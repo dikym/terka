@@ -53,7 +53,11 @@ export function ScopeNode({
 			)}
 			style={{ paddingLeft: `${12 + depth * 20}px` }}
 		>
-			{leaf ? null : <Chevron className="text-ink-700 size-[22px] shrink-0" aria-hidden />}
+			{leaf ? null : (
+				<span className="grid size-6 shrink-0 place-items-center">
+					<Chevron className="text-ink-700 size-[22px]" aria-hidden />
+				</span>
+			)}
 			<span
 				className={cn("size-2.5 shrink-0 rounded-full", groupDotClass[group])}
 				aria-hidden
