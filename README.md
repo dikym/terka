@@ -19,6 +19,16 @@ mengikuti proyek sumber. Folder kosong dipertahankan dengan `.gitkeep`.
 Konfigurasi tema tersedia di `src/app/globals.css` dan utilitas shadcn di
 `src/lib/utils.ts`.
 
+Logic Terka tersedia di `src/lib/terka/`: engine latihan, generator soal,
+penilaian, statistik, penyimpanan IndexedDB dan backup lokal. Cara pemakaian,
+perintah tes/build, dan kekurangan konten tercatat di [docs/logic.md](docs/logic.md).
+
+```sh
+bun run content:build
+bun run test
+bun run build:logic
+```
+
 Halaman, layout, komponen, API, logika bisnis, aset, serta migrasi database
 Semang tidak disalin. Tambahkan `src/app/layout.tsx` (dengan import
 `./globals.css`) dan `src/app/page.tsx` sebelum menjalankan aplikasi.

@@ -1,0 +1,335 @@
+import { verified } from "./content";
+import { matchAnswer } from "./grading";
+import {
+	type CardProgress,
+	type Content,
+	type Level,
+	type Question,
+	type Region,
+	type Target
+} from "./model";
+
+export function automaticLevel(card: CardProgress): Level {
+	if (card.mode === "setrecall") return 3;
+	if (card.state === "mature") return 3;
+	return card.state === "new" || card.state === "learning" ? 1 : 2;
+}
+
+export function regionTarget(region: Region): Target {
+	return {
+		id: region.id,
+		name: region.region,
+		aliases: [
+			...region.aliases,
+			...region.areas.flatMap((area) => [area.name, ...area.aliases])
+		]
+	};
+}
+
+export function areaTargets(region: Region): Target[] {
+	return region.areas.map((area) => ({ ...area, id: `${region.id}::${area.id}` }));
+}
+
+export function dictionary(content: Content, kind: "name" | "code"): Target[] {
+	return content.regions.flatMap((region) =>
+		kind === "code"
+			? [{ id: region.id, name: region.code, aliases: [] }]
+			: [regionTarget(region), ...areaTargets(region)]
+	);
+}
+
+export function shuffled<T>(items: T[], random: () => number): T[] {
+	const result = [...items];
+	for (let i = result.length - 1; i > 0; i--) {
+		const sample = random();
+		if (sample < 0 || sample >= 1 || !Number.isFinite(sample))
+			throw new Error("Random value must be in [0, 1)");
+		const j = Math.floor(sample * (i + 1));
+		[result[i], result[j]] = [result[j], result[i]];
+	}
+	return result;
+}
+
+export function generateQuestion(
+	content: Content,
+	card: CardProgress,
+	options: {
+		id: string;
+		now: number;
+		level?: Level;
+		format?: Question["format"];
+		pair?: [string, string];
+		random?: () => number;
+	}
+): Question {
+	const region = content.regions.find((region) => region.id === card.regionId);
+	if (!region) throw new Error("Question region is missing");
+	const random = options.random ?? Math.random;
+	const autoLevel = automaticLevel(card);
+	const level = options.pair ? 3 : (options.level ?? autoLevel);
+	const facts = region.facts
+		.map((id) => content.facts.find((fact) => fact.id === id)!)
+		.filter(Boolean)
+		.map((fact) => `${fact.status}: ${fact.text}`);
+	const question: Question = {
+		id: options.id,
+		cardId: card.cardId,
+		regionId: region.id,
+		level,
+		autoLevel,
+		format: "recall",
+		prompt: `Dari wilayah mana kode ${region.code}?`,
+		choices: [],
+		targets: [regionTarget(region)],
+		answerKind: "name",
+		setTarget: null,
+		limitMs: level === 3 ? 8_000 : null,
+		drillPair: options.pair ?? null,
+		context: card.lapses >= 6 ? facts.slice(0, 1) : [],
+		facts: facts.slice(0, 2),
+		shownAt: options.now
+	};
+	if (level === 2) question.context.push(`Kawasan: ${region.group}`);
+	if (options.pair) {
+		const other = content.regions.find((item) => item.id === options.pair![1]);
+		if (!other || other.id === region.id || options.pair[0] !== region.id)
+			throw new Error("Invalid confusion pair");
+		question.format = "drill";
+		question.prompt = `Mana yang ${region.region}, ${region.code} atau ${other.code}?`;
+		question.targets = [{ id: region.id, name: region.code, aliases: [] }];
+		question.answerKind = "code";
+		question.choices = shuffled([region.code, other.code], random);
+		question.context = [
+			`${region.code}: ${region.region} (${region.province}); ${other.code}: ${other.region} (${other.province}).`
+		];
+		question.limitMs = null;
+		return question;
+	}
+	if (card.mode === "setrecall") {
+		if (level !== 3) throw new Error("Set recall requires Level 3");
+		question.format = "set";
+		question.targets = areaTargets(region);
+		question.setTarget = Math.min(5, question.targets.length);
+		question.prompt = `Sebutkan ${question.setTarget} wilayah untuk kode ${region.code}.`;
+		question.answerKind = "set";
+		question.limitMs = null;
+		return question;
+	}
+	if (card.mode === "region2code") {
+		question.prompt = `Apa kode plat untuk ${region.region}?`;
+		question.targets = [{ id: region.id, name: region.code, aliases: [] }];
+		question.answerKind = "code";
+	}
+	if (card.mode === "suffix" || card.mode === "platfull") {
+		const suffixes = region.suffixes.filter(
+			(suffix) => verified(suffix) && (!card.suffixId || suffix.id === card.suffixId)
+		);
+		const suffix = shuffled(suffixes, random)[0];
+		if (!suffix) throw new Error("Verified suffix data is required");
+		const letters = suffix.pattern.replace(/\*/g, () =>
+			String.fromCharCode(65 + Math.floor(random() * 26))
+		);
+		const overlapping = region.suffixes
+			.filter(verified)
+			.filter((item) =>
+				new RegExp(`^${item.pattern.replace(/\*/g, "[A-Z]")}$`).test(letters)
+			);
+		if (new Set(overlapping.map((item) => item.areaId)).size > 1)
+			throw new Error("Ambiguous suffix pattern");
+		const area = areaTargets(region).find(
+			(area) => area.id === `${region.id}::${suffix.areaId}`
+		)!;
+		question.format = card.mode === "suffix" ? "suffix" : "plate";
+		question.prompt = `${region.code} ${Math.floor(random() * 9000) + 1000} ${letters}`;
+		question.answerKind = card.mode === "platfull" && level === 3 ? "plate" : "name";
+		question.targets =
+			card.mode === "platfull" && level <= 2
+				? [regionTarget(region)]
+				: question.answerKind === "plate"
+					? [regionTarget(region), area]
+					: [area];
+		question.limitMs = null;
+		if (level > 1) return question;
+	}
+	if (options.format === "fact") {
+		const fact = content.facts.find(
+			(fact) =>
+				fact.status === "terverifikasi" &&
+				fact.answerRegionId === region.id &&
+				fact.question
+		);
+		if (!fact || level !== 2)
+			throw new Error("An unambiguous verified fact question at Level 2 is required");
+		question.format = "fact";
+		question.prompt = fact.question!;
+		question.targets = [{ id: region.id, name: region.code, aliases: [] }];
+		question.answerKind = "code";
+		return question;
+	}
+	if (level === 1) {
+		question.limitMs = null;
+		const candidates = shuffled(
+			content.regions.filter(
+				(item) => item.id !== region.id && item.group !== region.group && verified(item)
+			),
+			random
+		);
+		if (options.format === "group" || options.format === "first-letter") {
+			question.format = options.format;
+			const value = options.format === "group" ? region.group : region.code[0];
+			question.prompt =
+				options.format === "group"
+					? `Kawasan untuk ${region.code}?`
+					: `Huruf pertama kode ${region.region}?`;
+			question.targets = [{ id: region.id, name: value, aliases: [] }];
+			question.answerKind = "literal";
+			question.choices = shuffled(
+				[
+					...new Set([
+						value,
+						...candidates.map((item) =>
+							options.format === "group" ? item.group : item.code[0]
+						)
+					])
+				].slice(0, 4),
+				random
+			);
+		} else if (options.format === "truefalse") {
+			if (!candidates.length) throw new Error("A distractor from another group is required");
+			const truthful = random() < 0.5;
+			question.format = "truefalse";
+			question.prompt = `${region.code} = ${truthful ? region.region : candidates[0].region}?`;
+			question.targets = [
+				{
+					id: truthful ? region.id : candidates[0].id,
+					name: truthful ? "Benar" : "Salah",
+					aliases: []
+				}
+			];
+			question.answerKind = "literal";
+			question.choices = ["Benar", "Salah"];
+			question.limitMs = 2_000;
+		} else if (options.format === "not-in") {
+			if (!candidates.length) throw new Error("A distractor from another group is required");
+			question.format = "not-in";
+			question.prompt = `Mana yang BUKAN wilayah ${region.code}?`;
+			question.targets = [regionTarget(candidates[0])];
+			question.choices = shuffled(
+				[candidates[0].region, ...region.areas.slice(0, 3).map((area) => area.name)],
+				random
+			);
+		} else {
+			question.format = "choice";
+			question.choices = shuffled(
+				[
+					question.targets[0].name,
+					...candidates
+						.slice(0, 3)
+						.map((item) =>
+							question.answerKind === "code"
+								? item.code
+								: card.mode === "suffix"
+									? item.areas[0].name
+									: item.region
+						)
+				],
+				random
+			);
+		}
+		if (new Set(question.choices).size < 2)
+			throw new Error("At least two distinct choices are required");
+	}
+	return question;
+}
+
+export type AnswerResult = {
+	correct: boolean;
+	fuzzy: boolean;
+	confusedWith: string[];
+	setCorrect: number | null;
+	corrections: string[];
+	ambiguous: boolean;
+};
+export function evaluateQuestion(
+	content: Content,
+	question: Question,
+	answers: string[]
+): AnswerResult {
+	const result: AnswerResult = {
+		correct: false,
+		fuzzy: false,
+		confusedWith: [],
+		setCorrect: null,
+		corrections: [],
+		ambiguous: false
+	};
+	const national = dictionary(content, question.answerKind === "code" ? "code" : "name");
+	const matched = new Set<string>();
+	if (
+		question.answerKind !== "set" &&
+		answers.length !== (question.answerKind === "plate" ? 2 : 1)
+	)
+		return result;
+	for (const [index, input] of answers.entries()) {
+		const targets =
+			question.answerKind === "plate" ? [question.targets[index]] : question.targets;
+		const match = matchAnswer(
+			input,
+			targets,
+			national,
+			question.answerKind === "code"
+				? "code"
+				: question.answerKind === "literal"
+					? "literal"
+					: "name"
+		);
+		if (match.correct && match.matchedId) matched.add(match.matchedId);
+		result.fuzzy ||= match.fuzzy;
+		result.ambiguous ||= match.ambiguous;
+		result.confusedWith.push(...match.confusedWith.filter((id) => id !== question.regionId));
+		if (match.correction) result.corrections.push(match.correction);
+	}
+	if (question.answerKind === "set") {
+		result.setCorrect = matched.size;
+		result.correct = matched.size >= question.setTarget!;
+	} else result.correct = matched.size === (question.answerKind === "plate" ? 2 : 1);
+	if (
+		!result.correct &&
+		question.format === "truefalse" &&
+		answers[0]?.trim().toLowerCase() === "benar" &&
+		question.targets[0].name === "Salah"
+	)
+		result.confusedWith.push(question.targets[0].id);
+	result.confusedWith = [...new Set(result.confusedWith)];
+	return result;
+}
+
+export function assertLevelThreeCoverage(content: Content) {
+	for (const region of content.regions) {
+		const card: CardProgress = {
+			cardId: `${region.id}::code2region`,
+			regionId: region.id,
+			mode: "code2region",
+			state: "new",
+			stability: 0,
+			difficulty: 0,
+			interval: 0,
+			due: 0,
+			reps: 0,
+			lapses: 0,
+			step: 0,
+			lastReview: null,
+			scheduledDay: null,
+			pendingDue: null,
+			passedLevels: [],
+			suspensionReason: null
+		};
+		const question = generateQuestion(content, card, {
+			id: `coverage-${region.id}`,
+			now: 0,
+			level: 3
+		});
+		if (!evaluateQuestion(content, question, [region.region]).correct)
+			throw new Error(`No valid Level 3 question for ${region.code}`);
+	}
+}

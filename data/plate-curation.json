@@ -1,0 +1,633 @@
+{
+	"version": "2026.09.15",
+	"regions": {
+		"BL": {
+			"id": "bl",
+			"province": "aceh",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"BB": {
+			"id": "bb",
+			"province": "sumatera-utara",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"BK": {
+			"id": "bk",
+			"province": "sumatera-utara",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"BA": {
+			"id": "ba",
+			"province": "sumatera-barat",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"BM": {
+			"id": "bm",
+			"province": "riau",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"BP": {
+			"id": "bp",
+			"province": "kepulauan-riau",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"BH": {
+			"id": "bh",
+			"province": "jambi",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"BG": {
+			"id": "bg",
+			"province": "sumatera-selatan",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"BN": {
+			"id": "bn",
+			"province": "bangka-belitung",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"BE": {
+			"id": "be",
+			"province": "lampung",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"BD": {
+			"id": "bd",
+			"province": "bengkulu",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"A": {
+			"id": "a",
+			"province": "banten",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"B": {
+			"id": "b",
+			"province": "jakarta",
+			"spans": ["jawa-barat", "banten"],
+			"aliases": ["Jakarta", "DKI Jakarta"],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"D": {
+			"id": "d",
+			"province": "jawa-barat",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"F": {
+			"id": "f",
+			"province": "jawa-barat",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"E": {
+			"id": "e",
+			"province": "jawa-barat",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"T": {
+			"id": "t",
+			"province": "jawa-barat",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"Z": {
+			"id": "z",
+			"province": "jawa-barat",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"G": {
+			"id": "g",
+			"province": "jawa-tengah",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"H": {
+			"id": "h",
+			"province": "jawa-tengah",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"K": {
+			"id": "k",
+			"province": "jawa-tengah",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"R": {
+			"id": "r",
+			"province": "jawa-tengah",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"AA": {
+			"id": "aa",
+			"province": "jawa-tengah",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"AD": {
+			"id": "ad",
+			"province": "jawa-tengah",
+			"spans": [],
+			"aliases": ["Solo", "Surakarta", "Solo Raya"],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"AB": {
+			"id": "ab",
+			"province": "yogyakarta",
+			"spans": [],
+			"aliases": ["Yogyakarta", "Jogja", "Yogya", "DIY"],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"L": {
+			"id": "l",
+			"province": "jawa-timur",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"W": {
+			"id": "w",
+			"province": "jawa-timur",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"M": {
+			"id": "m",
+			"province": "jawa-timur",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"N": {
+			"id": "n",
+			"province": "jawa-timur",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"P": {
+			"id": "p",
+			"province": "jawa-timur",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"S": {
+			"id": "s",
+			"province": "jawa-timur",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"AG": {
+			"id": "ag",
+			"province": "jawa-timur",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"AE": {
+			"id": "ae",
+			"province": "jawa-timur",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"DK": {
+			"id": "dk",
+			"province": "bali",
+			"spans": [],
+			"aliases": ["Pulau Bali"],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"DR": {
+			"id": "dr",
+			"province": "nusa-tenggara-barat",
+			"spans": [],
+			"aliases": ["Lombok"],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"EA": {
+			"id": "ea",
+			"province": "nusa-tenggara-barat",
+			"spans": [],
+			"aliases": ["Pulau Sumbawa"],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"DH": {
+			"id": "dh",
+			"province": "nusa-tenggara-timur",
+			"spans": [],
+			"aliases": ["Timor"],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"EB": {
+			"id": "eb",
+			"province": "nusa-tenggara-timur",
+			"spans": [],
+			"aliases": ["Flores"],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"ED": {
+			"id": "ed",
+			"province": "nusa-tenggara-timur",
+			"spans": [],
+			"aliases": ["Sumba"],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"KB": {
+			"id": "kb",
+			"province": "kalimantan-barat",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"DA": {
+			"id": "da",
+			"province": "kalimantan-selatan",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"KH": {
+			"id": "kh",
+			"province": "kalimantan-tengah",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"KT": {
+			"id": "kt",
+			"province": "kalimantan-timur",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"KU": {
+			"id": "ku",
+			"province": "kalimantan-utara",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"DB": {
+			"id": "db",
+			"province": "sulawesi-utara",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"DL": {
+			"id": "dl",
+			"province": "sulawesi-utara",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"DM": {
+			"id": "dm",
+			"province": "gorontalo",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"DN": {
+			"id": "dn",
+			"province": "sulawesi-tengah",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"DT": {
+			"id": "dt",
+			"province": "sulawesi-tenggara",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"DD": {
+			"id": "dd",
+			"province": "sulawesi-selatan",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"DW": {
+			"id": "dw",
+			"province": "sulawesi-selatan",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"DP": {
+			"id": "dp",
+			"province": "sulawesi-selatan",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"DC": {
+			"id": "dc",
+			"province": "sulawesi-barat",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"DE": {
+			"id": "de",
+			"province": "maluku",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"DG": {
+			"id": "dg",
+			"province": "maluku-utara",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"PA": {
+			"id": "pa",
+			"province": "papua",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"PB": {
+			"id": "pb",
+			"province": "papua-barat",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [
+				"Tanggal PB 2016 pada sumber bertentangan dengan 29 April 2013 pada PRD 13.3."
+			],
+			"suffixes": []
+		},
+		"PY": {
+			"id": "py",
+			"province": "papua-barat-daya",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"PS": {
+			"id": "ps",
+			"province": "papua-selatan",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"PT": {
+			"id": "pt",
+			"province": "papua-tengah",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		},
+		"PG": {
+			"id": "pg",
+			"province": "papua-pegunungan",
+			"spans": [],
+			"aliases": [],
+			"confidence": "medium",
+			"sources": [],
+			"issues": [],
+			"suffixes": []
+		}
+	},
+	"facts": {
+		"f-016": {
+			"question": "Kode mana yang muncul setelah pemekaran Kalimantan Utara dari Kalimantan Timur?",
+			"answerRegionId": "ku"
+		},
+		"f-017": {
+			"status": "diperdebatkan"
+		},
+		"f-020": {
+			"status": "diperdebatkan"
+		},
+		"f-030": {
+			"question": "Kode yang dahulu dipakai Belitung kini digunakan di Kepulauan Riau. Apa kodenya?",
+			"answerRegionId": "bp"
+		}
+	}
+}
