@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 export function MapPlaceholder({
-	note = "peta Indonesia — SVG statis · id elemen = id cakupan",
+	note = "peta Indonesia — SVG statis\nid elemen = id cakupan",
 	className
 }: {
 	note?: string;
@@ -14,7 +14,7 @@ export function MapPlaceholder({
 				className
 			)}
 		>
-			<span className="text-body-sm text-ink-500 font-mono">{note}</span>
+			<span className="text-body-sm text-ink-500 font-mono whitespace-pre-line">{note}</span>
 		</div>
 	);
 }

@@ -20,6 +20,7 @@ export function PlateTile({
 	number,
 	suffix,
 	muted,
+	emphasize,
 	size,
 	className
 }: VariantProps<typeof plateVariants> & {
@@ -27,6 +28,7 @@ export function PlateTile({
 	number?: string;
 	suffix?: string;
 	muted?: boolean;
+	emphasize?: "code" | "number" | "suffix";
 	className?: string;
 }) {
 	return (
@@ -34,9 +36,27 @@ export function PlateTile({
 			className={cn(plateVariants({ size }), className)}
 			aria-label={[code, number, suffix].filter(Boolean).join(" ")}
 		>
-			<span>{code}</span>
-			{number ? <span className={cn(muted && "text-ink-300")}>{number}</span> : null}
-			{suffix ? <span className={cn(muted && "text-ink-300")}>{suffix}</span> : null}
+			<span className={cn(emphasize === "code" && "text-caution-700")}>{code}</span>
+			{number ? (
+				<span
+					className={cn(
+						muted && "text-ink-300",
+						emphasize === "number" && "text-caution-700"
+					)}
+				>
+					{number}
+				</span>
+			) : null}
+			{suffix ? (
+				<span
+					className={cn(
+						muted && "text-ink-300",
+						emphasize === "suffix" && "text-caution-700"
+					)}
+				>
+					{suffix}
+				</span>
+			) : null}
 		</div>
 	);
 }
