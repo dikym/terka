@@ -2,21 +2,10 @@ import { Layers } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { LabelText } from "@/components/ui/label-text";
+import { CodeBadge } from "@/components/terka/code-badge";
+import type { IslandGroup } from "@/components/terka/scope-node";
 import { PageFrame, PageTitle } from "@/components/layout/page-frame";
 import { cn } from "@/lib/utils";
-
-function CodeBadge({ code, borderClass }: { code: string; borderClass: string }) {
-	return (
-		<span
-			className={cn(
-				"bg-paper-0 font-plate text-body-sm tracking-plate text-ink-1000 inline-flex h-7 min-w-7 shrink-0 items-center justify-center rounded-sm border border-b-[3px] px-2.5 leading-none font-bold",
-				borderClass
-			)}
-		>
-			{code}
-		</span>
-	);
-}
 
 function CityTag({ children }: React.PropsWithChildren) {
 	return (
@@ -26,9 +15,9 @@ function CityTag({ children }: React.PropsWithChildren) {
 	);
 }
 
-const region = {
+const region: { group: string; islandGroup: IslandGroup; iconClass: string } = {
 	group: "Bali & Nusa Tenggara",
-	borderClass: "border-group-balinusra",
+	islandGroup: "balinusra",
 	iconClass: "text-group-balinusra"
 };
 
@@ -64,7 +53,7 @@ export function Referensi() {
 							key={entry.code}
 							className="border-ink-200 bg-paper-0 flex min-h-11 items-center gap-3 rounded-sm border p-3"
 						>
-							<CodeBadge code={entry.code} borderClass={region.borderClass} />
+							<CodeBadge code={entry.code} group={region.islandGroup} />
 							<span className="flex min-w-0 flex-1 flex-col gap-1">
 								<span className="text-body-md text-ink-1000 leading-[1.2] font-medium">
 									{entry.name}
@@ -78,15 +67,15 @@ export function Referensi() {
 								) : null}
 							</span>
 							{entry.status === "verified" ? (
-								<Badge tone="success" className="text-go-500 self-start">
+								<Badge tone="success" className="self-start">
 									Masuk latihan
 								</Badge>
 							) : entry.status === "unverified-strong" ? (
-								<Badge tone="danger" className="text-stop-500 self-start">
+								<Badge tone="danger" className="self-start">
 									{statusLabel}
 								</Badge>
 							) : (
-								<Badge tone="warn" className="text-caution-500 self-start">
+								<Badge tone="warn" className="self-start">
 									{statusLabel}
 								</Badge>
 							)}
