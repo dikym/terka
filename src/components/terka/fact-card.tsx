@@ -21,7 +21,7 @@ export function FactCard({
 	children: React.ReactNode;
 }) {
 	return (
-		<Card className={className}>
+		<Card className={cn("shadow-none", className)}>
 			<CardBody>
 				<span
 					className={cn(
