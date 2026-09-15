@@ -16,18 +16,26 @@ export function StatBlock({
 	label,
 	size,
 	mono,
+	valueClassName,
+	unitClassName,
 	className
 }: VariantProps<typeof valueVariants> & {
 	value: React.ReactNode;
 	unit?: React.ReactNode;
 	label: React.ReactNode;
+	valueClassName?: string;
+	unitClassName?: string;
 	className?: string;
 }) {
 	return (
 		<div className={cn("flex flex-col gap-1", className)}>
 			<div className="flex items-baseline gap-2">
-				<span className={valueVariants({ size, mono })}>{value}</span>
-				{unit ? <span className="font-body text-body-md text-ink-700">{unit}</span> : null}
+				<span className={cn(valueVariants({ size, mono }), valueClassName)}>{value}</span>
+				{unit ? (
+					<span className={cn("font-body text-body-md text-ink-700", unitClassName)}>
+						{unit}
+					</span>
+				) : null}
 			</div>
 			<LabelText>{label}</LabelText>
 		</div>
