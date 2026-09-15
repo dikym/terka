@@ -1,9 +1,5 @@
-import { PageFrame, PageTitle } from "@/components/layout/page-frame";
+import { Cakupan } from "@/components/screens/cakupan";
 
 export default function Page() {
-	return (
-		<PageFrame>
-			<PageTitle>Cakupan</PageTitle>
-		</PageFrame>
-	);
+	return <Cakupan />;
 }

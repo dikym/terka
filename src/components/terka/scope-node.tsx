@@ -28,6 +28,7 @@ export function ScopeNode({
 	active,
 	expanded,
 	leaf,
+	mono,
 	className
 }: {
 	name: string;
@@ -38,6 +39,7 @@ export function ScopeNode({
 	active?: boolean;
 	expanded?: boolean;
 	leaf?: boolean;
+	mono?: boolean;
 	className?: string;
 }) {
 	const Chevron = expanded ? ChevronDown : ChevronRight;
@@ -65,7 +67,14 @@ export function ScopeNode({
 			<span className="flex min-w-0 flex-1 flex-col gap-1">
 				{active ? <LabelText tone="brand">Aktif sekarang</LabelText> : null}
 				<span className="flex items-baseline justify-between gap-2">
-					<span className="font-display text-body-lg text-ink-1000 truncate leading-[1.2] font-semibold">
+					<span
+						className={cn(
+							"text-body-lg text-ink-1000 truncate leading-[1.2]",
+							mono
+								? "tracking-plate font-mono font-bold"
+								: "font-display font-semibold"
+						)}
+					>
 						{name}
 					</span>
 					<span className="text-body-sm text-ink-500 shrink-0 font-mono">{count}</span>
