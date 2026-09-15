@@ -53,7 +53,7 @@ export function ScopeNode({
 				active && "border-ink-1000 bg-paper-50",
 				className
 			)}
-			style={{ paddingLeft: `${12 + depth * 20}px` }}
+			style={{ paddingLeft: `${12 + 20 + depth * 20}px` }}
 		>
 			{leaf ? null : (
 				<span className="grid size-6 shrink-0 place-items-center">
