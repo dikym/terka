@@ -28,14 +28,14 @@ export function SessionShell({
 					<Link
 						href={back}
 						aria-label="Keluar sesi"
-						className="size-control-sm text-ink-1000 hover:bg-paper-50 inline-flex items-center justify-center rounded-sm"
+						className="size-control-sm text-ink-700 hover:bg-paper-50 inline-flex items-center justify-center rounded-sm"
 					>
-						<ArrowLeft className="size-5" aria-hidden />
+						<ArrowLeft className="size-[18px]" aria-hidden />
 					</Link>
 					<SessionProgress current={current} total={total} />
 					{undo ? (
-						<IconButton label="Batalkan jawaban">
-							<Undo2 className="size-5" aria-hidden />
+						<IconButton label="Batalkan jawaban" className="text-ink-700">
+							<Undo2 className="size-[18px]" aria-hidden />
 						</IconButton>
 					) : null}
 				</div>
