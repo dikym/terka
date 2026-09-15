@@ -1,9 +1,5 @@
-import { PageFrame, PageTitle } from "@/components/layout/page-frame";
+import { Statistik } from "@/components/screens/statistik";
 
 export default function Page() {
-	return (
-		<PageFrame>
-			<PageTitle>Statistik</PageTitle>
-		</PageFrame>
-	);
+	return <Statistik />;
 }
