@@ -1,9 +1,13 @@
-import { SessionShell } from "@/components/layout/session-shell";
+import { notFound } from "next/navigation";
+import { sesiScreens, type SesiScreenKey } from "@/components/screens/sesi-registry";
 
-export default function Page() {
-	return (
-		<SessionShell current={7} total={24}>
-			<p>Sesi</p>
-		</SessionShell>
-	);
+export default async function Page({
+	searchParams
+}: {
+	searchParams: Promise<{ screen?: string }>;
+}) {
+	const { screen = "tanya" } = await searchParams;
+	const Screen = sesiScreens[screen as SesiScreenKey];
+	if (!Screen) notFound();
+	return <Screen />;
 }
