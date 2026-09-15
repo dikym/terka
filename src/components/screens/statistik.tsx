@@ -6,22 +6,11 @@ import { ProgressBar } from "@/components/ui/progress-bar";
 import { RingGauge } from "@/components/ui/ring-gauge";
 import { buttonVariants } from "@/components/ui/button";
 import { MapPlaceholder } from "@/components/terka/map-placeholder";
+import { CodeBadge } from "@/components/terka/code-badge";
+import type { IslandGroup } from "@/components/terka/scope-node";
 import { PageFrame, PageTitle } from "@/components/layout/page-frame";
 import { TwoColumn } from "@/components/layout/two-column";
 import { cn } from "@/lib/utils";
-
-function CodeBadge({ code, borderClass }: { code: string; borderClass: string }) {
-	return (
-		<span
-			className={cn(
-				"bg-paper-0 font-plate text-body-sm tracking-plate text-ink-1000 inline-flex h-7 min-w-7 shrink-0 items-center justify-center rounded-sm border border-b-[3px] px-2.5 leading-none font-bold",
-				borderClass
-			)}
-		>
-			{code}
-		</span>
-	);
-}
 
 function WeakBadge({
 	tone,
@@ -56,10 +45,17 @@ function MapLegend({ tone, children }: React.PropsWithChildren<{ tone: string }>
 	);
 }
 
-const weakestCards = [
+const weakestCards: {
+	code: string;
+	group: IslandGroup;
+	name: string;
+	badgeTone: string;
+	label: string;
+	accuracy: number;
+}[] = [
 	{
 		code: "BD",
-		codeBorder: "border-group-sumatera",
+		group: "sumatera",
 		name: "Dharmasraya",
 		badgeTone: "bg-stop-100 text-state-relearning",
 		label: "Sedang Dipelajari",
@@ -67,7 +63,7 @@ const weakestCards = [
 	},
 	{
 		code: "DP",
-		codeBorder: "border-group-sulawesi",
+		group: "sulawesi",
 		name: "Sulsel (11 kab.)",
 		badgeTone: "bg-paper-50 text-state-leech",
 		label: "Sulit Dikuasai",
@@ -75,7 +71,7 @@ const weakestCards = [
 	},
 	{
 		code: "PY",
-		codeBorder: "border-group-papua",
+		group: "papua",
 		name: "Papua Barat Daya",
 		badgeTone: "bg-caution-100 text-state-learning",
 		label: "Sedang Dipelajari",
@@ -83,7 +79,7 @@ const weakestCards = [
 	},
 	{
 		code: "DH",
-		codeBorder: "border-group-balinusra",
+		group: "balinusra",
 		name: "Timor",
 		badgeTone: "bg-sky-100 text-state-review",
 		label: "Sedang Dipelajari",
@@ -194,7 +190,7 @@ export function Statistik() {
 						<div className="flex flex-col gap-3">
 							{weakestCards.map((row) => (
 								<div key={row.code} className="flex items-center gap-3">
-									<CodeBadge code={row.code} borderClass={row.codeBorder} />
+									<CodeBadge code={row.code} group={row.group} />
 									<span className="text-body-md text-ink-900 min-w-0 flex-1 truncate">
 										{row.name}
 									</span>
