@@ -1,0 +1,432 @@
+@import "tailwindcss";
+
+@layer base {
+	html {
+		scroll-behavior: smooth;
+		scroll-padding-top: 3.75rem;
+	}
+	@media (width >= 64rem) {
+		html {
+			scroll-padding-top: 4rem;
+		}
+	}
+}
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+	--color-brand: #3c8377;
+	--color-teal-350: #82b8ad;
+	--color-warm-25: #fcfbf8;
+
+	--text-display: clamp(33px, 5.2vw, 66px);
+	--text-display--line-height: 1.02;
+	--text-display--letter-spacing: -0.035em;
+
+	--text-title: clamp(30px, 4.6vw, 58px);
+	--text-title--line-height: 1.04;
+	--text-title--letter-spacing: -0.035em;
+
+	--text-title-sm: clamp(30px, 4.2vw, 52px);
+	--text-title-sm--line-height: 1.06;
+	--text-title-sm--letter-spacing: -0.035em;
+
+	--text-h2: clamp(27px, 3.2vw, 40px);
+	--text-h2--line-height: 1.1;
+	--text-h2--letter-spacing: -0.028em;
+
+	--text-h2-sm: clamp(26px, 3vw, 38px);
+	--text-h2-sm--line-height: 1.12;
+	--text-h2-sm--letter-spacing: -0.028em;
+
+	--text-cta: clamp(24px, 2.8vw, 34px);
+	--text-cta--line-height: 1.15;
+	--text-cta--letter-spacing: -0.025em;
+
+	--text-cta-lg: clamp(30px, 3.6vw, 46px);
+	--text-cta-lg--line-height: 1.08;
+	--text-cta-lg--letter-spacing: -0.03em;
+
+	--text-celebration: clamp(34px, 6vw, 56px);
+	--text-celebration--line-height: 1.05;
+	--text-celebration--letter-spacing: -0.038em;
+
+	--text-panel-title: 26px;
+	--text-panel-title--line-height: 1.2;
+	--text-panel-title--letter-spacing: -0.03em;
+
+	--text-screen-title: clamp(23px, 4.2vw, 28px);
+	--text-screen-title--line-height: 1.1;
+	--text-screen-title--letter-spacing: -0.03em;
+
+	--text-screen-title-sm: clamp(23px, 4.2vw, 26px);
+	--text-screen-title-sm--line-height: 1.1;
+	--text-screen-title-sm--letter-spacing: -0.03em;
+
+	--text-page-title: clamp(20px, 2.6vw, 22px);
+	--text-page-title--line-height: 1.2;
+	--text-page-title--letter-spacing: -0.025em;
+
+	--text-section-title: clamp(18px, 2.4vw, 20px);
+	--text-section-title--line-height: 1.25;
+	--text-section-title--letter-spacing: -0.02em;
+
+	--text-card-title: 17px;
+	--text-card-title--line-height: 1.3;
+	--text-card-title--letter-spacing: -0.015em;
+
+	--text-amount: clamp(26px, 2.6vw, 28px);
+	--text-amount--line-height: 1.05;
+	--text-amount--letter-spacing: -0.03em;
+
+	--text-figure: clamp(20px, 2.4vw, 22px);
+	--text-figure--line-height: 1.1;
+	--text-figure--letter-spacing: -0.025em;
+
+	--text-lead: 15px;
+	--text-lead--line-height: 1.6;
+
+	--text-lead-lg: 18px;
+	--text-lead-lg--line-height: 1.6;
+
+	--text-control: 15.5px;
+	--text-control--line-height: 1.2;
+
+	--text-control-sm: 15px;
+	--text-control-sm--line-height: 1.2;
+
+	--text-row: 14.5px;
+	--text-row--line-height: 1.4;
+	--text-row--letter-spacing: -0.01em;
+
+	--text-small: 13.5px;
+	--text-small--line-height: 1.55;
+
+	--text-caption: 12.5px;
+	--text-caption--line-height: 1.5;
+
+	--text-footnote: 11.5px;
+	--text-footnote--line-height: 1.55;
+
+	--text-index: 11px;
+	--text-index--line-height: 1.5;
+
+	--radius-control: 4px;
+	--radius-knob: 2px;
+}
+
+@theme inline {
+	/* Shadcn semantic tokens */
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--font-sans: var(--font-plus-jakarta);
+	--font-mono: var(--font-geist-mono);
+	--font-heading: var(--font-sans);
+	--color-sidebar-ring: var(--sidebar-ring);
+	--color-sidebar-border: var(--sidebar-border);
+	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+	--color-sidebar-accent: var(--sidebar-accent);
+	--color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+	--color-sidebar-primary: var(--sidebar-primary);
+	--color-sidebar-foreground: var(--sidebar-foreground);
+	--color-sidebar: var(--sidebar);
+	--color-chart-5: var(--chart-5);
+	--color-chart-4: var(--chart-4);
+	--color-chart-3: var(--chart-3);
+	--color-chart-2: var(--chart-2);
+	--color-chart-1: var(--chart-1);
+	--color-ring: var(--ring);
+	--color-input: var(--input);
+	--color-border: var(--border);
+	--color-destructive: var(--destructive);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-accent: var(--accent);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-muted: var(--muted);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-secondary: var(--secondary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-primary: var(--primary);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-popover: var(--popover);
+	--color-card-foreground: var(--card-foreground);
+	--color-card: var(--card);
+	--radius-sm: calc(var(--radius) * 0.5);
+	--radius-md: var(--radius);
+	--radius-lg: calc(var(--radius) * 1.333);
+	--radius-xl: calc(var(--radius) * 1.667);
+	--radius-2xl: calc(var(--radius) * 2);
+	--radius-3xl: calc(var(--radius) * 2.667);
+	--radius-4xl: calc(var(--radius) * 3.333);
+
+	/* ── Semang extended palette ── */
+
+	/* Misty Teal */
+	--color-teal-50: #eef5f3;
+	--color-teal-100: #d6e8e3;
+	--color-teal-200: #afd2c9;
+	--color-teal-300: #a0c9c1;
+	--color-teal-400: #589c90;
+	--color-teal-500: #37796d;
+	--color-teal-600: #2e6b61;
+	--color-teal-700: #27574f;
+	--color-teal-800: #214641;
+	--color-teal-900: #1b3a36;
+
+	/* Warm Neutral */
+	--color-warm-canvas: #faf8f4;
+	--color-warm-50: #f4f1eb;
+	--color-warm-100: #ebe6dd;
+	--color-warm-200: #ddd6c9;
+	--color-warm-300: #c7bdac;
+	--color-warm-400: #756d60;
+	--color-warm-500: #756d5d;
+	--color-warm-600: #635a4b;
+	--color-warm-700: #48423a;
+	--color-warm-900: #211e19;
+
+	/* Semantic */
+	--color-success: #2f8b5f;
+	--color-success-bg: #e4f2ea;
+	--color-success-fg: #256e4b;
+	--color-warning: #c2841f;
+	--color-warning-bg: #f8eedb;
+	--color-warning-fg: #946115;
+	--color-danger: #be4f38;
+	--color-danger-bg: #f6e3dd;
+	--color-danger-fg: #a33f2a;
+	--color-info: #3877a6;
+	--color-info-bg: #e1ecf4;
+	--color-info-fg: #2c5f86;
+
+	/* WhatsApp */
+	--color-whatsapp: #25d366;
+	--color-whatsapp-hover: #1fb855;
+	--color-whatsapp-canvas: #ece5dd;
+	--color-whatsapp-bubble: #dcf3e4;
+
+	/* Shadows (warm-tinted, not grey) */
+	--shadow-warm-sm: 0 1px 2px rgba(33, 30, 25, 0.07);
+	--shadow-warm-md: 0 4px 14px rgba(33, 30, 25, 0.09);
+	--shadow-warm-lg: 0 12px 32px rgba(33, 30, 25, 0.12);
+	--shadow-warm-teal: 0 4px 12px rgba(60, 131, 119, 0.28);
+	--shadow-warm-teal-lg: 0 6px 18px rgba(60, 131, 119, 0.28);
+	--shadow-teal-card: 0 16px 36px rgba(39, 87, 79, 0.28);
+	--shadow-success: 0 5px 14px rgba(47, 139, 95, 0.28);
+	--shadow-chat: 0 1px 1px rgba(0, 0, 0, 0.08);
+	--shadow-phone:
+		0 2px 6px rgba(27, 58, 54, 0.2), 0 18px 36px rgba(27, 58, 54, 0.22),
+		0 40px 80px rgba(27, 58, 54, 0.18);
+}
+
+:root {
+	/* Font vars — overridden at runtime by Next.js font className injection */
+	--font-plus-jakarta: "Plus Jakarta Sans", system-ui, sans-serif;
+	--font-geist-mono: ui-monospace, "Cascadia Code", monospace;
+
+	/* Horizontal page gutter — shared by `container` and `bleed` */
+	--gutter: clamp(20px, 4vw, 48px);
+
+	/* Canvas & surface */
+	--background: #faf8f4;
+	--foreground: #211e19;
+	--card: #ffffff;
+	--card-foreground: #211e19;
+	--popover: #ffffff;
+	--popover-foreground: #211e19;
+
+	/* Primary = Teal 600 (WCAG AA: 5.8:1 on canvas, 6.2:1 with white text) */
+	--primary: #2e6b61;
+	--primary-foreground: #ffffff;
+
+	/* Secondary = Warm 50 */
+	--secondary: #f4f1eb;
+	--secondary-foreground: #211e19;
+
+	/* Muted = Warm 50 */
+	--muted: #f4f1eb;
+	--muted-foreground: #847a68;
+
+	/* Accent = Teal 100 */
+	--accent: #d6e8e3;
+	--accent-foreground: #27574f;
+
+	/* Destructive = Danger */
+	--destructive: #be4f38;
+
+	/* Borders & inputs */
+	--border: #ebe6dd;
+	--input: #ddd6c9;
+	--ring: #2e6b61;
+
+	/* Base radius = 12px (design's "md") */
+	--radius: 0.75rem;
+
+	/* Charts */
+	--chart-1: #2e6b61;
+	--chart-2: #2f8b5f;
+	--chart-3: #c2841f;
+	--chart-4: #3877a6;
+	--chart-5: #be4f38;
+
+	/* Sidebar */
+	--sidebar: #f4f1eb;
+	--sidebar-foreground: #211e19;
+	--sidebar-primary: #2e6b61;
+	--sidebar-primary-foreground: #ffffff;
+	--sidebar-accent: #d6e8e3;
+	--sidebar-accent-foreground: #27574f;
+	--sidebar-border: #ebe6dd;
+	--sidebar-ring: #2e6b61;
+}
+
+.dark {
+	--background: #1b3a36;
+	--foreground: #f4f1eb;
+	--card: #214641;
+	--card-foreground: #f4f1eb;
+	--popover: #214641;
+	--popover-foreground: #f4f1eb;
+	--primary: #82b8ad;
+	--primary-foreground: #1b3a36;
+	--secondary: #27574f;
+	--secondary-foreground: #f4f1eb;
+	--muted: #27574f;
+	--muted-foreground: #afd2c9;
+	--accent: #2e6b61;
+	--accent-foreground: #d6e8e3;
+	--destructive: #e07060;
+	--border: rgba(255, 255, 255, 0.1);
+	--input: rgba(255, 255, 255, 0.12);
+	--ring: #82b8ad;
+	--chart-1: #82b8ad;
+	--chart-2: #5cb88a;
+	--chart-3: #d4a04e;
+	--chart-4: #6fa3c8;
+	--chart-5: #d47a6a;
+	--sidebar: #214641;
+	--sidebar-foreground: #f4f1eb;
+	--sidebar-primary: #82b8ad;
+	--sidebar-primary-foreground: #1b3a36;
+	--sidebar-accent: #27574f;
+	--sidebar-accent-foreground: #d6e8e3;
+	--sidebar-border: rgba(255, 255, 255, 0.1);
+	--sidebar-ring: #82b8ad;
+}
+
+@utility focus-ring {
+	&:focus-visible {
+		outline: 2px solid currentColor;
+		outline-offset: 2px;
+	}
+}
+
+@utility eyebrow {
+	font-family: var(--font-mono), serif;
+	font-size: 10.5px;
+	line-height: 1.5;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}
+
+@utility meta-label {
+	font-family: var(--font-mono), serif;
+	font-size: 10.5px;
+	line-height: 1.5;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+@utility border-control {
+	border-width: 1.5px;
+}
+
+@utility border-t-control {
+	border-top-width: 1.5px;
+}
+
+@utility border-l-marker {
+	border-left-width: 3px;
+}
+
+@utility shadow-l-marker {
+	box-shadow: inset 3px 0 0 var(--color-brand);
+}
+
+@utility grid-cols-section-index {
+	grid-template-columns: 104px minmax(0, 1fr);
+}
+
+@utility grid-cols-bill-row {
+	grid-template-columns: 22px minmax(0, 1fr) auto;
+}
+
+@utility grid-cols-check-list {
+	grid-template-columns: 20px minmax(0, 1fr);
+}
+
+@utility container {
+	margin-inline: auto;
+	max-width: 77.5rem;
+	padding-inline: var(--gutter);
+	width: 100%;
+}
+
+/* Full-bleed strip inside a `container`: cancels the gutter, re-adds it as
+   padding so the bar touches both edges while its content stays aligned. */
+@utility bleed {
+	margin-inline: calc(var(--gutter) * -1);
+	padding-inline: var(--gutter);
+}
+
+@layer base {
+	* {
+		@apply border-border outline-ring/50;
+	}
+	button:not(:disabled),
+	[role="button"]:not(:disabled) {
+		cursor: pointer;
+	}
+	body {
+		@apply bg-background text-foreground;
+	}
+	html {
+		@apply font-sans;
+	}
+}
+
+@property --confetti-drift {
+	syntax: "<length>";
+	inherits: false;
+	initial-value: 0px;
+}
+
+@property --confetti-spin {
+	syntax: "<angle>";
+	inherits: false;
+	initial-value: 0deg;
+}
+
+@layer utilities {
+	/* Falls the full height of the confetti layer (its `container-type: size`
+	   defines 1cqh) plus enough overshoot to clear the top offset, so pieces
+	   are clipped at the bottom edge instead of fading out mid-screen. */
+	@keyframes confetti-fall {
+		0% {
+			transform: translate3d(0, -60px, 0) rotate(0deg);
+			opacity: 0;
+		}
+		6% {
+			opacity: 1;
+		}
+		100% {
+			transform: translate3d(var(--confetti-drift), calc(100cqh + 60px), 0)
+				rotate(var(--confetti-spin));
+			opacity: 1;
+		}
+	}
+}
