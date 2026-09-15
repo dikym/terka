@@ -1,9 +1,5 @@
-import { PageFrame, PageTitle } from "@/components/layout/page-frame";
+import { Referensi } from "@/components/screens/referensi";
 
 export default function Page() {
-	return (
-		<PageFrame>
-			<PageTitle>Referensi</PageTitle>
-		</PageFrame>
-	);
+	return <Referensi />;
 }
