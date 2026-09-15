@@ -1,0 +1,5633 @@
+{
+	"version": "2026.09.15",
+	"sourceRevision": "bda5b3bbed296de1a2e937b627cf2d2aedbfebfe2f66e74e3432ca6671940d15",
+	"regions": [
+		{
+			"id": "bl",
+			"code": "BL",
+			"region": "Aceh",
+			"group": "sumatera",
+			"province": "aceh",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "banda-aceh",
+					"name": "Banda Aceh",
+					"aliases": []
+				},
+				{
+					"id": "sabang",
+					"name": "Sabang",
+					"aliases": []
+				},
+				{
+					"id": "langsa",
+					"name": "Langsa",
+					"aliases": []
+				},
+				{
+					"id": "lhokseumawe",
+					"name": "Lhokseumawe",
+					"aliases": []
+				},
+				{
+					"id": "subulussalam",
+					"name": "Subulussalam",
+					"aliases": []
+				},
+				{
+					"id": "aceh-besar",
+					"name": "Aceh Besar",
+					"aliases": []
+				},
+				{
+					"id": "aceh-utara",
+					"name": "Aceh Utara",
+					"aliases": []
+				},
+				{
+					"id": "aceh-timur",
+					"name": "Aceh Timur",
+					"aliases": []
+				},
+				{
+					"id": "aceh-tengah",
+					"name": "Aceh Tengah",
+					"aliases": []
+				},
+				{
+					"id": "aceh-barat",
+					"name": "Aceh Barat",
+					"aliases": []
+				},
+				{
+					"id": "aceh-selatan",
+					"name": "Aceh Selatan",
+					"aliases": []
+				},
+				{
+					"id": "bireuen",
+					"name": "Bireuen",
+					"aliases": []
+				},
+				{
+					"id": "pidie",
+					"name": "Pidie",
+					"aliases": []
+				},
+				{
+					"id": "pidie-jaya",
+					"name": "Pidie Jaya",
+					"aliases": []
+				},
+				{
+					"id": "bener-meriah",
+					"name": "Bener Meriah",
+					"aliases": []
+				},
+				{
+					"id": "gayo-lues",
+					"name": "Gayo Lues",
+					"aliases": []
+				},
+				{
+					"id": "nagan-raya",
+					"name": "Nagan Raya",
+					"aliases": []
+				},
+				{
+					"id": "simeulue",
+					"name": "Simeulue",
+					"aliases": []
+				},
+				{
+					"id": "aceh-singkil",
+					"name": "Aceh Singkil",
+					"aliases": []
+				},
+				{
+					"id": "aceh-tamiang",
+					"name": "Aceh Tamiang",
+					"aliases": []
+				},
+				{
+					"id": "aceh-jaya",
+					"name": "Aceh Jaya",
+					"aliases": []
+				},
+				{
+					"id": "aceh-barat-daya",
+					"name": "Aceh Barat Daya",
+					"aliases": []
+				},
+				{
+					"id": "aceh-tenggara",
+					"name": "Aceh Tenggara",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-029",
+				"f-030",
+				"f-031",
+				"f-032",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **BL** | Aceh | Banda Aceh, Sabang, Langsa, Lhokseumawe, Subulussalam, Aceh Besar, Aceh Utara, Aceh Timur, Aceh Tengah, Aceh Barat, Aceh Selatan, Bireuen, Pidie, Pidie Jaya, Bener Meriah, Gayo Lues, Nagan Raya, Simeulue, Aceh Singkil, Aceh Tamiang, Aceh Jaya, Aceh Barat Daya, Aceh Tenggara |"
+		},
+		{
+			"id": "bb",
+			"code": "BB",
+			"region": "Sumatera Utara bagian Barat (Tapanuli)",
+			"group": "sumatera",
+			"province": "sumatera-utara",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "sibolga",
+					"name": "Sibolga",
+					"aliases": []
+				},
+				{
+					"id": "padang-sidempuan",
+					"name": "Padang Sidempuan",
+					"aliases": []
+				},
+				{
+					"id": "gunungsitoli",
+					"name": "Gunungsitoli",
+					"aliases": []
+				},
+				{
+					"id": "tapanuli-tengah",
+					"name": "Tapanuli Tengah",
+					"aliases": []
+				},
+				{
+					"id": "tapanuli-utara",
+					"name": "Tapanuli Utara",
+					"aliases": []
+				},
+				{
+					"id": "tapanuli-selatan",
+					"name": "Tapanuli Selatan",
+					"aliases": []
+				},
+				{
+					"id": "mandailing-natal",
+					"name": "Mandailing Natal",
+					"aliases": []
+				},
+				{
+					"id": "padang-lawas",
+					"name": "Padang Lawas",
+					"aliases": []
+				},
+				{
+					"id": "padang-lawas-utara",
+					"name": "Padang Lawas Utara",
+					"aliases": []
+				},
+				{
+					"id": "nias",
+					"name": "Nias",
+					"aliases": []
+				},
+				{
+					"id": "nias-selatan",
+					"name": "Nias Selatan",
+					"aliases": []
+				},
+				{
+					"id": "nias-utara",
+					"name": "Nias Utara",
+					"aliases": []
+				},
+				{
+					"id": "nias-barat",
+					"name": "Nias Barat",
+					"aliases": []
+				},
+				{
+					"id": "toba",
+					"name": "Toba",
+					"aliases": []
+				},
+				{
+					"id": "samosir",
+					"name": "Samosir",
+					"aliases": []
+				},
+				{
+					"id": "humbang-hasundutan",
+					"name": "Humbang Hasundutan",
+					"aliases": []
+				},
+				{
+					"id": "dairi",
+					"name": "Dairi",
+					"aliases": []
+				},
+				{
+					"id": "pakpak-bharat",
+					"name": "Pakpak Bharat",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-029",
+				"f-030",
+				"f-031",
+				"f-032",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **BB** | Sumatera Utara bagian Barat (Tapanuli) | Sibolga, Padang Sidempuan, Gunungsitoli, Tapanuli Tengah, Tapanuli Utara, Tapanuli Selatan, Mandailing Natal, Padang Lawas, Padang Lawas Utara, Nias, Nias Selatan, Nias Utara, Nias Barat, Toba, Samosir, Humbang Hasundutan, Dairi, Pakpak Bharat |"
+		},
+		{
+			"id": "bk",
+			"code": "BK",
+			"region": "Sumatera Utara bagian Timur",
+			"group": "sumatera",
+			"province": "sumatera-utara",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "medan",
+					"name": "Medan",
+					"aliases": []
+				},
+				{
+					"id": "binjai",
+					"name": "Binjai",
+					"aliases": []
+				},
+				{
+					"id": "tebing-tinggi",
+					"name": "Tebing Tinggi",
+					"aliases": []
+				},
+				{
+					"id": "pematangsiantar",
+					"name": "Pematangsiantar",
+					"aliases": []
+				},
+				{
+					"id": "tanjungbalai",
+					"name": "Tanjungbalai",
+					"aliases": []
+				},
+				{
+					"id": "deli-serdang",
+					"name": "Deli Serdang",
+					"aliases": []
+				},
+				{
+					"id": "serdang-bedagai",
+					"name": "Serdang Bedagai",
+					"aliases": []
+				},
+				{
+					"id": "langkat",
+					"name": "Langkat",
+					"aliases": []
+				},
+				{
+					"id": "karo",
+					"name": "Karo",
+					"aliases": []
+				},
+				{
+					"id": "simalungun",
+					"name": "Simalungun",
+					"aliases": []
+				},
+				{
+					"id": "asahan",
+					"name": "Asahan",
+					"aliases": []
+				},
+				{
+					"id": "batu-bara",
+					"name": "Batu Bara",
+					"aliases": []
+				},
+				{
+					"id": "labuhanbatu",
+					"name": "Labuhanbatu",
+					"aliases": []
+				},
+				{
+					"id": "labuhanbatu-utara",
+					"name": "Labuhanbatu Utara",
+					"aliases": []
+				},
+				{
+					"id": "labuhanbatu-selatan",
+					"name": "Labuhanbatu Selatan",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-029",
+				"f-030",
+				"f-031",
+				"f-032",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **BK** | Sumatera Utara bagian Timur | Medan, Binjai, Tebing Tinggi, Pematangsiantar, Tanjungbalai, Deli Serdang, Serdang Bedagai, Langkat, Karo, Simalungun, Asahan, Batu Bara, Labuhanbatu, Labuhanbatu Utara, Labuhanbatu Selatan |"
+		},
+		{
+			"id": "ba",
+			"code": "BA",
+			"region": "Sumatera Barat",
+			"group": "sumatera",
+			"province": "sumatera-barat",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "padang",
+					"name": "Padang",
+					"aliases": []
+				},
+				{
+					"id": "bukittinggi",
+					"name": "Bukittinggi",
+					"aliases": []
+				},
+				{
+					"id": "payakumbuh",
+					"name": "Payakumbuh",
+					"aliases": []
+				},
+				{
+					"id": "padang-panjang",
+					"name": "Padang Panjang",
+					"aliases": []
+				},
+				{
+					"id": "sawahlunto",
+					"name": "Sawahlunto",
+					"aliases": []
+				},
+				{
+					"id": "solok",
+					"name": "Solok",
+					"aliases": []
+				},
+				{
+					"id": "pariaman",
+					"name": "Pariaman",
+					"aliases": []
+				},
+				{
+					"id": "agam",
+					"name": "Agam",
+					"aliases": []
+				},
+				{
+					"id": "pasaman",
+					"name": "Pasaman",
+					"aliases": []
+				},
+				{
+					"id": "pasaman-barat",
+					"name": "Pasaman Barat",
+					"aliases": []
+				},
+				{
+					"id": "tanah-datar",
+					"name": "Tanah Datar",
+					"aliases": []
+				},
+				{
+					"id": "pesisir-selatan",
+					"name": "Pesisir Selatan",
+					"aliases": []
+				},
+				{
+					"id": "kepulauan-mentawai",
+					"name": "Kepulauan Mentawai",
+					"aliases": []
+				},
+				{
+					"id": "dharmasraya",
+					"name": "Dharmasraya",
+					"aliases": []
+				},
+				{
+					"id": "sijunjung",
+					"name": "Sijunjung",
+					"aliases": []
+				},
+				{
+					"id": "lima-puluh-kota",
+					"name": "Lima Puluh Kota",
+					"aliases": []
+				},
+				{
+					"id": "solok-selatan",
+					"name": "Solok Selatan",
+					"aliases": []
+				},
+				{
+					"id": "padang-pariaman",
+					"name": "Padang Pariaman",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-029",
+				"f-030",
+				"f-031",
+				"f-032",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **BA** | Sumatera Barat | Padang, Bukittinggi, Payakumbuh, Padang Panjang, Sawahlunto, Solok, Pariaman, Agam, Pasaman, Pasaman Barat, Tanah Datar, Pesisir Selatan, Kepulauan Mentawai, Dharmasraya, Sijunjung, Lima Puluh Kota, Solok Selatan, Padang Pariaman |"
+		},
+		{
+			"id": "bm",
+			"code": "BM",
+			"region": "Riau",
+			"group": "sumatera",
+			"province": "riau",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "pekanbaru",
+					"name": "Pekanbaru",
+					"aliases": []
+				},
+				{
+					"id": "dumai",
+					"name": "Dumai",
+					"aliases": []
+				},
+				{
+					"id": "kampar",
+					"name": "Kampar",
+					"aliases": []
+				},
+				{
+					"id": "bengkalis",
+					"name": "Bengkalis",
+					"aliases": []
+				},
+				{
+					"id": "siak",
+					"name": "Siak",
+					"aliases": []
+				},
+				{
+					"id": "pelalawan",
+					"name": "Pelalawan",
+					"aliases": []
+				},
+				{
+					"id": "rokan-hulu",
+					"name": "Rokan Hulu",
+					"aliases": []
+				},
+				{
+					"id": "rokan-hilir",
+					"name": "Rokan Hilir",
+					"aliases": []
+				},
+				{
+					"id": "indragiri-hulu",
+					"name": "Indragiri Hulu",
+					"aliases": []
+				},
+				{
+					"id": "indragiri-hilir",
+					"name": "Indragiri Hilir",
+					"aliases": []
+				},
+				{
+					"id": "kuantan-singingi",
+					"name": "Kuantan Singingi",
+					"aliases": []
+				},
+				{
+					"id": "kepulauan-meranti",
+					"name": "Kepulauan Meranti",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-029",
+				"f-030",
+				"f-031",
+				"f-032",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **BM** | Riau | Pekanbaru, Dumai, Kampar, Bengkalis, Siak, Pelalawan, Rokan Hulu, Rokan Hilir, Indragiri Hulu, Indragiri Hilir, Kuantan Singingi, Kepulauan Meranti |"
+		},
+		{
+			"id": "bp",
+			"code": "BP",
+			"region": "Kepulauan Riau",
+			"group": "sumatera",
+			"province": "kepulauan-riau",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "batam",
+					"name": "Batam",
+					"aliases": []
+				},
+				{
+					"id": "tanjung-pinang",
+					"name": "Tanjung Pinang",
+					"aliases": []
+				},
+				{
+					"id": "bintan",
+					"name": "Bintan",
+					"aliases": []
+				},
+				{
+					"id": "karimun",
+					"name": "Karimun",
+					"aliases": []
+				},
+				{
+					"id": "lingga",
+					"name": "Lingga",
+					"aliases": []
+				},
+				{
+					"id": "natuna",
+					"name": "Natuna",
+					"aliases": []
+				},
+				{
+					"id": "kepulauan-anambas",
+					"name": "Kepulauan Anambas",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-029",
+				"f-030",
+				"f-031",
+				"f-032",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **BP** | Kepulauan Riau | Batam, Tanjung Pinang, Bintan, Karimun, Lingga, Natuna, Kepulauan Anambas |"
+		},
+		{
+			"id": "bh",
+			"code": "BH",
+			"region": "Jambi",
+			"group": "sumatera",
+			"province": "jambi",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "kota-jambi",
+					"name": "Kota Jambi",
+					"aliases": []
+				},
+				{
+					"id": "sungai-penuh",
+					"name": "Sungai Penuh",
+					"aliases": []
+				},
+				{
+					"id": "batanghari",
+					"name": "Batanghari",
+					"aliases": []
+				},
+				{
+					"id": "muaro-jambi",
+					"name": "Muaro Jambi",
+					"aliases": []
+				},
+				{
+					"id": "tanjung-jabung-barat",
+					"name": "Tanjung Jabung Barat",
+					"aliases": []
+				},
+				{
+					"id": "tanjung-jabung-timur",
+					"name": "Tanjung Jabung Timur",
+					"aliases": []
+				},
+				{
+					"id": "bungo",
+					"name": "Bungo",
+					"aliases": []
+				},
+				{
+					"id": "tebo",
+					"name": "Tebo",
+					"aliases": []
+				},
+				{
+					"id": "merangin",
+					"name": "Merangin",
+					"aliases": []
+				},
+				{
+					"id": "sarolangun",
+					"name": "Sarolangun",
+					"aliases": []
+				},
+				{
+					"id": "kerinci",
+					"name": "Kerinci",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-029",
+				"f-030",
+				"f-031",
+				"f-032",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **BH** | Jambi | Kota Jambi, Sungai Penuh, Batanghari, Muaro Jambi, Tanjung Jabung Barat, Tanjung Jabung Timur, Bungo, Tebo, Merangin, Sarolangun, Kerinci |"
+		},
+		{
+			"id": "bg",
+			"code": "BG",
+			"region": "Sumatera Selatan",
+			"group": "sumatera",
+			"province": "sumatera-selatan",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "palembang",
+					"name": "Palembang",
+					"aliases": []
+				},
+				{
+					"id": "prabumulih",
+					"name": "Prabumulih",
+					"aliases": []
+				},
+				{
+					"id": "lubuklinggau",
+					"name": "Lubuklinggau",
+					"aliases": []
+				},
+				{
+					"id": "pagar-alam",
+					"name": "Pagar Alam",
+					"aliases": []
+				},
+				{
+					"id": "banyuasin",
+					"name": "Banyuasin",
+					"aliases": []
+				},
+				{
+					"id": "ogan-ilir",
+					"name": "Ogan Ilir",
+					"aliases": []
+				},
+				{
+					"id": "ogan-komering-ilir",
+					"name": "Ogan Komering Ilir",
+					"aliases": []
+				},
+				{
+					"id": "ogan-komering-ulu",
+					"name": "Ogan Komering Ulu",
+					"aliases": []
+				},
+				{
+					"id": "ogan-komering-ulu-timur",
+					"name": "Ogan Komering Ulu Timur",
+					"aliases": []
+				},
+				{
+					"id": "ogan-komering-ulu-selatan",
+					"name": "Ogan Komering Ulu Selatan",
+					"aliases": []
+				},
+				{
+					"id": "muara-enim",
+					"name": "Muara Enim",
+					"aliases": []
+				},
+				{
+					"id": "lahat",
+					"name": "Lahat",
+					"aliases": []
+				},
+				{
+					"id": "musi-banyuasin",
+					"name": "Musi Banyuasin",
+					"aliases": []
+				},
+				{
+					"id": "musi-rawas",
+					"name": "Musi Rawas",
+					"aliases": []
+				},
+				{
+					"id": "musi-rawas-utara",
+					"name": "Musi Rawas Utara",
+					"aliases": []
+				},
+				{
+					"id": "empat-lawang",
+					"name": "Empat Lawang",
+					"aliases": []
+				},
+				{
+					"id": "penukal-abab-lematang-ilir",
+					"name": "Penukal Abab Lematang Ilir",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-029",
+				"f-030",
+				"f-031",
+				"f-032",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **BG** | Sumatera Selatan | Palembang, Prabumulih, Lubuklinggau, Pagar Alam, Banyuasin, Ogan Ilir, Ogan Komering Ilir, Ogan Komering Ulu (+ Timur/Selatan), Muara Enim, Lahat, Musi Banyuasin, Musi Rawas, Musi Rawas Utara, Empat Lawang, Penukal Abab Lematang Ilir |"
+		},
+		{
+			"id": "bn",
+			"code": "BN",
+			"region": "Kepulauan Bangka Belitung",
+			"group": "sumatera",
+			"province": "bangka-belitung",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "pangkalpinang",
+					"name": "Pangkalpinang",
+					"aliases": []
+				},
+				{
+					"id": "bangka",
+					"name": "Bangka",
+					"aliases": []
+				},
+				{
+					"id": "bangka-barat",
+					"name": "Bangka Barat",
+					"aliases": []
+				},
+				{
+					"id": "bangka-tengah",
+					"name": "Bangka Tengah",
+					"aliases": []
+				},
+				{
+					"id": "bangka-selatan",
+					"name": "Bangka Selatan",
+					"aliases": []
+				},
+				{
+					"id": "belitung",
+					"name": "Belitung",
+					"aliases": []
+				},
+				{
+					"id": "belitung-timur",
+					"name": "Belitung Timur",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-029",
+				"f-030",
+				"f-031",
+				"f-032",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **BN** | Kepulauan Bangka Belitung | Pangkalpinang, Bangka, Bangka Barat, Bangka Tengah, Bangka Selatan, Belitung, Belitung Timur |"
+		},
+		{
+			"id": "be",
+			"code": "BE",
+			"region": "Lampung",
+			"group": "sumatera",
+			"province": "lampung",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "bandar-lampung",
+					"name": "Bandar Lampung",
+					"aliases": []
+				},
+				{
+					"id": "metro",
+					"name": "Metro",
+					"aliases": []
+				},
+				{
+					"id": "lampung-selatan",
+					"name": "Lampung Selatan",
+					"aliases": []
+				},
+				{
+					"id": "lampung-tengah",
+					"name": "Lampung Tengah",
+					"aliases": []
+				},
+				{
+					"id": "lampung-utara",
+					"name": "Lampung Utara",
+					"aliases": []
+				},
+				{
+					"id": "lampung-timur",
+					"name": "Lampung Timur",
+					"aliases": []
+				},
+				{
+					"id": "lampung-barat",
+					"name": "Lampung Barat",
+					"aliases": []
+				},
+				{
+					"id": "pesawaran",
+					"name": "Pesawaran",
+					"aliases": []
+				},
+				{
+					"id": "pringsewu",
+					"name": "Pringsewu",
+					"aliases": []
+				},
+				{
+					"id": "tanggamus",
+					"name": "Tanggamus",
+					"aliases": []
+				},
+				{
+					"id": "tulang-bawang",
+					"name": "Tulang Bawang",
+					"aliases": []
+				},
+				{
+					"id": "tulang-bawang-barat",
+					"name": "Tulang Bawang Barat",
+					"aliases": []
+				},
+				{
+					"id": "way-kanan",
+					"name": "Way Kanan",
+					"aliases": []
+				},
+				{
+					"id": "mesuji",
+					"name": "Mesuji",
+					"aliases": []
+				},
+				{
+					"id": "pesisir-barat",
+					"name": "Pesisir Barat",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-029",
+				"f-030",
+				"f-031",
+				"f-032",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **BE** | Lampung | Bandar Lampung, Metro, Lampung Selatan, Lampung Tengah, Lampung Utara, Lampung Timur, Lampung Barat, Pesawaran, Pringsewu, Tanggamus, Tulang Bawang, Tulang Bawang Barat, Way Kanan, Mesuji, Pesisir Barat |"
+		},
+		{
+			"id": "bd",
+			"code": "BD",
+			"region": "Bengkulu",
+			"group": "sumatera",
+			"province": "bengkulu",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "kota-bengkulu",
+					"name": "Kota Bengkulu",
+					"aliases": []
+				},
+				{
+					"id": "bengkulu-utara",
+					"name": "Bengkulu Utara",
+					"aliases": []
+				},
+				{
+					"id": "bengkulu-selatan",
+					"name": "Bengkulu Selatan",
+					"aliases": []
+				},
+				{
+					"id": "bengkulu-tengah",
+					"name": "Bengkulu Tengah",
+					"aliases": []
+				},
+				{
+					"id": "rejang-lebong",
+					"name": "Rejang Lebong",
+					"aliases": []
+				},
+				{
+					"id": "kepahiang",
+					"name": "Kepahiang",
+					"aliases": []
+				},
+				{
+					"id": "lebong",
+					"name": "Lebong",
+					"aliases": []
+				},
+				{
+					"id": "kaur",
+					"name": "Kaur",
+					"aliases": []
+				},
+				{
+					"id": "seluma",
+					"name": "Seluma",
+					"aliases": []
+				},
+				{
+					"id": "muko-muko",
+					"name": "Muko-Muko",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-029",
+				"f-030",
+				"f-031",
+				"f-032",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **BD** | Bengkulu | Kota Bengkulu, Bengkulu Utara, Bengkulu Selatan, Bengkulu Tengah, Rejang Lebong, Kepahiang, Lebong, Kaur, Seluma, Muko-Muko |"
+		},
+		{
+			"id": "a",
+			"code": "A",
+			"region": "Banten",
+			"group": "jawa",
+			"province": "banten",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "kota-serang",
+					"name": "Kota Serang",
+					"aliases": []
+				},
+				{
+					"id": "kabupaten-serang",
+					"name": "Kabupaten Serang",
+					"aliases": []
+				},
+				{
+					"id": "kota-cilegon",
+					"name": "Kota Cilegon",
+					"aliases": []
+				},
+				{
+					"id": "pandeglang",
+					"name": "Pandeglang",
+					"aliases": []
+				},
+				{
+					"id": "lebak",
+					"name": "Lebak",
+					"aliases": []
+				},
+				{
+					"id": "kabupaten-tangerang",
+					"name": "Kabupaten Tangerang",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-025",
+				"f-026",
+				"f-027",
+				"f-028",
+				"f-036",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **A** | Banten | Kota Serang, Kabupaten Serang, Kota Cilegon, Pandeglang, Lebak, Kabupaten Tangerang (sebagian besar kecamatan) |"
+		},
+		{
+			"id": "b",
+			"code": "B",
+			"region": "Jabodetabek",
+			"group": "jawa",
+			"province": "jakarta",
+			"spans": [
+				"jawa-barat",
+				"banten"
+			],
+			"confidence": "medium",
+			"aliases": [
+				"Jakarta",
+				"DKI Jakarta"
+			],
+			"areas": [
+				{
+					"id": "jakarta-pusat",
+					"name": "Jakarta Pusat",
+					"aliases": []
+				},
+				{
+					"id": "jakarta-utara",
+					"name": "Jakarta Utara",
+					"aliases": []
+				},
+				{
+					"id": "jakarta-barat",
+					"name": "Jakarta Barat",
+					"aliases": []
+				},
+				{
+					"id": "jakarta-selatan",
+					"name": "Jakarta Selatan",
+					"aliases": []
+				},
+				{
+					"id": "jakarta-timur",
+					"name": "Jakarta Timur",
+					"aliases": []
+				},
+				{
+					"id": "kepulauan-seribu",
+					"name": "Kepulauan Seribu",
+					"aliases": []
+				},
+				{
+					"id": "kota-bekasi",
+					"name": "Kota Bekasi",
+					"aliases": []
+				},
+				{
+					"id": "kabupaten-bekasi",
+					"name": "Kabupaten Bekasi",
+					"aliases": []
+				},
+				{
+					"id": "kota-depok",
+					"name": "Kota Depok",
+					"aliases": []
+				},
+				{
+					"id": "kota-tangerang",
+					"name": "Kota Tangerang",
+					"aliases": []
+				},
+				{
+					"id": "kota-tangerang-selatan",
+					"name": "Kota Tangerang Selatan",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-025",
+				"f-026",
+				"f-027",
+				"f-028",
+				"f-036",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **B** | Jabodetabek | Jakarta Pusat/Utara/Barat/Selatan/Timur, Kepulauan Seribu, Kota Bekasi, Kabupaten Bekasi, Kota Depok, Kota Tangerang, Kota Tangerang Selatan |"
+		},
+		{
+			"id": "d",
+			"code": "D",
+			"region": "Bandung (Parahyangan)",
+			"group": "jawa",
+			"province": "jawa-barat",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "kota-bandung",
+					"name": "Kota Bandung",
+					"aliases": []
+				},
+				{
+					"id": "kota-cimahi",
+					"name": "Kota Cimahi",
+					"aliases": []
+				},
+				{
+					"id": "kabupaten-bandung",
+					"name": "Kabupaten Bandung",
+					"aliases": []
+				},
+				{
+					"id": "bandung-barat",
+					"name": "Bandung Barat",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-025",
+				"f-026",
+				"f-027",
+				"f-028",
+				"f-036",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **D** | Bandung (Parahyangan) | Kota Bandung, Kota Cimahi, Kabupaten Bandung, Bandung Barat |"
+		},
+		{
+			"id": "f",
+			"code": "F",
+			"region": "Bogor",
+			"group": "jawa",
+			"province": "jawa-barat",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "kota-bogor",
+					"name": "Kota Bogor",
+					"aliases": []
+				},
+				{
+					"id": "kabupaten-bogor",
+					"name": "Kabupaten Bogor",
+					"aliases": []
+				},
+				{
+					"id": "kota-sukabumi",
+					"name": "Kota Sukabumi",
+					"aliases": []
+				},
+				{
+					"id": "kabupaten-sukabumi",
+					"name": "Kabupaten Sukabumi",
+					"aliases": []
+				},
+				{
+					"id": "cianjur",
+					"name": "Cianjur",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-025",
+				"f-026",
+				"f-027",
+				"f-028",
+				"f-036",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **F** | Bogor | Kota Bogor, Kabupaten Bogor, Kota Sukabumi, Kabupaten Sukabumi, Cianjur |"
+		},
+		{
+			"id": "e",
+			"code": "E",
+			"region": "Cirebon",
+			"group": "jawa",
+			"province": "jawa-barat",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "kota-cirebon",
+					"name": "Kota Cirebon",
+					"aliases": []
+				},
+				{
+					"id": "kabupaten-cirebon",
+					"name": "Kabupaten Cirebon",
+					"aliases": []
+				},
+				{
+					"id": "indramayu",
+					"name": "Indramayu",
+					"aliases": []
+				},
+				{
+					"id": "majalengka",
+					"name": "Majalengka",
+					"aliases": []
+				},
+				{
+					"id": "kuningan",
+					"name": "Kuningan",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-025",
+				"f-026",
+				"f-027",
+				"f-028",
+				"f-036",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **E** | Cirebon | Kota Cirebon, Kabupaten Cirebon, Indramayu, Majalengka, Kuningan |"
+		},
+		{
+			"id": "t",
+			"code": "T",
+			"region": "Purwakarta",
+			"group": "jawa",
+			"province": "jawa-barat",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "purwakarta",
+					"name": "Purwakarta",
+					"aliases": []
+				},
+				{
+					"id": "subang",
+					"name": "Subang",
+					"aliases": []
+				},
+				{
+					"id": "karawang",
+					"name": "Karawang",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-025",
+				"f-026",
+				"f-027",
+				"f-028",
+				"f-036",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **T** | Purwakarta | Purwakarta, Subang, Karawang |"
+		},
+		{
+			"id": "z",
+			"code": "Z",
+			"region": "Priangan Timur",
+			"group": "jawa",
+			"province": "jawa-barat",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "sumedang",
+					"name": "Sumedang",
+					"aliases": []
+				},
+				{
+					"id": "garut",
+					"name": "Garut",
+					"aliases": []
+				},
+				{
+					"id": "kota-tasikmalaya",
+					"name": "Kota Tasikmalaya",
+					"aliases": []
+				},
+				{
+					"id": "kabupaten-tasikmalaya",
+					"name": "Kabupaten Tasikmalaya",
+					"aliases": []
+				},
+				{
+					"id": "ciamis",
+					"name": "Ciamis",
+					"aliases": []
+				},
+				{
+					"id": "pangandaran",
+					"name": "Pangandaran",
+					"aliases": []
+				},
+				{
+					"id": "kota-banjar",
+					"name": "Kota Banjar",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-025",
+				"f-026",
+				"f-027",
+				"f-028",
+				"f-036",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **Z** | Priangan Timur | Sumedang, Garut, Kota Tasikmalaya, Kabupaten Tasikmalaya, Ciamis, Pangandaran, Kota Banjar |"
+		},
+		{
+			"id": "g",
+			"code": "G",
+			"region": "Pekalongan",
+			"group": "jawa",
+			"province": "jawa-tengah",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "kota-pekalongan",
+					"name": "Kota Pekalongan",
+					"aliases": []
+				},
+				{
+					"id": "kabupaten-pekalongan",
+					"name": "Kabupaten Pekalongan",
+					"aliases": []
+				},
+				{
+					"id": "kota-tegal",
+					"name": "Kota Tegal",
+					"aliases": []
+				},
+				{
+					"id": "kabupaten-tegal",
+					"name": "Kabupaten Tegal",
+					"aliases": []
+				},
+				{
+					"id": "batang",
+					"name": "Batang",
+					"aliases": []
+				},
+				{
+					"id": "pemalang",
+					"name": "Pemalang",
+					"aliases": []
+				},
+				{
+					"id": "brebes",
+					"name": "Brebes",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-025",
+				"f-026",
+				"f-027",
+				"f-028",
+				"f-036",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **G** | Pekalongan | Kota Pekalongan, Kabupaten Pekalongan, Kota Tegal, Kabupaten Tegal, Batang, Pemalang, Brebes |"
+		},
+		{
+			"id": "h",
+			"code": "H",
+			"region": "Semarang",
+			"group": "jawa",
+			"province": "jawa-tengah",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "kota-semarang",
+					"name": "Kota Semarang",
+					"aliases": []
+				},
+				{
+					"id": "kota-salatiga",
+					"name": "Kota Salatiga",
+					"aliases": []
+				},
+				{
+					"id": "kabupaten-semarang",
+					"name": "Kabupaten Semarang",
+					"aliases": []
+				},
+				{
+					"id": "kendal",
+					"name": "Kendal",
+					"aliases": []
+				},
+				{
+					"id": "demak",
+					"name": "Demak",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-025",
+				"f-026",
+				"f-027",
+				"f-028",
+				"f-036",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **H** | Semarang | Kota Semarang, Kota Salatiga, Kabupaten Semarang, Kendal, Demak |"
+		},
+		{
+			"id": "k",
+			"code": "K",
+			"region": "Pati",
+			"group": "jawa",
+			"province": "jawa-tengah",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "pati",
+					"name": "Pati",
+					"aliases": []
+				},
+				{
+					"id": "kudus",
+					"name": "Kudus",
+					"aliases": []
+				},
+				{
+					"id": "jepara",
+					"name": "Jepara",
+					"aliases": []
+				},
+				{
+					"id": "rembang",
+					"name": "Rembang",
+					"aliases": []
+				},
+				{
+					"id": "blora",
+					"name": "Blora",
+					"aliases": []
+				},
+				{
+					"id": "grobogan",
+					"name": "Grobogan",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-025",
+				"f-026",
+				"f-027",
+				"f-028",
+				"f-036",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **K** | Pati | Pati, Kudus, Jepara, Rembang, Blora, Grobogan (termasuk Cepu) |"
+		},
+		{
+			"id": "r",
+			"code": "R",
+			"region": "Banyumas",
+			"group": "jawa",
+			"province": "jawa-tengah",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "banyumas",
+					"name": "Banyumas",
+					"aliases": [
+						"Purwokerto"
+					]
+				},
+				{
+					"id": "cilacap",
+					"name": "Cilacap",
+					"aliases": []
+				},
+				{
+					"id": "purbalingga",
+					"name": "Purbalingga",
+					"aliases": []
+				},
+				{
+					"id": "banjarnegara",
+					"name": "Banjarnegara",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-025",
+				"f-026",
+				"f-027",
+				"f-028",
+				"f-036",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **R** | Banyumas | Banyumas (Purwokerto), Cilacap, Purbalingga, Banjarnegara |"
+		},
+		{
+			"id": "aa",
+			"code": "AA",
+			"region": "Kedu",
+			"group": "jawa",
+			"province": "jawa-tengah",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "kota-magelang",
+					"name": "Kota Magelang",
+					"aliases": []
+				},
+				{
+					"id": "kabupaten-magelang",
+					"name": "Kabupaten Magelang",
+					"aliases": []
+				},
+				{
+					"id": "purworejo",
+					"name": "Purworejo",
+					"aliases": []
+				},
+				{
+					"id": "kebumen",
+					"name": "Kebumen",
+					"aliases": []
+				},
+				{
+					"id": "temanggung",
+					"name": "Temanggung",
+					"aliases": []
+				},
+				{
+					"id": "wonosobo",
+					"name": "Wonosobo",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-025",
+				"f-026",
+				"f-027",
+				"f-028",
+				"f-036",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **AA** | Kedu | Kota Magelang, Kabupaten Magelang, Purworejo, Kebumen, Temanggung, Wonosobo |"
+		},
+		{
+			"id": "ad",
+			"code": "AD",
+			"region": "Surakarta (Solo Raya)",
+			"group": "jawa",
+			"province": "jawa-tengah",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [
+				"Solo",
+				"Surakarta",
+				"Solo Raya"
+			],
+			"areas": [
+				{
+					"id": "kota-surakarta",
+					"name": "Kota Surakarta",
+					"aliases": []
+				},
+				{
+					"id": "sukoharjo",
+					"name": "Sukoharjo",
+					"aliases": []
+				},
+				{
+					"id": "klaten",
+					"name": "Klaten",
+					"aliases": []
+				},
+				{
+					"id": "boyolali",
+					"name": "Boyolali",
+					"aliases": []
+				},
+				{
+					"id": "sragen",
+					"name": "Sragen",
+					"aliases": []
+				},
+				{
+					"id": "karanganyar",
+					"name": "Karanganyar",
+					"aliases": []
+				},
+				{
+					"id": "wonogiri",
+					"name": "Wonogiri",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-025",
+				"f-026",
+				"f-027",
+				"f-028",
+				"f-036",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **AD** | Surakarta (Solo Raya) | Kota Surakarta, Sukoharjo, Klaten, Boyolali, Sragen, Karanganyar, Wonogiri |"
+		},
+		{
+			"id": "ab",
+			"code": "AB",
+			"region": "Seluruh DIY",
+			"group": "jawa",
+			"province": "yogyakarta",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [
+				"Yogyakarta",
+				"Jogja",
+				"Yogya",
+				"DIY"
+			],
+			"areas": [
+				{
+					"id": "kota-yogyakarta",
+					"name": "Kota Yogyakarta",
+					"aliases": []
+				},
+				{
+					"id": "bantul",
+					"name": "Bantul",
+					"aliases": []
+				},
+				{
+					"id": "sleman",
+					"name": "Sleman",
+					"aliases": []
+				},
+				{
+					"id": "gunungkidul",
+					"name": "Gunungkidul",
+					"aliases": []
+				},
+				{
+					"id": "kulon-progo",
+					"name": "Kulon Progo",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-025",
+				"f-026",
+				"f-027",
+				"f-028",
+				"f-036",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **AB** | Seluruh DIY | Kota Yogyakarta, Bantul, Sleman, Gunungkidul, Kulon Progo |"
+		},
+		{
+			"id": "l",
+			"code": "L",
+			"region": "Surabaya",
+			"group": "jawa",
+			"province": "jawa-timur",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "kota-surabaya",
+					"name": "Kota Surabaya",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-025",
+				"f-026",
+				"f-027",
+				"f-028",
+				"f-036",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **L** | Surabaya | Kota Surabaya |"
+		},
+		{
+			"id": "w",
+			"code": "W",
+			"region": "Sidoarjo–Gresik",
+			"group": "jawa",
+			"province": "jawa-timur",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "sidoarjo",
+					"name": "Sidoarjo",
+					"aliases": []
+				},
+				{
+					"id": "gresik",
+					"name": "Gresik",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-025",
+				"f-026",
+				"f-027",
+				"f-028",
+				"f-036",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **W** | Sidoarjo–Gresik | Sidoarjo, Gresik |"
+		},
+		{
+			"id": "m",
+			"code": "M",
+			"region": "Madura",
+			"group": "jawa",
+			"province": "jawa-timur",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "bangkalan",
+					"name": "Bangkalan",
+					"aliases": []
+				},
+				{
+					"id": "sampang",
+					"name": "Sampang",
+					"aliases": []
+				},
+				{
+					"id": "pamekasan",
+					"name": "Pamekasan",
+					"aliases": []
+				},
+				{
+					"id": "sumenep",
+					"name": "Sumenep",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-025",
+				"f-026",
+				"f-027",
+				"f-028",
+				"f-036",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **M** | Madura | Bangkalan, Sampang, Pamekasan, Sumenep |"
+		},
+		{
+			"id": "n",
+			"code": "N",
+			"region": "Malang Raya",
+			"group": "jawa",
+			"province": "jawa-timur",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "kota-malang",
+					"name": "Kota Malang",
+					"aliases": []
+				},
+				{
+					"id": "kabupaten-malang",
+					"name": "Kabupaten Malang",
+					"aliases": []
+				},
+				{
+					"id": "kota-batu",
+					"name": "Kota Batu",
+					"aliases": []
+				},
+				{
+					"id": "kota-pasuruan",
+					"name": "Kota Pasuruan",
+					"aliases": []
+				},
+				{
+					"id": "kabupaten-pasuruan",
+					"name": "Kabupaten Pasuruan",
+					"aliases": []
+				},
+				{
+					"id": "kota-probolinggo",
+					"name": "Kota Probolinggo",
+					"aliases": []
+				},
+				{
+					"id": "kabupaten-probolinggo",
+					"name": "Kabupaten Probolinggo",
+					"aliases": []
+				},
+				{
+					"id": "lumajang",
+					"name": "Lumajang",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-025",
+				"f-026",
+				"f-027",
+				"f-028",
+				"f-036",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **N** | Malang Raya | Kota Malang, Kabupaten Malang, Kota Batu, Kota Pasuruan, Kabupaten Pasuruan, Kota Probolinggo, Kabupaten Probolinggo, Lumajang |"
+		},
+		{
+			"id": "p",
+			"code": "P",
+			"region": "Besuki",
+			"group": "jawa",
+			"province": "jawa-timur",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "jember",
+					"name": "Jember",
+					"aliases": []
+				},
+				{
+					"id": "banyuwangi",
+					"name": "Banyuwangi",
+					"aliases": []
+				},
+				{
+					"id": "bondowoso",
+					"name": "Bondowoso",
+					"aliases": []
+				},
+				{
+					"id": "situbondo",
+					"name": "Situbondo",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-025",
+				"f-026",
+				"f-027",
+				"f-028",
+				"f-036",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **P** | Besuki | Jember, Banyuwangi, Bondowoso, Situbondo |"
+		},
+		{
+			"id": "s",
+			"code": "S",
+			"region": "Bojonegoro",
+			"group": "jawa",
+			"province": "jawa-timur",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "bojonegoro",
+					"name": "Bojonegoro",
+					"aliases": []
+				},
+				{
+					"id": "tuban",
+					"name": "Tuban",
+					"aliases": []
+				},
+				{
+					"id": "lamongan",
+					"name": "Lamongan",
+					"aliases": []
+				},
+				{
+					"id": "kota-mojokerto",
+					"name": "Kota Mojokerto",
+					"aliases": []
+				},
+				{
+					"id": "kabupaten-mojokerto",
+					"name": "Kabupaten Mojokerto",
+					"aliases": []
+				},
+				{
+					"id": "jombang",
+					"name": "Jombang",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-025",
+				"f-026",
+				"f-027",
+				"f-028",
+				"f-036",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **S** | Bojonegoro | Bojonegoro, Tuban, Lamongan, Kota Mojokerto, Kabupaten Mojokerto, Jombang |"
+		},
+		{
+			"id": "ag",
+			"code": "AG",
+			"region": "Kediri",
+			"group": "jawa",
+			"province": "jawa-timur",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "kota-kediri",
+					"name": "Kota Kediri",
+					"aliases": []
+				},
+				{
+					"id": "kabupaten-kediri",
+					"name": "Kabupaten Kediri",
+					"aliases": []
+				},
+				{
+					"id": "kota-blitar",
+					"name": "Kota Blitar",
+					"aliases": []
+				},
+				{
+					"id": "kabupaten-blitar",
+					"name": "Kabupaten Blitar",
+					"aliases": []
+				},
+				{
+					"id": "tulungagung",
+					"name": "Tulungagung",
+					"aliases": []
+				},
+				{
+					"id": "trenggalek",
+					"name": "Trenggalek",
+					"aliases": []
+				},
+				{
+					"id": "nganjuk",
+					"name": "Nganjuk",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-025",
+				"f-026",
+				"f-027",
+				"f-028",
+				"f-036",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **AG** | Kediri | Kota Kediri, Kabupaten Kediri, Kota Blitar, Kabupaten Blitar, Tulungagung, Trenggalek, Nganjuk |"
+		},
+		{
+			"id": "ae",
+			"code": "AE",
+			"region": "Madiun",
+			"group": "jawa",
+			"province": "jawa-timur",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "kota-madiun",
+					"name": "Kota Madiun",
+					"aliases": []
+				},
+				{
+					"id": "kabupaten-madiun",
+					"name": "Kabupaten Madiun",
+					"aliases": []
+				},
+				{
+					"id": "ngawi",
+					"name": "Ngawi",
+					"aliases": []
+				},
+				{
+					"id": "magetan",
+					"name": "Magetan",
+					"aliases": []
+				},
+				{
+					"id": "ponorogo",
+					"name": "Ponorogo",
+					"aliases": []
+				},
+				{
+					"id": "pacitan",
+					"name": "Pacitan",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-025",
+				"f-026",
+				"f-027",
+				"f-028",
+				"f-036",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **AE** | Madiun | Kota Madiun, Kabupaten Madiun, Ngawi, Magetan, Ponorogo, Pacitan |"
+		},
+		{
+			"id": "dk",
+			"code": "DK",
+			"region": "Bali",
+			"group": "bali-nusra",
+			"province": "bali",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [
+				"Pulau Bali"
+			],
+			"areas": [
+				{
+					"id": "denpasar",
+					"name": "Denpasar",
+					"aliases": []
+				},
+				{
+					"id": "badung",
+					"name": "Badung",
+					"aliases": []
+				},
+				{
+					"id": "gianyar",
+					"name": "Gianyar",
+					"aliases": []
+				},
+				{
+					"id": "tabanan",
+					"name": "Tabanan",
+					"aliases": []
+				},
+				{
+					"id": "buleleng",
+					"name": "Buleleng",
+					"aliases": []
+				},
+				{
+					"id": "karangasem",
+					"name": "Karangasem",
+					"aliases": []
+				},
+				{
+					"id": "klungkung",
+					"name": "Klungkung",
+					"aliases": []
+				},
+				{
+					"id": "bangli",
+					"name": "Bangli",
+					"aliases": []
+				},
+				{
+					"id": "jembrana",
+					"name": "Jembrana",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-034",
+				"f-035",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **DK** | Bali | Denpasar, Badung, Gianyar, Tabanan, Buleleng, Karangasem, Klungkung, Bangli, Jembrana |"
+		},
+		{
+			"id": "dr",
+			"code": "DR",
+			"region": "NTB — Pulau Lombok",
+			"group": "bali-nusra",
+			"province": "nusa-tenggara-barat",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [
+				"Lombok"
+			],
+			"areas": [
+				{
+					"id": "mataram",
+					"name": "Mataram",
+					"aliases": []
+				},
+				{
+					"id": "lombok-barat",
+					"name": "Lombok Barat",
+					"aliases": []
+				},
+				{
+					"id": "lombok-tengah",
+					"name": "Lombok Tengah",
+					"aliases": []
+				},
+				{
+					"id": "lombok-timur",
+					"name": "Lombok Timur",
+					"aliases": []
+				},
+				{
+					"id": "lombok-utara",
+					"name": "Lombok Utara",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-034",
+				"f-035",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **DR** | NTB — Pulau Lombok | Mataram, Lombok Barat, Lombok Tengah, Lombok Timur, Lombok Utara |"
+		},
+		{
+			"id": "ea",
+			"code": "EA",
+			"region": "NTB — Pulau Sumbawa",
+			"group": "bali-nusra",
+			"province": "nusa-tenggara-barat",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [
+				"Pulau Sumbawa"
+			],
+			"areas": [
+				{
+					"id": "kota-bima",
+					"name": "Kota Bima",
+					"aliases": []
+				},
+				{
+					"id": "kabupaten-bima",
+					"name": "Kabupaten Bima",
+					"aliases": []
+				},
+				{
+					"id": "dompu",
+					"name": "Dompu",
+					"aliases": []
+				},
+				{
+					"id": "sumbawa",
+					"name": "Sumbawa",
+					"aliases": []
+				},
+				{
+					"id": "sumbawa-barat",
+					"name": "Sumbawa Barat",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-034",
+				"f-035",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **EA** | NTB — Pulau Sumbawa | Kota Bima, Kabupaten Bima, Dompu, Sumbawa, Sumbawa Barat |"
+		},
+		{
+			"id": "dh",
+			"code": "DH",
+			"region": "NTT — Pulau Timor & sekitarnya",
+			"group": "bali-nusra",
+			"province": "nusa-tenggara-timur",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [
+				"Timor"
+			],
+			"areas": [
+				{
+					"id": "kota-kupang",
+					"name": "Kota Kupang",
+					"aliases": []
+				},
+				{
+					"id": "kabupaten-kupang",
+					"name": "Kabupaten Kupang",
+					"aliases": []
+				},
+				{
+					"id": "timor-tengah-selatan",
+					"name": "Timor Tengah Selatan",
+					"aliases": [
+						"Soe"
+					]
+				},
+				{
+					"id": "timor-tengah-utara",
+					"name": "Timor Tengah Utara",
+					"aliases": [
+						"Kefamenanu"
+					]
+				},
+				{
+					"id": "belu",
+					"name": "Belu",
+					"aliases": [
+						"Atambua"
+					]
+				},
+				{
+					"id": "malaka",
+					"name": "Malaka",
+					"aliases": [
+						"Betun"
+					]
+				},
+				{
+					"id": "rote-ndao",
+					"name": "Rote Ndao",
+					"aliases": [
+						"Baa"
+					]
+				},
+				{
+					"id": "sabu-raijua",
+					"name": "Sabu Raijua",
+					"aliases": [
+						"Seba"
+					]
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-034",
+				"f-035",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **DH** | NTT — Pulau Timor & sekitarnya | Kota Kupang, Kabupaten Kupang, Timor Tengah Selatan (Soe), Timor Tengah Utara (Kefamenanu), Belu (Atambua), Malaka (Betun), Rote Ndao (Baa), Sabu Raijua (Seba) |"
+		},
+		{
+			"id": "eb",
+			"code": "EB",
+			"region": "NTT — Pulau Flores & sekitarnya",
+			"group": "bali-nusra",
+			"province": "nusa-tenggara-timur",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [
+				"Flores"
+			],
+			"areas": [
+				{
+					"id": "sikka",
+					"name": "Sikka",
+					"aliases": [
+						"Maumere"
+					]
+				},
+				{
+					"id": "ende",
+					"name": "Ende",
+					"aliases": []
+				},
+				{
+					"id": "ngada",
+					"name": "Ngada",
+					"aliases": [
+						"Bajawa"
+					]
+				},
+				{
+					"id": "nagekeo",
+					"name": "Nagekeo",
+					"aliases": [
+						"Mbay"
+					]
+				},
+				{
+					"id": "flores-timur",
+					"name": "Flores Timur",
+					"aliases": [
+						"Larantuka"
+					]
+				},
+				{
+					"id": "manggarai",
+					"name": "Manggarai",
+					"aliases": [
+						"Ruteng"
+					]
+				},
+				{
+					"id": "manggarai-barat",
+					"name": "Manggarai Barat",
+					"aliases": [
+						"Labuan Bajo"
+					]
+				},
+				{
+					"id": "manggarai-timur",
+					"name": "Manggarai Timur",
+					"aliases": [
+						"Borong"
+					]
+				},
+				{
+					"id": "alor",
+					"name": "Alor",
+					"aliases": [
+						"Kalabahi"
+					]
+				},
+				{
+					"id": "lembata",
+					"name": "Lembata",
+					"aliases": [
+						"Lewoleba"
+					]
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-034",
+				"f-035",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **EB** | NTT — Pulau Flores & sekitarnya | Sikka (Maumere), Ende, Ngada (Bajawa), Nagekeo (Mbay), Flores Timur (Larantuka), Manggarai (Ruteng), Manggarai Barat (Labuan Bajo), Manggarai Timur (Borong), Alor (Kalabahi), Lembata (Lewoleba) |"
+		},
+		{
+			"id": "ed",
+			"code": "ED",
+			"region": "NTT — Pulau Sumba",
+			"group": "bali-nusra",
+			"province": "nusa-tenggara-timur",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [
+				"Sumba"
+			],
+			"areas": [
+				{
+					"id": "sumba-barat",
+					"name": "Sumba Barat",
+					"aliases": [
+						"Waikabubak"
+					]
+				},
+				{
+					"id": "sumba-timur",
+					"name": "Sumba Timur",
+					"aliases": [
+						"Waingapu"
+					]
+				},
+				{
+					"id": "sumba-tengah",
+					"name": "Sumba Tengah",
+					"aliases": [
+						"Waibakul"
+					]
+				},
+				{
+					"id": "sumba-barat-daya",
+					"name": "Sumba Barat Daya",
+					"aliases": [
+						"Tambolaka"
+					]
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-034",
+				"f-035",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **ED** | NTT — Pulau Sumba | Sumba Barat (Waikabubak), Sumba Timur (Waingapu), Sumba Tengah (Waibakul), Sumba Barat Daya (Tambolaka) |"
+		},
+		{
+			"id": "kb",
+			"code": "KB",
+			"region": "Kalimantan Barat",
+			"group": "kalimantan",
+			"province": "kalimantan-barat",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "pontianak",
+					"name": "Pontianak",
+					"aliases": []
+				},
+				{
+					"id": "singkawang",
+					"name": "Singkawang",
+					"aliases": []
+				},
+				{
+					"id": "kubu-raya",
+					"name": "Kubu Raya",
+					"aliases": []
+				},
+				{
+					"id": "mempawah",
+					"name": "Mempawah",
+					"aliases": []
+				},
+				{
+					"id": "sambas",
+					"name": "Sambas",
+					"aliases": []
+				},
+				{
+					"id": "bengkayang",
+					"name": "Bengkayang",
+					"aliases": []
+				},
+				{
+					"id": "landak",
+					"name": "Landak",
+					"aliases": []
+				},
+				{
+					"id": "sanggau",
+					"name": "Sanggau",
+					"aliases": []
+				},
+				{
+					"id": "sekadau",
+					"name": "Sekadau",
+					"aliases": []
+				},
+				{
+					"id": "sintang",
+					"name": "Sintang",
+					"aliases": []
+				},
+				{
+					"id": "melawi",
+					"name": "Melawi",
+					"aliases": []
+				},
+				{
+					"id": "kapuas-hulu",
+					"name": "Kapuas Hulu",
+					"aliases": []
+				},
+				{
+					"id": "ketapang",
+					"name": "Ketapang",
+					"aliases": []
+				},
+				{
+					"id": "kayong-utara",
+					"name": "Kayong Utara",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-010",
+				"f-011",
+				"f-012",
+				"f-013",
+				"f-014",
+				"f-015",
+				"f-016",
+				"f-033",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **KB** | Kalimantan Barat | Pontianak, Singkawang, Kubu Raya, Mempawah, Sambas, Bengkayang, Landak, Sanggau, Sekadau, Sintang, Melawi, Kapuas Hulu, Ketapang, Kayong Utara |"
+		},
+		{
+			"id": "da",
+			"code": "DA",
+			"region": "Kalimantan Selatan",
+			"group": "kalimantan",
+			"province": "kalimantan-selatan",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "banjarmasin",
+					"name": "Banjarmasin",
+					"aliases": []
+				},
+				{
+					"id": "banjarbaru",
+					"name": "Banjarbaru",
+					"aliases": []
+				},
+				{
+					"id": "banjar",
+					"name": "Banjar",
+					"aliases": [
+						"Martapura"
+					]
+				},
+				{
+					"id": "barito-kuala",
+					"name": "Barito Kuala",
+					"aliases": []
+				},
+				{
+					"id": "tapin",
+					"name": "Tapin",
+					"aliases": []
+				},
+				{
+					"id": "hulu-sungai-selatan",
+					"name": "Hulu Sungai Selatan",
+					"aliases": [
+						"Kandangan"
+					]
+				},
+				{
+					"id": "hulu-sungai-tengah",
+					"name": "Hulu Sungai Tengah",
+					"aliases": []
+				},
+				{
+					"id": "hulu-sungai-utara",
+					"name": "Hulu Sungai Utara",
+					"aliases": []
+				},
+				{
+					"id": "tabalong",
+					"name": "Tabalong",
+					"aliases": []
+				},
+				{
+					"id": "balangan",
+					"name": "Balangan",
+					"aliases": []
+				},
+				{
+					"id": "tanah-laut",
+					"name": "Tanah Laut",
+					"aliases": []
+				},
+				{
+					"id": "tanah-bumbu",
+					"name": "Tanah Bumbu",
+					"aliases": []
+				},
+				{
+					"id": "kotabaru",
+					"name": "Kotabaru",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-010",
+				"f-011",
+				"f-012",
+				"f-013",
+				"f-014",
+				"f-015",
+				"f-016",
+				"f-033",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **DA** | Kalimantan Selatan | Banjarmasin, Banjarbaru, Banjar (Martapura), Barito Kuala, Tapin, Hulu Sungai Selatan (Kandangan), Hulu Sungai Tengah, Hulu Sungai Utara, Tabalong, Balangan, Tanah Laut, Tanah Bumbu, Kotabaru |"
+		},
+		{
+			"id": "kh",
+			"code": "KH",
+			"region": "Kalimantan Tengah",
+			"group": "kalimantan",
+			"province": "kalimantan-tengah",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "palangka-raya",
+					"name": "Palangka Raya",
+					"aliases": []
+				},
+				{
+					"id": "kotawaringin-timur",
+					"name": "Kotawaringin Timur",
+					"aliases": [
+						"Sampit"
+					]
+				},
+				{
+					"id": "kotawaringin-barat",
+					"name": "Kotawaringin Barat",
+					"aliases": [
+						"Pangkalan Bun"
+					]
+				},
+				{
+					"id": "kapuas",
+					"name": "Kapuas",
+					"aliases": []
+				},
+				{
+					"id": "barito-selatan",
+					"name": "Barito Selatan",
+					"aliases": []
+				},
+				{
+					"id": "barito-utara",
+					"name": "Barito Utara",
+					"aliases": []
+				},
+				{
+					"id": "barito-timur",
+					"name": "Barito Timur",
+					"aliases": []
+				},
+				{
+					"id": "katingan",
+					"name": "Katingan",
+					"aliases": []
+				},
+				{
+					"id": "seruyan",
+					"name": "Seruyan",
+					"aliases": []
+				},
+				{
+					"id": "sukamara",
+					"name": "Sukamara",
+					"aliases": []
+				},
+				{
+					"id": "lamandau",
+					"name": "Lamandau",
+					"aliases": []
+				},
+				{
+					"id": "gunung-mas",
+					"name": "Gunung Mas",
+					"aliases": []
+				},
+				{
+					"id": "murung-raya",
+					"name": "Murung Raya",
+					"aliases": []
+				},
+				{
+					"id": "pulang-pisau",
+					"name": "Pulang Pisau",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-010",
+				"f-011",
+				"f-012",
+				"f-013",
+				"f-014",
+				"f-015",
+				"f-016",
+				"f-033",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **KH** | Kalimantan Tengah | Palangka Raya, Kotawaringin Timur (Sampit), Kotawaringin Barat (Pangkalan Bun), Kapuas, Barito Selatan, Barito Utara, Barito Timur, Katingan, Seruyan, Sukamara, Lamandau, Gunung Mas, Murung Raya, Pulang Pisau |"
+		},
+		{
+			"id": "kt",
+			"code": "KT",
+			"region": "Kalimantan Timur",
+			"group": "kalimantan",
+			"province": "kalimantan-timur",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "samarinda",
+					"name": "Samarinda",
+					"aliases": []
+				},
+				{
+					"id": "balikpapan",
+					"name": "Balikpapan",
+					"aliases": []
+				},
+				{
+					"id": "bontang",
+					"name": "Bontang",
+					"aliases": []
+				},
+				{
+					"id": "kutai-kartanegara",
+					"name": "Kutai Kartanegara",
+					"aliases": [
+						"Tenggarong"
+					]
+				},
+				{
+					"id": "kutai-timur",
+					"name": "Kutai Timur",
+					"aliases": [
+						"Sangatta"
+					]
+				},
+				{
+					"id": "kutai-barat",
+					"name": "Kutai Barat",
+					"aliases": [
+						"Sendawar"
+					]
+				},
+				{
+					"id": "berau",
+					"name": "Berau",
+					"aliases": [
+						"Tanjung Redeb"
+					]
+				},
+				{
+					"id": "paser",
+					"name": "Paser",
+					"aliases": []
+				},
+				{
+					"id": "penajam-paser-utara",
+					"name": "Penajam Paser Utara",
+					"aliases": []
+				},
+				{
+					"id": "mahakam-ulu",
+					"name": "Mahakam Ulu",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-010",
+				"f-011",
+				"f-012",
+				"f-013",
+				"f-014",
+				"f-015",
+				"f-016",
+				"f-033",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **KT** | Kalimantan Timur | Samarinda, Balikpapan, Bontang, Kutai Kartanegara (Tenggarong), Kutai Timur (Sangatta), Kutai Barat (Sendawar), Berau (Tanjung Redeb), Paser, Penajam Paser Utara, Mahakam Ulu |"
+		},
+		{
+			"id": "ku",
+			"code": "KU",
+			"region": "Kalimantan Utara",
+			"group": "kalimantan",
+			"province": "kalimantan-utara",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "tarakan",
+					"name": "Tarakan",
+					"aliases": []
+				},
+				{
+					"id": "bulungan",
+					"name": "Bulungan",
+					"aliases": [
+						"Tanjung Selor"
+					]
+				},
+				{
+					"id": "nunukan",
+					"name": "Nunukan",
+					"aliases": []
+				},
+				{
+					"id": "malinau",
+					"name": "Malinau",
+					"aliases": []
+				},
+				{
+					"id": "tana-tidung",
+					"name": "Tana Tidung",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-010",
+				"f-011",
+				"f-012",
+				"f-013",
+				"f-014",
+				"f-015",
+				"f-016",
+				"f-033",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **KU** | Kalimantan Utara | Tarakan, Bulungan (Tanjung Selor), Nunukan, Malinau, Tana Tidung |"
+		},
+		{
+			"id": "db",
+			"code": "DB",
+			"region": "Sulawesi Utara (daratan)",
+			"group": "sulawesi",
+			"province": "sulawesi-utara",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "manado",
+					"name": "Manado",
+					"aliases": []
+				},
+				{
+					"id": "bitung",
+					"name": "Bitung",
+					"aliases": []
+				},
+				{
+					"id": "tomohon",
+					"name": "Tomohon",
+					"aliases": []
+				},
+				{
+					"id": "kotamobagu",
+					"name": "Kotamobagu",
+					"aliases": []
+				},
+				{
+					"id": "minahasa",
+					"name": "Minahasa",
+					"aliases": [
+						"Tondano"
+					]
+				},
+				{
+					"id": "minahasa-utara",
+					"name": "Minahasa Utara",
+					"aliases": []
+				},
+				{
+					"id": "minahasa-selatan",
+					"name": "Minahasa Selatan",
+					"aliases": []
+				},
+				{
+					"id": "minahasa-tenggara",
+					"name": "Minahasa Tenggara",
+					"aliases": []
+				},
+				{
+					"id": "bolaang-mongondow",
+					"name": "Bolaang Mongondow",
+					"aliases": []
+				},
+				{
+					"id": "bolaang-mongondow-utara",
+					"name": "Bolaang Mongondow Utara",
+					"aliases": []
+				},
+				{
+					"id": "bolaang-mongondow-timur",
+					"name": "Bolaang Mongondow Timur",
+					"aliases": []
+				},
+				{
+					"id": "bolaang-mongondow-selatan",
+					"name": "Bolaang Mongondow Selatan",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-034",
+				"f-035",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **DB** | Sulawesi Utara (daratan) | Manado, Bitung, Tomohon, Kotamobagu, Minahasa (Tondano), Minahasa Utara, Minahasa Selatan, Minahasa Tenggara, Bolaang Mongondow (+ Utara/Timur/Selatan) |"
+		},
+		{
+			"id": "dl",
+			"code": "DL",
+			"region": "Sulawesi Utara (kepulauan)",
+			"group": "sulawesi",
+			"province": "sulawesi-utara",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "kepulauan-sangihe",
+					"name": "Kepulauan Sangihe",
+					"aliases": [
+						"Tahuna"
+					]
+				},
+				{
+					"id": "kepulauan-talaud",
+					"name": "Kepulauan Talaud",
+					"aliases": [
+						"Melonguane"
+					]
+				},
+				{
+					"id": "kepulauan-siau-tagulandang-biaro",
+					"name": "Kepulauan Siau Tagulandang Biaro",
+					"aliases": [
+						"Ondong",
+						"Sitaro"
+					]
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-034",
+				"f-035",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **DL** | Sulawesi Utara (kepulauan) | Kepulauan Sangihe (Tahuna), Kepulauan Talaud (Melonguane), Kepulauan Siau Tagulandang Biaro / Sitaro (Ondong) |"
+		},
+		{
+			"id": "dm",
+			"code": "DM",
+			"region": "Gorontalo",
+			"group": "sulawesi",
+			"province": "gorontalo",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "kota-gorontalo",
+					"name": "Kota Gorontalo",
+					"aliases": []
+				},
+				{
+					"id": "kabupaten-gorontalo",
+					"name": "Kabupaten Gorontalo",
+					"aliases": [
+						"Limboto"
+					]
+				},
+				{
+					"id": "gorontalo-utara",
+					"name": "Gorontalo Utara",
+					"aliases": []
+				},
+				{
+					"id": "bone-bolango",
+					"name": "Bone Bolango",
+					"aliases": []
+				},
+				{
+					"id": "boalemo",
+					"name": "Boalemo",
+					"aliases": []
+				},
+				{
+					"id": "pohuwato",
+					"name": "Pohuwato",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-034",
+				"f-035",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **DM** | Gorontalo | Kota Gorontalo, Kabupaten Gorontalo (Limboto), Gorontalo Utara, Bone Bolango, Boalemo, Pohuwato |"
+		},
+		{
+			"id": "dn",
+			"code": "DN",
+			"region": "Sulawesi Tengah",
+			"group": "sulawesi",
+			"province": "sulawesi-tengah",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "palu",
+					"name": "Palu",
+					"aliases": []
+				},
+				{
+					"id": "donggala",
+					"name": "Donggala",
+					"aliases": []
+				},
+				{
+					"id": "sigi",
+					"name": "Sigi",
+					"aliases": []
+				},
+				{
+					"id": "parigi-moutong",
+					"name": "Parigi Moutong",
+					"aliases": []
+				},
+				{
+					"id": "poso",
+					"name": "Poso",
+					"aliases": []
+				},
+				{
+					"id": "tolitoli",
+					"name": "Tolitoli",
+					"aliases": []
+				},
+				{
+					"id": "buol",
+					"name": "Buol",
+					"aliases": []
+				},
+				{
+					"id": "banggai",
+					"name": "Banggai",
+					"aliases": [
+						"Luwuk"
+					]
+				},
+				{
+					"id": "banggai-kepulauan",
+					"name": "Banggai Kepulauan",
+					"aliases": []
+				},
+				{
+					"id": "banggai-laut",
+					"name": "Banggai Laut",
+					"aliases": []
+				},
+				{
+					"id": "morowali",
+					"name": "Morowali",
+					"aliases": []
+				},
+				{
+					"id": "morowali-utara",
+					"name": "Morowali Utara",
+					"aliases": []
+				},
+				{
+					"id": "tojo-una-una",
+					"name": "Tojo Una-Una",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-034",
+				"f-035",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **DN** | Sulawesi Tengah | Palu, Donggala, Sigi, Parigi Moutong, Poso, Tolitoli, Buol, Banggai (Luwuk), Banggai Kepulauan, Banggai Laut, Morowali, Morowali Utara, Tojo Una-Una |"
+		},
+		{
+			"id": "dt",
+			"code": "DT",
+			"region": "Sulawesi Tenggara",
+			"group": "sulawesi",
+			"province": "sulawesi-tenggara",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "kendari",
+					"name": "Kendari",
+					"aliases": []
+				},
+				{
+					"id": "baubau",
+					"name": "Baubau",
+					"aliases": []
+				},
+				{
+					"id": "konawe",
+					"name": "Konawe",
+					"aliases": [
+						"Unaaha"
+					]
+				},
+				{
+					"id": "konawe-selatan",
+					"name": "Konawe Selatan",
+					"aliases": []
+				},
+				{
+					"id": "konawe-utara",
+					"name": "Konawe Utara",
+					"aliases": []
+				},
+				{
+					"id": "konawe-kepulauan",
+					"name": "Konawe Kepulauan",
+					"aliases": []
+				},
+				{
+					"id": "kolaka",
+					"name": "Kolaka",
+					"aliases": []
+				},
+				{
+					"id": "kolaka-utara",
+					"name": "Kolaka Utara",
+					"aliases": []
+				},
+				{
+					"id": "kolaka-timur",
+					"name": "Kolaka Timur",
+					"aliases": []
+				},
+				{
+					"id": "bombana",
+					"name": "Bombana",
+					"aliases": []
+				},
+				{
+					"id": "buton",
+					"name": "Buton",
+					"aliases": []
+				},
+				{
+					"id": "buton-utara",
+					"name": "Buton Utara",
+					"aliases": []
+				},
+				{
+					"id": "buton-selatan",
+					"name": "Buton Selatan",
+					"aliases": []
+				},
+				{
+					"id": "buton-tengah",
+					"name": "Buton Tengah",
+					"aliases": []
+				},
+				{
+					"id": "muna",
+					"name": "Muna",
+					"aliases": []
+				},
+				{
+					"id": "muna-barat",
+					"name": "Muna Barat",
+					"aliases": []
+				},
+				{
+					"id": "wakatobi",
+					"name": "Wakatobi",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-034",
+				"f-035",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **DT** | Sulawesi Tenggara | Kendari, Baubau, Konawe (Unaaha), Konawe Selatan, Konawe Utara, Konawe Kepulauan, Kolaka, Kolaka Utara, Kolaka Timur, Bombana, Buton, Buton Utara, Buton Selatan, Buton Tengah, Muna, Muna Barat, Wakatobi |"
+		},
+		{
+			"id": "dd",
+			"code": "DD",
+			"region": "Sulawesi Selatan I (bagian selatan)",
+			"group": "sulawesi",
+			"province": "sulawesi-selatan",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "makassar",
+					"name": "Makassar",
+					"aliases": []
+				},
+				{
+					"id": "gowa",
+					"name": "Gowa",
+					"aliases": [
+						"Sungguminasa"
+					]
+				},
+				{
+					"id": "maros",
+					"name": "Maros",
+					"aliases": []
+				},
+				{
+					"id": "pangkajene-dan-kepulauan",
+					"name": "Pangkajene dan Kepulauan",
+					"aliases": []
+				},
+				{
+					"id": "takalar",
+					"name": "Takalar",
+					"aliases": []
+				},
+				{
+					"id": "jeneponto",
+					"name": "Jeneponto",
+					"aliases": []
+				},
+				{
+					"id": "bantaeng",
+					"name": "Bantaeng",
+					"aliases": []
+				},
+				{
+					"id": "bulukumba",
+					"name": "Bulukumba",
+					"aliases": []
+				},
+				{
+					"id": "kepulauan-selayar",
+					"name": "Kepulauan Selayar",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-021",
+				"f-022",
+				"f-023",
+				"f-024",
+				"f-034",
+				"f-035",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **DD** | Sulawesi Selatan I (bagian selatan) | Makassar, Gowa (Sungguminasa), Maros, Pangkajene dan Kepulauan, Takalar, Jeneponto, Bantaeng, Bulukumba, Kepulauan Selayar |"
+		},
+		{
+			"id": "dw",
+			"code": "DW",
+			"region": "Sulawesi Selatan II (Bosowasi)",
+			"group": "sulawesi",
+			"province": "sulawesi-selatan",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "bone",
+					"name": "Bone",
+					"aliases": [
+						"Watampone"
+					]
+				},
+				{
+					"id": "soppeng",
+					"name": "Soppeng",
+					"aliases": [
+						"Watansoppeng"
+					]
+				},
+				{
+					"id": "wajo",
+					"name": "Wajo",
+					"aliases": [
+						"Sengkang"
+					]
+				},
+				{
+					"id": "sinjai",
+					"name": "Sinjai",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-021",
+				"f-022",
+				"f-023",
+				"f-024",
+				"f-034",
+				"f-035",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **DW** | Sulawesi Selatan II (Bosowasi) | Bone (Watampone), Soppeng (Watansoppeng), Wajo (Sengkang), Sinjai |"
+		},
+		{
+			"id": "dp",
+			"code": "DP",
+			"region": "Sulawesi Selatan III (bagian utara)",
+			"group": "sulawesi",
+			"province": "sulawesi-selatan",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "parepare",
+					"name": "Parepare",
+					"aliases": []
+				},
+				{
+					"id": "palopo",
+					"name": "Palopo",
+					"aliases": []
+				},
+				{
+					"id": "barru",
+					"name": "Barru",
+					"aliases": []
+				},
+				{
+					"id": "sidenreng-rappang",
+					"name": "Sidenreng Rappang",
+					"aliases": [
+						"Sidrap"
+					]
+				},
+				{
+					"id": "pinrang",
+					"name": "Pinrang",
+					"aliases": []
+				},
+				{
+					"id": "enrekang",
+					"name": "Enrekang",
+					"aliases": []
+				},
+				{
+					"id": "luwu",
+					"name": "Luwu",
+					"aliases": [
+						"Belopa"
+					]
+				},
+				{
+					"id": "luwu-utara",
+					"name": "Luwu Utara",
+					"aliases": [
+						"Masamba"
+					]
+				},
+				{
+					"id": "luwu-timur",
+					"name": "Luwu Timur",
+					"aliases": [
+						"Malili"
+					]
+				},
+				{
+					"id": "tana-toraja",
+					"name": "Tana Toraja",
+					"aliases": [
+						"Makale"
+					]
+				},
+				{
+					"id": "toraja-utara",
+					"name": "Toraja Utara",
+					"aliases": [
+						"Rantepao"
+					]
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-021",
+				"f-022",
+				"f-023",
+				"f-024",
+				"f-034",
+				"f-035",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **DP** | Sulawesi Selatan III (bagian utara) | Parepare, Palopo, Barru, Sidenreng Rappang (Sidrap), Pinrang, Enrekang, Luwu (Belopa), Luwu Utara (Masamba), Luwu Timur (Malili), Tana Toraja (Makale), Toraja Utara (Rantepao) |"
+		},
+		{
+			"id": "dc",
+			"code": "DC",
+			"region": "Sulawesi Barat",
+			"group": "sulawesi",
+			"province": "sulawesi-barat",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "mamuju",
+					"name": "Mamuju",
+					"aliases": []
+				},
+				{
+					"id": "mamuju-tengah",
+					"name": "Mamuju Tengah",
+					"aliases": []
+				},
+				{
+					"id": "pasangkayu",
+					"name": "Pasangkayu",
+					"aliases": []
+				},
+				{
+					"id": "majene",
+					"name": "Majene",
+					"aliases": []
+				},
+				{
+					"id": "polewali-mandar",
+					"name": "Polewali Mandar",
+					"aliases": []
+				},
+				{
+					"id": "mamasa",
+					"name": "Mamasa",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-034",
+				"f-035",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **DC** | Sulawesi Barat | Mamuju, Mamuju Tengah, Pasangkayu, Majene, Polewali Mandar, Mamasa |"
+		},
+		{
+			"id": "de",
+			"code": "DE",
+			"region": "Maluku",
+			"group": "maluku",
+			"province": "maluku",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "ambon",
+					"name": "Ambon",
+					"aliases": []
+				},
+				{
+					"id": "tual",
+					"name": "Tual",
+					"aliases": []
+				},
+				{
+					"id": "maluku-tengah",
+					"name": "Maluku Tengah",
+					"aliases": [
+						"Masohi"
+					]
+				},
+				{
+					"id": "seram-bagian-barat",
+					"name": "Seram Bagian Barat",
+					"aliases": []
+				},
+				{
+					"id": "seram-bagian-timur",
+					"name": "Seram Bagian Timur",
+					"aliases": []
+				},
+				{
+					"id": "maluku-tenggara",
+					"name": "Maluku Tenggara",
+					"aliases": []
+				},
+				{
+					"id": "kepulauan-tanimbar",
+					"name": "Kepulauan Tanimbar",
+					"aliases": [
+						"Saumlaki"
+					]
+				},
+				{
+					"id": "maluku-barat-daya",
+					"name": "Maluku Barat Daya",
+					"aliases": []
+				},
+				{
+					"id": "kepulauan-aru",
+					"name": "Kepulauan Aru",
+					"aliases": [
+						"Dobo"
+					]
+				},
+				{
+					"id": "buru",
+					"name": "Buru",
+					"aliases": []
+				},
+				{
+					"id": "buru-selatan",
+					"name": "Buru Selatan",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-034",
+				"f-035",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **DE** | Maluku | Ambon, Tual, Maluku Tengah (Masohi), Seram Bagian Barat, Seram Bagian Timur, Maluku Tenggara, Kepulauan Tanimbar (Saumlaki), Maluku Barat Daya, Kepulauan Aru (Dobo), Buru, Buru Selatan |"
+		},
+		{
+			"id": "dg",
+			"code": "DG",
+			"region": "Maluku Utara",
+			"group": "maluku",
+			"province": "maluku-utara",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "ternate",
+					"name": "Ternate",
+					"aliases": []
+				},
+				{
+					"id": "tidore-kepulauan",
+					"name": "Tidore Kepulauan",
+					"aliases": []
+				},
+				{
+					"id": "halmahera-barat",
+					"name": "Halmahera Barat",
+					"aliases": [
+						"Jailolo"
+					]
+				},
+				{
+					"id": "halmahera-tengah",
+					"name": "Halmahera Tengah",
+					"aliases": []
+				},
+				{
+					"id": "halmahera-utara",
+					"name": "Halmahera Utara",
+					"aliases": [
+						"Tobelo"
+					]
+				},
+				{
+					"id": "halmahera-timur",
+					"name": "Halmahera Timur",
+					"aliases": []
+				},
+				{
+					"id": "halmahera-selatan",
+					"name": "Halmahera Selatan",
+					"aliases": [
+						"Labuha"
+					]
+				},
+				{
+					"id": "kepulauan-sula",
+					"name": "Kepulauan Sula",
+					"aliases": []
+				},
+				{
+					"id": "pulau-morotai",
+					"name": "Pulau Morotai",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-034",
+				"f-035",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **DG** | Maluku Utara | Ternate, Tidore Kepulauan, Halmahera Barat (Jailolo), Halmahera Tengah, Halmahera Utara (Tobelo), Halmahera Timur, Halmahera Selatan (Labuha), Kepulauan Sula, Pulau Morotai |"
+		},
+		{
+			"id": "pa",
+			"code": "PA",
+			"region": "Papua",
+			"group": "papua",
+			"province": "papua",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "kota-jayapura",
+					"name": "Kota Jayapura",
+					"aliases": []
+				},
+				{
+					"id": "kabupaten-jayapura",
+					"name": "Kabupaten Jayapura",
+					"aliases": []
+				},
+				{
+					"id": "biak-numfor",
+					"name": "Biak Numfor",
+					"aliases": []
+				},
+				{
+					"id": "kepulauan-yapen",
+					"name": "Kepulauan Yapen",
+					"aliases": [
+						"Serui"
+					]
+				},
+				{
+					"id": "sarmi",
+					"name": "Sarmi",
+					"aliases": []
+				},
+				{
+					"id": "keerom",
+					"name": "Keerom",
+					"aliases": []
+				},
+				{
+					"id": "waropen",
+					"name": "Waropen",
+					"aliases": []
+				},
+				{
+					"id": "supiori",
+					"name": "Supiori",
+					"aliases": []
+				},
+				{
+					"id": "mamberamo-raya",
+					"name": "Mamberamo Raya",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-017",
+				"f-018",
+				"f-019",
+				"f-020",
+				"f-037",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **PA** | Papua | Kota Jayapura, Kabupaten Jayapura, Biak Numfor, Kepulauan Yapen (Serui), Sarmi, Keerom, Waropen, Supiori, Mamberamo Raya | 2016 (menggantikan DS) |"
+		},
+		{
+			"id": "pb",
+			"code": "PB",
+			"region": "Papua Barat",
+			"group": "papua",
+			"province": "papua-barat",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "manokwari",
+					"name": "Manokwari",
+					"aliases": []
+				},
+				{
+					"id": "manokwari-selatan",
+					"name": "Manokwari Selatan",
+					"aliases": []
+				},
+				{
+					"id": "pegunungan-arfak",
+					"name": "Pegunungan Arfak",
+					"aliases": []
+				},
+				{
+					"id": "fakfak",
+					"name": "Fakfak",
+					"aliases": []
+				},
+				{
+					"id": "kaimana",
+					"name": "Kaimana",
+					"aliases": []
+				},
+				{
+					"id": "teluk-bintuni",
+					"name": "Teluk Bintuni",
+					"aliases": []
+				},
+				{
+					"id": "teluk-wondama",
+					"name": "Teluk Wondama",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-017",
+				"f-018",
+				"f-019",
+				"f-020",
+				"f-037",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [
+				"Tanggal PB 2016 pada sumber bertentangan dengan 29 April 2013 pada PRD 13.3."
+			],
+			"sourceText": "| **PB** | Papua Barat | Manokwari, Manokwari Selatan, Pegunungan Arfak, Fakfak, Kaimana, Teluk Bintuni, Teluk Wondama | 2016 |"
+		},
+		{
+			"id": "py",
+			"code": "PY",
+			"region": "Papua Barat Daya",
+			"group": "papua",
+			"province": "papua-barat-daya",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "kota-sorong",
+					"name": "Kota Sorong",
+					"aliases": []
+				},
+				{
+					"id": "kabupaten-sorong",
+					"name": "Kabupaten Sorong",
+					"aliases": []
+				},
+				{
+					"id": "sorong-selatan",
+					"name": "Sorong Selatan",
+					"aliases": []
+				},
+				{
+					"id": "raja-ampat",
+					"name": "Raja Ampat",
+					"aliases": []
+				},
+				{
+					"id": "tambrauw",
+					"name": "Tambrauw",
+					"aliases": []
+				},
+				{
+					"id": "maybrat",
+					"name": "Maybrat",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-017",
+				"f-018",
+				"f-019",
+				"f-020",
+				"f-037",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **PY** | Papua Barat Daya | Kota Sorong, Kabupaten Sorong, Sorong Selatan, Raja Ampat, Tambrauw, Maybrat | Mei 2024 |"
+		},
+		{
+			"id": "ps",
+			"code": "PS",
+			"region": "Papua Selatan",
+			"group": "papua",
+			"province": "papua-selatan",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "merauke",
+					"name": "Merauke",
+					"aliases": []
+				},
+				{
+					"id": "boven-digoel",
+					"name": "Boven Digoel",
+					"aliases": []
+				},
+				{
+					"id": "mappi",
+					"name": "Mappi",
+					"aliases": []
+				},
+				{
+					"id": "asmat",
+					"name": "Asmat",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-017",
+				"f-018",
+				"f-019",
+				"f-020",
+				"f-037",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **PS** | Papua Selatan | Merauke, Boven Digoel, Mappi, Asmat | Juli 2024 |"
+		},
+		{
+			"id": "pt",
+			"code": "PT",
+			"region": "Papua Tengah",
+			"group": "papua",
+			"province": "papua-tengah",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "nabire",
+					"name": "Nabire",
+					"aliases": []
+				},
+				{
+					"id": "mimika",
+					"name": "Mimika",
+					"aliases": [
+						"Timika"
+					]
+				},
+				{
+					"id": "paniai",
+					"name": "Paniai",
+					"aliases": []
+				},
+				{
+					"id": "puncak",
+					"name": "Puncak",
+					"aliases": []
+				},
+				{
+					"id": "puncak-jaya",
+					"name": "Puncak Jaya",
+					"aliases": []
+				},
+				{
+					"id": "dogiyai",
+					"name": "Dogiyai",
+					"aliases": []
+				},
+				{
+					"id": "deiyai",
+					"name": "Deiyai",
+					"aliases": []
+				},
+				{
+					"id": "intan-jaya",
+					"name": "Intan Jaya",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-017",
+				"f-018",
+				"f-019",
+				"f-020",
+				"f-037",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **PT** | Papua Tengah | Nabire, Mimika (Timika), Paniai, Puncak, Puncak Jaya, Dogiyai, Deiyai, Intan Jaya | Agustus 2024 |"
+		},
+		{
+			"id": "pg",
+			"code": "PG",
+			"region": "Papua Pegunungan",
+			"group": "papua",
+			"province": "papua-pegunungan",
+			"spans": [],
+			"confidence": "medium",
+			"aliases": [],
+			"areas": [
+				{
+					"id": "jayawijaya",
+					"name": "Jayawijaya",
+					"aliases": [
+						"Wamena"
+					]
+				},
+				{
+					"id": "yahukimo",
+					"name": "Yahukimo",
+					"aliases": []
+				},
+				{
+					"id": "nduga",
+					"name": "Nduga",
+					"aliases": []
+				},
+				{
+					"id": "pegunungan-bintang",
+					"name": "Pegunungan Bintang",
+					"aliases": []
+				},
+				{
+					"id": "tolikara",
+					"name": "Tolikara",
+					"aliases": []
+				},
+				{
+					"id": "lanny-jaya",
+					"name": "Lanny Jaya",
+					"aliases": []
+				},
+				{
+					"id": "mamberamo-tengah",
+					"name": "Mamberamo Tengah",
+					"aliases": []
+				},
+				{
+					"id": "yalimo",
+					"name": "Yalimo",
+					"aliases": []
+				}
+			],
+			"facts": [
+				"f-001",
+				"f-002",
+				"f-003",
+				"f-004",
+				"f-005",
+				"f-006",
+				"f-007",
+				"f-008",
+				"f-009",
+				"f-017",
+				"f-018",
+				"f-019",
+				"f-020",
+				"f-037",
+				"f-038",
+				"f-039",
+				"f-040",
+				"f-041",
+				"f-042",
+				"f-043"
+			],
+			"suffixes": [],
+			"sources": [
+				{
+					"ref": "docs/Kode_Plat_Nomor_Indonesia.md",
+					"publisher": "terka-reference",
+					"official": false
+				}
+			],
+			"issues": [],
+			"sourceText": "| **PG** | Papua Pegunungan | Jayawijaya (Wamena), Yahukimo, Nduga, Pegunungan Bintang, Tolikara, Lanny Jaya, Mamberamo Tengah, Yalimo | Oktober 2024 |"
+		}
+	],
+	"facts": [
+		{
+			"id": "f-001",
+			"status": "legenda",
+			"text": "Cerita yang paling banyak beredar: pada 1811 Inggris merebut Batavia dengan sekitar 15.600 tentara yang terbagi ke dalam 26 batalion berkode A–Z, dan tiap wilayah yang ditaklukkan mewarisi huruf batalionnya. Batavia jatuh ke Batalion B, Surabaya ke L, Banten ke A, Madura ke M.",
+			"source": "docs/Terka_PRD.md#fact-1"
+		},
+		{
+			"id": "f-002",
+			"status": "diperdebatkan",
+			"text": "Validitas cerita batalion itu masih dipersoalkan di kalangan sejarawan, dan versi tandingannya menyebut sistem kode Hindia Belanda meniru pola Eropa: satu atau dua huruf mewakili satu karesidenan, tanpa kaitan militer sama sekali.",
+			"source": "docs/Terka_PRD.md#fact-2"
+		},
+		{
+			"id": "f-003",
+			"status": "terverifikasi",
+			"text": "Aturan penomoran kendaraan berlaku menyeluruh di Hindia Belanda pada 1921–1922, jauh setelah pendudukan Inggris berakhir pada 1816.",
+			"source": "docs/Terka_PRD.md#fact-3"
+		},
+		{
+			"id": "f-004",
+			"status": "terverifikasi",
+			"text": "Negara pertama yang menerapkan pelat nomor adalah Prancis, pada 1893.",
+			"source": "docs/Terka_PRD.md#fact-4"
+		},
+		{
+			"id": "f-005",
+			"status": "terverifikasi",
+			"text": "Pelat nomor Hindia Belanda disebut *kentekens*, muncul di masa transisi kereta kuda ke kendaraan bermotor sekitar 1890–1910.",
+			"source": "docs/Terka_PRD.md#fact-5"
+		},
+		{
+			"id": "f-006",
+			"status": "terverifikasi",
+			"text": "Buku *Handboek voor automobilisten en motorwielrijders* terbitan Java Motor Club tahun 1920 memuat 36 kode wilayah, dan jadi sumber primer tertua yang bisa diperiksa untuk melacak kode-kode awal.",
+			"source": "docs/Terka_PRD.md#fact-6"
+		},
+		{
+			"id": "f-007",
+			"status": "legenda",
+			"text": "Menurut versi batalion, kereta kuda di Batavia wajib memakai plakat huruf B diikuti lima digit angka dan huruf A untuk *annex* atau C untuk *cargo*.",
+			"source": "docs/Terka_PRD.md#fact-7"
+		},
+		{
+			"id": "f-008",
+			"status": "legenda",
+			"text": "AB Yogyakarta dan AD Solo dikatakan berasal dari dua batalion sekaligus (A+B dan A+D), karena wilayah Mataram dianggap negara tersendiri dan menyerah lewat jalur berbeda.",
+			"source": "docs/Terka_PRD.md#fact-8"
+		},
+		{
+			"id": "f-009",
+			"status": "diperdebatkan",
+			"text": "Cerita bahwa batalion C, I, J, O, Q, U, V, W, X, Y, dan Z cuma jadi pasukan cadangan sehingga hurufnya tidak terpakai tidak cocok dengan kenyataan: W dan Z kini dipakai, dan keduanya justru ditetapkan di era modern.",
+			"source": "docs/Terka_PRD.md#fact-9"
+		},
+		{
+			"id": "f-010",
+			"status": "terverifikasi",
+			"text": "Empat provinsi di Kalimantan memakai kode berawalan K (KB, KH, KT, KU), tetapi Kalimantan Selatan memakai DA.",
+			"source": "docs/Terka_PRD.md#fact-10"
+		},
+		{
+			"id": "f-011",
+			"status": "terverifikasi",
+			"text": "Penjelasannya: pada masa Hindia Belanda, wilayah *Zuider en Ooster Afdeeling van Borneo* — mencakup yang kini jadi Kalsel, Kalteng, Kaltim, dan Kaltara — memakai satu kode tunggal, yaitu DA. Kalsel adalah wilayah pertama di Kalimantan yang memakai pelat nomor.",
+			"source": "docs/Terka_PRD.md#fact-11"
+		},
+		{
+			"id": "f-012",
+			"status": "terverifikasi",
+			"text": "Kode KB, KH, dan KT baru muncul setelah pembagian provinsi pasca-kemerdekaan; DA dipertahankan di wilayah asalnya. Kalimantan Barat sebelumnya berkode BR sebelum jadi KB.",
+			"source": "docs/Terka_PRD.md#fact-12"
+		},
+		{
+			"id": "f-013",
+			"status": "diperdebatkan",
+			"text": "Versi Ditlantas Polda Kalsel menyebut DA singkatan dari Distrik Amandit, wilayah yang kini termasuk Kabupaten Hulu Sungai Selatan dengan Kandangan sebagai pusatnya.",
+			"source": "docs/Terka_PRD.md#fact-13"
+		},
+		{
+			"id": "f-014",
+			"status": "diperdebatkan",
+			"text": "Versi lain menyebut DA kebalikan dari AD (Surakarta), karena FN Nieuwenhuyzen menjabat Residen Surakarta sekaligus Gubernemen Komisaris untuk Borneo bagian selatan dan timur, lalu menyeragamkan kode kedua wilayahnya dengan cara membalik hurufnya.",
+			"source": "docs/Terka_PRD.md#fact-14"
+		},
+		{
+			"id": "f-015",
+			"status": "terverifikasi",
+			"text": "Handboek 1920 tidak menyebut DA sebagai singkatan apa pun; besar kemungkinan ia cuma kode urut yang ditetapkan pemerintah kolonial. Tiga tebakan populer — \"Dayak Asli\", \"Daerah Air\", dan \"Distrik Amandit\" — tidak didukung sumber itu.",
+			"source": "docs/Terka_PRD.md#fact-15"
+		},
+		{
+			"id": "f-016",
+			"status": "terverifikasi",
+			"text": "KU adalah kode termuda di Kalimantan, menyusul pemekaran Kalimantan Utara dari Kalimantan Timur pada 2012.",
+			"source": "docs/Terka_PRD.md#fact-16",
+			"question": "Kode mana yang muncul setelah pemekaran Kalimantan Utara dari Kalimantan Timur?",
+			"answerRegionId": "ku"
+		},
+		{
+			"id": "f-017",
+			"status": "diperdebatkan",
+			"text": "Papua Barat memisahkan diri dari kode DS dan meresmikan PB pada 29 April 2013, diserahkan Kakorlantas kepada Gubernur Abraham Octavianus Atururi.",
+			"source": "docs/Terka_PRD.md#fact-17"
+		},
+		{
+			"id": "f-018",
+			"status": "terverifikasi",
+			"text": "Papua sendiri mengganti DS jadi PA pada 1 Juli 2016, bertepatan dengan HUT Bhayangkara.",
+			"source": "docs/Terka_PRD.md#fact-18"
+		},
+		{
+			"id": "f-019",
+			"status": "terverifikasi",
+			"text": "Pada 2024, tiga provinsi hasil pemekaran mengambil kode sendiri: Papua Barat Daya jadi PY pada Mei, Papua Selatan jadi PS pada Juli, dan Papua Tengah jadi PT — ditandai penyerahan pelat PT 1 kepada Pj Gubernur Ribka Haluk pada 19 Agustus 2024.",
+			"source": "docs/Terka_PRD.md#fact-19"
+		},
+		{
+			"id": "f-020",
+			"status": "diperdebatkan",
+			"text": "Artinya dalam sebelas tahun, satu kode tunggal DS berkembang jadi lima kode terpisah: PA, PB, PY, PS, dan PT. Ini contoh terbaik kenapa data plat harus diberi versi, bukan dianggap tetap.",
+			"source": "docs/Terka_PRD.md#fact-20"
+		},
+		{
+			"id": "f-021",
+			"status": "terverifikasi",
+			"text": "Kode DD dipecah jadi DD, DP, dan DW, berlaku sejak 1 Juni 2012 berdasarkan Peraturan Kapolri Nomor 5 Tahun 2012.",
+			"source": "docs/Terka_PRD.md#fact-21"
+		},
+		{
+			"id": "f-022",
+			"status": "terverifikasi",
+			"text": "Pemicunya kuota: pertumbuhan sekitar 24.000 sepeda motor dan 3.600 mobil per bulan membuat nomor DD hampir habis.",
+			"source": "docs/Terka_PRD.md#fact-22"
+		},
+		{
+			"id": "f-023",
+			"status": "terverifikasi",
+			"text": "Pembagiannya: DD untuk 9 kota/kabupaten, DP untuk 11 kabupaten, DW untuk 4 kabupaten.",
+			"source": "docs/Terka_PRD.md#fact-23"
+		},
+		{
+			"id": "f-024",
+			"status": "terverifikasi",
+			"text": "Sempat beredar tanggal 2021 untuk pemberlakuan DP dan DW, termasuk dari laman Bapenda Sulsel. Tanggal itu keliru; yang benar 1 Juni 2012.",
+			"source": "docs/Terka_PRD.md#fact-24"
+		},
+		{
+			"id": "f-025",
+			"status": "terverifikasi",
+			"text": "Kode W untuk Gresik dan Sidoarjo baru ditetapkan sekitar tahun 2000, memisah dari L Surabaya. Jadi W bukan warisan kolonial, melainkan kode era milenium.",
+			"source": "docs/Terka_PRD.md#fact-25"
+		},
+		{
+			"id": "f-026",
+			"status": "terverifikasi",
+			"text": "Kode Z memisah dari D, yang merupakan eks-Karesidenan Priangan.",
+			"source": "docs/Terka_PRD.md#fact-26"
+		},
+		{
+			"id": "f-027",
+			"status": "terverifikasi",
+			"text": "Sebagian besar Kabupaten Tangerang memakai pelat A (Banten), bukan B, dengan kode belakang V/W/X/Y/Z. Awalnya cuma 7 kecamatan, lalu berkembang jadi 19 kecamatan sejak 2016.",
+			"source": "docs/Terka_PRD.md#fact-27"
+		},
+		{
+			"id": "f-028",
+			"status": "terverifikasi",
+			"text": "Kota Tangerang Selatan tetap masuk kategori pelat B, jadi satu kabupaten dan satu kota bertetangga bisa beda kode depan.",
+			"source": "docs/Terka_PRD.md#fact-28"
+		},
+		{
+			"id": "f-029",
+			"status": "terverifikasi",
+			"text": "Sebelum disatukan di bawah BN, Bangka dan Belitung berkode berbeda: Bangka memakai BN dan Belitung memakai BP, terlihat pada foto kendaraan Belitung era 1920-an.",
+			"source": "docs/Terka_PRD.md#fact-29"
+		},
+		{
+			"id": "f-030",
+			"status": "terverifikasi",
+			"text": "Kode BP kini justru dipakai Kepulauan Riau — contoh kode yang berpindah wilayah sepenuhnya, dan alasan kuat kenapa ID kartu tidak boleh didaur ulang.",
+			"source": "docs/Terka_PRD.md#fact-30",
+			"question": "Kode yang dahulu dipakai Belitung kini digunakan di Kepulauan Riau. Apa kodenya?",
+			"answerRegionId": "bp"
+		},
+		{
+			"id": "f-031",
+			"status": "terverifikasi",
+			"text": "Sumatera Utara satu-satunya provinsi dengan dua kode depan: BK untuk bagian timur termasuk Medan, dan BB untuk wilayah Tapanuli.",
+			"source": "docs/Terka_PRD.md#fact-31"
+		},
+		{
+			"id": "f-032",
+			"status": "terverifikasi",
+			"text": "Hampir seluruh Sumatera memakai kode dua huruf berawalan B: BA, BB, BD, BE, BG, BH, BK, BL, BM, BN, BP. Yang tidak ikut pola ini justru B tunggal, dan itu Jakarta.",
+			"source": "docs/Terka_PRD.md#fact-32"
+		},
+		{
+			"id": "f-033",
+			"status": "terverifikasi",
+			"text": "Hampir seluruh Kalimantan memakai awalan K, dengan DA sebagai satu-satunya pengecualian.",
+			"source": "docs/Terka_PRD.md#fact-33"
+		},
+		{
+			"id": "f-034",
+			"status": "terverifikasi",
+			"text": "Blok D dua huruf mencakup Sulawesi, Bali, Nusa Tenggara, dan Maluku sekaligus: DB, DC, DD, DE, DG, DH, DK, DL, DM, DN, DP, DR, DT, DW, ditambah EA, EB, dan ED di Nusa Tenggara.",
+			"source": "docs/Terka_PRD.md#fact-34"
+		},
+		{
+			"id": "f-035",
+			"status": "terverifikasi",
+			"text": "Karena itu DK Bali bukan anomali seperti yang sering dikira; ia justru bagian rapi dari blok D yang sama.",
+			"source": "docs/Terka_PRD.md#fact-35"
+		},
+		{
+			"id": "f-036",
+			"status": "terverifikasi",
+			"text": "Jawa memakai huruf tunggal, ditambah seri AA sampai AG untuk wilayah yang tidak kebagian huruf tunggal: AA, AB, AD, AE, AG.",
+			"source": "docs/Terka_PRD.md#fact-36"
+		},
+		{
+			"id": "f-037",
+			"status": "terverifikasi",
+			"text": "Papua satu-satunya kawasan yang seluruh kodenya berawalan huruf sama dan seluruhnya ditetapkan pada abad ke-21.",
+			"source": "docs/Terka_PRD.md#fact-37"
+		},
+		{
+			"id": "f-038",
+			"status": "terverifikasi",
+			"text": "Sejak 15 Juni 2022, pelat kendaraan pribadi berubah dari dasar hitam tulisan putih jadi dasar putih tulisan hitam, untuk mendukung pembacaan kamera tilang elektronik ETLE.",
+			"source": "docs/Terka_PRD.md#fact-38"
+		},
+		{
+			"id": "f-039",
+			"status": "terverifikasi",
+			"text": "Warna lainnya: kuning untuk angkutan umum, merah untuk kendaraan pemerintah, hijau untuk kawasan perdagangan bebas seperti Batam, dan putih-biru untuk diplomatik.",
+			"source": "docs/Terka_PRD.md#fact-39"
+		},
+		{
+			"id": "f-040",
+			"status": "terverifikasi",
+			"text": "Pelat putih dengan tulisan merah bukan pelat wilayah, melainkan TCKB (Tanda Coba Kendaraan Bermotor), dipakai kendaraan baru sebelum pelat tetapnya selesai.",
+			"source": "docs/Terka_PRD.md#fact-40"
+		},
+		{
+			"id": "f-041",
+			"status": "terverifikasi",
+			"text": "Dasar hukum sistem registrasi yang berlaku sekarang adalah Peraturan Kepolisian Nomor 7 Tahun 2021 tentang Registrasi dan Identifikasi Kendaraan Bermotor.",
+			"source": "docs/Terka_PRD.md#fact-41"
+		},
+		{
+			"id": "f-042",
+			"status": "terverifikasi",
+			"text": "Kode RI khusus untuk kendaraan dinas Presiden, Wakil Presiden, Ketua Lembaga Tinggi Negara, dan pejabat setingkat menteri, sedangkan CC khusus untuk kendaraan Konsul Kehormatan.",
+			"source": "docs/Terka_PRD.md#fact-42"
+		},
+		{
+			"id": "f-043",
+			"status": "terverifikasi",
+			"text": "Untuk keperluan resmi seperti mutasi, cek pajak, atau jual-beli kendaraan, rujukan yang sah adalah SAMSAT setempat atau aplikasi SIGNAL Korlantas — daftar daring sering tidak sinkron dengan pemekaran wilayah terbaru.",
+			"source": "docs/Terka_PRD.md#fact-43"
+		}
+	],
+	"specialCodes": [
+		{
+			"code": "RI",
+			"description": "Kendaraan dinas Presiden, Wakil Presiden, Ketua Lembaga Tinggi Negara, dan pejabat setingkat menteri"
+		},
+		{
+			"code": "CD",
+			"description": "*Corps Diplomatique* — kendaraan korps diplomatik negara asing dan organisasi internasional"
+		},
+		{
+			"code": "CC",
+			"description": "*Corps Consulaire* — kendaraan korps konsulat dan konsul kehormatan"
+		}
+	]
+}
