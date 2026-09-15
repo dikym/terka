@@ -6,6 +6,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Kbd } from "@/components/ui/kbd";
 import { PageFrame } from "@/components/layout/page-frame";
 import { TwoColumn } from "@/components/layout/two-column";
+import { cn } from "@/lib/utils";
 
 const beranda = {
 	due: 12,
@@ -33,7 +34,10 @@ export function Beranda() {
 						</Link>
 						<Link
 							href="/tantangan"
-							className={buttonVariants({ variant: "stop", size: "md", block: true })}
+							className={cn(
+								buttonVariants({ variant: "stop", size: "md", block: true }),
+								"px-4"
+							)}
 						>
 							<Target className="size-4" aria-hidden />
 							<span>Tantangan Harian</span>
@@ -43,11 +47,10 @@ export function Beranda() {
 						</Link>
 						<Link
 							href="/kilat"
-							className={buttonVariants({
-								variant: "confirm",
-								size: "md",
-								block: true
-							})}
+							className={cn(
+								buttonVariants({ variant: "confirm", size: "md", block: true }),
+								"px-4"
+							)}
 						>
 							<Zap className="size-4" aria-hidden />
 							<span>Mode Kilat</span>
