@@ -1,432 +1,219 @@
 @import "tailwindcss";
-
-@layer base {
-	html {
-		scroll-behavior: smooth;
-		scroll-padding-top: 3.75rem;
-	}
-	@media (width >= 64rem) {
-		html {
-			scroll-padding-top: 4rem;
-		}
-	}
-}
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
-
 @theme {
-	--color-brand: #3c8377;
-	--color-teal-350: #82b8ad;
-	--color-warm-25: #fcfbf8;
+	/* ---- Ink & paper: cool neutrals ---- */
+	--color-ink-1000: oklch(0.2 0.02 260);
+	--color-ink-900: oklch(0.26 0.02 260);
+	--color-ink-700: oklch(0.42 0.016 258);
+	--color-ink-500: oklch(0.55 0.015 258);
+	--color-ink-300: oklch(0.73 0.012 255);
+	--color-ink-200: oklch(0.87 0.008 250);
+	--color-ink-100: oklch(0.93 0.006 250);
+	--color-paper-50: oklch(0.97 0.004 250);
+	--color-paper-25: oklch(0.985 0.003 250);
+	--color-paper-0: oklch(1 0 0);
 
-	--text-display: clamp(33px, 5.2vw, 66px);
+	/* ---- Brand: traffic light ---- */
+	--color-stop-700: oklch(0.48 0.18 25);
+	--color-stop-500: oklch(0.7 0.17 25);
+	--color-stop-300: oklch(0.84 0.1 28);
+	--color-stop-100: oklch(0.945 0.055 25);
+	--color-caution-700: oklch(0.5 0.13 70);
+	--color-caution-500: oklch(0.82 0.15 75);
+	--color-caution-300: oklch(0.9 0.1 80);
+	--color-caution-100: oklch(0.955 0.06 78);
+	--color-go-700: oklch(0.42 0.12 150);
+	--color-go-500: oklch(0.74 0.14 150);
+	--color-go-300: oklch(0.86 0.09 152);
+	--color-go-100: oklch(0.945 0.055 150);
+
+	/* ---- Secondary accents: 700 as text, 100 as wash ---- */
+	--color-tangerine-700: oklch(0.47 0.16 42);
+	--color-tangerine-500: oklch(0.64 0.19 40);
+	--color-tangerine-300: oklch(0.8 0.12 42);
+	--color-tangerine-100: oklch(0.955 0.045 45);
+	--color-grape-700: oklch(0.45 0.17 298);
+	--color-grape-500: oklch(0.56 0.19 300);
+	--color-grape-300: oklch(0.75 0.11 300);
+	--color-grape-100: oklch(0.955 0.035 300);
+	--color-sky-700: oklch(0.45 0.13 240);
+	--color-sky-500: oklch(0.76 0.105 240);
+	--color-sky-100: oklch(0.955 0.03 240);
+
+	/* ---- Island groups: one L/C, seven hues ---- */
+	--color-group-sumatera: oklch(0.76 0.115 28);
+	--color-group-jawa: oklch(0.79 0.115 80);
+	--color-group-kalimantan: oklch(0.78 0.11 135);
+	--color-group-sulawesi: oklch(0.78 0.1 190);
+	--color-group-balinusra: oklch(0.76 0.105 240);
+	--color-group-maluku: oklch(0.76 0.11 295);
+	--color-group-papua: oklch(0.77 0.105 340);
+
+	/* ---- Type ---- */
+	--font-display: var(--font-space-grotesk), "Helvetica Neue", Helvetica, sans-serif;
+	--font-body: var(--font-ibm-plex-sans), "Helvetica Neue", Helvetica, sans-serif;
+	--font-mono: var(--font-ibm-plex-mono), ui-monospace, "SF Mono", Menlo, monospace;
+	--font-plate: var(--font-barlow-semi-condensed), "DIN 1451", "Helvetica Neue", sans-serif;
+	--font-sans: var(--font-body);
+
+	--text-hero: 72px;
+	--text-hero--line-height: 1.02;
+	--text-hero--letter-spacing: -0.03em;
+	--text-display: 44px;
 	--text-display--line-height: 1.02;
-	--text-display--letter-spacing: -0.035em;
+	--text-display--letter-spacing: -0.03em;
+	--text-title: 30px;
+	--text-title--line-height: 1.18;
+	--text-title--letter-spacing: -0.02em;
+	--text-heading: 22px;
+	--text-heading--line-height: 1.18;
+	--text-heading--letter-spacing: -0.02em;
+	--text-subhead: 17px;
+	--text-subhead--line-height: 1.18;
+	--text-subhead--letter-spacing: -0.02em;
+	--text-body-lg: 16px;
+	--text-body-lg--line-height: 1.65;
+	--text-body-md: 15px;
+	--text-body-md--line-height: 1.5;
+	--text-body-sm: 13px;
+	--text-body-sm--line-height: 1.5;
+	--text-label: 12px;
+	--text-label--line-height: 1.2;
+	--text-label--letter-spacing: 0.08em;
+	--text-micro: 11px;
+	--text-micro--line-height: 1;
 
-	--text-title: clamp(30px, 4.6vw, 58px);
-	--text-title--line-height: 1.04;
-	--text-title--letter-spacing: -0.035em;
+	--tracking-plate: 0.06em;
+	--tracking-wordmark: -0.04em;
 
-	--text-title-sm: clamp(30px, 4.2vw, 52px);
-	--text-title-sm--line-height: 1.06;
-	--text-title-sm--letter-spacing: -0.035em;
+	/* ---- Sizes ---- */
+	--spacing-control: 48px;
+	--spacing-control-sm: 36px;
+	--spacing-sidebar: 232px;
+	--spacing-panel: 296px;
 
-	--text-h2: clamp(27px, 3.2vw, 40px);
-	--text-h2--line-height: 1.1;
-	--text-h2--letter-spacing: -0.028em;
+	/* ---- Shape ---- */
+	--radius-xs: 2px;
+	--radius-sm: 4px;
+	--radius-md: 8px;
+	--radius-lg: 12px;
+	--radius-pill: 999px;
 
-	--text-h2-sm: clamp(26px, 3vw, 38px);
-	--text-h2-sm--line-height: 1.12;
-	--text-h2-sm--letter-spacing: -0.028em;
+	/* ---- Shadows: flat offset only ---- */
+	--shadow-block: 3px 3px 0 var(--color-ink-1000);
+	--shadow-block-accent: 3px 3px 0 var(--color-caution-500);
+	--shadow-lift: 0 1px 0 var(--color-ink-200);
+	--shadow-overlay: 0 12px 32px -12px oklch(0.14 0.012 60 / 0.28);
 
-	--text-cta: clamp(24px, 2.8vw, 34px);
-	--text-cta--line-height: 1.15;
-	--text-cta--letter-spacing: -0.025em;
-
-	--text-cta-lg: clamp(30px, 3.6vw, 46px);
-	--text-cta-lg--line-height: 1.08;
-	--text-cta-lg--letter-spacing: -0.03em;
-
-	--text-celebration: clamp(34px, 6vw, 56px);
-	--text-celebration--line-height: 1.05;
-	--text-celebration--letter-spacing: -0.038em;
-
-	--text-panel-title: 26px;
-	--text-panel-title--line-height: 1.2;
-	--text-panel-title--letter-spacing: -0.03em;
-
-	--text-screen-title: clamp(23px, 4.2vw, 28px);
-	--text-screen-title--line-height: 1.1;
-	--text-screen-title--letter-spacing: -0.03em;
-
-	--text-screen-title-sm: clamp(23px, 4.2vw, 26px);
-	--text-screen-title-sm--line-height: 1.1;
-	--text-screen-title-sm--letter-spacing: -0.03em;
-
-	--text-page-title: clamp(20px, 2.6vw, 22px);
-	--text-page-title--line-height: 1.2;
-	--text-page-title--letter-spacing: -0.025em;
-
-	--text-section-title: clamp(18px, 2.4vw, 20px);
-	--text-section-title--line-height: 1.25;
-	--text-section-title--letter-spacing: -0.02em;
-
-	--text-card-title: 17px;
-	--text-card-title--line-height: 1.3;
-	--text-card-title--letter-spacing: -0.015em;
-
-	--text-amount: clamp(26px, 2.6vw, 28px);
-	--text-amount--line-height: 1.05;
-	--text-amount--letter-spacing: -0.03em;
-
-	--text-figure: clamp(20px, 2.4vw, 22px);
-	--text-figure--line-height: 1.1;
-	--text-figure--letter-spacing: -0.025em;
-
-	--text-lead: 15px;
-	--text-lead--line-height: 1.6;
-
-	--text-lead-lg: 18px;
-	--text-lead-lg--line-height: 1.6;
-
-	--text-control: 15.5px;
-	--text-control--line-height: 1.2;
-
-	--text-control-sm: 15px;
-	--text-control-sm--line-height: 1.2;
-
-	--text-row: 14.5px;
-	--text-row--line-height: 1.4;
-	--text-row--letter-spacing: -0.01em;
-
-	--text-small: 13.5px;
-	--text-small--line-height: 1.55;
-
-	--text-caption: 12.5px;
-	--text-caption--line-height: 1.5;
-
-	--text-footnote: 11.5px;
-	--text-footnote--line-height: 1.55;
-
-	--text-index: 11px;
-	--text-index--line-height: 1.5;
-
-	--radius-control: 4px;
-	--radius-knob: 2px;
+	/* ---- Motion ---- */
+	--ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+	--ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+	--ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @theme inline {
-	/* Shadcn semantic tokens */
-	--color-background: var(--background);
-	--color-foreground: var(--foreground);
-	--font-sans: var(--font-plus-jakarta);
-	--font-mono: var(--font-geist-mono);
-	--font-heading: var(--font-sans);
-	--color-sidebar-ring: var(--sidebar-ring);
-	--color-sidebar-border: var(--sidebar-border);
-	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-	--color-sidebar-accent: var(--sidebar-accent);
-	--color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-	--color-sidebar-primary: var(--sidebar-primary);
-	--color-sidebar-foreground: var(--sidebar-foreground);
-	--color-sidebar: var(--sidebar);
-	--color-chart-5: var(--chart-5);
-	--color-chart-4: var(--chart-4);
-	--color-chart-3: var(--chart-3);
-	--color-chart-2: var(--chart-2);
-	--color-chart-1: var(--chart-1);
-	--color-ring: var(--ring);
-	--color-input: var(--input);
-	--color-border: var(--border);
-	--color-destructive: var(--destructive);
-	--color-accent-foreground: var(--accent-foreground);
-	--color-accent: var(--accent);
-	--color-muted-foreground: var(--muted-foreground);
-	--color-muted: var(--muted);
-	--color-secondary-foreground: var(--secondary-foreground);
-	--color-secondary: var(--secondary);
-	--color-primary-foreground: var(--primary-foreground);
-	--color-primary: var(--primary);
-	--color-popover-foreground: var(--popover-foreground);
-	--color-popover: var(--popover);
-	--color-card-foreground: var(--card-foreground);
-	--color-card: var(--card);
-	--radius-sm: calc(var(--radius) * 0.5);
-	--radius-md: var(--radius);
-	--radius-lg: calc(var(--radius) * 1.333);
-	--radius-xl: calc(var(--radius) * 1.667);
-	--radius-2xl: calc(var(--radius) * 2);
-	--radius-3xl: calc(var(--radius) * 2.667);
-	--radius-4xl: calc(var(--radius) * 3.333);
+	/* Brand */
+	--color-brand: var(--color-caution-500);
+	--color-brand-text: var(--color-caution-700);
 
-	/* ── Semang extended palette ── */
+	/* Semantic: verdicts only */
+	--color-success-700: var(--color-go-700);
+	--color-success-500: var(--color-go-500);
+	--color-success-100: var(--color-go-100);
+	--color-danger-700: var(--color-stop-700);
+	--color-danger-500: var(--color-stop-500);
+	--color-danger-100: var(--color-stop-100);
+	--color-warn-700: var(--color-caution-700);
+	--color-warn-500: var(--color-caution-500);
+	--color-warn-100: var(--color-caution-100);
+	--color-info-700: var(--color-sky-700);
+	--color-info-500: var(--color-ink-200);
+	--color-info-100: var(--color-sky-100);
 
-	/* Misty Teal */
-	--color-teal-50: #eef5f3;
-	--color-teal-100: #d6e8e3;
-	--color-teal-200: #afd2c9;
-	--color-teal-300: #a0c9c1;
-	--color-teal-400: #589c90;
-	--color-teal-500: #37796d;
-	--color-teal-600: #2e6b61;
-	--color-teal-700: #27574f;
-	--color-teal-800: #214641;
-	--color-teal-900: #1b3a36;
+	/* Grading: Lagi / Sulit / Bagus / Mudah, fixed order */
+	--color-grade-again: var(--color-danger-500);
+	--color-grade-hard: var(--color-warn-500);
+	--color-grade-good: var(--color-success-500);
+	--color-grade-easy: var(--color-info-500);
 
-	/* Warm Neutral */
-	--color-warm-canvas: #faf8f4;
-	--color-warm-50: #f4f1eb;
-	--color-warm-100: #ebe6dd;
-	--color-warm-200: #ddd6c9;
-	--color-warm-300: #c7bdac;
-	--color-warm-400: #756d60;
-	--color-warm-500: #756d5d;
-	--color-warm-600: #635a4b;
-	--color-warm-700: #48423a;
-	--color-warm-900: #211e19;
+	/* Verdict */
+	--color-verdict-wrong: var(--color-stop-500);
+	--color-verdict-near: var(--color-caution-500);
+	--color-verdict-right: var(--color-go-500);
 
-	/* Semantic */
-	--color-success: #2f8b5f;
-	--color-success-bg: #e4f2ea;
-	--color-success-fg: #256e4b;
-	--color-warning: #c2841f;
-	--color-warning-bg: #f8eedb;
-	--color-warning-fg: #946115;
-	--color-danger: #be4f38;
-	--color-danger-bg: #f6e3dd;
-	--color-danger-fg: #a33f2a;
-	--color-info: #3877a6;
-	--color-info-bg: #e1ecf4;
-	--color-info-fg: #2c5f86;
+	/* Card states (read as 12px text → dark steps) */
+	--color-state-locked: var(--color-ink-700);
+	--color-state-new: var(--color-go-700);
+	--color-state-learning: var(--color-caution-700);
+	--color-state-review: var(--color-ink-700);
+	--color-state-relearning: var(--color-stop-700);
+	--color-state-mature: var(--color-go-700);
+	--color-state-leech: var(--color-grape-700);
+	--color-state-suspended: var(--color-ink-500);
 
-	/* WhatsApp */
-	--color-whatsapp: #25d366;
-	--color-whatsapp-hover: #1fb855;
-	--color-whatsapp-canvas: #ece5dd;
-	--color-whatsapp-bubble: #dcf3e4;
+	/* Fact confidence */
+	--color-fact-verified: var(--color-go-700);
+	--color-fact-disputed: var(--color-caution-700);
+	--color-fact-legend: var(--color-grape-700);
 
-	/* Shadows (warm-tinted, not grey) */
-	--shadow-warm-sm: 0 1px 2px rgba(33, 30, 25, 0.07);
-	--shadow-warm-md: 0 4px 14px rgba(33, 30, 25, 0.09);
-	--shadow-warm-lg: 0 12px 32px rgba(33, 30, 25, 0.12);
-	--shadow-warm-teal: 0 4px 12px rgba(60, 131, 119, 0.28);
-	--shadow-warm-teal-lg: 0 6px 18px rgba(60, 131, 119, 0.28);
-	--shadow-teal-card: 0 16px 36px rgba(39, 87, 79, 0.28);
-	--shadow-success: 0 5px 14px rgba(47, 139, 95, 0.28);
-	--shadow-chat: 0 1px 1px rgba(0, 0, 0, 0.08);
-	--shadow-phone:
-		0 2px 6px rgba(27, 58, 54, 0.2), 0 18px 36px rgba(27, 58, 54, 0.22),
-		0 40px 80px rgba(27, 58, 54, 0.18);
-}
+	/* Plate */
+	--color-plate-ground: var(--color-paper-0);
+	--color-plate-ink: var(--color-ink-1000);
 
-:root {
-	/* Font vars — overridden at runtime by Next.js font className injection */
-	--font-plus-jakarta: "Plus Jakarta Sans", system-ui, sans-serif;
-	--font-geist-mono: ui-monospace, "Cascadia Code", monospace;
-
-	/* Horizontal page gutter — shared by `container` and `bleed` */
-	--gutter: clamp(20px, 4vw, 48px);
-
-	/* Canvas & surface */
-	--background: #faf8f4;
-	--foreground: #211e19;
-	--card: #ffffff;
-	--card-foreground: #211e19;
-	--popover: #ffffff;
-	--popover-foreground: #211e19;
-
-	/* Primary = Teal 600 (WCAG AA: 5.8:1 on canvas, 6.2:1 with white text) */
-	--primary: #2e6b61;
-	--primary-foreground: #ffffff;
-
-	/* Secondary = Warm 50 */
-	--secondary: #f4f1eb;
-	--secondary-foreground: #211e19;
-
-	/* Muted = Warm 50 */
-	--muted: #f4f1eb;
-	--muted-foreground: #847a68;
-
-	/* Accent = Teal 100 */
-	--accent: #d6e8e3;
-	--accent-foreground: #27574f;
-
-	/* Destructive = Danger */
-	--destructive: #be4f38;
-
-	/* Borders & inputs */
-	--border: #ebe6dd;
-	--input: #ddd6c9;
-	--ring: #2e6b61;
-
-	/* Base radius = 12px (design's "md") */
-	--radius: 0.75rem;
-
-	/* Charts */
-	--chart-1: #2e6b61;
-	--chart-2: #2f8b5f;
-	--chart-3: #c2841f;
-	--chart-4: #3877a6;
-	--chart-5: #be4f38;
-
-	/* Sidebar */
-	--sidebar: #f4f1eb;
-	--sidebar-foreground: #211e19;
-	--sidebar-primary: #2e6b61;
-	--sidebar-primary-foreground: #ffffff;
-	--sidebar-accent: #d6e8e3;
-	--sidebar-accent-foreground: #27574f;
-	--sidebar-border: #ebe6dd;
-	--sidebar-ring: #2e6b61;
-}
-
-.dark {
-	--background: #1b3a36;
-	--foreground: #f4f1eb;
-	--card: #214641;
-	--card-foreground: #f4f1eb;
-	--popover: #214641;
-	--popover-foreground: #f4f1eb;
-	--primary: #82b8ad;
-	--primary-foreground: #1b3a36;
-	--secondary: #27574f;
-	--secondary-foreground: #f4f1eb;
-	--muted: #27574f;
-	--muted-foreground: #afd2c9;
-	--accent: #2e6b61;
-	--accent-foreground: #d6e8e3;
-	--destructive: #e07060;
-	--border: rgba(255, 255, 255, 0.1);
-	--input: rgba(255, 255, 255, 0.12);
-	--ring: #82b8ad;
-	--chart-1: #82b8ad;
-	--chart-2: #5cb88a;
-	--chart-3: #d4a04e;
-	--chart-4: #6fa3c8;
-	--chart-5: #d47a6a;
-	--sidebar: #214641;
-	--sidebar-foreground: #f4f1eb;
-	--sidebar-primary: #82b8ad;
-	--sidebar-primary-foreground: #1b3a36;
-	--sidebar-accent: #27574f;
-	--sidebar-accent-foreground: #d6e8e3;
-	--sidebar-border: rgba(255, 255, 255, 0.1);
-	--sidebar-ring: #82b8ad;
-}
-
-@utility focus-ring {
-	&:focus-visible {
-		outline: 2px solid currentColor;
-		outline-offset: 2px;
-	}
-}
-
-@utility eyebrow {
-	font-family: var(--font-mono), serif;
-	font-size: 10.5px;
-	line-height: 1.5;
-	font-weight: 700;
-	letter-spacing: 0.12em;
-	text-transform: uppercase;
-}
-
-@utility meta-label {
-	font-family: var(--font-mono), serif;
-	font-size: 10.5px;
-	line-height: 1.5;
-	font-weight: 700;
-	letter-spacing: 0.1em;
-	text-transform: uppercase;
-}
-
-@utility border-control {
-	border-width: 1.5px;
-}
-
-@utility border-t-control {
-	border-top-width: 1.5px;
-}
-
-@utility border-l-marker {
-	border-left-width: 3px;
-}
-
-@utility shadow-l-marker {
-	box-shadow: inset 3px 0 0 var(--color-brand);
-}
-
-@utility grid-cols-section-index {
-	grid-template-columns: 104px minmax(0, 1fr);
-}
-
-@utility grid-cols-bill-row {
-	grid-template-columns: 22px minmax(0, 1fr) auto;
-}
-
-@utility grid-cols-check-list {
-	grid-template-columns: 20px minmax(0, 1fr);
-}
-
-@utility container {
-	margin-inline: auto;
-	max-width: 77.5rem;
-	padding-inline: var(--gutter);
-	width: 100%;
-}
-
-/* Full-bleed strip inside a `container`: cancels the gutter, re-adds it as
-   padding so the bar touches both edges while its content stays aligned. */
-@utility bleed {
-	margin-inline: calc(var(--gutter) * -1);
-	padding-inline: var(--gutter);
+	/* shadcn semantic vars, mapped so shadcn/tailwind.css stays valid */
+	--color-background: var(--color-paper-0);
+	--color-foreground: var(--color-ink-900);
+	--color-card: var(--color-paper-0);
+	--color-card-foreground: var(--color-ink-900);
+	--color-popover: var(--color-paper-0);
+	--color-popover-foreground: var(--color-ink-900);
+	--color-primary: var(--color-caution-500);
+	--color-primary-foreground: var(--color-ink-1000);
+	--color-secondary: var(--color-paper-50);
+	--color-secondary-foreground: var(--color-ink-900);
+	--color-muted: var(--color-paper-50);
+	--color-muted-foreground: var(--color-ink-500);
+	--color-accent: var(--color-caution-100);
+	--color-accent-foreground: var(--color-ink-1000);
+	--color-destructive: var(--color-stop-500);
+	--color-border: var(--color-ink-200);
+	--color-input: var(--color-ink-1000);
+	--color-ring: var(--color-ink-1000);
 }
 
 @layer base {
 	* {
-		@apply border-border outline-ring/50;
+		@apply border-ink-200;
+	}
+	body {
+		@apply bg-paper-0 font-body text-body-md text-ink-900 antialiased;
+		text-wrap: pretty;
+	}
+	a {
+		@apply text-caution-700 hover:text-ink-1000;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 2px;
+	}
+	:focus-visible {
+		outline: 2px solid var(--color-ink-1000);
+		outline-offset: 2px;
+	}
+	::selection {
+		@apply bg-caution-300 text-ink-1000;
 	}
 	button:not(:disabled),
 	[role="button"]:not(:disabled) {
 		cursor: pointer;
 	}
-	body {
-		@apply bg-background text-foreground;
-	}
-	html {
-		@apply font-sans;
-	}
 }
 
-@property --confetti-drift {
-	syntax: "<length>";
-	inherits: false;
-	initial-value: 0px;
-}
-
-@property --confetti-spin {
-	syntax: "<angle>";
-	inherits: false;
-	initial-value: 0deg;
-}
-
-@layer utilities {
-	/* Falls the full height of the confetti layer (its `container-type: size`
-	   defines 1cqh) plus enough overshoot to clear the top offset, so pieces
-	   are clipped at the bottom edge instead of fading out mid-screen. */
-	@keyframes confetti-fall {
-		0% {
-			transform: translate3d(0, -60px, 0) rotate(0deg);
-			opacity: 0;
-		}
-		6% {
-			opacity: 1;
-		}
-		100% {
-			transform: translate3d(var(--confetti-drift), calc(100cqh + 60px), 0)
-				rotate(var(--confetti-spin));
-			opacity: 1;
-		}
-	}
+/* Hatched placeholder for missing imagery (progress map). */
+@utility bg-hatch {
+	background: repeating-linear-gradient(
+		-45deg,
+		var(--color-paper-50) 0 8px,
+		var(--color-ink-100) 8px 9px
+	);
 }
