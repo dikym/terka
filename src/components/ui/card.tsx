@@ -8,6 +8,7 @@ export type AccentToken =
 	| "balinusra"
 	| "maluku"
 	| "papua"
+	| "grape"
 	| "brand"
 	| "success"
 	| "danger"
@@ -22,6 +23,7 @@ const accentClass: Record<AccentToken, string> = {
 	balinusra: "bg-group-balinusra",
 	maluku: "bg-group-maluku",
 	papua: "bg-group-papua",
+	grape: "bg-grape-500",
 	brand: "bg-caution-500",
 	success: "bg-go-500",
 	danger: "bg-stop-500",

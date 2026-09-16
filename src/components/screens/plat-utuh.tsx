@@ -37,7 +37,7 @@ export function PlatUtuh() {
 				<span className="text-body-md text-ink-1000 leading-[1.3]">{stepOne.label}</span>
 				<span className="text-micro text-ink-500 ml-auto font-mono">{stepOne.time}</span>
 			</div>
-			<Input placeholder="Ketik jawaban…" />
+			<Input placeholder="Ketik jawaban…" aria-label="Ketik jawaban" />
 			<Button block kbd="Enter" iconRight={<CornerDownLeft className="size-4" aria-hidden />}>
 				Periksa
 			</Button>

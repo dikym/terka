@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { Card, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { LabelText } from "@/components/ui/label-text";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { RingGauge } from "@/components/ui/ring-gauge";
@@ -18,30 +19,17 @@ function WeakBadge({
 	children
 }: React.PropsWithChildren<{ tone: string; className?: string }>) {
 	return (
-		<span
-			className={cn(
-				"rounded-pill font-display text-label inline-flex shrink-0 items-center gap-2 px-2.5 py-1 font-semibold whitespace-nowrap",
-				tone,
-				className
-			)}
-		>
-			<span className="size-[7px] shrink-0 rounded-full bg-current" aria-hidden />
+		<Badge dot className={cn("shrink-0 whitespace-nowrap normal-case", tone, className)}>
 			{children}
-		</span>
+		</Badge>
 	);
 }
 
 function MapLegend({ tone, children }: React.PropsWithChildren<{ tone: string }>) {
 	return (
-		<span
-			className={cn(
-				"rounded-pill font-display text-label inline-flex w-fit shrink-0 items-center gap-2 self-start px-2.5 py-1 font-semibold whitespace-nowrap uppercase",
-				tone
-			)}
-		>
-			<span className="size-[7px] shrink-0 rounded-full bg-current" aria-hidden />
+		<Badge dot className={cn("w-fit shrink-0 self-start whitespace-nowrap", tone)}>
 			{children}
-		</span>
+		</Badge>
 	);
 }
 
@@ -134,8 +122,7 @@ export function Statistik() {
 							</div>
 							<ProgressBar value={mastery.percent} tone="success" className="h-2" />
 						</div>
-						<Card>
-							<div className="bg-grape-500 h-1 w-full" aria-hidden />
+						<Card accent="grape">
 							<div className="flex flex-col gap-3 p-4">
 								<header className="flex items-baseline justify-between gap-3">
 									<CardTitle>Sulit Dikuasai</CardTitle>

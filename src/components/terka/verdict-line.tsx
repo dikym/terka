@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 
 const verdictClass = {
 	right: "bg-go-100 text-go-700",
@@ -19,15 +20,9 @@ export function VerdictLine({
 }) {
 	return (
 		<div className={cn("flex items-center justify-between gap-3", className)}>
-			<span
-				className={cn(
-					"rounded-pill font-display text-label inline-flex items-center gap-2 self-start px-2.5 py-1 font-semibold uppercase",
-					verdictClass[verdict]
-				)}
-			>
-				<span className="size-[7px] shrink-0 rounded-full bg-current" aria-hidden />
+			<Badge dot className={cn("self-start", verdictClass[verdict])}>
 				{label}
-			</span>
+			</Badge>
 			{detail ? <span className="text-body-sm text-ink-500 font-mono">{detail}</span> : null}
 		</div>
 	);

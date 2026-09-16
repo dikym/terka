@@ -1,19 +1,12 @@
 import { Layers } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Tag } from "@/components/ui/tag";
 import { LabelText } from "@/components/ui/label-text";
 import { CodeBadge } from "@/components/terka/code-badge";
 import type { IslandGroup } from "@/components/terka/scope-node";
 import { PageFrame, PageTitle } from "@/components/layout/page-frame";
 import { cn } from "@/lib/utils";
-
-function CityTag({ children }: React.PropsWithChildren) {
-	return (
-		<span className="border-ink-1000 bg-paper-0 text-ink-1000 text-micro inline-flex items-center gap-2 rounded-sm border px-1.5 py-0.5 font-mono leading-[1.2] font-medium whitespace-nowrap">
-			{children}
-		</span>
-	);
-}
 
 const region: { group: string; islandGroup: IslandGroup; iconClass: string } = {
 	group: "Bali & Nusa Tenggara",
@@ -61,7 +54,12 @@ export function Referensi() {
 								{entry.cities.length > 0 ? (
 									<span className="flex flex-wrap gap-1">
 										{entry.cities.map((city) => (
-											<CityTag key={city}>{city}</CityTag>
+											<Tag
+												key={city}
+												className="border-ink-1000 text-micro text-ink-1000 gap-2 rounded-sm px-1.5 leading-[1.2] whitespace-nowrap"
+											>
+												{city}
+											</Tag>
 										))}
 									</span>
 								) : null}

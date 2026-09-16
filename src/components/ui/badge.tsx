@@ -14,7 +14,8 @@ const badgeVariants = cva(
 				info: "bg-sky-100 text-sky-500",
 				grape: "bg-grape-100 text-grape-700",
 				tangerine: "bg-tangerine-100 text-tangerine-700",
-				muted: "bg-paper-50 text-ink-700"
+				muted: "bg-paper-50 text-ink-700",
+				neutral: "bg-paper-50 text-ink-900"
 			}
 		},
 		defaultVariants: { tone: "muted" }
@@ -24,7 +25,16 @@ const badgeVariants = cva(
 export function Badge({
 	className,
 	tone,
+	dot,
+	children,
 	...props
-}: React.ComponentProps<"span"> & VariantProps<typeof badgeVariants>) {
-	return <span className={cn(badgeVariants({ tone }), className)} {...props} />;
+}: React.ComponentProps<"span"> & VariantProps<typeof badgeVariants> & { dot?: boolean }) {
+	return (
+		<span className={cn(badgeVariants({ tone }), className)} {...props}>
+			{dot ? (
+				<span className="size-[7px] shrink-0 rounded-full bg-current" aria-hidden />
+			) : null}
+			{children}
+		</span>
+	);
 }

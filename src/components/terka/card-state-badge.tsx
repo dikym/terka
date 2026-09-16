@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 
 export type CardState =
 	"new" | "learning" | "review" | "relearning" | "mature" | "leech" | "suspended" | "locked";
@@ -27,15 +28,8 @@ const stateClass: Record<CardState, string> = {
 
 export function CardStateBadge({ state, className }: { state: CardState; className?: string }) {
 	return (
-		<span
-			className={cn(
-				"rounded-pill bg-paper-50 font-display text-label inline-flex items-center gap-2 px-2.5 py-1 font-semibold uppercase",
-				stateClass[state],
-				className
-			)}
-		>
-			<span className="size-[7px] shrink-0 rounded-full bg-current" aria-hidden />
+		<Badge dot tone="neutral" className={cn(stateClass[state], className)}>
 			{cardStateLabel[state]}
-		</span>
+		</Badge>
 	);
 }

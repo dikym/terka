@@ -1,5 +1,6 @@
 import { Medal } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 import { SessionShell } from "@/components/layout/session-shell";
 import { chipVariants } from "@/components/terka/code-chip";
 import { LevelChip } from "./sesi-tanya";
@@ -16,16 +17,9 @@ export function ModeBadge({
 	children
 }: React.PropsWithChildren<{ tone: string; className?: string }>) {
 	return (
-		<span
-			className={cn(
-				"rounded-pill font-display text-label inline-flex shrink-0 items-center gap-2 px-2.5 py-1 font-semibold whitespace-nowrap uppercase",
-				tone,
-				className
-			)}
-		>
-			<span className="size-[7px] shrink-0 rounded-full bg-current" aria-hidden />
+		<Badge dot className={cn("shrink-0 whitespace-nowrap", tone, className)}>
 			{children}
-		</span>
+		</Badge>
 	);
 }
 

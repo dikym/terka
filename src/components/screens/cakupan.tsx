@@ -46,7 +46,7 @@ const tree: ScopeItem[] = [
 	{ name: "Papua", count: "25 kartu", percent: "0%", group: "papua", leaf: true }
 ];
 
-const totalScope = { count: "305 kartu", percent: 26 };
+const totalScope = { count: "305 kartu", percent: "26%" };
 
 const highlighted = {
 	name: "Kawasan Sumatera",
@@ -62,33 +62,12 @@ export function Cakupan() {
 				className="grid-cols-[minmax(0,1fr)_340px]"
 				aside={
 					<>
-						<div className="border-ink-200 bg-paper-0 box-border flex min-h-11 items-center gap-3 rounded-sm border p-3">
-							<span
-								className="bg-ink-1000 size-2.5 shrink-0 rounded-full"
-								aria-hidden
-							/>
-							<span className="flex min-w-0 flex-1 flex-col gap-1">
-								<span className="flex items-baseline justify-between gap-2">
-									<span className="font-display text-body-lg text-ink-1000 truncate leading-[1.2] font-semibold">
-										Seluruh Indonesia
-									</span>
-									<span className="text-body-sm text-ink-500 shrink-0 font-mono">
-										{totalScope.count}
-									</span>
-								</span>
-								<span className="flex items-center gap-2">
-									<span className="bg-ink-100 h-1.5 min-w-0 flex-1 overflow-hidden rounded-xs">
-										<span
-											className="bg-ink-1000 block h-full"
-											style={{ width: `${totalScope.percent}%` }}
-										/>
-									</span>
-									<span className="text-body-sm text-ink-900 w-9 shrink-0 text-right font-mono font-medium tabular-nums">
-										{totalScope.percent}%
-									</span>
-								</span>
-							</span>
-						</div>
+						<ScopeNode
+							name="Seluruh Indonesia"
+							count={totalScope.count}
+							percent={totalScope.percent}
+							leaf
+						/>
 						<Card className="border-ink-1000 shadow-block flex flex-col gap-3 border-2 p-4">
 							<div className="flex items-baseline justify-between gap-3">
 								<div className="flex flex-col items-start gap-1">
