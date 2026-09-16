@@ -3,6 +3,7 @@ import { BandingkanDijawab } from "./bandingkan-dijawab";
 import { BenarSalah } from "./benar-salah";
 import { BukanYangMana } from "./bukan-yang-mana";
 import { FaktaKode } from "./fakta-kode";
+import { JawabanDibatalkan } from "./jawaban-dibatalkan";
 import { KodeBelakang } from "./kode-belakang";
 import { PlatUtuh } from "./plat-utuh";
 import { Sebutkan } from "./sebutkan";
@@ -23,7 +24,8 @@ export const sesiScreens = {
 	"kode-belakang": KodeBelakang,
 	"benar-salah": BenarSalah,
 	"bukan-yang-mana": BukanYangMana,
-	"fakta-kode": FaktaKode
+	"fakta-kode": FaktaKode,
+	dibatalkan: JawabanDibatalkan
 } satisfies Record<string, () => React.JSX.Element>;
 
 export type SesiScreenKey = keyof typeof sesiScreens;

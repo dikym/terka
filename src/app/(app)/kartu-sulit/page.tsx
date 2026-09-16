@@ -1,9 +1,5 @@
-import { PageFrame, PageTitle } from "@/components/layout/page-frame";
+import { KartuSulit } from "@/components/screens/kartu-sulit";
 
 export default function Page() {
-	return (
-		<PageFrame>
-			<PageTitle>Kartu Sulit</PageTitle>
-		</PageFrame>
-	);
+	return <KartuSulit />;
 }

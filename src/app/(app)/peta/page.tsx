@@ -1,9 +1,5 @@
-import { PageFrame, PageTitle } from "@/components/layout/page-frame";
+import { PetaPenguasaan } from "@/components/screens/peta-penguasaan";
 
 export default function Page() {
-	return (
-		<PageFrame>
-			<PageTitle>Peta</PageTitle>
-		</PageFrame>
-	);
+	return <PetaPenguasaan />;
 }
