@@ -1,11 +1,10 @@
-import Link from "next/link";
-import { ArrowLeft, Settings, Target } from "lucide-react";
+import { Settings, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Callout } from "@/components/ui/callout";
 import { LabelText } from "@/components/ui/label-text";
 import { IconButton } from "@/components/ui/icon-button";
 import { CodeBadge } from "@/components/terka/code-badge";
-import { PageFrame } from "@/components/layout/page-frame";
+import { PageFrame, PageTitle } from "@/components/layout/page-frame";
 import { TwoColumn } from "@/components/layout/two-column";
 import { ModeBadge } from "./bandingkan";
 
@@ -22,22 +21,19 @@ const due = { count: 4, note: "soal — juga dihitung untuk jadwal hari ini" };
 export function LatihanTerfokus() {
 	return (
 		<>
-			<header className="border-ink-200 bg-paper-0 flex items-center justify-between border-b px-8 py-4">
-				<div className="flex items-center gap-3">
-					<Link
-						href="/"
-						aria-label="Kembali"
-						className="size-control-sm text-ink-700 hover:bg-paper-50 inline-flex items-center justify-center rounded-sm"
-					>
-						<ArrowLeft className="size-[18px]" aria-hidden />
-					</Link>
-					<span className="font-display text-subhead text-ink-1000 font-semibold">
-						Latihan Terfokus
-					</span>
-				</div>
-				<IconButton label="Setelan">
-					<Settings className="size-[18px]" aria-hidden />
-				</IconButton>
+			<header className="border-ink-200 bg-paper-0 flex items-center border-b px-5 py-4">
+				<PageTitle
+					back="/"
+					size="sm"
+					className="flex-1"
+					actions={
+						<IconButton label="Setelan">
+							<Settings className="size-[18px]" aria-hidden />
+						</IconButton>
+					}
+				>
+					Latihan Terfokus
+				</PageTitle>
 			</header>
 			<PageFrame>
 				<TwoColumn
@@ -47,7 +43,8 @@ export function LatihanTerfokus() {
 							<Callout
 								tone="warn"
 								className="border-ink-200"
-								title={<span className="text-warn-700">Jadwal tidak berubah</span>}
+								title="Jadwal tidak berubah"
+								titleClassName="text-warn-700"
 							>
 								Latihan tambahan. Jawabannya dicatat untuk statistik dan kode yang
 								sering tertukar, tetapi jadwal kartu yang belum perlu diulang tidak

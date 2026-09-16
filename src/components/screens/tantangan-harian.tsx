@@ -75,7 +75,7 @@ export function TantanganHarian() {
 					>
 						Lanjut
 					</Button>
-					<Callout title={<span className="text-warn-700">Jadwal tidak berubah</span>}>
+					<Callout title="Jadwal tidak berubah" titleClassName="text-warn-700">
 						Soal diambil dari seluruh kartu yang pernah dipelajari, tanpa memandang
 						Cakupan. Jawaban di sini tidak mengubah jadwal.
 					</Callout>

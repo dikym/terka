@@ -26,11 +26,13 @@ const titleToneClass: Record<NonNullable<VariantProps<typeof calloutVariants>["t
 export function Callout({
 	tone,
 	title,
+	titleClassName,
 	icon,
 	className,
 	children
 }: VariantProps<typeof calloutVariants> & {
 	title?: React.ReactNode;
+	titleClassName?: string;
 	icon?: React.ReactNode;
 	className?: string;
 	children: React.ReactNode;
@@ -49,7 +51,9 @@ export function Callout({
 			{icon ? <span className="text-ink-700 mt-0.5 shrink-0">{icon}</span> : null}
 			<div className={cn("flex flex-col gap-2", icon && "flex-1")}>
 				{title ? (
-					<LabelText className={titleToneClass[activeTone]}>{title}</LabelText>
+					<LabelText className={cn(titleToneClass[activeTone], titleClassName)}>
+						{title}
+					</LabelText>
 				) : null}
 				<div>{children}</div>
 			</div>
