@@ -8,10 +8,14 @@ export function PageFrame({ className, ...props }: React.ComponentProps<"div">) 
 
 export function PageTitle({
 	back,
+	size = "lg",
+	actions,
 	children,
 	className
 }: {
 	back?: string;
+	size?: "lg" | "sm";
+	actions?: React.ReactNode;
 	children: React.ReactNode;
 	className?: string;
 }) {
@@ -26,7 +30,15 @@ export function PageTitle({
 					<ArrowLeft className="size-[18px]" aria-hidden />
 				</Link>
 			) : null}
-			<h1 className="font-display text-title text-ink-1000 font-bold">{children}</h1>
+			<h1
+				className={cn(
+					"font-display text-ink-1000",
+					size === "sm" ? "text-subhead font-semibold" : "text-title font-bold"
+				)}
+			>
+				{children}
+			</h1>
+			{actions ? <span className="ml-auto flex items-center gap-3">{actions}</span> : null}
 		</div>
 	);
 }

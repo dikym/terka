@@ -40,7 +40,7 @@ export function ModeKilat() {
 							unit="detik"
 							label="sisa waktu"
 							size="display"
-							unitClassName="text-body-sm text-ink-500 leading-none font-mono"
+							unitClassName="text-body-sm text-ink-500 leading-none font-mono font-medium"
 						/>
 					</div>
 					<ProgressBar
