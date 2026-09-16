@@ -1,9 +1,5 @@
-import { SessionShell } from "@/components/layout/session-shell";
+import { ModeKilat } from "@/components/screens/mode-kilat";
 
 export default function Page() {
-	return (
-		<SessionShell current={7} total={24}>
-			<p>Sesi</p>
-		</SessionShell>
-	);
+	return <ModeKilat />;
 }
