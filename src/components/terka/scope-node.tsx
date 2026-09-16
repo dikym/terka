@@ -45,9 +45,9 @@ export function ScopeNode({
 	const Chevron = expanded ? ChevronDown : ChevronRight;
 	return (
 		<div
-			role="treeitem"
-			aria-selected={active}
-			aria-expanded={leaf ? undefined : expanded}
+			role={group ? "treeitem" : undefined}
+			aria-selected={group ? active : undefined}
+			aria-expanded={group && !leaf ? expanded : undefined}
 			className={cn(
 				"border-ink-200 bg-paper-0 box-border flex min-h-11 items-center gap-3 rounded-sm border p-3",
 				active && "border-ink-1000 bg-paper-50",
