@@ -1320,15 +1320,9 @@
 			"region": "Jabodetabek",
 			"group": "jawa",
 			"province": "jakarta",
-			"spans": [
-				"jawa-barat",
-				"banten"
-			],
+			"spans": ["jawa-barat", "banten"],
 			"confidence": "medium",
-			"aliases": [
-				"Jakarta",
-				"DKI Jakarta"
-			],
+			"aliases": ["Jakarta", "DKI Jakarta"],
 			"areas": [
 				{
 					"id": "jakarta-pusat",
@@ -1994,9 +1988,7 @@
 				{
 					"id": "banyumas",
 					"name": "Banyumas",
-					"aliases": [
-						"Purwokerto"
-					]
+					"aliases": ["Purwokerto"]
 				},
 				{
 					"id": "cilacap",
@@ -2129,11 +2121,7 @@
 			"province": "jawa-tengah",
 			"spans": [],
 			"confidence": "medium",
-			"aliases": [
-				"Solo",
-				"Surakarta",
-				"Solo Raya"
-			],
+			"aliases": ["Solo", "Surakarta", "Solo Raya"],
 			"areas": [
 				{
 					"id": "kota-surakarta",
@@ -2212,12 +2200,7 @@
 			"province": "yogyakarta",
 			"spans": [],
 			"confidence": "medium",
-			"aliases": [
-				"Yogyakarta",
-				"Jogja",
-				"Yogya",
-				"DIY"
-			],
+			"aliases": ["Yogyakarta", "Jogja", "Yogya", "DIY"],
 			"areas": [
 				{
 					"id": "kota-yogyakarta",
@@ -2828,9 +2811,7 @@
 			"province": "bali",
 			"spans": [],
 			"confidence": "medium",
-			"aliases": [
-				"Pulau Bali"
-			],
+			"aliases": ["Pulau Bali"],
 			"areas": [
 				{
 					"id": "denpasar",
@@ -2916,9 +2897,7 @@
 			"province": "nusa-tenggara-barat",
 			"spans": [],
 			"confidence": "medium",
-			"aliases": [
-				"Lombok"
-			],
+			"aliases": ["Lombok"],
 			"areas": [
 				{
 					"id": "mataram",
@@ -2984,9 +2963,7 @@
 			"province": "nusa-tenggara-barat",
 			"spans": [],
 			"confidence": "medium",
-			"aliases": [
-				"Pulau Sumbawa"
-			],
+			"aliases": ["Pulau Sumbawa"],
 			"areas": [
 				{
 					"id": "kota-bima",
@@ -3052,9 +3029,7 @@
 			"province": "nusa-tenggara-timur",
 			"spans": [],
 			"confidence": "medium",
-			"aliases": [
-				"Timor"
-			],
+			"aliases": ["Timor"],
 			"areas": [
 				{
 					"id": "kota-kupang",
@@ -3069,44 +3044,32 @@
 				{
 					"id": "timor-tengah-selatan",
 					"name": "Timor Tengah Selatan",
-					"aliases": [
-						"Soe"
-					]
+					"aliases": ["Soe"]
 				},
 				{
 					"id": "timor-tengah-utara",
 					"name": "Timor Tengah Utara",
-					"aliases": [
-						"Kefamenanu"
-					]
+					"aliases": ["Kefamenanu"]
 				},
 				{
 					"id": "belu",
 					"name": "Belu",
-					"aliases": [
-						"Atambua"
-					]
+					"aliases": ["Atambua"]
 				},
 				{
 					"id": "malaka",
 					"name": "Malaka",
-					"aliases": [
-						"Betun"
-					]
+					"aliases": ["Betun"]
 				},
 				{
 					"id": "rote-ndao",
 					"name": "Rote Ndao",
-					"aliases": [
-						"Baa"
-					]
+					"aliases": ["Baa"]
 				},
 				{
 					"id": "sabu-raijua",
 					"name": "Sabu Raijua",
-					"aliases": [
-						"Seba"
-					]
+					"aliases": ["Seba"]
 				}
 			],
 			"facts": [
@@ -3147,16 +3110,12 @@
 			"province": "nusa-tenggara-timur",
 			"spans": [],
 			"confidence": "medium",
-			"aliases": [
-				"Flores"
-			],
+			"aliases": ["Flores"],
 			"areas": [
 				{
 					"id": "sikka",
 					"name": "Sikka",
-					"aliases": [
-						"Maumere"
-					]
+					"aliases": ["Maumere"]
 				},
 				{
 					"id": "ende",
@@ -3166,58 +3125,42 @@
 				{
 					"id": "ngada",
 					"name": "Ngada",
-					"aliases": [
-						"Bajawa"
-					]
+					"aliases": ["Bajawa"]
 				},
 				{
 					"id": "nagekeo",
 					"name": "Nagekeo",
-					"aliases": [
-						"Mbay"
-					]
+					"aliases": ["Mbay"]
 				},
 				{
 					"id": "flores-timur",
 					"name": "Flores Timur",
-					"aliases": [
-						"Larantuka"
-					]
+					"aliases": ["Larantuka"]
 				},
 				{
 					"id": "manggarai",
 					"name": "Manggarai",
-					"aliases": [
-						"Ruteng"
-					]
+					"aliases": ["Ruteng"]
 				},
 				{
 					"id": "manggarai-barat",
 					"name": "Manggarai Barat",
-					"aliases": [
-						"Labuan Bajo"
-					]
+					"aliases": ["Labuan Bajo"]
 				},
 				{
 					"id": "manggarai-timur",
 					"name": "Manggarai Timur",
-					"aliases": [
-						"Borong"
-					]
+					"aliases": ["Borong"]
 				},
 				{
 					"id": "alor",
 					"name": "Alor",
-					"aliases": [
-						"Kalabahi"
-					]
+					"aliases": ["Kalabahi"]
 				},
 				{
 					"id": "lembata",
 					"name": "Lembata",
-					"aliases": [
-						"Lewoleba"
-					]
+					"aliases": ["Lewoleba"]
 				}
 			],
 			"facts": [
@@ -3258,37 +3201,27 @@
 			"province": "nusa-tenggara-timur",
 			"spans": [],
 			"confidence": "medium",
-			"aliases": [
-				"Sumba"
-			],
+			"aliases": ["Sumba"],
 			"areas": [
 				{
 					"id": "sumba-barat",
 					"name": "Sumba Barat",
-					"aliases": [
-						"Waikabubak"
-					]
+					"aliases": ["Waikabubak"]
 				},
 				{
 					"id": "sumba-timur",
 					"name": "Sumba Timur",
-					"aliases": [
-						"Waingapu"
-					]
+					"aliases": ["Waingapu"]
 				},
 				{
 					"id": "sumba-tengah",
 					"name": "Sumba Tengah",
-					"aliases": [
-						"Waibakul"
-					]
+					"aliases": ["Waibakul"]
 				},
 				{
 					"id": "sumba-barat-daya",
 					"name": "Sumba Barat Daya",
-					"aliases": [
-						"Tambolaka"
-					]
+					"aliases": ["Tambolaka"]
 				}
 			],
 			"facts": [
@@ -3461,9 +3394,7 @@
 				{
 					"id": "banjar",
 					"name": "Banjar",
-					"aliases": [
-						"Martapura"
-					]
+					"aliases": ["Martapura"]
 				},
 				{
 					"id": "barito-kuala",
@@ -3478,9 +3409,7 @@
 				{
 					"id": "hulu-sungai-selatan",
 					"name": "Hulu Sungai Selatan",
-					"aliases": [
-						"Kandangan"
-					]
+					"aliases": ["Kandangan"]
 				},
 				{
 					"id": "hulu-sungai-tengah",
@@ -3572,16 +3501,12 @@
 				{
 					"id": "kotawaringin-timur",
 					"name": "Kotawaringin Timur",
-					"aliases": [
-						"Sampit"
-					]
+					"aliases": ["Sampit"]
 				},
 				{
 					"id": "kotawaringin-barat",
 					"name": "Kotawaringin Barat",
-					"aliases": [
-						"Pangkalan Bun"
-					]
+					"aliases": ["Pangkalan Bun"]
 				},
 				{
 					"id": "kapuas",
@@ -3703,30 +3628,22 @@
 				{
 					"id": "kutai-kartanegara",
 					"name": "Kutai Kartanegara",
-					"aliases": [
-						"Tenggarong"
-					]
+					"aliases": ["Tenggarong"]
 				},
 				{
 					"id": "kutai-timur",
 					"name": "Kutai Timur",
-					"aliases": [
-						"Sangatta"
-					]
+					"aliases": ["Sangatta"]
 				},
 				{
 					"id": "kutai-barat",
 					"name": "Kutai Barat",
-					"aliases": [
-						"Sendawar"
-					]
+					"aliases": ["Sendawar"]
 				},
 				{
 					"id": "berau",
 					"name": "Berau",
-					"aliases": [
-						"Tanjung Redeb"
-					]
+					"aliases": ["Tanjung Redeb"]
 				},
 				{
 					"id": "paser",
@@ -3798,9 +3715,7 @@
 				{
 					"id": "bulungan",
 					"name": "Bulungan",
-					"aliases": [
-						"Tanjung Selor"
-					]
+					"aliases": ["Tanjung Selor"]
 				},
 				{
 					"id": "nunukan",
@@ -3887,9 +3802,7 @@
 				{
 					"id": "minahasa",
 					"name": "Minahasa",
-					"aliases": [
-						"Tondano"
-					]
+					"aliases": ["Tondano"]
 				},
 				{
 					"id": "minahasa-utara",
@@ -3970,24 +3883,17 @@
 				{
 					"id": "kepulauan-sangihe",
 					"name": "Kepulauan Sangihe",
-					"aliases": [
-						"Tahuna"
-					]
+					"aliases": ["Tahuna"]
 				},
 				{
 					"id": "kepulauan-talaud",
 					"name": "Kepulauan Talaud",
-					"aliases": [
-						"Melonguane"
-					]
+					"aliases": ["Melonguane"]
 				},
 				{
 					"id": "kepulauan-siau-tagulandang-biaro",
 					"name": "Kepulauan Siau Tagulandang Biaro",
-					"aliases": [
-						"Ondong",
-						"Sitaro"
-					]
+					"aliases": ["Ondong", "Sitaro"]
 				}
 			],
 			"facts": [
@@ -4038,9 +3944,7 @@
 				{
 					"id": "kabupaten-gorontalo",
 					"name": "Kabupaten Gorontalo",
-					"aliases": [
-						"Limboto"
-					]
+					"aliases": ["Limboto"]
 				},
 				{
 					"id": "gorontalo-utara",
@@ -4141,9 +4045,7 @@
 				{
 					"id": "banggai",
 					"name": "Banggai",
-					"aliases": [
-						"Luwuk"
-					]
+					"aliases": ["Luwuk"]
 				},
 				{
 					"id": "banggai-kepulauan",
@@ -4224,9 +4126,7 @@
 				{
 					"id": "konawe",
 					"name": "Konawe",
-					"aliases": [
-						"Unaaha"
-					]
+					"aliases": ["Unaaha"]
 				},
 				{
 					"id": "konawe-selatan",
@@ -4347,9 +4247,7 @@
 				{
 					"id": "gowa",
 					"name": "Gowa",
-					"aliases": [
-						"Sungguminasa"
-					]
+					"aliases": ["Sungguminasa"]
 				},
 				{
 					"id": "maros",
@@ -4434,23 +4332,17 @@
 				{
 					"id": "bone",
 					"name": "Bone",
-					"aliases": [
-						"Watampone"
-					]
+					"aliases": ["Watampone"]
 				},
 				{
 					"id": "soppeng",
 					"name": "Soppeng",
-					"aliases": [
-						"Watansoppeng"
-					]
+					"aliases": ["Watansoppeng"]
 				},
 				{
 					"id": "wajo",
 					"name": "Wajo",
-					"aliases": [
-						"Sengkang"
-					]
+					"aliases": ["Sengkang"]
 				},
 				{
 					"id": "sinjai",
@@ -4520,9 +4412,7 @@
 				{
 					"id": "sidenreng-rappang",
 					"name": "Sidenreng Rappang",
-					"aliases": [
-						"Sidrap"
-					]
+					"aliases": ["Sidrap"]
 				},
 				{
 					"id": "pinrang",
@@ -4537,37 +4427,27 @@
 				{
 					"id": "luwu",
 					"name": "Luwu",
-					"aliases": [
-						"Belopa"
-					]
+					"aliases": ["Belopa"]
 				},
 				{
 					"id": "luwu-utara",
 					"name": "Luwu Utara",
-					"aliases": [
-						"Masamba"
-					]
+					"aliases": ["Masamba"]
 				},
 				{
 					"id": "luwu-timur",
 					"name": "Luwu Timur",
-					"aliases": [
-						"Malili"
-					]
+					"aliases": ["Malili"]
 				},
 				{
 					"id": "tana-toraja",
 					"name": "Tana Toraja",
-					"aliases": [
-						"Makale"
-					]
+					"aliases": ["Makale"]
 				},
 				{
 					"id": "toraja-utara",
 					"name": "Toraja Utara",
-					"aliases": [
-						"Rantepao"
-					]
+					"aliases": ["Rantepao"]
 				}
 			],
 			"facts": [
@@ -4698,9 +4578,7 @@
 				{
 					"id": "maluku-tengah",
 					"name": "Maluku Tengah",
-					"aliases": [
-						"Masohi"
-					]
+					"aliases": ["Masohi"]
 				},
 				{
 					"id": "seram-bagian-barat",
@@ -4720,9 +4598,7 @@
 				{
 					"id": "kepulauan-tanimbar",
 					"name": "Kepulauan Tanimbar",
-					"aliases": [
-						"Saumlaki"
-					]
+					"aliases": ["Saumlaki"]
 				},
 				{
 					"id": "maluku-barat-daya",
@@ -4732,9 +4608,7 @@
 				{
 					"id": "kepulauan-aru",
 					"name": "Kepulauan Aru",
-					"aliases": [
-						"Dobo"
-					]
+					"aliases": ["Dobo"]
 				},
 				{
 					"id": "buru",
@@ -4800,9 +4674,7 @@
 				{
 					"id": "halmahera-barat",
 					"name": "Halmahera Barat",
-					"aliases": [
-						"Jailolo"
-					]
+					"aliases": ["Jailolo"]
 				},
 				{
 					"id": "halmahera-tengah",
@@ -4812,9 +4684,7 @@
 				{
 					"id": "halmahera-utara",
 					"name": "Halmahera Utara",
-					"aliases": [
-						"Tobelo"
-					]
+					"aliases": ["Tobelo"]
 				},
 				{
 					"id": "halmahera-timur",
@@ -4824,9 +4694,7 @@
 				{
 					"id": "halmahera-selatan",
 					"name": "Halmahera Selatan",
-					"aliases": [
-						"Labuha"
-					]
+					"aliases": ["Labuha"]
 				},
 				{
 					"id": "kepulauan-sula",
@@ -4897,9 +4765,7 @@
 				{
 					"id": "kepulauan-yapen",
 					"name": "Kepulauan Yapen",
-					"aliases": [
-						"Serui"
-					]
+					"aliases": ["Serui"]
 				},
 				{
 					"id": "sarmi",
@@ -5197,9 +5063,7 @@
 				{
 					"id": "mimika",
 					"name": "Mimika",
-					"aliases": [
-						"Timika"
-					]
+					"aliases": ["Timika"]
 				},
 				{
 					"id": "paniai",
@@ -5278,9 +5142,7 @@
 				{
 					"id": "jayawijaya",
 					"name": "Jayawijaya",
-					"aliases": [
-						"Wamena"
-					]
+					"aliases": ["Wamena"]
 				},
 				{
 					"id": "yahukimo",
