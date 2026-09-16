@@ -1,9 +1,5 @@
-import { PageFrame, PageTitle } from "@/components/layout/page-frame";
+import { Cadangan } from "@/components/screens/cadangan";
 
 export default function Page() {
-	return (
-		<PageFrame>
-			<PageTitle>Cadangan</PageTitle>
-		</PageFrame>
-	);
+	return <Cadangan />;
 }
