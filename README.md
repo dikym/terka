@@ -29,9 +29,20 @@ bun run test
 bun run build:logic
 ```
 
-Halaman, layout, komponen, API, logika bisnis, aset, serta migrasi database
-Semang tidak disalin. Tambahkan `src/app/layout.tsx` (dengan import
-`./globals.css`) dan `src/app/page.tsx` sebelum menjalankan aplikasi.
+UI desktop tersedia di `src/components/`:
+
+- `ui`: primitif Tailwind + cva (button, badge, input, dst).
+- `terka`: komponen domain — plat, kode, status kartu, fakta, pohon cakupan.
+- `layout`: AppShell/sidebar, PageFrame, TwoColumn, SessionShell.
+- `screens`: 23 layar statis dengan data dummy, belum terhubung ke
+  `src/lib/terka`.
+
+Route yang tersedia: `/`, `/cakupan`, `/statistik`, `/referensi`,
+`/terfokus`, `/peta`, `/kartu-sulit`, `/cadangan`, `/tantangan`, `/kilat`,
+dan `/sesi?screen=<key>` dengan 13 key: `tanya`, `dinilai`, `bandingkan`,
+`bandingkan-dijawab`, `ringkasan`, `tanpa-petunjuk`, `sebutkan`,
+`plat-utuh`, `kode-belakang`, `benar-salah`, `bukan-yang-mana`,
+`fakta-kode`, `dibatalkan`.
 
 ```sh
 bun run dev
