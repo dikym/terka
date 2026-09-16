@@ -15,15 +15,16 @@ export function LevelChip({
 	icon: Icon = Brain
 }: {
 	level: number;
-	label: string;
+	label?: string;
 	filled: number;
-	icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+	icon?: React.ComponentType<React.SVGProps<SVGSVGElement>> | null;
 }) {
+	const ariaLabel = label ? `Level ${level} · ${label}` : `Level ${level}`;
 	return (
 		<span
 			role="img"
-			aria-label={`Level ${level} · ${label}`}
-			title={`Level ${level} · ${label}`}
+			aria-label={ariaLabel}
+			title={ariaLabel}
 			className="inline-flex shrink-0 items-center gap-2"
 		>
 			<span className="inline-flex gap-[3px]">
@@ -37,7 +38,7 @@ export function LevelChip({
 					/>
 				))}
 			</span>
-			<Icon className="text-ink-700 size-4" aria-hidden />
+			{Icon ? <Icon className="text-ink-700 size-4" aria-hidden /> : null}
 		</span>
 	);
 }
