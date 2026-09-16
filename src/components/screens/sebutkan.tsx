@@ -75,7 +75,7 @@ export function Sebutkan() {
 					</div>
 				))}
 			</div>
-			<Input placeholder="Tambah jawaban…" />
+			<Input placeholder="Tambah jawaban…" aria-label="Tambah jawaban" />
 			<div className="grid grid-cols-2 gap-2">
 				<Button variant="secondary" kbd="Enter">
 					Tambah

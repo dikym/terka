@@ -59,7 +59,7 @@ export function SesiTanya() {
 					emphasize="code"
 				/>
 			</div>
-			<Input placeholder="Ketik jawaban…" />
+			<Input placeholder="Ketik jawaban…" aria-label="Ketik jawaban" />
 			<Button block kbd="Enter" iconRight={<CornerDownLeft className="size-4" aria-hidden />}>
 				Periksa
 			</Button>

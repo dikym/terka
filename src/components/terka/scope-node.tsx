@@ -34,7 +34,7 @@ export function ScopeNode({
 	name: string;
 	count: string;
 	percent: string;
-	group: IslandGroup;
+	group?: IslandGroup;
 	depth?: number;
 	active?: boolean;
 	expanded?: boolean;
@@ -53,7 +53,7 @@ export function ScopeNode({
 				active && "border-ink-1000 bg-paper-50",
 				className
 			)}
-			style={{ paddingLeft: `${12 + 20 + depth * 20}px` }}
+			style={group ? { paddingLeft: `${12 + 20 + depth * 20}px` } : undefined}
 		>
 			{leaf ? null : (
 				<span className="grid size-6 shrink-0 place-items-center">
@@ -61,7 +61,10 @@ export function ScopeNode({
 				</span>
 			)}
 			<span
-				className={cn("size-2.5 shrink-0 rounded-full", groupDotClass[group])}
+				className={cn(
+					"size-2.5 shrink-0 rounded-full",
+					group ? groupDotClass[group] : "bg-ink-1000"
+				)}
 				aria-hidden
 			/>
 			<span className="flex min-w-0 flex-1 flex-col gap-1">
@@ -82,7 +85,10 @@ export function ScopeNode({
 				<span className="flex items-center gap-2">
 					<span className="bg-ink-100 h-1.5 min-w-0 flex-1 overflow-hidden rounded-xs">
 						<span
-							className={cn("block h-full", groupDotClass[group])}
+							className={cn(
+								"block h-full",
+								group ? groupDotClass[group] : "bg-ink-1000"
+							)}
 							style={{ width: percent }}
 						/>
 					</span>
