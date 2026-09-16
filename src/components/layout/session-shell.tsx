@@ -34,7 +34,7 @@ export function SessionShell({
 					</Link>
 					<SessionProgress current={current} total={total} />
 					{undo ? (
-						<IconButton label="Batalkan jawaban" className="text-ink-700">
+						<IconButton label="Batalkan jawaban">
 							<Undo2 className="size-[18px]" aria-hidden />
 						</IconButton>
 					) : null}

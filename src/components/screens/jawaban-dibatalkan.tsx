@@ -54,11 +54,11 @@ export function JawabanDibatalkan() {
 				</div>
 			</Card>
 			<Callout title="Satu langkah saja">
-				Undo hanya mengembalikan jawaban paling akhir. Jawaban sebelumnya tidak bisa
-				dibatalkan lagi.
+				Jawaban terakhir selalu bisa dibatalkan sampai jawaban berikutnya masuk. Setiap
+				kartu menyimpan satu salinan keadaan sebelumnya.
 			</Callout>
-			<Button block iconRight={<ArrowRight className="size-4" aria-hidden />}>
-				Lanjut
+			<Button variant="secondary" block>
+				Jawab ulang kartu ini
 			</Button>
 		</SessionShell>
 	);
