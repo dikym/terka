@@ -1,9 +1,5 @@
-import { SessionShell } from "@/components/layout/session-shell";
+import { TantanganHarian } from "@/components/screens/tantangan-harian";
 
 export default function Page() {
-	return (
-		<SessionShell current={7} total={24}>
-			<p>Sesi</p>
-		</SessionShell>
-	);
+	return <TantanganHarian />;
 }
