@@ -2,25 +2,9 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@property --font-space-grotesk {
-	syntax: "*";
-	inherits: true;
-}
-
-@property --font-ibm-plex-sans {
-	syntax: "*";
-	inherits: true;
-}
-
-@property --font-ibm-plex-mono {
-	syntax: "*";
-	inherits: true;
-}
-
-@property --font-barlow-semi-condensed {
-	syntax: "*";
-	inherits: true;
-}
+/* Disabled controls keep their cursor but never react to hover or press. */
+@custom-variant hover (&:hover:not(:disabled, [aria-disabled="true"]));
+@custom-variant active (&:active:not(:disabled, [aria-disabled="true"]));
 
 @theme {
 	--color-ink-1000: oklch(0.2 0.02 260);
@@ -67,12 +51,6 @@
 	--color-group-maluku: oklch(0.76 0.11 295);
 	--color-group-papua: oklch(0.77 0.105 340);
 
-	--font-display: var(--font-space-grotesk), "Helvetica Neue", Helvetica, sans-serif;
-	--font-body: var(--font-ibm-plex-sans), "Helvetica Neue", Helvetica, sans-serif;
-	--font-mono: var(--font-ibm-plex-mono), ui-monospace, "SF Mono", Menlo, monospace;
-	--font-plate: var(--font-barlow-semi-condensed), "DIN 1451", "Helvetica Neue", sans-serif;
-	--font-sans: var(--font-body);
-
 	--text-hero: 72px;
 	--text-hero--line-height: 1.02;
 	--text-hero--letter-spacing: -0.03em;
@@ -100,6 +78,11 @@
 	--text-micro: 11px;
 	--text-micro--line-height: 1;
 
+	--leading-tight: 1.02;
+	--leading-snug: 1.18;
+	--leading-normal: 1.5;
+	--leading-loose: 1.65;
+
 	--tracking-plate: 0.06em;
 	--tracking-wordmark: -0.04em;
 
@@ -125,6 +108,12 @@
 }
 
 @theme inline {
+	--font-display: var(--font-space-grotesk), "Helvetica Neue", Helvetica, sans-serif;
+	--font-body: var(--font-ibm-plex-sans), "Helvetica Neue", Helvetica, sans-serif;
+	--font-mono: var(--font-ibm-plex-mono), ui-monospace, "SF Mono", Menlo, monospace;
+	--font-plate: var(--font-barlow-semi-condensed), "DIN 1451", "Helvetica Neue", sans-serif;
+	--font-sans: var(--font-body);
+
 	--color-brand: var(--color-caution-500);
 	--color-brand-text: var(--color-caution-700);
 
@@ -192,8 +181,7 @@
 		@apply border-ink-200;
 	}
 	body {
-		@apply bg-paper-0 font-body text-body-md text-ink-900 antialiased;
-		text-wrap: pretty;
+		@apply bg-paper-0 font-body text-body-md text-pretty text-ink-900 antialiased;
 	}
 	a {
 		@apply text-caution-700 hover:text-ink-1000;
