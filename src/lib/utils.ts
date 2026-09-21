@@ -1,9 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { extendTailwindMerge } from "tailwind-merge";
 
-// tailwind-merge only knows Tailwind's own scales; the Terka type scale
-// (`text-body-md`) would otherwise be filed under text *color* and drop the
-// real colour next to it. Every custom font-size from globals.css is listed.
+// Keep custom font sizes separate from text colors when merging classes.
 const twMerge = extendTailwindMerge({
 	extend: {
 		classGroups: {
@@ -23,7 +21,8 @@ const twMerge = extendTailwindMerge({
 					]
 				}
 			],
-			shadow: [{ shadow: ["block", "block-accent", "lift", "overlay"] }]
+			shadow: [{ shadow: ["block", "block-accent", "lift", "overlay"] }],
+			size: [{ size: ["control", "control-sm"] }]
 		}
 	}
 });
