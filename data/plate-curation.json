@@ -1,13 +1,29 @@
 {
-	"version": "2026.09.15",
+	"version": "2026.09.16",
 	"regions": {
 		"BL": {
 			"id": "bl",
 			"province": "aceh",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -16,8 +32,24 @@
 			"province": "sumatera-utara",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -26,8 +58,24 @@
 			"province": "sumatera-utara",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -36,8 +84,24 @@
 			"province": "sumatera-barat",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -46,8 +110,24 @@
 			"province": "riau",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -56,8 +136,24 @@
 			"province": "kepulauan-riau",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -66,8 +162,24 @@
 			"province": "jambi",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -76,8 +188,24 @@
 			"province": "sumatera-selatan",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -86,8 +214,24 @@
 			"province": "bangka-belitung",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -96,8 +240,24 @@
 			"province": "lampung",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -106,8 +266,24 @@
 			"province": "bengkulu",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -116,8 +292,34 @@
 			"province": "banten",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				},
+				{
+					"ref": "https://daerah.sindonews.com/berita/1095125/174/april-plat-nomor-ranmor-di-kabupaten-tangerang-berubah-a",
+					"publisher": "sindonews",
+					"official": false
+				},
+				{
+					"ref": "https://media3.id/2025/05/bapenda-uptd-wilayah-4-pakuhaji-gelar-sosialisasi-opsen-pkb-dan-bbnkb-di-aula-kantor-kecamatan-pakuhaji/",
+					"publisher": "media3",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -125,9 +327,35 @@
 			"id": "b",
 			"province": "jakarta",
 			"spans": ["jawa-barat", "banten"],
-			"aliases": ["Jakarta", "DKI Jakarta"],
-			"confidence": "medium",
-			"sources": [],
+			"aliases": ["Jakarta", "DKI Jakarta", "Jadetabek"],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				},
+				{
+					"ref": "https://daerah.sindonews.com/berita/1095125/174/april-plat-nomor-ranmor-di-kabupaten-tangerang-berubah-a",
+					"publisher": "sindonews",
+					"official": false
+				},
+				{
+					"ref": "https://media3.id/2025/05/bapenda-uptd-wilayah-4-pakuhaji-gelar-sosialisasi-opsen-pkb-dan-bbnkb-di-aula-kantor-kecamatan-pakuhaji/",
+					"publisher": "media3",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -136,8 +364,24 @@
 			"province": "jawa-barat",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -146,8 +390,24 @@
 			"province": "jawa-barat",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -156,8 +416,24 @@
 			"province": "jawa-barat",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -166,8 +442,24 @@
 			"province": "jawa-barat",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -176,8 +468,24 @@
 			"province": "jawa-barat",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -186,8 +494,24 @@
 			"province": "jawa-tengah",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -196,8 +520,24 @@
 			"province": "jawa-tengah",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -206,8 +546,24 @@
 			"province": "jawa-tengah",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -216,8 +572,24 @@
 			"province": "jawa-tengah",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -226,8 +598,24 @@
 			"province": "jawa-tengah",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -236,8 +624,24 @@
 			"province": "jawa-tengah",
 			"spans": [],
 			"aliases": ["Solo", "Surakarta", "Solo Raya"],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -246,8 +650,24 @@
 			"province": "yogyakarta",
 			"spans": [],
 			"aliases": ["Yogyakarta", "Jogja", "Yogya", "DIY"],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -256,8 +676,19 @@
 			"province": "jawa-timur",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -266,8 +697,24 @@
 			"province": "jawa-timur",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://jogja.polri.go.id/yogyakarta/tribrata-news/online/detail/plat-nomor--identitas-resmi-kendaraan-di-indonesia.html",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -276,8 +723,24 @@
 			"province": "jawa-timur",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -285,9 +748,25 @@
 			"id": "n",
 			"province": "jawa-timur",
 			"spans": [],
-			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"aliases": ["Malang Raya"],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -296,8 +775,24 @@
 			"province": "jawa-timur",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -306,8 +801,29 @@
 			"province": "jawa-timur",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://jogja.polri.go.id/yogyakarta/tribrata-news/online/detail/plat-nomor--identitas-resmi-kendaraan-di-indonesia.html",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				},
+				{
+					"ref": "https://news.detik.com/berita-jawa-timur/d-5309949/pelat-s-dipakai-6-daerah-di-jatim-kendaraan-kamu-masuk-mana",
+					"publisher": "detik",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -316,8 +832,24 @@
 			"province": "jawa-timur",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -326,8 +858,24 @@
 			"province": "jawa-timur",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -336,8 +884,24 @@
 			"province": "bali",
 			"spans": [],
 			"aliases": ["Pulau Bali"],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -346,8 +910,24 @@
 			"province": "nusa-tenggara-barat",
 			"spans": [],
 			"aliases": ["Lombok"],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -356,8 +936,24 @@
 			"province": "nusa-tenggara-barat",
 			"spans": [],
 			"aliases": ["Pulau Sumbawa"],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -366,8 +962,24 @@
 			"province": "nusa-tenggara-timur",
 			"spans": [],
 			"aliases": ["Timor"],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://oto.detik.com/berita/d-7030888/plat-z-daerah-mana-cek-kode-plat-nomor-kendaraan-lengkap-di-indonesia",
+					"publisher": "detik",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -376,8 +988,24 @@
 			"province": "nusa-tenggara-timur",
 			"spans": [],
 			"aliases": ["Flores"],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://oto.detik.com/berita/d-7030888/plat-z-daerah-mana-cek-kode-plat-nomor-kendaraan-lengkap-di-indonesia",
+					"publisher": "detik",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -386,8 +1014,24 @@
 			"province": "nusa-tenggara-timur",
 			"spans": [],
 			"aliases": ["Sumba"],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -396,8 +1040,24 @@
 			"province": "kalimantan-barat",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -406,8 +1066,24 @@
 			"province": "kalimantan-selatan",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -416,8 +1092,24 @@
 			"province": "kalimantan-tengah",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -426,8 +1118,24 @@
 			"province": "kalimantan-timur",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -436,8 +1144,19 @@
 			"province": "kalimantan-utara",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -446,8 +1165,24 @@
 			"province": "sulawesi-utara",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -456,8 +1191,24 @@
 			"province": "sulawesi-utara",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -466,8 +1217,24 @@
 			"province": "gorontalo",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -476,8 +1243,24 @@
 			"province": "sulawesi-tengah",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -486,8 +1269,24 @@
 			"province": "sulawesi-tenggara",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -496,8 +1295,24 @@
 			"province": "sulawesi-selatan",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -506,8 +1321,24 @@
 			"province": "sulawesi-selatan",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -516,8 +1347,24 @@
 			"province": "sulawesi-selatan",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -526,8 +1373,24 @@
 			"province": "sulawesi-barat",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -536,8 +1399,24 @@
 			"province": "maluku",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -546,8 +1425,24 @@
 			"province": "maluku-utara",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://auto2000.co.id/berita-dan-tips/kode-plat-nomor-belakang-dan-daerahnya",
+					"publisher": "auto2000",
+					"official": false
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -556,8 +1451,34 @@
 			"province": "papua",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://tribratanews.polri.go.id/blog/nasional-3/3-provinsi-baru-papua-kini-miliki-pelat-nomor-baru-77921",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://mail.bappeda.papua.go.id/berita/pembentukan-3-provinsi-baru-di-papua",
+					"publisher": "pemprov-papua",
+					"official": true
+				},
+				{
+					"ref": "https://papuabaratdayaprov.go.id/page/59/index.html",
+					"publisher": "pemprov-papua-barat-daya",
+					"official": true
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -566,11 +1487,40 @@
 			"province": "papua-barat",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
-			"issues": [
-				"Tanggal PB 2016 pada sumber bertentangan dengan 29 April 2013 pada PRD 13.3."
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://tribratanews.polri.go.id/blog/nasional-3/3-provinsi-baru-papua-kini-miliki-pelat-nomor-baru-77921",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.antaranews.com/berita/4661277/daftar-kode-huruf-plat-nomor-kendaraan-diseluruh-wilayah-indonesia",
+					"publisher": "antara",
+					"official": false
+				},
+				{
+					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://mail.bappeda.papua.go.id/berita/pembentukan-3-provinsi-baru-di-papua",
+					"publisher": "pemprov-papua",
+					"official": true
+				},
+				{
+					"ref": "https://papuabaratdayaprov.go.id/page/59/index.html",
+					"publisher": "pemprov-papua-barat-daya",
+					"official": true
+				},
+				{
+					"ref": "https://www.papua.us/2013/04/pb-plat-nomor-baru-kendaraan-bermotor.html",
+					"publisher": "papua-us",
+					"official": false
+				}
 			],
+			"issues": [],
 			"suffixes": []
 		},
 		"PY": {
@@ -578,8 +1528,24 @@
 			"province": "papua-barat-daya",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://tribratanews.polri.go.id/blog/nasional-3/3-provinsi-baru-papua-kini-miliki-pelat-nomor-baru-77921",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://balleonews.com/2024/05/27/resmi-plat-kendaraan-di-papua-barat-daya-berubah-jadi-py/",
+					"publisher": "balleonews",
+					"official": false
+				},
+				{
+					"ref": "https://papuabaratdayaprov.go.id/page/59/index.html",
+					"publisher": "pemprov-papua-barat-daya",
+					"official": true
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -588,8 +1554,24 @@
 			"province": "papua-selatan",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://tribratanews.papua.polri.go.id/kapolres-merauke-hadiri-launching-nomor-registrasi-kendaraan-bermotor-di-provinsi-papua-selatan/",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://portal.merauke.go.id/berita/pemprov-papua-selatan-launching-nomor-registrasi-kendaraan-bermotor-dari-pa-ke-ps",
+					"publisher": "pemkab-merauke",
+					"official": true
+				},
+				{
+					"ref": "https://mail.bappeda.papua.go.id/berita/pembentukan-3-provinsi-baru-di-papua",
+					"publisher": "pemprov-papua",
+					"official": true
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -598,8 +1580,24 @@
 			"province": "papua-tengah",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://tribratanews.polri.go.id/blog/nasional-3/3-provinsi-baru-papua-kini-miliki-pelat-nomor-baru-77921",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://www.salampapua.com/2024/08/plat-mobil-di-timika-dirubah-dari-pa-menjadi-pt-ini-syaratnya.html",
+					"publisher": "salampapua",
+					"official": false
+				},
+				{
+					"ref": "https://mail.bappeda.papua.go.id/berita/pembentukan-3-provinsi-baru-di-papua",
+					"publisher": "pemprov-papua",
+					"official": true
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		},
@@ -608,8 +1606,24 @@
 			"province": "papua-pegunungan",
 			"spans": [],
 			"aliases": [],
-			"confidence": "medium",
-			"sources": [],
+			"confidence": "high",
+			"sources": [
+				{
+					"ref": "https://tribratanews.papua.polri.go.id/launching-nomor-registrasi-kendaraan-bermotor-di-papua-pegunungan/",
+					"publisher": "polri",
+					"official": true
+				},
+				{
+					"ref": "https://rri.co.id/wamena/regional/1070172/pemprov-papua-pegunungan-launching-plat-nomor-kendaraan-pg",
+					"publisher": "rri",
+					"official": false
+				},
+				{
+					"ref": "https://mail.bappeda.papua.go.id/berita/pembentukan-3-provinsi-baru-di-papua",
+					"publisher": "pemprov-papua",
+					"official": true
+				}
+			],
 			"issues": [],
 			"suffixes": []
 		}
@@ -620,9 +1634,6 @@
 			"answerRegionId": "ku"
 		},
 		"f-017": {
-			"status": "diperdebatkan"
-		},
-		"f-020": {
 			"status": "diperdebatkan"
 		},
 		"f-030": {
