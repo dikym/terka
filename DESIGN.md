@@ -52,20 +52,20 @@ Delapan butir yang harus diperiksa sebelum satu layar dinyatakan selesai:
 
 ### Isi
 
-| § | Bagian | Untuk |
-| --- | --- | --- |
-| 1 | Ringkasan Desain | Orientasi |
-| 2 | Prinsip → Keputusan Desain | Memutuskan hal yang belum tertulis |
-| 3 | Fondasi Visual | Warna, tipe, jarak, bentuk, motion, state |
-| 4 | Inventaris Komponen | Memilih dan membangun komponen |
-| 5 | Pola Komposisi | Menyusun komponen jadi layar |
-| 6 | Peta Layar | Navigasi dan kepemilikan layar |
-| 7 | Spesifikasi Layar | Membangun layar tertentu |
-| 8 | Pola Lintas Layar | Status, istilah, copy, keyboard, aksesibilitas |
-| 9 | Yang Sengaja Tidak Ada | Menolak usulan fitur |
-| 10 | Aset yang Belum Ada | Substitusi yang perlu dikonfirmasi |
-| 11 | Pertanyaan Desain Terbuka | Keputusan yang ditunda |
-| 12 | Riwayat Revisi | Apa yang berubah dan kapan |
+| §   | Bagian                     | Untuk                                          |
+| --- | -------------------------- | ---------------------------------------------- |
+| 1   | Ringkasan Desain           | Orientasi                                      |
+| 2   | Prinsip → Keputusan Desain | Memutuskan hal yang belum tertulis             |
+| 3   | Fondasi Visual             | Warna, tipe, jarak, bentuk, motion, state      |
+| 4   | Inventaris Komponen        | Memilih dan membangun komponen                 |
+| 5   | Pola Komposisi             | Menyusun komponen jadi layar                   |
+| 6   | Peta Layar                 | Navigasi dan kepemilikan layar                 |
+| 7   | Spesifikasi Layar          | Membangun layar tertentu                       |
+| 8   | Pola Lintas Layar          | Status, istilah, copy, keyboard, aksesibilitas |
+| 9   | Yang Sengaja Tidak Ada     | Menolak usulan fitur                           |
+| 10  | Aset yang Belum Ada        | Substitusi yang perlu dikonfirmasi             |
+| 11  | Pertanyaan Desain Terbuka  | Keputusan yang ditunda                         |
+| 12  | Riwayat Revisi             | Apa yang berubah dan kapan                     |
 
 ---
 
@@ -85,32 +85,32 @@ Tiga hal yang membedakan Terka dari aplikasi hafalan pada umumnya:
    punya satu jalan keluar: **Kembali ke beranda**.
 2. **Sistem tidak menanyakan hal yang bisa diukur sendiri.** Tidak ada baris penilaian yang dipilih
    pengguna; grade dihitung dari benar-salah dan waktu respons. Yang tampil sesudah menjawab adalah
-   *hasil*, bukan *pertanyaan*.
+   _hasil_, bukan _pertanyaan_.
 3. **Alur penuh bisa dijalankan dari keyboard.** Enter mengirim, Enter lanjut, Z membatalkan, L
    menurunkan level. Karena itu focus ring adalah afordans utama, bukan detail aksesibilitas.
 
 **Nada.** Aplikasi menyatakan fakta dan konsekuensi. Ia tidak menyemangati, tidak mendorong, dan tidak
 memberi selamat.
 
-* Benar: "Antrean hari ini habis. Kembali besok."
-* Benar: "Turunkan ke Level 1 — tidak memengaruhi jadwal."
-* Salah: "Hebat! Lanjutkan Hari Beruntunmu."
+- Benar: "Antrean hari ini habis. Kembali besok."
+- Benar: "Turunkan ke Level 1 — tidak memengaruhi jadwal."
+- Salah: "Hebat! Lanjutkan Hari Beruntunmu."
 
 ---
 
 ## 2. Prinsip → Keputusan Desain
 
-| Prinsip produk | Konsekuensi di UI |
-| --- | --- |
-| Recall aktif lebih utama daripada pengenalan | Kolom ketik adalah kontrol utama layar soal. Pilihan ganda hanya muncul di kartu Level 1 dan tidak diberi perlakuan visual istimewa |
-| Konsistensi jadwal mengalahkan volume latihan | Tidak ada badge angka di bilah bawah; angka jatuh tempo hidup di satu tempat saja, yaitu beranda |
-| Kode mirip adalah sumber kesalahan utama | **Bandingkan Kode** dapat layout khusus: dua kode berdampingan dengan ukuran sama, tidak ada yang disorot lebih |
-| Konteks latihan menyerupai pemakaian nyata | Soal tampil sebagai plat utuh — ground putih, ink hitam, tipe condensed — meniru plat pasca-15 Juni 2022 |
-| Konteks mengalahkan pengulangan kosong | Fakta Singkat selalu tampil *sesudah* verdict; tampil *sebelum* soal hanya pada kartu Sulit Dikuasai, dan wajib disertai penjelasan |
-| Cakupan membatasi materi baru, bukan pengulangan | Layar Cakupan memakai model dua langkah; menelusuri tidak mengubah apa pun sampai **Pilih wilayah ini** ditekan |
-| Level mengikuti kematangan kartu | Label **Tidak memengaruhi jadwal** dan **Dihitung penuh** keduanya tampil, bukan hanya yang penurunan |
-| Sistem tidak menanyakan yang bisa diukur | Baris grading adalah **tampilan hasil**, bukan kontrol pilihan |
-| Data lokal dan tetap dipegang pengguna | Status cadangan punya slot tetap di beranda dan Statistik, bukan disembunyikan di Setelan |
+| Prinsip produk                                   | Konsekuensi di UI                                                                                                                   |
+| ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Recall aktif lebih utama daripada pengenalan     | Kolom ketik adalah kontrol utama layar soal. Pilihan ganda hanya muncul di kartu Level 1 dan tidak diberi perlakuan visual istimewa |
+| Konsistensi jadwal mengalahkan volume latihan    | Tidak ada badge angka di bilah bawah; angka jatuh tempo hidup di satu tempat saja, yaitu beranda                                    |
+| Kode mirip adalah sumber kesalahan utama         | **Bandingkan Kode** dapat layout khusus: dua kode berdampingan dengan ukuran sama, tidak ada yang disorot lebih                     |
+| Konteks latihan menyerupai pemakaian nyata       | Soal tampil sebagai plat utuh — ground putih, ink hitam, tipe condensed — meniru plat pasca-15 Juni 2022                            |
+| Konteks mengalahkan pengulangan kosong           | Fakta Singkat selalu tampil _sesudah_ verdict; tampil _sebelum_ soal hanya pada kartu Sulit Dikuasai, dan wajib disertai penjelasan |
+| Cakupan membatasi materi baru, bukan pengulangan | Layar Cakupan memakai model dua langkah; menelusuri tidak mengubah apa pun sampai **Pilih wilayah ini** ditekan                     |
+| Level mengikuti kematangan kartu                 | Label **Tidak memengaruhi jadwal** dan **Dihitung penuh** keduanya tampil, bukan hanya yang penurunan                               |
+| Sistem tidak menanyakan yang bisa diukur         | Baris grading adalah **tampilan hasil**, bukan kontrol pilihan                                                                      |
+| Data lokal dan tetap dipegang pengguna           | Status cadangan punya slot tetap di beranda dan Statistik, bukan disembunyikan di Setelan                                           |
 
 ---
 
@@ -123,80 +123,80 @@ Seluruh nilai di bawah adalah token. Definisikan sekali sebagai CSS custom prope
 
 **Ink dan paper — netral dingin.** Tidak ada hitam murni, tidak ada abu-abu netral.
 
-| Token | Nilai | Dipakai untuk |
-| --- | --- | --- |
-| `--ink-1000` | `oklch(0.20 0.020 260)` | Judul, border kuat, focus ring |
-| `--ink-900` | `oklch(0.26 0.020 260)` | Teks body |
-| `--ink-700` | `oklch(0.42 0.016 258)` | Teks sekunder |
-| `--ink-500` | `oklch(0.55 0.015 258)` | Teks muted, metadata |
-| `--ink-300` | `oklch(0.73 0.012 255)` | Ikon nonaktif |
-| `--ink-200` | `oklch(0.87 0.008 250)` | Border hairline |
-| `--ink-100` | `oklch(0.93 0.006 250)` | Track progress |
-| `--paper-50` | `oklch(0.970 0.004 250)` | Surface cekung |
-| `--paper-25` | `oklch(0.985 0.003 250)` | Teks di atas ink |
-| `--paper-0` | `oklch(1 0 0)` | Latar aplikasi, surface card |
+| Token        | Nilai                    | Dipakai untuk                  |
+| ------------ | ------------------------ | ------------------------------ |
+| `--ink-1000` | `oklch(0.20 0.020 260)`  | Judul, border kuat, focus ring |
+| `--ink-900`  | `oklch(0.26 0.020 260)`  | Teks body                      |
+| `--ink-700`  | `oklch(0.42 0.016 258)`  | Teks sekunder                  |
+| `--ink-500`  | `oklch(0.55 0.015 258)`  | Teks muted, metadata           |
+| `--ink-300`  | `oklch(0.73 0.012 255)`  | Ikon nonaktif                  |
+| `--ink-200`  | `oklch(0.87 0.008 250)`  | Border hairline                |
+| `--ink-100`  | `oklch(0.93 0.006 250)`  | Track progress                 |
+| `--paper-50` | `oklch(0.970 0.004 250)` | Surface cekung                 |
+| `--paper-25` | `oklch(0.985 0.003 250)` | Teks di atas ink               |
+| `--paper-0`  | `oklch(1 0 0)`           | Latar aplikasi, surface card   |
 
 **Brand — lampu lalu lintas.** Kuning bertindak, merah berhenti, hijau membenarkan. Tiap warna punya
 step 700 yang dipakai **setiap kali warna itu menanggung teks**, sehingga tidak ada warna terang yang
 pernah jadi tipe kecil.
 
-| Token | Nilai | Dipakai untuk |
-| --- | --- | --- |
-| `--caution-500` | `oklch(0.82 0.15 75)` | **Warna tindakan utama.** Fill tombol primary, wash Cakupan aktif, text selection |
-| `--caution-700` | `oklch(0.50 0.13 70)` | Kuning sebagai teks kecil dan tautan |
-| `--caution-300` | `oklch(0.90 0.10 80)` | Wash penanda "perhatikan ini" |
-| `--caution-100` | `oklch(0.955 0.06 78)` | Tint latar kuning |
-| `--stop-500` | `oklch(0.70 0.17 25)` | Verdict salah, grade Lagi |
-| `--stop-700` | `oklch(0.48 0.18 25)` | Merah sebagai teks kecil |
-| `--stop-300` / `--stop-100` | `oklch(0.84 0.10 28)` / `oklch(0.945 0.055 25)` | Wash dan tint merah |
-| `--go-500` | `oklch(0.74 0.14 150)` | Verdict benar, grade Bagus |
-| `--go-700` | `oklch(0.42 0.12 150)` | Hijau sebagai teks kecil |
-| `--go-300` / `--go-100` | `oklch(0.86 0.09 152)` / `oklch(0.945 0.055 150)` | Wash dan tint hijau |
+| Token                       | Nilai                                             | Dipakai untuk                                                                     |
+| --------------------------- | ------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `--caution-500`             | `oklch(0.82 0.15 75)`                             | **Warna tindakan utama.** Fill tombol primary, wash Cakupan aktif, text selection |
+| `--caution-700`             | `oklch(0.50 0.13 70)`                             | Kuning sebagai teks kecil dan tautan                                              |
+| `--caution-300`             | `oklch(0.90 0.10 80)`                             | Wash penanda "perhatikan ini"                                                     |
+| `--caution-100`             | `oklch(0.955 0.06 78)`                            | Tint latar kuning                                                                 |
+| `--stop-500`                | `oklch(0.70 0.17 25)`                             | Verdict salah, grade Lagi                                                         |
+| `--stop-700`                | `oklch(0.48 0.18 25)`                             | Merah sebagai teks kecil                                                          |
+| `--stop-300` / `--stop-100` | `oklch(0.84 0.10 28)` / `oklch(0.945 0.055 25)`   | Wash dan tint merah                                                               |
+| `--go-500`                  | `oklch(0.74 0.14 150)`                            | Verdict benar, grade Bagus                                                        |
+| `--go-700`                  | `oklch(0.42 0.12 150)`                            | Hijau sebagai teks kecil                                                          |
+| `--go-300` / `--go-100`     | `oklch(0.86 0.09 152)` / `oklch(0.945 0.055 150)` | Wash dan tint hijau                                                               |
 
 Kuning adalah warna tindakan; hijau **hanya** berarti "benar". Jangan memakai hijau sebagai fill
 tombol umum, dan jangan memakai biru sama sekali — biru tidak ada di palet UI Terka.
 
 **Aksen sekunder.** Hanya sebagai teks step 700 atau wash step 100, tidak pernah fill besar.
 
-| Token | Nilai | Dipakai untuk |
-| --- | --- | --- |
-| `--tangerine-700` | `oklch(0.47 0.16 42)` | Hari Beruntun, aktivitas |
-| `--grape-700` | `oklch(0.45 0.17 298)` | Sulit Dikuasai, label `legenda` |
-| `--sky-700` | `oklch(0.45 0.13 240)` | Teks informatif netral |
+| Token             | Nilai                  | Dipakai untuk                   |
+| ----------------- | ---------------------- | ------------------------------- |
+| `--tangerine-700` | `oklch(0.47 0.16 42)`  | Hari Beruntun, aktivitas        |
+| `--grape-700`     | `oklch(0.45 0.17 298)` | Sulit Dikuasai, label `legenda` |
+| `--sky-700`       | `oklch(0.45 0.13 240)` | Teks informatif netral          |
 
 **Tujuh hue kawasan.** Satu lightness, satu chroma, beda hue saja.
 
-| Token | Nilai |
-| --- | --- |
-| `--group-sumatera` | `oklch(0.76 0.115 28)` |
-| `--group-jawa` | `oklch(0.79 0.115 80)` |
+| Token                | Nilai                   |
+| -------------------- | ----------------------- |
+| `--group-sumatera`   | `oklch(0.76 0.115 28)`  |
+| `--group-jawa`       | `oklch(0.79 0.115 80)`  |
 | `--group-kalimantan` | `oklch(0.78 0.110 135)` |
-| `--group-sulawesi` | `oklch(0.78 0.100 190)` |
-| `--group-balinusra` | `oklch(0.76 0.105 240)` |
-| `--group-maluku` | `oklch(0.76 0.110 295)` |
-| `--group-papua` | `oklch(0.77 0.105 340)` |
+| `--group-sulawesi`   | `oklch(0.78 0.100 190)` |
+| `--group-balinusra`  | `oklch(0.76 0.105 240)` |
+| `--group-maluku`     | `oklch(0.76 0.110 295)` |
+| `--group-papua`      | `oklch(0.77 0.105 340)` |
 
 **Alias semantik.**
 
-| Token | Nilai |
-| --- | --- |
-| `--bg-app`, `--surface-card` | `--paper-0` |
-| `--surface-sunken` | `--paper-50` |
-| `--surface-invert` | `--ink-1000` |
-| `--text-title` / `--text-body` / `--text-muted` / `--text-invert` | `--ink-1000` / `--ink-900` / `--ink-500` / `--paper-25` |
-| `--brand-500` / `--brand-700` | `--caution-500` / `--caution-700` |
-| `--text-link` / `--text-link-hover` | `--caution-700` / `--ink-1000` |
-| `--border-hairline` / `--border-strong` | `--ink-200` / `--ink-1000` |
-| `--focus-ring` | `--ink-1000` — bukan hijau, karena hijau berarti "benar" |
+| Token                                                             | Nilai                                                    |
+| ----------------------------------------------------------------- | -------------------------------------------------------- |
+| `--bg-app`, `--surface-card`                                      | `--paper-0`                                              |
+| `--surface-sunken`                                                | `--paper-50`                                             |
+| `--surface-invert`                                                | `--ink-1000`                                             |
+| `--text-title` / `--text-body` / `--text-muted` / `--text-invert` | `--ink-1000` / `--ink-900` / `--ink-500` / `--paper-25`  |
+| `--brand-500` / `--brand-700`                                     | `--caution-500` / `--caution-700`                        |
+| `--text-link` / `--text-link-hover`                               | `--caution-700` / `--ink-1000`                           |
+| `--border-hairline` / `--border-strong`                           | `--ink-200` / `--ink-1000`                               |
+| `--focus-ring`                                                    | `--ink-1000` — bukan hijau, karena hijau berarti "benar" |
 
 **Grading — terkunci selamanya.** Urutan dan warnanya tidak pernah berubah di layar mana pun.
 
-| Grade | Token | Warna |
-| --- | --- | --- |
-| Lagi | `--grade-again` | `--stop-500` |
-| Sulit | `--grade-hard` | `--caution-500` |
-| Bagus | `--grade-good` | `--go-500` |
-| Mudah | `--grade-easy` | `--ink-200` |
+| Grade | Token           | Warna           |
+| ----- | --------------- | --------------- |
+| Lagi  | `--grade-again` | `--stop-500`    |
+| Sulit | `--grade-hard`  | `--caution-500` |
+| Bagus | `--grade-good`  | `--go-500`      |
+| Mudah | `--grade-easy`  | `--ink-200`     |
 
 **Verdict** (dihitung dari jawaban, tidak pernah dipilih): `--verdict-wrong` = `--stop-500`,
 `--verdict-near` = `--caution-500`, `--verdict-right` = `--go-500`.
@@ -216,12 +216,12 @@ Transparansi dan blur praktis tidak dipakai.
 
 ### 3.2 Tipografi
 
-| Keluarga | Token | Dipakai untuk |
-| --- | --- | --- |
-| Space Grotesk | `--font-display` | Display, judul, tombol, label |
-| IBM Plex Sans | `--font-body` | Body dan prosa fakta |
-| IBM Plex Mono | `--font-mono` | Kode, interval, nilai ease, milidetik, persentase |
-| Barlow Semi Condensed | `--font-plate` | Hanya rendering plat |
+| Keluarga              | Token            | Dipakai untuk                                     |
+| --------------------- | ---------------- | ------------------------------------------------- |
+| Space Grotesk         | `--font-display` | Display, judul, tombol, label                     |
+| IBM Plex Sans         | `--font-body`    | Body dan prosa fakta                              |
+| IBM Plex Mono         | `--font-mono`    | Kode, interval, nilai ease, milidetik, persentase |
+| Barlow Semi Condensed | `--font-plate`   | Hanya rendering plat                              |
 
 **Skala:** hero 72px · display 44px · title 30px · heading 22px · subhead 17px · body-lg 16px ·
 body-md 15px · body-sm 13px · label 12px · micro 11px.
@@ -232,16 +232,16 @@ body-md 15px · body-sm 13px · label 12px · micro 11px.
 
 **Gaya siap pakai.**
 
-| Token | Definisi |
-| --- | --- |
-| `--type-metric` | 700 72px/1.02 display — angka hero |
-| `--type-screen-title` | 700 30px/1.18 display |
-| `--type-card-title` | 600 17px/1.18 display |
-| `--type-body` | 400 15px/1.5 body |
-| `--type-prose` | 400 16px/1.65 body — prosa fakta |
-| `--type-label` | 600 12px/1.2 display, tracking 0.08em, uppercase |
-| `--type-code` | 500 15px/1.3 mono |
-| `--type-plate` | 700 44px/1 plate |
+| Token                 | Definisi                                         |
+| --------------------- | ------------------------------------------------ |
+| `--type-metric`       | 700 72px/1.02 display — angka hero               |
+| `--type-screen-title` | 700 30px/1.18 display                            |
+| `--type-card-title`   | 600 17px/1.18 display                            |
+| `--type-body`         | 400 15px/1.5 body                                |
+| `--type-prose`        | 400 16px/1.65 body — prosa fakta                 |
+| `--type-label`        | 600 12px/1.2 display, tracking 0.08em, uppercase |
+| `--type-code`         | 500 15px/1.3 mono                                |
+| `--type-plate`        | 700 44px/1 plate                                 |
 
 **Aturan.** Angka hero muncul **sekali per layar**, dan selalu angka yang pengguna pertanggungjawabkan.
 `--type-label` uppercase selalu metadata (`JATUH TEMPO HARI INI`, `CAKUPAN AKTIF`), tidak pernah judul
@@ -252,17 +252,17 @@ atau tombol. Apa pun yang berupa kode plat atau angka memakai mono. Angka diform
 
 Basis 4px dengan setengah-langkah 2px: `0 · 2 · 4 · 8 · 12 · 16 · 20 · 24 · 32 · 40 · 48 · 64 · 80`.
 
-| Token | Nilai |
-| --- | --- |
-| `--gutter-screen` | 20px |
-| `--gap-stack` | 12px |
-| `--gap-section` | 32px |
-| `--pad-card` | 16px |
-| `--pad-control-x` / `--pad-control-y` | 16px / 12px |
+| Token                                  | Nilai       |
+| -------------------------------------- | ----------- |
+| `--gutter-screen`                      | 20px        |
+| `--gap-stack`                          | 12px        |
+| `--gap-section`                        | 32px        |
+| `--pad-card`                           | 16px        |
+| `--pad-control-x` / `--pad-control-y`  | 16px / 12px |
 | `--size-control` / `--size-control-sm` | 48px / 36px |
-| `--size-tap-min` | 48px |
-| `--width-app` | 420px |
-| `--width-prose` | 62ch |
+| `--size-tap-min`                       | 48px        |
+| `--width-app`                          | 420px       |
+| `--width-prose`                        | 62ch        |
 
 Kelompok sibling — tombol, chip, ikon, baris kartu, tab — selalu `display: flex`/`grid` + `gap`,
 tidak pernah margin per elemen.
@@ -277,12 +277,12 @@ untuk plat.
 
 Shadow rata dan bergeser, tidak pernah blur ambient:
 
-| Token | Nilai |
-| --- | --- |
-| `--shadow-block` | `3px 3px 0 var(--ink-1000)` |
-| `--shadow-block-accent` | `3px 3px 0 var(--brand-500)` |
-| `--shadow-lift` | `0 1px 0 var(--ink-200)` |
-| `--shadow-overlay` | `0 12px 32px -12px oklch(0.14 0.012 60 / 0.28)` — **hanya** untuk sheet |
+| Token                   | Nilai                                                                   |
+| ----------------------- | ----------------------------------------------------------------------- |
+| `--shadow-block`        | `3px 3px 0 var(--ink-1000)`                                             |
+| `--shadow-block-accent` | `3px 3px 0 var(--brand-500)`                                            |
+| `--shadow-lift`         | `0 1px 0 var(--ink-200)`                                                |
+| `--shadow-overlay`      | `0 12px 32px -12px oklch(0.14 0.012 60 / 0.28)` — **hanya** untuk sheet |
 
 ### 3.5 Motion
 
@@ -295,11 +295,11 @@ perayaan yang jarang (rekor baru).
 
 ### 3.6 State interaktif
 
-| State | Perlakuan |
-| --- | --- |
-| Hover | Menggelapkan atau mengisi — **tidak pernah** mengangkat |
-| Press | Bergeser `translate(2px, 2px)` sepanjang shadow, shadow-nya hilang. Tekanan dirasakan, bukan dianimasikan |
-| Focus | Outline 2px `--ink-1000` dengan offset 2px. **Tidak pernah dihapus** — aplikasi ini keyboard-first |
+| State    | Perlakuan                                                                                                                |
+| -------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Hover    | Menggelapkan atau mengisi — **tidak pernah** mengangkat                                                                  |
+| Press    | Bergeser `translate(2px, 2px)` sepanjang shadow, shadow-nya hilang. Tekanan dirasakan, bukan dianimasikan                |
+| Focus    | Outline 2px `--ink-1000` dengan offset 2px. **Tidak pernah dihapus** — aplikasi ini keyboard-first                       |
 | Disabled | Opacity 40% + border hairline. Dipakai untuk batas yang memang tidak boleh diubah, misalnya batas 10 kartu baru per hari |
 
 ### 3.7 Ikon
@@ -334,15 +334,15 @@ salah satunya secara lokal.
 
 ### 4.1 Core
 
-| Komponen | Dipakai untuk | Varian / prop penting |
-| --- | --- | --- |
-| **Icon** | Semua ikon | `name`; `size` 16/20/24; `color` opsional (mengubah render jadi CSS mask supaya bisa ditint) |
-| **Button** | Semua tindakan | `variant`: **primary** (fill kuning, satu per layar) · **confirm** (hijau, hanya untuk konfirmasi) · **ink** (di atas surface gelap) · **secondary** (alternatif berpasangan) · **quiet** (level daftar) · **ghost** (tersier). `size` sm/md/lg · `block` (default untuk tindakan utama di ponsel) · `kbd` menampilkan chip pintasan · `iconLeft`/`iconRight` |
-| **IconButton** | Kontrol ikon tanpa teks | `label` **wajib** · `size` tidak pernah di bawah 44 di dalam loop menjawab · `tone` default/invert/bare |
-| **Card** | Pengelompokan konten | `accent` = bar 4px di atas untuk klasifikasi · `tint` hanya token level 100 · `title` · `meta` (label uppercase kanan atas) · `padding` |
-| **Badge** | Keadaan sistem | `color` dari token state/semantic · `tint` opsional · `dot` untuk penanda ringkas |
-| **Tag** | Metadata, filter, alias | `tone` default/active/mono · `onRemove` opsional |
-| **StatBlock** | Angka yang dipertanggungjawabkan | `value` · `label` uppercase · `unit` mono kecil · `size` hero/md/sm · `align` |
+| Komponen       | Dipakai untuk                    | Varian / prop penting                                                                                                                                                                                                                                                                                                                                         |
+| -------------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Icon**       | Semua ikon                       | `name`; `size` 16/20/24; `color` opsional (mengubah render jadi CSS mask supaya bisa ditint)                                                                                                                                                                                                                                                                  |
+| **Button**     | Semua tindakan                   | `variant`: **primary** (fill kuning, satu per layar) · **confirm** (hijau, hanya untuk konfirmasi) · **ink** (di atas surface gelap) · **secondary** (alternatif berpasangan) · **quiet** (level daftar) · **ghost** (tersier). `size` sm/md/lg · `block` (default untuk tindakan utama di ponsel) · `kbd` menampilkan chip pintasan · `iconLeft`/`iconRight` |
+| **IconButton** | Kontrol ikon tanpa teks          | `label` **wajib** · `size` tidak pernah di bawah 44 di dalam loop menjawab · `tone` default/invert/bare                                                                                                                                                                                                                                                       |
+| **Card**       | Pengelompokan konten             | `accent` = bar 4px di atas untuk klasifikasi · `tint` hanya token level 100 · `title` · `meta` (label uppercase kanan atas) · `padding`                                                                                                                                                                                                                       |
+| **Badge**      | Keadaan sistem                   | `color` dari token state/semantic · `tint` opsional · `dot` untuk penanda ringkas                                                                                                                                                                                                                                                                             |
+| **Tag**        | Metadata, filter, alias          | `tone` default/active/mono · `onRemove` opsional                                                                                                                                                                                                                                                                                                              |
+| **StatBlock**  | Angka yang dipertanggungjawabkan | `value` · `label` uppercase · `unit` mono kecil · `size` hero/md/sm · `align`                                                                                                                                                                                                                                                                                 |
 
 **Badge vs Tag.** Badge menyatakan keadaan sistem yang tidak bisa diubah pengguna (Dikuasai, Sulit
 Dikuasai). Tag menyatakan label atau pilihan yang bisa dilepas atau ditekan. Kalau bisa di-`onRemove`,
@@ -350,30 +350,30 @@ ia Tag; kalau tidak, ia Badge.
 
 ### 4.2 Forms
 
-| Komponen | Spesifikasi |
-| --- | --- |
-| **Input** | Tinggi 48px, `size="lg"` untuk kolom jawaban sesi. `state` correct/wrong diisi **hanya setelah** jawaban dikirim — bukan validasi saat mengetik. `mono` wajib kalau jawabannya kode plat. `hint` membawa baris koreksi ejaan. `label` di atas kolom |
-| **Select** | Untuk daftar tertutup pendek. **Tidak** dipakai memilih wilayah — itu pekerjaan ScopeNode |
-| **Switch** | `hint` wajib kalau konsekuensi setelannya tidak jelas dari labelnya. Setelan yang tidak boleh dimatikan dirender `disabled` dengan nilainya tetap terlihat, bukan disembunyikan |
+| Komponen   | Spesifikasi                                                                                                                                                                                                                                         |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Input**  | Tinggi 48px, `size="lg"` untuk kolom jawaban sesi. `state` correct/wrong diisi **hanya setelah** jawaban dikirim — bukan validasi saat mengetik. `mono` wajib kalau jawabannya kode plat. `hint` membawa baris koreksi ejaan. `label` di atas kolom |
+| **Select** | Untuk daftar tertutup pendek. **Tidak** dipakai memilih wilayah — itu pekerjaan ScopeNode                                                                                                                                                           |
+| **Switch** | `hint` wajib kalau konsekuensi setelannya tidak jelas dari labelnya. Setelan yang tidak boleh dimatikan dirender `disabled` dengan nilainya tetap terlihat, bukan disembunyikan                                                                     |
 
 ### 4.3 Feedback
 
-| Komponen | Spesifikasi |
-| --- | --- |
-| **Callout** | `tone` neutral/warn/danger/success · `label` uppercase sebagai kicker (`CADANGAN`, `TIDAK DIHITUNG`) · satu sampai dua kalimat, tidak lebih |
+| Komponen        | Spesifikasi                                                                                                                                                         |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Callout**     | `tone` neutral/warn/danger/success · `label` uppercase sebagai kicker (`CADANGAN`, `TIDAK DIHITUNG`) · satu sampai dua kalimat, tidak lebih                         |
 | **ProgressBar** | `segments` untuk jumlah kartu yang bisa dihitung; track kontinu untuk persentase. `color` memakai hue kawasan. Persentase tercetak di kanan. Animasi menyusul 260ms |
-| **RingGauge** | `levels` = [L1, L2, L3], cincin terluar Level 1. Warna mengikuti hue kawasan |
+| **RingGauge**   | `levels` = [L1, L2, L3], cincin terluar Level 1. Warna mengikuti hue kawasan                                                                                        |
 
 ### 4.4 Terka
 
-| Komponen | Spesifikasi |
-| --- | --- |
-| **PlateTile** | Plat utuh: `code` + `number` + `suffix`, ground putih, ink hitam, tipe condensed, border 2px. `highlight` menandai segmen yang sedang ditanya, memakai wash `--caution-300` |
-| **CodeChip** | Kode depan dengan underline 3px hue kawasannya. `filled` hanya kalau kode itu subjek layar · `selected` untuk pilihan aktif · `size` sm/md/lg |
-| **GradeBar** | **Tampilan hasil, bukan kontrol pilihan.** Menampilkan grade yang sudah dihitung sistem plus interval berikutnya per grade. Tidak menerima handler pemilihan. Urutan Lagi · Sulit · Bagus · Mudah terkunci |
-| **CardStateBadge** | Delapan state mesin kartu, dirender dengan label Indonesia di bagian 8.1. Nama internal hanya untuk layar debug. `interval` opsional, misalnya `21h` |
-| **FactCard** | `status` (`terverifikasi`/`diperdebatkan`/`legenda`) **selalu** tampil · `source` diisi kalau ada sumber primer · prosa maksimal tiga baris |
-| **ScopeNode** | Baris pohon cakupan. `level` national/group/province/code (level kode dirender mono) · `depth` mengatur indent · `color` hue kawasan dipakai dot dan meter penguasaan · `mastery` 0–100 · `active` = wash `--caution-100` + border kuat · `expandable`/`expanded` |
+| Komponen           | Spesifikasi                                                                                                                                                                                                                                                       |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **PlateTile**      | Plat utuh: `code` + `number` + `suffix`, ground putih, ink hitam, tipe condensed, border 2px. `highlight` menandai segmen yang sedang ditanya, memakai wash `--caution-300`                                                                                       |
+| **CodeChip**       | Kode depan dengan underline 3px hue kawasannya. `filled` hanya kalau kode itu subjek layar · `selected` untuk pilihan aktif · `size` sm/md/lg                                                                                                                     |
+| **GradeBar**       | **Tampilan hasil, bukan kontrol pilihan.** Menampilkan grade yang sudah dihitung sistem plus interval berikutnya per grade. Tidak menerima handler pemilihan. Urutan Lagi · Sulit · Bagus · Mudah terkunci                                                        |
+| **CardStateBadge** | Delapan state mesin kartu, dirender dengan label Indonesia di bagian 8.1. Nama internal hanya untuk layar debug. `interval` opsional, misalnya `21h`                                                                                                              |
+| **FactCard**       | `status` (`terverifikasi`/`diperdebatkan`/`legenda`) **selalu** tampil · `source` diisi kalau ada sumber primer · prosa maksimal tiga baris                                                                                                                       |
+| **ScopeNode**      | Baris pohon cakupan. `level` national/group/province/code (level kode dirender mono) · `depth` mengatur indent · `color` hue kawasan dipakai dot dan meter penguasaan · `mastery` 0–100 · `active` = wash `--caution-100` + border kuat · `expandable`/`expanded` |
 
 ---
 
@@ -397,25 +397,25 @@ mengisi formulir.
 
 ### 5.3 Chrome dan lapisan
 
-| Lapisan | Isi | Perilaku |
-| --- | --- | --- |
-| Header | Wordmark `terka` + titik kuning, kontrol ikon Setelan dan `?` | Tetap, latar putih, border bawah hairline. Tidak menyusut atau berubah saat scroll |
-| Konten | Kolom 420px, gutter 20px | Menggulir di antara header dan bilah bawah |
-| Bilah bawah | Empat tujuan, label + ikon | Tetap. Aktif = warna penuh, sisanya abu-abu. Tanpa badge, underline, latar, atau animasi berpindah |
-| Sheet / overlay | Konfirmasi, pemilihan folder cadangan | Satu-satunya tempat `--shadow-overlay` dipakai; radius 12px hanya di dua sudut atas |
-| Sesi | Loop menjawab | Header dan bilah bawah **hilang sepenuhnya** |
+| Lapisan         | Isi                                                           | Perilaku                                                                                           |
+| --------------- | ------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Header          | Wordmark `terka` + titik kuning, kontrol ikon Setelan dan `?` | Tetap, latar putih, border bawah hairline. Tidak menyusut atau berubah saat scroll                 |
+| Konten          | Kolom 420px, gutter 20px                                      | Menggulir di antara header dan bilah bawah                                                         |
+| Bilah bawah     | Empat tujuan, label + ikon                                    | Tetap. Aktif = warna penuh, sisanya abu-abu. Tanpa badge, underline, latar, atau animasi berpindah |
+| Sheet / overlay | Konfirmasi, pemilihan folder cadangan                         | Satu-satunya tempat `--shadow-overlay` dipakai; radius 12px hanya di dua sudut atas                |
+| Sesi            | Loop menjawab                                                 | Header dan bilah bawah **hilang sepenuhnya**                                                       |
 
 Tidak ada lapisan lain. Tidak ada toast, snackbar, atau notifikasi melayang — pesan status hidup di
 tempatnya, sebagai Callout.
 
 ### 5.4 Empat keadaan setiap layar
 
-| Keadaan | Perlakuan |
-| --- | --- |
-| **Penuh** | Keadaan normal |
-| **Kosong** | Satu kalimat deskriptif dari bagian 7, rata kiri, `--text-muted`. Tidak pernah ilustrasi, tidak pernah CTA yang memancing latihan tambahan |
+| Keadaan    | Perlakuan                                                                                                                                                  |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Penuh**  | Keadaan normal                                                                                                                                             |
+| **Kosong** | Satu kalimat deskriptif dari bagian 7, rata kiri, `--text-muted`. Tidak pernah ilustrasi, tidak pernah CTA yang memancing latihan tambahan                 |
 | **Memuat** | Data lokal terbaca dalam milidetik, jadi keadaan memuat berupa **tidak ada apa-apa** — bukan skeleton berkedip. Skeleton hanya kalau pembacaan lewat 300ms |
-| **Gagal** | Callout `tone="danger"` dengan pola *apa yang terjadi → apa yang bisa dilakukan*, plus tombol pemulihan kalau ada |
+| **Gagal**  | Callout `tone="danger"` dengan pola _apa yang terjadi → apa yang bisa dilakukan_, plus tombol pemulihan kalau ada                                          |
 
 Offline bukan keadaan gagal: **Sedang offline. Latihan tetap dapat digunakan.** dengan
 `tone="neutral"`, dan hanya tampil kalau ada sesuatu yang memang butuh jaringan (cadangan).
@@ -438,15 +438,15 @@ sambil melihat plat di jalan, dan loop menjawab harus terasa identik di mana pun
 
 Bilah bawah punya empat tujuan. Layar lain dibuka dari dalam, bukan dari bilah bawah.
 
-| Layar | Tujuan bilah bawah | Isi ringkas |
-| --- | --- | --- |
-| **Beranda** | Ya | Angka jatuh tempo, Cakupan aktif, tiga tindakan latihan, status cadangan |
-| **Cakupan** | Ya | Pohon Nasional → Kawasan → Provinsi → Kode, model dua langkah |
-| **Statistik** | Ya | Peta Penguasaan, kartu terlemah, beban 14 hari, indikator level, kartu Sulit Dikuasai, cadangan |
-| **Referensi** | Ya | Penelusuran dan pencarian seluruh data tanpa penilaian |
-| **Sesi** | — (fullscreen) | Loop tanya → dinilai → Bandingkan Kode → ringkasan |
-| **Setelan** | — (dari header) | Batas kartu baru, penyimpanan permanen, cadangan |
-| **Pintasan keyboard** | — (tombol `?`) | Daftar seluruh pintasan |
+| Layar                 | Tujuan bilah bawah | Isi ringkas                                                                                     |
+| --------------------- | ------------------ | ----------------------------------------------------------------------------------------------- |
+| **Beranda**           | Ya                 | Angka jatuh tempo, Cakupan aktif, tiga tindakan latihan, status cadangan                        |
+| **Cakupan**           | Ya                 | Pohon Nasional → Kawasan → Provinsi → Kode, model dua langkah                                   |
+| **Statistik**         | Ya                 | Peta Penguasaan, kartu terlemah, beban 14 hari, indikator level, kartu Sulit Dikuasai, cadangan |
+| **Referensi**         | Ya                 | Penelusuran dan pencarian seluruh data tanpa penilaian                                          |
+| **Sesi**              | — (fullscreen)     | Loop tanya → dinilai → Bandingkan Kode → ringkasan                                              |
+| **Setelan**           | — (dari header)    | Batas kartu baru, penyimpanan permanen, cadangan                                                |
+| **Pintasan keyboard** | — (tombol `?`)     | Daftar seluruh pintasan                                                                         |
 
 **Referensi dan Cakupan ada di bilah bawah, bukan di beranda,** karena keduanya bukan aktivitas
 latihan. Tiga tombol di beranda semuanya menjadwalkan atau menilai sesuatu; Referensi tidak, dan
@@ -473,13 +473,13 @@ Dari atas ke bawah:
    tidak terus tertunda.
 6. **Status cadangan** — Callout bernada informatif kalau cadangan terakhir lewat 14 hari.
 
-| Situasi | Teks UI |
-| --- | --- |
-| Ada pengulangan | **12 soal perlu diulang** |
-| Ada materi baru | **4 materi baru tersedia** |
-| Tidak ada pengulangan | **Tidak ada soal yang perlu diulang hari ini.** |
-| Materi baru habis | **Semua materi di wilayah ini sudah diperkenalkan.** |
-| Materi baru ditahan | **Materi baru dijeda hari ini agar sesi tetap ringan.** |
+| Situasi               | Teks UI                                                 |
+| --------------------- | ------------------------------------------------------- |
+| Ada pengulangan       | **12 soal perlu diulang**                               |
+| Ada materi baru       | **4 materi baru tersedia**                              |
+| Tidak ada pengulangan | **Tidak ada soal yang perlu diulang hari ini.**         |
+| Materi baru habis     | **Semua materi di wilayah ini sudah diperkenalkan.**    |
+| Materi baru ditahan   | **Materi baru dijeda hari ini agar sesi tetap ringan.** |
 
 Tidak ada tombol **Latihan lagi** pada keadaan kosong. Kalau antrean habis, beranda menunjukkan jadwal
 hari itu sudah beres dan berhenti di situ.
@@ -495,13 +495,13 @@ Sulit Dikuasai membawa Badge **Sulit Dikuasai** plus penjelasan
 
 **b. Dinilai.** Verdict dulu, lalu bukti, lalu konteks.
 
-| Situasi | Teks UI | Warna |
-| --- | --- | --- |
-| Benar | **Benar** | `--verdict-right` |
-| Benar dengan koreksi ejaan | **Benar · ejaan diperbaiki** | `--verdict-near` |
-| Salah | **Belum tepat** lalu **Jawaban: Bengkulu** | `--verdict-wrong` |
-| Batas waktu habis | **Waktu habis** | `--verdict-wrong` |
-| Jawaban terakhir dibatalkan | **Jawaban dibatalkan** | netral |
+| Situasi                     | Teks UI                                    | Warna             |
+| --------------------------- | ------------------------------------------ | ----------------- |
+| Benar                       | **Benar**                                  | `--verdict-right` |
+| Benar dengan koreksi ejaan  | **Benar · ejaan diperbaiki**               | `--verdict-near`  |
+| Salah                       | **Belum tepat** lalu **Jawaban: Bengkulu** | `--verdict-wrong` |
+| Batas waktu habis           | **Waktu habis**                            | `--verdict-wrong` |
+| Jawaban terakhir dibatalkan | **Jawaban dibatalkan**                     | netral            |
 
 Di bawahnya GradeBar menampilkan grade yang **sudah dihitung sistem**, lalu satu FactCard dengan label
 statusnya. Kontrol level menampilkan konsekuensinya inline: **Tidak memengaruhi jadwal** saat
@@ -536,15 +536,15 @@ berubah setelah **Pilih wilayah ini** ditekan. Ini disengaja: salah satu guna pe
 membandingkan beberapa wilayah sebelum memutuskan, dan pengguna tidak boleh keluar dengan Cakupan yang
 berubah tanpa pernah bermaksud mengubahnya.
 
-| Situasi | Teks UI |
-| --- | --- |
-| Judul tab | **Cakupan** |
-| Wilayah aktif | **Aktif sekarang** |
-| Jumlah materi | **8 materi baru tersedia** |
-| Terapkan pilihan | **Pilih wilayah ini** |
-| Latihan tanpa mengganti pilihan | **Latih wilayah ini** |
-| Tidak ada materi baru | **Tidak ada materi baru di wilayah ini.** |
-| Kembali ke nasional | **Seluruh Indonesia** |
+| Situasi                         | Teks UI                                   |
+| ------------------------------- | ----------------------------------------- |
+| Judul tab                       | **Cakupan**                               |
+| Wilayah aktif                   | **Aktif sekarang**                        |
+| Jumlah materi                   | **8 materi baru tersedia**                |
+| Terapkan pilihan                | **Pilih wilayah ini**                     |
+| Latihan tanpa mengganti pilihan | **Latih wilayah ini**                     |
+| Tidak ada materi baru           | **Tidak ada materi baru di wilayah ini.** |
+| Kembali ke nasional             | **Seluruh Indonesia**                     |
 
 Dua tombol di kaki layar tidak boleh berlabel mirip: **Pilih wilayah ini** (primary, mengubah Cakupan)
 dan **Latih wilayah ini** (secondary, memulai Latihan Terfokus tanpa mengubah apa pun).
@@ -562,53 +562,53 @@ Ditambah **Indikator Tingkat Penguasaan**: tiga RingGauge per wilayah untuk pers
 Level 1 / 2 / 3. Lingkaran Level 3 hampir selalu paling kecil, dan itulah yang paling informatif. Di
 bawahnya daftar kartu **Sulit Dikuasai** dengan CTA **Tinjau kartu**, lalu status cadangan.
 
-| Situasi | Teks UI |
-| --- | --- |
-| Kartu dinonaktifkan otomatis | **Kode ini dinonaktifkan sementara. Tinjau di halaman statistik.** |
-| Diaktifkan kembali | **Kode ini diaktifkan kembali dan dimulai dari awal.** |
-| Cadangan diperbarui | **Cadangan diperbarui** |
-| Waktu cadangan | **Terakhir dicadangkan 2 hari lalu** |
-| Cadangan basi | **Cadangan terakhir sudah lebih dari 14 hari.** |
-| CTA | **Perbarui cadangan** |
-| Izin folder hilang | **Akses ke folder cadangan terputus. Pilih folder lagi.** → **Pilih folder** |
-| Peramban tidak mendukung | **Cadangan otomatis belum didukung di peramban ini. Unduh cadangan secara manual.** → **Unduh cadangan** |
-| Pemulihan selesai | **Cadangan berhasil dipulihkan** |
+| Situasi                      | Teks UI                                                                                                  |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------- |
+| Kartu dinonaktifkan otomatis | **Kode ini dinonaktifkan sementara. Tinjau di halaman statistik.**                                       |
+| Diaktifkan kembali           | **Kode ini diaktifkan kembali dan dimulai dari awal.**                                                   |
+| Cadangan diperbarui          | **Cadangan diperbarui**                                                                                  |
+| Waktu cadangan               | **Terakhir dicadangkan 2 hari lalu**                                                                     |
+| Cadangan basi                | **Cadangan terakhir sudah lebih dari 14 hari.**                                                          |
+| CTA                          | **Perbarui cadangan**                                                                                    |
+| Izin folder hilang           | **Akses ke folder cadangan terputus. Pilih folder lagi.** → **Pilih folder**                             |
+| Peramban tidak mendukung     | **Cadangan otomatis belum didukung di peramban ini. Unduh cadangan secara manual.** → **Unduh cadangan** |
+| Pemulihan selesai            | **Cadangan berhasil dipulihkan**                                                                         |
 
 ### 7.5 Referensi
 
 Kolom pencarian di atas (dibuka dengan `/`), lalu hierarki yang sama dengan Cakupan tapi tanpa
 penilaian. Entri yang tingkat kepercayaannya kurang tetap tampil, diberi Tag dan catatan.
 
-| Situasi | Teks UI |
-| --- | --- |
-| Kolom pencarian | **Cari kode atau wilayah…** |
-| Tidak ada hasil | **Tidak ada hasil untuk "{query}".** |
-| Entri belum cukup kuat | **Belum terverifikasi penuh** |
-| Catatan | **Tersedia di Referensi, belum masuk latihan.** |
+| Situasi                | Teks UI                                         |
+| ---------------------- | ----------------------------------------------- |
+| Kolom pencarian        | **Cari kode atau wilayah…**                     |
+| Tidak ada hasil        | **Tidak ada hasil untuk "{query}".**            |
+| Entri belum cukup kuat | **Belum terverifikasi penuh**                   |
+| Catatan                | **Tersedia di Referensi, belum masuk latihan.** |
 
 Label kepercayaan internal `high`/`medium`/`low` tidak pernah dirender mentah.
 
 ### 7.6 Tantangan Harian dan Mode Kilat
 
-| Tantangan Harian | Teks UI |
-| --- | --- |
-| Sebelum mulai | **5 soal · sekali sehari** |
-| Tombol | **Mulai tantangan** |
-| Selesai | **Tantangan hari ini selesai** |
-| Sudah dikerjakan | **Sudah selesai untuk hari ini** |
+| Tantangan Harian  | Teks UI                                 |
+| ----------------- | --------------------------------------- |
+| Sebelum mulai     | **5 soal · sekali sehari**              |
+| Tombol            | **Mulai tantangan**                     |
+| Selesai           | **Tantangan hari ini selesai**          |
+| Sudah dikerjakan  | **Sudah selesai untuk hari ini**        |
 | Toleransi dipakai | **Jatah toleransi digunakan hari ini.** |
-| Label rangkaian | **Hari Beruntun** |
+| Label rangkaian   | **Hari Beruntun**                       |
 
-| Mode Kilat | Teks UI |
-| --- | --- |
-| Pengantar | **60 detik · jawab sebanyak mungkin** |
-| Tombol | **Mulai** |
-| Waktu habis | **Waktu habis** |
-| Skor | **24 jawaban benar** |
-| Wilayah yang dimainkan | **Mode Kilat · Kawasan Maluku** |
-| Rekor baru | **Rekor baru di Kawasan Maluku: 24** |
-| Bukan rekor | **Rekor terbaik di Kawasan Maluku: 31** |
-| Belum ada rekor | **Belum ada rekor untuk wilayah ini.** |
+| Mode Kilat             | Teks UI                                 |
+| ---------------------- | --------------------------------------- |
+| Pengantar              | **60 detik · jawab sebanyak mungkin**   |
+| Tombol                 | **Mulai**                               |
+| Waktu habis            | **Waktu habis**                         |
+| Skor                   | **24 jawaban benar**                    |
+| Wilayah yang dimainkan | **Mode Kilat · Kawasan Maluku**         |
+| Rekor baru             | **Rekor baru di Kawasan Maluku: 24**    |
+| Bukan rekor            | **Rekor terbaik di Kawasan Maluku: 31** |
+| Belum ada rekor        | **Belum ada rekor untuk wilayah ini.**  |
 
 Nama wilayah wajib disebut di setiap tampilan rekor, karena rekor dicatat terpisah per wilayah dan
 angka tanpa nama wilayah menyesatkan. Rekor baru boleh ditandai secara visual — `--ease-pop` boleh
@@ -632,32 +632,32 @@ perilaku sebenarnya (bagian 8.5).
 
 Status internal **tidak pernah** dirender mentah di alur belajar.
 
-| Internal | Label UI |
-| --- | --- |
-| `new` | **Belum Dipelajari** |
-| `learning`, `review`, `relearning` | **Sedang Dipelajari** |
-| `mature` | **Dikuasai** |
-| `leech` | **Sulit Dikuasai** |
-| `suspended` karena data | **Dinonaktifkan · data perlu diverifikasi** |
-| `suspended` karena kegagalan | **Dinonaktifkan · perlu ditinjau** |
+| Internal                           | Label UI                                    |
+| ---------------------------------- | ------------------------------------------- |
+| `new`                              | **Belum Dipelajari**                        |
+| `learning`, `review`, `relearning` | **Sedang Dipelajari**                       |
+| `mature`                           | **Dikuasai**                                |
+| `leech`                            | **Sulit Dikuasai**                          |
+| `suspended` karena data            | **Dinonaktifkan · data perlu diverifikasi** |
+| `suspended` karena kegagalan       | **Dinonaktifkan · perlu ditinjau**          |
 
 Status detail hanya muncul di Statistik atau pemeriksaan kartu — tidak di tiap soal, karena tidak
 membantu proses menjawab.
 
 ### 8.2 Istilah UI
 
-| Konsep | Label UI |
-| --- | --- |
-| Wilayah yang dipilih untuk materi baru | **Cakupan** |
-| Sesi harian utama | **Mulai belajar** |
-| Latihan tambahan untuk satu wilayah | **Latih wilayah ini** → **Latihan Terfokus** |
-| Tingkat kedua hierarki | **Kawasan** |
-| Satu node yang sedang disorot | **wilayah** |
-| Navigasi bawah | **bilah bawah** |
-| Drill dua kode yang sering tertukar | **Bandingkan Kode** |
-| Visual penguasaan | **Peta Penguasaan** |
-| Kartu `due` | **soal yang perlu diulang** |
-| Kartu yang belum pernah dipelajari | **materi baru** |
+| Konsep                                 | Label UI                                     |
+| -------------------------------------- | -------------------------------------------- |
+| Wilayah yang dipilih untuk materi baru | **Cakupan**                                  |
+| Sesi harian utama                      | **Mulai belajar**                            |
+| Latihan tambahan untuk satu wilayah    | **Latih wilayah ini** → **Latihan Terfokus** |
+| Tingkat kedua hierarki                 | **Kawasan**                                  |
+| Satu node yang sedang disorot          | **wilayah**                                  |
+| Navigasi bawah                         | **bilah bawah**                              |
+| Drill dua kode yang sering tertukar    | **Bandingkan Kode**                          |
+| Visual penguasaan                      | **Peta Penguasaan**                          |
+| Kartu `due`                            | **soal yang perlu diulang**                  |
+| Kartu yang belum pernah dipelajari     | **materi baru**                              |
 
 Satu istilah untuk satu konsep. **Cakupan** adalah nama pengaturannya; **wilayah** adalah yang dipilih
 untuk mengisi pengaturan itu. Istilah "Wilayah Belajar" dan "lingkup" tidak dipakai. `node` dan
@@ -687,20 +687,20 @@ sebaliknya.
 
 **Pesan error baku.**
 
-| Kondisi | Teks UI |
-| --- | --- |
-| Data belajar gagal dibaca | **Data belajar tidak dapat dibuka. Coba muat ulang aplikasi.** |
-| Data referensi gagal dimuat | **Data plat tidak dapat dimuat. Coba buka kembali aplikasi.** |
+| Kondisi                             | Teks UI                                                                      |
+| ----------------------------------- | ---------------------------------------------------------------------------- |
+| Data belajar gagal dibaca           | **Data belajar tidak dapat dibuka. Coba muat ulang aplikasi.**               |
+| Data referensi gagal dimuat         | **Data plat tidak dapat dimuat. Coba buka kembali aplikasi.**                |
 | Penyimpanan permanen tidak tersedia | **Penyimpanan permanen tidak tersedia. Pastikan cadangan data tetap aktif.** |
-| Gagal tetapi aman dicoba lagi | **Perubahan belum tersimpan. Coba lagi.** |
-| Offline | **Sedang offline. Latihan tetap dapat digunakan.** |
+| Gagal tetapi aman dicoba lagi       | **Perubahan belum tersimpan. Coba lagi.**                                    |
+| Offline                             | **Sedang offline. Latihan tetap dapat digunakan.**                           |
 
 ### 8.5 Keyboard
 
-| Konteks | Tombol |
-| --- | --- |
-| Sesi | `Enter` kirim jawaban · `Enter` kartu berikutnya · `Z` batalkan penilaian terakhir · `L` turunkan level soal · `Esc` keluar sesi |
-| Di luar sesi | `S` Mulai belajar · `T` Tantangan Harian · `B` Mode Kilat · `C` ganti Cakupan · `/` cari di Referensi · `?` daftar pintasan |
+| Konteks      | Tombol                                                                                                                           |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------- |
+| Sesi         | `Enter` kirim jawaban · `Enter` kartu berikutnya · `Z` batalkan penilaian terakhir · `L` turunkan level soal · `Esc` keluar sesi |
+| Di luar sesi | `S` Mulai belajar · `T` Tantangan Harian · `B` Mode Kilat · `C` ganti Cakupan · `/` cari di Referensi · `?` daftar pintasan      |
 
 Konsekuensi desain: setiap kontrol wajib punya focus state yang terlihat, urutan tab mengikuti urutan
 baca, dan tidak ada tindakan yang hanya bisa dicapai dengan pointer. Kalau satu pintasan berubah,
@@ -734,13 +734,13 @@ aksesibel. Focus ring tidak pernah dihapus.
 
 ## 10. Aset yang Belum Ada
 
-| Hal | Keadaan sekarang | Yang dibutuhkan |
-| --- | --- | --- |
-| Logo | Wordmark tipografis: `terka` Space Grotesk Bold −0.04em + titik kuning | Konfirmasi, atau file logo |
-| Font | Space Grotesk, IBM Plex Sans, IBM Plex Mono, Barlow Semi Condensed dari layanan font web | File lokal — PWA offline tidak boleh bergantung host remote |
-| Set ikon | Satu set ikon stroke 24×24, 2px, ujung membulat | Konfirmasi set yang dipakai, atau kirim set lain |
-| Peta Penguasaan | Placeholder bergaris | SVG statis Indonesia dengan `id` = id node cakupan |
-| Plat | Rectangle border 2px ink, ground putih, tipe condensed | Konfirmasi proporsi terhadap plat asli pasca-2022 |
+| Hal             | Keadaan sekarang                                                                         | Yang dibutuhkan                                             |
+| --------------- | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| Logo            | Wordmark tipografis: `terka` Space Grotesk Bold −0.04em + titik kuning                   | Konfirmasi, atau file logo                                  |
+| Font            | Space Grotesk, IBM Plex Sans, IBM Plex Mono, Barlow Semi Condensed dari layanan font web | File lokal — PWA offline tidak boleh bergantung host remote |
+| Set ikon        | Satu set ikon stroke 24×24, 2px, ujung membulat                                          | Konfirmasi set yang dipakai, atau kirim set lain            |
+| Peta Penguasaan | Placeholder bergaris                                                                     | SVG statis Indonesia dengan `id` = id node cakupan          |
+| Plat            | Rectangle border 2px ink, ground putih, tipe condensed                                   | Konfirmasi proporsi terhadap plat asli pasca-2022           |
 
 ---
 
@@ -759,10 +759,10 @@ aksesibel. Focus ring tidak pernah dihapus.
 
 ## 12. Riwayat Revisi
 
-| Versi | Tanggal | Perubahan |
-| --- | --- | --- |
-| 2.0 | 2026-09-19 | Dokumen dijadikan mandiri: seluruh nilai token, spesifikasi komponen, dan teks UI diinlinekan; seluruh rujukan ke berkas lain dihapus. Keputusan yang sebelumnya tercatat sebagai catatan kesesuaian sekarang dinyatakan langsung sebagai aturan (kuning sebagai warna tindakan, biru dipensiunkan, GradeBar sebagai tampilan hasil, wash aktif kuning, penanda plat memakai `--caution-300`) |
-| 1.0 | 2026-09-19 | Dokumen awal |
+| Versi | Tanggal    | Perubahan                                                                                                                                                                                                                                                                                                                                                                                     |
+| ----- | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 2.0   | 2026-09-19 | Dokumen dijadikan mandiri: seluruh nilai token, spesifikasi komponen, dan teks UI diinlinekan; seluruh rujukan ke berkas lain dihapus. Keputusan yang sebelumnya tercatat sebagai catatan kesesuaian sekarang dinyatakan langsung sebagai aturan (kuning sebagai warna tindakan, biru dipensiunkan, GradeBar sebagai tampilan hasil, wash aktif kuning, penanda plat memakai `--caution-300`) |
+| 1.0   | 2026-09-19 | Dokumen awal                                                                                                                                                                                                                                                                                                                                                                                  |
 
 **Cara memperbarui dokumen ini.** Setiap perubahan desain yang mengubah perilaku, copy, atau token
 masuk ke tabel di atas dalam commit yang sama dengan perubahannya. Keputusan yang ditolak dicatat di
