@@ -8,10 +8,10 @@ const badgeVariants = cva(
 			tone: {
 				ink: "bg-ink-1000 text-paper-25",
 				brand: "bg-caution-100 text-caution-700",
-				success: "bg-go-100 text-go-500",
-				danger: "bg-stop-100 text-stop-500",
-				warn: "bg-caution-100 text-caution-500",
-				info: "bg-sky-100 text-sky-500",
+				success: "bg-go-100 text-go-700",
+				danger: "bg-stop-100 text-stop-700",
+				warn: "bg-caution-100 text-caution-700",
+				info: "bg-sky-100 text-sky-700",
 				grape: "bg-grape-100 text-grape-700",
 				tangerine: "bg-tangerine-100 text-tangerine-700",
 				muted: "bg-paper-50 text-ink-700",
@@ -32,7 +32,7 @@ export function Badge({
 	return (
 		<span className={cn(badgeVariants({ tone }), className)} {...props}>
 			{dot ? (
-				<span className="size-[7px] shrink-0 rounded-full bg-current" aria-hidden />
+				<span className="size-1.75 shrink-0 rounded-full bg-current" aria-hidden />
 			) : null}
 			{children}
 		</span>

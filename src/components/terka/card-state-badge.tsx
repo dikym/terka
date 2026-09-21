@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 export type CardState =
 	"new" | "learning" | "review" | "relearning" | "mature" | "leech" | "suspended" | "locked";
 
-export const cardStateLabel: Record<CardState, string> = {
+export const cardStateLabels: Record<CardState, string> = {
 	new: "Baru",
 	learning: "Sedang Dipelajari",
 	review: "Ulang",
@@ -28,8 +28,8 @@ const stateClass: Record<CardState, string> = {
 
 export function CardStateBadge({ state, className }: { state: CardState; className?: string }) {
 	return (
-		<Badge dot tone="neutral" className={cn(stateClass[state], className)}>
-			{cardStateLabel[state]}
+		<Badge dot tone="neutral" className={cn("normal-case", stateClass[state], className)}>
+			{cardStateLabels[state]}
 		</Badge>
 	);
 }

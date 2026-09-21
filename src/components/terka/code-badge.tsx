@@ -13,7 +13,7 @@ const groupBorderClass: Record<IslandGroup, string> = {
 };
 
 const codeBadgeVariants = cva(
-	"bg-paper-0 font-plate tracking-plate text-ink-1000 inline-flex shrink-0 items-center justify-center rounded-sm border border-b-[3px] px-2.5 leading-none font-bold",
+	"inline-flex shrink-0 items-center justify-center rounded-sm border border-b-3 bg-paper-0 px-2.5 font-plate leading-none font-bold tracking-plate text-ink-1000",
 	{
 		variants: {
 			size: {
@@ -25,7 +25,6 @@ const codeBadgeVariants = cva(
 	}
 );
 
-/** Group-bordered code pill (e.g. `DK`, `BD`) used in reference, stat and answer rows. */
 export function CodeBadge({
 	code,
 	group,

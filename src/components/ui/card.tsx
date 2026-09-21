@@ -40,7 +40,7 @@ export function Card({
 	return (
 		<section
 			className={cn(
-				"border-ink-200 bg-paper-0 shadow-lift overflow-hidden rounded-md border",
+				"overflow-hidden rounded-md border border-ink-200 bg-paper-0 shadow-lift",
 				className
 			)}
 			{...props}
@@ -63,7 +63,7 @@ export function CardHeader({ className, ...props }: React.ComponentProps<"div">)
 export function CardTitle({ className, ...props }: React.ComponentProps<"h2">) {
 	return (
 		<h2
-			className={cn("font-display text-subhead text-ink-1000 font-semibold", className)}
+			className={cn("font-display text-subhead font-semibold text-ink-1000", className)}
 			{...props}
 		/>
 	);
@@ -76,7 +76,7 @@ export function CardBody({ className, ...props }: React.ComponentProps<"div">) {
 export function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
 	return (
 		<div
-			className={cn("border-ink-200 flex items-center gap-3 border-t px-4 py-3", className)}
+			className={cn("flex items-center gap-3 border-t border-ink-200 px-4 py-3", className)}
 			{...props}
 		/>
 	);

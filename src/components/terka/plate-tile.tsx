@@ -7,7 +7,7 @@ const plateVariants = cva(
 		variants: {
 			size: {
 				sm: "px-3 py-1.5 text-heading",
-				md: "px-[18px] py-2.5 text-display",
+				md: "px-4.5 py-2.5 text-display",
 				lg: "px-6 py-3 text-hero"
 			}
 		},

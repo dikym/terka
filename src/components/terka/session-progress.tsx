@@ -11,7 +11,7 @@ export function SessionProgress({
 }) {
 	return (
 		<div className={cn("flex items-center gap-3", className)}>
-			<div className="flex flex-1 gap-[3px]" aria-hidden>
+			<div className="flex flex-1 gap-0.75" aria-hidden>
 				{Array.from({ length: total }, (_, i) => (
 					<span
 						key={i}
@@ -22,7 +22,7 @@ export function SessionProgress({
 					/>
 				))}
 			</div>
-			<span className="text-body-sm text-ink-500 shrink-0 font-mono font-medium tabular-nums">
+			<span className="shrink-0 font-mono text-body-sm font-medium text-ink-500 tabular-nums">
 				{current}/{total}
 			</span>
 		</div>
