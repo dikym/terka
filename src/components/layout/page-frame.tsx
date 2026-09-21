@@ -3,7 +3,15 @@ import { ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function PageFrame({ className, ...props }: React.ComponentProps<"div">) {
-	return <div className={cn("flex flex-col gap-5 px-8 pt-8 pb-10", className)} {...props} />;
+	return (
+		<div
+			className={cn(
+				"mx-auto flex w-full max-w-7xl flex-col gap-5 px-4 pt-6 pb-10 sm:px-8 sm:pt-8",
+				className
+			)}
+			{...props}
+		/>
+	);
 }
 
 export function PageTitle({
@@ -20,14 +28,14 @@ export function PageTitle({
 	className?: string;
 }) {
 	return (
-		<div className={cn("flex items-center gap-3", className)}>
+		<div className={cn("flex flex-wrap items-center gap-3", className)}>
 			{back ? (
 				<Link
 					href={back}
 					aria-label="Kembali"
-					className="size-control-sm text-ink-700 hover:bg-paper-50 inline-flex items-center justify-center rounded-sm"
+					className="inline-flex size-control-sm items-center justify-center rounded-sm text-ink-700 hover:bg-paper-50"
 				>
-					<ArrowLeft className="size-[18px]" aria-hidden />
+					<ArrowLeft className="size-4.5" aria-hidden />
 				</Link>
 			) : null}
 			<h1
