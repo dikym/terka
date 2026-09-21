@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Card, CardBody } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 type Confidence = "terverifikasi" | "diperdebatkan" | "legenda";
 
@@ -23,16 +24,11 @@ export function FactCard({
 	return (
 		<Card className={cn("shadow-none", className)}>
 			<CardBody>
-				<span
-					className={cn(
-						"rounded-pill font-display text-label self-start px-2.5 py-1 font-semibold uppercase",
-						confidenceBadgeClass[confidence]
-					)}
-				>
+				<Badge className={cn("self-start", confidenceBadgeClass[confidence])}>
 					{confidence}
-				</span>
-				<p className="font-body text-body-md text-ink-900 leading-loose">{children}</p>
-				<cite className="font-body text-body-sm text-ink-500 leading-[1.4] italic">
+				</Badge>
+				<p className="font-body text-body-md leading-loose text-ink-900">{children}</p>
+				<cite className="font-body text-body-sm leading-[1.4] text-ink-500 italic">
 					{source}
 				</cite>
 			</CardBody>

@@ -15,14 +15,6 @@ const calloutVariants = cva("rounded-md border p-4 text-body-md text-ink-1000", 
 	defaultVariants: { tone: "info" }
 });
 
-const titleToneClass: Record<NonNullable<VariantProps<typeof calloutVariants>["tone"]>, string> = {
-	info: "text-ink-1000",
-	sky: "text-sky-700",
-	warn: "text-ink-1000",
-	danger: "text-ink-1000",
-	success: "text-ink-1000"
-};
-
 export function Callout({
 	tone,
 	title,
@@ -37,7 +29,6 @@ export function Callout({
 	className?: string;
 	children: React.ReactNode;
 }) {
-	const activeTone = tone ?? "info";
 	return (
 		<div
 			role="note"
@@ -48,10 +39,15 @@ export function Callout({
 				className
 			)}
 		>
-			{icon ? <span className="text-ink-700 mt-0.5 shrink-0">{icon}</span> : null}
+			{icon ? <span className="mt-0.5 shrink-0 text-ink-700">{icon}</span> : null}
 			<div className={cn("flex flex-col gap-2", icon && "flex-1")}>
 				{title ? (
-					<LabelText className={cn(titleToneClass[activeTone], titleClassName)}>
+					<LabelText
+						className={cn(
+							tone === "sky" ? "text-sky-700" : "text-ink-1000",
+							titleClassName
+						)}
+					>
 						{title}
 					</LabelText>
 				) : null}

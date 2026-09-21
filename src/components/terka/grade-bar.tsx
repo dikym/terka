@@ -15,17 +15,17 @@ export function GradeBar({ className }: { className?: string }) {
 			role="group"
 			aria-label="Nilai jawaban"
 		>
-			{grades.map((g) => (
+			{grades.map((grade) => (
 				<button
-					key={g.key}
+					key={grade.key}
 					type="button"
 					className={cn(
-						"h-control border-ink-1000 font-display text-body-md text-ink-1000 shadow-block flex items-center justify-center gap-2 rounded-sm border leading-none font-semibold active:translate-[2px_2px] active:shadow-none",
-						g.className
+						"flex h-control items-center justify-center gap-2 rounded-sm border border-ink-1000 font-display text-body-md leading-none font-semibold text-ink-1000 shadow-block active:translate-0.5 active:shadow-none",
+						grade.className
 					)}
 				>
-					{g.label}
-					<Kbd>{g.key}</Kbd>
+					{grade.label}
+					<Kbd>{grade.key}</Kbd>
 				</button>
 			))}
 		</div>

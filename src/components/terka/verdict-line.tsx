@@ -23,7 +23,7 @@ export function VerdictLine({
 			<Badge dot className={cn("self-start", verdictClass[verdict])}>
 				{label}
 			</Badge>
-			{detail ? <span className="text-body-sm text-ink-500 font-mono">{detail}</span> : null}
+			{detail ? <span className="font-mono text-body-sm text-ink-500">{detail}</span> : null}
 		</div>
 	);
 }

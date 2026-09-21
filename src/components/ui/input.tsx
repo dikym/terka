@@ -6,7 +6,7 @@ export const inputVariants = cva(
 	"w-full rounded-sm border border-ink-1000 bg-paper-0 font-body text-ink-1000 placeholder:text-ink-500 disabled:opacity-40",
 	{
 		variants: {
-			size: { sm: "h-control-sm px-3 text-body-sm", md: "h-control px-4 text-body-md" }
+			size: { sm: "h-control-sm px-3 text-body-sm", md: "h-control px-4 text-body-lg" }
 		},
 		defaultVariants: { size: "md" }
 	}
