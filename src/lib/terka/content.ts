@@ -214,9 +214,7 @@ export function reconcileContent(input: Progress, value: unknown): Progress {
 }
 
 export function createProgress(content: Content, now: number, timezone?: string): Progress {
-	const activeScope: Scope = content.regions.some((region) => region.group === "bali-nusra")
-		? { level: "group", id: "bali-nusra" }
-		: { level: "national", id: "indonesia" };
+	const activeScope: Scope = { level: "national", id: "indonesia" };
 	return reconcileContent(
 		{
 			schemaVersion: 1,

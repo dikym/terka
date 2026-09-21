@@ -2,9 +2,9 @@ import { ArrowRight } from "lucide-react";
 import { SessionShell } from "@/components/layout/session-shell";
 import { LabelText } from "@/components/ui/label-text";
 import { FactCard } from "@/components/terka/fact-card";
-import { LevelChip } from "./sesi-tanya";
-import { ModeBadge } from "./bandingkan";
-import { GradedAnswer } from "./kode-belakang";
+import { LevelChip } from "@/components/terka/level-chip";
+import { ModeBadge } from "@/components/terka/mode-badge";
+import { GradedAnswer } from "@/components/terka/graded-answer";
 
 const question =
 	"Provinsi yang dulunya berkode DS, lalu menggantinya pada 1 Juli 2016 bertepatan dengan HUT Bhayangkara.";
@@ -21,7 +21,7 @@ export function FaktaKode() {
 			total={24}
 			toolbar={
 				<span className="inline-flex shrink-0 items-center gap-3">
-					<ModeBadge tone="bg-caution-100 text-ink-1000">
+					<ModeBadge className="bg-caution-100 text-ink-1000">
 						Fakta{" "}
 						<ArrowRight
 							className="inline-block size-[0.9em] align-[-0.09em]"
@@ -35,12 +35,12 @@ export function FaktaKode() {
 		>
 			<div className="flex flex-col items-start gap-3">
 				<LabelText>kode mana yang dimaksud?</LabelText>
-				<p className="text-body-lg text-ink-900 leading-loose">{question}</p>
+				<p className="text-body-lg leading-loose text-ink-900">{question}</p>
 			</div>
-			<GradedAnswer className="tracking-plate font-mono font-semibold uppercase">
+			<GradedAnswer className="font-mono font-semibold tracking-plate uppercase">
 				PA
 			</GradedAnswer>
-			<span className="text-body-sm text-ink-500 leading-[1.4]">
+			<span className="text-body-sm leading-[1.4] text-ink-500">
 				Jawaban berupa kode dinilai persis — tanpa toleransi salah ketik.
 			</span>
 			<FactCard confidence="terverifikasi" source={fact.source}>

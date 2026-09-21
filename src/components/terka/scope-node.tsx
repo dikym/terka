@@ -5,7 +5,7 @@ import { LabelText } from "@/components/ui/label-text";
 export type IslandGroup =
 	"sumatera" | "jawa" | "kalimantan" | "sulawesi" | "balinusra" | "maluku" | "papua";
 
-export const groupDotClass: Record<IslandGroup, string> = {
+export const islandGroupBackgroundClasses: Record<IslandGroup, string> = {
 	sumatera: "bg-group-sumatera",
 	jawa: "bg-group-jawa",
 	kalimantan: "bg-group-kalimantan",
@@ -24,46 +24,56 @@ export function ScopeNode({
 	count,
 	percent,
 	group,
+	tree = Boolean(group),
 	depth = 0,
 	active,
 	expanded,
 	leaf,
 	mono,
+	highlighted,
+	onClick,
 	className
 }: {
 	name: string;
 	count: string;
 	percent: string;
 	group?: IslandGroup;
+	/** Rendered inside a ScopeTree; defaults to true for grouped nodes. */
+	tree?: boolean;
 	depth?: number;
 	active?: boolean;
 	expanded?: boolean;
 	leaf?: boolean;
 	mono?: boolean;
+	highlighted?: boolean;
 	className?: string;
+	onClick?: () => void;
 }) {
 	const Chevron = expanded ? ChevronDown : ChevronRight;
 	return (
-		<div
-			role={group ? "treeitem" : undefined}
-			aria-selected={group ? active : undefined}
-			aria-expanded={group && !leaf ? expanded : undefined}
+		<button
+			type="button"
+			onClick={onClick}
+			role={tree ? "treeitem" : undefined}
+			aria-selected={tree ? active : undefined}
+			aria-expanded={tree && !leaf ? expanded : undefined}
 			className={cn(
-				"border-ink-200 bg-paper-0 box-border flex min-h-11 items-center gap-3 rounded-sm border p-3",
+				"box-border flex min-h-12 items-center gap-3 rounded-sm border border-ink-200 bg-paper-0 p-3 text-left transition-[border-color,box-shadow] duration-90 ease-out hover:border-ink-1000 hover:shadow-[2px_2px_0_var(--color-ink-1000)]",
 				active && "border-ink-1000 bg-paper-50",
+				highlighted && "border-2 border-ink-1000 shadow-[2px_2px_0_var(--color-ink-1000)]",
 				className
 			)}
-			style={group ? { paddingLeft: `${12 + 20 + depth * 20}px` } : undefined}
+			style={group ? { marginLeft: `${(depth + 1) * 20}px` } : undefined}
 		>
 			{leaf ? null : (
 				<span className="grid size-6 shrink-0 place-items-center">
-					<Chevron className="text-ink-700 size-[22px]" aria-hidden />
+					<Chevron className="size-5.5 text-ink-700" aria-hidden />
 				</span>
 			)}
 			<span
 				className={cn(
 					"size-2.5 shrink-0 rounded-full",
-					group ? groupDotClass[group] : "bg-ink-1000"
+					group ? islandGroupBackgroundClasses[group] : "bg-ink-1000"
 				)}
 				aria-hidden
 			/>
@@ -72,31 +82,33 @@ export function ScopeNode({
 				<span className="flex items-baseline justify-between gap-2">
 					<span
 						className={cn(
-							"text-body-lg text-ink-1000 truncate leading-[1.2]",
+							"truncate text-body-lg leading-[1.2] text-ink-1000",
 							mono
-								? "tracking-plate font-mono font-bold"
+								? "font-mono font-bold tracking-plate"
 								: "font-display font-semibold"
 						)}
 					>
 						{name}
 					</span>
-					<span className="text-body-sm text-ink-500 shrink-0 font-mono">{count}</span>
+					<span className="shrink-0 font-mono text-body-sm leading-none text-ink-500">
+						{count}
+					</span>
 				</span>
 				<span className="flex items-center gap-2">
-					<span className="bg-ink-100 h-1.5 min-w-0 flex-1 overflow-hidden rounded-xs">
+					<span className="h-1.5 min-w-0 flex-1 overflow-hidden rounded-xs bg-ink-100">
 						<span
 							className={cn(
 								"block h-full",
-								group ? groupDotClass[group] : "bg-ink-1000"
+								group ? islandGroupBackgroundClasses[group] : "bg-ink-1000"
 							)}
 							style={{ width: percent }}
 						/>
 					</span>
-					<span className="text-body-sm text-ink-900 w-9 shrink-0 text-right font-mono font-medium tabular-nums">
+					<span className="w-9 shrink-0 text-right font-mono text-body-sm leading-none font-medium text-ink-900 tabular-nums">
 						{percent}
 					</span>
 				</span>
 			</span>
-		</div>
+		</button>
 	);
 }

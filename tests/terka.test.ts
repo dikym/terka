@@ -25,6 +25,7 @@ import {
 	nextQuestion,
 	refreshProgress,
 	selectScope,
+	learnedCards,
 	startSession,
 	undoAnswer
 } from "../src/lib/terka/engine";
@@ -59,7 +60,68 @@ test("AC-1: all 61 imported codes have a Level 3 question without history", () =
 	const content = parseContent(plates);
 	assert.equal(content.regions.length, 61);
 	assertLevelThreeCoverage(content);
-	assert.equal(createProgress(content, NOW).cards.length, 0);
+	assert.equal(createProgress(content, NOW).cards.length, 122);
+	for (const region of content.regions) {
+		let progress = selectScope(createProgress(content, NOW), content, {
+			level: "code",
+			id: region.id
+		});
+		progress = startSession(progress, content, { id: region.id, mode: "daily", now: NOW });
+		progress = nextQuestion(progress, content, { id: region.id, now: NOW, level: 3 });
+		assert.equal(progress.currentQuestion?.regionId, region.id, region.code);
+		progress = answerCurrent(progress, content, region.id);
+		assert.equal(progress.reviews[0].correct, true, region.code);
+		assert.equal(progress.reviews[0].scheduled, true, region.code);
+
+		const set = generateQuestion(content, newCard(region.id, "setrecall", NOW), {
+			id: region.id,
+			now: NOW
+		});
+		assert.equal(
+			evaluateQuestion(
+				content,
+				set,
+				region.areas.map((area) => area.name)
+			).setCorrect,
+			region.areas.length,
+			region.code
+		);
+	}
+});
+
+test("verified locations include Solok, Taliabu and both Tangerang jurisdictions", () => {
+	const content = parseContent(plates);
+	const areas = (code: string) => content.regions.find((region) => region.code === code)!.areas;
+	assert.equal(content.regions.flatMap((region) => region.areas).length, 515);
+	assert.equal(
+		new Set(content.regions.flatMap((region) => region.areas.map((area) => area.id))).size,
+		514
+	);
+	assert.ok(areas("BA").some((area) => area.name === "Kota Solok"));
+	assert.ok(areas("BA").some((area) => area.name === "Kabupaten Solok"));
+	assert.ok(areas("DG").some((area) => area.name === "Pulau Taliabu"));
+	for (const code of ["A", "B"])
+		assert.ok(areas(code).some((area) => area.name === "Kabupaten Tangerang"));
+	assert.ok(areas("F").some((area) => area.name === "Kota Bogor"));
+	assert.ok(areas("B").every((area) => !area.name.includes("Bogor")));
+	assert.ok(
+		areas("K")
+			.find((area) => area.name === "Blora")!
+			.aliases.includes("Cepu")
+	);
+	assert.deepEqual(
+		areas("W")
+			.map((area) => area.name)
+			.sort(),
+		["Gresik", "Sidoarjo"]
+	);
+	assert.ok(areas("S").some((area) => area.name === "Kabupaten Mojokerto"));
+	const solok = generateQuestion(content, newCard("ba", "setrecall", NOW), {
+		id: "solok",
+		now: NOW
+	});
+	assert.equal(evaluateQuestion(content, solok, ["Solok"]).ambiguous, true);
+	assert.equal(evaluateQuestion(content, solok, ["Kota Solok", "Kabupaten Solok"]).setCorrect, 2);
 });
 
 test("AC-7: codes never use typo tolerance; national dictionary precedes fuzzy", () => {
@@ -266,6 +328,16 @@ test("AC-8/9: a scheduled answer is idempotent and undo restores D/S, due, reps 
 	assert.deepEqual(applyAnswer(progress, content, answer), progress);
 	assert.deepEqual(undoAnswer(progress), { ...before, clock: progress.clock, undo: null });
 	assert.throws(() => applyAnswer(before, content, { ...answer, msToFirstKey: 2000 }));
+});
+
+test("challenge stays closed until a card has been studied", () => {
+	const content = fixture();
+	const fresh = createProgress(content, NOW, "Asia/Makassar");
+	assert.equal(learnedCards(fresh, content).length, 0);
+	assert.throws(() =>
+		startSession(fresh, content, { id: "challenge", mode: "challenge", now: NOW })
+	);
+	assert.ok(learnedCards(reviewing(), content).length > 0);
 });
 
 test("challenge is five questions once per day and never changes scheduling", () => {

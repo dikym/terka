@@ -1,0 +1,31 @@
+"use client";
+import { createContext, useContext } from "react";
+import type { Content, Progress, Question, RawReview, Session } from "@/lib/terka/model";
+import type { sessionSummary } from "@/lib/terka/statistics";
+
+export type SessionView = {
+	progress: Progress;
+	content: Content;
+	session: Session;
+	question: Question | null;
+	review: RawReview | null;
+	summary: ReturnType<typeof sessionSummary> | null;
+	busy: boolean;
+	current: number;
+	total: number;
+	value: string;
+	plate: { code: string; number?: string; suffix?: string };
+	timer: { value: number; time: string };
+	secondsLeft: number;
+	items: { name: string; correct: boolean; note?: string }[];
+	setValue: (value: string) => void;
+	submit: (answers?: string[]) => void;
+	add: () => void;
+	next: () => void;
+	lower: () => void;
+	undo: () => void;
+	canUndo: boolean;
+	firstPart: string | null;
+};
+export const SessionViewContext = createContext<SessionView | null>(null);
+export const useSessionView = () => useContext(SessionViewContext);
