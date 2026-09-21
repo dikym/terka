@@ -1,109 +1,163 @@
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useLearning } from "@/components/learning/learning-provider";
+import { islandGroup } from "@/components/learning/presentation";
+import { buildHierarchy } from "@/lib/terka/content";
+import { scopeStats } from "@/lib/terka/statistics";
+import { scopeName, percent } from "@/lib/terka/practice";
+import { selectScope } from "@/lib/terka/engine";
+import type { Scope } from "@/lib/terka/model";
 import { Button } from "@/components/ui/button";
 import { LabelText } from "@/components/ui/label-text";
 import { Card, CardTitle } from "@/components/ui/card";
 import { PageFrame, PageTitle } from "@/components/layout/page-frame";
 import { TwoColumn } from "@/components/layout/two-column";
-import { ScopeTree, ScopeNode, type IslandGroup } from "@/components/terka/scope-node";
-
-type ScopeChild = {
-	name: string;
-	count: string;
-	percent: string;
-	group: IslandGroup;
-	mono?: boolean;
-};
-
-type ScopeItem = {
-	name: string;
-	count: string;
-	percent: string;
-	group: IslandGroup;
-	expanded?: boolean;
-	active?: boolean;
-	leaf?: boolean;
-	children?: ScopeChild[];
-};
-
-const tree: ScopeItem[] = [
-	{ name: "Sumatera", count: "61 kartu", percent: "8%", group: "sumatera" },
-	{ name: "Jawa", count: "124 kartu", percent: "22%", group: "jawa" },
-	{ name: "Kalimantan", count: "28 kartu", percent: "14%", group: "kalimantan", leaf: true },
-	{ name: "Sulawesi", count: "49 kartu", percent: "4%", group: "sulawesi", leaf: true },
-	{
-		name: "Bali & Nusa Tenggara",
-		count: "31 kartu",
-		percent: "64%",
-		group: "balinusra",
-		expanded: true,
-		active: true,
-		children: [
-			{ name: "DK", count: "6 kartu", percent: "88%", group: "balinusra", mono: true },
-			{ name: "DR", count: "5 kartu", percent: "52%", group: "balinusra", mono: true },
-			{ name: "EA", count: "5 kartu", percent: "40%", group: "balinusra", mono: true }
-		]
-	},
-	{ name: "Maluku", count: "8 kartu", percent: "100%", group: "maluku", leaf: true },
-	{ name: "Papua", count: "25 kartu", percent: "0%", group: "papua", leaf: true }
-];
-
-const totalScope = { count: "305 kartu", percent: "26%" };
-
-const highlighted = {
-	name: "Kawasan Sumatera",
-	count: "61 kartu",
-	fresh: "8 materi baru tersedia"
-};
+import { ScopeTree, ScopeNode } from "@/components/terka/scope-node";
 
 export function Cakupan() {
+	const { progress, content, busy, act } = useLearning();
+	const router = useRouter();
+	const [selected, setSelected] = useState<Scope>(progress.activeScope);
+	const [expanded, setExpanded] = useState<string[]>([
+		"group:" +
+			(content.regions.find((region) => region.id === progress.activeScope.id)?.group ??
+				progress.activeScope.id)
+	]);
+	const nodes = buildHierarchy(content);
+	const same = (scope: Scope, other: Scope) =>
+		scope.level === other.level && scope.id === other.id;
+	function choose(scope: Scope) {
+		setSelected({ level: scope.level, id: scope.id });
+		const key = `${scope.level}:${scope.id}`;
+		setExpanded((values) =>
+			values.includes(key) ? values.filter((value) => value !== key) : [...values, key]
+		);
+	}
+	function rows(
+		parent: string,
+		depth: number
+	): {
+		scope: Scope;
+		name: string;
+		count: string;
+		percent: string;
+		group: ReturnType<typeof islandGroup>;
+		expanded: boolean;
+		active: boolean;
+		leaf: boolean;
+		highlighted: boolean;
+		mono: boolean;
+		depth: number;
+	}[] {
+		return nodes
+			.filter((node) => node.parent === parent)
+			.flatMap((node) => {
+				const key = `${node.level}:${node.id}`;
+				const stats = scopeStats(progress, content, node);
+				const open = expanded.includes(key);
+				return [
+					{
+						scope: node,
+						name:
+							node.level === "code"
+								? content.regions.find((region) => region.id === node.id)!.code
+								: scopeName(content, node),
+						count: `${stats.totalCards} kartu`,
+						percent: percent(stats.mastery),
+						group: islandGroup(
+							content.regions.find((region) => region.id === node.regionIds[0])!.group
+						),
+						expanded: open,
+						active: same(node, progress.activeScope),
+						leaf: node.level === "code",
+						highlighted: same(node, selected),
+						mono: node.level === "code",
+						depth
+					},
+					...(open ? rows(key, depth + 1) : [])
+				];
+			});
+	}
+	const tree = rows("national:indonesia", 0);
+	const national: Scope = { level: "national", id: "indonesia" };
+	const all = scopeStats(progress, content, national);
+	const totalScope = { count: `${all.totalCards} kartu`, percent: percent(all.mastery) };
+	const stats = scopeStats(progress, content, selected);
+	const highlighted = {
+		name: scopeName(content, selected),
+		count: `${stats.totalCards} kartu`,
+		fresh: `${stats.newCards} materi baru tersedia`
+	};
+
 	return (
 		<PageFrame>
 			<PageTitle>Cakupan</PageTitle>
 			<TwoColumn
-				className="grid-cols-[minmax(0,1fr)_340px]"
+				className="lg:grid-cols-[minmax(0,1fr)_340px]"
 				aside={
-					<>
-						<ScopeNode
-							name="Seluruh Indonesia"
-							count={totalScope.count}
-							percent={totalScope.percent}
-							leaf
-						/>
-						<Card className="border-ink-1000 shadow-block flex flex-col gap-3 border-2 p-4">
-							<div className="flex items-baseline justify-between gap-3">
-								<div className="flex flex-col items-start gap-1">
-									<LabelText>Wilayah disorot</LabelText>
-									<CardTitle>{highlighted.name}</CardTitle>
-								</div>
-								<span className="text-body-sm text-ink-500 shrink-0 font-mono font-medium">
-									{highlighted.count}
-								</span>
+					<Card className="flex flex-col gap-3 border-2 border-ink-1000 p-4 shadow-block">
+						<div className="flex items-baseline justify-between gap-3">
+							<div className="flex flex-col items-start gap-1">
+								<LabelText>Wilayah disorot</LabelText>
+								<CardTitle>{highlighted.name}</CardTitle>
 							</div>
-							<span className="text-body-md text-ink-900">{highlighted.fresh}</span>
-							<div className="flex flex-col gap-2">
-								<Button variant="primary" size="md" block className="px-4">
-									Pilih wilayah ini
-								</Button>
-								<Button
-									variant="quiet"
-									size="md"
-									block
-									className="border-ink-1000 px-4"
-								>
-									Latih wilayah ini
-								</Button>
-							</div>
-							<span className="text-body-sm text-ink-500 font-body leading-[1.4]">
-								Menelusuri tidak mengubah Cakupan. Cakupan berganti setelah Pilih
-								wilayah ini ditekan.
+							<span className="shrink-0 font-mono text-body-sm font-medium text-ink-500">
+								{highlighted.count}
 							</span>
-						</Card>
-					</>
+						</div>
+						<span className="text-body-md text-ink-900">{highlighted.fresh}</span>
+						<div className="flex flex-col gap-2">
+							<Button
+								disabled={busy}
+								onClick={() =>
+									void act((current, data) =>
+										selectScope(current, data, selected)
+									)
+								}
+								variant="primary"
+								size="md"
+								block
+								className="px-4"
+							>
+								Pilih wilayah ini
+							</Button>
+							<Button
+								disabled={busy}
+								onClick={() =>
+									router.push(
+										`/terfokus?level=${selected.level}&id=${encodeURIComponent(selected.id)}`
+									)
+								}
+								variant="quiet"
+								size="md"
+								block
+								className="border-ink-1000 px-4"
+							>
+								Latih wilayah ini
+							</Button>
+						</div>
+						<span className="font-body text-body-sm leading-[1.4] text-ink-500">
+							Menelusuri tidak mengubah Cakupan. Cakupan berganti setelah Pilih
+							wilayah ini ditekan.
+						</span>
+					</Card>
 				}
 			>
 				<ScopeTree>
-					{tree.flatMap((item) => [
+					<ScopeNode
+						name="Seluruh Indonesia"
+						onClick={() => setSelected(national)}
+						active={same(progress.activeScope, national)}
+						highlighted={same(selected, national)}
+						count={totalScope.count}
+						percent={totalScope.percent}
+						tree
+						leaf
+					/>
+					{tree.map((item) => (
 						<ScopeNode
-							key={item.name}
+							key={`${item.scope.level}:${item.scope.id}`}
 							name={item.name}
 							count={item.count}
 							percent={item.percent}
@@ -111,22 +165,14 @@ export function Cakupan() {
 							expanded={item.expanded}
 							active={item.active}
 							leaf={item.leaf}
-						/>,
-						...(item.children ?? []).map((child) => (
-							<ScopeNode
-								key={`${item.name}-${child.name}`}
-								name={child.name}
-								count={child.count}
-								percent={child.percent}
-								group={child.group}
-								depth={1}
-								leaf
-								mono={child.mono}
-							/>
-						))
-					])}
+							highlighted={item.highlighted}
+							depth={item.depth}
+							mono={item.mono}
+							onClick={() => choose(item.scope)}
+						/>
+					))}
 				</ScopeTree>
-				<div className="border-ink-200 bg-paper-50 text-ink-900 flex flex-col gap-2 rounded-md border p-4">
+				<div className="flex flex-col gap-2 rounded-md border border-ink-200 bg-paper-50 p-4 text-ink-900">
 					<LabelText tone="ink">Aturan</LabelText>
 					<p className="text-body-md text-ink-900">
 						Cakupan hanya menentukan materi baru mana yang boleh dipelajari. Soal yang

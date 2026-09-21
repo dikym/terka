@@ -1,3 +1,10 @@
+"use client";
+import { useRef } from "react";
+import { useRouter } from "next/navigation";
+import { useLearning, useNow } from "@/components/learning/learning-provider";
+import { useBackupActions } from "@/components/learning/backup-actions";
+import { backupStatus, manualBackup } from "@/lib/terka/backup";
+import { dateLabel } from "@/lib/terka/practice";
 import { Download, Settings } from "lucide-react";
 import { PageFrame, PageTitle } from "@/components/layout/page-frame";
 import { TwoColumn } from "@/components/layout/two-column";
@@ -7,35 +14,63 @@ import { Card, CardTitle } from "@/components/ui/card";
 import { IconButton } from "@/components/ui/icon-button";
 import { LabelText } from "@/components/ui/label-text";
 
-const backupWarning = {
-	title: "Cadangan terakhir sudah lebih dari 14 hari.",
-	body: "Lebih dari 14 hari. Data belajar hanya tersimpan di perangkat ini, jadi berkas cadangan adalah satu-satunya salinan."
-};
-
-const destination = [
-	{ label: "folder", value: "iCloud Drive / Terka" },
-	{ label: "izin", value: "directory handle permanen" },
-	{ label: "jadwal", value: "otomatis, mingguan" },
-	{ label: "ukuran", value: "84 KB · 305 kartu" }
-];
-
-const history = [
-	{ date: "2026-08-24", kind: "otomatis" },
-	{ date: "2026-08-17", kind: "otomatis" },
-	{ date: "2026-08-03", kind: "manual" }
-];
-
 export function Cadangan() {
+	const { progress, busy } = useLearning();
+	const router = useRouter();
+	const now = useNow();
+	const input = useRef<HTMLInputElement>(null);
+	const backup = useBackupActions();
+	const status = backupStatus(progress, now);
+	const backupWarning = {
+		title: backup.downloaded
+			? "Pastikan berkas sudah tersimpan."
+			: progress.lastBackupAt === null
+				? "Belum ada cadangan."
+				: status.overdue
+					? "Cadangan terakhir sudah lebih dari 14 hari."
+					: "Cadangan sudah diperbarui.",
+		body: backup.downloaded
+			? "Setelah unduhan tersimpan, tekan Berkas sudah tersimpan untuk mencatat cadangan ini."
+			: (status.message ??
+				"Data belajar tersimpan di perangkat ini. Simpan salinan cadangan di tempat aman.")
+	};
+	const destination = [
+		{ label: "folder", value: backup.folder ?? "Unduhan manual" },
+		{ label: "izin", value: backup.folder ? "Diperiksa saat menyimpan" : "Belum terhubung" },
+		{ label: "jadwal", value: backup.folder ? "otomatis, mingguan" : "manual" },
+		{
+			label: "ukuran",
+			value: `${Math.ceil(manualBackup(progress).size / 1024)} KB · ${progress.cards.length} kartu`
+		}
+	];
+	const history = [
+		{
+			date: dateLabel(progress.lastBackupAt),
+			kind: progress.lastBackupAt === null ? "belum ada" : "terakhir tersimpan"
+		}
+	];
+
 	return (
 		<>
-			<header className="border-ink-200 bg-paper-0 flex items-center border-b px-5 py-4">
+			<input
+				ref={input}
+				type="file"
+				accept=".json,application/json"
+				hidden
+				onChange={(event) => {
+					const file = event.target.files?.[0];
+					event.target.value = "";
+					if (file) void backup.restore(file);
+				}}
+			/>
+			<header className="flex items-center border-b border-ink-200 bg-paper-0 px-5 py-4">
 				<PageTitle
 					back="/statistik"
 					size="sm"
 					className="flex-1"
 					actions={
-						<IconButton label="Setelan">
-							<Settings className="size-[18px]" aria-hidden />
+						<IconButton label="Setelan" onClick={() => router.push("/setelan")}>
+							<Settings className="size-4.5" aria-hidden />
 						</IconButton>
 					}
 				>
@@ -44,7 +79,7 @@ export function Cadangan() {
 			</header>
 			<PageFrame>
 				<TwoColumn
-					className="grid-cols-[minmax(0,1fr)_300px]"
+					className="lg:grid-cols-[minmax(0,1fr)_300px]"
 					aside={
 						<>
 							<div className="flex flex-col gap-2">
@@ -52,9 +87,9 @@ export function Cadangan() {
 								{history.map((entry) => (
 									<div
 										key={entry.date}
-										className="border-ink-200 flex items-center justify-between gap-3 border-t py-2"
+										className="flex items-center justify-between gap-3 border-t border-ink-200 py-2"
 									>
-										<span className="text-body-sm text-ink-1000 font-mono font-medium">
+										<span className="font-mono text-body-sm leading-none font-medium text-ink-1000">
 											{entry.date}
 										</span>
 										<LabelText>{entry.kind}</LabelText>
@@ -69,10 +104,10 @@ export function Cadangan() {
 					}
 				>
 					<Callout
-						tone="danger"
+						tone={status.overdue ? "danger" : "sky"}
 						className="border-ink-200"
 						title={backupWarning.title}
-						titleClassName="text-stop-700"
+						titleClassName={status.overdue ? "text-stop-700" : undefined}
 					>
 						{backupWarning.body}
 					</Callout>
@@ -88,7 +123,7 @@ export function Cadangan() {
 										className="flex items-center justify-between gap-3"
 									>
 										<LabelText>{item.label}</LabelText>
-										<span className="text-body-sm text-ink-900 text-right">
+										<span className="text-right text-body-sm leading-[1.3] text-ink-900">
 											{item.value}
 										</span>
 									</div>
@@ -96,10 +131,20 @@ export function Cadangan() {
 							</div>
 						</div>
 					</Card>
-					<Button block iconRight={<Download className="size-4" aria-hidden />}>
-						Perbarui cadangan
+					<Button
+						disabled={busy}
+						onClick={() => void backup.save()}
+						block
+						iconRight={<Download className="size-4" aria-hidden />}
+					>
+						{backup.downloaded ? "Berkas sudah tersimpan" : "Perbarui cadangan"}
 					</Button>
-					<Button variant="secondary" block>
+					<Button
+						disabled={busy}
+						onClick={() => input.current?.click()}
+						variant="secondary"
+						block
+					>
 						Pulihkan cadangan
 					</Button>
 				</TwoColumn>

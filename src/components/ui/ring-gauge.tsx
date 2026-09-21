@@ -4,20 +4,22 @@ type Ring = { value: number; className?: string };
 
 export function RingGauge({
 	size = 96,
-	stroke = 8,
+	viewBoxSize = size,
+	strokeWidth = 8,
 	gap = 4,
 	rings,
 	className,
 	children
 }: {
 	size?: number;
-	stroke?: number;
+	viewBoxSize?: number;
+	strokeWidth?: number;
 	gap?: number;
 	rings: Ring[];
 	className?: string;
 	children?: React.ReactNode;
 }) {
-	const c = size / 2;
+	const center = viewBoxSize / 2;
 	return (
 		<div
 			className={cn("relative inline-flex items-center justify-center", className)}
@@ -26,31 +28,31 @@ export function RingGauge({
 			<svg
 				width={size}
 				height={size}
-				viewBox={`0 0 ${size} ${size}`}
+				viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}
 				className="-rotate-90"
 				aria-hidden
 			>
-				{rings.map((ring, i) => {
-					const r = c - stroke / 2 - i * (stroke + gap);
-					const len = 2 * Math.PI * r;
+				{rings.map((ring, index) => {
+					const radius = center - strokeWidth / 2 - index * (strokeWidth + gap);
+					const circumference = 2 * Math.PI * radius;
 					return (
-						<g key={i}>
+						<g key={index}>
 							<circle
-								cx={c}
-								cy={c}
-								r={r}
+								cx={center}
+								cy={center}
+								r={radius}
 								fill="none"
-								strokeWidth={stroke}
+								strokeWidth={strokeWidth}
 								className="stroke-ink-100"
 							/>
 							<circle
-								cx={c}
-								cy={c}
-								r={r}
+								cx={center}
+								cy={center}
+								r={radius}
 								fill="none"
-								strokeWidth={stroke}
-								strokeDasharray={len}
-								strokeDashoffset={len * (1 - ring.value / 100)}
+								strokeWidth={strokeWidth}
+								strokeDasharray={circumference}
+								strokeDashoffset={circumference * (1 - ring.value / 100)}
 								className={ring.className ?? "stroke-ink-1000"}
 							/>
 						</g>

@@ -151,6 +151,16 @@ export function selectScope(input: Progress, content: Content, value: Scope): Pr
 	return { ...input, activeScope: scope };
 }
 
+export function learnedCards(progress: Progress, content: Content, includeNew = false) {
+	return progress.cards.filter(
+		(card) =>
+			(card.reps > 0 || includeNew) &&
+			card.state !== "suspended" &&
+			card.mode !== "setrecall" &&
+			cardEligible(card, content)
+	);
+}
+
 export function startSession(
 	input: Progress,
 	content: Content,
@@ -182,13 +192,7 @@ export function startSession(
 	}
 	const scope = options.scope ?? progress.activeScope;
 	selectScope(progress, content, scope);
-	const learned = progress.cards.filter(
-		(card) =>
-			card.reps > 0 &&
-			card.state !== "suspended" &&
-			card.mode !== "setrecall" &&
-			cardEligible(card, content)
-	);
+	const learned = learnedCards(progress, content, mode === "sprint");
 	let cardIds: string[];
 	if (mode === "daily") cardIds = [];
 	else if (mode === "challenge") {

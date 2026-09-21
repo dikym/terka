@@ -6,6 +6,7 @@ import {
 	Space_Grotesk
 } from "next/font/google";
 import "./globals.css";
+import { LearningProvider } from "@/components/learning/learning-provider";
 
 const spaceGrotesk = Space_Grotesk({
 	subsets: ["latin"],
@@ -40,7 +41,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 			lang="id"
 			className={`${spaceGrotesk.variable} ${plexSans.variable} ${plexMono.variable} ${barlow.variable}`}
 		>
-			<body>{children}</body>
+			<body>
+				<LearningProvider>{children}</LearningProvider>
+			</body>
 		</html>
 	);
 }

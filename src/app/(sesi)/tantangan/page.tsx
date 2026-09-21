@@ -1,5 +1,4 @@
-import { TantanganHarian } from "@/components/screens/tantangan-harian";
-
+import { LearningSession } from "@/components/learning/learning-session";
 export default function Page() {
-	return <TantanganHarian />;
+	return <LearningSession initialMode="challenge" />;
 }

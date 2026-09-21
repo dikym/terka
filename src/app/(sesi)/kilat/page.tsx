@@ -1,5 +1,4 @@
-import { ModeKilat } from "@/components/screens/mode-kilat";
-
+import { LearningSession } from "@/components/learning/learning-session";
 export default function Page() {
-	return <ModeKilat />;
+	return <LearningSession initialMode="sprint" />;
 }

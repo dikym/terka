@@ -624,3 +624,18 @@ test("set sessions select unlocked cards in scope, consume one introduction and 
 	assert.deepEqual(progress.newCardsToday, ["be::setrecall"]);
 	assert.ok(progress.sessions[0].completedAt);
 });
+
+test("sprint sessions draw from every eligible scope card, learned or not", () => {
+	const content = fixture();
+	const progress = startSession(createProgress(content, NOW, "Asia/Makassar"), content, {
+		id: "sprint",
+		mode: "sprint",
+		scope: { level: "national", id: "indonesia" },
+		now: NOW,
+		random: () => 0.5
+	});
+	assert.deepEqual(
+		new Set(progress.sessions[0].cardIds.map((cardId) => cardId.split("::")[0])),
+		new Set(["be", "bd", "dk", "de"])
+	);
+});
