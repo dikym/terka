@@ -17,16 +17,14 @@ test("custom Tailwind sizes, colors and responsive overrides merge independently
 	);
 });
 
-test("toast preserves severity and exposes a focusable countdown without close controls", () => {
+test("toast preserves severity, stays focusable and offers a close control", () => {
 	for (const tone of ["warn", "danger"] as const) {
 		const markup = renderToStaticMarkup(<Toast message="Pesan pengujian" tone={tone} />);
 		assert.ok(markup.includes(tone === "warn" ? "Perlu perhatian" : "Terjadi kesalahan"));
 		assert.ok(markup.includes(`data-tone="${tone}"`));
-		assert.ok(markup.indexOf("toast-countdown") < markup.indexOf("Pesan pengujian"));
 		assert.ok(markup.includes('tabindex="0"'));
-		assert.ok(markup.includes("toast-countdown"));
-		assert.ok(!markup.includes("<button"));
-		assert.ok(!markup.includes("<svg"));
+		assert.ok(markup.includes('aria-label="Tutup"'));
+		assert.ok(markup.includes("Pesan pengujian"));
 	}
 });
 
