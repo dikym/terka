@@ -1,5 +1,5 @@
-import { Cadangan } from "@/components/screens/cadangan";
+import { BackupScreen } from "@/components/screens/backup";
 
 export default function Page() {
-	return <Cadangan />;
+	return <BackupScreen />;
 }

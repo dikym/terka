@@ -14,7 +14,7 @@ import { CodeBadge } from "@/components/terka/code-badge";
 import { PageFrame, PageTitle } from "@/components/layout/page-frame";
 import { cn } from "@/lib/utils";
 
-export function Referensi() {
+export function ReferenceScreen() {
 	const { content, progress } = useLearning();
 	const [query, setQuery] = useState("");
 	const results = searchReference(

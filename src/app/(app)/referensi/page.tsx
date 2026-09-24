@@ -1,5 +1,5 @@
-import { Referensi } from "@/components/screens/referensi";
+import { ReferenceScreen } from "@/components/screens/reference";
 
 export default function Page() {
-	return <Referensi />;
+	return <ReferenceScreen />;
 }

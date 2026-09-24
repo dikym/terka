@@ -1,5 +1,5 @@
-import { Setelan } from "@/components/screens/setelan";
+import { SettingsScreen } from "@/components/screens/settings";
 
 export default function Page() {
-	return <Setelan />;
+	return <SettingsScreen />;
 }

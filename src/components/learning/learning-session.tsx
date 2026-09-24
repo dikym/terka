@@ -5,19 +5,19 @@ import { useRouter } from "next/navigation";
 import { SessionShell } from "@/components/layout/session-shell";
 import { Button } from "@/components/ui/button";
 import { Callout } from "@/components/ui/callout";
-import { SesiTanya } from "@/components/screens/sesi-tanya";
-import { SesiDinilai } from "@/components/screens/sesi-dinilai";
-import { SesiRingkasan } from "@/components/screens/sesi-ringkasan";
-import { TanpaPetunjuk } from "@/components/screens/tanpa-petunjuk";
-import { BukanYangMana } from "@/components/screens/bukan-yang-mana";
-import { BenarSalah } from "@/components/screens/benar-salah";
-import { Bandingkan } from "@/components/screens/bandingkan";
-import { BandingkanDijawab } from "@/components/screens/bandingkan-dijawab";
-import { JawabanDibatalkan } from "@/components/screens/jawaban-dibatalkan";
-import { Sebutkan } from "@/components/screens/sebutkan";
+import { SessionQuestionScreen } from "@/components/screens/session-question";
+import { SessionGradedScreen } from "@/components/screens/session-graded";
+import { SessionSummaryScreen } from "@/components/screens/session-summary";
+import { BlindRecallScreen } from "@/components/screens/blind-recall";
+import { OddOneOutScreen } from "@/components/screens/odd-one-out";
+import { TrueFalseScreen } from "@/components/screens/true-false";
+import { CompareScreen } from "@/components/screens/compare";
+import { CompareAnsweredScreen } from "@/components/screens/compare-answered";
+import { AnswerUndoneScreen } from "@/components/screens/answer-undone";
+import { SetRecallScreen } from "@/components/screens/set-recall";
 import { PlatUtuh } from "@/components/screens/plat-utuh";
-import { ModeKilat } from "@/components/screens/mode-kilat";
-import { TantanganHarian } from "@/components/screens/tantangan-harian";
+import { SprintScreen } from "@/components/screens/sprint";
+import { DailyChallengeScreen } from "@/components/screens/daily-challenge";
 import { isTyping, useLearning, useNow } from "./learning-provider";
 import { SessionViewContext, type SessionView } from "./session-view";
 import { answerPractice, modeNames, practiceFeedback, undoPractice } from "@/lib/terka/practice";
@@ -338,11 +338,11 @@ export function LearningSession({ initialMode = "daily" }: { initialMode?: Sessi
 		firstPart
 	};
 	let screen;
-	if (showSummary) screen = <SesiRingkasan />;
-	else if (restoredPreview) screen = <JawabanDibatalkan />;
+	if (showSummary) screen = <SessionSummaryScreen />;
+	else if (restoredPreview) screen = <AnswerUndoneScreen />;
 	else if (feedback)
-		screen = question?.format === "drill" ? <BandingkanDijawab /> : <SesiDinilai />;
-	else if (challengePreview) screen = <TantanganHarian />;
+		screen = question?.format === "drill" ? <CompareAnsweredScreen /> : <SessionGradedScreen />;
+	else if (challengePreview) screen = <DailyChallengeScreen />;
 	else if (!progress.currentQuestion)
 		screen = (
 			<SessionShell current={session.answered} total={session.answered} undo={false}>
@@ -354,13 +354,13 @@ export function LearningSession({ initialMode = "daily" }: { initialMode?: Sessi
 				</Button>
 			</SessionShell>
 		);
-	else if (session.mode === "sprint") screen = <ModeKilat />;
-	else if (question?.format === "drill") screen = <Bandingkan />;
-	else if (question?.format === "truefalse") screen = <BenarSalah />;
-	else if (question?.choices.length) screen = <BukanYangMana />;
-	else if (question?.format === "set") screen = <Sebutkan />;
+	else if (session.mode === "sprint") screen = <SprintScreen />;
+	else if (question?.format === "drill") screen = <CompareScreen />;
+	else if (question?.format === "truefalse") screen = <TrueFalseScreen />;
+	else if (question?.choices.length) screen = <OddOneOutScreen />;
+	else if (question?.format === "set") screen = <SetRecallScreen />;
 	else if (question?.answerKind === "plate") screen = <PlatUtuh />;
-	else if (question?.level === 3 && question.limitMs) screen = <TanpaPetunjuk />;
-	else screen = <SesiTanya />;
+	else if (question?.level === 3 && question.limitMs) screen = <BlindRecallScreen />;
+	else screen = <SessionQuestionScreen />;
 	return <SessionViewContext.Provider value={view}>{screen}</SessionViewContext.Provider>;
 }

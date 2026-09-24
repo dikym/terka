@@ -30,7 +30,7 @@ test("settings explain denied or unavailable storage and still allow a successfu
 			}
 		})
 	}));
-	const { Setelan } = await import("../src/components/screens/setelan");
+	const { SettingsScreen } = await import("../src/components/screens/settings");
 	function findToggle(children) {
 		for (const child of Children.toArray(children)) {
 			if (!isValidElement(child)) continue;
@@ -42,7 +42,7 @@ test("settings explain denied or unavailable storage and still allow a successfu
 	// Hooks need a real render; capture the returned tree to reach the toggle's handlers.
 	function render() {
 		let tree;
-		renderToStaticMarkup(createElement(() => ((tree = Setelan()), null)));
+		renderToStaticMarkup(createElement(() => ((tree = SettingsScreen()), null)));
 		return tree;
 	}
 	const original = Object.getOwnPropertyDescriptor(navigator, "storage");

@@ -16,7 +16,7 @@ import { PageFrame, PageTitle } from "@/components/layout/page-frame";
 import { TwoColumn } from "@/components/layout/two-column";
 import { ModeBadge } from "@/components/terka/mode-badge";
 
-export function LatihanTerfokus({ level, id }: { level?: string; id?: string }) {
+export function FocusedPracticeScreen({ level, id }: { level?: string; id?: string }) {
 	const { progress, content, busy, act, start } = useLearning();
 	const router = useRouter();
 	const now = useNow();

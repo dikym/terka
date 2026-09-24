@@ -14,7 +14,7 @@ const previewStats = { correct: 23, secondsLeft: 38, timeUsedPercent: 63 };
 const previewOptions = ["Nusa Tenggara Timur", "Nusa Tenggara Barat", "Bali", "Maluku"];
 const previewRecord = { region: "Kawasan Bali & Nusa Tenggara", best: 31 };
 
-export function ModeKilat() {
+export function SprintScreen() {
 	const view = useSessionView();
 	const stats = view
 		? {

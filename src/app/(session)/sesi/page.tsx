@@ -1,6 +1,6 @@
 import { LearningSession } from "@/components/learning/learning-session";
 import { notFound } from "next/navigation";
-import { sesiScreens, type SesiScreenKey } from "@/components/screens/sesi-registry";
+import { sessionScreens, type SessionScreenKey } from "@/components/screens/session-registry";
 
 export default async function Page({
 	searchParams
@@ -9,7 +9,7 @@ export default async function Page({
 }) {
 	const { screen } = await searchParams;
 	if (!screen) return <LearningSession />;
-	const Screen = sesiScreens[screen as SesiScreenKey];
+	const Screen = sessionScreens[screen as SessionScreenKey];
 	if (!Screen) notFound();
 	return <Screen />;
 }

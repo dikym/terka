@@ -20,7 +20,7 @@ const previewAnswers = [
 	{ name: "Padang", correct: false, note: "BA — dicatat sebagai tertukar" }
 ];
 
-export function Sebutkan() {
+export function SetRecallScreen() {
 	const view = useSessionView();
 	const answers = view?.items ?? previewAnswers;
 	const found = view?.items.filter((item) => item.correct).length ?? 0;

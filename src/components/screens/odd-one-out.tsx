@@ -14,7 +14,7 @@ const previewOptions = [
 	{ name: "Bukittinggi", tag: "BA", emphasized: true }
 ];
 
-export function BukanYangMana() {
+export function OddOneOutScreen() {
 	const view = useSessionView();
 	const options: { name: string; tag?: string; emphasized?: boolean }[] = view?.question
 		? view.question.choices.map((name) => ({ name }))

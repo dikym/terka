@@ -15,7 +15,7 @@ import { ModeBadge } from "@/components/terka/mode-badge";
 const previewProgress = { current: 3, total: 5, filled: 3, segments: 5 };
 const previewStreak = 17;
 
-export function TantanganHarian() {
+export function DailyChallengeScreen() {
 	const view = useSessionView();
 	const progress = view
 		? { current: view.session.answered, total: 5, filled: view.session.answered, segments: 5 }

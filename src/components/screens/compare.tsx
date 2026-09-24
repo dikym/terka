@@ -13,7 +13,7 @@ const previewQuestion = {
 	options: ["BD", "BE"]
 };
 
-export function Bandingkan() {
+export function CompareScreen() {
 	const view = useSessionView();
 	const question = view?.question
 		? {

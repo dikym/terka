@@ -12,7 +12,7 @@ import { IconButton } from "@/components/ui/icon-button";
 import { StatBlock } from "@/components/ui/stat-block";
 import { CardStateBadge } from "@/components/terka/card-state-badge";
 
-export function KartuSulit() {
+export function LeechCardsScreen() {
 	const { progress, content, busy, act } = useLearning();
 	const router = useRouter();
 	const [selected, setSelected] = useState<string | null>(null);

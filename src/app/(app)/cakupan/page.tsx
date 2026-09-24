@@ -1,5 +1,5 @@
-import { Cakupan } from "@/components/screens/cakupan";
+import { ScopeScreen } from "@/components/screens/scope";
 
 export default function Page() {
-	return <Cakupan />;
+	return <ScopeScreen />;
 }

@@ -10,7 +10,7 @@ import { TimerRow } from "@/components/terka/timer-row";
 
 const previewTimer = { value: 60, time: "1,2 s" };
 
-export function BenarSalah() {
+export function TrueFalseScreen() {
 	const view = useSessionView();
 	const timer = view?.timer ?? previewTimer;
 	return (

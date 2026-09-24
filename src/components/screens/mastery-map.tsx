@@ -25,7 +25,7 @@ const rings = [
 	}
 ];
 
-export function PetaPenguasaan() {
+export function MasteryMapScreen() {
 	const { content, progress } = useLearning();
 	const router = useRouter();
 	const national = scopeStats(progress, content, { level: "national", id: "indonesia" });
