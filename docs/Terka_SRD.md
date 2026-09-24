@@ -55,7 +55,7 @@ Kabupaten/kota tidak menjadi pilihan Cakupan karena kartu dibentuk per kode, buk
 | Sulawesi             | DB, DC, DD, DL, DM, DN, DP, DT, DW                                    |
 | Bali & Nusa Tenggara | DK, DR, EA, DH, EB, ED                                                |
 | Maluku               | DE, DG                                                                |
-| Papua                | PA, PB, PY, PS, PT                                                    |
+| Papua                | PA, PB, PY, PS, PT, PG                                                |
 
 Pengelompokannya mengikuti kedekatan administratif, bukan definisi geologis pulau. Madura masuk Jawa, Bangka Belitung dan Kepulauan Riau masuk Sumatera, dan Nusa Tenggara digabung dengan Bali jadi satu kawasan. Maluku berdiri sendiri karena hanya dua kode dan tidak ada kawasan lain yang logis untuk menampungnya.
 
