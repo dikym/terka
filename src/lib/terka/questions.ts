@@ -1,4 +1,4 @@
-import { verified } from "./content";
+import { areaDisplayName, memberAreas } from "./content";
 import { matchAnswer } from "./grading";
 import {
 	type CardProgress,
@@ -15,26 +15,34 @@ export function automaticLevel(card: CardProgress): Level {
 	return card.state === "new" || card.state === "learning" ? 1 : 2;
 }
 
-export function regionTarget(region: Region): Target {
+export function regionTarget(content: Content, region: Region): Target {
 	return {
 		id: region.id,
 		name: region.region,
 		aliases: [
 			...region.aliases,
-			...region.areas.flatMap((area) => [area.name, ...area.aliases])
+			...memberAreas(content, region).flatMap((area) => [
+				areaDisplayName(area),
+				...area.aliases,
+				...area.variants
+			])
 		]
 	};
 }
 
-export function areaTargets(region: Region): Target[] {
-	return region.areas.map((area) => ({ ...area, id: `${region.id}::${area.id}` }));
+export function areaTargets(content: Content, region: Region): Target[] {
+	return memberAreas(content, region).map((area) => ({
+		id: `${region.id}::${area.id}`,
+		name: areaDisplayName(area),
+		aliases: [...area.aliases, ...area.variants]
+	}));
 }
 
 export function dictionary(content: Content, kind: "name" | "code"): Target[] {
 	return content.regions.flatMap((region) =>
 		kind === "code"
 			? [{ id: region.id, name: region.code, aliases: [] }]
-			: [regionTarget(region), ...areaTargets(region)]
+			: [regionTarget(content, region), ...areaTargets(content, region)]
 	);
 }
 
@@ -67,10 +75,6 @@ export function generateQuestion(
 	const random = options.random ?? Math.random;
 	const autoLevel = automaticLevel(card);
 	const level = options.pair ? 3 : (options.level ?? autoLevel);
-	const facts = region.facts
-		.map((id) => content.facts.find((fact) => fact.id === id)!)
-		.filter(Boolean)
-		.map((fact) => `${fact.status}: ${fact.text}`);
 	const question: Question = {
 		id: options.id,
 		cardId: card.cardId,
@@ -80,13 +84,12 @@ export function generateQuestion(
 		format: "recall",
 		prompt: `Dari wilayah mana kode ${region.code}?`,
 		choices: [],
-		targets: [regionTarget(region)],
+		targets: [regionTarget(content, region)],
 		answerKind: "name",
 		setTarget: null,
 		limitMs: level === 3 ? 8_000 : null,
 		drillPair: options.pair ?? null,
-		context: card.lapses >= 6 ? facts.slice(0, 1) : [],
-		facts: facts.slice(0, 2),
+		context: [],
 		shownAt: options.now
 	};
 	if (level === 2) question.context.push(`Kawasan: ${region.group}`);
@@ -108,7 +111,7 @@ export function generateQuestion(
 	if (card.mode === "setrecall") {
 		if (level !== 3) throw new Error("Set recall requires Level 3");
 		question.format = "set";
-		question.targets = areaTargets(region);
+		question.targets = areaTargets(content, region);
 		question.setTarget = Math.min(5, question.targets.length);
 		question.prompt = `Sebutkan ${question.setTarget} wilayah untuk kode ${region.code}.`;
 		question.answerKind = "set";
@@ -116,15 +119,24 @@ export function generateQuestion(
 		return question;
 	}
 	if (card.mode === "region2code") {
-		question.prompt = `Apa kode plat untuk ${region.region}?`;
-		question.targets = [{ id: region.id, name: region.code, aliases: [] }];
+		const shown = memberAreas(content, region)[0];
+		question.prompt = `Apa kode plat untuk ${areaDisplayName(shown)}?`;
+		// SRD 2.8: every high code of the shown area is correct; the card stays the asked code's card.
+		question.targets = content.regions
+			.filter((item) => memberAreas(content, item).some((area) => area.id === shown.id))
+			// The asked code first: Level 1 builds its choices from targets[0].
+			.sort((a, b) => Number(b.id === region.id) - Number(a.id === region.id))
+			.map((item) => ({ id: item.id, name: item.code, aliases: [] }));
 		question.answerKind = "code";
 	}
 	if (level === 1) {
 		question.limitMs = null;
 		const candidates = shuffled(
 			content.regions.filter(
-				(item) => item.id !== region.id && item.group !== region.group && verified(item)
+				(item) =>
+					item.id !== region.id &&
+					item.group !== region.group &&
+					item.confidence === "high"
 			),
 			random
 		);
@@ -167,9 +179,12 @@ export function generateQuestion(
 			if (!candidates.length) throw new Error("A distractor from another group is required");
 			question.format = "not-in";
 			question.prompt = `Mana yang BUKAN wilayah ${region.code}?`;
-			question.targets = [regionTarget(candidates[0])];
+			question.targets = [regionTarget(content, candidates[0])];
 			question.choices = shuffled(
-				[candidates[0].region, ...region.areas.slice(0, 3).map((area) => area.name)],
+				[
+					candidates[0].region,
+					...memberAreas(content, region).slice(0, 3).map(areaDisplayName)
+				],
 				random
 			);
 		} else {
@@ -271,7 +286,7 @@ export function assertLevelThreeCoverage(content: Content) {
 			now: 0,
 			level: 3
 		});
-		if (!evaluateQuestion(content, question, [region.region]).correct)
+		if (!evaluateQuestion(content, question, [memberAreas(content, region)[0].name]).correct)
 			throw new Error(`No valid Level 3 question for ${region.code}`);
 	}
 }

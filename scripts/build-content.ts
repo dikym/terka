@@ -1,6 +1,8 @@
 import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import { buildContent } from "../src/lib/terka/content-rules";
+import { parseContent } from "../src/lib/terka/content";
+import { assertLevelThreeCoverage } from "../src/lib/terka/questions";
 
 const root = new URL("../", import.meta.url);
 const read = (path: string) => readFile(new URL(path, root), "utf8");
@@ -22,6 +24,7 @@ const result = buildContent({
 for (const line of result.reports) console.log(`report: ${line}`);
 for (const line of result.warnings) console.warn(`warning: ${line}`);
 if (!result.content) throw new Error(`Content build failed:\n${result.errors.join("\n")}`);
+assertLevelThreeCoverage(parseContent(result.content));
 await writeFile(
 	new URL("src/data/plates.json", root),
 	JSON.stringify(result.content, null, "\t") + "\n"

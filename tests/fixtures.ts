@@ -2,6 +2,7 @@ import { createProgress } from "../src/lib/terka/content";
 import { applyAnswer } from "../src/lib/terka/engine";
 import {
 	DAY,
+	type Area,
 	type Content,
 	type Region,
 	type RawReview,
@@ -16,16 +17,19 @@ export const region = (id: string, name: string, group = "island-a"): Region => 
 	group,
 	province: `province-${id}`,
 	spans: [],
+	placementTier: "common",
 	confidence: "high",
 	aliases: [],
-	areas: [{ id: `${id}-city`, name, aliases: [] }],
-	facts: [],
-	sources: [
-		{ ref: "fixture:official", publisher: "fixture-official", official: true },
-		{ ref: "fixture:independent", publisher: "fixture-independent", official: false }
-	],
-	issues: [],
-	sourceText: "Synthetic test fixture"
+	areas: [{ areaId: `kota-${id}`, confidence: "high" }],
+	facts: []
+});
+const cityOf = (id: string, name: string): Area => ({
+	id: `kota-${id}`,
+	type: "kota",
+	name,
+	province: `province-${id}`,
+	aliases: [],
+	variants: []
 });
 export const fixture = (): Content => ({
 	version: "2026.09.15",
@@ -36,8 +40,17 @@ export const fixture = (): Content => ({
 		region("dk", "Bali", "island-b"),
 		region("de", "Maluku", "island-c")
 	],
+	areas: [
+		cityOf("be", "Lampung"),
+		cityOf("bd", "Bengkulu"),
+		cityOf("dk", "Bali"),
+		cityOf("de", "Maluku")
+	],
 	facts: [],
-	specialCodes: []
+	specialsVersion: "2026.09.24",
+	sources: [],
+	specials: [],
+	referencePlates: []
 });
 export const NOW = Date.parse("2026-09-15T04:00:00Z");
 export const raw = (overrides: Partial<RawReview> = {}): RawReview => ({

@@ -1,6 +1,7 @@
 import {
 	contentSchema,
 	progressSchema,
+	type Area,
 	type CardMode,
 	type CardProgress,
 	type Content,
@@ -14,19 +15,6 @@ function unique(values: string[], label: string) {
 	if (new Set(values).size !== values.length) throw new Error(`Duplicate ${label}`);
 }
 
-export function verified(entry: {
-	confidence: string;
-	sources: Region["sources"];
-	issues: string[];
-}): boolean {
-	return (
-		entry.confidence === "high" &&
-		!entry.issues.length &&
-		entry.sources.some((source) => source.official) &&
-		new Set(entry.sources.map((source) => source.publisher)).size >= 2
-	);
-}
-
 export function parseContent(value: unknown): Content {
 	const content = contentSchema.parse(value);
 	unique(
@@ -38,13 +26,18 @@ export function parseContent(value: unknown): Content {
 		"codes"
 	);
 	unique(
+		content.areas.map((area) => area.id),
+		"area IDs"
+	);
+	unique(
 		content.facts.map((fact) => fact.id),
 		"fact IDs"
 	);
+	const areaIds = new Set(content.areas.map((area) => area.id));
 	const factIds = new Set(content.facts.map((fact) => fact.id));
 	const provinceGroups = new Map<string, string>();
 	for (const region of content.regions) {
-		if (["RI", "CD", "CC"].includes(region.code))
+		if (["RI", "CD", "CC", "CH"].includes(region.code))
 			throw new Error("Special codes belong in reference-only content");
 		if (
 			provinceGroups.has(region.province) &&
@@ -53,18 +46,38 @@ export function parseContent(value: unknown): Content {
 			throw new Error("A primary province cannot belong to multiple groups");
 		provinceGroups.set(region.province, region.group);
 		unique(
-			region.areas.map((area) => area.id),
+			region.areas.map((membership) => membership.areaId),
 			`area IDs in ${region.code}`
 		);
-		if (region.confidence === "high" && !verified(region))
-			throw new Error(
-				`${region.code}: high confidence requires independent sources, an official source and no conflicts`
-			);
+		if (region.areas.some((membership) => !areaIds.has(membership.areaId)))
+			throw new Error(`${region.code}: unknown area`);
 		if (region.facts.some((fact) => !factIds.has(fact)))
 			throw new Error(`${region.code}: unknown fact`);
 	}
 	return content;
 }
+
+export function regionAreas(content: Content, region: Region) {
+	return region.areas.map((membership) => {
+		const area = content.areas.find((area) => area.id === membership.areaId);
+		if (!area) throw new Error(`${region.code}: unknown area ${membership.areaId}`);
+		return { area, confidence: membership.confidence };
+	});
+}
+
+// Only high memberships may be asked, accepted or used as distractors (SRD 5.1, TRD 4.1).
+export function memberAreas(content: Content, region: Region): Area[] {
+	return regionAreas(content, region)
+		.filter((membership) => membership.confidence === "high")
+		.map((membership) => membership.area);
+}
+
+export function areaDisplayName(area: Area): string {
+	return `${area.type === "kota" ? "Kota" : "Kabupaten"} ${area.name}`;
+}
+
+const eligibleRegion = (content: Content, region: Region) =>
+	region.confidence === "high" && memberAreas(content, region).length > 0;
 
 export function inScope(region: Region, scope: Scope): boolean {
 	return scope.level === "national" || region[scope.level] === scope.id;
@@ -111,7 +124,7 @@ export function newCard(regionId: string, mode: CardMode, now: number): CardProg
 
 export function cardEligible(card: CardProgress, content: Content): boolean {
 	const region = content.regions.find((region) => region.id === card.regionId);
-	return Boolean(region && verified(region));
+	return Boolean(region && eligibleRegion(content, region));
 }
 
 export function reconcileContent(input: Progress, value: unknown): Progress {
@@ -131,7 +144,7 @@ export function reconcileContent(input: Progress, value: unknown): Progress {
 			progress.notices.push(`${card.cardId}: ${card.suspensionReason}`);
 		}
 	}
-	for (const region of content.regions.filter(verified)) {
+	for (const region of content.regions.filter((region) => eligibleRegion(content, region))) {
 		const add = (mode: CardMode) => {
 			const card = newCard(region.id, mode, progress.clock.lastSeen);
 			if (

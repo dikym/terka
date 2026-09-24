@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useLearning } from "@/components/learning/learning-provider";
 import { searchReference } from "@/lib/terka/statistics";
-import { verified } from "@/lib/terka/content";
+import { areaDisplayName, regionAreas } from "@/lib/terka/content";
 import { scopeName } from "@/lib/terka/practice";
 import { islandGroup } from "@/components/learning/presentation";
 import { Layers } from "lucide-react";
@@ -29,14 +29,29 @@ export function ReferenceScreen() {
 	const entries = results.regions.map((entry) => ({
 		code: entry.code,
 		name: entry.region,
-		cities: entry.areas.map((area) => area.name),
+		cities: regionAreas(content, entry).map(({ area }) => areaDisplayName(area)),
 		group: islandGroup(entry.group),
-		status: verified(entry)
-			? "verified"
-			: entry.confidence === "low"
-				? "unverified-strong"
-				: "unverified"
+		status:
+			entry.confidence === "high"
+				? "verified"
+				: entry.confidence === "low"
+					? "unverified-strong"
+					: "unverified"
 	}));
+	const specials = [
+		...results.specials.map((entry) => ({
+			key: entry.id,
+			code: `${entry.series} ${entry.number}`,
+			name: entry.holder,
+			note: entry.holderType === "country" ? "Negara" : "Organisasi"
+		})),
+		...results.referencePlates.map((plate) => ({
+			key: plate.id,
+			code: plate.series,
+			name: plate.label,
+			note: plate.note ?? ""
+		}))
+	];
 	const statusLabel = "Belum terverifikasi penuh";
 
 	return (
@@ -94,9 +109,33 @@ export function ReferenceScreen() {
 						</div>
 					))}
 				</div>
+				{specials.length > 0 ? (
+					<div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
+						{specials.map((entry) => (
+							<div
+								key={entry.key}
+								className="flex min-h-11 items-start gap-3 rounded-sm border border-ink-200 bg-paper-0 p-3"
+							>
+								<span className="shrink-0 font-mono text-body-md font-semibold text-ink-1000">
+									{entry.code}
+								</span>
+								<span className="flex min-w-0 flex-1 flex-col gap-1">
+									<span className="text-body-md leading-[1.2] font-medium text-ink-1000">
+										{entry.name}
+									</span>
+									{entry.note ? (
+										<span className="text-body-sm text-ink-500">
+											{entry.note}
+										</span>
+									) : null}
+								</span>
+							</div>
+						))}
+					</div>
+				) : null}
 				<span className="font-body text-body-sm leading-normal text-ink-500">
-					{entries.length
-						? `${entries.length} kode wilayah ditampilkan. Kode khusus RI, CD, dan CC hanya untuk referensi.`
+					{entries.length || specials.length
+						? `${entries.length} kode wilayah ditampilkan. Kode khusus RI, CD, CC, dan CH hanya untuk referensi.`
 						: "Tidak ada kode atau lokasi yang cocok."}
 				</span>
 			</div>

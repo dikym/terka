@@ -1,4 +1,18 @@
 import { z } from "zod";
+import { bundleSchema, type Bundle, type BundleArea, type BundleRegion } from "./content-schema";
+
+export const contentSchema = bundleSchema;
+export type Content = Bundle;
+export type Region = BundleRegion;
+export type Area = BundleArea;
+export type {
+	ContentSource,
+	Fact,
+	PlacementTier,
+	ReferencePlate,
+	RegionArea,
+	Special
+} from "./content-schema";
 
 const id = z.string().regex(/^[a-z0-9][a-z0-9-]*$/);
 const timestamp = z.number().finite().nonnegative();
@@ -7,46 +21,6 @@ export const levelSchema = z.union([z.literal(1), z.literal(2), z.literal(3)]);
 export const scopeSchema = z.object({
 	level: z.enum(["national", "group", "province"]),
 	id: z.string().min(1)
-});
-const sourceSchema = z.object({
-	ref: z.string().min(1),
-	publisher: z.string().min(1),
-	official: z.boolean()
-});
-const confidenceSchema = z.enum(["high", "medium", "low"]);
-export const areaSchema = z.object({
-	id,
-	name: z.string().min(1),
-	aliases: z.array(z.string().min(1))
-});
-export const regionSchema = z.object({
-	id,
-	code: z.string().regex(/^[A-Z]{1,2}$/),
-	region: z.string().min(1),
-	group: id,
-	province: id,
-	spans: z.array(id),
-	confidence: confidenceSchema,
-	aliases: z.array(z.string().min(1)),
-	areas: z.array(areaSchema).min(1),
-	facts: z.array(id),
-	sources: z.array(sourceSchema),
-	issues: z.array(z.string()),
-	sourceText: z.string().min(1)
-});
-export const contentSchema = z.object({
-	version: z.string().regex(/^\d{4}\.\d{2}\.\d{2}$/),
-	sourceRevision: z.string().min(1),
-	regions: z.array(regionSchema).min(1),
-	facts: z.array(
-		z.object({
-			id,
-			status: z.enum(["terverifikasi", "diperdebatkan", "legenda"]),
-			text: z.string().min(1),
-			source: z.string().min(1)
-		})
-	),
-	specialCodes: z.array(z.object({ code: z.string().min(1), description: z.string().min(1) }))
 });
 export const modeSchema = z.enum(["code2region", "region2code", "blindrecall", "setrecall"]);
 export const cardSchema = z.object({
@@ -147,7 +121,6 @@ export const questionSchema = z.object({
 	limitMs: timestamp.positive().nullable(),
 	drillPair: z.tuple([id, id]).nullable(),
 	context: z.array(z.string()),
-	facts: z.array(z.string()),
 	shownAt: timestamp
 });
 const coreSchema = z.object({
@@ -173,9 +146,6 @@ const coreSchema = z.object({
 export const progressSchema = coreSchema.extend({
 	undo: z.object({ reviewId: z.string(), before: coreSchema }).nullable()
 });
-export type Content = z.infer<typeof contentSchema>;
-export type Region = Content["regions"][number];
-export type Area = z.infer<typeof areaSchema>;
 export type Scope = z.infer<typeof scopeSchema>;
 export type Level = z.infer<typeof levelSchema>;
 export type CardMode = z.infer<typeof modeSchema>;
