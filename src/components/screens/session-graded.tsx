@@ -23,7 +23,7 @@ const previewFact = {
 	body: "Wilayah Zuider en Ooster Afdeeling van Borneo memakai satu kode tunggal, DA. Kalimantan Selatan adalah wilayah pertama di Kalimantan yang memakai pelat nomor."
 };
 
-export function SesiDinilai() {
+export function SessionGradedScreen() {
 	const view = useSessionView();
 	const plate = view?.plate ?? previewPlate;
 	const question = view?.question;

@@ -1,5 +1,5 @@
-import { PetaPenguasaan } from "@/components/screens/peta-penguasaan";
+import { MasteryMapScreen } from "@/components/screens/mastery-map";
 
 export default function Page() {
-	return <PetaPenguasaan />;
+	return <MasteryMapScreen />;
 }

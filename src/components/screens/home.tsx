@@ -20,7 +20,7 @@ function countdown(ms: number) {
 		.join(":");
 }
 
-export function Beranda() {
+export function HomeScreen() {
 	const { progress, content, start, busy } = useLearning();
 	const now = useNow();
 	const queue = dailyQueue(progress, content, now);

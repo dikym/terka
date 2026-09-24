@@ -19,7 +19,7 @@ import { PageFrame, PageTitle } from "@/components/layout/page-frame";
 import { TwoColumn } from "@/components/layout/two-column";
 import { cn } from "@/lib/utils";
 
-export function Statistik() {
+export function StatisticsScreen() {
 	const { progress, content } = useLearning();
 	const now = useNow();
 	const weakestCards = weakCards(progress)

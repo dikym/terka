@@ -97,7 +97,7 @@ function ToggleSetting({
 	);
 }
 
-export function Setelan() {
+export function SettingsScreen() {
 	const { progress, content, busy, act, run } = useLearning();
 	const router = useRouter();
 	const actions = useBackupActions();

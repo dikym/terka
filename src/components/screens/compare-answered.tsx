@@ -21,7 +21,7 @@ const previewQuestion = {
 const previewDistinction =
 	"BD Kabupaten Dharmasraya, Sumatera Barat. BE Bengkulu — huruf E seperti Enggano, pulau di lepas pantai Bengkulu.";
 
-export function BandingkanDijawab() {
+export function CompareAnsweredScreen() {
 	const view = useSessionView();
 	const question = view?.question
 		? {

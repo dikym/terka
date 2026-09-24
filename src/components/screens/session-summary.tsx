@@ -40,7 +40,7 @@ const previewStats: Stat[] = [
 
 const previewConfusedCodes = { first: "BE", second: "BD" };
 
-export function SesiRingkasan() {
+export function SessionSummaryScreen() {
 	const view = useSessionView();
 	const now = useNow();
 	const summary = view?.summary;

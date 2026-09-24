@@ -1,5 +1,5 @@
-import { Beranda } from "@/components/screens/beranda";
+import { HomeScreen } from "@/components/screens/home";
 
 export default function Page() {
-	return <Beranda />;
+	return <HomeScreen />;
 }

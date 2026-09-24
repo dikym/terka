@@ -15,7 +15,7 @@ import { PageFrame, PageTitle } from "@/components/layout/page-frame";
 import { TwoColumn } from "@/components/layout/two-column";
 import { ScopeTree, ScopeNode } from "@/components/terka/scope-node";
 
-export function Cakupan() {
+export function ScopeScreen() {
 	const { progress, content, busy, act } = useLearning();
 	const router = useRouter();
 	const [selected, setSelected] = useState<Scope>(progress.activeScope);

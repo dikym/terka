@@ -45,7 +45,7 @@ const groups: { title: string; rows: Shortcut[] }[] = [
 	}
 ];
 
-export function Pintasan() {
+export function ShortcutsScreen() {
 	return (
 		<PageFrame>
 			<div className="flex flex-col items-start justify-between gap-5 lg:flex-row lg:gap-8">

@@ -17,7 +17,7 @@ const previewRestored = {
 	status: "Dikuasai"
 };
 
-export function JawabanDibatalkan() {
+export function AnswerUndoneScreen() {
 	const view = useSessionView();
 	const card = view?.progress.cards.find((card) => card.cardId === view.question?.cardId);
 	const restored = view

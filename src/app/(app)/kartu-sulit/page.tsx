@@ -1,5 +1,5 @@
-import { KartuSulit } from "@/components/screens/kartu-sulit";
+import { LeechCardsScreen } from "@/components/screens/leech-cards";
 
 export default function Page() {
-	return <KartuSulit />;
+	return <LeechCardsScreen />;
 }

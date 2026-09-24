@@ -14,7 +14,7 @@ import { Card, CardTitle } from "@/components/ui/card";
 import { IconButton } from "@/components/ui/icon-button";
 import { LabelText } from "@/components/ui/label-text";
 
-export function Cadangan() {
+export function BackupScreen() {
 	const { progress, busy } = useLearning();
 	const router = useRouter();
 	const now = useNow();

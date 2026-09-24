@@ -1,9 +1,9 @@
-import { LatihanTerfokus } from "@/components/screens/latihan-terfokus";
+import { FocusedPracticeScreen } from "@/components/screens/focused-practice";
 export default async function Page({
 	searchParams
 }: {
 	searchParams: Promise<{ level?: string; id?: string }>;
 }) {
 	const { level, id } = await searchParams;
-	return <LatihanTerfokus level={level} id={id} />;
+	return <FocusedPracticeScreen level={level} id={id} />;
 }
