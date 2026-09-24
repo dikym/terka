@@ -27,7 +27,6 @@ import {
 	forecast,
 	weakCards,
 	masteryMap,
-	factContext,
 	sessionSummary
 } from "../src/lib/terka/statistics";
 
@@ -308,26 +307,6 @@ const invalidContent: [string, (content: Content) => void][] = [
 		}
 	],
 	[
-		"no official source",
-		(c) => {
-			c.regions[0].sources.forEach((s) => {
-				s.official = false;
-			});
-		}
-	],
-	[
-		"one publisher",
-		(c) => {
-			c.regions[0].sources[1].publisher = c.regions[0].sources[0].publisher;
-		}
-	],
-	[
-		"unresolved conflict",
-		(c) => {
-			c.regions[0].issues = ["conflict"];
-		}
-	],
-	[
 		"missing fact",
 		(c) => {
 			c.regions[0].facts = ["missing"];
@@ -343,6 +322,12 @@ const invalidContent: [string, (content: Content) => void][] = [
 		"province in two groups",
 		(c) => {
 			c.regions[2].province = c.regions[0].province;
+		}
+	],
+	[
+		"unknown area membership",
+		(c) => {
+			c.regions[0].areas[0].areaId = "kab-ghost";
 		}
 	]
 ];
@@ -581,27 +566,6 @@ test("streak grace expires after 30 days and completion days are deduplicated", 
 		assert.equal(challengeStreak(progress).streak, expected, JSON.stringify(days));
 	}
 	assert.deepEqual(challengeStreak(progress).graceDays, [1, 31]);
-});
-
-test("fact context exposes one leech prompt and additional facts only after maturity", () => {
-	const content = fixture();
-	content.facts = Array.from({ length: 4 }, (_, i) => ({
-		id: `f-${i}`,
-		status: "terverifikasi",
-		text: `Synthetic fact ${i}`,
-		source: "fixture"
-	}));
-	content.regions[0].facts = content.facts.map((fact) => fact.id);
-	const progress = reviewing(content);
-	const card = progress.cards[0];
-	assert.equal(factContext(progress, content, card.cardId).beforeQuestion.length, 0);
-	card.lapses = 6;
-	assert.equal(factContext(progress, content, card.cardId).beforeQuestion.length, 1);
-	assert.equal(factContext(progress, content, card.cardId).afterAnswer.length, 2);
-	assert.equal(factContext(progress, content, card.cardId).additional.length, 0);
-	card.state = "mature";
-	assert.equal(factContext(progress, content, card.cardId).additional.length, 2);
-	assert.throws(() => factContext(progress, content, "missing"));
 });
 
 test("set sessions select unlocked cards in scope, consume one introduction and complete", () => {

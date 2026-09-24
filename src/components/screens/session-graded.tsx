@@ -35,7 +35,9 @@ export function SessionGradedScreen() {
 			}
 		: previewAnswer;
 	const region = view?.content.regions.find((region) => region.id === question?.regionId);
-	const storedFact = view?.content.facts.find((fact) => region?.facts.includes(fact.id));
+	const storedFact = view?.content.facts.find(
+		(fact) => fact.publicationStatus === "ready" && region?.facts.includes(fact.id)
+	);
 	const fact = view
 		? storedFact
 			? { source: storedFact.source, body: storedFact.text }
@@ -63,7 +65,10 @@ export function SessionGradedScreen() {
 				<span className="text-body-sm text-ink-500">{answer.alias}</span>
 			</div>
 			{fact && (
-				<FactCard confidence={storedFact?.status ?? "terverifikasi"} source={fact.source}>
+				<FactCard
+					confidence={storedFact?.historyLabel ?? "terverifikasi"}
+					source={fact.source}
+				>
 					{fact.body}
 				</FactCard>
 			)}

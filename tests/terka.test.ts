@@ -5,7 +5,10 @@ import {
 	buildHierarchy,
 	createProgress,
 	newCard,
-	reconcileContent
+	reconcileContent,
+	memberAreas,
+	regionAreas,
+	areaDisplayName
 } from "../src/lib/terka/content";
 import { boundary, createClock, advanceClock } from "../src/lib/terka/time";
 import { DAY } from "../src/lib/terka/model";
@@ -68,7 +71,7 @@ test("AC-1: all 61 imported codes have a Level 3 question without history", () =
 			level: 3
 		});
 		assert.equal(
-			evaluateQuestion(content, recall, [region.areas[0].name]).correct,
+			evaluateQuestion(content, recall, [memberAreas(content, region)[0].name]).correct,
 			true,
 			region.code
 		);
@@ -78,12 +81,9 @@ test("AC-1: all 61 imported codes have a Level 3 question without history", () =
 			now: NOW
 		});
 		assert.equal(
-			evaluateQuestion(
-				content,
-				set,
-				region.areas.map((area) => area.name)
-			).setCorrect,
-			region.areas.length,
+			evaluateQuestion(content, set, memberAreas(content, region).map(areaDisplayName))
+				.setCorrect,
+			memberAreas(content, region).length,
 			region.code
 		);
 	}
@@ -91,19 +91,20 @@ test("AC-1: all 61 imported codes have a Level 3 question without history", () =
 
 test("verified locations include Solok, Taliabu and both Tangerang jurisdictions", () => {
 	const content = parseContent(plates);
-	const areas = (code: string) => content.regions.find((region) => region.code === code)!.areas;
+	const areas = (code: string) =>
+		memberAreas(
+			content,
+			content.regions.find((region) => region.code === code)!
+		);
+	const names = (code: string) => areas(code).map(areaDisplayName);
 	assert.equal(content.regions.flatMap((region) => region.areas).length, 515);
-	assert.equal(
-		new Set(content.regions.flatMap((region) => region.areas.map((area) => area.id))).size,
-		514
-	);
-	assert.ok(areas("BA").some((area) => area.name === "Kota Solok"));
-	assert.ok(areas("BA").some((area) => area.name === "Kabupaten Solok"));
-	assert.ok(areas("DG").some((area) => area.name === "Pulau Taliabu"));
-	for (const code of ["A", "B"])
-		assert.ok(areas(code).some((area) => area.name === "Kabupaten Tangerang"));
-	assert.ok(areas("F").some((area) => area.name === "Kota Bogor"));
-	assert.ok(areas("B").every((area) => !area.name.includes("Bogor")));
+	assert.equal(content.areas.length, 514);
+	assert.ok(names("BA").includes("Kota Solok"));
+	assert.ok(names("BA").includes("Kabupaten Solok"));
+	assert.ok(names("DG").includes("Kabupaten Pulau Taliabu"));
+	for (const code of ["A", "B"]) assert.ok(names(code).includes("Kabupaten Tangerang"));
+	assert.ok(names("F").includes("Kota Bogor"));
+	assert.ok(names("B").every((name) => !name.includes("Bogor")));
 	assert.ok(
 		areas("K")
 			.find((area) => area.name === "Blora")!
@@ -115,7 +116,7 @@ test("verified locations include Solok, Taliabu and both Tangerang jurisdictions
 			.sort(),
 		["Gresik", "Sidoarjo"]
 	);
-	assert.ok(areas("S").some((area) => area.name === "Kabupaten Mojokerto"));
+	assert.ok(names("S").includes("Kabupaten Mojokerto"));
 	const solok = generateQuestion(content, newCard("ba", "setrecall", NOW), {
 		id: "solok",
 		now: NOW
@@ -174,10 +175,29 @@ test("AC-11: grades use raw history, per-level samples and fuzzy/outlier excepti
 
 test("set answers count unique areas, preserve administrative identity and accept aliases", () => {
 	const content = fixture();
+	content.areas.push(
+		{
+			id: "kota-lampung",
+			type: "kota",
+			name: "Lampung",
+			province: "province-be",
+			aliases: ["Kota Satu"],
+			variants: []
+		},
+		{
+			id: "kab-lampung",
+			type: "kabupaten",
+			name: "Lampung",
+			province: "province-be",
+			aliases: [],
+			variants: []
+		}
+	);
 	content.regions[0].areas = [
-		{ id: "city", name: "Kota Lampung", aliases: ["Kota Satu"] },
-		{ id: "county", name: "Kabupaten Lampung", aliases: [] }
+		{ areaId: "kota-lampung", confidence: "high" },
+		{ areaId: "kab-lampung", confidence: "high" }
 	];
+	content.areas = content.areas.filter((area) => area.id !== "kota-be");
 	const question = generateQuestion(content, newCard("be", "setrecall", NOW), {
 		id: "set",
 		now: NOW
@@ -272,6 +292,14 @@ test("AC-5: more than 40 pending reviews pauses new cards for the whole day", ()
 			index % 2 ? "one" : "two"
 		)
 	);
+	content.areas = content.regions.map((region) => ({
+		id: `kota-${region.id}`,
+		type: "kota",
+		name: region.region,
+		province: region.province,
+		aliases: [],
+		variants: []
+	}));
 	let progress = refreshProgress(reviewing(content), content, NOW);
 	assert.equal(progress.newPaused, true);
 	progress.cards.forEach((card) => {
@@ -502,9 +530,28 @@ test("active questions can change level and an unanswered sprint still expires",
 test("all MVP presentation variants grade correctly", () => {
 	const content = fixture();
 	const bali = content.regions.find((region) => region.id === "dk")!;
+	content.areas = content.areas.filter((area) => area.id !== "kota-dk");
+	content.areas.push(
+		{
+			id: "kota-denpasar",
+			type: "kota",
+			name: "Denpasar",
+			province: "province-dk",
+			aliases: [],
+			variants: []
+		},
+		{
+			id: "kab-badung",
+			type: "kabupaten",
+			name: "Badung",
+			province: "province-dk",
+			aliases: [],
+			variants: []
+		}
+	);
 	bali.areas = [
-		{ id: "denpasar", name: "Denpasar", aliases: [] },
-		{ id: "badung", name: "Badung", aliases: [] }
+		{ areaId: "kota-denpasar", confidence: "high" },
+		{ areaId: "kab-badung", confidence: "high" }
 	];
 	parseContent(content);
 	const primary = { ...newCard("dk", "code2region", NOW), state: "review" as const };
@@ -571,4 +618,119 @@ test("daily learning can finish minute steps and eventually unlock and mature bo
 			.filter((card) => card.mode === "code2region")
 			.every((card) => card.state === "mature")
 	);
+});
+
+test("memberships: medium areas are never answers or distractors; shared areas count for both codes", () => {
+	const content = fixture();
+	content.areas.push(
+		{
+			id: "kab-shared",
+			type: "kabupaten",
+			name: "Shared",
+			province: "province-be",
+			aliases: [],
+			variants: []
+		},
+		{
+			id: "kab-doubt",
+			type: "kabupaten",
+			name: "Doubt",
+			province: "province-be",
+			aliases: [],
+			variants: []
+		}
+	);
+	const [be, bd] = content.regions;
+	be.areas.push(
+		{ areaId: "kab-shared", confidence: "high" },
+		{ areaId: "kab-doubt", confidence: "medium" }
+	);
+	bd.areas.push({ areaId: "kab-shared", confidence: "high" });
+	parseContent(content);
+	assert.deepEqual(
+		memberAreas(content, be).map((area) => area.id),
+		["kota-be", "kab-shared"]
+	);
+	assert.equal(regionAreas(content, be).length, 3);
+	for (const code of [be, bd]) {
+		const question = generateQuestion(content, newCard(code.id, "code2region", NOW), {
+			id: code.id,
+			now: NOW,
+			level: 3
+		});
+		assert.equal(
+			evaluateQuestion(content, question, ["Kabupaten Shared"]).correct,
+			true,
+			code.code
+		);
+	}
+	const recall = generateQuestion(content, newCard("be", "code2region", NOW), {
+		id: "doubt",
+		now: NOW,
+		level: 3
+	});
+	assert.equal(evaluateQuestion(content, recall, ["Doubt"]).correct, false);
+	const set = generateQuestion(content, newCard("be", "setrecall", NOW), { id: "set", now: NOW });
+	assert.equal(
+		set.targets.some((target) => target.name.includes("Doubt")),
+		false
+	);
+	for (let seed = 0; seed < 20; seed++) {
+		const notIn = generateQuestion(
+			content,
+			{ ...newCard("bd", "code2region", NOW), state: "review" },
+			{
+				id: `n${seed}`,
+				now: NOW,
+				level: 1,
+				format: "not-in",
+				random: () => (seed + 0.5) / 20
+			}
+		);
+		assert.equal(notIn.targets[0].name.includes("Shared"), false);
+	}
+});
+
+test("region to code accepts every high code of the shown area", () => {
+	const content = fixture();
+	content.areas.push({
+		id: "kab-shared",
+		type: "kabupaten",
+		name: "Shared",
+		province: "province-be",
+		aliases: [],
+		variants: []
+	});
+	const [be, bd] = content.regions;
+	be.areas.unshift({ areaId: "kab-shared", confidence: "high" });
+	bd.areas.push({ areaId: "kab-shared", confidence: "high" });
+	const question = generateQuestion(
+		content,
+		{ ...newCard("be", "region2code", NOW), state: "review" },
+		{
+			id: "shared",
+			now: NOW,
+			level: 2
+		}
+	);
+	assert.match(question.prompt, /Kabupaten Shared/);
+	const result = evaluateQuestion(content, question, ["BD"]);
+	assert.equal(result.correct, true);
+	assert.deepEqual(result.confusedWith, []);
+	assert.equal(evaluateQuestion(content, question, ["DK"]).correct, false);
+});
+
+test("region to code prompts name the administrative type", () => {
+	const content = fixture();
+	const question = generateQuestion(
+		content,
+		{ ...newCard("be", "region2code", NOW), state: "review" },
+		{
+			id: "r2c",
+			now: NOW,
+			level: 2
+		}
+	);
+	assert.match(question.prompt, /Kota Lampung/);
+	assert.equal(areaDisplayName(content.areas[0]), "Kota Lampung");
 });

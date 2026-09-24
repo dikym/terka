@@ -1,4 +1,4 @@
-import { buildHierarchy, inScope } from "./content";
+import { areaDisplayName, buildHierarchy, inScope, regionAreas } from "./content";
 import { normalizeName, percentile } from "./grading";
 import { addDays, createClock } from "./time";
 import { type Content, type Level, type Progress, type RawReview, type Scope } from "./model";
@@ -122,22 +122,32 @@ export function searchReference(
 	scope: Scope = { level: "national", id: "indonesia" }
 ) {
 	const needle = normalizeName(query, false);
+	const matches = (values: string[]) =>
+		values.some((value) => normalizeName(value, false).includes(needle));
 	return {
 		regions: content.regions.filter(
 			(region) =>
 				inScope(region, scope) &&
-				[
+				matches([
 					region.code,
 					region.region,
 					...region.aliases,
-					...region.areas.flatMap((area) => [area.name, ...area.aliases])
-				].some((name) => normalizeName(name, false).includes(needle))
+					...regionAreas(content, region).flatMap(({ area }) => [
+						areaDisplayName(area),
+						...area.aliases,
+						...area.variants
+					])
+				])
 		),
-		specialCodes:
-			scope.level === "national"
-				? content.specialCodes.filter((entry) =>
-						normalizeName(`${entry.code} ${entry.description}`, false).includes(needle)
+		specials:
+			scope.level === "national" && needle
+				? content.specials.filter((entry) =>
+						matches([`${entry.series} ${entry.number}`, entry.holder, ...entry.aliases])
 					)
+				: [],
+		referencePlates:
+			scope.level === "national" && needle
+				? content.referencePlates.filter((plate) => matches([plate.series, plate.label]))
 				: []
 	};
 }
@@ -167,18 +177,5 @@ export function sessionSummary(progress: Progress, content: Content, sessionId: 
 		backupOverdue:
 			progress.lastBackupAt === null ||
 			progress.clock.lastSeen - progress.lastBackupAt > 14 * 86_400_000
-	};
-}
-
-export function factContext(progress: Progress, content: Content, cardId: string) {
-	const card = progress.cards.find((card) => card.cardId === cardId);
-	if (!card) throw new Error("Card not found");
-	const region = content.regions.find((region) => region.id === card.regionId);
-	const facts = content.facts.filter((fact) => region?.facts.includes(fact.id));
-	return {
-		beforeQuestion: card.lapses >= 6 ? facts.slice(0, 1) : [],
-		afterAnswer: facts.slice(0, 2),
-		additional: card.state === "mature" ? facts.slice(2) : [],
-		spans: region?.spans ?? []
 	};
 }
