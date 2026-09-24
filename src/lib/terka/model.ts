@@ -5,7 +5,7 @@ const timestamp = z.number().finite().nonnegative();
 const count = z.number().int().nonnegative();
 export const levelSchema = z.union([z.literal(1), z.literal(2), z.literal(3)]);
 export const scopeSchema = z.object({
-	level: z.enum(["national", "group", "province", "code"]),
+	level: z.enum(["national", "group", "province"]),
 	id: z.string().min(1)
 });
 const sourceSchema = z.object({
@@ -19,14 +19,6 @@ export const areaSchema = z.object({
 	name: z.string().min(1),
 	aliases: z.array(z.string().min(1))
 });
-export const suffixSchema = z.object({
-	id,
-	areaId: id,
-	pattern: z.string().regex(/^[A-Z*]{1,3}$/),
-	confidence: confidenceSchema,
-	sources: z.array(sourceSchema),
-	issues: z.array(z.string())
-});
 export const regionSchema = z.object({
 	id,
 	code: z.string().regex(/^[A-Z]{1,2}$/),
@@ -38,7 +30,6 @@ export const regionSchema = z.object({
 	aliases: z.array(z.string().min(1)),
 	areas: z.array(areaSchema).min(1),
 	facts: z.array(id),
-	suffixes: z.array(suffixSchema),
 	sources: z.array(sourceSchema),
 	issues: z.array(z.string()),
 	sourceText: z.string().min(1)
@@ -52,26 +43,16 @@ export const contentSchema = z.object({
 			id,
 			status: z.enum(["terverifikasi", "diperdebatkan", "legenda"]),
 			text: z.string().min(1),
-			source: z.string().min(1),
-			question: z.string().optional(),
-			answerRegionId: id.optional()
+			source: z.string().min(1)
 		})
 	),
 	specialCodes: z.array(z.object({ code: z.string().min(1), description: z.string().min(1) }))
 });
-export const modeSchema = z.enum([
-	"code2region",
-	"region2code",
-	"blindrecall",
-	"setrecall",
-	"platfull",
-	"suffix"
-]);
+export const modeSchema = z.enum(["code2region", "region2code", "blindrecall", "setrecall"]);
 export const cardSchema = z.object({
 	cardId: z.string().min(1),
 	regionId: id,
 	mode: modeSchema,
-	suffixId: id.optional(),
 	state: z.enum(["new", "learning", "review", "relearning", "mature", "suspended"]),
 	stability: z.number().finite().nonnegative(),
 	difficulty: z.number().finite().min(0).max(10),
@@ -150,10 +131,7 @@ export const questionSchema = z.object({
 		"choice",
 		"truefalse",
 		"not-in",
-		"fact",
 		"recall",
-		"plate",
-		"suffix",
 		"set",
 		"drill",
 		"group",
@@ -164,7 +142,7 @@ export const questionSchema = z.object({
 	targets: z
 		.array(z.object({ id: z.string(), name: z.string(), aliases: z.array(z.string()) }))
 		.min(1),
-	answerKind: z.enum(["name", "code", "literal", "set", "plate"]),
+	answerKind: z.enum(["name", "code", "literal", "set"]),
 	setTarget: count.positive().nullable(),
 	limitMs: timestamp.positive().nullable(),
 	drillPair: z.tuple([id, id]).nullable(),
@@ -211,4 +189,3 @@ export type Progress = z.infer<typeof progressSchema>;
 export type Grade = 1 | 2 | 3 | 4;
 export type Target = Question["targets"][number];
 export const DAY = 86_400_000;
-export const PRIORITY_CODES = ["DK", "B", "L", "D", "AD"];

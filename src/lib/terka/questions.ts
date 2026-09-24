@@ -120,52 +120,6 @@ export function generateQuestion(
 		question.targets = [{ id: region.id, name: region.code, aliases: [] }];
 		question.answerKind = "code";
 	}
-	if (card.mode === "suffix" || card.mode === "platfull") {
-		const suffixes = region.suffixes.filter(
-			(suffix) => verified(suffix) && (!card.suffixId || suffix.id === card.suffixId)
-		);
-		const suffix = shuffled(suffixes, random)[0];
-		if (!suffix) throw new Error("Verified suffix data is required");
-		const letters = suffix.pattern.replace(/\*/g, () =>
-			String.fromCharCode(65 + Math.floor(random() * 26))
-		);
-		const overlapping = region.suffixes
-			.filter(verified)
-			.filter((item) =>
-				new RegExp(`^${item.pattern.replace(/\*/g, "[A-Z]")}$`).test(letters)
-			);
-		if (new Set(overlapping.map((item) => item.areaId)).size > 1)
-			throw new Error("Ambiguous suffix pattern");
-		const area = areaTargets(region).find(
-			(area) => area.id === `${region.id}::${suffix.areaId}`
-		)!;
-		question.format = card.mode === "suffix" ? "suffix" : "plate";
-		question.prompt = `${region.code} ${Math.floor(random() * 9000) + 1000} ${letters}`;
-		question.answerKind = card.mode === "platfull" && level === 3 ? "plate" : "name";
-		question.targets =
-			card.mode === "platfull" && level <= 2
-				? [regionTarget(region)]
-				: question.answerKind === "plate"
-					? [regionTarget(region), area]
-					: [area];
-		question.limitMs = null;
-		if (level > 1) return question;
-	}
-	if (options.format === "fact") {
-		const fact = content.facts.find(
-			(fact) =>
-				fact.status === "terverifikasi" &&
-				fact.answerRegionId === region.id &&
-				fact.question
-		);
-		if (!fact || level !== 2)
-			throw new Error("An unambiguous verified fact question at Level 2 is required");
-		question.format = "fact";
-		question.prompt = fact.question!;
-		question.targets = [{ id: region.id, name: region.code, aliases: [] }];
-		question.answerKind = "code";
-		return question;
-	}
 	if (level === 1) {
 		question.limitMs = null;
 		const candidates = shuffled(
@@ -225,13 +179,7 @@ export function generateQuestion(
 					question.targets[0].name,
 					...candidates
 						.slice(0, 3)
-						.map((item) =>
-							question.answerKind === "code"
-								? item.code
-								: card.mode === "suffix"
-									? item.areas[0].name
-									: item.region
-						)
+						.map((item) => (question.answerKind === "code" ? item.code : item.region))
 				],
 				random
 			);
@@ -265,17 +213,11 @@ export function evaluateQuestion(
 	};
 	const national = dictionary(content, question.answerKind === "code" ? "code" : "name");
 	const matched = new Set<string>();
-	if (
-		question.answerKind !== "set" &&
-		answers.length !== (question.answerKind === "plate" ? 2 : 1)
-	)
-		return result;
-	for (const [index, input] of answers.entries()) {
-		const targets =
-			question.answerKind === "plate" ? [question.targets[index]] : question.targets;
+	if (question.answerKind !== "set" && answers.length !== 1) return result;
+	for (const input of answers) {
 		const match = matchAnswer(
 			input,
-			targets,
+			question.targets,
 			national,
 			question.answerKind === "code"
 				? "code"
@@ -292,7 +234,7 @@ export function evaluateQuestion(
 	if (question.answerKind === "set") {
 		result.setCorrect = matched.size;
 		result.correct = matched.size >= question.setTarget!;
-	} else result.correct = matched.size === (question.answerKind === "plate" ? 2 : 1);
+	} else result.correct = matched.size === 1;
 	if (
 		!result.correct &&
 		question.format === "truefalse" &&
