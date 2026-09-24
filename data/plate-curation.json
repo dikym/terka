@@ -1,12 +1,110 @@
 {
-	"version": "2026.09.16",
-	"regions": {
-		"BL": {
+	"version": "2026.09.24",
+	"regions": [
+		{
 			"id": "bl",
+			"code": "BL",
+			"region": "Aceh",
+			"group": "sumatera",
 			"province": "aceh",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "medium",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-banda-aceh",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-sabang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-langsa",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-lhokseumawe",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-subulussalam",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-aceh-besar",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-aceh-utara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-aceh-timur",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-aceh-tengah",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-aceh-barat",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-aceh-selatan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bireuen",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-pidie",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-pidie-jaya",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bener-meriah",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-gayo-lues",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-nagan-raya",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-simeulue",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-aceh-singkil",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-aceh-tamiang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-aceh-jaya",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-aceh-barat-daya",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-aceh-tenggara",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -24,15 +122,92 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"BB": {
+		{
 			"id": "bb",
+			"code": "BB",
+			"region": "Sumatera Utara bagian Barat (Tapanuli)",
+			"group": "sumatera",
 			"province": "sumatera-utara",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "rare",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-sibolga",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-padang-sidempuan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-gunungsitoli",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-tapanuli-tengah",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-tapanuli-utara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-tapanuli-selatan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-mandailing-natal",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-padang-lawas",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-padang-lawas-utara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-nias",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-nias-selatan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-nias-utara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-nias-barat",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-toba",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-samosir",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-humbang-hasundutan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-dairi",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-pakpak-bharat",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -50,15 +225,80 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"BK": {
+		{
 			"id": "bk",
+			"code": "BK",
+			"region": "Sumatera Utara bagian Timur",
+			"group": "sumatera",
 			"province": "sumatera-utara",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "common",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-medan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-binjai",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-tebing-tinggi",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-pematangsiantar",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-tanjungbalai",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-deli-serdang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-serdang-bedagai",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-langkat",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-karo",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-simalungun",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-asahan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-batu-bara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-labuhanbatu",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-labuhanbatu-utara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-labuhanbatu-selatan",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -76,15 +316,96 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"BA": {
+		{
 			"id": "ba",
+			"code": "BA",
+			"region": "Sumatera Barat",
+			"group": "sumatera",
 			"province": "sumatera-barat",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "medium",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-padang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-bukittinggi",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-payakumbuh",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-padang-panjang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-sawahlunto",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-solok",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-solok",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-pariaman",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-agam",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-pasaman",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-pasaman-barat",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-tanah-datar",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-pesisir-selatan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kepulauan-mentawai",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-dharmasraya",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-sijunjung",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-lima-puluh-kota",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-solok-selatan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-padang-pariaman",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -102,15 +423,68 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"BM": {
+		{
 			"id": "bm",
+			"code": "BM",
+			"region": "Riau",
+			"group": "sumatera",
 			"province": "riau",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "medium",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-pekanbaru",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-dumai",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kampar",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bengkalis",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-siak",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-pelalawan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-rokan-hulu",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-rokan-hilir",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-indragiri-hulu",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-indragiri-hilir",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kuantan-singingi",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kepulauan-meranti",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -128,15 +502,48 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"BP": {
+		{
 			"id": "bp",
+			"code": "BP",
+			"region": "Kepulauan Riau",
+			"group": "sumatera",
 			"province": "kepulauan-riau",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "medium",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-batam",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-tanjung-pinang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bintan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-karimun",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-lingga",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-natuna",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kepulauan-anambas",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -154,15 +561,64 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"BH": {
+		{
 			"id": "bh",
+			"code": "BH",
+			"region": "Jambi",
+			"group": "sumatera",
 			"province": "jambi",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "medium",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-jambi",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-sungai-penuh",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-batanghari",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-muaro-jambi",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-tanjung-jabung-barat",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-tanjung-jabung-timur",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bungo",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-tebo",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-merangin",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-sarolangun",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kerinci",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -180,15 +636,88 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"BG": {
+		{
 			"id": "bg",
+			"code": "BG",
+			"region": "Sumatera Selatan",
+			"group": "sumatera",
 			"province": "sumatera-selatan",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "medium",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-palembang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-prabumulih",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-lubuklinggau",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-pagar-alam",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-banyuasin",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-ogan-ilir",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-ogan-komering-ilir",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-ogan-komering-ulu",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-ogan-komering-ulu-timur",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-ogan-komering-ulu-selatan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-muara-enim",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-lahat",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-musi-banyuasin",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-musi-rawas",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-musi-rawas-utara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-empat-lawang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-penukal-abab-lematang-ilir",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -206,15 +735,48 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"BN": {
+		{
 			"id": "bn",
+			"code": "BN",
+			"region": "Kepulauan Bangka Belitung",
+			"group": "sumatera",
 			"province": "bangka-belitung",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "rare",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-pangkalpinang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bangka",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bangka-barat",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bangka-tengah",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bangka-selatan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-belitung",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-belitung-timur",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -232,15 +794,80 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"BE": {
+		{
 			"id": "be",
+			"code": "BE",
+			"region": "Lampung",
+			"group": "sumatera",
 			"province": "lampung",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "medium",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-bandar-lampung",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-metro",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-lampung-selatan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-lampung-tengah",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-lampung-utara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-lampung-timur",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-lampung-barat",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-pesawaran",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-pringsewu",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-tanggamus",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-tulang-bawang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-tulang-bawang-barat",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-way-kanan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-mesuji",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-pesisir-barat",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -258,15 +885,60 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"BD": {
+		{
 			"id": "bd",
+			"code": "BD",
+			"region": "Bengkulu",
+			"group": "sumatera",
 			"province": "bengkulu",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "rare",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-bengkulu",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bengkulu-utara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bengkulu-selatan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bengkulu-tengah",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-rejang-lebong",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kepahiang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-lebong",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kaur",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-seluma",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-muko-muko",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -284,15 +956,44 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"A": {
+		{
 			"id": "a",
+			"code": "A",
+			"region": "Banten",
+			"group": "jawa",
 			"province": "banten",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "medium",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-serang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-serang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-cilegon",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-pandeglang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-lebak",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-tangerang",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -320,15 +1021,68 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"B": {
+		{
 			"id": "b",
+			"code": "B",
+			"region": "Jakarta, Depok, Tangerang, dan Bekasi",
+			"group": "jawa",
 			"province": "jakarta",
 			"spans": ["jawa-barat", "banten"],
-			"aliases": ["Jakarta", "DKI Jakarta", "Jadetabek"],
+			"placementTier": "common",
 			"confidence": "high",
+			"aliases": ["Jakarta", "DKI Jakarta", "Jadetabek"],
+			"areas": [
+				{
+					"areaId": "kota-jakarta-pusat",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-jakarta-utara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-jakarta-barat",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-jakarta-selatan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-jakarta-timur",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kepulauan-seribu",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-bekasi",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bekasi",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-depok",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-tangerang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-tangerang-selatan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-tangerang",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -356,15 +1110,36 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"D": {
+		{
 			"id": "d",
+			"code": "D",
+			"region": "Bandung (Parahyangan)",
+			"group": "jawa",
 			"province": "jawa-barat",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "common",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-bandung",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-cimahi",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bandung",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bandung-barat",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -382,15 +1157,40 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"F": {
+		{
 			"id": "f",
+			"code": "F",
+			"region": "Bogor",
+			"group": "jawa",
 			"province": "jawa-barat",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "common",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-bogor",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bogor",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-sukabumi",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-sukabumi",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-cianjur",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -408,15 +1208,40 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"E": {
+		{
 			"id": "e",
+			"code": "E",
+			"region": "Cirebon",
+			"group": "jawa",
 			"province": "jawa-barat",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "common",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-cirebon",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-cirebon",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-indramayu",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-majalengka",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kuningan",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -434,15 +1259,32 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"T": {
+		{
 			"id": "t",
+			"code": "T",
+			"region": "Purwakarta",
+			"group": "jawa",
 			"province": "jawa-barat",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "common",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kab-purwakarta",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-subang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-karawang",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -460,15 +1302,48 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"Z": {
+		{
 			"id": "z",
+			"code": "Z",
+			"region": "Priangan Timur",
+			"group": "jawa",
 			"province": "jawa-barat",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "medium",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kab-sumedang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-garut",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-tasikmalaya",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-tasikmalaya",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-ciamis",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-pangandaran",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-banjar",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -486,15 +1361,48 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"G": {
+		{
 			"id": "g",
+			"code": "G",
+			"region": "Pekalongan",
+			"group": "jawa",
 			"province": "jawa-tengah",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "medium",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-pekalongan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-pekalongan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-tegal",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-tegal",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-batang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-pemalang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-brebes",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -512,15 +1420,40 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"H": {
+		{
 			"id": "h",
+			"code": "H",
+			"region": "Semarang",
+			"group": "jawa",
 			"province": "jawa-tengah",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "common",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-semarang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-salatiga",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-semarang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kendal",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-demak",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -538,15 +1471,44 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"K": {
+		{
 			"id": "k",
+			"code": "K",
+			"region": "Pati",
+			"group": "jawa",
 			"province": "jawa-tengah",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "medium",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kab-pati",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kudus",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-jepara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-rembang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-blora",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-grobogan",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -564,15 +1526,36 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"R": {
+		{
 			"id": "r",
+			"code": "R",
+			"region": "Banyumas",
+			"group": "jawa",
 			"province": "jawa-tengah",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "medium",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kab-banyumas",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-cilacap",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-purbalingga",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-banjarnegara",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -590,15 +1573,44 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"AA": {
+		{
 			"id": "aa",
+			"code": "AA",
+			"region": "Kedu",
+			"group": "jawa",
 			"province": "jawa-tengah",
 			"spans": [],
+			"placementTier": "medium",
+			"confidence": "high",
 			"aliases": [],
-			"confidence": "high",
+			"areas": [
+				{
+					"areaId": "kota-magelang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-magelang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-purworejo",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kebumen",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-temanggung",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-wonosobo",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -616,15 +1628,48 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"AD": {
+		{
 			"id": "ad",
+			"code": "AD",
+			"region": "Surakarta (Solo Raya)",
+			"group": "jawa",
 			"province": "jawa-tengah",
 			"spans": [],
-			"aliases": ["Solo", "Surakarta", "Solo Raya"],
+			"placementTier": "common",
 			"confidence": "high",
+			"aliases": ["Solo", "Surakarta", "Solo Raya"],
+			"areas": [
+				{
+					"areaId": "kota-surakarta",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-sukoharjo",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-klaten",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-boyolali",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-sragen",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-karanganyar",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-wonogiri",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -642,15 +1687,40 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"AB": {
+		{
 			"id": "ab",
+			"code": "AB",
+			"region": "Seluruh DIY",
+			"group": "jawa",
 			"province": "yogyakarta",
 			"spans": [],
-			"aliases": ["Yogyakarta", "Jogja", "Yogya", "DIY"],
+			"placementTier": "common",
 			"confidence": "high",
+			"aliases": ["Yogyakarta", "Jogja", "Yogya", "DIY"],
+			"areas": [
+				{
+					"areaId": "kota-yogyakarta",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bantul",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-sleman",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-gunungkidul",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kulon-progo",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -668,15 +1738,24 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"L": {
+		{
 			"id": "l",
+			"code": "L",
+			"region": "Surabaya",
+			"group": "jawa",
 			"province": "jawa-timur",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "common",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-surabaya",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -689,15 +1768,28 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"W": {
+		{
 			"id": "w",
+			"code": "W",
+			"region": "Sidoarjo–Gresik",
+			"group": "jawa",
 			"province": "jawa-timur",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "common",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kab-sidoarjo",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-gresik",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://jogja.polri.go.id/yogyakarta/tribrata-news/online/detail/plat-nomor--identitas-resmi-kendaraan-di-indonesia.html",
@@ -715,15 +1807,36 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"M": {
+		{
 			"id": "m",
+			"code": "M",
+			"region": "Madura",
+			"group": "jawa",
 			"province": "jawa-timur",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "medium",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kab-bangkalan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-sampang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-pamekasan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-sumenep",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -741,15 +1854,52 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"N": {
+		{
 			"id": "n",
+			"code": "N",
+			"region": "Malang, Pasuruan, Probolinggo, Batu, dan Lumajang",
+			"group": "jawa",
 			"province": "jawa-timur",
 			"spans": [],
+			"placementTier": "common",
+			"confidence": "high",
 			"aliases": ["Malang Raya"],
-			"confidence": "high",
+			"areas": [
+				{
+					"areaId": "kota-malang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-malang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-batu",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-pasuruan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-pasuruan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-probolinggo",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-probolinggo",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-lumajang",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -767,15 +1917,36 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"P": {
+		{
 			"id": "p",
+			"code": "P",
+			"region": "Besuki",
+			"group": "jawa",
 			"province": "jawa-timur",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "medium",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kab-jember",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-banyuwangi",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bondowoso",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-situbondo",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -793,15 +1964,44 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"S": {
+		{
 			"id": "s",
+			"code": "S",
+			"region": "Bojonegoro",
+			"group": "jawa",
 			"province": "jawa-timur",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "medium",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kab-bojonegoro",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-tuban",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-lamongan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-mojokerto",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-mojokerto",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-jombang",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://jogja.polri.go.id/yogyakarta/tribrata-news/online/detail/plat-nomor--identitas-resmi-kendaraan-di-indonesia.html",
@@ -824,15 +2024,48 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"AG": {
+		{
 			"id": "ag",
+			"code": "AG",
+			"region": "Kediri",
+			"group": "jawa",
 			"province": "jawa-timur",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "medium",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-kediri",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kediri",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-blitar",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-blitar",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-tulungagung",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-trenggalek",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-nganjuk",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -850,15 +2083,44 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"AE": {
+		{
 			"id": "ae",
+			"code": "AE",
+			"region": "Madiun",
+			"group": "jawa",
 			"province": "jawa-timur",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "medium",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-madiun",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-madiun",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-ngawi",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-magetan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-ponorogo",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-pacitan",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -876,15 +2138,56 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"DK": {
+		{
 			"id": "dk",
+			"code": "DK",
+			"region": "Bali",
+			"group": "bali-nusra",
 			"province": "bali",
 			"spans": [],
+			"placementTier": "common",
+			"confidence": "high",
 			"aliases": ["Pulau Bali"],
-			"confidence": "high",
+			"areas": [
+				{
+					"areaId": "kota-denpasar",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-badung",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-gianyar",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-tabanan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-buleleng",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-karangasem",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-klungkung",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bangli",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-jembrana",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -902,15 +2205,40 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"DR": {
+		{
 			"id": "dr",
+			"code": "DR",
+			"region": "NTB — Pulau Lombok",
+			"group": "bali-nusra",
 			"province": "nusa-tenggara-barat",
 			"spans": [],
+			"placementTier": "medium",
+			"confidence": "high",
 			"aliases": ["Lombok"],
-			"confidence": "high",
+			"areas": [
+				{
+					"areaId": "kota-mataram",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-lombok-barat",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-lombok-tengah",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-lombok-timur",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-lombok-utara",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -928,15 +2256,40 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"EA": {
+		{
 			"id": "ea",
+			"code": "EA",
+			"region": "NTB — Pulau Sumbawa",
+			"group": "bali-nusra",
 			"province": "nusa-tenggara-barat",
 			"spans": [],
+			"placementTier": "rare",
+			"confidence": "high",
 			"aliases": ["Pulau Sumbawa"],
-			"confidence": "high",
+			"areas": [
+				{
+					"areaId": "kota-bima",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bima",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-dompu",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-sumbawa",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-sumbawa-barat",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -954,15 +2307,52 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"DH": {
+		{
 			"id": "dh",
+			"code": "DH",
+			"region": "NTT — Pulau Timor & sekitarnya",
+			"group": "bali-nusra",
 			"province": "nusa-tenggara-timur",
 			"spans": [],
+			"placementTier": "rare",
+			"confidence": "high",
 			"aliases": ["Timor"],
-			"confidence": "high",
+			"areas": [
+				{
+					"areaId": "kota-kupang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kupang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-timor-tengah-selatan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-timor-tengah-utara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-belu",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-malaka",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-rote-ndao",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-sabu-raijua",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -980,15 +2370,60 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"EB": {
+		{
 			"id": "eb",
+			"code": "EB",
+			"region": "NTT — Pulau Flores & sekitarnya",
+			"group": "bali-nusra",
 			"province": "nusa-tenggara-timur",
 			"spans": [],
-			"aliases": ["Flores"],
+			"placementTier": "rare",
 			"confidence": "high",
+			"aliases": ["Flores"],
+			"areas": [
+				{
+					"areaId": "kab-sikka",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-ende",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-ngada",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-nagekeo",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-flores-timur",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-manggarai",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-manggarai-barat",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-manggarai-timur",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-alor",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-lembata",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -1006,15 +2441,36 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"ED": {
+		{
 			"id": "ed",
+			"code": "ED",
+			"region": "NTT — Pulau Sumba",
+			"group": "bali-nusra",
 			"province": "nusa-tenggara-timur",
 			"spans": [],
-			"aliases": ["Sumba"],
+			"placementTier": "rare",
 			"confidence": "high",
+			"aliases": ["Sumba"],
+			"areas": [
+				{
+					"areaId": "kab-sumba-barat",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-sumba-timur",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-sumba-tengah",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-sumba-barat-daya",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -1032,15 +2488,76 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"KB": {
+		{
 			"id": "kb",
+			"code": "KB",
+			"region": "Kalimantan Barat",
+			"group": "kalimantan",
 			"province": "kalimantan-barat",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "medium",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-pontianak",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-singkawang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kubu-raya",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-mempawah",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-sambas",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bengkayang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-landak",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-sanggau",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-sekadau",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-sintang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-melawi",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kapuas-hulu",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-ketapang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kayong-utara",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -1058,15 +2575,72 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"DA": {
+		{
 			"id": "da",
+			"code": "DA",
+			"region": "Kalimantan Selatan",
+			"group": "kalimantan",
 			"province": "kalimantan-selatan",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "medium",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-banjarmasin",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-banjarbaru",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-banjar",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-barito-kuala",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-tapin",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-hulu-sungai-selatan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-hulu-sungai-tengah",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-hulu-sungai-utara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-tabalong",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-balangan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-tanah-laut",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-tanah-bumbu",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kotabaru",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -1084,15 +2658,76 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"KH": {
+		{
 			"id": "kh",
+			"code": "KH",
+			"region": "Kalimantan Tengah",
+			"group": "kalimantan",
 			"province": "kalimantan-tengah",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "rare",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-palangka-raya",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kotawaringin-timur",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kotawaringin-barat",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kapuas",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-barito-selatan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-barito-utara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-barito-timur",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-katingan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-seruyan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-sukamara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-lamandau",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-gunung-mas",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-murung-raya",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-pulang-pisau",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -1110,15 +2745,60 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"KT": {
+		{
 			"id": "kt",
+			"code": "KT",
+			"region": "Kalimantan Timur",
+			"group": "kalimantan",
 			"province": "kalimantan-timur",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "medium",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-samarinda",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-balikpapan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-bontang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kutai-kartanegara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kutai-timur",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kutai-barat",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-berau",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-paser",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-penajam-paser-utara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-mahakam-ulu",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -1136,15 +2816,40 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"KU": {
+		{
 			"id": "ku",
+			"code": "KU",
+			"region": "Kalimantan Utara",
+			"group": "kalimantan",
 			"province": "kalimantan-utara",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "rare",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-tarakan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bulungan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-nunukan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-malinau",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-tana-tidung",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -1157,15 +2862,68 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"DB": {
+		{
 			"id": "db",
+			"code": "DB",
+			"region": "Sulawesi Utara (daratan)",
+			"group": "sulawesi",
 			"province": "sulawesi-utara",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "medium",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-manado",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-bitung",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-tomohon",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-kotamobagu",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-minahasa",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-minahasa-utara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-minahasa-selatan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-minahasa-tenggara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bolaang-mongondow",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bolaang-mongondow-utara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bolaang-mongondow-timur",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bolaang-mongondow-selatan",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -1183,15 +2941,32 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"DL": {
+		{
 			"id": "dl",
+			"code": "DL",
+			"region": "Sulawesi Utara (kepulauan)",
+			"group": "sulawesi",
 			"province": "sulawesi-utara",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "rare",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kab-kepulauan-sangihe",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kepulauan-talaud",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kepulauan-sitaro",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -1209,15 +2984,44 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"DM": {
+		{
 			"id": "dm",
+			"code": "DM",
+			"region": "Gorontalo",
+			"group": "sulawesi",
 			"province": "gorontalo",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "rare",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-gorontalo",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-gorontalo",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-gorontalo-utara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bone-bolango",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-boalemo",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-pohuwato",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -1235,15 +3039,72 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"DN": {
+		{
 			"id": "dn",
+			"code": "DN",
+			"region": "Sulawesi Tengah",
+			"group": "sulawesi",
 			"province": "sulawesi-tengah",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "rare",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-palu",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-donggala",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-sigi",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-parigi-moutong",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-poso",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-tolitoli",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-buol",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-banggai",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-banggai-kepulauan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-banggai-laut",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-morowali",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-morowali-utara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-tojo-una-una",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -1261,15 +3122,88 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"DT": {
+		{
 			"id": "dt",
+			"code": "DT",
+			"region": "Sulawesi Tenggara",
+			"group": "sulawesi",
 			"province": "sulawesi-tenggara",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "rare",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-kendari",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-baubau",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-konawe",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-konawe-selatan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-konawe-utara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-konawe-kepulauan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kolaka",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kolaka-utara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kolaka-timur",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bombana",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-buton",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-buton-utara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-buton-selatan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-buton-tengah",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-muna",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-muna-barat",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-wakatobi",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -1287,15 +3221,56 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"DD": {
+		{
 			"id": "dd",
+			"code": "DD",
+			"region": "Sulawesi Selatan I (bagian selatan)",
+			"group": "sulawesi",
 			"province": "sulawesi-selatan",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "medium",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-makassar",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-gowa",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-maros",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-pangkajene-dan-kepulauan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-takalar",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-jeneponto",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bantaeng",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-bulukumba",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kepulauan-selayar",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -1313,15 +3288,36 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"DW": {
+		{
 			"id": "dw",
+			"code": "DW",
+			"region": "Sulawesi Selatan II (Bosowasi)",
+			"group": "sulawesi",
 			"province": "sulawesi-selatan",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "rare",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kab-bone",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-soppeng",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-wajo",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-sinjai",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -1339,15 +3335,64 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"DP": {
+		{
 			"id": "dp",
+			"code": "DP",
+			"region": "Sulawesi Selatan III (bagian utara)",
+			"group": "sulawesi",
 			"province": "sulawesi-selatan",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "rare",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-parepare",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-palopo",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-barru",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-sidenreng-rappang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-pinrang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-enrekang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-luwu",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-luwu-utara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-luwu-timur",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-tana-toraja",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-toraja-utara",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -1365,15 +3410,44 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"DC": {
+		{
 			"id": "dc",
+			"code": "DC",
+			"region": "Sulawesi Barat",
+			"group": "sulawesi",
 			"province": "sulawesi-barat",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "rare",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kab-mamuju",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-mamuju-tengah",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-pasangkayu",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-majene",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-polewali-mandar",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-mamasa",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -1391,15 +3465,64 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"DE": {
+		{
 			"id": "de",
+			"code": "DE",
+			"region": "Maluku",
+			"group": "maluku",
 			"province": "maluku",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "rare",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-ambon",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-tual",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-maluku-tengah",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-seram-bagian-barat",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-seram-bagian-timur",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-maluku-tenggara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kepulauan-tanimbar",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-maluku-barat-daya",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kepulauan-aru",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-buru",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-buru-selatan",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -1417,15 +3540,60 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"DG": {
+		{
 			"id": "dg",
+			"code": "DG",
+			"region": "Maluku Utara",
+			"group": "maluku",
 			"province": "maluku-utara",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "rare",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-ternate",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kota-tidore-kepulauan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-halmahera-barat",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-halmahera-tengah",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-halmahera-utara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-halmahera-timur",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-halmahera-selatan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kepulauan-sula",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-pulau-morotai",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-pulau-taliabu",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://korlantas.polri.go.id/wp-content/uploads/2021/05/PERATURAN-POLRI-NOMOR-7-TAHUN-2021-TENTANG-REGISTRASI-DAN-IDENTIFIKASI-KENDARAAN-BERMOTOR.pdf",
@@ -1443,15 +3611,56 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"PA": {
+		{
 			"id": "pa",
+			"code": "PA",
+			"region": "Papua",
+			"group": "papua",
 			"province": "papua",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "rare",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-jayapura",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-jayapura",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-biak-numfor",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kepulauan-yapen",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-sarmi",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-keerom",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-waropen",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-supiori",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-mamberamo-raya",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://tribratanews.polri.go.id/blog/nasional-3/3-provinsi-baru-papua-kini-miliki-pelat-nomor-baru-77921",
@@ -1479,15 +3688,48 @@
 					"official": true
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"PB": {
+		{
 			"id": "pb",
+			"code": "PB",
+			"region": "Papua Barat",
+			"group": "papua",
 			"province": "papua-barat",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "rare",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kab-manokwari",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-manokwari-selatan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-pegunungan-arfak",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-fakfak",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-kaimana",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-teluk-bintuni",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-teluk-wondama",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://tribratanews.polri.go.id/blog/nasional-3/3-provinsi-baru-papua-kini-miliki-pelat-nomor-baru-77921",
@@ -1520,15 +3762,44 @@
 					"official": false
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"PY": {
+		{
 			"id": "py",
+			"code": "PY",
+			"region": "Papua Barat Daya",
+			"group": "papua",
 			"province": "papua-barat-daya",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "rare",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kota-sorong",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-sorong",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-sorong-selatan",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-raja-ampat",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-tambrauw",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-maybrat",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://tribratanews.polri.go.id/blog/nasional-3/3-provinsi-baru-papua-kini-miliki-pelat-nomor-baru-77921",
@@ -1546,15 +3817,36 @@
 					"official": true
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"PS": {
+		{
 			"id": "ps",
+			"code": "PS",
+			"region": "Papua Selatan",
+			"group": "papua",
 			"province": "papua-selatan",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "rare",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kab-merauke",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-boven-digoel",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-mappi",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-asmat",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://tribratanews.papua.polri.go.id/kapolres-merauke-hadiri-launching-nomor-registrasi-kendaraan-bermotor-di-provinsi-papua-selatan/",
@@ -1572,15 +3864,52 @@
 					"official": true
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"PT": {
+		{
 			"id": "pt",
+			"code": "PT",
+			"region": "Papua Tengah",
+			"group": "papua",
 			"province": "papua-tengah",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "rare",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kab-nabire",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-mimika",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-paniai",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-puncak",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-puncak-jaya",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-dogiyai",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-deiyai",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-intan-jaya",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://tribratanews.polri.go.id/blog/nasional-3/3-provinsi-baru-papua-kini-miliki-pelat-nomor-baru-77921",
@@ -1598,15 +3927,52 @@
 					"official": true
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		},
-		"PG": {
+		{
 			"id": "pg",
+			"code": "PG",
+			"region": "Papua Pegunungan",
+			"group": "papua",
 			"province": "papua-pegunungan",
 			"spans": [],
-			"aliases": [],
+			"placementTier": "rare",
 			"confidence": "high",
+			"aliases": [],
+			"areas": [
+				{
+					"areaId": "kab-jayawijaya",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-yahukimo",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-nduga",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-pegunungan-bintang",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-tolikara",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-lanny-jaya",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-mamberamo-tengah",
+					"confidence": "high"
+				},
+				{
+					"areaId": "kab-yalimo",
+					"confidence": "high"
+				}
+			],
 			"sources": [
 				{
 					"ref": "https://tribratanews.papua.polri.go.id/launching-nomor-registrasi-kendaraan-bermotor-di-papua-pegunungan/",
@@ -1624,21 +3990,4374 @@
 					"official": true
 				}
 			],
-			"issues": [],
-			"suffixes": []
+			"issues": []
 		}
-	},
-	"facts": {
-		"f-016": {
-			"question": "Kode mana yang muncul setelah pemekaran Kalimantan Utara dari Kalimantan Timur?",
-			"answerRegionId": "ku"
+	],
+	"areas": [
+		{
+			"id": "kota-banda-aceh",
+			"type": "kota",
+			"name": "Banda Aceh",
+			"province": "aceh",
+			"aliases": [],
+			"variants": []
 		},
-		"f-017": {
-			"status": "diperdebatkan"
+		{
+			"id": "kota-sabang",
+			"type": "kota",
+			"name": "Sabang",
+			"province": "aceh",
+			"aliases": [],
+			"variants": []
 		},
-		"f-030": {
-			"question": "Kode yang dahulu dipakai Belitung kini digunakan di Kepulauan Riau. Apa kodenya?",
-			"answerRegionId": "bp"
+		{
+			"id": "kota-langsa",
+			"type": "kota",
+			"name": "Langsa",
+			"province": "aceh",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-lhokseumawe",
+			"type": "kota",
+			"name": "Lhokseumawe",
+			"province": "aceh",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-subulussalam",
+			"type": "kota",
+			"name": "Subulussalam",
+			"province": "aceh",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-aceh-besar",
+			"type": "kabupaten",
+			"name": "Aceh Besar",
+			"province": "aceh",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-aceh-utara",
+			"type": "kabupaten",
+			"name": "Aceh Utara",
+			"province": "aceh",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-aceh-timur",
+			"type": "kabupaten",
+			"name": "Aceh Timur",
+			"province": "aceh",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-aceh-tengah",
+			"type": "kabupaten",
+			"name": "Aceh Tengah",
+			"province": "aceh",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-aceh-barat",
+			"type": "kabupaten",
+			"name": "Aceh Barat",
+			"province": "aceh",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-aceh-selatan",
+			"type": "kabupaten",
+			"name": "Aceh Selatan",
+			"province": "aceh",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bireuen",
+			"type": "kabupaten",
+			"name": "Bireuen",
+			"province": "aceh",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-pidie",
+			"type": "kabupaten",
+			"name": "Pidie",
+			"province": "aceh",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-pidie-jaya",
+			"type": "kabupaten",
+			"name": "Pidie Jaya",
+			"province": "aceh",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bener-meriah",
+			"type": "kabupaten",
+			"name": "Bener Meriah",
+			"province": "aceh",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-gayo-lues",
+			"type": "kabupaten",
+			"name": "Gayo Lues",
+			"province": "aceh",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-nagan-raya",
+			"type": "kabupaten",
+			"name": "Nagan Raya",
+			"province": "aceh",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-simeulue",
+			"type": "kabupaten",
+			"name": "Simeulue",
+			"province": "aceh",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-aceh-singkil",
+			"type": "kabupaten",
+			"name": "Aceh Singkil",
+			"province": "aceh",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-aceh-tamiang",
+			"type": "kabupaten",
+			"name": "Aceh Tamiang",
+			"province": "aceh",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-aceh-jaya",
+			"type": "kabupaten",
+			"name": "Aceh Jaya",
+			"province": "aceh",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-aceh-barat-daya",
+			"type": "kabupaten",
+			"name": "Aceh Barat Daya",
+			"province": "aceh",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-aceh-tenggara",
+			"type": "kabupaten",
+			"name": "Aceh Tenggara",
+			"province": "aceh",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-sibolga",
+			"type": "kota",
+			"name": "Sibolga",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-padang-sidempuan",
+			"type": "kota",
+			"name": "Padang Sidempuan",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-gunungsitoli",
+			"type": "kota",
+			"name": "Gunungsitoli",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-tapanuli-tengah",
+			"type": "kabupaten",
+			"name": "Tapanuli Tengah",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-tapanuli-utara",
+			"type": "kabupaten",
+			"name": "Tapanuli Utara",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-tapanuli-selatan",
+			"type": "kabupaten",
+			"name": "Tapanuli Selatan",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-mandailing-natal",
+			"type": "kabupaten",
+			"name": "Mandailing Natal",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-padang-lawas",
+			"type": "kabupaten",
+			"name": "Padang Lawas",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-padang-lawas-utara",
+			"type": "kabupaten",
+			"name": "Padang Lawas Utara",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-nias",
+			"type": "kabupaten",
+			"name": "Nias",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-nias-selatan",
+			"type": "kabupaten",
+			"name": "Nias Selatan",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-nias-utara",
+			"type": "kabupaten",
+			"name": "Nias Utara",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-nias-barat",
+			"type": "kabupaten",
+			"name": "Nias Barat",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-toba",
+			"type": "kabupaten",
+			"name": "Toba",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-samosir",
+			"type": "kabupaten",
+			"name": "Samosir",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-humbang-hasundutan",
+			"type": "kabupaten",
+			"name": "Humbang Hasundutan",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-dairi",
+			"type": "kabupaten",
+			"name": "Dairi",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-pakpak-bharat",
+			"type": "kabupaten",
+			"name": "Pakpak Bharat",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-medan",
+			"type": "kota",
+			"name": "Medan",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-binjai",
+			"type": "kota",
+			"name": "Binjai",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-tebing-tinggi",
+			"type": "kota",
+			"name": "Tebing Tinggi",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-pematangsiantar",
+			"type": "kota",
+			"name": "Pematangsiantar",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-tanjungbalai",
+			"type": "kota",
+			"name": "Tanjungbalai",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-deli-serdang",
+			"type": "kabupaten",
+			"name": "Deli Serdang",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-serdang-bedagai",
+			"type": "kabupaten",
+			"name": "Serdang Bedagai",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-langkat",
+			"type": "kabupaten",
+			"name": "Langkat",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-karo",
+			"type": "kabupaten",
+			"name": "Karo",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-simalungun",
+			"type": "kabupaten",
+			"name": "Simalungun",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-asahan",
+			"type": "kabupaten",
+			"name": "Asahan",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-batu-bara",
+			"type": "kabupaten",
+			"name": "Batu Bara",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-labuhanbatu",
+			"type": "kabupaten",
+			"name": "Labuhanbatu",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-labuhanbatu-utara",
+			"type": "kabupaten",
+			"name": "Labuhanbatu Utara",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-labuhanbatu-selatan",
+			"type": "kabupaten",
+			"name": "Labuhanbatu Selatan",
+			"province": "sumatera-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-padang",
+			"type": "kota",
+			"name": "Padang",
+			"province": "sumatera-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-bukittinggi",
+			"type": "kota",
+			"name": "Bukittinggi",
+			"province": "sumatera-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-payakumbuh",
+			"type": "kota",
+			"name": "Payakumbuh",
+			"province": "sumatera-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-padang-panjang",
+			"type": "kota",
+			"name": "Padang Panjang",
+			"province": "sumatera-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-sawahlunto",
+			"type": "kota",
+			"name": "Sawahlunto",
+			"province": "sumatera-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-solok",
+			"type": "kota",
+			"name": "Solok",
+			"province": "sumatera-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-solok",
+			"type": "kabupaten",
+			"name": "Solok",
+			"province": "sumatera-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-pariaman",
+			"type": "kota",
+			"name": "Pariaman",
+			"province": "sumatera-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-agam",
+			"type": "kabupaten",
+			"name": "Agam",
+			"province": "sumatera-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-pasaman",
+			"type": "kabupaten",
+			"name": "Pasaman",
+			"province": "sumatera-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-pasaman-barat",
+			"type": "kabupaten",
+			"name": "Pasaman Barat",
+			"province": "sumatera-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-tanah-datar",
+			"type": "kabupaten",
+			"name": "Tanah Datar",
+			"province": "sumatera-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-pesisir-selatan",
+			"type": "kabupaten",
+			"name": "Pesisir Selatan",
+			"province": "sumatera-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kepulauan-mentawai",
+			"type": "kabupaten",
+			"name": "Kepulauan Mentawai",
+			"province": "sumatera-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-dharmasraya",
+			"type": "kabupaten",
+			"name": "Dharmasraya",
+			"province": "sumatera-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-sijunjung",
+			"type": "kabupaten",
+			"name": "Sijunjung",
+			"province": "sumatera-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-lima-puluh-kota",
+			"type": "kabupaten",
+			"name": "Lima Puluh Kota",
+			"province": "sumatera-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-solok-selatan",
+			"type": "kabupaten",
+			"name": "Solok Selatan",
+			"province": "sumatera-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-padang-pariaman",
+			"type": "kabupaten",
+			"name": "Padang Pariaman",
+			"province": "sumatera-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-pekanbaru",
+			"type": "kota",
+			"name": "Pekanbaru",
+			"province": "riau",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-dumai",
+			"type": "kota",
+			"name": "Dumai",
+			"province": "riau",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kampar",
+			"type": "kabupaten",
+			"name": "Kampar",
+			"province": "riau",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bengkalis",
+			"type": "kabupaten",
+			"name": "Bengkalis",
+			"province": "riau",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-siak",
+			"type": "kabupaten",
+			"name": "Siak",
+			"province": "riau",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-pelalawan",
+			"type": "kabupaten",
+			"name": "Pelalawan",
+			"province": "riau",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-rokan-hulu",
+			"type": "kabupaten",
+			"name": "Rokan Hulu",
+			"province": "riau",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-rokan-hilir",
+			"type": "kabupaten",
+			"name": "Rokan Hilir",
+			"province": "riau",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-indragiri-hulu",
+			"type": "kabupaten",
+			"name": "Indragiri Hulu",
+			"province": "riau",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-indragiri-hilir",
+			"type": "kabupaten",
+			"name": "Indragiri Hilir",
+			"province": "riau",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kuantan-singingi",
+			"type": "kabupaten",
+			"name": "Kuantan Singingi",
+			"province": "riau",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kepulauan-meranti",
+			"type": "kabupaten",
+			"name": "Kepulauan Meranti",
+			"province": "riau",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-batam",
+			"type": "kota",
+			"name": "Batam",
+			"province": "kepulauan-riau",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-tanjung-pinang",
+			"type": "kota",
+			"name": "Tanjung Pinang",
+			"province": "kepulauan-riau",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bintan",
+			"type": "kabupaten",
+			"name": "Bintan",
+			"province": "kepulauan-riau",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-karimun",
+			"type": "kabupaten",
+			"name": "Karimun",
+			"province": "kepulauan-riau",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-lingga",
+			"type": "kabupaten",
+			"name": "Lingga",
+			"province": "kepulauan-riau",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-natuna",
+			"type": "kabupaten",
+			"name": "Natuna",
+			"province": "kepulauan-riau",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kepulauan-anambas",
+			"type": "kabupaten",
+			"name": "Kepulauan Anambas",
+			"province": "kepulauan-riau",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-jambi",
+			"type": "kota",
+			"name": "Jambi",
+			"province": "jambi",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-sungai-penuh",
+			"type": "kota",
+			"name": "Sungai Penuh",
+			"province": "jambi",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-batanghari",
+			"type": "kabupaten",
+			"name": "Batanghari",
+			"province": "jambi",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-muaro-jambi",
+			"type": "kabupaten",
+			"name": "Muaro Jambi",
+			"province": "jambi",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-tanjung-jabung-barat",
+			"type": "kabupaten",
+			"name": "Tanjung Jabung Barat",
+			"province": "jambi",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-tanjung-jabung-timur",
+			"type": "kabupaten",
+			"name": "Tanjung Jabung Timur",
+			"province": "jambi",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bungo",
+			"type": "kabupaten",
+			"name": "Bungo",
+			"province": "jambi",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-tebo",
+			"type": "kabupaten",
+			"name": "Tebo",
+			"province": "jambi",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-merangin",
+			"type": "kabupaten",
+			"name": "Merangin",
+			"province": "jambi",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-sarolangun",
+			"type": "kabupaten",
+			"name": "Sarolangun",
+			"province": "jambi",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kerinci",
+			"type": "kabupaten",
+			"name": "Kerinci",
+			"province": "jambi",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-palembang",
+			"type": "kota",
+			"name": "Palembang",
+			"province": "sumatera-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-prabumulih",
+			"type": "kota",
+			"name": "Prabumulih",
+			"province": "sumatera-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-lubuklinggau",
+			"type": "kota",
+			"name": "Lubuklinggau",
+			"province": "sumatera-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-pagar-alam",
+			"type": "kota",
+			"name": "Pagar Alam",
+			"province": "sumatera-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-banyuasin",
+			"type": "kabupaten",
+			"name": "Banyuasin",
+			"province": "sumatera-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-ogan-ilir",
+			"type": "kabupaten",
+			"name": "Ogan Ilir",
+			"province": "sumatera-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-ogan-komering-ilir",
+			"type": "kabupaten",
+			"name": "Ogan Komering Ilir",
+			"province": "sumatera-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-ogan-komering-ulu",
+			"type": "kabupaten",
+			"name": "Ogan Komering Ulu",
+			"province": "sumatera-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-ogan-komering-ulu-timur",
+			"type": "kabupaten",
+			"name": "Ogan Komering Ulu Timur",
+			"province": "sumatera-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-ogan-komering-ulu-selatan",
+			"type": "kabupaten",
+			"name": "Ogan Komering Ulu Selatan",
+			"province": "sumatera-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-muara-enim",
+			"type": "kabupaten",
+			"name": "Muara Enim",
+			"province": "sumatera-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-lahat",
+			"type": "kabupaten",
+			"name": "Lahat",
+			"province": "sumatera-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-musi-banyuasin",
+			"type": "kabupaten",
+			"name": "Musi Banyuasin",
+			"province": "sumatera-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-musi-rawas",
+			"type": "kabupaten",
+			"name": "Musi Rawas",
+			"province": "sumatera-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-musi-rawas-utara",
+			"type": "kabupaten",
+			"name": "Musi Rawas Utara",
+			"province": "sumatera-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-empat-lawang",
+			"type": "kabupaten",
+			"name": "Empat Lawang",
+			"province": "sumatera-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-penukal-abab-lematang-ilir",
+			"type": "kabupaten",
+			"name": "Penukal Abab Lematang Ilir",
+			"province": "sumatera-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-pangkalpinang",
+			"type": "kota",
+			"name": "Pangkalpinang",
+			"province": "bangka-belitung",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bangka",
+			"type": "kabupaten",
+			"name": "Bangka",
+			"province": "bangka-belitung",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bangka-barat",
+			"type": "kabupaten",
+			"name": "Bangka Barat",
+			"province": "bangka-belitung",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bangka-tengah",
+			"type": "kabupaten",
+			"name": "Bangka Tengah",
+			"province": "bangka-belitung",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bangka-selatan",
+			"type": "kabupaten",
+			"name": "Bangka Selatan",
+			"province": "bangka-belitung",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-belitung",
+			"type": "kabupaten",
+			"name": "Belitung",
+			"province": "bangka-belitung",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-belitung-timur",
+			"type": "kabupaten",
+			"name": "Belitung Timur",
+			"province": "bangka-belitung",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-bandar-lampung",
+			"type": "kota",
+			"name": "Bandar Lampung",
+			"province": "lampung",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-metro",
+			"type": "kota",
+			"name": "Metro",
+			"province": "lampung",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-lampung-selatan",
+			"type": "kabupaten",
+			"name": "Lampung Selatan",
+			"province": "lampung",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-lampung-tengah",
+			"type": "kabupaten",
+			"name": "Lampung Tengah",
+			"province": "lampung",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-lampung-utara",
+			"type": "kabupaten",
+			"name": "Lampung Utara",
+			"province": "lampung",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-lampung-timur",
+			"type": "kabupaten",
+			"name": "Lampung Timur",
+			"province": "lampung",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-lampung-barat",
+			"type": "kabupaten",
+			"name": "Lampung Barat",
+			"province": "lampung",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-pesawaran",
+			"type": "kabupaten",
+			"name": "Pesawaran",
+			"province": "lampung",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-pringsewu",
+			"type": "kabupaten",
+			"name": "Pringsewu",
+			"province": "lampung",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-tanggamus",
+			"type": "kabupaten",
+			"name": "Tanggamus",
+			"province": "lampung",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-tulang-bawang",
+			"type": "kabupaten",
+			"name": "Tulang Bawang",
+			"province": "lampung",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-tulang-bawang-barat",
+			"type": "kabupaten",
+			"name": "Tulang Bawang Barat",
+			"province": "lampung",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-way-kanan",
+			"type": "kabupaten",
+			"name": "Way Kanan",
+			"province": "lampung",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-mesuji",
+			"type": "kabupaten",
+			"name": "Mesuji",
+			"province": "lampung",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-pesisir-barat",
+			"type": "kabupaten",
+			"name": "Pesisir Barat",
+			"province": "lampung",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-bengkulu",
+			"type": "kota",
+			"name": "Bengkulu",
+			"province": "bengkulu",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bengkulu-utara",
+			"type": "kabupaten",
+			"name": "Bengkulu Utara",
+			"province": "bengkulu",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bengkulu-selatan",
+			"type": "kabupaten",
+			"name": "Bengkulu Selatan",
+			"province": "bengkulu",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bengkulu-tengah",
+			"type": "kabupaten",
+			"name": "Bengkulu Tengah",
+			"province": "bengkulu",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-rejang-lebong",
+			"type": "kabupaten",
+			"name": "Rejang Lebong",
+			"province": "bengkulu",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kepahiang",
+			"type": "kabupaten",
+			"name": "Kepahiang",
+			"province": "bengkulu",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-lebong",
+			"type": "kabupaten",
+			"name": "Lebong",
+			"province": "bengkulu",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kaur",
+			"type": "kabupaten",
+			"name": "Kaur",
+			"province": "bengkulu",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-seluma",
+			"type": "kabupaten",
+			"name": "Seluma",
+			"province": "bengkulu",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-muko-muko",
+			"type": "kabupaten",
+			"name": "Muko-Muko",
+			"province": "bengkulu",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-serang",
+			"type": "kota",
+			"name": "Serang",
+			"province": "banten",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-serang",
+			"type": "kabupaten",
+			"name": "Serang",
+			"province": "banten",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-cilegon",
+			"type": "kota",
+			"name": "Cilegon",
+			"province": "banten",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-pandeglang",
+			"type": "kabupaten",
+			"name": "Pandeglang",
+			"province": "banten",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-lebak",
+			"type": "kabupaten",
+			"name": "Lebak",
+			"province": "banten",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-tangerang",
+			"type": "kabupaten",
+			"name": "Tangerang",
+			"province": "banten",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-jakarta-pusat",
+			"type": "kota",
+			"name": "Jakarta Pusat",
+			"province": "jakarta",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-jakarta-utara",
+			"type": "kota",
+			"name": "Jakarta Utara",
+			"province": "jakarta",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-jakarta-barat",
+			"type": "kota",
+			"name": "Jakarta Barat",
+			"province": "jakarta",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-jakarta-selatan",
+			"type": "kota",
+			"name": "Jakarta Selatan",
+			"province": "jakarta",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-jakarta-timur",
+			"type": "kota",
+			"name": "Jakarta Timur",
+			"province": "jakarta",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kepulauan-seribu",
+			"type": "kabupaten",
+			"name": "Kepulauan Seribu",
+			"province": "jakarta",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-bekasi",
+			"type": "kota",
+			"name": "Bekasi",
+			"province": "jawa-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bekasi",
+			"type": "kabupaten",
+			"name": "Bekasi",
+			"province": "jawa-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-depok",
+			"type": "kota",
+			"name": "Depok",
+			"province": "jawa-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-tangerang",
+			"type": "kota",
+			"name": "Tangerang",
+			"province": "banten",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-tangerang-selatan",
+			"type": "kota",
+			"name": "Tangerang Selatan",
+			"province": "banten",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-bandung",
+			"type": "kota",
+			"name": "Bandung",
+			"province": "jawa-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-cimahi",
+			"type": "kota",
+			"name": "Cimahi",
+			"province": "jawa-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bandung",
+			"type": "kabupaten",
+			"name": "Bandung",
+			"province": "jawa-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bandung-barat",
+			"type": "kabupaten",
+			"name": "Bandung Barat",
+			"province": "jawa-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-bogor",
+			"type": "kota",
+			"name": "Bogor",
+			"province": "jawa-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bogor",
+			"type": "kabupaten",
+			"name": "Bogor",
+			"province": "jawa-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-sukabumi",
+			"type": "kota",
+			"name": "Sukabumi",
+			"province": "jawa-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-sukabumi",
+			"type": "kabupaten",
+			"name": "Sukabumi",
+			"province": "jawa-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-cianjur",
+			"type": "kabupaten",
+			"name": "Cianjur",
+			"province": "jawa-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-cirebon",
+			"type": "kota",
+			"name": "Cirebon",
+			"province": "jawa-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-cirebon",
+			"type": "kabupaten",
+			"name": "Cirebon",
+			"province": "jawa-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-indramayu",
+			"type": "kabupaten",
+			"name": "Indramayu",
+			"province": "jawa-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-majalengka",
+			"type": "kabupaten",
+			"name": "Majalengka",
+			"province": "jawa-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kuningan",
+			"type": "kabupaten",
+			"name": "Kuningan",
+			"province": "jawa-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-purwakarta",
+			"type": "kabupaten",
+			"name": "Purwakarta",
+			"province": "jawa-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-subang",
+			"type": "kabupaten",
+			"name": "Subang",
+			"province": "jawa-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-karawang",
+			"type": "kabupaten",
+			"name": "Karawang",
+			"province": "jawa-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-sumedang",
+			"type": "kabupaten",
+			"name": "Sumedang",
+			"province": "jawa-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-garut",
+			"type": "kabupaten",
+			"name": "Garut",
+			"province": "jawa-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-tasikmalaya",
+			"type": "kota",
+			"name": "Tasikmalaya",
+			"province": "jawa-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-tasikmalaya",
+			"type": "kabupaten",
+			"name": "Tasikmalaya",
+			"province": "jawa-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-ciamis",
+			"type": "kabupaten",
+			"name": "Ciamis",
+			"province": "jawa-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-pangandaran",
+			"type": "kabupaten",
+			"name": "Pangandaran",
+			"province": "jawa-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-banjar",
+			"type": "kota",
+			"name": "Banjar",
+			"province": "jawa-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-pekalongan",
+			"type": "kota",
+			"name": "Pekalongan",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-pekalongan",
+			"type": "kabupaten",
+			"name": "Pekalongan",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-tegal",
+			"type": "kota",
+			"name": "Tegal",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-tegal",
+			"type": "kabupaten",
+			"name": "Tegal",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-batang",
+			"type": "kabupaten",
+			"name": "Batang",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-pemalang",
+			"type": "kabupaten",
+			"name": "Pemalang",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-brebes",
+			"type": "kabupaten",
+			"name": "Brebes",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-semarang",
+			"type": "kota",
+			"name": "Semarang",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-salatiga",
+			"type": "kota",
+			"name": "Salatiga",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-semarang",
+			"type": "kabupaten",
+			"name": "Semarang",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kendal",
+			"type": "kabupaten",
+			"name": "Kendal",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-demak",
+			"type": "kabupaten",
+			"name": "Demak",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-pati",
+			"type": "kabupaten",
+			"name": "Pati",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kudus",
+			"type": "kabupaten",
+			"name": "Kudus",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-jepara",
+			"type": "kabupaten",
+			"name": "Jepara",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-rembang",
+			"type": "kabupaten",
+			"name": "Rembang",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-blora",
+			"type": "kabupaten",
+			"name": "Blora",
+			"province": "jawa-tengah",
+			"aliases": ["Cepu"],
+			"variants": []
+		},
+		{
+			"id": "kab-grobogan",
+			"type": "kabupaten",
+			"name": "Grobogan",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-banyumas",
+			"type": "kabupaten",
+			"name": "Banyumas",
+			"province": "jawa-tengah",
+			"aliases": ["Purwokerto"],
+			"variants": []
+		},
+		{
+			"id": "kab-cilacap",
+			"type": "kabupaten",
+			"name": "Cilacap",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-purbalingga",
+			"type": "kabupaten",
+			"name": "Purbalingga",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-banjarnegara",
+			"type": "kabupaten",
+			"name": "Banjarnegara",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-magelang",
+			"type": "kota",
+			"name": "Magelang",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-magelang",
+			"type": "kabupaten",
+			"name": "Magelang",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-purworejo",
+			"type": "kabupaten",
+			"name": "Purworejo",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kebumen",
+			"type": "kabupaten",
+			"name": "Kebumen",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-temanggung",
+			"type": "kabupaten",
+			"name": "Temanggung",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-wonosobo",
+			"type": "kabupaten",
+			"name": "Wonosobo",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-surakarta",
+			"type": "kota",
+			"name": "Surakarta",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-sukoharjo",
+			"type": "kabupaten",
+			"name": "Sukoharjo",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-klaten",
+			"type": "kabupaten",
+			"name": "Klaten",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-boyolali",
+			"type": "kabupaten",
+			"name": "Boyolali",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-sragen",
+			"type": "kabupaten",
+			"name": "Sragen",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-karanganyar",
+			"type": "kabupaten",
+			"name": "Karanganyar",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-wonogiri",
+			"type": "kabupaten",
+			"name": "Wonogiri",
+			"province": "jawa-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-yogyakarta",
+			"type": "kota",
+			"name": "Yogyakarta",
+			"province": "yogyakarta",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bantul",
+			"type": "kabupaten",
+			"name": "Bantul",
+			"province": "yogyakarta",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-sleman",
+			"type": "kabupaten",
+			"name": "Sleman",
+			"province": "yogyakarta",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-gunungkidul",
+			"type": "kabupaten",
+			"name": "Gunungkidul",
+			"province": "yogyakarta",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kulon-progo",
+			"type": "kabupaten",
+			"name": "Kulon Progo",
+			"province": "yogyakarta",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-surabaya",
+			"type": "kota",
+			"name": "Surabaya",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-sidoarjo",
+			"type": "kabupaten",
+			"name": "Sidoarjo",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-gresik",
+			"type": "kabupaten",
+			"name": "Gresik",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bangkalan",
+			"type": "kabupaten",
+			"name": "Bangkalan",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-sampang",
+			"type": "kabupaten",
+			"name": "Sampang",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-pamekasan",
+			"type": "kabupaten",
+			"name": "Pamekasan",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-sumenep",
+			"type": "kabupaten",
+			"name": "Sumenep",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-malang",
+			"type": "kota",
+			"name": "Malang",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-malang",
+			"type": "kabupaten",
+			"name": "Malang",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-batu",
+			"type": "kota",
+			"name": "Batu",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-pasuruan",
+			"type": "kota",
+			"name": "Pasuruan",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-pasuruan",
+			"type": "kabupaten",
+			"name": "Pasuruan",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-probolinggo",
+			"type": "kota",
+			"name": "Probolinggo",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-probolinggo",
+			"type": "kabupaten",
+			"name": "Probolinggo",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-lumajang",
+			"type": "kabupaten",
+			"name": "Lumajang",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-jember",
+			"type": "kabupaten",
+			"name": "Jember",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-banyuwangi",
+			"type": "kabupaten",
+			"name": "Banyuwangi",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bondowoso",
+			"type": "kabupaten",
+			"name": "Bondowoso",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-situbondo",
+			"type": "kabupaten",
+			"name": "Situbondo",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bojonegoro",
+			"type": "kabupaten",
+			"name": "Bojonegoro",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-tuban",
+			"type": "kabupaten",
+			"name": "Tuban",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-lamongan",
+			"type": "kabupaten",
+			"name": "Lamongan",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-mojokerto",
+			"type": "kota",
+			"name": "Mojokerto",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-mojokerto",
+			"type": "kabupaten",
+			"name": "Mojokerto",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-jombang",
+			"type": "kabupaten",
+			"name": "Jombang",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-kediri",
+			"type": "kota",
+			"name": "Kediri",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kediri",
+			"type": "kabupaten",
+			"name": "Kediri",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-blitar",
+			"type": "kota",
+			"name": "Blitar",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-blitar",
+			"type": "kabupaten",
+			"name": "Blitar",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-tulungagung",
+			"type": "kabupaten",
+			"name": "Tulungagung",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-trenggalek",
+			"type": "kabupaten",
+			"name": "Trenggalek",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-nganjuk",
+			"type": "kabupaten",
+			"name": "Nganjuk",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-madiun",
+			"type": "kota",
+			"name": "Madiun",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-madiun",
+			"type": "kabupaten",
+			"name": "Madiun",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-ngawi",
+			"type": "kabupaten",
+			"name": "Ngawi",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-magetan",
+			"type": "kabupaten",
+			"name": "Magetan",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-ponorogo",
+			"type": "kabupaten",
+			"name": "Ponorogo",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-pacitan",
+			"type": "kabupaten",
+			"name": "Pacitan",
+			"province": "jawa-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-denpasar",
+			"type": "kota",
+			"name": "Denpasar",
+			"province": "bali",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-badung",
+			"type": "kabupaten",
+			"name": "Badung",
+			"province": "bali",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-gianyar",
+			"type": "kabupaten",
+			"name": "Gianyar",
+			"province": "bali",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-tabanan",
+			"type": "kabupaten",
+			"name": "Tabanan",
+			"province": "bali",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-buleleng",
+			"type": "kabupaten",
+			"name": "Buleleng",
+			"province": "bali",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-karangasem",
+			"type": "kabupaten",
+			"name": "Karangasem",
+			"province": "bali",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-klungkung",
+			"type": "kabupaten",
+			"name": "Klungkung",
+			"province": "bali",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bangli",
+			"type": "kabupaten",
+			"name": "Bangli",
+			"province": "bali",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-jembrana",
+			"type": "kabupaten",
+			"name": "Jembrana",
+			"province": "bali",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-mataram",
+			"type": "kota",
+			"name": "Mataram",
+			"province": "nusa-tenggara-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-lombok-barat",
+			"type": "kabupaten",
+			"name": "Lombok Barat",
+			"province": "nusa-tenggara-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-lombok-tengah",
+			"type": "kabupaten",
+			"name": "Lombok Tengah",
+			"province": "nusa-tenggara-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-lombok-timur",
+			"type": "kabupaten",
+			"name": "Lombok Timur",
+			"province": "nusa-tenggara-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-lombok-utara",
+			"type": "kabupaten",
+			"name": "Lombok Utara",
+			"province": "nusa-tenggara-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-bima",
+			"type": "kota",
+			"name": "Bima",
+			"province": "nusa-tenggara-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bima",
+			"type": "kabupaten",
+			"name": "Bima",
+			"province": "nusa-tenggara-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-dompu",
+			"type": "kabupaten",
+			"name": "Dompu",
+			"province": "nusa-tenggara-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-sumbawa",
+			"type": "kabupaten",
+			"name": "Sumbawa",
+			"province": "nusa-tenggara-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-sumbawa-barat",
+			"type": "kabupaten",
+			"name": "Sumbawa Barat",
+			"province": "nusa-tenggara-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-kupang",
+			"type": "kota",
+			"name": "Kupang",
+			"province": "nusa-tenggara-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kupang",
+			"type": "kabupaten",
+			"name": "Kupang",
+			"province": "nusa-tenggara-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-timor-tengah-selatan",
+			"type": "kabupaten",
+			"name": "Timor Tengah Selatan",
+			"province": "nusa-tenggara-timur",
+			"aliases": ["Soe"],
+			"variants": []
+		},
+		{
+			"id": "kab-timor-tengah-utara",
+			"type": "kabupaten",
+			"name": "Timor Tengah Utara",
+			"province": "nusa-tenggara-timur",
+			"aliases": ["Kefamenanu"],
+			"variants": []
+		},
+		{
+			"id": "kab-belu",
+			"type": "kabupaten",
+			"name": "Belu",
+			"province": "nusa-tenggara-timur",
+			"aliases": ["Atambua"],
+			"variants": []
+		},
+		{
+			"id": "kab-malaka",
+			"type": "kabupaten",
+			"name": "Malaka",
+			"province": "nusa-tenggara-timur",
+			"aliases": ["Betun"],
+			"variants": []
+		},
+		{
+			"id": "kab-rote-ndao",
+			"type": "kabupaten",
+			"name": "Rote Ndao",
+			"province": "nusa-tenggara-timur",
+			"aliases": ["Baa"],
+			"variants": []
+		},
+		{
+			"id": "kab-sabu-raijua",
+			"type": "kabupaten",
+			"name": "Sabu Raijua",
+			"province": "nusa-tenggara-timur",
+			"aliases": ["Seba"],
+			"variants": []
+		},
+		{
+			"id": "kab-sikka",
+			"type": "kabupaten",
+			"name": "Sikka",
+			"province": "nusa-tenggara-timur",
+			"aliases": ["Maumere"],
+			"variants": []
+		},
+		{
+			"id": "kab-ende",
+			"type": "kabupaten",
+			"name": "Ende",
+			"province": "nusa-tenggara-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-ngada",
+			"type": "kabupaten",
+			"name": "Ngada",
+			"province": "nusa-tenggara-timur",
+			"aliases": ["Bajawa"],
+			"variants": []
+		},
+		{
+			"id": "kab-nagekeo",
+			"type": "kabupaten",
+			"name": "Nagekeo",
+			"province": "nusa-tenggara-timur",
+			"aliases": ["Mbay"],
+			"variants": []
+		},
+		{
+			"id": "kab-flores-timur",
+			"type": "kabupaten",
+			"name": "Flores Timur",
+			"province": "nusa-tenggara-timur",
+			"aliases": ["Larantuka"],
+			"variants": []
+		},
+		{
+			"id": "kab-manggarai",
+			"type": "kabupaten",
+			"name": "Manggarai",
+			"province": "nusa-tenggara-timur",
+			"aliases": ["Ruteng"],
+			"variants": []
+		},
+		{
+			"id": "kab-manggarai-barat",
+			"type": "kabupaten",
+			"name": "Manggarai Barat",
+			"province": "nusa-tenggara-timur",
+			"aliases": ["Labuan Bajo"],
+			"variants": []
+		},
+		{
+			"id": "kab-manggarai-timur",
+			"type": "kabupaten",
+			"name": "Manggarai Timur",
+			"province": "nusa-tenggara-timur",
+			"aliases": ["Borong"],
+			"variants": []
+		},
+		{
+			"id": "kab-alor",
+			"type": "kabupaten",
+			"name": "Alor",
+			"province": "nusa-tenggara-timur",
+			"aliases": ["Kalabahi"],
+			"variants": []
+		},
+		{
+			"id": "kab-lembata",
+			"type": "kabupaten",
+			"name": "Lembata",
+			"province": "nusa-tenggara-timur",
+			"aliases": ["Lewoleba"],
+			"variants": []
+		},
+		{
+			"id": "kab-sumba-barat",
+			"type": "kabupaten",
+			"name": "Sumba Barat",
+			"province": "nusa-tenggara-timur",
+			"aliases": ["Waikabubak"],
+			"variants": []
+		},
+		{
+			"id": "kab-sumba-timur",
+			"type": "kabupaten",
+			"name": "Sumba Timur",
+			"province": "nusa-tenggara-timur",
+			"aliases": ["Waingapu"],
+			"variants": []
+		},
+		{
+			"id": "kab-sumba-tengah",
+			"type": "kabupaten",
+			"name": "Sumba Tengah",
+			"province": "nusa-tenggara-timur",
+			"aliases": ["Waibakul"],
+			"variants": []
+		},
+		{
+			"id": "kab-sumba-barat-daya",
+			"type": "kabupaten",
+			"name": "Sumba Barat Daya",
+			"province": "nusa-tenggara-timur",
+			"aliases": ["Tambolaka"],
+			"variants": []
+		},
+		{
+			"id": "kota-pontianak",
+			"type": "kota",
+			"name": "Pontianak",
+			"province": "kalimantan-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-singkawang",
+			"type": "kota",
+			"name": "Singkawang",
+			"province": "kalimantan-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kubu-raya",
+			"type": "kabupaten",
+			"name": "Kubu Raya",
+			"province": "kalimantan-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-mempawah",
+			"type": "kabupaten",
+			"name": "Mempawah",
+			"province": "kalimantan-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-sambas",
+			"type": "kabupaten",
+			"name": "Sambas",
+			"province": "kalimantan-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bengkayang",
+			"type": "kabupaten",
+			"name": "Bengkayang",
+			"province": "kalimantan-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-landak",
+			"type": "kabupaten",
+			"name": "Landak",
+			"province": "kalimantan-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-sanggau",
+			"type": "kabupaten",
+			"name": "Sanggau",
+			"province": "kalimantan-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-sekadau",
+			"type": "kabupaten",
+			"name": "Sekadau",
+			"province": "kalimantan-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-sintang",
+			"type": "kabupaten",
+			"name": "Sintang",
+			"province": "kalimantan-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-melawi",
+			"type": "kabupaten",
+			"name": "Melawi",
+			"province": "kalimantan-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kapuas-hulu",
+			"type": "kabupaten",
+			"name": "Kapuas Hulu",
+			"province": "kalimantan-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-ketapang",
+			"type": "kabupaten",
+			"name": "Ketapang",
+			"province": "kalimantan-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kayong-utara",
+			"type": "kabupaten",
+			"name": "Kayong Utara",
+			"province": "kalimantan-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-banjarmasin",
+			"type": "kota",
+			"name": "Banjarmasin",
+			"province": "kalimantan-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-banjarbaru",
+			"type": "kota",
+			"name": "Banjarbaru",
+			"province": "kalimantan-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-banjar",
+			"type": "kabupaten",
+			"name": "Banjar",
+			"province": "kalimantan-selatan",
+			"aliases": ["Martapura"],
+			"variants": []
+		},
+		{
+			"id": "kab-barito-kuala",
+			"type": "kabupaten",
+			"name": "Barito Kuala",
+			"province": "kalimantan-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-tapin",
+			"type": "kabupaten",
+			"name": "Tapin",
+			"province": "kalimantan-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-hulu-sungai-selatan",
+			"type": "kabupaten",
+			"name": "Hulu Sungai Selatan",
+			"province": "kalimantan-selatan",
+			"aliases": ["Kandangan"],
+			"variants": []
+		},
+		{
+			"id": "kab-hulu-sungai-tengah",
+			"type": "kabupaten",
+			"name": "Hulu Sungai Tengah",
+			"province": "kalimantan-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-hulu-sungai-utara",
+			"type": "kabupaten",
+			"name": "Hulu Sungai Utara",
+			"province": "kalimantan-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-tabalong",
+			"type": "kabupaten",
+			"name": "Tabalong",
+			"province": "kalimantan-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-balangan",
+			"type": "kabupaten",
+			"name": "Balangan",
+			"province": "kalimantan-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-tanah-laut",
+			"type": "kabupaten",
+			"name": "Tanah Laut",
+			"province": "kalimantan-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-tanah-bumbu",
+			"type": "kabupaten",
+			"name": "Tanah Bumbu",
+			"province": "kalimantan-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kotabaru",
+			"type": "kabupaten",
+			"name": "Kotabaru",
+			"province": "kalimantan-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-palangka-raya",
+			"type": "kota",
+			"name": "Palangka Raya",
+			"province": "kalimantan-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kotawaringin-timur",
+			"type": "kabupaten",
+			"name": "Kotawaringin Timur",
+			"province": "kalimantan-tengah",
+			"aliases": ["Sampit"],
+			"variants": []
+		},
+		{
+			"id": "kab-kotawaringin-barat",
+			"type": "kabupaten",
+			"name": "Kotawaringin Barat",
+			"province": "kalimantan-tengah",
+			"aliases": ["Pangkalan Bun"],
+			"variants": []
+		},
+		{
+			"id": "kab-kapuas",
+			"type": "kabupaten",
+			"name": "Kapuas",
+			"province": "kalimantan-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-barito-selatan",
+			"type": "kabupaten",
+			"name": "Barito Selatan",
+			"province": "kalimantan-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-barito-utara",
+			"type": "kabupaten",
+			"name": "Barito Utara",
+			"province": "kalimantan-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-barito-timur",
+			"type": "kabupaten",
+			"name": "Barito Timur",
+			"province": "kalimantan-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-katingan",
+			"type": "kabupaten",
+			"name": "Katingan",
+			"province": "kalimantan-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-seruyan",
+			"type": "kabupaten",
+			"name": "Seruyan",
+			"province": "kalimantan-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-sukamara",
+			"type": "kabupaten",
+			"name": "Sukamara",
+			"province": "kalimantan-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-lamandau",
+			"type": "kabupaten",
+			"name": "Lamandau",
+			"province": "kalimantan-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-gunung-mas",
+			"type": "kabupaten",
+			"name": "Gunung Mas",
+			"province": "kalimantan-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-murung-raya",
+			"type": "kabupaten",
+			"name": "Murung Raya",
+			"province": "kalimantan-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-pulang-pisau",
+			"type": "kabupaten",
+			"name": "Pulang Pisau",
+			"province": "kalimantan-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-samarinda",
+			"type": "kota",
+			"name": "Samarinda",
+			"province": "kalimantan-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-balikpapan",
+			"type": "kota",
+			"name": "Balikpapan",
+			"province": "kalimantan-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-bontang",
+			"type": "kota",
+			"name": "Bontang",
+			"province": "kalimantan-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kutai-kartanegara",
+			"type": "kabupaten",
+			"name": "Kutai Kartanegara",
+			"province": "kalimantan-timur",
+			"aliases": ["Tenggarong"],
+			"variants": []
+		},
+		{
+			"id": "kab-kutai-timur",
+			"type": "kabupaten",
+			"name": "Kutai Timur",
+			"province": "kalimantan-timur",
+			"aliases": ["Sangatta"],
+			"variants": []
+		},
+		{
+			"id": "kab-kutai-barat",
+			"type": "kabupaten",
+			"name": "Kutai Barat",
+			"province": "kalimantan-timur",
+			"aliases": ["Sendawar"],
+			"variants": []
+		},
+		{
+			"id": "kab-berau",
+			"type": "kabupaten",
+			"name": "Berau",
+			"province": "kalimantan-timur",
+			"aliases": ["Tanjung Redeb"],
+			"variants": []
+		},
+		{
+			"id": "kab-paser",
+			"type": "kabupaten",
+			"name": "Paser",
+			"province": "kalimantan-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-penajam-paser-utara",
+			"type": "kabupaten",
+			"name": "Penajam Paser Utara",
+			"province": "kalimantan-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-mahakam-ulu",
+			"type": "kabupaten",
+			"name": "Mahakam Ulu",
+			"province": "kalimantan-timur",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-tarakan",
+			"type": "kota",
+			"name": "Tarakan",
+			"province": "kalimantan-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bulungan",
+			"type": "kabupaten",
+			"name": "Bulungan",
+			"province": "kalimantan-utara",
+			"aliases": ["Tanjung Selor"],
+			"variants": []
+		},
+		{
+			"id": "kab-nunukan",
+			"type": "kabupaten",
+			"name": "Nunukan",
+			"province": "kalimantan-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-malinau",
+			"type": "kabupaten",
+			"name": "Malinau",
+			"province": "kalimantan-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-tana-tidung",
+			"type": "kabupaten",
+			"name": "Tana Tidung",
+			"province": "kalimantan-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-manado",
+			"type": "kota",
+			"name": "Manado",
+			"province": "sulawesi-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-bitung",
+			"type": "kota",
+			"name": "Bitung",
+			"province": "sulawesi-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-tomohon",
+			"type": "kota",
+			"name": "Tomohon",
+			"province": "sulawesi-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-kotamobagu",
+			"type": "kota",
+			"name": "Kotamobagu",
+			"province": "sulawesi-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-minahasa",
+			"type": "kabupaten",
+			"name": "Minahasa",
+			"province": "sulawesi-utara",
+			"aliases": ["Tondano"],
+			"variants": []
+		},
+		{
+			"id": "kab-minahasa-utara",
+			"type": "kabupaten",
+			"name": "Minahasa Utara",
+			"province": "sulawesi-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-minahasa-selatan",
+			"type": "kabupaten",
+			"name": "Minahasa Selatan",
+			"province": "sulawesi-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-minahasa-tenggara",
+			"type": "kabupaten",
+			"name": "Minahasa Tenggara",
+			"province": "sulawesi-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bolaang-mongondow",
+			"type": "kabupaten",
+			"name": "Bolaang Mongondow",
+			"province": "sulawesi-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bolaang-mongondow-utara",
+			"type": "kabupaten",
+			"name": "Bolaang Mongondow Utara",
+			"province": "sulawesi-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bolaang-mongondow-timur",
+			"type": "kabupaten",
+			"name": "Bolaang Mongondow Timur",
+			"province": "sulawesi-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bolaang-mongondow-selatan",
+			"type": "kabupaten",
+			"name": "Bolaang Mongondow Selatan",
+			"province": "sulawesi-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kepulauan-sangihe",
+			"type": "kabupaten",
+			"name": "Kepulauan Sangihe",
+			"province": "sulawesi-utara",
+			"aliases": ["Tahuna"],
+			"variants": []
+		},
+		{
+			"id": "kab-kepulauan-talaud",
+			"type": "kabupaten",
+			"name": "Kepulauan Talaud",
+			"province": "sulawesi-utara",
+			"aliases": ["Melonguane"],
+			"variants": []
+		},
+		{
+			"id": "kab-kepulauan-sitaro",
+			"type": "kabupaten",
+			"name": "Kepulauan Siau Tagulandang Biaro",
+			"province": "sulawesi-utara",
+			"aliases": ["Ondong", "Sitaro"],
+			"variants": []
+		},
+		{
+			"id": "kota-gorontalo",
+			"type": "kota",
+			"name": "Gorontalo",
+			"province": "gorontalo",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-gorontalo",
+			"type": "kabupaten",
+			"name": "Gorontalo",
+			"province": "gorontalo",
+			"aliases": ["Limboto"],
+			"variants": []
+		},
+		{
+			"id": "kab-gorontalo-utara",
+			"type": "kabupaten",
+			"name": "Gorontalo Utara",
+			"province": "gorontalo",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bone-bolango",
+			"type": "kabupaten",
+			"name": "Bone Bolango",
+			"province": "gorontalo",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-boalemo",
+			"type": "kabupaten",
+			"name": "Boalemo",
+			"province": "gorontalo",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-pohuwato",
+			"type": "kabupaten",
+			"name": "Pohuwato",
+			"province": "gorontalo",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-palu",
+			"type": "kota",
+			"name": "Palu",
+			"province": "sulawesi-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-donggala",
+			"type": "kabupaten",
+			"name": "Donggala",
+			"province": "sulawesi-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-sigi",
+			"type": "kabupaten",
+			"name": "Sigi",
+			"province": "sulawesi-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-parigi-moutong",
+			"type": "kabupaten",
+			"name": "Parigi Moutong",
+			"province": "sulawesi-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-poso",
+			"type": "kabupaten",
+			"name": "Poso",
+			"province": "sulawesi-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-tolitoli",
+			"type": "kabupaten",
+			"name": "Tolitoli",
+			"province": "sulawesi-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-buol",
+			"type": "kabupaten",
+			"name": "Buol",
+			"province": "sulawesi-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-banggai",
+			"type": "kabupaten",
+			"name": "Banggai",
+			"province": "sulawesi-tengah",
+			"aliases": ["Luwuk"],
+			"variants": []
+		},
+		{
+			"id": "kab-banggai-kepulauan",
+			"type": "kabupaten",
+			"name": "Banggai Kepulauan",
+			"province": "sulawesi-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-banggai-laut",
+			"type": "kabupaten",
+			"name": "Banggai Laut",
+			"province": "sulawesi-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-morowali",
+			"type": "kabupaten",
+			"name": "Morowali",
+			"province": "sulawesi-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-morowali-utara",
+			"type": "kabupaten",
+			"name": "Morowali Utara",
+			"province": "sulawesi-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-tojo-una-una",
+			"type": "kabupaten",
+			"name": "Tojo Una-Una",
+			"province": "sulawesi-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-kendari",
+			"type": "kota",
+			"name": "Kendari",
+			"province": "sulawesi-tenggara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-baubau",
+			"type": "kota",
+			"name": "Baubau",
+			"province": "sulawesi-tenggara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-konawe",
+			"type": "kabupaten",
+			"name": "Konawe",
+			"province": "sulawesi-tenggara",
+			"aliases": ["Unaaha"],
+			"variants": []
+		},
+		{
+			"id": "kab-konawe-selatan",
+			"type": "kabupaten",
+			"name": "Konawe Selatan",
+			"province": "sulawesi-tenggara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-konawe-utara",
+			"type": "kabupaten",
+			"name": "Konawe Utara",
+			"province": "sulawesi-tenggara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-konawe-kepulauan",
+			"type": "kabupaten",
+			"name": "Konawe Kepulauan",
+			"province": "sulawesi-tenggara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kolaka",
+			"type": "kabupaten",
+			"name": "Kolaka",
+			"province": "sulawesi-tenggara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kolaka-utara",
+			"type": "kabupaten",
+			"name": "Kolaka Utara",
+			"province": "sulawesi-tenggara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kolaka-timur",
+			"type": "kabupaten",
+			"name": "Kolaka Timur",
+			"province": "sulawesi-tenggara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bombana",
+			"type": "kabupaten",
+			"name": "Bombana",
+			"province": "sulawesi-tenggara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-buton",
+			"type": "kabupaten",
+			"name": "Buton",
+			"province": "sulawesi-tenggara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-buton-utara",
+			"type": "kabupaten",
+			"name": "Buton Utara",
+			"province": "sulawesi-tenggara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-buton-selatan",
+			"type": "kabupaten",
+			"name": "Buton Selatan",
+			"province": "sulawesi-tenggara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-buton-tengah",
+			"type": "kabupaten",
+			"name": "Buton Tengah",
+			"province": "sulawesi-tenggara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-muna",
+			"type": "kabupaten",
+			"name": "Muna",
+			"province": "sulawesi-tenggara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-muna-barat",
+			"type": "kabupaten",
+			"name": "Muna Barat",
+			"province": "sulawesi-tenggara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-wakatobi",
+			"type": "kabupaten",
+			"name": "Wakatobi",
+			"province": "sulawesi-tenggara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-makassar",
+			"type": "kota",
+			"name": "Makassar",
+			"province": "sulawesi-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-gowa",
+			"type": "kabupaten",
+			"name": "Gowa",
+			"province": "sulawesi-selatan",
+			"aliases": ["Sungguminasa"],
+			"variants": []
+		},
+		{
+			"id": "kab-maros",
+			"type": "kabupaten",
+			"name": "Maros",
+			"province": "sulawesi-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-pangkajene-dan-kepulauan",
+			"type": "kabupaten",
+			"name": "Pangkajene dan Kepulauan",
+			"province": "sulawesi-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-takalar",
+			"type": "kabupaten",
+			"name": "Takalar",
+			"province": "sulawesi-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-jeneponto",
+			"type": "kabupaten",
+			"name": "Jeneponto",
+			"province": "sulawesi-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bantaeng",
+			"type": "kabupaten",
+			"name": "Bantaeng",
+			"province": "sulawesi-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bulukumba",
+			"type": "kabupaten",
+			"name": "Bulukumba",
+			"province": "sulawesi-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kepulauan-selayar",
+			"type": "kabupaten",
+			"name": "Kepulauan Selayar",
+			"province": "sulawesi-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-bone",
+			"type": "kabupaten",
+			"name": "Bone",
+			"province": "sulawesi-selatan",
+			"aliases": ["Watampone"],
+			"variants": []
+		},
+		{
+			"id": "kab-soppeng",
+			"type": "kabupaten",
+			"name": "Soppeng",
+			"province": "sulawesi-selatan",
+			"aliases": ["Watansoppeng"],
+			"variants": []
+		},
+		{
+			"id": "kab-wajo",
+			"type": "kabupaten",
+			"name": "Wajo",
+			"province": "sulawesi-selatan",
+			"aliases": ["Sengkang"],
+			"variants": []
+		},
+		{
+			"id": "kab-sinjai",
+			"type": "kabupaten",
+			"name": "Sinjai",
+			"province": "sulawesi-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-parepare",
+			"type": "kota",
+			"name": "Parepare",
+			"province": "sulawesi-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-palopo",
+			"type": "kota",
+			"name": "Palopo",
+			"province": "sulawesi-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-barru",
+			"type": "kabupaten",
+			"name": "Barru",
+			"province": "sulawesi-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-sidenreng-rappang",
+			"type": "kabupaten",
+			"name": "Sidenreng Rappang",
+			"province": "sulawesi-selatan",
+			"aliases": ["Sidrap"],
+			"variants": []
+		},
+		{
+			"id": "kab-pinrang",
+			"type": "kabupaten",
+			"name": "Pinrang",
+			"province": "sulawesi-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-enrekang",
+			"type": "kabupaten",
+			"name": "Enrekang",
+			"province": "sulawesi-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-luwu",
+			"type": "kabupaten",
+			"name": "Luwu",
+			"province": "sulawesi-selatan",
+			"aliases": ["Belopa"],
+			"variants": []
+		},
+		{
+			"id": "kab-luwu-utara",
+			"type": "kabupaten",
+			"name": "Luwu Utara",
+			"province": "sulawesi-selatan",
+			"aliases": ["Masamba"],
+			"variants": []
+		},
+		{
+			"id": "kab-luwu-timur",
+			"type": "kabupaten",
+			"name": "Luwu Timur",
+			"province": "sulawesi-selatan",
+			"aliases": ["Malili"],
+			"variants": []
+		},
+		{
+			"id": "kab-tana-toraja",
+			"type": "kabupaten",
+			"name": "Tana Toraja",
+			"province": "sulawesi-selatan",
+			"aliases": ["Makale"],
+			"variants": []
+		},
+		{
+			"id": "kab-toraja-utara",
+			"type": "kabupaten",
+			"name": "Toraja Utara",
+			"province": "sulawesi-selatan",
+			"aliases": ["Rantepao"],
+			"variants": []
+		},
+		{
+			"id": "kab-mamuju",
+			"type": "kabupaten",
+			"name": "Mamuju",
+			"province": "sulawesi-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-mamuju-tengah",
+			"type": "kabupaten",
+			"name": "Mamuju Tengah",
+			"province": "sulawesi-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-pasangkayu",
+			"type": "kabupaten",
+			"name": "Pasangkayu",
+			"province": "sulawesi-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-majene",
+			"type": "kabupaten",
+			"name": "Majene",
+			"province": "sulawesi-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-polewali-mandar",
+			"type": "kabupaten",
+			"name": "Polewali Mandar",
+			"province": "sulawesi-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-mamasa",
+			"type": "kabupaten",
+			"name": "Mamasa",
+			"province": "sulawesi-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-ambon",
+			"type": "kota",
+			"name": "Ambon",
+			"province": "maluku",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-tual",
+			"type": "kota",
+			"name": "Tual",
+			"province": "maluku",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-maluku-tengah",
+			"type": "kabupaten",
+			"name": "Maluku Tengah",
+			"province": "maluku",
+			"aliases": ["Masohi"],
+			"variants": []
+		},
+		{
+			"id": "kab-seram-bagian-barat",
+			"type": "kabupaten",
+			"name": "Seram Bagian Barat",
+			"province": "maluku",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-seram-bagian-timur",
+			"type": "kabupaten",
+			"name": "Seram Bagian Timur",
+			"province": "maluku",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-maluku-tenggara",
+			"type": "kabupaten",
+			"name": "Maluku Tenggara",
+			"province": "maluku",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kepulauan-tanimbar",
+			"type": "kabupaten",
+			"name": "Kepulauan Tanimbar",
+			"province": "maluku",
+			"aliases": ["Saumlaki"],
+			"variants": []
+		},
+		{
+			"id": "kab-maluku-barat-daya",
+			"type": "kabupaten",
+			"name": "Maluku Barat Daya",
+			"province": "maluku",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kepulauan-aru",
+			"type": "kabupaten",
+			"name": "Kepulauan Aru",
+			"province": "maluku",
+			"aliases": ["Dobo"],
+			"variants": []
+		},
+		{
+			"id": "kab-buru",
+			"type": "kabupaten",
+			"name": "Buru",
+			"province": "maluku",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-buru-selatan",
+			"type": "kabupaten",
+			"name": "Buru Selatan",
+			"province": "maluku",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-ternate",
+			"type": "kota",
+			"name": "Ternate",
+			"province": "maluku-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-tidore-kepulauan",
+			"type": "kota",
+			"name": "Tidore Kepulauan",
+			"province": "maluku-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-halmahera-barat",
+			"type": "kabupaten",
+			"name": "Halmahera Barat",
+			"province": "maluku-utara",
+			"aliases": ["Jailolo"],
+			"variants": []
+		},
+		{
+			"id": "kab-halmahera-tengah",
+			"type": "kabupaten",
+			"name": "Halmahera Tengah",
+			"province": "maluku-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-halmahera-utara",
+			"type": "kabupaten",
+			"name": "Halmahera Utara",
+			"province": "maluku-utara",
+			"aliases": ["Tobelo"],
+			"variants": []
+		},
+		{
+			"id": "kab-halmahera-timur",
+			"type": "kabupaten",
+			"name": "Halmahera Timur",
+			"province": "maluku-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-halmahera-selatan",
+			"type": "kabupaten",
+			"name": "Halmahera Selatan",
+			"province": "maluku-utara",
+			"aliases": ["Labuha"],
+			"variants": []
+		},
+		{
+			"id": "kab-kepulauan-sula",
+			"type": "kabupaten",
+			"name": "Kepulauan Sula",
+			"province": "maluku-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-pulau-morotai",
+			"type": "kabupaten",
+			"name": "Pulau Morotai",
+			"province": "maluku-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-pulau-taliabu",
+			"type": "kabupaten",
+			"name": "Pulau Taliabu",
+			"province": "maluku-utara",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-jayapura",
+			"type": "kota",
+			"name": "Jayapura",
+			"province": "papua",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-jayapura",
+			"type": "kabupaten",
+			"name": "Jayapura",
+			"province": "papua",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-biak-numfor",
+			"type": "kabupaten",
+			"name": "Biak Numfor",
+			"province": "papua",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kepulauan-yapen",
+			"type": "kabupaten",
+			"name": "Kepulauan Yapen",
+			"province": "papua",
+			"aliases": ["Serui"],
+			"variants": []
+		},
+		{
+			"id": "kab-sarmi",
+			"type": "kabupaten",
+			"name": "Sarmi",
+			"province": "papua",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-keerom",
+			"type": "kabupaten",
+			"name": "Keerom",
+			"province": "papua",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-waropen",
+			"type": "kabupaten",
+			"name": "Waropen",
+			"province": "papua",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-supiori",
+			"type": "kabupaten",
+			"name": "Supiori",
+			"province": "papua",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-mamberamo-raya",
+			"type": "kabupaten",
+			"name": "Mamberamo Raya",
+			"province": "papua",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-manokwari",
+			"type": "kabupaten",
+			"name": "Manokwari",
+			"province": "papua-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-manokwari-selatan",
+			"type": "kabupaten",
+			"name": "Manokwari Selatan",
+			"province": "papua-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-pegunungan-arfak",
+			"type": "kabupaten",
+			"name": "Pegunungan Arfak",
+			"province": "papua-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-fakfak",
+			"type": "kabupaten",
+			"name": "Fakfak",
+			"province": "papua-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-kaimana",
+			"type": "kabupaten",
+			"name": "Kaimana",
+			"province": "papua-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-teluk-bintuni",
+			"type": "kabupaten",
+			"name": "Teluk Bintuni",
+			"province": "papua-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-teluk-wondama",
+			"type": "kabupaten",
+			"name": "Teluk Wondama",
+			"province": "papua-barat",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kota-sorong",
+			"type": "kota",
+			"name": "Sorong",
+			"province": "papua-barat-daya",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-sorong",
+			"type": "kabupaten",
+			"name": "Sorong",
+			"province": "papua-barat-daya",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-sorong-selatan",
+			"type": "kabupaten",
+			"name": "Sorong Selatan",
+			"province": "papua-barat-daya",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-raja-ampat",
+			"type": "kabupaten",
+			"name": "Raja Ampat",
+			"province": "papua-barat-daya",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-tambrauw",
+			"type": "kabupaten",
+			"name": "Tambrauw",
+			"province": "papua-barat-daya",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-maybrat",
+			"type": "kabupaten",
+			"name": "Maybrat",
+			"province": "papua-barat-daya",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-merauke",
+			"type": "kabupaten",
+			"name": "Merauke",
+			"province": "papua-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-boven-digoel",
+			"type": "kabupaten",
+			"name": "Boven Digoel",
+			"province": "papua-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-mappi",
+			"type": "kabupaten",
+			"name": "Mappi",
+			"province": "papua-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-asmat",
+			"type": "kabupaten",
+			"name": "Asmat",
+			"province": "papua-selatan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-nabire",
+			"type": "kabupaten",
+			"name": "Nabire",
+			"province": "papua-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-mimika",
+			"type": "kabupaten",
+			"name": "Mimika",
+			"province": "papua-tengah",
+			"aliases": ["Timika"],
+			"variants": []
+		},
+		{
+			"id": "kab-paniai",
+			"type": "kabupaten",
+			"name": "Paniai",
+			"province": "papua-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-puncak",
+			"type": "kabupaten",
+			"name": "Puncak",
+			"province": "papua-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-puncak-jaya",
+			"type": "kabupaten",
+			"name": "Puncak Jaya",
+			"province": "papua-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-dogiyai",
+			"type": "kabupaten",
+			"name": "Dogiyai",
+			"province": "papua-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-deiyai",
+			"type": "kabupaten",
+			"name": "Deiyai",
+			"province": "papua-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-intan-jaya",
+			"type": "kabupaten",
+			"name": "Intan Jaya",
+			"province": "papua-tengah",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-jayawijaya",
+			"type": "kabupaten",
+			"name": "Jayawijaya",
+			"province": "papua-pegunungan",
+			"aliases": ["Wamena"],
+			"variants": []
+		},
+		{
+			"id": "kab-yahukimo",
+			"type": "kabupaten",
+			"name": "Yahukimo",
+			"province": "papua-pegunungan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-nduga",
+			"type": "kabupaten",
+			"name": "Nduga",
+			"province": "papua-pegunungan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-pegunungan-bintang",
+			"type": "kabupaten",
+			"name": "Pegunungan Bintang",
+			"province": "papua-pegunungan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-tolikara",
+			"type": "kabupaten",
+			"name": "Tolikara",
+			"province": "papua-pegunungan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-lanny-jaya",
+			"type": "kabupaten",
+			"name": "Lanny Jaya",
+			"province": "papua-pegunungan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-mamberamo-tengah",
+			"type": "kabupaten",
+			"name": "Mamberamo Tengah",
+			"province": "papua-pegunungan",
+			"aliases": [],
+			"variants": []
+		},
+		{
+			"id": "kab-yalimo",
+			"type": "kabupaten",
+			"name": "Yalimo",
+			"province": "papua-pegunungan",
+			"aliases": [],
+			"variants": []
 		}
-	}
+	],
+	"factLinks": [
+		{
+			"number": 1,
+			"id": "f-001",
+			"regions": []
+		},
+		{
+			"number": 2,
+			"id": "f-002",
+			"regions": []
+		},
+		{
+			"number": 3,
+			"id": "f-003",
+			"regions": []
+		},
+		{
+			"number": 4,
+			"id": "f-004",
+			"regions": []
+		},
+		{
+			"number": 5,
+			"id": "f-005",
+			"regions": []
+		},
+		{
+			"number": 6,
+			"id": "f-006",
+			"regions": []
+		},
+		{
+			"number": 7,
+			"id": "f-007",
+			"regions": []
+		},
+		{
+			"number": 8,
+			"id": "f-008",
+			"regions": []
+		},
+		{
+			"number": 9,
+			"id": "f-009",
+			"regions": []
+		},
+		{
+			"number": 10,
+			"id": "f-010",
+			"regions": ["kb", "kh", "kt", "ku", "da"]
+		},
+		{
+			"number": 11,
+			"id": "f-011",
+			"regions": ["da"]
+		},
+		{
+			"number": 12,
+			"id": "f-012",
+			"regions": ["kb", "kh", "kt", "da"]
+		},
+		{
+			"number": 13,
+			"id": "f-013",
+			"regions": ["da"]
+		},
+		{
+			"number": 14,
+			"id": "f-014",
+			"regions": ["da"]
+		},
+		{
+			"number": 15,
+			"id": "f-015",
+			"regions": ["da"]
+		},
+		{
+			"number": 16,
+			"id": "f-016",
+			"regions": ["ku"]
+		},
+		{
+			"number": 17,
+			"id": "f-017",
+			"regions": ["pb"]
+		},
+		{
+			"number": 18,
+			"id": "f-018",
+			"regions": ["pa"]
+		},
+		{
+			"number": 19,
+			"id": "f-019",
+			"regions": ["py", "ps", "pt"]
+		},
+		{
+			"number": 20,
+			"id": "f-020",
+			"regions": ["pa", "pb", "py", "ps", "pt"]
+		},
+		{
+			"number": 21,
+			"id": "f-021",
+			"regions": ["dd", "dp", "dw"]
+		},
+		{
+			"number": 22,
+			"id": "f-022",
+			"regions": ["dd"]
+		},
+		{
+			"number": 23,
+			"id": "f-023",
+			"regions": ["dd", "dp", "dw"]
+		},
+		{
+			"number": 24,
+			"id": "f-024",
+			"regions": ["dp", "dw"]
+		},
+		{
+			"number": 25,
+			"id": "f-025",
+			"regions": ["w", "l"]
+		},
+		{
+			"number": 26,
+			"id": "f-026",
+			"regions": ["z", "d"]
+		},
+		{
+			"number": 27,
+			"id": "f-027",
+			"regions": ["a", "b"]
+		},
+		{
+			"number": 28,
+			"id": "f-028",
+			"regions": ["b"]
+		},
+		{
+			"number": 29,
+			"id": "f-029",
+			"regions": ["bn", "bp"]
+		},
+		{
+			"number": 30,
+			"id": "f-030",
+			"regions": ["bp"]
+		},
+		{
+			"number": 31,
+			"id": "f-031",
+			"regions": ["bk", "bb"]
+		},
+		{
+			"number": 32,
+			"id": "f-032",
+			"regions": ["ba", "bb", "bd", "be", "bg", "bh", "bk", "bl", "bm", "bn", "bp"]
+		},
+		{
+			"number": 33,
+			"id": "f-033",
+			"regions": ["kb", "kh", "kt", "ku", "da"]
+		},
+		{
+			"number": 34,
+			"id": "f-034",
+			"regions": []
+		},
+		{
+			"number": 35,
+			"id": "f-035",
+			"regions": ["dk"]
+		},
+		{
+			"number": 36,
+			"id": "f-036",
+			"regions": ["aa", "ab", "ad", "ae", "ag"]
+		},
+		{
+			"number": 37,
+			"id": "f-037",
+			"regions": ["pa", "pb", "py", "ps", "pt", "pg"]
+		},
+		{
+			"number": 38,
+			"id": "f-038",
+			"regions": []
+		},
+		{
+			"number": 39,
+			"id": "f-039",
+			"regions": []
+		},
+		{
+			"number": 40,
+			"id": "f-040",
+			"regions": []
+		},
+		{
+			"number": 41,
+			"id": "f-041",
+			"regions": []
+		},
+		{
+			"number": 42,
+			"id": "f-042",
+			"regions": []
+		},
+		{
+			"number": 43,
+			"id": "f-043",
+			"regions": []
+		},
+		{
+			"number": 44,
+			"id": "f-044",
+			"regions": []
+		},
+		{
+			"number": 45,
+			"id": "f-045",
+			"regions": []
+		},
+		{
+			"number": 46,
+			"id": "f-046",
+			"regions": []
+		},
+		{
+			"number": 47,
+			"id": "f-047",
+			"regions": []
+		},
+		{
+			"number": 48,
+			"id": "f-048",
+			"regions": []
+		},
+		{
+			"number": 49,
+			"id": "f-049",
+			"regions": []
+		},
+		{
+			"number": 50,
+			"id": "f-050",
+			"regions": []
+		}
+	],
+	"retiredIds": []
 }
