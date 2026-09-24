@@ -21,7 +21,7 @@ import {
 } from "../src/lib/terka/backup";
 import { DAY, type Content } from "../src/lib/terka/model";
 import plates from "../src/data/plates.json";
-import { parseContent } from "../src/lib/terka/content";
+import { parseContent, parseProgress } from "../src/lib/terka/content";
 import { fixture, reviewing, answerCurrent } from "./fixtures";
 import { startSession, nextQuestion, refreshProgress, undoAnswer } from "../src/lib/terka/engine";
 
@@ -439,4 +439,41 @@ test("open learning initializes offline with manual backup fallback", async () =
 	} finally {
 		repository.close();
 	}
+});
+
+test("legacy progress with plate, suffix, fact questions and a code scope still loads", () => {
+	const content = fixture();
+	const progress = reviewing(content);
+	const legacy = structuredClone(progress) as unknown as Record<string, unknown> & {
+		cards: Record<string, unknown>[];
+		sessions: { scope: { level: string; id: string }; cardIds: string[] }[];
+	};
+	legacy.cards.push({
+		...progress.cards[0],
+		cardId: "dk::platfull",
+		regionId: "dk",
+		mode: "platfull"
+	});
+	legacy.cards.push({
+		...progress.cards[0],
+		cardId: "dk::suffix::denpasar",
+		regionId: "dk",
+		mode: "suffix",
+		suffixId: "denpasar"
+	});
+	legacy.activeScope = { level: "code", id: "be" };
+	legacy.newCardsToday = ["dk::platfull"];
+	legacy.currentQuestion = { ...structuredClone(progress.cards[0]), format: "fact" };
+	const loaded = parseProgress(legacy);
+	assert.equal(
+		loaded.cards.some((card) => card.cardId.includes("platfull")),
+		false
+	);
+	assert.equal(
+		loaded.cards.some((card) => card.cardId.includes("::suffix")),
+		false
+	);
+	assert.deepEqual(loaded.activeScope, { level: "national", id: "indonesia" });
+	assert.deepEqual(loaded.newCardsToday, []);
+	assert.equal(loaded.currentQuestion, null);
 });

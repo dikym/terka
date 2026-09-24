@@ -92,10 +92,6 @@ export function undoPractice(progress: Progress, now: number) {
 
 export function scopeName(content: Content, scope: Scope): string {
 	if (scope.level === "national") return "Seluruh Indonesia";
-	if (scope.level === "code") {
-		const region = content.regions.find((region) => region.id === scope.id);
-		return region ? `${region.code} · ${region.region}` : scope.id;
-	}
 	if (scope.id === "bali-nusra") return "Bali & Nusa Tenggara";
 	return scope.id
 		.split("-")

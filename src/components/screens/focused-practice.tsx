@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useLearning, useNow } from "@/components/learning/learning-provider";
 import { islandGroup } from "@/components/learning/presentation";
 import { buildHierarchy, inScope } from "@/lib/terka/content";
-import { scopeStats } from "@/lib/terka/statistics";
+import { regionStats, scopeStats } from "@/lib/terka/statistics";
 import { scopeName, percent } from "@/lib/terka/practice";
 import { selectScope } from "@/lib/terka/engine";
 import { Settings, Target } from "lucide-react";
@@ -36,7 +36,7 @@ export function FocusedPracticeScreen({ level, id }: { level?: string; id?: stri
 		code: region.code,
 		name: region.region,
 		group: islandGroup(region.group),
-		percent: percent(scopeStats(progress, content, { level: "code", id: region.id }).mastery)
+		percent: percent(regionStats(progress, new Set([region.id])).mastery)
 	}));
 	const learned = cards.some((card) => card.reps > 0 && card.state !== "suspended");
 	const due = {

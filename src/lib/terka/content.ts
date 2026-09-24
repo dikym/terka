@@ -1,7 +1,6 @@
 import {
 	contentSchema,
 	progressSchema,
-	PRIORITY_CODES,
 	type CardMode,
 	type CardProgress,
 	type Content,
@@ -57,40 +56,18 @@ export function parseContent(value: unknown): Content {
 			region.areas.map((area) => area.id),
 			`area IDs in ${region.code}`
 		);
-		unique(
-			region.suffixes.map((suffix) => suffix.id),
-			`suffix IDs in ${region.code}`
-		);
 		if (region.confidence === "high" && !verified(region))
 			throw new Error(
 				`${region.code}: high confidence requires independent sources, an official source and no conflicts`
 			);
 		if (region.facts.some((fact) => !factIds.has(fact)))
 			throw new Error(`${region.code}: unknown fact`);
-		for (const suffix of region.suffixes) {
-			if (!region.areas.some((area) => area.id === suffix.areaId))
-				throw new Error(`${region.code}: unknown suffix area`);
-			if (suffix.confidence === "high" && !verified(suffix))
-				throw new Error(`${region.code}: unverified suffix ${suffix.id}`);
-		}
-	}
-	for (const fact of content.facts) {
-		if (Boolean(fact.question) !== Boolean(fact.answerRegionId))
-			throw new Error(`Fact question requires an answer: ${fact.id}`);
-		if (
-			fact.answerRegionId &&
-			!content.regions.some((region) => region.id === fact.answerRegionId)
-		)
-			throw new Error(`Unknown fact answer: ${fact.id}`);
 	}
 	return content;
 }
 
 export function inScope(region: Region, scope: Scope): boolean {
-	return (
-		scope.level === "national" ||
-		(scope.level === "code" ? region.id === scope.id : region[scope.level] === scope.id)
-	);
+	return scope.level === "national" || region[scope.level] === scope.id;
 }
 
 export type ScopeNode = Scope & { parent: string | null; regionIds: string[]; count: number };
@@ -107,22 +84,15 @@ export function buildHierarchy(content: Content): ScopeNode[] {
 		add("national", "indonesia", null, region.id);
 		add("group", region.group, "national:indonesia", region.id);
 		add("province", region.province, `group:${region.group}`, region.id);
-		add("code", region.id, `province:${region.province}`, region.id);
 	}
 	return [...nodes.values()];
 }
 
-export function newCard(
-	regionId: string,
-	mode: CardMode,
-	now: number,
-	suffixId?: string
-): CardProgress {
+export function newCard(regionId: string, mode: CardMode, now: number): CardProgress {
 	return {
-		cardId: `${regionId}::${mode}${suffixId ? `::${suffixId}` : ""}`,
+		cardId: `${regionId}::${mode}`,
 		regionId,
 		mode,
-		...(suffixId ? { suffixId } : {}),
 		state: "new",
 		stability: 0,
 		difficulty: 0,
@@ -141,15 +111,7 @@ export function newCard(
 
 export function cardEligible(card: CardProgress, content: Content): boolean {
 	const region = content.regions.find((region) => region.id === card.regionId);
-	if (!region || !verified(region)) return false;
-	if (card.mode === "suffix")
-		return (
-			PRIORITY_CODES.includes(region.code) &&
-			region.suffixes.some((suffix) => suffix.id === card.suffixId && verified(suffix))
-		);
-	if (card.mode === "platfull")
-		return PRIORITY_CODES.includes(region.code) && region.suffixes.some(verified);
-	return true;
+	return Boolean(region && verified(region));
 }
 
 export function reconcileContent(input: Progress, value: unknown): Progress {
@@ -170,8 +132,8 @@ export function reconcileContent(input: Progress, value: unknown): Progress {
 		}
 	}
 	for (const region of content.regions.filter(verified)) {
-		const add = (mode: CardMode, suffixId?: string) => {
-			const card = newCard(region.id, mode, progress.clock.lastSeen, suffixId);
+		const add = (mode: CardMode) => {
+			const card = newCard(region.id, mode, progress.clock.lastSeen);
 			if (
 				progress.reviews.some(
 					(review) =>
@@ -189,10 +151,6 @@ export function reconcileContent(input: Progress, value: unknown): Progress {
 		const primary = progress.cards.find((card) => card.cardId === `${region.id}::code2region`)!;
 		if (primary.interval >= 7 && primary.state !== "suspended") add("region2code");
 		if (primary.interval >= 14 && primary.state !== "suspended") add("setrecall");
-		if (PRIORITY_CODES.includes(region.code) && region.suffixes.some(verified)) {
-			add("platfull");
-			for (const suffix of region.suffixes.filter(verified)) add("suffix", suffix.id);
-		}
 	}
 	if (
 		!buildHierarchy(content).some(
@@ -241,8 +199,52 @@ export function createProgress(content: Content, now: number, timezone?: string)
 	);
 }
 
+type LegacyCore = {
+	activeScope?: { level: string; id: string };
+	cards?: { cardId: string; suffixId?: string }[];
+	reviews?: { cardId: string }[];
+	sessions?: { scope: { level: string; id: string }; cardIds: string[] }[];
+	newCardsToday?: string[];
+	currentQuestion?: { cardId: string; format?: string; answerKind?: string } | null;
+	undo?: { before: LegacyCore } | null;
+};
+const legacyCard = (cardId: string) => /::(?:platfull|suffix)(?:::|$)/.test(cardId);
+const legacyScope = (scope: { level: string; id: string }) =>
+	scope.level === "code" ? { level: "national", id: "indonesia" } : scope;
+
+// Stored data from before the plate/suffix/fact modes and the code scope were removed.
+function dropLegacy(core: LegacyCore): boolean {
+	const before = JSON.stringify(core);
+	core.cards = core.cards?.filter((card) => !legacyCard(card.cardId));
+	for (const card of core.cards ?? []) delete card.suffixId;
+	core.reviews = core.reviews?.filter((review) => !legacyCard(review.cardId));
+	core.newCardsToday = core.newCardsToday?.filter((cardId) => !legacyCard(cardId));
+	for (const session of core.sessions ?? []) {
+		session.cardIds = session.cardIds.filter((cardId) => !legacyCard(cardId));
+		session.scope = legacyScope(session.scope);
+	}
+	if (core.activeScope) core.activeScope = legacyScope(core.activeScope);
+	const question = core.currentQuestion;
+	if (
+		question &&
+		(legacyCard(question.cardId) ||
+			["fact", "plate", "suffix"].includes(question.format ?? "") ||
+			question.answerKind === "plate")
+	)
+		core.currentQuestion = null;
+	return JSON.stringify(core) !== before;
+}
+
+function migrateProgress(value: unknown): unknown {
+	if (!value || typeof value !== "object") return value;
+	const progress = structuredClone(value) as LegacyCore;
+	const changed = dropLegacy(progress);
+	if (progress.undo && (dropLegacy(progress.undo.before) || changed)) progress.undo = null;
+	return progress;
+}
+
 export function parseProgress(value: unknown): Progress {
-	const progress = progressSchema.parse(value);
+	const progress = progressSchema.parse(migrateProgress(value));
 	unique(
 		progress.cards.map((card) => card.cardId),
 		"card IDs"
@@ -260,9 +262,8 @@ export function parseProgress(value: unknown): Progress {
 	const cards = new Set(progress.cards.map((card) => card.cardId));
 	const sessions = new Set(progress.sessions.map((session) => session.id));
 	for (const card of progress.cards) {
-		if (card.cardId !== newCard(card.regionId, card.mode, 0, card.suffixId).cardId)
+		if (card.cardId !== newCard(card.regionId, card.mode, 0).cardId)
 			throw new Error("Invalid card identity");
-		if (card.mode === "suffix" && !card.suffixId) throw new Error("Missing suffix identity");
 		if (card.state === "mature" && (card.interval < 21 || !card.passedLevels.includes(3)))
 			throw new Error("Invalid mature card");
 	}

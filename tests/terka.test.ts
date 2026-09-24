@@ -62,16 +62,16 @@ test("AC-1: all 61 imported codes have a Level 3 question without history", () =
 	assertLevelThreeCoverage(content);
 	assert.equal(createProgress(content, NOW).cards.length, 122);
 	for (const region of content.regions) {
-		let progress = selectScope(createProgress(content, NOW), content, {
-			level: "code",
-			id: region.id
+		const recall = generateQuestion(content, newCard(region.id, "code2region", NOW), {
+			id: region.id,
+			now: NOW,
+			level: 3
 		});
-		progress = startSession(progress, content, { id: region.id, mode: "daily", now: NOW });
-		progress = nextQuestion(progress, content, { id: region.id, now: NOW, level: 3 });
-		assert.equal(progress.currentQuestion?.regionId, region.id, region.code);
-		progress = answerCurrent(progress, content, region.id);
-		assert.equal(progress.reviews[0].correct, true, region.code);
-		assert.equal(progress.reviews[0].scheduled, true, region.code);
+		assert.equal(
+			evaluateQuestion(content, recall, [region.areas[0].name]).correct,
+			true,
+			region.code
+		);
 
 		const set = generateQuestion(content, newCard(region.id, "setrecall", NOW), {
 			id: region.id,
@@ -252,7 +252,7 @@ test("AC-2/12: maturity requires Level 3 and lapse 8 suspends; data updates reta
 
 test("AC-3/4: due reviews ignore scope and new quota survives scope changes", () => {
 	const content = fixture();
-	let progress = selectScope(reviewing(), content, { level: "code", id: "dk" });
+	let progress = selectScope(reviewing(), content, { level: "province", id: "province-dk" });
 	assert.ok(dailyQueue(progress, content, NOW).some((item) => item.cardId === "be::code2region"));
 	progress.newCardsToday = Array.from({ length: 10 }, (_, index) => `introduced-${index}`);
 	progress = selectScope(progress, content, { level: "national", id: "indonesia" });
@@ -290,7 +290,7 @@ test("AC-6/9: lower-level answers keep schedules, record mistakes, and undo rest
 	let progress = startSession(reviewing(), content, {
 		id: "focused",
 		mode: "focused",
-		scope: { level: "code", id: "be" },
+		scope: { level: "province", id: "province-be" },
 		now: NOW
 	});
 	progress = nextQuestion(progress, content, {
@@ -386,7 +386,7 @@ test("sprint has a 60-second limit and keeps records per scope", () => {
 	let progress = startSession(reviewing(), content, {
 		id: "sprint",
 		mode: "sprint",
-		scope: { level: "code", id: "be" },
+		scope: { level: "province", id: "province-be" },
 		now: NOW
 	});
 	progress = nextQuestion(progress, content, { id: "sq", now: NOW, random: () => 0.5 });
@@ -394,7 +394,7 @@ test("sprint has a 60-second limit and keeps records per scope", () => {
 	assert.equal(progress.reviews[0].scheduled, false);
 	assert.throws(() => finishSession(progress, NOW + 5000));
 	progress = finishSession(progress, NOW + 60_000);
-	assert.equal(progress.bestScores["code:be"], 1);
+	assert.equal(progress.bestScores["province:province-be"], 1);
 	assert.equal(progress.bestScores["national:indonesia"], undefined);
 });
 
@@ -406,7 +406,7 @@ test("confusions activate at three, clear after five drills and recur at two", (
 		progress = startSession(progress, content, {
 			id: `f-${now}`,
 			mode: "focused",
-			scope: { level: "code", id: "be" },
+			scope: { level: "province", id: "province-be" },
 			now
 		});
 		progress = nextQuestion(progress, content, { id: `fq-${now}`, now, level: 2 });
@@ -453,8 +453,14 @@ test("scope mastery includes cross-scope confusion, stats handle no samples and 
 		resolvedAt: null,
 		lastSeen: NOW
 	});
-	assert.equal(scopeStats(progress, content, { level: "code", id: "dk" }).mastered, false);
-	assert.equal(scopeStats(progress, content, { level: "code", id: "dk" }).accuracy, null);
+	assert.equal(
+		scopeStats(progress, content, { level: "province", id: "province-dk" }).mastered,
+		false
+	);
+	assert.equal(
+		scopeStats(progress, content, { level: "province", id: "province-dk" }).accuracy,
+		null
+	);
 	assert.equal(forecast(progress, content, NOW).length, 14);
 	progress.challengeDays = [0, 1, 3, 4, 6];
 	progress.clock.sequence = 6;
@@ -493,31 +499,13 @@ test("active questions can change level and an unanswered sprint still expires",
 	assert.equal(progress.sessions.at(-1)!.completedAt, NOW + 63_000);
 });
 
-test("all MVP presentation variants grade correctly, including valid full plates and suffixes", () => {
+test("all MVP presentation variants grade correctly", () => {
 	const content = fixture();
 	const bali = content.regions.find((region) => region.id === "dk")!;
 	bali.areas = [
 		{ id: "denpasar", name: "Denpasar", aliases: [] },
 		{ id: "badung", name: "Badung", aliases: [] }
 	];
-	bali.suffixes = [
-		{
-			id: "denpasar",
-			areaId: "denpasar",
-			pattern: "A**",
-			confidence: "high",
-			sources: bali.sources,
-			issues: []
-		}
-	];
-	content.facts.push({
-		id: "bali-fact",
-		status: "terverifikasi",
-		text: "Synthetic fact about Bali",
-		source: "fixture",
-		question: "What is Bali's code?",
-		answerRegionId: "dk"
-	});
 	parseContent(content);
 	const primary = { ...newCard("dk", "code2region", NOW), state: "review" as const };
 	for (const format of ["choice", "truefalse", "not-in", "group", "first-letter"] as const) {
@@ -534,48 +522,6 @@ test("all MVP presentation variants grade correctly, including valid full plates
 			format
 		);
 	}
-	const fact = generateQuestion(content, primary, {
-		id: "fact",
-		now: NOW,
-		level: 2,
-		format: "fact"
-	});
-	assert.equal(evaluateQuestion(content, fact, ["DK"]).correct, true);
-	const full = generateQuestion(content, newCard("dk", "platfull", NOW), {
-		id: "plate",
-		now: NOW,
-		level: 3,
-		random: () => 0.5
-	});
-	assert.match(full.prompt, /^DK \d{4} A[A-Z]{2}$/);
-	assert.equal(evaluateQuestion(content, full, ["Bali", "Denpasar"]).correct, true);
-	assert.equal(evaluateQuestion(content, full, ["Bali", "Badung"]).correct, false);
-	const suffix = generateQuestion(content, newCard("dk", "suffix", NOW, "denpasar"), {
-		id: "suffix",
-		now: NOW,
-		level: 3,
-		random: () => 0.5
-	});
-	assert.equal(evaluateQuestion(content, suffix, ["Denpasar"]).correct, true);
-	const easySuffix = generateQuestion(content, newCard("dk", "suffix", NOW, "denpasar"), {
-		id: "easy-suffix",
-		now: NOW,
-		level: 1,
-		random: () => 0.5
-	});
-	assert.match(easySuffix.prompt, /^DK \d{4} A[A-Z]{2}$/);
-	assert.equal(evaluateQuestion(content, easySuffix, ["Denpasar"]).correct, true);
-	assert.equal(evaluateQuestion(content, easySuffix, ["Bali"]).correct, false);
-	const progress = createProgress(content, NOW);
-	assert.ok(progress.cards.some((card) => card.cardId === "dk::suffix::denpasar"));
-	const noSuffix = fixture();
-	assert.throws(() =>
-		generateQuestion(noSuffix, newCard("dk", "platfull", NOW), {
-			id: "invalid",
-			now: NOW,
-			level: 3
-		})
-	);
 });
 
 test("content revision changes clear stale questions and undo without losing existing cards", () => {

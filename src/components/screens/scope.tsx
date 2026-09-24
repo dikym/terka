@@ -47,7 +47,6 @@ export function ScopeScreen() {
 		active: boolean;
 		leaf: boolean;
 		highlighted: boolean;
-		mono: boolean;
 		depth: number;
 	}[] {
 		return nodes
@@ -59,10 +58,7 @@ export function ScopeScreen() {
 				return [
 					{
 						scope: node,
-						name:
-							node.level === "code"
-								? content.regions.find((region) => region.id === node.id)!.code
-								: scopeName(content, node),
+						name: scopeName(content, node),
 						count: `${stats.totalCards} kartu`,
 						percent: percent(stats.mastery),
 						group: islandGroup(
@@ -70,9 +66,8 @@ export function ScopeScreen() {
 						),
 						expanded: open,
 						active: same(node, progress.activeScope),
-						leaf: node.level === "code",
+						leaf: node.level === "province",
 						highlighted: same(node, selected),
-						mono: node.level === "code",
 						depth
 					},
 					...(open ? rows(key, depth + 1) : [])
@@ -167,7 +162,6 @@ export function ScopeScreen() {
 							leaf={item.leaf}
 							highlighted={item.highlighted}
 							depth={item.depth}
-							mono={item.mono}
 							onClick={() => choose(item.scope)}
 						/>
 					))}

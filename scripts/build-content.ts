@@ -2,13 +2,7 @@ import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import { z } from "zod";
 import { parseContent, verified } from "../src/lib/terka/content";
-import {
-	regionSchema,
-	PRIORITY_CODES,
-	type Area,
-	type Content,
-	type Region
-} from "../src/lib/terka/model";
+import { regionSchema, type Area, type Content, type Region } from "../src/lib/terka/model";
 import { assertLevelThreeCoverage } from "../src/lib/terka/questions";
 
 const root = new URL("../", import.meta.url);
@@ -24,9 +18,7 @@ const curation = z
 		facts: z
 			.record(
 				z.object({
-					status: z.enum(["terverifikasi", "diperdebatkan", "legenda"]).optional(),
-					question: z.string().min(1).optional(),
-					answerRegionId: z.string().min(1).optional()
+					status: z.enum(["terverifikasi", "diperdebatkan", "legenda"]).optional()
 				})
 			)
 			.default({}),
@@ -38,8 +30,7 @@ const curation = z
 				aliases: true,
 				confidence: true,
 				sources: true,
-				issues: true,
-				suffixes: true
+				issues: true
 			})
 		)
 	})
@@ -175,10 +166,6 @@ if (process.argv.includes("--release")) {
 			(region) =>
 				`${region.code}: independent verification incomplete${region.issues.length ? ` (${region.issues.join("; ")})` : ""}`
 		);
-	for (const code of PRIORITY_CODES) {
-		if (!content.regions.find((region) => region.code === code)?.suffixes.some(verified))
-			problems.push(`${code}: verified suffix data missing`);
-	}
 	if (problems.length)
 		throw new Error(`Content is not ready for release:\n${problems.join("\n")}`);
 }

@@ -25,7 +25,6 @@ export type SessionView = {
 	lower: () => void;
 	undo: () => void;
 	canUndo: boolean;
-	firstPart: string | null;
 };
 export const SessionViewContext = createContext<SessionView | null>(null);
 export const useSessionView = () => useContext(SessionViewContext);

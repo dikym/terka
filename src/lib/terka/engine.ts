@@ -551,7 +551,7 @@ export function setCardSuspended(
 	if (suspended) {
 		card.state = "suspended";
 		card.suspensionReason = "manual";
-	} else Object.assign(card, newCard(card.regionId, card.mode, now, card.suffixId));
+	} else Object.assign(card, newCard(card.regionId, card.mode, now));
 	progress.currentQuestion = null;
 	progress.undo = null;
 	return progress;

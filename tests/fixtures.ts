@@ -20,7 +20,6 @@ export const region = (id: string, name: string, group = "island-a"): Region => 
 	aliases: [],
 	areas: [{ id: `${id}-city`, name, aliases: [] }],
 	facts: [],
-	suffixes: [],
 	sources: [
 		{ ref: "fixture:official", publisher: "fixture-official", official: true },
 		{ ref: "fixture:independent", publisher: "fixture-independent", official: false }

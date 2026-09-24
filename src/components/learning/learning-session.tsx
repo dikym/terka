@@ -15,7 +15,6 @@ import { CompareScreen } from "@/components/screens/compare";
 import { CompareAnsweredScreen } from "@/components/screens/compare-answered";
 import { AnswerUndoneScreen } from "@/components/screens/answer-undone";
 import { SetRecallScreen } from "@/components/screens/set-recall";
-import { PlatUtuh } from "@/components/screens/plat-utuh";
 import { SprintScreen } from "@/components/screens/sprint";
 import { DailyChallengeScreen } from "@/components/screens/daily-challenge";
 import { isTyping, useLearning, useNow } from "./learning-provider";
@@ -33,8 +32,7 @@ export function LearningSession({ initialMode = "daily" }: { initialMode?: Sessi
 	const [draft, setDraft] = useState({
 		key: "",
 		value: "",
-		items: [] as string[],
-		firstPart: null as string | null
+		items: [] as string[]
 	});
 	const [summaryId, setSummaryId] = useState<string | null>(null);
 	const [restoredKey, setRestoredKey] = useState<string | null>(null);
@@ -48,7 +46,6 @@ export function LearningSession({ initialMode = "daily" }: { initialMode?: Sessi
 	const restoredPreview = restoredKey === key;
 	const value = draft.key === key ? draft.value : "";
 	const items = draft.key === key ? draft.items : [];
-	const firstPart = draft.key === key ? draft.firstPart : null;
 	const completed = Boolean(session && session.completedAt !== null);
 	const showSummary =
 		session &&
@@ -65,23 +62,10 @@ export function LearningSession({ initialMode = "daily" }: { initialMode?: Sessi
 	function edit(next: string) {
 		if (question && firstKey.current?.key !== key)
 			firstKey.current = { key, ms: Math.max(0, Date.now() - question.shownAt) };
-		setDraft({ key, value: next, items, firstPart });
+		setDraft({ key, value: next, items });
 	}
 	async function submit(answers?: string[]) {
 		if (busy || !progress.currentQuestion || !session) return;
-		if (question?.answerKind === "plate" && firstPart === null && !answers) {
-			if (
-				evaluateQuestion(
-					content,
-					{ ...question, answerKind: "name", targets: [question.targets[0]] },
-					[value]
-				).correct
-			) {
-				setDraft({ key, value: "", items, firstPart: value });
-				return;
-			}
-			answers = [value, ""];
-		}
 		const values =
 			answers ??
 			(question?.answerKind === "set"
@@ -92,9 +76,7 @@ export function LearningSession({ initialMode = "daily" }: { initialMode?: Sessi
 							.map((item) => item.trim())
 							.filter(Boolean)
 					]
-				: question?.answerKind === "plate"
-					? [firstPart ?? "", value]
-					: [value]);
+				: [value]);
 		const submittedAt = Date.now();
 		const delay =
 			firstKey.current?.key === key
@@ -262,8 +244,7 @@ export function LearningSession({ initialMode = "daily" }: { initialMode?: Sessi
 			setDraft({
 				key,
 				value: "",
-				items: [...new Set([...items, value.trim()])].slice(0, 200),
-				firstPart
+				items: [...new Set([...items, value.trim()])].slice(0, 200)
 			});
 	}
 	useEffect(() => {
@@ -288,7 +269,6 @@ export function LearningSession({ initialMode = "daily" }: { initialMode?: Sessi
 			</SessionShell>
 		);
 	const region = content.regions.find((region) => region.id === question?.regionId);
-	const parts = question?.prompt.match(/^([A-Z]{1,2}) (\d{4}) ([A-Z]{1,3})$/);
 	const remaining = question?.limitMs
 		? Math.max(0, question.shownAt + question.limitMs - now)
 		: 0;
@@ -308,14 +288,7 @@ export function LearningSession({ initialMode = "daily" }: { initialMode?: Sessi
 					? session.answered + 1
 					: session.cardIds.length,
 		value,
-		plate: {
-			code:
-				question?.answerKind === "code" && !feedback
-					? "?"
-					: (parts?.[1] ?? region?.code ?? ""),
-			number: parts?.[2],
-			suffix: parts?.[3]
-		},
+		plate: { code: question?.answerKind === "code" && !feedback ? "?" : (region?.code ?? "") },
 		timer: {
 			value: question?.limitMs ? (remaining / question.limitMs) * 100 : 0,
 			time: `${(remaining / 1000).toFixed(1)} s`
@@ -334,8 +307,7 @@ export function LearningSession({ initialMode = "daily" }: { initialMode?: Sessi
 		next: () => void next(),
 		lower: () => void lower(),
 		undo: () => void undo(),
-		canUndo,
-		firstPart
+		canUndo
 	};
 	let screen;
 	if (showSummary) screen = <SessionSummaryScreen />;
@@ -359,7 +331,6 @@ export function LearningSession({ initialMode = "daily" }: { initialMode?: Sessi
 	else if (question?.format === "truefalse") screen = <TrueFalseScreen />;
 	else if (question?.choices.length) screen = <OddOneOutScreen />;
 	else if (question?.format === "set") screen = <SetRecallScreen />;
-	else if (question?.answerKind === "plate") screen = <PlatUtuh />;
 	else if (question?.level === 3 && question.limitMs) screen = <BlindRecallScreen />;
 	else screen = <SessionQuestionScreen />;
 	return <SessionViewContext.Provider value={view}>{screen}</SessionViewContext.Provider>;

@@ -613,7 +613,7 @@ test("set sessions select unlocked cards in scope, consume one introduction and 
 	progress = startSession(progress, content, {
 		id: "set",
 		mode: "set",
-		scope: { level: "code", id: "be" },
+		scope: { level: "province", id: "province-be" },
 		now: NOW
 	});
 	assert.deepEqual(progress.sessions[0].cardIds, ["be::setrecall"]);

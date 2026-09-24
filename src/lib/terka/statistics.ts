@@ -25,9 +25,15 @@ export function answerStats(reviews: RawReview[]) {
 }
 
 export function scopeStats(progress: Progress, content: Content, scope: Scope) {
-	const ids = new Set(
-		content.regions.filter((region) => inScope(region, scope)).map((region) => region.id)
+	return regionStats(
+		progress,
+		new Set(
+			content.regions.filter((region) => inScope(region, scope)).map((region) => region.id)
+		)
 	);
+}
+
+export function regionStats(progress: Progress, ids: Set<string>) {
 	const cards = progress.cards.filter((card) => ids.has(card.regionId));
 	const reviews = progress.reviews.filter((review) => ids.has(review.regionId));
 	const mature = cards.filter((card) => card.state === "mature").length;
