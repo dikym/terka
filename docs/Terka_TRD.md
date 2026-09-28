@@ -63,7 +63,7 @@ Konsekuensinya, server tidak memeriksa apakah jawaban benar atau jadwal valid. T
 - **Google Cloud:** satu OAuth client bertipe Web application, dengan layar persetujuan OAuth berstatus produksi
 - **Analitik kunjungan:** Vercel Web Analytics lewat `@vercel/analytics`. Tanpa cookie; pengunjung dikenali lewat hash dari request, dan data disimpan teranonimkan. Hanya page view yang dipakai, karena paket Hobby tidak mendukung custom event. Jatahnya 50.000 event per bulan; jika habis, pengumpulan berhenti sementara tanpa biaya dan tanpa memengaruhi aplikasi. Setiap layar utama memiliki path sendiri — `/`, `/sesi`, `/cakupan`, `/statistik`, `/referensi`, `/tentang` — dan soal di dalam sesi tidak mengubah path, supaya satu jawaban tidak menghabiskan satu event
 - **Paket Supabase:** Free saat rilis, dengan pemicu pindah ke Pro di bagian 6
-- **Pengujian:** Vitest, fast-check, fake-indexeddb, Supabase CLI (stack lokal dan pgTAP), Playwright (`Terka_Tests.md`)
+- **Pengujian:** `bun test` (API `bun:test`), fast-check, fake-indexeddb, Supabase CLI (stack lokal dan pgTAP), Playwright (`Terka_Tests.md`)
 
 ---
 
