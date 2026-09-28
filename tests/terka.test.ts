@@ -21,7 +21,7 @@ import {
 	automaticLevel,
 	questionTimedOut
 } from "../src/lib/terka/questions";
-import { scheduleAnswer } from "../src/lib/terka/scheduler";
+import { scheduleAnswer, retrievability } from "../src/lib/terka/scheduler";
 import plates from "../src/data/plates.json";
 import {
 	applyAnswer,
@@ -1033,4 +1033,76 @@ test("SR-149: a challenge with fewer than five learned cards asks each once", ()
 	}
 	assert.notEqual(progress.sessions[0].completedAt, null);
 	assert.ok(progress.challengeDays.includes(progress.clock.sequence));
+});
+
+test("SR-061/SR-062: reviews are ordered by lowest retrievability, not interval", () => {
+	const content = fixture();
+	const progress = reviewing(content);
+	const set = (id: string, stability: number, overdue: number) =>
+		Object.assign(
+			progress.cards.find((card) => card.cardId === `${id}::code2region`)!,
+			{
+				stability,
+				interval: stability,
+				lastReview: NOW - (stability + overdue) * DAY,
+				due: NOW - overdue * DAY
+			}
+		);
+	set("be", 3, 1);
+	set("bd", 30, 20);
+	set("dk", 10, 0);
+	set("de", 60, 1);
+	const order = dailyQueue(progress, content, NOW)
+		.filter((item) => item.priority === 3)
+		.map((item) => item.cardId.split("::")[0]);
+	assert.deepEqual(order, ["bd", "be", "de", "dk"]);
+	assert.ok(retrievability(progress.cards[1], NOW) < retrievability(progress.cards[0], NOW));
+});
+
+test("SR-058: learning steps are priority 1", () => {
+	const content = fixture();
+	const progress = reviewing(content);
+	Object.assign(progress.cards[0], { state: "learning", step: 1, due: NOW - 1 });
+	assert.deepEqual(dailyQueue(progress, content, NOW)[0], {
+		cardId: progress.cards[0].cardId,
+		priority: 1
+	});
+});
+
+test("SR-063: of two due sibling cards only the lower-R one is shown and the other keeps its due", () => {
+	const content = fixture();
+	const progress = reviewing(content);
+	Object.assign(
+		progress.cards.find((card) => card.cardId === "dk::code2region")!,
+		{
+			stability: 10,
+			interval: 10,
+			lastReview: NOW - 10 * DAY,
+			due: NOW
+		}
+	);
+	progress.cards.push({
+		...newCard("dk", "region2code", NOW),
+		state: "review",
+		stability: 5,
+		difficulty: 5,
+		interval: 5,
+		reps: 2,
+		lastReview: NOW - 8 * DAY,
+		due: NOW - 3 * DAY
+	});
+	const queue = dailyQueue(progress, content, NOW).map((item) => item.cardId);
+	assert.ok(queue.includes("dk::region2code"));
+	assert.ok(!queue.includes("dk::code2region"));
+	const refreshed = refreshProgress(progress, content, NOW);
+	assert.equal(refreshed.cards.find((card) => card.cardId === "dk::code2region")!.due, NOW);
+});
+
+test("SR-015/SR-016: new cards follow the order of plates.json", () => {
+	const content = fixture();
+	const queue = dailyQueue(createProgress(content, NOW, "Asia/Makassar"), content, NOW);
+	assert.deepEqual(
+		queue.map((item) => item.cardId),
+		["be::code2region", "bd::code2region", "dk::code2region", "de::code2region"]
+	);
 });
