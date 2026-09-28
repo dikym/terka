@@ -79,7 +79,7 @@ export function DailyChallengeScreen() {
 													view.content.regions.find(
 														(region) =>
 															region.id === view.question?.regionId
-													)?.group ?? "bali-nusra"
+													)?.group ?? "bali-nusa-tenggara"
 												)
 											: "balinusra"
 									}

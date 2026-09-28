@@ -82,7 +82,7 @@ export function SprintScreen() {
 									? islandGroup(
 											view.content.regions.find(
 												(region) => region.id === view.question?.regionId
-											)?.group ?? "bali-nusra"
+											)?.group ?? "bali-nusa-tenggara"
 										)
 									: "balinusra"
 							}

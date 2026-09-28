@@ -92,7 +92,7 @@ export function undoPractice(progress: Progress, now: number) {
 
 export function scopeName(content: Content, scope: Scope): string {
 	if (scope.level === "national") return "Seluruh Indonesia";
-	if (scope.id === "bali-nusra") return "Bali & Nusa Tenggara";
+	if (scope.id === "bali-nusa-tenggara") return "Bali & Nusa Tenggara";
 	return scope.id
 		.split("-")
 		.map((word) => word[0].toUpperCase() + word.slice(1))

@@ -196,13 +196,13 @@ export function reconcileContent(input: Progress, value: unknown): Progress {
 		progress.activeScope = { level: "national", id: "indonesia" };
 	if (
 		progress.contentVersion !== content.version ||
-		progress.contentRevision !== content.sourceRevision
+		progress.contentRevision !== String(content.contentRev)
 	) {
 		progress.currentQuestion = null;
 		progress.undo = null;
 	}
 	progress.contentVersion = content.version;
-	progress.contentRevision = content.sourceRevision;
+	progress.contentRevision = String(content.contentRev);
 	return progress;
 }
 
@@ -212,7 +212,7 @@ export function createProgress(content: Content, now: number, timezone?: string)
 		{
 			schemaVersion: 1,
 			contentVersion: content.version,
-			contentRevision: content.sourceRevision,
+			contentRevision: String(content.contentRev),
 			activeScope,
 			clock: createClock(now, timezone),
 			newCardsToday: [],
