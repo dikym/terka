@@ -1,7 +1,8 @@
 import { createEmptyCard, fsrs, State } from "ts-fsrs";
 import { gradeAnswer } from "./grading";
+import { boundary, addDays } from "./time";
 import { DAY, type CardProgress, type LearningClock, type RawReview } from "./model";
-import { MATURE_INTERVAL_DAYS } from "../../rules";
+import { FUZZ_MIN_DAYS, FUZZ_RATIO, MATURE_INTERVAL_DAYS } from "../../rules";
 
 // Minute steps belong to Terka; FSRS only supplies the daily memory update.
 const scheduler = fsrs({ request_retention: 0.9, enable_fuzz: false, enable_short_term: false });
@@ -31,12 +32,60 @@ export function retrievability(card: CardProgress, now: number): number {
 	return scheduler.get_retrievability(toMemory(card), new Date(now), false);
 }
 
+// FNV-1a seed + mulberry32: the same answer id picks the same day on every device.
+function seededRandom(seed: string): () => number {
+	let hash = 0x811c9dc5;
+	for (const char of seed) hash = Math.imul(hash ^ char.charCodeAt(0), 0x01000193);
+	let state = hash >>> 0;
+	return () => {
+		state = (state + 0x6d2b79f5) >>> 0;
+		let value = state;
+		value = Math.imul(value ^ (value >>> 15), value | 1);
+		value ^= value + Math.imul(value ^ (value >>> 7), value | 61);
+		return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
+	};
+}
+
+// SRD 4.6: within ±5% pick the least loaded learning day; ties are broken by the answer id.
+export function scheduledDays(
+	interval: number,
+	card: CardProgress,
+	cards: CardProgress[],
+	clock: LearningClock,
+	seed: string
+): number {
+	const days = Math.max(1, Math.round(interval));
+	if (days < FUZZ_MIN_DAYS) return days;
+	const load = (offset: number) => {
+		const start = boundary(addDays(clock.day, offset), clock.timezone);
+		const end = boundary(addDays(clock.day, offset + 1), clock.timezone);
+		return cards.filter(
+			(other) =>
+				other.cardId !== card.cardId &&
+				other.state !== "new" &&
+				other.state !== "suspended" &&
+				other.due >= start &&
+				other.due < end
+		).length;
+	};
+	const candidates: { days: number; load: number }[] = [];
+	for (
+		let offset = Math.round(days * (1 - FUZZ_RATIO));
+		offset <= Math.round(days * (1 + FUZZ_RATIO));
+		offset++
+	)
+		candidates.push({ days: offset, load: load(offset) });
+	const least = Math.min(...candidates.map((candidate) => candidate.load));
+	const best = candidates.filter((candidate) => candidate.load === least);
+	return best[Math.floor(seededRandom(seed)() * best.length)].days;
+}
+
 export function scheduleAnswer(
 	input: CardProgress,
 	review: RawReview,
 	history: RawReview[],
 	clock: LearningClock,
-	random = Math.random
+	cards: CardProgress[] = []
 ): CardProgress {
 	const card = structuredClone(input);
 	if (card.state === "suspended") throw new Error("Suspended cards cannot be scheduled");
@@ -47,18 +96,10 @@ export function scheduleAnswer(
 	if (newDay) {
 		const memory = toMemory(card);
 		const result = scheduler.next(memory, new Date(now), grade).card;
-		const sample = random();
-		if (!Number.isFinite(sample) || sample < 0 || sample >= 1)
-			throw new Error("Invalid random sample");
 		card.stability = result.stability;
 		card.difficulty = result.difficulty;
-		card.interval = Math.max(1, result.scheduled_days) * (0.95 + sample * 0.1);
-		if (
-			card.state === "relearning" ||
-			((card.state === "review" || card.state === "mature") && grade === 1)
-		)
-			card.interval *= 0.5;
-		card.pendingDue = Math.max(clock.nextBoundary, now + card.interval * DAY);
+		card.interval = scheduledDays(result.scheduled_days, input, cards, clock, review.id);
+		card.pendingDue = boundary(addDays(clock.day, card.interval), clock.timezone);
 		card.scheduledDay = clock.sequence;
 		card.lastReview = now;
 	}

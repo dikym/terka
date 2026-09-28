@@ -133,7 +133,7 @@ test("answer retry is idempotent but rejects the same ID with a changed payload"
 		msToFirstKey: 500,
 		answers: [progress.currentQuestion!.targets[0].name]
 	};
-	progress = applyAnswer(progress, content, submission, () => 0.5);
+	progress = applyAnswer(progress, content, submission);
 	assert.deepEqual(applyAnswer(progress, content, submission), progress);
 	for (const change of [
 		{ answers: ["wrong"] },
@@ -224,7 +224,7 @@ test("name matching rejects fuzzy ties and changed first letters; normalization 
 
 test("failed minute steps restart learning and repeated relearning errors do not add daily lapses", () => {
 	const clock = createClock(NOW, "Asia/Makassar");
-	let card = scheduleAnswer(newCard("be", "code2region", NOW), raw(), [], clock, () => 0.5);
+	let card = scheduleAnswer(newCard("be", "code2region", NOW), raw(), [], clock);
 	card = scheduleAnswer(card, raw({ ts: card.due }), [], clock);
 	assert.equal(card.step, 2);
 	const reset = scheduleAnswer(card, raw({ correct: false, ts: card.due }), [], clock);
@@ -232,7 +232,7 @@ test("failed minute steps restart learning and repeated relearning errors do not
 	assert.equal(reset.due, card.due + 60_000);
 	assert.equal(reset.stability, card.stability);
 	const learned = reviewing().cards.find((card) => card.cardId === "be::code2region")!;
-	const failed = scheduleAnswer(learned, raw({ correct: false }), [], clock, () => 0.5);
+	const failed = scheduleAnswer(learned, raw({ correct: false }), [], clock);
 	assert.equal(failed.lapses, 1);
 	assert.equal(failed.state, "relearning");
 	const again = scheduleAnswer(failed, raw({ correct: false, ts: failed.due }), [], clock);
@@ -246,31 +246,19 @@ test("failed minute steps restart learning and repeated relearning errors do not
 	assert.deepEqual(scheduleAnswer(recovered, raw(), [], clock), recovered);
 });
 
-test("minute step across 04:00 gets one new daily memory update and fuzz stays within five percent", () => {
+test("minute step across 04:00 gets one new daily memory update", () => {
 	const clock = createClock(NOW, "Asia/Makassar");
 	const first = scheduleAnswer(
 		newCard("be", "code2region", NOW),
 		raw({ ts: clock.nextBoundary - 30_000 }),
 		[],
-		clock,
-		() => 0.5
+		clock
 	);
 	const nextClock = advanceClock(clock, first.due);
-	const second = scheduleAnswer(first, raw({ ts: first.due }), [], nextClock, () => 0.5);
+	const second = scheduleAnswer(first, raw({ ts: first.due }), [], nextClock);
 	assert.equal(second.scheduledDay, 1);
 	assert.equal(second.lastReview, first.due);
 	assert.equal(second.step, 2);
-	const card = newCard("be", "code2region", NOW);
-	const base = scheduleAnswer(card, raw(), [], clock, () => 0.5);
-	assert.ok(
-		Math.abs(scheduleAnswer(card, raw(), [], clock, () => 0).interval / base.interval - 0.95) <
-			1e-10
-	);
-	assert.ok(
-		scheduleAnswer(card, raw(), [], clock, () => 0.999999).interval / base.interval < 1.05
-	);
-	for (const sample of [-1, 1, NaN, Infinity])
-		assert.throws(() => scheduleAnswer(card, raw(), [], clock, () => sample));
 });
 
 test("manual suspension and reactivation preserve history; unverified content cannot reactivate", () => {
@@ -446,19 +434,14 @@ test("SR-031: Level 3 accepts a first input at exactly eight seconds and times o
 		[8000, true],
 		[8001, false]
 	] as const) {
-		const answered = applyAnswer(
-			question,
-			content,
-			{
-				id: "a",
-				sessionId: "timed",
-				questionId: "q",
-				now: NOW + 11_000,
-				msToFirstKey: firstKey,
-				answers: [question.currentQuestion!.targets[0].name]
-			},
-			() => 0.5
-		);
+		const answered = applyAnswer(question, content, {
+			id: "a",
+			sessionId: "timed",
+			questionId: "q",
+			now: NOW + 11_000,
+			msToFirstKey: firstKey,
+			answers: [question.currentQuestion!.targets[0].name]
+		});
 		assert.equal(answered.reviews[0].correct, correct);
 		assert.equal(answered.reviews[0].timedOut, !correct);
 		assert.equal(answered.reviews[0].scheduled, true);

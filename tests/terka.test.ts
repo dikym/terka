@@ -10,8 +10,8 @@ import {
 	regionAreas,
 	areaDisplayName
 } from "../src/lib/terka/content";
-import { boundary, createClock, advanceClock } from "../src/lib/terka/time";
-import { DAY, type Question } from "../src/lib/terka/model";
+import { boundary, createClock, advanceClock, addDays } from "../src/lib/terka/time";
+import { DAY, type CardProgress, type Question } from "../src/lib/terka/model";
 import { matchAnswer, gradeAnswer } from "../src/lib/terka/grading";
 import {
 	dictionary,
@@ -21,7 +21,8 @@ import {
 	automaticLevel,
 	questionTimedOut
 } from "../src/lib/terka/questions";
-import { scheduleAnswer, retrievability } from "../src/lib/terka/scheduler";
+import { scheduleAnswer, scheduledDays, retrievability } from "../src/lib/terka/scheduler";
+import { fsrs, createEmptyCard, State, Rating, type Grade } from "ts-fsrs";
 import plates from "../src/data/plates.json";
 import {
 	applyAnswer,
@@ -217,29 +218,11 @@ test("set answers count unique areas, preserve administrative identity and accep
 
 test("AC-8: minute steps continue without a second memory or daily interval update", () => {
 	const clock = createClock(NOW, "Asia/Makassar");
-	const first = scheduleAnswer(
-		newCard("be", "code2region", NOW),
-		raw({ level: 1 }),
-		[],
-		clock,
-		() => 0.5
-	);
+	const first = scheduleAnswer(newCard("be", "code2region", NOW), raw({ level: 1 }), [], clock);
 	assert.equal(first.due, NOW + 60_000);
-	const second = scheduleAnswer(
-		first,
-		raw({ ts: first.due, id: "second", level: 1 }),
-		[],
-		clock,
-		() => 0.5
-	);
+	const second = scheduleAnswer(first, raw({ ts: first.due, id: "second", level: 1 }), [], clock);
 	assert.equal(second.due, first.due + 600_000);
-	const third = scheduleAnswer(
-		second,
-		raw({ ts: second.due, id: "third", level: 1 }),
-		[],
-		clock,
-		() => 0.5
-	);
+	const third = scheduleAnswer(second, raw({ ts: second.due, id: "third", level: 1 }), [], clock);
 	assert.equal(third.state, "review");
 	assert.equal(third.stability, first.stability);
 	assert.equal(third.difficulty, first.difficulty);
@@ -256,10 +239,10 @@ test("AC-2/12: maturity requires Level 3 and lapse 8 suspends; data updates reta
 		interval: 100,
 		lastReview: NOW - 100 * DAY
 	};
-	assert.notEqual(scheduleAnswer(card, raw(), [], clock, () => 0.5).state, "mature");
-	assert.equal(scheduleAnswer(card, raw({ level: 3 }), [], clock, () => 0.5).state, "mature");
+	assert.notEqual(scheduleAnswer(card, raw(), [], clock).state, "mature");
+	assert.equal(scheduleAnswer(card, raw({ level: 3 }), [], clock).state, "mature");
 	assert.equal(
-		scheduleAnswer({ ...card, lapses: 7 }, raw({ correct: false }), [], clock, () => 0.5).state,
+		scheduleAnswer({ ...card, lapses: 7 }, raw({ correct: false }), [], clock).state,
 		"suspended"
 	);
 	const progress = createProgress(fixture(), NOW);
@@ -360,7 +343,7 @@ test("AC-8/9: a scheduled answer is idempotent and undo restores D/S, due, reps 
 		msToFirstKey: 1000,
 		answers: [progress.currentQuestion!.targets[0].name]
 	};
-	progress = applyAnswer(progress, content, answer, () => 0.5);
+	progress = applyAnswer(progress, content, answer);
 	assert.equal(progress.reviews.length, 1);
 	assert.deepEqual(applyAnswer(progress, content, answer), progress);
 	assert.deepEqual(undoAnswer(progress), { ...before, clock: progress.clock, undo: null });
@@ -1105,4 +1088,77 @@ test("SR-015/SR-016: new cards follow the order of plates.json", () => {
 		queue.map((item) => item.cardId),
 		["be::code2region", "bd::code2region", "dk::code2region", "de::code2region"]
 	);
+});
+
+const expectedDays = (card: CardProgress, rating: Grade) =>
+	fsrs({ request_retention: 0.9, enable_fuzz: false, enable_short_term: false }).next(
+		{
+			...createEmptyCard(new Date(card.due)),
+			due: new Date(card.due),
+			state: State.Review,
+			stability: card.stability,
+			difficulty: card.difficulty,
+			reps: card.reps,
+			lapses: card.lapses,
+			scheduled_days: card.interval,
+			last_review: new Date(card.lastReview!)
+		},
+		new Date(NOW),
+		rating
+	).card.scheduled_days;
+const within = (value: number, days: number) =>
+	value >= Math.round(days * 0.95) && value <= Math.round(days * 1.05);
+const strongCard = (): CardProgress => ({
+	...newCard("be", "code2region", NOW),
+	state: "review",
+	stability: 100,
+	difficulty: 5,
+	interval: 100,
+	reps: 5,
+	lastReview: NOW - 100 * DAY,
+	due: NOW
+});
+
+test("SR-050: lapses and finished relearning keep the FSRS interval without an extra cut", () => {
+	const clock = createClock(NOW, "Asia/Makassar");
+	const lapse = scheduleAnswer(strongCard(), raw({ correct: false }), [], clock);
+	const lapseDays = expectedDays(strongCard(), Rating.Again);
+	assert.ok(lapseDays >= 3);
+	assert.ok(within(lapse.interval, lapseDays), `${lapse.interval} vs ${lapseDays}`);
+	const relearning = { ...strongCard(), state: "relearning" as const, lapses: 1 };
+	const recovered = scheduleAnswer(relearning, raw(), [], clock);
+	assert.ok(within(recovered.interval, expectedDays(relearning, Rating.Good)));
+});
+
+test("SR-052/SR-053/SR-054/AC-17: fuzz picks the least loaded day and ties follow the answer id", () => {
+	const clock = createClock(NOW, "Asia/Makassar");
+	const card = strongCard();
+	const dayStart = (offset: number) => boundary(addDays(clock.day, offset), clock.timezone);
+	const busy = (offset: number) =>
+		[0, 1].map((index) => ({
+			...card,
+			cardId: `x${offset}-${index}::code2region`,
+			due: dayStart(offset)
+		}));
+	const loaded = [38, 39, 40, 42].flatMap(busy);
+	assert.equal(scheduledDays(40, card, loaded, clock, "a"), 41);
+	const ignored = loaded.map((item) => ({ ...item, state: "suspended" as const }));
+	assert.equal(
+		scheduledDays(40, card, [...ignored, { ...card, due: dayStart(41) }], clock, "same"),
+		scheduledDays(40, card, [], clock, "same")
+	);
+	const picks = new Set(
+		"abcdefgh".split("").map((seed) => scheduledDays(40, card, [], clock, seed))
+	);
+	assert.ok([...picks].every((days) => days >= 38 && days <= 42));
+	assert.ok(picks.size > 1);
+	assert.equal(scheduledDays(2, card, loaded, clock, "a"), 2);
+	assert.equal(scheduledDays(2.4, card, [], clock, "a"), 2);
+});
+
+test("SR-057: a scheduled review is due at the start of its learning day", () => {
+	const clock = createClock(NOW, "Asia/Makassar");
+	const next = scheduleAnswer(strongCard(), raw(), [], clock);
+	assert.equal(next.due, boundary(addDays(clock.day, next.interval), clock.timezone));
+	assert.equal(Number.isInteger(next.interval), true);
 });

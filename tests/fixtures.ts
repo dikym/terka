@@ -139,17 +139,12 @@ export function answerCurrent(
 	now?: number
 ) {
 	const question = progress.currentQuestion!;
-	return applyAnswer(
-		progress,
-		content,
-		{
-			id,
-			sessionId: progress.sessions.at(-1)!.id,
-			questionId: question.id,
-			now: now ?? question.shownAt + 1500,
-			msToFirstKey: 500,
-			answers: answer ?? [question.targets[0].name]
-		},
-		() => 0.5
-	);
+	return applyAnswer(progress, content, {
+		id,
+		sessionId: progress.sessions.at(-1)!.id,
+		questionId: question.id,
+		now: now ?? question.shownAt + 1500,
+		msToFirstKey: 500,
+		answers: answer ?? [question.targets[0].name]
+	});
 }
