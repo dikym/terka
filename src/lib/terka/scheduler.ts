@@ -11,6 +11,26 @@ export function introduceCard(card: CardProgress, now: number): CardProgress {
 	return { ...card, state: "learning", step: 1, due: now + 60_000 };
 }
 
+function toMemory(card: CardProgress) {
+	return {
+		...createEmptyCard(new Date(card.due)),
+		due: new Date(card.due),
+		state: card.stability === 0 ? State.New : State.Review,
+		stability: card.stability,
+		difficulty: card.difficulty,
+		reps: card.reps,
+		lapses: card.lapses,
+		scheduled_days: card.interval,
+		...(card.lastReview === null ? {} : { last_review: new Date(card.lastReview) })
+	};
+}
+
+// SRD 4.7: reviews are served from the lowest predicted recall.
+export function retrievability(card: CardProgress, now: number): number {
+	if (card.lastReview === null || card.stability === 0) return 0;
+	return scheduler.get_retrievability(toMemory(card), new Date(now), false);
+}
+
 export function scheduleAnswer(
 	input: CardProgress,
 	review: RawReview,
@@ -25,17 +45,7 @@ export function scheduleAnswer(
 	if (!newDay && card.state !== "learning" && card.state !== "relearning") return card;
 	const now = review.ts;
 	if (newDay) {
-		const memory = {
-			...createEmptyCard(new Date(now)),
-			due: new Date(card.due),
-			state: card.stability === 0 ? State.New : State.Review,
-			stability: card.stability,
-			difficulty: card.difficulty,
-			reps: card.reps,
-			lapses: card.lapses,
-			scheduled_days: card.interval,
-			...(card.lastReview === null ? {} : { last_review: new Date(card.lastReview) })
-		};
+		const memory = toMemory(card);
 		const result = scheduler.next(memory, new Date(now), grade).card;
 		const sample = random();
 		if (!Number.isFinite(sample) || sample < 0 || sample >= 1)

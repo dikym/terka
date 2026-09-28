@@ -8,7 +8,7 @@ import {
 	questionTimedOut,
 	shuffled
 } from "./questions";
-import { introduceCard, scheduleAnswer } from "./scheduler";
+import { introduceCard, retrievability, scheduleAnswer } from "./scheduler";
 import { scopeStats } from "./statistics";
 import {
 	DAY,
@@ -40,23 +40,19 @@ export function dailyQueue(progress: Progress, content: Content, now: number): Q
 			card.mode !== "setrecall" && card.state !== "suspended" && cardEligible(card, content)
 	);
 	const chosenRegions = new Set<string>();
-	for (const card of [...available]
-		.filter((card) => card.state !== "new" && card.due <= now)
-		.sort(
-			(a, b) =>
-				Number(b.state === "relearning") - Number(a.state === "relearning") ||
-				a.interval - b.interval ||
-				Number(a.mode === "region2code") - Number(b.mode === "region2code") ||
-				a.cardId.localeCompare(b.cardId)
-		)) {
-		const steps = card.state === "learning" || card.state === "relearning";
-		if (
-			(!steps && card.scheduledDay === day) ||
-			(seenRegions.has(card.regionId) && seenRegions.get(card.regionId) !== card.cardId) ||
-			chosenRegions.has(card.regionId)
-		)
-			continue;
-		queue.push({ cardId: card.cardId, priority: card.state === "relearning" ? 1 : 3 });
+	const due = available.filter((card) => card.state !== "new" && card.due <= now);
+	// SR-058: learning/relearning steps are always priority 1, regardless of sibling reviews today.
+	const steps = due.filter((card) => card.state === "learning" || card.state === "relearning");
+	for (const card of steps) queue.push({ cardId: card.cardId, priority: 1 });
+	// SRD 4.7: reviews are served from the lowest predicted recall, not the shortest interval.
+	const reviews = due
+		.filter((card) => !steps.includes(card) && card.scheduledDay !== day)
+		.map((card) => ({ card, recall: retrievability(card, now) }))
+		.sort((a, b) => a.recall - b.recall || a.card.cardId.localeCompare(b.card.cardId));
+	for (const { card } of reviews) {
+		const seen = seenRegions.get(card.regionId);
+		if ((seen && seen !== card.cardId) || chosenRegions.has(card.regionId)) continue;
+		queue.push({ cardId: card.cardId, priority: 3 });
 		chosenRegions.add(card.regionId);
 	}
 	for (const confusion of progress.confusions.filter((pair) => pair.active)) {
@@ -80,12 +76,14 @@ export function dailyQueue(progress: Progress, content: Content, now: number): Q
 	const pause = progress.newPaused || queue.length > 40;
 	if (!pause) {
 		let remaining = Math.max(0, 10 - introduced.size);
+		// SR-015/SR-016: new cards follow plates.json order, not alphabetical order.
+		const order = new Map(content.regions.map((region, index) => [region.id, index]));
 		for (const card of available
 			.filter((card) => card.state === "new" && card.due <= now)
 			.sort(
 				(a, b) =>
-					Number(a.mode !== "code2region") - Number(b.mode !== "code2region") ||
-					a.cardId.localeCompare(b.cardId)
+					order.get(a.regionId)! - order.get(b.regionId)! ||
+					Number(a.mode !== "code2region") - Number(b.mode !== "code2region")
 			)) {
 			const region = content.regions.find((region) => region.id === card.regionId)!;
 			if (
@@ -142,27 +140,6 @@ export function refreshProgress(
 	}
 	const queue = dailyQueue(progress, content, now);
 	if (queue.filter((item) => item.priority < 4).length > 40) progress.newPaused = true;
-	// Keep the deferred sibling due at the next protected day, not hidden indefinitely.
-	const chosen = new Set(queue.filter((item) => !item.pair).map((item) => item.cardId));
-	const seen = progress.reviews.filter(
-		(review) => review.day === progress.clock.sequence && review.scheduled
-	);
-	for (const card of progress.cards) {
-		if (
-			card.mode === "setrecall" ||
-			card.state === "new" ||
-			card.state === "suspended" ||
-			card.due > now ||
-			chosen.has(card.cardId)
-		)
-			continue;
-		if (
-			seen.some(
-				(review) => review.regionId === card.regionId && review.cardId !== card.cardId
-			)
-		)
-			card.due = Math.max(card.due, progress.clock.nextBoundary);
-	}
 	return progress;
 }
 
