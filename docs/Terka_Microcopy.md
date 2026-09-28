@@ -83,6 +83,7 @@ Microcopy Terka mengikuti aturan berikut supaya seluruh UI terasa konsisten:
 11. **Angka aturan ditulis sebagai placeholder.** Angka yang berasal dari aturan, seperti batas harian, batas waktu, atau batas perangkat, ditulis `{nama}` dan diisi dari modul konstanta saat render. Pemilik angkanya ada di SRD atau TRD (PRD, bagian pemilik angka). Angka lain di dokumen ini, seperti **12 soal perlu diulang**, hanya contoh hasil render.
 12. **Jenis soal ditulis sebagai tindakan.** Pakai **Tebak daerah** dan **Tebak kode**, bukan panah seperti "Kode → daerah". Panah hanya dipakai di spesifikasi teknis.
 13. **Soal tidak menampilkan petunjuk parsial.** Tidak ada huruf pertama, digit pertama, atau tipe pemegang sebelum pengguna menjawab. Jawaban lengkap baru tampil setelah menjawab, atau sebelum pertanyaan pada kartu Sulit Dikuasai (bagian 3.9).
+14. **Nama lokasi ditulis lengkap.** Nama wilayah, kab/kota, dan kawasan tidak disingkat kecuali singkatannya memang lazim. Tulis **Bali & Nusa Tenggara**, bukan "Bali Nusra"; **Yogyakarta**, bukan "DIY" atau "DI Yogyakarta"; **Nusa Tenggara Barat**, bukan "NTB". Data menyimpan nama lengkap; **Kep.** untuk "Kepulauan" hanya boleh dipakai di tempat sempit.
 
 ---
 

@@ -1,13 +1,16 @@
 {
 	"version": "2026.09.28",
-	"contentRev": 1,
+	"contentRev": 2,
 	"contentHistory": [
 		{
 			"contentRev": 1,
 			"version": "2026.09.28"
+		},
+		{
+			"contentRev": 2,
+			"version": "2026.09.28"
 		}
 	],
-	"sourceRevision": "092c0dd0c2fbe465ba22792cfd10afdb3162ce7266ca9c61ed51d4f18d27d5f6",
 	"regions": [
 		{
 			"id": "bl",
@@ -113,9 +116,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-032"
-			]
+			"facts": ["f-032"]
 		},
 		{
 			"id": "bb",
@@ -201,10 +202,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-031",
-				"f-032"
-			]
+			"facts": ["f-031", "f-032"]
 		},
 		{
 			"id": "bk",
@@ -278,10 +276,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-031",
-				"f-032"
-			]
+			"facts": ["f-031", "f-032"]
 		},
 		{
 			"id": "ba",
@@ -371,9 +366,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-032"
-			]
+			"facts": ["f-032"]
 		},
 		{
 			"id": "bm",
@@ -435,9 +428,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-032"
-			]
+			"facts": ["f-032"]
 		},
 		{
 			"id": "bp",
@@ -479,11 +470,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-029",
-				"f-030",
-				"f-032"
-			]
+			"facts": ["f-029", "f-030", "f-032"]
 		},
 		{
 			"id": "bh",
@@ -541,9 +528,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-032"
-			]
+			"facts": ["f-032"]
 		},
 		{
 			"id": "bg",
@@ -625,9 +610,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-032"
-			]
+			"facts": ["f-032"]
 		},
 		{
 			"id": "bn",
@@ -669,10 +652,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-029",
-				"f-032"
-			]
+			"facts": ["f-029", "f-032"]
 		},
 		{
 			"id": "be",
@@ -746,9 +726,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-032"
-			]
+			"facts": ["f-032"]
 		},
 		{
 			"id": "bd",
@@ -802,9 +780,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-032"
-			]
+			"facts": ["f-032"]
 		},
 		{
 			"id": "a",
@@ -842,9 +818,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-027"
-			]
+			"facts": ["f-027"]
 		},
 		{
 			"id": "b",
@@ -852,17 +826,10 @@
 			"region": "Jakarta, Depok, Tangerang, dan Bekasi",
 			"group": "jawa",
 			"province": "jakarta",
-			"spans": [
-				"jawa-barat",
-				"banten"
-			],
+			"spans": ["jawa-barat", "banten"],
 			"placementTier": "common",
 			"confidence": "high",
-			"aliases": [
-				"Jakarta",
-				"DKI Jakarta",
-				"Jadetabek"
-			],
+			"aliases": ["Jakarta", "DKI Jakarta", "Jadetabek"],
 			"areas": [
 				{
 					"areaId": "kota-jakarta-pusat",
@@ -913,10 +880,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-027",
-				"f-028"
-			]
+			"facts": ["f-027", "f-028"]
 		},
 		{
 			"id": "d",
@@ -946,9 +910,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-026"
-			]
+			"facts": ["f-026"]
 		},
 		{
 			"id": "f",
@@ -1084,9 +1046,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-026"
-			]
+			"facts": ["f-026"]
 		},
 		{
 			"id": "g",
@@ -1268,9 +1228,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-036"
-			]
+			"facts": ["f-036"]
 		},
 		{
 			"id": "ad",
@@ -1281,11 +1239,7 @@
 			"spans": [],
 			"placementTier": "common",
 			"confidence": "high",
-			"aliases": [
-				"Solo",
-				"Surakarta",
-				"Solo Raya"
-			],
+			"aliases": ["Solo", "Surakarta", "Solo Raya"],
 			"areas": [
 				{
 					"areaId": "kota-surakarta",
@@ -1316,25 +1270,18 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-036"
-			]
+			"facts": ["f-036"]
 		},
 		{
 			"id": "ab",
 			"code": "AB",
-			"region": "Seluruh DIY",
+			"region": "Yogyakarta",
 			"group": "jawa",
 			"province": "yogyakarta",
 			"spans": [],
 			"placementTier": "common",
 			"confidence": "high",
-			"aliases": [
-				"Yogyakarta",
-				"Jogja",
-				"Yogya",
-				"DIY"
-			],
+			"aliases": ["Yogyakarta", "Jogja", "Yogya", "DIY"],
 			"areas": [
 				{
 					"areaId": "kota-yogyakarta",
@@ -1357,9 +1304,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-036"
-			]
+			"facts": ["f-036"]
 		},
 		{
 			"id": "l",
@@ -1377,9 +1322,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-025"
-			]
+			"facts": ["f-025"]
 		},
 		{
 			"id": "w",
@@ -1401,9 +1344,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-025"
-			]
+			"facts": ["f-025"]
 		},
 		{
 			"id": "m",
@@ -1444,9 +1385,7 @@
 			"spans": [],
 			"placementTier": "common",
 			"confidence": "high",
-			"aliases": [
-				"Malang Raya"
-			],
+			"aliases": ["Malang Raya"],
 			"areas": [
 				{
 					"areaId": "kota-malang",
@@ -1591,9 +1530,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-036"
-			]
+			"facts": ["f-036"]
 		},
 		{
 			"id": "ae",
@@ -1631,22 +1568,18 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-036"
-			]
+			"facts": ["f-036"]
 		},
 		{
 			"id": "dk",
 			"code": "DK",
 			"region": "Bali",
-			"group": "bali-nusra",
+			"group": "bali-nusa-tenggara",
 			"province": "bali",
 			"spans": [],
 			"placementTier": "common",
 			"confidence": "high",
-			"aliases": [
-				"Pulau Bali"
-			],
+			"aliases": ["Pulau Bali"],
 			"areas": [
 				{
 					"areaId": "kota-denpasar",
@@ -1685,22 +1618,18 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-035"
-			]
+			"facts": ["f-035"]
 		},
 		{
 			"id": "dr",
 			"code": "DR",
-			"region": "NTB — Pulau Lombok",
-			"group": "bali-nusra",
+			"region": "Nusa Tenggara Barat — Pulau Lombok",
+			"group": "bali-nusa-tenggara",
 			"province": "nusa-tenggara-barat",
 			"spans": [],
 			"placementTier": "medium",
 			"confidence": "high",
-			"aliases": [
-				"Lombok"
-			],
+			"aliases": ["Lombok"],
 			"areas": [
 				{
 					"areaId": "kota-mataram",
@@ -1728,15 +1657,13 @@
 		{
 			"id": "ea",
 			"code": "EA",
-			"region": "NTB — Pulau Sumbawa",
-			"group": "bali-nusra",
+			"region": "Nusa Tenggara Barat — Pulau Sumbawa",
+			"group": "bali-nusa-tenggara",
 			"province": "nusa-tenggara-barat",
 			"spans": [],
 			"placementTier": "rare",
 			"confidence": "high",
-			"aliases": [
-				"Pulau Sumbawa"
-			],
+			"aliases": ["Pulau Sumbawa"],
 			"areas": [
 				{
 					"areaId": "kota-bima",
@@ -1764,15 +1691,13 @@
 		{
 			"id": "dh",
 			"code": "DH",
-			"region": "NTT — Pulau Timor & sekitarnya",
-			"group": "bali-nusra",
+			"region": "Nusa Tenggara Timur — Pulau Timor & sekitarnya",
+			"group": "bali-nusa-tenggara",
 			"province": "nusa-tenggara-timur",
 			"spans": [],
 			"placementTier": "rare",
 			"confidence": "high",
-			"aliases": [
-				"Timor"
-			],
+			"aliases": ["Timor"],
 			"areas": [
 				{
 					"areaId": "kota-kupang",
@@ -1812,15 +1737,13 @@
 		{
 			"id": "eb",
 			"code": "EB",
-			"region": "NTT — Pulau Flores & sekitarnya",
-			"group": "bali-nusra",
+			"region": "Nusa Tenggara Timur — Pulau Flores & sekitarnya",
+			"group": "bali-nusa-tenggara",
 			"province": "nusa-tenggara-timur",
 			"spans": [],
 			"placementTier": "rare",
 			"confidence": "high",
-			"aliases": [
-				"Flores"
-			],
+			"aliases": ["Flores"],
 			"areas": [
 				{
 					"areaId": "kab-sikka",
@@ -1868,15 +1791,13 @@
 		{
 			"id": "ed",
 			"code": "ED",
-			"region": "NTT — Pulau Sumba",
-			"group": "bali-nusra",
+			"region": "Nusa Tenggara Timur — Pulau Sumba",
+			"group": "bali-nusa-tenggara",
 			"province": "nusa-tenggara-timur",
 			"spans": [],
 			"placementTier": "rare",
 			"confidence": "high",
-			"aliases": [
-				"Sumba"
-			],
+			"aliases": ["Sumba"],
 			"areas": [
 				{
 					"areaId": "kab-sumba-barat",
@@ -1965,11 +1886,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-010",
-				"f-012",
-				"f-033"
-			]
+			"facts": ["f-010", "f-012", "f-033"]
 		},
 		{
 			"id": "da",
@@ -2035,15 +1952,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-010",
-				"f-011",
-				"f-012",
-				"f-013",
-				"f-014",
-				"f-015",
-				"f-033"
-			]
+			"facts": ["f-010", "f-011", "f-012", "f-013", "f-014", "f-015", "f-033"]
 		},
 		{
 			"id": "kh",
@@ -2113,11 +2022,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-010",
-				"f-012",
-				"f-033"
-			]
+			"facts": ["f-010", "f-012", "f-033"]
 		},
 		{
 			"id": "kt",
@@ -2171,11 +2076,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-010",
-				"f-012",
-				"f-033"
-			]
+			"facts": ["f-010", "f-012", "f-033"]
 		},
 		{
 			"id": "ku",
@@ -2209,11 +2110,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-010",
-				"f-016",
-				"f-033"
-			]
+			"facts": ["f-010", "f-016", "f-033"]
 		},
 		{
 			"id": "db",
@@ -2537,16 +2434,12 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-021",
-				"f-022",
-				"f-023"
-			]
+			"facts": ["f-021", "f-022", "f-023"]
 		},
 		{
 			"id": "dw",
 			"code": "DW",
-			"region": "Sulawesi Selatan II (Bosowasi)",
+			"region": "Bone, Soppeng, Wajo, dan Sinjai",
 			"group": "sulawesi",
 			"province": "sulawesi-selatan",
 			"spans": [],
@@ -2571,11 +2464,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-021",
-				"f-023",
-				"f-024"
-			]
+			"facts": ["f-021", "f-023", "f-024"]
 		},
 		{
 			"id": "dp",
@@ -2633,11 +2522,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-021",
-				"f-023",
-				"f-024"
-			]
+			"facts": ["f-021", "f-023", "f-024"]
 		},
 		{
 			"id": "dc",
@@ -2837,11 +2722,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-018",
-				"f-020",
-				"f-037"
-			]
+			"facts": ["f-018", "f-020", "f-037"]
 		},
 		{
 			"id": "pb",
@@ -2883,11 +2764,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-017",
-				"f-020",
-				"f-037"
-			]
+			"facts": ["f-017", "f-020", "f-037"]
 		},
 		{
 			"id": "py",
@@ -2925,11 +2802,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-019",
-				"f-020",
-				"f-037"
-			]
+			"facts": ["f-019", "f-020", "f-037"]
 		},
 		{
 			"id": "ps",
@@ -2959,11 +2832,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-019",
-				"f-020",
-				"f-037"
-			]
+			"facts": ["f-019", "f-020", "f-037"]
 		},
 		{
 			"id": "pt",
@@ -3009,11 +2878,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-019",
-				"f-020",
-				"f-037"
-			]
+			"facts": ["f-019", "f-020", "f-037"]
 		},
 		{
 			"id": "pg",
@@ -3059,10 +2924,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": [
-				"f-020",
-				"f-037"
-			]
+			"facts": ["f-020", "f-037"]
 		}
 	],
 	"areas": [
@@ -4759,9 +4621,7 @@
 			"type": "kabupaten",
 			"name": "Blora",
 			"province": "jawa-tengah",
-			"aliases": [
-				"Cepu"
-			],
+			"aliases": ["Cepu"],
 			"variants": []
 		},
 		{
@@ -4777,9 +4637,7 @@
 			"type": "kabupaten",
 			"name": "Banyumas",
 			"province": "jawa-tengah",
-			"aliases": [
-				"Purwokerto"
-			],
+			"aliases": ["Purwokerto"],
 			"variants": []
 		},
 		{
@@ -5427,9 +5285,7 @@
 			"type": "kabupaten",
 			"name": "Timor Tengah Selatan",
 			"province": "nusa-tenggara-timur",
-			"aliases": [
-				"Soe"
-			],
+			"aliases": ["Soe"],
 			"variants": []
 		},
 		{
@@ -5437,9 +5293,7 @@
 			"type": "kabupaten",
 			"name": "Timor Tengah Utara",
 			"province": "nusa-tenggara-timur",
-			"aliases": [
-				"Kefamenanu"
-			],
+			"aliases": ["Kefamenanu"],
 			"variants": []
 		},
 		{
@@ -5447,9 +5301,7 @@
 			"type": "kabupaten",
 			"name": "Belu",
 			"province": "nusa-tenggara-timur",
-			"aliases": [
-				"Atambua"
-			],
+			"aliases": ["Atambua"],
 			"variants": []
 		},
 		{
@@ -5457,9 +5309,7 @@
 			"type": "kabupaten",
 			"name": "Malaka",
 			"province": "nusa-tenggara-timur",
-			"aliases": [
-				"Betun"
-			],
+			"aliases": ["Betun"],
 			"variants": []
 		},
 		{
@@ -5467,9 +5317,7 @@
 			"type": "kabupaten",
 			"name": "Rote Ndao",
 			"province": "nusa-tenggara-timur",
-			"aliases": [
-				"Baa"
-			],
+			"aliases": ["Baa"],
 			"variants": []
 		},
 		{
@@ -5477,9 +5325,7 @@
 			"type": "kabupaten",
 			"name": "Sabu Raijua",
 			"province": "nusa-tenggara-timur",
-			"aliases": [
-				"Seba"
-			],
+			"aliases": ["Seba"],
 			"variants": []
 		},
 		{
@@ -5487,9 +5333,7 @@
 			"type": "kabupaten",
 			"name": "Sikka",
 			"province": "nusa-tenggara-timur",
-			"aliases": [
-				"Maumere"
-			],
+			"aliases": ["Maumere"],
 			"variants": []
 		},
 		{
@@ -5505,9 +5349,7 @@
 			"type": "kabupaten",
 			"name": "Ngada",
 			"province": "nusa-tenggara-timur",
-			"aliases": [
-				"Bajawa"
-			],
+			"aliases": ["Bajawa"],
 			"variants": []
 		},
 		{
@@ -5515,9 +5357,7 @@
 			"type": "kabupaten",
 			"name": "Nagekeo",
 			"province": "nusa-tenggara-timur",
-			"aliases": [
-				"Mbay"
-			],
+			"aliases": ["Mbay"],
 			"variants": []
 		},
 		{
@@ -5525,9 +5365,7 @@
 			"type": "kabupaten",
 			"name": "Flores Timur",
 			"province": "nusa-tenggara-timur",
-			"aliases": [
-				"Larantuka"
-			],
+			"aliases": ["Larantuka"],
 			"variants": []
 		},
 		{
@@ -5535,9 +5373,7 @@
 			"type": "kabupaten",
 			"name": "Manggarai",
 			"province": "nusa-tenggara-timur",
-			"aliases": [
-				"Ruteng"
-			],
+			"aliases": ["Ruteng"],
 			"variants": []
 		},
 		{
@@ -5545,9 +5381,7 @@
 			"type": "kabupaten",
 			"name": "Manggarai Barat",
 			"province": "nusa-tenggara-timur",
-			"aliases": [
-				"Labuan Bajo"
-			],
+			"aliases": ["Labuan Bajo"],
 			"variants": []
 		},
 		{
@@ -5555,9 +5389,7 @@
 			"type": "kabupaten",
 			"name": "Manggarai Timur",
 			"province": "nusa-tenggara-timur",
-			"aliases": [
-				"Borong"
-			],
+			"aliases": ["Borong"],
 			"variants": []
 		},
 		{
@@ -5565,9 +5397,7 @@
 			"type": "kabupaten",
 			"name": "Alor",
 			"province": "nusa-tenggara-timur",
-			"aliases": [
-				"Kalabahi"
-			],
+			"aliases": ["Kalabahi"],
 			"variants": []
 		},
 		{
@@ -5575,9 +5405,7 @@
 			"type": "kabupaten",
 			"name": "Lembata",
 			"province": "nusa-tenggara-timur",
-			"aliases": [
-				"Lewoleba"
-			],
+			"aliases": ["Lewoleba"],
 			"variants": []
 		},
 		{
@@ -5585,9 +5413,7 @@
 			"type": "kabupaten",
 			"name": "Sumba Barat",
 			"province": "nusa-tenggara-timur",
-			"aliases": [
-				"Waikabubak"
-			],
+			"aliases": ["Waikabubak"],
 			"variants": []
 		},
 		{
@@ -5595,9 +5421,7 @@
 			"type": "kabupaten",
 			"name": "Sumba Timur",
 			"province": "nusa-tenggara-timur",
-			"aliases": [
-				"Waingapu"
-			],
+			"aliases": ["Waingapu"],
 			"variants": []
 		},
 		{
@@ -5605,9 +5429,7 @@
 			"type": "kabupaten",
 			"name": "Sumba Tengah",
 			"province": "nusa-tenggara-timur",
-			"aliases": [
-				"Waibakul"
-			],
+			"aliases": ["Waibakul"],
 			"variants": []
 		},
 		{
@@ -5615,9 +5437,7 @@
 			"type": "kabupaten",
 			"name": "Sumba Barat Daya",
 			"province": "nusa-tenggara-timur",
-			"aliases": [
-				"Tambolaka"
-			],
+			"aliases": ["Tambolaka"],
 			"variants": []
 		},
 		{
@@ -5753,9 +5573,7 @@
 			"type": "kabupaten",
 			"name": "Banjar",
 			"province": "kalimantan-selatan",
-			"aliases": [
-				"Martapura"
-			],
+			"aliases": ["Martapura"],
 			"variants": []
 		},
 		{
@@ -5779,9 +5597,7 @@
 			"type": "kabupaten",
 			"name": "Hulu Sungai Selatan",
 			"province": "kalimantan-selatan",
-			"aliases": [
-				"Kandangan"
-			],
+			"aliases": ["Kandangan"],
 			"variants": []
 		},
 		{
@@ -5853,9 +5669,7 @@
 			"type": "kabupaten",
 			"name": "Kotawaringin Timur",
 			"province": "kalimantan-tengah",
-			"aliases": [
-				"Sampit"
-			],
+			"aliases": ["Sampit"],
 			"variants": []
 		},
 		{
@@ -5863,9 +5677,7 @@
 			"type": "kabupaten",
 			"name": "Kotawaringin Barat",
 			"province": "kalimantan-tengah",
-			"aliases": [
-				"Pangkalan Bun"
-			],
+			"aliases": ["Pangkalan Bun"],
 			"variants": []
 		},
 		{
@@ -5985,9 +5797,7 @@
 			"type": "kabupaten",
 			"name": "Kutai Kartanegara",
 			"province": "kalimantan-timur",
-			"aliases": [
-				"Tenggarong"
-			],
+			"aliases": ["Tenggarong"],
 			"variants": []
 		},
 		{
@@ -5995,9 +5805,7 @@
 			"type": "kabupaten",
 			"name": "Kutai Timur",
 			"province": "kalimantan-timur",
-			"aliases": [
-				"Sangatta"
-			],
+			"aliases": ["Sangatta"],
 			"variants": []
 		},
 		{
@@ -6005,9 +5813,7 @@
 			"type": "kabupaten",
 			"name": "Kutai Barat",
 			"province": "kalimantan-timur",
-			"aliases": [
-				"Sendawar"
-			],
+			"aliases": ["Sendawar"],
 			"variants": []
 		},
 		{
@@ -6015,9 +5821,7 @@
 			"type": "kabupaten",
 			"name": "Berau",
 			"province": "kalimantan-timur",
-			"aliases": [
-				"Tanjung Redeb"
-			],
+			"aliases": ["Tanjung Redeb"],
 			"variants": []
 		},
 		{
@@ -6057,9 +5861,7 @@
 			"type": "kabupaten",
 			"name": "Bulungan",
 			"province": "kalimantan-utara",
-			"aliases": [
-				"Tanjung Selor"
-			],
+			"aliases": ["Tanjung Selor"],
 			"variants": []
 		},
 		{
@@ -6123,9 +5925,7 @@
 			"type": "kabupaten",
 			"name": "Minahasa",
 			"province": "sulawesi-utara",
-			"aliases": [
-				"Tondano"
-			],
+			"aliases": ["Tondano"],
 			"variants": []
 		},
 		{
@@ -6189,9 +5989,7 @@
 			"type": "kabupaten",
 			"name": "Kepulauan Sangihe",
 			"province": "sulawesi-utara",
-			"aliases": [
-				"Tahuna"
-			],
+			"aliases": ["Tahuna"],
 			"variants": []
 		},
 		{
@@ -6199,9 +5997,7 @@
 			"type": "kabupaten",
 			"name": "Kepulauan Talaud",
 			"province": "sulawesi-utara",
-			"aliases": [
-				"Melonguane"
-			],
+			"aliases": ["Melonguane"],
 			"variants": []
 		},
 		{
@@ -6209,10 +6005,7 @@
 			"type": "kabupaten",
 			"name": "Kepulauan Siau Tagulandang Biaro",
 			"province": "sulawesi-utara",
-			"aliases": [
-				"Ondong",
-				"Sitaro"
-			],
+			"aliases": ["Ondong", "Sitaro"],
 			"variants": []
 		},
 		{
@@ -6228,9 +6021,7 @@
 			"type": "kabupaten",
 			"name": "Gorontalo",
 			"province": "gorontalo",
-			"aliases": [
-				"Limboto"
-			],
+			"aliases": ["Limboto"],
 			"variants": []
 		},
 		{
@@ -6326,9 +6117,7 @@
 			"type": "kabupaten",
 			"name": "Banggai",
 			"province": "sulawesi-tengah",
-			"aliases": [
-				"Luwuk"
-			],
+			"aliases": ["Luwuk"],
 			"variants": []
 		},
 		{
@@ -6392,9 +6181,7 @@
 			"type": "kabupaten",
 			"name": "Konawe",
 			"province": "sulawesi-tenggara",
-			"aliases": [
-				"Unaaha"
-			],
+			"aliases": ["Unaaha"],
 			"variants": []
 		},
 		{
@@ -6522,9 +6309,7 @@
 			"type": "kabupaten",
 			"name": "Gowa",
 			"province": "sulawesi-selatan",
-			"aliases": [
-				"Sungguminasa"
-			],
+			"aliases": ["Sungguminasa"],
 			"variants": []
 		},
 		{
@@ -6588,9 +6373,7 @@
 			"type": "kabupaten",
 			"name": "Bone",
 			"province": "sulawesi-selatan",
-			"aliases": [
-				"Watampone"
-			],
+			"aliases": ["Watampone"],
 			"variants": []
 		},
 		{
@@ -6598,9 +6381,7 @@
 			"type": "kabupaten",
 			"name": "Soppeng",
 			"province": "sulawesi-selatan",
-			"aliases": [
-				"Watansoppeng"
-			],
+			"aliases": ["Watansoppeng"],
 			"variants": []
 		},
 		{
@@ -6608,9 +6389,7 @@
 			"type": "kabupaten",
 			"name": "Wajo",
 			"province": "sulawesi-selatan",
-			"aliases": [
-				"Sengkang"
-			],
+			"aliases": ["Sengkang"],
 			"variants": []
 		},
 		{
@@ -6650,9 +6429,7 @@
 			"type": "kabupaten",
 			"name": "Sidenreng Rappang",
 			"province": "sulawesi-selatan",
-			"aliases": [
-				"Sidrap"
-			],
+			"aliases": ["Sidrap"],
 			"variants": []
 		},
 		{
@@ -6676,9 +6453,7 @@
 			"type": "kabupaten",
 			"name": "Luwu",
 			"province": "sulawesi-selatan",
-			"aliases": [
-				"Belopa"
-			],
+			"aliases": ["Belopa"],
 			"variants": []
 		},
 		{
@@ -6686,9 +6461,7 @@
 			"type": "kabupaten",
 			"name": "Luwu Utara",
 			"province": "sulawesi-selatan",
-			"aliases": [
-				"Masamba"
-			],
+			"aliases": ["Masamba"],
 			"variants": []
 		},
 		{
@@ -6696,9 +6469,7 @@
 			"type": "kabupaten",
 			"name": "Luwu Timur",
 			"province": "sulawesi-selatan",
-			"aliases": [
-				"Malili"
-			],
+			"aliases": ["Malili"],
 			"variants": []
 		},
 		{
@@ -6706,9 +6477,7 @@
 			"type": "kabupaten",
 			"name": "Tana Toraja",
 			"province": "sulawesi-selatan",
-			"aliases": [
-				"Makale"
-			],
+			"aliases": ["Makale"],
 			"variants": []
 		},
 		{
@@ -6716,9 +6485,7 @@
 			"type": "kabupaten",
 			"name": "Toraja Utara",
 			"province": "sulawesi-selatan",
-			"aliases": [
-				"Rantepao"
-			],
+			"aliases": ["Rantepao"],
 			"variants": []
 		},
 		{
@@ -6790,9 +6557,7 @@
 			"type": "kabupaten",
 			"name": "Maluku Tengah",
 			"province": "maluku",
-			"aliases": [
-				"Masohi"
-			],
+			"aliases": ["Masohi"],
 			"variants": []
 		},
 		{
@@ -6824,9 +6589,7 @@
 			"type": "kabupaten",
 			"name": "Kepulauan Tanimbar",
 			"province": "maluku",
-			"aliases": [
-				"Saumlaki"
-			],
+			"aliases": ["Saumlaki"],
 			"variants": []
 		},
 		{
@@ -6842,9 +6605,7 @@
 			"type": "kabupaten",
 			"name": "Kepulauan Aru",
 			"province": "maluku",
-			"aliases": [
-				"Dobo"
-			],
+			"aliases": ["Dobo"],
 			"variants": []
 		},
 		{
@@ -6884,9 +6645,7 @@
 			"type": "kabupaten",
 			"name": "Halmahera Barat",
 			"province": "maluku-utara",
-			"aliases": [
-				"Jailolo"
-			],
+			"aliases": ["Jailolo"],
 			"variants": []
 		},
 		{
@@ -6902,9 +6661,7 @@
 			"type": "kabupaten",
 			"name": "Halmahera Utara",
 			"province": "maluku-utara",
-			"aliases": [
-				"Tobelo"
-			],
+			"aliases": ["Tobelo"],
 			"variants": []
 		},
 		{
@@ -6920,9 +6677,7 @@
 			"type": "kabupaten",
 			"name": "Halmahera Selatan",
 			"province": "maluku-utara",
-			"aliases": [
-				"Labuha"
-			],
+			"aliases": ["Labuha"],
 			"variants": []
 		},
 		{
@@ -6978,9 +6733,7 @@
 			"type": "kabupaten",
 			"name": "Kepulauan Yapen",
 			"province": "papua",
-			"aliases": [
-				"Serui"
-			],
+			"aliases": ["Serui"],
 			"variants": []
 		},
 		{
@@ -7172,9 +6925,7 @@
 			"type": "kabupaten",
 			"name": "Mimika",
 			"province": "papua-tengah",
-			"aliases": [
-				"Timika"
-			],
+			"aliases": ["Timika"],
 			"variants": []
 		},
 		{
@@ -7230,9 +6981,7 @@
 			"type": "kabupaten",
 			"name": "Jayawijaya",
 			"province": "papua-pegunungan",
-			"aliases": [
-				"Wamena"
-			],
+			"aliases": ["Wamena"],
 			"variants": []
 		},
 		{
@@ -7770,18 +7519,11 @@
 			"number": "12",
 			"holder": "Amerika Serikat",
 			"holderType": "country",
-			"aliases": [
-				"AS",
-				"USA",
-				"United States",
-				"Amerika"
-			],
+			"aliases": ["AS", "USA", "United States", "Amerika"],
 			"sourceName": "Amerika Serikat",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -7795,9 +7537,7 @@
 			"sourceName": "India",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -7807,16 +7547,11 @@
 			"number": "14",
 			"holder": "Prancis",
 			"holderType": "country",
-			"aliases": [
-				"Perancis",
-				"France"
-			],
+			"aliases": ["Perancis", "France"],
 			"sourceName": "Perancis",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -7826,18 +7561,11 @@
 			"number": "15",
 			"holder": "Inggris",
 			"holderType": "country",
-			"aliases": [
-				"Britania Raya",
-				"Kerajaan Inggris",
-				"UK",
-				"United Kingdom"
-			],
+			"aliases": ["Britania Raya", "Kerajaan Inggris", "UK", "United Kingdom"],
 			"sourceName": "Inggris",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -7847,15 +7575,11 @@
 			"number": "16",
 			"holder": "Filipina",
 			"holderType": "country",
-			"aliases": [
-				"Philippines"
-			],
+			"aliases": ["Philippines"],
 			"sourceName": "Filipina",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -7865,17 +7589,11 @@
 			"number": "17",
 			"holder": "Vatikan",
 			"holderType": "country",
-			"aliases": [
-				"Takhta Suci",
-				"Tahta Suci",
-				"Holy See"
-			],
+			"aliases": ["Takhta Suci", "Tahta Suci", "Holy See"],
 			"sourceName": "Vatikan",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -7889,9 +7607,7 @@
 			"sourceName": "Australia",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -7901,15 +7617,11 @@
 			"number": "19",
 			"holder": "Norwegia",
 			"holderType": "country",
-			"aliases": [
-				"Norway"
-			],
+			"aliases": ["Norway"],
 			"sourceName": "Norwegia",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -7919,15 +7631,11 @@
 			"number": "20",
 			"holder": "Irak",
 			"holderType": "country",
-			"aliases": [
-				"Iraq"
-			],
+			"aliases": ["Iraq"],
 			"sourceName": "Irak",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -7941,9 +7649,7 @@
 			"sourceName": "Pakistan",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -7953,15 +7659,11 @@
 			"number": "22",
 			"holder": "Belgia",
 			"holderType": "country",
-			"aliases": [
-				"Belgium"
-			],
+			"aliases": ["Belgium"],
 			"sourceName": "Belgia",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -7971,35 +7673,25 @@
 			"number": "23",
 			"holder": "Myanmar",
 			"holderType": "country",
-			"aliases": [
-				"Burma"
-			],
+			"aliases": ["Burma"],
 			"sourceName": "Myanmar",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
 		{
-			"id": "cd-24-uea",
+			"id": "cd-24-uni-emirat-arab",
 			"series": "CD",
 			"number": "24",
 			"holder": "Uni Emirat Arab",
 			"holderType": "country",
-			"aliases": [
-				"UEA",
-				"UAE",
-				"Emirat Arab"
-			],
+			"aliases": ["UEA", "UAE", "Emirat Arab"],
 			"sourceName": "Uni Emirat Arab",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8009,19 +7701,11 @@
 			"number": "25",
 			"holder": "Tiongkok",
 			"holderType": "country",
-			"aliases": [
-				"China",
-				"Cina",
-				"RRT",
-				"Republik Rakyat Tiongkok",
-				"RRC"
-			],
+			"aliases": ["China", "Cina", "RRT", "Republik Rakyat Tiongkok", "RRC"],
 			"sourceName": "China",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8031,15 +7715,11 @@
 			"number": "26",
 			"holder": "Swedia",
 			"holderType": "country",
-			"aliases": [
-				"Sweden"
-			],
+			"aliases": ["Sweden"],
 			"sourceName": "Swedia",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8049,16 +7729,11 @@
 			"number": "27",
 			"holder": "Arab Saudi",
 			"holderType": "country",
-			"aliases": [
-				"Saudi Arabia",
-				"Saudi"
-			],
+			"aliases": ["Saudi Arabia", "Saudi"],
 			"sourceName": "Saudi Arabia",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8068,15 +7743,11 @@
 			"number": "28",
 			"holder": "Thailand",
 			"holderType": "country",
-			"aliases": [
-				"Muangthai"
-			],
+			"aliases": ["Muangthai"],
 			"sourceName": "Thailand",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8086,15 +7757,11 @@
 			"number": "29",
 			"holder": "Mesir",
 			"holderType": "country",
-			"aliases": [
-				"Egypt"
-			],
+			"aliases": ["Egypt"],
 			"sourceName": "Mesir",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8104,15 +7771,11 @@
 			"number": "30",
 			"holder": "Italia",
 			"holderType": "country",
-			"aliases": [
-				"Italy"
-			],
+			"aliases": ["Italy"],
 			"sourceName": "Italia",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8122,15 +7785,11 @@
 			"number": "31",
 			"holder": "Swiss",
 			"holderType": "country",
-			"aliases": [
-				"Switzerland"
-			],
+			"aliases": ["Switzerland"],
 			"sourceName": "Swiss",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8140,15 +7799,11 @@
 			"number": "32",
 			"holder": "Jerman",
 			"holderType": "country",
-			"aliases": [
-				"Germany"
-			],
+			"aliases": ["Germany"],
 			"sourceName": "Jerman",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8158,15 +7813,11 @@
 			"number": "33",
 			"holder": "Sri Lanka",
 			"holderType": "country",
-			"aliases": [
-				"Srilanka"
-			],
+			"aliases": ["Srilanka"],
 			"sourceName": "Srilanka",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8180,9 +7831,7 @@
 			"sourceName": "Denmark",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8192,15 +7841,11 @@
 			"number": "35",
 			"holder": "Kanada",
 			"holderType": "country",
-			"aliases": [
-				"Canada"
-			],
+			"aliases": ["Canada"],
 			"sourceName": "Kanada",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8210,15 +7855,11 @@
 			"number": "36",
 			"holder": "Brasil",
 			"holderType": "country",
-			"aliases": [
-				"Brazil"
-			],
+			"aliases": ["Brazil"],
 			"sourceName": "Brazil",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8228,16 +7869,11 @@
 			"number": "37",
 			"holder": "Rusia",
 			"holderType": "country",
-			"aliases": [
-				"Russia",
-				"Federasi Rusia"
-			],
+			"aliases": ["Russia", "Federasi Rusia"],
 			"sourceName": "Rusia",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8247,15 +7883,11 @@
 			"number": "38",
 			"holder": "Afganistan",
 			"holderType": "country",
-			"aliases": [
-				"Afghanistan"
-			],
+			"aliases": ["Afghanistan"],
 			"sourceName": "Afganistan",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8269,9 +7901,7 @@
 			"sourceName": "Serbia",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8281,17 +7911,11 @@
 			"number": "40",
 			"holder": "Ceko",
 			"holderType": "country",
-			"aliases": [
-				"Republik Ceko",
-				"Czech",
-				"Cheko"
-			],
+			"aliases": ["Republik Ceko", "Czech", "Cheko"],
 			"sourceName": "Ceko",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8301,15 +7925,11 @@
 			"number": "41",
 			"holder": "Finlandia",
 			"holderType": "country",
-			"aliases": [
-				"Finland"
-			],
+			"aliases": ["Finland"],
 			"sourceName": "Finlandia",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8319,15 +7939,11 @@
 			"number": "42",
 			"holder": "Meksiko",
 			"holderType": "country",
-			"aliases": [
-				"Mexico"
-			],
+			"aliases": ["Mexico"],
 			"sourceName": "Meksiko",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8337,15 +7953,11 @@
 			"number": "43",
 			"holder": "Hungaria",
 			"holderType": "country",
-			"aliases": [
-				"Hungary"
-			],
+			"aliases": ["Hungary"],
 			"sourceName": "Hungaria",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8355,15 +7967,11 @@
 			"number": "44",
 			"holder": "Polandia",
 			"holderType": "country",
-			"aliases": [
-				"Poland"
-			],
+			"aliases": ["Poland"],
 			"sourceName": "Polandia",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8377,9 +7985,7 @@
 			"sourceName": "Iran",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8393,9 +7999,7 @@
 			"sourceName": "Malaysia",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8405,17 +8009,11 @@
 			"number": "48",
 			"holder": "Turki",
 			"holderType": "country",
-			"aliases": [
-				"Turkiye",
-				"Türkiye",
-				"Turkey"
-			],
+			"aliases": ["Turkiye", "Türkiye", "Turkey"],
 			"sourceName": "Turki",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8425,15 +8023,11 @@
 			"number": "49",
 			"holder": "Jepang",
 			"holderType": "country",
-			"aliases": [
-				"Japan"
-			],
+			"aliases": ["Japan"],
 			"sourceName": "Jepang",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8447,9 +8041,7 @@
 			"sourceName": "Bulgaria",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8459,15 +8051,11 @@
 			"number": "51",
 			"holder": "Kamboja",
 			"holderType": "country",
-			"aliases": [
-				"Cambodia"
-			],
+			"aliases": ["Cambodia"],
 			"sourceName": "Kamboja",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8481,9 +8069,7 @@
 			"sourceName": "Argentina",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8493,15 +8079,11 @@
 			"number": "53",
 			"holder": "Rumania",
 			"holderType": "country",
-			"aliases": [
-				"Romania"
-			],
+			"aliases": ["Romania"],
 			"sourceName": "Rumania",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8511,15 +8093,11 @@
 			"number": "54",
 			"holder": "Yunani",
 			"holderType": "country",
-			"aliases": [
-				"Greece"
-			],
+			"aliases": ["Greece"],
 			"sourceName": "Yunani",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8529,16 +8107,11 @@
 			"number": "55",
 			"holder": "Yordania",
 			"holderType": "country",
-			"aliases": [
-				"Jordan",
-				"Yordan"
-			],
+			"aliases": ["Jordan", "Yordan"],
 			"sourceName": "Yordania",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8552,9 +8125,7 @@
 			"sourceName": "Austria",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8564,16 +8135,11 @@
 			"number": "57",
 			"holder": "Suriah",
 			"holderType": "country",
-			"aliases": [
-				"Syria",
-				"Siria"
-			],
+			"aliases": ["Syria", "Siria"],
 			"sourceName": "Syria",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8583,16 +8149,11 @@
 			"number": "58",
 			"holder": "UNDP",
 			"holderType": "organization",
-			"aliases": [
-				"United Nations Development Programme",
-				"Program Pembangunan PBB"
-			],
+			"aliases": ["United Nations Development Programme", "Program Pembangunan PBB"],
 			"sourceName": "United Nations Development Programme (UNDP)",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8602,15 +8163,11 @@
 			"number": "59",
 			"holder": "Selandia Baru",
 			"holderType": "country",
-			"aliases": [
-				"New Zealand"
-			],
+			"aliases": ["New Zealand"],
 			"sourceName": "Selandia Baru",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8620,16 +8177,11 @@
 			"number": "60",
 			"holder": "Belanda",
 			"holderType": "country",
-			"aliases": [
-				"Netherlands",
-				"Nederland"
-			],
+			"aliases": ["Netherlands", "Nederland"],
 			"sourceName": "Belanda",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8639,15 +8191,11 @@
 			"number": "61",
 			"holder": "Yaman",
 			"holderType": "country",
-			"aliases": [
-				"Yemen"
-			],
+			"aliases": ["Yemen"],
 			"sourceName": "Yaman",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8657,16 +8205,11 @@
 			"number": "62",
 			"holder": "UPU",
 			"holderType": "organization",
-			"aliases": [
-				"Universal Postal Union",
-				"Uni Pos Sedunia"
-			],
+			"aliases": ["Universal Postal Union", "Uni Pos Sedunia"],
 			"sourceName": "Universal Postal Union (UPU)",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8680,9 +8223,7 @@
 			"sourceName": "Portugal",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8692,15 +8233,11 @@
 			"number": "64",
 			"holder": "Aljazair",
 			"holderType": "country",
-			"aliases": [
-				"Algeria"
-			],
+			"aliases": ["Algeria"],
 			"sourceName": "Aljazair",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8710,17 +8247,11 @@
 			"number": "65",
 			"holder": "Korea Utara",
 			"holderType": "country",
-			"aliases": [
-				"RRDK",
-				"Republik Rakyat Demokratik Korea",
-				"DPRK"
-			],
+			"aliases": ["RRDK", "Republik Rakyat Demokratik Korea", "DPRK"],
 			"sourceName": "Korea Utara",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8730,15 +8261,11 @@
 			"number": "66",
 			"holder": "Vietnam",
 			"holderType": "country",
-			"aliases": [
-				"Viet Nam"
-			],
+			"aliases": ["Viet Nam"],
 			"sourceName": "Vietnam",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8748,15 +8275,11 @@
 			"number": "67",
 			"holder": "Singapura",
 			"holderType": "country",
-			"aliases": [
-				"Singapore"
-			],
+			"aliases": ["Singapore"],
 			"sourceName": "Singapura",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8766,15 +8289,11 @@
 			"number": "68",
 			"holder": "Spanyol",
 			"holderType": "country",
-			"aliases": [
-				"Spain"
-			],
+			"aliases": ["Spain"],
 			"sourceName": "Spanyol",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8788,9 +8307,7 @@
 			"sourceName": "Bangladesh",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8804,9 +8321,7 @@
 			"sourceName": "Panama",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8816,15 +8331,11 @@
 			"number": "71",
 			"holder": "UNICEF",
 			"holderType": "organization",
-			"aliases": [
-				"United Nations Children's Fund"
-			],
+			"aliases": ["United Nations Children's Fund"],
 			"sourceName": "United Nations International Children's Emergency Fund (UNICEF)",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8838,9 +8349,7 @@
 			"sourceName": "United Nations Educational, Scientific and Cultural Organization (UNESCO)",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8850,16 +8359,11 @@
 			"number": "73",
 			"holder": "FAO",
 			"holderType": "organization",
-			"aliases": [
-				"Food and Agriculture Organization",
-				"Organisasi Pangan dan Pertanian"
-			],
+			"aliases": ["Food and Agriculture Organization", "Organisasi Pangan dan Pertanian"],
 			"sourceName": "Food and Agriculture Organization (FAO)",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8869,16 +8373,11 @@
 			"number": "74",
 			"holder": "WHO",
 			"holderType": "organization",
-			"aliases": [
-				"World Health Organization",
-				"Organisasi Kesehatan Dunia"
-			],
+			"aliases": ["World Health Organization", "Organisasi Kesehatan Dunia"],
 			"sourceName": "World Health Organization (WHO)",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8888,17 +8387,11 @@
 			"number": "75",
 			"holder": "Korea Selatan",
 			"holderType": "country",
-			"aliases": [
-				"Republik Korea",
-				"South Korea",
-				"Korsel"
-			],
+			"aliases": ["Republik Korea", "South Korea", "Korsel"],
 			"sourceName": "Korea Selatan",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8908,16 +8401,11 @@
 			"number": "76",
 			"holder": "ADB",
 			"holderType": "organization",
-			"aliases": [
-				"Asian Development Bank",
-				"Bank Pembangunan Asia"
-			],
+			"aliases": ["Asian Development Bank", "Bank Pembangunan Asia"],
 			"sourceName": "Asian Development Bank (ADB)",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8927,16 +8415,11 @@
 			"number": "77",
 			"holder": "Bank Dunia",
 			"holderType": "organization",
-			"aliases": [
-				"IBRD",
-				"World Bank"
-			],
+			"aliases": ["IBRD", "World Bank"],
 			"sourceName": "International Bank for Reconstruction and Development (IBRD)/Bank Dunia",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8946,16 +8429,11 @@
 			"number": "78",
 			"holder": "IMF",
 			"holderType": "organization",
-			"aliases": [
-				"International Monetary Fund",
-				"Dana Moneter Internasional"
-			],
+			"aliases": ["International Monetary Fund", "Dana Moneter Internasional"],
 			"sourceName": "International Monetary Fund (IMF)",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8965,16 +8443,11 @@
 			"number": "79",
 			"holder": "ILO",
 			"holderType": "organization",
-			"aliases": [
-				"International Labour Organization",
-				"Organisasi Buruh Internasional"
-			],
+			"aliases": ["International Labour Organization", "Organisasi Buruh Internasional"],
 			"sourceName": "International Labour Organisation (ILO)",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -8984,16 +8457,11 @@
 			"number": "80",
 			"holder": "Papua Nugini",
 			"holderType": "country",
-			"aliases": [
-				"Papua New Guinea",
-				"PNG"
-			],
+			"aliases": ["Papua New Guinea", "PNG"],
 			"sourceName": "Papua Nugini",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9007,9 +8475,7 @@
 			"sourceName": "Nigeria",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9019,16 +8485,11 @@
 			"number": "82",
 			"holder": "Cile",
 			"holderType": "country",
-			"aliases": [
-				"Chili",
-				"Chile"
-			],
+			"aliases": ["Chili", "Chile"],
 			"sourceName": "Chili",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9038,15 +8499,11 @@
 			"number": "83",
 			"holder": "UNHCR",
 			"holderType": "organization",
-			"aliases": [
-				"Badan Pengungsi PBB"
-			],
+			"aliases": ["Badan Pengungsi PBB"],
 			"sourceName": "United Nations High Commissioner for Refugees (UNHCR)",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9056,16 +8513,11 @@
 			"number": "84",
 			"holder": "WFP",
 			"holderType": "organization",
-			"aliases": [
-				"World Food Programme",
-				"Program Pangan Dunia"
-			],
+			"aliases": ["World Food Programme", "Program Pangan Dunia"],
 			"sourceName": "World Food Programme (WFP)",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9079,9 +8531,7 @@
 			"sourceName": "Venezuela",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9091,15 +8541,11 @@
 			"number": "86",
 			"holder": "ESCAP",
 			"holderType": "organization",
-			"aliases": [
-				"UNESCAP"
-			],
+			"aliases": ["UNESCAP"],
 			"sourceName": "Economic and Social Commission for Asia and the Pacific (ESCAP)",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9109,33 +8555,25 @@
 			"number": "87",
 			"holder": "Kolombia",
 			"holderType": "country",
-			"aliases": [
-				"Colombia"
-			],
+			"aliases": ["Colombia"],
 			"sourceName": "Kolombia",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
 		{
-			"id": "cd-88-brunei",
+			"id": "cd-88-brunei-darussalam",
 			"series": "CD",
 			"number": "88",
 			"holder": "Brunei Darussalam",
 			"holderType": "country",
-			"aliases": [
-				"Brunei"
-			],
+			"aliases": ["Brunei"],
 			"sourceName": "Brunei Darussalam",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9145,16 +8583,11 @@
 			"number": "89",
 			"holder": "UNIC",
 			"holderType": "organization",
-			"aliases": [
-				"United Nations Information Centre",
-				"Pusat Informasi PBB"
-			],
+			"aliases": ["United Nations Information Centre", "Pusat Informasi PBB"],
 			"sourceName": "United Nations Information Center (UNIC)",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9164,34 +8597,25 @@
 			"number": "90",
 			"holder": "IFC",
 			"holderType": "organization",
-			"aliases": [
-				"International Finance Corporation"
-			],
+			"aliases": ["International Finance Corporation"],
 			"sourceName": "International Finance Corporation (IFC)",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
 		{
-			"id": "cd-92-ptri-asean",
+			"id": "cd-92-ptri-untuk-asean",
 			"series": "CD",
 			"number": "92",
 			"holder": "PTRI untuk ASEAN",
 			"holderType": "organization",
-			"aliases": [
-				"PTRI ASEAN",
-				"Perutusan Tetap RI untuk ASEAN"
-			],
+			"aliases": ["PTRI ASEAN", "Perutusan Tetap RI untuk ASEAN"],
 			"sourceName": "Perutusan Tetap Republik Indonesia (PTRI) ASEAN",
 			"confidence": "high",
 			"needsReview": true,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9205,9 +8629,7 @@
 			"sourceName": "Fiji",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9217,15 +8639,11 @@
 			"number": "94",
 			"holder": "Belarus",
 			"holderType": "country",
-			"aliases": [
-				"Belarusia"
-			],
+			"aliases": ["Belarusia"],
 			"sourceName": "Belarus",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9235,16 +8653,11 @@
 			"number": "95",
 			"holder": "Kazakhstan",
 			"holderType": "country",
-			"aliases": [
-				"Kazakhtan",
-				"Kazakstan"
-			],
+			"aliases": ["Kazakhtan", "Kazakstan"],
 			"sourceName": "Kazakhtan",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9258,9 +8671,7 @@
 			"sourceName": "United Nations Industrial Development Organization (UNIDO)",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9270,15 +8681,11 @@
 			"number": "97",
 			"holder": "ICRC",
 			"holderType": "organization",
-			"aliases": [
-				"Komite Internasional Palang Merah"
-			],
+			"aliases": ["Komite Internasional Palang Merah"],
 			"sourceName": "International Committee of the Red Cross (ICRC)",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9288,15 +8695,11 @@
 			"number": "98",
 			"holder": "Maroko",
 			"holderType": "country",
-			"aliases": [
-				"Morocco"
-			],
+			"aliases": ["Morocco"],
 			"sourceName": "Maroko",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9306,35 +8709,25 @@
 			"number": "99",
 			"holder": "Uni Eropa",
 			"holderType": "organization",
-			"aliases": [
-				"UE",
-				"EU",
-				"European Union"
-			],
+			"aliases": ["UE", "EU", "European Union"],
 			"sourceName": "Uni Eropa",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
 		{
-			"id": "cd-100-asean",
+			"id": "cd-100-sekretariat-asean",
 			"series": "CD",
 			"number": "100",
 			"holder": "Sekretariat ASEAN",
 			"holderType": "organization",
-			"aliases": [
-				"ASEAN"
-			],
+			"aliases": ["ASEAN"],
 			"sourceName": "Association of Southeast Asian Nations (ASEAN)",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9348,9 +8741,7 @@
 			"sourceName": "Tunisia",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9360,15 +8751,11 @@
 			"number": "102",
 			"holder": "Kuwait",
 			"holderType": "country",
-			"aliases": [
-				"Kuait"
-			],
+			"aliases": ["Kuait"],
 			"sourceName": "Kuait",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9378,15 +8765,11 @@
 			"number": "103",
 			"holder": "Laos",
 			"holderType": "country",
-			"aliases": [
-				"Republik Demokratik Rakyat Laos"
-			],
+			"aliases": ["Republik Demokratik Rakyat Laos"],
 			"sourceName": "Laos",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9396,15 +8779,11 @@
 			"number": "104",
 			"holder": "Palestina",
 			"holderType": "country",
-			"aliases": [
-				"Palestine"
-			],
+			"aliases": ["Palestine"],
 			"sourceName": "Palestina",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9414,15 +8793,11 @@
 			"number": "105",
 			"holder": "Kuba",
 			"holderType": "country",
-			"aliases": [
-				"Cuba"
-			],
+			"aliases": ["Cuba"],
 			"sourceName": "Kuba",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9439,9 +8814,7 @@
 			"sourceName": "ASEAN Inter-Paliamentary Organization (AIPA)",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9455,9 +8828,7 @@
 			"sourceName": "Libya",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9471,9 +8842,7 @@
 			"sourceName": "Peru",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9483,15 +8852,11 @@
 			"number": "109",
 			"holder": "Slowakia",
 			"holderType": "country",
-			"aliases": [
-				"Slovakia"
-			],
+			"aliases": ["Slovakia"],
 			"sourceName": "Slovakia",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9505,27 +8870,21 @@
 			"sourceName": "Sudan",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
 		{
-			"id": "cd-111-asean-foundation",
+			"id": "cd-111-yayasan-asean",
 			"series": "CD",
 			"number": "111",
 			"holder": "Yayasan ASEAN",
 			"holderType": "organization",
-			"aliases": [
-				"ASEAN Foundation"
-			],
+			"aliases": ["ASEAN Foundation"],
 			"sourceName": "ASEAN Foundation",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9535,15 +8894,11 @@
 			"number": "112",
 			"holder": "Utusan Sekjen PBB",
 			"holderType": "organization",
-			"aliases": [
-				"Utusan Sekretaris Jenderal PBB"
-			],
+			"aliases": ["Utusan Sekretaris Jenderal PBB"],
 			"sourceName": "Utusan Sekjen PBB",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9553,34 +8908,25 @@
 			"number": "113",
 			"holder": "CIFOR",
 			"holderType": "organization",
-			"aliases": [
-				"Center for International Forestry Research"
-			],
+			"aliases": ["Center for International Forestry Research"],
 			"sourceName": "Center for International Forestry Research (CIFOR)",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
 		{
-			"id": "cd-114-bosnia",
+			"id": "cd-114-bosnia-dan-herzegovina",
 			"series": "CD",
 			"number": "114",
 			"holder": "Bosnia dan Herzegovina",
 			"holderType": "country",
-			"aliases": [
-				"Bosnia Herzegovina",
-				"Bosnia"
-			],
+			"aliases": ["Bosnia Herzegovina", "Bosnia"],
 			"sourceName": "Bosnia Herzegovina",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9590,15 +8936,11 @@
 			"number": "115",
 			"holder": "Lebanon",
 			"holderType": "country",
-			"aliases": [
-				"Libanon"
-			],
+			"aliases": ["Libanon"],
 			"sourceName": "Lebanon",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9608,15 +8950,11 @@
 			"number": "116",
 			"holder": "Afrika Selatan",
 			"holderType": "country",
-			"aliases": [
-				"South Africa"
-			],
+			"aliases": ["South Africa"],
 			"sourceName": "Afrika Selatan",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9626,15 +8964,11 @@
 			"number": "117",
 			"holder": "Kroasia",
 			"holderType": "country",
-			"aliases": [
-				"Croatia"
-			],
+			"aliases": ["Croatia"],
 			"sourceName": "Kroasia",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9644,15 +8978,11 @@
 			"number": "118",
 			"holder": "Ukraina",
 			"holderType": "country",
-			"aliases": [
-				"Ukraine"
-			],
+			"aliases": ["Ukraine"],
 			"sourceName": "Ukraina",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9666,9 +8996,7 @@
 			"sourceName": "Uzbekistan",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9678,15 +9006,11 @@
 			"number": "121",
 			"holder": "Qatar",
 			"holderType": "country",
-			"aliases": [
-				"Katar"
-			],
+			"aliases": ["Katar"],
 			"sourceName": "Qatar",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9696,15 +9020,11 @@
 			"number": "122",
 			"holder": "UNFPA",
 			"holderType": "organization",
-			"aliases": [
-				"United Nations Population Fund"
-			],
+			"aliases": ["United Nations Population Fund"],
 			"sourceName": "United Nations Population Fund (UNFPA)",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9714,15 +9034,11 @@
 			"number": "123",
 			"holder": "Mozambik",
 			"holderType": "country",
-			"aliases": [
-				"Mozambique"
-			],
+			"aliases": ["Mozambique"],
 			"sourceName": "Mozambique",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9732,15 +9048,11 @@
 			"number": "125",
 			"holder": "Timor Leste",
 			"holderType": "country",
-			"aliases": [
-				"Timor-Leste"
-			],
+			"aliases": ["Timor-Leste"],
 			"sourceName": "Timor Leste",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9754,9 +9066,7 @@
 			"sourceName": "Suriname",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9766,15 +9076,11 @@
 			"number": "127",
 			"holder": "Ekuador",
 			"holderType": "country",
-			"aliases": [
-				"Ecuador"
-			],
+			"aliases": ["Ecuador"],
 			"sourceName": "Ecuador",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9788,9 +9094,7 @@
 			"sourceName": "Zimbabwe",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9800,15 +9104,11 @@
 			"number": "129",
 			"holder": "IOM",
 			"holderType": "organization",
-			"aliases": [
-				"International Organization for Migration"
-			],
+			"aliases": ["International Organization for Migration"],
 			"sourceName": "Perwakilan International Organization for Migration (IOM)",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9822,9 +9122,7 @@
 			"sourceName": "Azerbaijan",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9838,9 +9136,7 @@
 			"sourceName": "Somalia",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9854,9 +9150,7 @@
 			"sourceName": "Georgia",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9870,9 +9164,7 @@
 			"sourceName": "Paraguay",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9886,9 +9178,7 @@
 			"sourceName": "Oman",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9902,9 +9192,7 @@
 			"sourceName": "Armenia",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9918,9 +9206,7 @@
 			"sourceName": "Bahrain",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9934,9 +9220,7 @@
 			"sourceName": "Mongolia",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9950,9 +9234,7 @@
 			"sourceName": "San Marino",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9962,15 +9244,11 @@
 			"number": "139",
 			"holder": "Irlandia",
 			"holderType": "country",
-			"aliases": [
-				"Ireland"
-			],
+			"aliases": ["Ireland"],
 			"sourceName": "Irlandia",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9984,9 +9262,7 @@
 			"sourceName": "United Nations Office for REDD+ Coordination in Indonesia (UNORCID)",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -9996,17 +9272,11 @@
 			"number": "141",
 			"holder": "IsDB",
 			"holderType": "organization",
-			"aliases": [
-				"IDB",
-				"Islamic Development Bank",
-				"Bank Pembangunan Islam"
-			],
+			"aliases": ["IDB", "Islamic Development Bank", "Bank Pembangunan Islam"],
 			"sourceName": "Islamic Development Bank (IDB)",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -10016,15 +9286,11 @@
 			"number": "142",
 			"holder": "Guinea-Bissau",
 			"holderType": "country",
-			"aliases": [
-				"Guinea Bissau"
-			],
+			"aliases": ["Guinea Bissau"],
 			"sourceName": "Guinea Bissau",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -10034,35 +9300,25 @@
 			"number": "143",
 			"holder": "Etiopia",
 			"holderType": "country",
-			"aliases": [
-				"Ethiopia"
-			],
+			"aliases": ["Ethiopia"],
 			"sourceName": "Ethiopia",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
 		{
-			"id": "cd-144-kep-solomon",
+			"id": "cd-144-kepulauan-solomon",
 			"series": "CD",
 			"number": "144",
 			"holder": "Kepulauan Solomon",
 			"holderType": "country",
-			"aliases": [
-				"Kep Solomon",
-				"Solomon Islands",
-				"Solomon"
-			],
+			"aliases": ["Kep Solomon", "Solomon Islands", "Solomon"],
 			"sourceName": "Kep Solomon",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		},
@@ -10072,41 +9328,23 @@
 			"number": "145",
 			"holder": "IFAD",
 			"holderType": "organization",
-			"aliases": [
-				"International Fund for Agricultural Development"
-			],
+			"aliases": ["International Fund for Agricultural Development"],
 			"sourceName": "International Fund for Agricultural Development (IFAD)",
 			"confidence": "high",
 			"needsReview": false,
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"validFrom": "2021-05-05",
 			"reviewBy": "2027-03-24"
 		}
 	],
 	"referencePlates": [
 		{
-			"id": "ref-ri-format",
-			"series": "RI",
-			"number": null,
-			"label": "Kendaraan dinas Presiden, Wakil Presiden, ketua lembaga tinggi negara, dan pejabat setingkat menteri; format RI + nomor urut, tanpa seri huruf",
-			"confidence": "high",
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
-			"note": "Tidak ada sumber valid yang memuat daftar lengkap kode RI, dan alokasi nomornya dapat berubah sewaktu-waktu.",
-			"reviewBy": "2027-03-24"
-		},
-		{
 			"id": "ref-cc-format",
 			"series": "CC",
 			"number": null,
-			"label": "Korps konsulat; format CC + kode negara + nomor urut",
+			"label": "Korps konsulat; format CC + kode negara + nomor urut registrasi",
 			"confidence": "high",
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"note": null,
 			"reviewBy": "2027-03-24"
 		},
@@ -10114,12 +9352,20 @@
 			"id": "ref-ch-format",
 			"series": "CH",
 			"number": null,
-			"label": "Konsul kehormatan; format CH + kode negara + nomor urut",
+			"label": "Konsul kehormatan; format CH + kode negara + nomor urut registrasi",
 			"confidence": "high",
-			"sources": [
-				"perpol-7-2021-lampiran"
-			],
+			"sources": ["perpol-7-2021-lampiran"],
 			"note": null,
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "ref-ri-format",
+			"series": "RI",
+			"number": null,
+			"label": "Presiden, Wakil Presiden, ketua lembaga tinggi negara, pejabat setingkat menteri; format RI + nomor urut registrasi, tanpa seri huruf",
+			"confidence": "high",
+			"sources": ["perpol-7-2021-lampiran"],
+			"note": "Tidak ada sumber valid yang memuat daftar lengkap kode RI, dan alokasi nomornya dapat berubah sewaktu-waktu.",
 			"reviewBy": "2027-03-24"
 		}
 	]

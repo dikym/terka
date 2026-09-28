@@ -638,10 +638,17 @@ test("content revision changes clear stale questions and undo without losing exi
 	const content = fixture();
 	let progress = startSession(reviewing(), content, { id: "revision", mode: "daily", now: NOW });
 	progress = nextQuestion(progress, content, { id: "before-update", now: NOW });
-	const updated = reconcileContent(progress, { ...content, sourceRevision: "updated-source" });
+	const updated = reconcileContent(progress, {
+		...content,
+		contentRev: content.contentRev + 1,
+		contentHistory: [
+			...content.contentHistory,
+			{ contentRev: content.contentRev + 1, version: content.version }
+		]
+	});
 	assert.equal(updated.currentQuestion, null);
 	assert.deepEqual(updated.cards, progress.cards);
-	assert.equal(updated.contentRevision, "updated-source");
+	assert.equal(updated.contentRevision, String(content.contentRev + 1));
 });
 
 test("daily learning can finish minute steps and eventually unlock and mature both directions", () => {

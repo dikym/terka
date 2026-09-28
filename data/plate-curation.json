@@ -1,10 +1,44 @@
 {
 	"version": "2026.09.28",
-	"contentRev": 1,
+	"contentRev": 2,
 	"contentHistory": [
 		{
 			"contentRev": 1,
 			"version": "2026.09.28"
+		},
+		{
+			"contentRev": 2,
+			"version": "2026.09.28"
+		}
+	],
+	"groups": [
+		{
+			"id": "sumatera",
+			"name": "Sumatera"
+		},
+		{
+			"id": "jawa",
+			"name": "Jawa"
+		},
+		{
+			"id": "bali-nusa-tenggara",
+			"name": "Bali & Nusa Tenggara"
+		},
+		{
+			"id": "kalimantan",
+			"name": "Kalimantan"
+		},
+		{
+			"id": "sulawesi",
+			"name": "Sulawesi"
+		},
+		{
+			"id": "maluku",
+			"name": "Maluku"
+		},
+		{
+			"id": "papua",
+			"name": "Papua"
 		}
 	],
 	"regions": [
@@ -1699,7 +1733,7 @@
 		{
 			"id": "ab",
 			"code": "AB",
-			"region": "Seluruh DIY",
+			"region": "Yogyakarta",
 			"group": "jawa",
 			"province": "yogyakarta",
 			"spans": [],
@@ -2151,7 +2185,7 @@
 			"id": "dk",
 			"code": "DK",
 			"region": "Bali",
-			"group": "bali-nusra",
+			"group": "bali-nusa-tenggara",
 			"province": "bali",
 			"spans": [],
 			"placementTier": "common",
@@ -2217,8 +2251,8 @@
 		{
 			"id": "dr",
 			"code": "DR",
-			"region": "NTB — Pulau Lombok",
-			"group": "bali-nusra",
+			"region": "Nusa Tenggara Barat — Pulau Lombok",
+			"group": "bali-nusa-tenggara",
 			"province": "nusa-tenggara-barat",
 			"spans": [],
 			"placementTier": "medium",
@@ -2268,8 +2302,8 @@
 		{
 			"id": "ea",
 			"code": "EA",
-			"region": "NTB — Pulau Sumbawa",
-			"group": "bali-nusra",
+			"region": "Nusa Tenggara Barat — Pulau Sumbawa",
+			"group": "bali-nusa-tenggara",
 			"province": "nusa-tenggara-barat",
 			"spans": [],
 			"placementTier": "rare",
@@ -2319,8 +2353,8 @@
 		{
 			"id": "dh",
 			"code": "DH",
-			"region": "NTT — Pulau Timor & sekitarnya",
-			"group": "bali-nusra",
+			"region": "Nusa Tenggara Timur — Pulau Timor & sekitarnya",
+			"group": "bali-nusa-tenggara",
 			"province": "nusa-tenggara-timur",
 			"spans": [],
 			"placementTier": "rare",
@@ -2382,8 +2416,8 @@
 		{
 			"id": "eb",
 			"code": "EB",
-			"region": "NTT — Pulau Flores & sekitarnya",
-			"group": "bali-nusra",
+			"region": "Nusa Tenggara Timur — Pulau Flores & sekitarnya",
+			"group": "bali-nusa-tenggara",
 			"province": "nusa-tenggara-timur",
 			"spans": [],
 			"placementTier": "rare",
@@ -2453,8 +2487,8 @@
 		{
 			"id": "ed",
 			"code": "ED",
-			"region": "NTT — Pulau Sumba",
-			"group": "bali-nusra",
+			"region": "Nusa Tenggara Timur — Pulau Sumba",
+			"group": "bali-nusa-tenggara",
 			"province": "nusa-tenggara-timur",
 			"spans": [],
 			"placementTier": "rare",
@@ -3300,7 +3334,7 @@
 		{
 			"id": "dw",
 			"code": "DW",
-			"region": "Sulawesi Selatan II (Bosowasi)",
+			"region": "Bone, Soppeng, Wajo, dan Sinjai",
 			"group": "sulawesi",
 			"province": "sulawesi-selatan",
 			"spans": [],
@@ -8114,7 +8148,7 @@
 			"variants": []
 		}
 	],
-	"factLinks": [
+	"facts": [
 		{
 			"number": 1,
 			"id": "f-001",
