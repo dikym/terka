@@ -110,7 +110,14 @@ export const questionSchema = z.object({
 	prompt: z.string().min(1),
 	choices: z.array(z.string()),
 	targets: z
-		.array(z.object({ id: z.string(), name: z.string(), aliases: z.array(z.string()) }))
+		.array(
+			z.object({
+				id: z.string(),
+				name: z.string(),
+				aliases: z.array(z.string()),
+				variants: z.array(z.string()).optional()
+			})
+		)
 		.min(1),
 	answerKind: z.enum(["name", "code", "literal", "set"]),
 	setTarget: count.positive().nullable(),

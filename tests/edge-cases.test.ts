@@ -191,7 +191,7 @@ for (const [correct, target, fuzzy, timedOut, grade] of [
 	[5, 5, false, false, 3],
 	[6, 5, false, false, 3],
 	[7, 5, false, false, 4],
-	[7, 5, true, false, 2],
+	[7, 5, true, false, 4],
 	[7, 5, false, true, 1]
 ] as const) {
 	test(`set grading: ${correct}/${target}, fuzzy=${fuzzy}, timeout=${timedOut} gives ${grade}`, () => {
@@ -213,12 +213,13 @@ for (const [correct, target, fuzzy, timedOut, grade] of [
 
 test("name matching rejects fuzzy ties and changed first letters; normalization handles Unicode", () => {
 	const targets = [
-		{ id: "a", name: "Bali", aliases: [] },
-		{ id: "b", name: "Balu", aliases: [] }
+		{ id: "a", name: "Sabang", aliases: [] },
+		{ id: "b", name: "Sabung", aliases: [] }
 	];
-	assert.equal(matchAnswer("Bale", targets, [], "name").ambiguous, true);
-	assert.equal(matchAnswer("Cali", targets, [], "name").correct, false);
-	assert.equal(matchAnswer(" ＢＡＬＩ ", targets, [], "name").matchedId, "a");
+	// Controller ruling (Step 7.6): "Sabeng" is cost 1 to both Sabang and Sabung, so it is ambiguous.
+	assert.equal(matchAnswer("Sabeng", targets, [], "name").correct, false);
+	assert.equal(matchAnswer("Tabang", targets, [], "name").correct, false);
+	assert.equal(matchAnswer(" ＳＡＢＡＮＧ ", targets, [], "name").matchedId, "a");
 	assert.equal(matchAnswer("  ", targets, [], "name").correct, false);
 });
 

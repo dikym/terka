@@ -50,10 +50,10 @@ export function regionTarget(content: Content, region: Region): Target {
 			...region.aliases,
 			...memberAreas(content, region).flatMap((area) => [
 				areaDisplayName(area),
-				...area.aliases,
-				...area.variants
+				...area.aliases
 			])
-		]
+		],
+		variants: memberAreas(content, region).flatMap((area) => area.variants)
 	};
 }
 
@@ -61,7 +61,8 @@ export function areaTargets(content: Content, region: Region): Target[] {
 	return memberAreas(content, region).map((area) => ({
 		id: `${region.id}::${area.id}`,
 		name: areaDisplayName(area),
-		aliases: [...area.aliases, ...area.variants]
+		aliases: [...area.aliases],
+		variants: [...area.variants]
 	}));
 }
 

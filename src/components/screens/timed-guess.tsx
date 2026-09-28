@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { PlateTile } from "@/components/terka/plate-tile";
 import { LevelChip } from "@/components/terka/level-chip";
 import { ModeBadge } from "@/components/terka/mode-badge";
-import { TIMED_LIMIT_MS } from "@/rules";
+import { ANSWER_MAX_CHARS, TIMED_LIMIT_MS } from "@/rules";
 
 const previewTimer = { value: 28, time: "2,2 s" };
 
@@ -40,7 +40,7 @@ export function TimedGuessScreen() {
 				value={view?.value}
 				onChange={(event) => view?.setValue(event.target.value)}
 				disabled={view?.busy}
-				maxLength={500}
+				maxLength={ANSWER_MAX_CHARS}
 				autoComplete="off"
 			/>
 			<Button
