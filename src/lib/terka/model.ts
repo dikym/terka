@@ -39,7 +39,11 @@ export const cardSchema = z.object({
 	scheduledDay: count.nullable(),
 	pendingDue: timestamp.nullable(),
 	passedLevels: z.array(levelSchema),
-	suspensionReason: z.enum(["manual", "missing-data", "confidence", "leech"]).nullable()
+	suspensionReason: z.enum(["manual", "missing-data", "confidence", "leech"]).nullable(),
+	resumeState: z
+		.enum(["new", "learning", "review", "relearning", "mature"])
+		.nullable()
+		.default(null)
 });
 export const clockSchema = z.object({
 	day: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),

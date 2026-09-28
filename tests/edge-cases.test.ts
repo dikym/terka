@@ -271,7 +271,8 @@ test("manual suspension and reactivation preserve history; unverified content ca
 	assert.equal(progress.cards.find((card) => card.cardId === id)!.suspensionReason, "manual");
 	assert.equal(progress.undo, null);
 	const reset = setCardSuspended(progress, content, id, false, NOW + 3000);
-	assert.equal(reset.cards.find((card) => card.cardId === id)!.state, "new");
+	// SRD 7: manual reactivation restores the pre-suspension state instead of resetting the card.
+	assert.equal(reset.cards.find((card) => card.cardId === id)!.state, "review");
 	assert.deepEqual(reset.reviews, progress.reviews);
 	const unverified = structuredClone(content);
 	unverified.regions.forEach((region) => {
@@ -337,7 +338,8 @@ test("content updates preserve suspended memory, tolerate renames and reject reu
 	const updated = reconcileContent(before, degraded);
 	assert.equal(updated.cards[0].state, "suspended");
 	assert.equal(updated.cards[0].stability, before.cards[0].stability);
-	assert.equal(reconcileContent(updated, content).cards[0].state, "suspended");
+	// SRD 7: a data-driven suspension lifts itself once the data is valid again.
+	assert.equal(reconcileContent(updated, content).cards[0].state, "review");
 	renamed.regions[0].code = "ZZ";
 	assert.throws(() => reconcileContent(before, renamed), /Stable ID/);
 });

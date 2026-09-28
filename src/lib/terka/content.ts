@@ -119,7 +119,8 @@ export function newCard(regionId: string, mode: CardMode, now: number): CardProg
 		scheduledDay: null,
 		pendingDue: null,
 		passedLevels: [],
-		suspensionReason: null
+		suspensionReason: null,
+		resumeState: null
 	};
 }
 
@@ -141,13 +142,24 @@ export function reconcileContent(input: Progress, value: unknown): Progress {
 		progress.knownRegions[region.id] = region.code;
 	}
 	for (const card of progress.cards) {
-		if (!cardEligible(card, content) && card.state !== "suspended") {
-			card.state = "suspended";
+		const eligible = cardEligible(card, content);
+		if (!eligible && card.state !== "suspended") {
 			const region = content.regions.find((item) => item.id === card.regionId);
 			const lacksAreas =
 				card.mode === "setrecall" && region && eligibleRegion(content, region);
+			card.resumeState = card.state;
+			card.state = "suspended";
 			card.suspensionReason = region && !lacksAreas ? "confidence" : "missing-data";
 			progress.notices.push(`${card.cardId}: ${card.suspensionReason}`);
+		} else if (
+			eligible &&
+			card.state === "suspended" &&
+			(card.suspensionReason === "confidence" || card.suspensionReason === "missing-data")
+		) {
+			// SRD 7: data-driven suspensions end when the data is valid again, with history intact.
+			card.state = card.resumeState ?? (card.stability > 0 ? "review" : "new");
+			card.suspensionReason = null;
+			card.resumeState = null;
 		}
 	}
 	for (const region of content.regions.filter((region) => eligibleRegion(content, region))) {

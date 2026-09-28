@@ -34,7 +34,8 @@ import {
 	learnedCards,
 	nextDailyAt,
 	startSession,
-	undoAnswer
+	undoAnswer,
+	setCardSuspended
 } from "../src/lib/terka/engine";
 import {
 	answerStats,
@@ -260,6 +261,46 @@ test("AC-2/12: maturity requires Level 3 and lapse 8 suspends; data updates reta
 	});
 	assert.equal(removed.cards[0].state, "suspended");
 	assert.equal(removed.cards[0].interval, 14);
+});
+
+test("SR-129/SR-130: manual suspension keeps D, S and due and restores the previous state", () => {
+	const content = fixture();
+	const progress = reviewing(content);
+	const before = { ...progress.cards[0], due: NOW - DAY };
+	progress.cards[0] = before;
+	const suspended = setCardSuspended(progress, content, before.cardId, true, NOW);
+	assert.equal(suspended.cards[0].state, "suspended");
+	assert.equal(suspended.cards[0].resumeState, "review");
+	const restored = setCardSuspended(suspended, content, before.cardId, false, NOW + DAY);
+	assert.deepEqual(restored.cards[0], { ...before, resumeState: null });
+	assert.ok(
+		dailyQueue(restored, content, NOW + DAY).some((item) => item.cardId === before.cardId)
+	);
+});
+
+test("SR-122: a leech is reset to a new card when reactivated", () => {
+	const content = fixture();
+	const progress = reviewing(content);
+	Object.assign(progress.cards[0], { state: "suspended", suspensionReason: "leech", lapses: 8 });
+	const card = setCardSuspended(progress, content, progress.cards[0].cardId, false, NOW).cards[0];
+	assert.equal(card.state, "new");
+	assert.equal(card.lapses, 0);
+	assert.equal(card.stability, 0);
+});
+
+test("SR-131/SR-132: data-driven suspensions lift themselves when the data returns", () => {
+	const content = fixture();
+	let progress = reviewing(content);
+	const lowered = fixture();
+	lowered.regions[0].confidence = "medium";
+	progress = reconcileContent(progress, lowered);
+	const cardId = `${lowered.regions[0].id}::code2region`;
+	assert.equal(progress.cards.find((card) => card.cardId === cardId)!.state, "suspended");
+	progress = reconcileContent(progress, fixture());
+	const card = progress.cards.find((item) => item.cardId === cardId)!;
+	assert.equal(card.state, "review");
+	assert.equal(card.stability, 5);
+	assert.equal(card.suspensionReason, null);
 });
 
 test("AC-3/4: due reviews ignore scope and new quota survives scope changes", () => {

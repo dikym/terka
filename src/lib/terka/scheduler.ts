@@ -148,6 +148,7 @@ export function scheduleAnswer(
 	if (card.lapses >= 8) {
 		card.state = "suspended";
 		card.suspensionReason = "leech";
+		card.resumeState = null;
 	}
 	return card;
 }

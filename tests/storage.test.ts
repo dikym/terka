@@ -23,7 +23,13 @@ import { DAY, type Content } from "../src/lib/terka/model";
 import plates from "../src/data/plates.json";
 import { parseContent, parseProgress } from "../src/lib/terka/content";
 import { fixture, raw, reviewing, answerCurrent } from "./fixtures";
-import { startSession, nextQuestion, refreshProgress, undoAnswer } from "../src/lib/terka/engine";
+import {
+	startSession,
+	nextQuestion,
+	refreshProgress,
+	undoAnswer,
+	setCardSuspended
+} from "../src/lib/terka/engine";
 
 const content: Content = parseContent(plates);
 Dexie.dependencies.indexedDB = indexedDB;
@@ -533,4 +539,15 @@ test("reviews saved before the intro flag load as graded answers", () => {
 	const legacy = structuredClone(progress) as unknown as { reviews: Record<string, unknown>[] };
 	delete legacy.reviews[0].intro;
 	assert.equal(parseProgress(legacy).reviews[0].intro, false);
+});
+
+test("cards saved before resumeState load and restore to review", () => {
+	const progress = reviewing(fixture());
+	Object.assign(progress.cards[0], { state: "suspended", suspensionReason: "manual" });
+	const legacy = structuredClone(progress) as unknown as { cards: Record<string, unknown>[] };
+	delete legacy.cards[0].resumeState;
+	const loaded = parseProgress(legacy);
+	assert.equal(loaded.cards[0].resumeState, null);
+	const restored = setCardSuspended(loaded, fixture(), loaded.cards[0].cardId, false, NOW);
+	assert.equal(restored.cards[0].state, "review");
 });

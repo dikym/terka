@@ -549,8 +549,14 @@ export function setCardSuspended(
 	if (!suspended && !cardEligible(card, content))
 		throw new Error("Verify card content before reactivation");
 	if (suspended) {
+		if (card.state !== "suspended") card.resumeState = card.state;
 		card.state = "suspended";
 		card.suspensionReason = "manual";
+	} else if (card.suspensionReason === "manual") {
+		// SRD 7: a manual suspension only pauses the card; D, S and due are untouched.
+		card.state = card.resumeState ?? (card.stability > 0 ? "review" : "new");
+		card.suspensionReason = null;
+		card.resumeState = null;
 	} else Object.assign(card, newCard(card.regionId, card.mode, now));
 	progress.currentQuestion = null;
 	progress.undo = null;

@@ -339,7 +339,8 @@ export function assertLevelThreeCoverage(content: Content) {
 			scheduledDay: null,
 			pendingDue: null,
 			passedLevels: [],
-			suspensionReason: null
+			suspensionReason: null,
+			resumeState: null
 		};
 		const question = generateQuestion(content, card, {
 			id: `coverage-${region.id}`,
