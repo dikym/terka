@@ -34,13 +34,14 @@ export function SessionGradedScreen() {
 				alias: `Jawaban: ${question?.targets.map((target) => target.name).join(" · ") ?? ""}`
 			}
 		: previewAnswer;
-	const verdict = review
+	const gradedVerdict = review
 		? review.correct
 			? review.fuzzy
 				? "near"
 				: "right"
 			: "wrong"
 		: "right";
+	const verdict = review?.intro ? "neutral" : gradedVerdict;
 	const region = view?.content.regions.find((region) => region.id === question?.regionId);
 	const storedFact = view?.content.facts.find(
 		(fact) => fact.publicationStatus === "ready" && region?.facts.includes(fact.id)
@@ -79,25 +80,29 @@ export function SessionGradedScreen() {
 					{fact.body}
 				</FactCard>
 			)}
-			<VerdictLine
-				verdict={verdict}
-				label={
-					review
-						? review.timedOut
-							? "Waktu habis"
-							: review.correct
-								? "Benar"
-								: "Belum tepat"
-						: "Benar"
-				}
-				detail={
-					view
-						? review?.scheduled && card
-							? `Diulang: ${dateLabel(card.due)}`
-							: "Jadwal tidak berubah"
-						: "diulang lagi dalam 30 jam"
-				}
-			/>
+			{review?.intro ? (
+				<p className="text-body-sm text-ink-500">Tebakan tidak dinilai.</p>
+			) : (
+				<VerdictLine
+					verdict={gradedVerdict}
+					label={
+						review
+							? review.timedOut
+								? "Waktu habis"
+								: review.correct
+									? "Benar"
+									: "Belum tepat"
+							: "Benar"
+					}
+					detail={
+						view
+							? review?.scheduled && card
+								? `Diulang: ${dateLabel(card.due)}`
+								: "Jadwal tidak berubah"
+							: "diulang lagi dalam 30 jam"
+					}
+				/>
+			)}
 			<Button
 				disabled={view?.busy}
 				onClick={view?.next}

@@ -8,7 +8,7 @@ import {
 	questionTimedOut,
 	shuffled
 } from "./questions";
-import { scheduleAnswer } from "./scheduler";
+import { introduceCard, scheduleAnswer } from "./scheduler";
 import { scopeStats } from "./statistics";
 import {
 	DAY,
@@ -303,6 +303,8 @@ export function nextQuestion(
 			if (session.mode === "sprint" || question.drillPair)
 				throw new Error("This mode has a fixed difficulty level");
 			const card = progress.cards.find((card) => card.cardId === question.cardId)!;
+			if (card.state === "new" && options.level !== undefined && options.level !== 1)
+				throw new Error("Perkenalan selalu Level 1");
 			progress.currentQuestion = generateQuestion(content, card, options);
 		}
 		return progress;
@@ -322,6 +324,8 @@ export function nextQuestion(
 	const card = progress.cards.find((card) => card.cardId === item.cardId);
 	if (!card || card.state === "suspended" || !cardEligible(card, content))
 		throw new Error("Card is no longer available");
+	if (card.state === "new" && options.level !== undefined && options.level !== 1)
+		throw new Error("Perkenalan selalu Level 1");
 	progress.currentQuestion = generateQuestion(content, card, {
 		...options,
 		level: session.mode === "sprint" ? 1 : options.level,
@@ -449,6 +453,7 @@ export function applyAnswer(
 			content.regions.find((region) => region.id === card.regionId)!,
 			progress.activeScope
 		);
+	const intro = isNew && mayIntroduce;
 	const scheduled =
 		!lowerLevel &&
 		session.mode !== "challenge" &&
@@ -479,26 +484,23 @@ export function applyAnswer(
 		setTarget: question.setTarget,
 		drillPair: question.drillPair,
 		scheduled,
-		wasMature: card.state === "mature"
+		wasMature: card.state === "mature",
+		intro
 	};
 	const { undo: previousUndo, ...before } = progress;
 	void previousUndo;
 	progress.undo = { reviewId: review.id, before: structuredClone(before) };
 	if (scheduled) {
-		progress.cards[progress.cards.indexOf(card)] = scheduleAnswer(
-			card,
-			review,
-			progress.reviews,
-			progress.clock,
-			random
-		);
+		progress.cards[progress.cards.indexOf(card)] = intro
+			? introduceCard(card, submission.now)
+			: scheduleAnswer(card, review, progress.reviews, progress.clock, random);
 		if (isNew) progress.newCardsToday.push(card.cardId);
 	}
 	const updatedCard = progress.cards.find((item) => item.cardId === card.cardId)!;
-	if (review.correct && !updatedCard.passedLevels.includes(review.level))
+	if (review.correct && !intro && !updatedCard.passedLevels.includes(review.level))
 		updatedCard.passedLevels.push(review.level);
 	progress.reviews.push(review);
-	recordConfusions(progress, review);
+	if (!intro) recordConfusions(progress, review);
 	session.answered++;
 	if (review.correct) session.correct++;
 	progress.currentQuestion = null;

@@ -36,6 +36,7 @@ import {
 	undoAnswer
 } from "../src/lib/terka/engine";
 import {
+	answerStats,
 	challengeStreak,
 	forecast,
 	scopeStats,
@@ -595,10 +596,21 @@ test("daily learning can finish minute steps and eventually unlock and mature bo
 			progress = nextQuestion(progress, content, {
 				id: `simulation-${day}-${turn}`,
 				now,
-				level: 3,
 				random: () => 0.5
 			});
 			if (progress.currentQuestion) {
+				// SRD 4.7: a brand-new card's first exposure is an ungraded Level 1 intro;
+				// every later exposure is forced to Level 3 so the simulation reaches maturity.
+				const askedCard = progress.cards.find(
+					(card) => card.cardId === progress.currentQuestion!.cardId
+				)!;
+				if (askedCard.state !== "new" && progress.currentQuestion.level !== 3)
+					progress = nextQuestion(progress, content, {
+						id: `simulation-${day}-${turn}-level`,
+						now,
+						level: 3,
+						random: () => 0.5
+					});
 				progress = answerCurrent(progress, content, `simulation-answer-${day}-${turn}`);
 				now += 2000;
 			} else {
@@ -803,4 +815,44 @@ test("SR-030/SR-031/SR-339/SR-300: typed Level 3 limits the first input; true/fa
 	const trueFalse = { format: "truefalse", limitMs: TRUE_FALSE_LIMIT_MS } as Question;
 	assert.equal(questionTimedOut(trueFalse, 2_001, 100), true);
 	assert.equal(questionTimedOut(trueFalse, 2_000, 100), false);
+});
+
+test("SR-071/SR-072/SR-074: Perkenalan is an ungraded guess that starts the 1-minute step", () => {
+	const content = fixture();
+	let progress = startSession(createProgress(content, NOW, "Asia/Makassar"), content, {
+		id: "s",
+		mode: "daily",
+		now: NOW
+	});
+	progress = nextQuestion(progress, content, { id: "q", now: NOW, random: () => 0.5 });
+	const question = progress.currentQuestion!;
+	assert.equal(question.level, 1);
+	assert.throws(
+		() => nextQuestion(progress, content, { id: "q", now: NOW, level: 2 }),
+		/Perkenalan/
+	);
+	const other = content.regions.find((region) => region.id !== question.regionId)!;
+	const answered = answerCurrent(progress, content, "a", [other.region]);
+	const card = answered.cards.find((item) => item.cardId === question.cardId)!;
+	const review = answered.reviews[0];
+	assert.equal(review.intro, true);
+	assert.equal(card.state, "learning");
+	assert.equal(card.step, 1);
+	assert.equal(card.due, review.ts + 60_000);
+	assert.equal(card.stability, 0);
+	assert.equal(card.scheduledDay, null);
+	assert.deepEqual(card.passedLevels, []);
+	assert.deepEqual(answered.confusions, []);
+	assert.deepEqual(answered.newCardsToday, [question.cardId]);
+	assert.equal(answerStats(answered.reviews).answered, 0);
+	const undone = undoAnswer(answered);
+	assert.equal(undone.cards.find((item) => item.cardId === question.cardId)!.state, "new");
+	assert.deepEqual(undone.newCardsToday, []);
+});
+
+test("SR-076: intro guesses never enter the latency percentile", () => {
+	const intro = Array.from({ length: 30 }, (_, index) =>
+		raw({ id: `i-${index}`, ts: NOW - 1000 + index, msToFirstKey: 2000, intro: true })
+	);
+	assert.equal(gradeAnswer(raw({ msToFirstKey: 100 }), intro), 3);
 });

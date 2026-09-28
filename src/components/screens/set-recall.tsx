@@ -41,7 +41,7 @@ export function SetRecallScreen() {
 			toolbar={
 				<span className="inline-flex shrink-0 items-center gap-3">
 					<ModeBadge className="bg-grape-100 text-ink-1000">
-						Sebutkan sebanyak mungkin
+						{view?.intro ? "Materi baru · tebak dulu" : "Sebutkan sebanyak mungkin"}
 					</ModeBadge>
 					<LevelChip level={3} filled={3} icon={null} />
 				</span>
