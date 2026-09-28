@@ -1,6 +1,6 @@
 "use client";
 import { useLearning, useNow } from "@/components/learning/learning-provider";
-import { dailyQueue, learnedCards } from "@/lib/terka/engine";
+import { dailyQueue, learnedCards, nextDailyAt } from "@/lib/terka/engine";
 import { scopeStats, challengeStreak } from "@/lib/terka/statistics";
 import { modeDone, scopeName } from "@/lib/terka/practice";
 import Link from "next/link";
@@ -62,7 +62,7 @@ export function HomeScreen() {
 							<span>Mulai belajar</span>
 							{dailyDone ? (
 								<span className="ml-1 font-mono text-micro font-medium tabular-nums opacity-70">
-									{countdown(untilNextDay)}
+									{countdown(nextDailyAt(progress, content, now) - now)}
 								</span>
 							) : (
 								<Kbd className="ml-1">Enter</Kbd>

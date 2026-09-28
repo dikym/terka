@@ -5,7 +5,7 @@ import { searchReference } from "@/lib/terka/statistics";
 import { areaDisplayName, regionAreas } from "@/lib/terka/content";
 import { scopeName } from "@/lib/terka/practice";
 import { islandGroup } from "@/components/learning/presentation";
-import { Layers } from "lucide-react";
+import { ChevronDown, Layers } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Tag } from "@/components/ui/tag";
@@ -69,19 +69,35 @@ export function ReferenceScreen() {
 					<Layers className={cn("size-4 shrink-0", region.iconClass)} aria-hidden />
 					<LabelText>{region.group}</LabelText>
 				</div>
-				<div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
+				<div className="grid grid-cols-1 items-start gap-2 lg:grid-cols-2">
 					{entries.map((entry) => (
 						<div
 							key={entry.code}
-							className="flex min-h-11 items-center gap-3 rounded-sm border border-ink-200 bg-paper-0 p-3"
+							className="flex flex-col gap-2 rounded-sm border border-ink-200 bg-paper-0 p-3"
 						>
-							<CodeBadge code={entry.code} group={entry.group} />
-							<span className="flex min-w-0 flex-1 flex-col gap-1">
-								<span className="text-body-md leading-[1.2] font-medium text-ink-1000">
+							<div className="flex min-h-11 items-center gap-3">
+								<CodeBadge code={entry.code} group={entry.group} />
+								<span className="min-w-0 flex-1 text-body-md leading-[1.2] font-medium text-ink-1000">
 									{entry.name}
 								</span>
-								{entry.cities.length > 0 ? (
-									<span className="flex flex-wrap gap-1">
+								{entry.status === "verified" ? (
+									<Badge tone="success">Masuk latihan</Badge>
+								) : entry.status === "unverified-strong" ? (
+									<Badge tone="danger">{statusLabel}</Badge>
+								) : (
+									<Badge tone="warn">{statusLabel}</Badge>
+								)}
+							</div>
+							{entry.cities.length > 0 ? (
+								<details open={Boolean(query)} className="group">
+									<summary className="inline-flex cursor-pointer list-none items-center gap-1 text-body-sm text-ink-500 [&::-webkit-details-marker]:hidden">
+										{entry.cities.length} kab/kota
+										<ChevronDown
+											className="size-4 shrink-0 transition-transform group-open:rotate-180"
+											aria-hidden
+										/>
+									</summary>
+									<span className="mt-2 flex flex-wrap gap-1">
 										{entry.cities.map((city) => (
 											<Tag
 												key={city}
@@ -91,21 +107,8 @@ export function ReferenceScreen() {
 											</Tag>
 										))}
 									</span>
-								) : null}
-							</span>
-							{entry.status === "verified" ? (
-								<Badge tone="success" className="self-start">
-									Masuk latihan
-								</Badge>
-							) : entry.status === "unverified-strong" ? (
-								<Badge tone="danger" className="self-start">
-									{statusLabel}
-								</Badge>
-							) : (
-								<Badge tone="warn" className="self-start">
-									{statusLabel}
-								</Badge>
-							)}
+								</details>
+							) : null}
 						</div>
 					))}
 				</div>
