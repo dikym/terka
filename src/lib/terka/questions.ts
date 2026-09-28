@@ -82,7 +82,7 @@ export function generateQuestion(
 		level,
 		autoLevel,
 		format: "recall",
-		prompt: `Dari wilayah mana kode ${region.code}?`,
+		prompt: `${region.code} dipakai daerah mana?`,
 		choices: [],
 		targets: [regionTarget(content, region)],
 		answerKind: "name",
@@ -92,13 +92,12 @@ export function generateQuestion(
 		context: [],
 		shownAt: options.now
 	};
-	if (level === 2) question.context.push(`Kawasan: ${region.group}`);
 	if (options.pair) {
 		const other = content.regions.find((item) => item.id === options.pair![1]);
 		if (!other || other.id === region.id || options.pair[0] !== region.id)
 			throw new Error("Invalid confusion pair");
 		question.format = "drill";
-		question.prompt = `Mana yang ${region.region}, ${region.code} atau ${other.code}?`;
+		question.prompt = `${region.code} atau ${other.code}: ${region.region}?`;
 		question.targets = [{ id: region.id, name: region.code, aliases: [] }];
 		question.answerKind = "code";
 		question.choices = shuffled([region.code, other.code], random);
@@ -113,14 +112,14 @@ export function generateQuestion(
 		question.format = "set";
 		question.targets = areaTargets(content, region);
 		question.setTarget = Math.min(5, question.targets.length);
-		question.prompt = `Sebutkan ${question.setTarget} wilayah untuk kode ${region.code}.`;
+		question.prompt = `Sebutkan daerah yang memakai ${region.code}.`;
 		question.answerKind = "set";
 		question.limitMs = null;
 		return question;
 	}
 	if (card.mode === "region2code") {
 		const shown = memberAreas(content, region)[0];
-		question.prompt = `Apa kode plat untuk ${areaDisplayName(shown)}?`;
+		question.prompt = `Kode pelat ${areaDisplayName(shown)}?`;
 		// SRD 2.8: every high code of the shown area is correct; the card stays the asked code's card.
 		question.targets = content.regions
 			.filter((item) => memberAreas(content, item).some((area) => area.id === shown.id))
@@ -140,31 +139,11 @@ export function generateQuestion(
 			),
 			random
 		);
-		if (options.format === "group" || options.format === "first-letter") {
-			question.format = options.format;
-			const value = options.format === "group" ? region.group : region.code[0];
-			question.prompt =
-				options.format === "group"
-					? `Kawasan untuk ${region.code}?`
-					: `Huruf pertama kode ${region.region}?`;
-			question.targets = [{ id: region.id, name: value, aliases: [] }];
-			question.answerKind = "literal";
-			question.choices = shuffled(
-				[
-					...new Set([
-						value,
-						...candidates.map((item) =>
-							options.format === "group" ? item.group : item.code[0]
-						)
-					])
-				].slice(0, 4),
-				random
-			);
-		} else if (options.format === "truefalse") {
+		if (options.format === "truefalse") {
 			if (!candidates.length) throw new Error("A distractor from another group is required");
 			const truthful = random() < 0.5;
 			question.format = "truefalse";
-			question.prompt = `${region.code} = ${truthful ? region.region : candidates[0].region}?`;
+			question.prompt = `${region.code} dipakai ${truthful ? region.region : candidates[0].region}.`;
 			question.targets = [
 				{
 					id: truthful ? region.id : candidates[0].id,
@@ -178,7 +157,7 @@ export function generateQuestion(
 		} else if (options.format === "not-in") {
 			if (!candidates.length) throw new Error("A distractor from another group is required");
 			question.format = "not-in";
-			question.prompt = `Mana yang BUKAN wilayah ${region.code}?`;
+			question.prompt = `Mana yang tidak memakai ${region.code}?`;
 			question.targets = [regionTarget(content, candidates[0])];
 			question.choices = shuffled(
 				[

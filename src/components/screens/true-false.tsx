@@ -19,14 +19,14 @@ export function TrueFalseScreen() {
 			total={24}
 			toolbar={
 				<span className="inline-flex shrink-0 items-center gap-3">
-					<ModeBadge className="bg-stop-100 text-ink-1000">Benar/salah kilat</ModeBadge>
+					<ModeBadge className="bg-stop-100 text-ink-1000">Benar atau salah</ModeBadge>
 					<LevelChip level={1} label="Kenali" filled={1} icon={Eye} />
 				</span>
 			}
 		>
 			<TimerRow value={timer.value} tone="success" time={timer.time} />
 			<h2 className="font-display text-title font-bold text-ink-1000">
-				{view?.question?.prompt ?? "BE = Bengkulu?"}
+				{view?.question?.prompt ?? "BE dipakai Bengkulu."}
 			</h2>
 			<div className="grid grid-cols-2 gap-3">
 				<Button

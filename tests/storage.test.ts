@@ -477,3 +477,29 @@ test("legacy progress with plate, suffix, fact questions and a code scope still 
 	assert.deepEqual(loaded.newCardsToday, []);
 	assert.equal(loaded.currentQuestion, null);
 });
+
+test("legacy blindrecall cards, reviews and first-letter questions are dropped on load", () => {
+	const progress = reviewing(fixture());
+	const legacy = structuredClone(progress) as unknown as Record<string, unknown> & {
+		cards: Record<string, unknown>[];
+		reviews: Record<string, unknown>[];
+	};
+	legacy.cards.push({
+		...progress.cards[0],
+		cardId: "dk::blindrecall",
+		regionId: "dk",
+		mode: "blindrecall"
+	});
+	legacy.reviews.push({ ...progress.reviews[0], id: "legacy-review", cardId: "dk::blindrecall" });
+	legacy.currentQuestion = { ...structuredClone(progress.cards[0]), format: "first-letter" };
+	const loaded = parseProgress(legacy);
+	assert.equal(
+		loaded.cards.some((card) => card.cardId === "dk::blindrecall"),
+		false
+	);
+	assert.equal(
+		loaded.reviews.some((review) => review.id === "legacy-review"),
+		false
+	);
+	assert.equal(loaded.currentQuestion, null);
+});

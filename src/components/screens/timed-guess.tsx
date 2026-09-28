@@ -12,7 +12,7 @@ import { ModeBadge } from "@/components/terka/mode-badge";
 
 const previewTimer = { value: 28, time: "2,2 s" };
 
-export function BlindRecallScreen() {
+export function TimedGuessScreen() {
 	const view = useSessionView();
 	const timer = view?.timer ?? previewTimer;
 	return (
@@ -21,16 +21,14 @@ export function BlindRecallScreen() {
 			total={24}
 			toolbar={
 				<span className="inline-flex shrink-0 items-center gap-3">
-					<ModeBadge className="bg-caution-100 text-ink-1000">Tanpa Petunjuk</ModeBadge>
+					<ModeBadge className="bg-caution-100 text-ink-1000">Tebak berwaktu</ModeBadge>
 					<LevelChip level={3} label="Kuasai" filled={3} icon={Medal} />
 				</span>
 			}
 		>
 			<TimerRow value={timer.value} tone="danger" time={timer.time} />
 			<div className="flex flex-col items-start gap-4">
-				<LabelText>
-					{view?.question?.prompt ?? "Tanpa petunjuk. Ketik wilayahnya."}
-				</LabelText>
+				<LabelText>{view?.question?.prompt ?? "BM dipakai daerah mana?"}</LabelText>
 				<PlateTile code={view?.plate.code ?? "BM"} size="lg" emphasize="code" />
 			</div>
 			<Input
@@ -52,8 +50,8 @@ export function BlindRecallScreen() {
 				Periksa
 			</Button>
 			<p className="text-body-sm leading-[1.4] text-ink-500">
-				Batas 8 detik. Lewat batas, soal ditutup dengan{" "}
-				<span className="font-mono">Waktu habis</span>.
+				Mulai mengetik dalam {(view?.question?.limitMs ?? 8_000) / 1000} detik. Lewat batas,
+				soal ditutup dengan <span className="font-mono">Waktu habis</span>.
 			</p>
 		</SessionShell>
 	);
