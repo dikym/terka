@@ -22,7 +22,7 @@ export const scopeSchema = z.object({
 	level: z.enum(["national", "group", "province"]),
 	id: z.string().min(1)
 });
-export const modeSchema = z.enum(["code2region", "region2code", "blindrecall", "setrecall"]);
+export const modeSchema = z.enum(["code2region", "region2code", "setrecall"]);
 export const cardSchema = z.object({
 	cardId: z.string().min(1),
 	regionId: id,
@@ -101,16 +101,7 @@ export const questionSchema = z.object({
 	regionId: id,
 	level: levelSchema,
 	autoLevel: levelSchema,
-	format: z.enum([
-		"choice",
-		"truefalse",
-		"not-in",
-		"recall",
-		"set",
-		"drill",
-		"group",
-		"first-letter"
-	]),
+	format: z.enum(["choice", "truefalse", "not-in", "recall", "set", "drill"]),
 	prompt: z.string().min(1),
 	choices: z.array(z.string()),
 	targets: z

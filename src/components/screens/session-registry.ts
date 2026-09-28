@@ -1,5 +1,4 @@
 import { AnswerUndoneScreen } from "./answer-undone";
-import { BlindRecallScreen } from "./blind-recall";
 import { CompareScreen } from "./compare";
 import { CompareAnsweredScreen } from "./compare-answered";
 import { OddOneOutScreen } from "./odd-one-out";
@@ -7,6 +6,7 @@ import { SessionGradedScreen } from "./session-graded";
 import { SessionQuestionScreen } from "./session-question";
 import { SessionSummaryScreen } from "./session-summary";
 import { SetRecallScreen } from "./set-recall";
+import { TimedGuessScreen } from "./timed-guess";
 import { TrueFalseScreen } from "./true-false";
 
 export const sessionScreens = {
@@ -15,7 +15,7 @@ export const sessionScreens = {
 	compare: CompareScreen,
 	"compare-answered": CompareAnsweredScreen,
 	summary: SessionSummaryScreen,
-	"blind-recall": BlindRecallScreen,
+	"timed-guess": TimedGuessScreen,
 	"set-recall": SetRecallScreen,
 	"true-false": TrueFalseScreen,
 	"odd-one-out": OddOneOutScreen,

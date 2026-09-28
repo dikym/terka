@@ -160,7 +160,6 @@ export function reconcileContent(input: Progress, value: unknown): Progress {
 				progress.cards.push(card);
 		};
 		add("code2region");
-		add("blindrecall");
 		const primary = progress.cards.find((card) => card.cardId === `${region.id}::code2region`)!;
 		if (primary.interval >= 7 && primary.state !== "suspended") add("region2code");
 		if (primary.interval >= 14 && primary.state !== "suspended") add("setrecall");
@@ -221,11 +220,12 @@ type LegacyCore = {
 	currentQuestion?: { cardId: string; format?: string; answerKind?: string } | null;
 	undo?: { before: LegacyCore } | null;
 };
-const legacyCard = (cardId: string) => /::(?:platfull|suffix)(?:::|$)/.test(cardId);
+// blindrecall merged into code2region: its timed form is now a plain Level 3 question (TRD 4.1).
+const legacyCard = (cardId: string) => /::(?:platfull|suffix|blindrecall)(?:::|$)/.test(cardId);
 const legacyScope = (scope: { level: string; id: string }) =>
 	scope.level === "code" ? { level: "national", id: "indonesia" } : scope;
 
-// Stored data from before the plate/suffix/fact modes and the code scope were removed.
+// Stored data from before the plate/suffix/fact/blindrecall modes, partial-hint formats and the code scope were removed.
 function dropLegacy(core: LegacyCore): boolean {
 	const before = JSON.stringify(core);
 	core.cards = core.cards?.filter((card) => !legacyCard(card.cardId));
@@ -241,7 +241,7 @@ function dropLegacy(core: LegacyCore): boolean {
 	if (
 		question &&
 		(legacyCard(question.cardId) ||
-			["fact", "plate", "suffix"].includes(question.format ?? "") ||
+			["fact", "plate", "suffix", "group", "first-letter"].includes(question.format ?? "") ||
 			question.answerKind === "plate")
 	)
 		core.currentQuestion = null;

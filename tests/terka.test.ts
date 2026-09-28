@@ -45,7 +45,7 @@ test("content rejects empty datasets and derives hierarchy from primary province
 	assert.throws(() => parseContent({ ...fixture(), regions: [] }));
 	assert.equal(parseContent(fixture()).regions.length, 4);
 	assert.equal(buildHierarchy(fixture()).filter((scope) => scope.level === "group").length, 3);
-	assert.equal(createProgress(fixture(), 1_000_000).cards.length, 8);
+	assert.equal(createProgress(fixture(), 1_000_000).cards.length, 4);
 });
 
 test("learning day changes at 04:00 and travel cannot advance the boundary", () => {
@@ -63,7 +63,7 @@ test("AC-1: all 61 imported codes have a Level 3 question without history", () =
 	const content = parseContent(plates);
 	assert.equal(content.regions.length, 61);
 	assertLevelThreeCoverage(content);
-	assert.equal(createProgress(content, NOW).cards.length, 122);
+	assert.equal(createProgress(content, NOW).cards.length, 61);
 	for (const region of content.regions) {
 		const recall = generateQuestion(content, newCard(region.id, "code2region", NOW), {
 			id: region.id,
@@ -555,7 +555,7 @@ test("all MVP presentation variants grade correctly", () => {
 	];
 	parseContent(content);
 	const primary = { ...newCard("dk", "code2region", NOW), state: "review" as const };
-	for (const format of ["choice", "truefalse", "not-in", "group", "first-letter"] as const) {
+	for (const format of ["choice", "truefalse", "not-in"] as const) {
 		const question = generateQuestion(content, primary, {
 			id: format,
 			now: NOW,
@@ -733,4 +733,19 @@ test("region to code prompts name the administrative type", () => {
 	);
 	assert.match(question.prompt, /Kota Lampung/);
 	assert.equal(areaDisplayName(content.areas[0]), "Kota Lampung");
+});
+
+test("SR-338: typed Level 2 and 3 questions show no partial hint", () => {
+	const content = fixture();
+	for (const mode of ["code2region", "region2code"] as const)
+		for (const level of [2, 3] as const) {
+			const card = { ...newCard("be", mode, NOW), state: "review" as const };
+			const question = generateQuestion(content, card, {
+				id: `${mode}-${level}`,
+				now: NOW,
+				level
+			});
+			assert.deepEqual(question.context, [], `${mode} L${level}`);
+			assert.deepEqual(question.choices, [], `${mode} L${level}`);
+		}
 });

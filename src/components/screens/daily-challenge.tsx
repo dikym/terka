@@ -86,7 +86,7 @@ export function DailyChallengeScreen() {
 									className="h-10 min-w-10 text-subhead"
 								/>
 								<span className="font-mono text-body-sm font-medium text-ink-500">
-									{view ? `Level ${view.question?.level}` : "Tanpa Petunjuk"}
+									{view ? `Level ${view.question?.level}` : "Tebak berwaktu"}
 								</span>
 							</div>
 						</CardBody>

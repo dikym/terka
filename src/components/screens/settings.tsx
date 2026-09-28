@@ -147,7 +147,7 @@ export function SettingsScreen() {
 						<SettingsSection title="Menjawab">
 							<ToggleSetting
 								checked
-								label="Batas waktu Tanpa Petunjuk"
+								label="Batas waktu Tebak berwaktu"
 								note="8 detik. Lewat batas, soal ditutup dengan Waktu habis."
 							/>
 							<div className="flex flex-col">

@@ -8,7 +8,7 @@ import { Callout } from "@/components/ui/callout";
 import { SessionQuestionScreen } from "@/components/screens/session-question";
 import { SessionGradedScreen } from "@/components/screens/session-graded";
 import { SessionSummaryScreen } from "@/components/screens/session-summary";
-import { BlindRecallScreen } from "@/components/screens/blind-recall";
+import { TimedGuessScreen } from "@/components/screens/timed-guess";
 import { OddOneOutScreen } from "@/components/screens/odd-one-out";
 import { TrueFalseScreen } from "@/components/screens/true-false";
 import { CompareScreen } from "@/components/screens/compare";
@@ -331,7 +331,7 @@ export function LearningSession({ initialMode = "daily" }: { initialMode?: Sessi
 	else if (question?.format === "truefalse") screen = <TrueFalseScreen />;
 	else if (question?.choices.length) screen = <OddOneOutScreen />;
 	else if (question?.format === "set") screen = <SetRecallScreen />;
-	else if (question?.level === 3 && question.limitMs) screen = <BlindRecallScreen />;
+	else if (question?.level === 3 && question.limitMs) screen = <TimedGuessScreen />;
 	else screen = <SessionQuestionScreen />;
 	return <SessionViewContext.Provider value={view}>{screen}</SessionViewContext.Provider>;
 }
