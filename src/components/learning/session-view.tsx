@@ -10,6 +10,7 @@ export type SessionView = {
 	question: Question | null;
 	review: RawReview | null;
 	summary: ReturnType<typeof sessionSummary> | null;
+	masteryTest: boolean;
 	busy: boolean;
 	current: number;
 	total: number;

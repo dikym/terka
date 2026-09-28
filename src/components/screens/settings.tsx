@@ -17,6 +17,7 @@ import { LabelText } from "@/components/ui/label-text";
 import { Select } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
+import { TIMED_LIMIT_MS } from "@/rules";
 
 function SettingsSection({
 	title,
@@ -148,7 +149,7 @@ export function SettingsScreen() {
 							<ToggleSetting
 								checked
 								label="Batas waktu Tebak berwaktu"
-								note="8 detik. Lewat batas, soal ditutup dengan Waktu habis."
+								note={`${TIMED_LIMIT_MS / 1000} detik sampai mulai mengetik. Lewat batas, soal ditutup dengan Waktu habis.`}
 							/>
 							<div className="flex flex-col">
 								<SettingRow label="Pembatalan jawaban" value="tombol Z" />

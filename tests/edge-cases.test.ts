@@ -437,16 +437,28 @@ test("malformed progress is rejected before it can be saved or restored", () => 
 	}
 });
 
-test("Level 3 accepts exactly eight seconds and records a correct late response as a timeout", () => {
+test("SR-031: Level 3 accepts a first input at exactly eight seconds and times out after", () => {
 	const content = fixture();
 	const initial = startSession(reviewing(), content, { id: "timed", mode: "daily", now: NOW });
 	const question = nextQuestion(initial, content, { id: "q", now: NOW, level: 3 });
 	assert.equal(question.currentQuestion!.limitMs, 8000);
-	for (const [elapsed, correct] of [
+	for (const [firstKey, correct] of [
 		[8000, true],
 		[8001, false]
 	] as const) {
-		const answered = answerCurrent(question, content, "a", undefined, NOW + elapsed);
+		const answered = applyAnswer(
+			question,
+			content,
+			{
+				id: "a",
+				sessionId: "timed",
+				questionId: "q",
+				now: NOW + 11_000,
+				msToFirstKey: firstKey,
+				answers: [question.currentQuestion!.targets[0].name]
+			},
+			() => 0.5
+		);
 		assert.equal(answered.reviews[0].correct, correct);
 		assert.equal(answered.reviews[0].timedOut, !correct);
 		assert.equal(answered.reviews[0].scheduled, true);

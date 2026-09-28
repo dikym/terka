@@ -8,11 +8,31 @@ import {
 	type Region,
 	type Target
 } from "./model";
+import { MATURE_INTERVAL_DAYS, TIMED_LIMIT_MS, TRUE_FALSE_LIMIT_MS } from "../../rules";
 
 export function automaticLevel(card: CardProgress): Level {
-	if (card.mode === "setrecall") return 3;
-	if (card.state === "mature") return 3;
-	return card.state === "new" || card.state === "learning" ? 1 : 2;
+	if (card.mode === "setrecall" || card.state === "mature") return 3;
+	if (card.state === "new" || card.state === "learning") return 1;
+	// SRD 3.2: a long review interval without a Level 3 pass triggers the automatic mastery test.
+	if (
+		card.state === "review" &&
+		card.interval >= MATURE_INTERVAL_DAYS &&
+		!card.passedLevels.includes(3)
+	)
+		return 3;
+	return 2;
+}
+
+// SRD 4.4: true/false is limited until the answer locks; typed Level 3 only until the first input.
+export function questionTimedOut(
+	question: Pick<Question, "format" | "limitMs">,
+	elapsedMs: number,
+	msToFirstKey: number | null
+): boolean {
+	if (question.limitMs === null) return false;
+	if (question.format === "truefalse" || msToFirstKey === null)
+		return elapsedMs > question.limitMs;
+	return msToFirstKey > question.limitMs;
 }
 
 export function regionTarget(content: Content, region: Region): Target {
@@ -87,7 +107,7 @@ export function generateQuestion(
 		targets: [regionTarget(content, region)],
 		answerKind: "name",
 		setTarget: null,
-		limitMs: level === 3 ? 8_000 : null,
+		limitMs: level === 3 ? TIMED_LIMIT_MS : null,
 		drillPair: options.pair ?? null,
 		context: [],
 		shownAt: options.now
@@ -153,7 +173,7 @@ export function generateQuestion(
 			];
 			question.answerKind = "literal";
 			question.choices = ["Benar", "Salah"];
-			question.limitMs = 2_000;
+			question.limitMs = TRUE_FALSE_LIMIT_MS;
 		} else if (options.format === "not-in") {
 			if (!candidates.length) throw new Error("A distractor from another group is required");
 			question.format = "not-in";

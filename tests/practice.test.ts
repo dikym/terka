@@ -53,7 +53,7 @@ test("timed UI submissions record expiry; a finished sprint never accepts a late
 		progress,
 		content,
 		[progress.currentQuestion!.targets[0].name],
-		100,
+		null,
 		NOW + 8001,
 		"late"
 	);

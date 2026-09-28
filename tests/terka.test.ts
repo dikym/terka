@@ -11,13 +11,15 @@ import {
 	areaDisplayName
 } from "../src/lib/terka/content";
 import { boundary, createClock, advanceClock } from "../src/lib/terka/time";
-import { DAY } from "../src/lib/terka/model";
+import { DAY, type Question } from "../src/lib/terka/model";
 import { matchAnswer, gradeAnswer } from "../src/lib/terka/grading";
 import {
 	dictionary,
 	generateQuestion,
 	evaluateQuestion,
-	assertLevelThreeCoverage
+	assertLevelThreeCoverage,
+	automaticLevel,
+	questionTimedOut
 } from "../src/lib/terka/questions";
 import { scheduleAnswer } from "../src/lib/terka/scheduler";
 import plates from "../src/data/plates.json";
@@ -41,6 +43,7 @@ import {
 } from "../src/lib/terka/statistics";
 
 import { region, fixture, NOW, raw, reviewing, answerCurrent } from "./fixtures";
+import { TIMED_LIMIT_MS, TRUE_FALSE_LIMIT_MS } from "../src/rules";
 
 test("content rejects empty datasets and derives hierarchy from primary provinces", () => {
 	assert.throws(() => parseContent({ ...fixture(), regions: [] }));
@@ -757,4 +760,47 @@ test("SR-338: typed Level 2 and 3 questions show no partial hint", () => {
 			assert.deepEqual(question.context, [], `${mode} L${level}`);
 			assert.deepEqual(question.choices, [], `${mode} L${level}`);
 		}
+});
+
+test("SR-018/SR-023/SR-340: automatic level follows SRD 3.2 and tests mastery at 21 days", () => {
+	const base = newCard("be", "code2region", NOW);
+	assert.equal(automaticLevel(base), 1);
+	assert.equal(automaticLevel({ ...base, state: "learning" }), 1);
+	assert.equal(automaticLevel({ ...base, state: "review", interval: 20 }), 2);
+	assert.equal(automaticLevel({ ...base, state: "review", interval: 21 }), 3);
+	assert.equal(automaticLevel({ ...base, state: "review", interval: 25, passedLevels: [3] }), 2);
+	assert.equal(automaticLevel({ ...base, state: "relearning", interval: 30 }), 2);
+	assert.equal(automaticLevel({ ...base, state: "mature", interval: 30, passedLevels: [3] }), 3);
+	assert.equal(automaticLevel(newCard("be", "setrecall", NOW)), 3);
+});
+
+test("SR-295: a review card at 21+ days is tested at Level 3 and matures on a pass", () => {
+	const content = fixture();
+	let progress = reviewing(content);
+	for (const card of progress.cards)
+		Object.assign(card, { interval: 25, stability: 25, lastReview: NOW - 25 * DAY, due: NOW });
+	progress = startSession(progress, content, { id: "s", mode: "daily", now: NOW });
+	progress = nextQuestion(progress, content, { id: "q", now: NOW });
+	assert.equal(progress.currentQuestion!.level, 3);
+	assert.equal(progress.currentQuestion!.limitMs, TIMED_LIMIT_MS);
+	const cardId = progress.currentQuestion!.cardId;
+	progress = answerCurrent(progress, content, "a");
+	const card = progress.cards.find((item) => item.cardId === cardId)!;
+	assert.ok(card.passedLevels.includes(3));
+	assert.equal(card.state, "mature");
+});
+
+test("SR-030/SR-031/SR-339/SR-300: typed Level 3 limits the first input; true/false limits the answer", () => {
+	const typed = { format: "recall", limitMs: TIMED_LIMIT_MS } as Question;
+	assert.equal(questionTimedOut(typed, 11_000, 7_900), false);
+	assert.equal(questionTimedOut(typed, 8_000, null), false);
+	assert.equal(questionTimedOut(typed, 8_001, null), true);
+	assert.equal(questionTimedOut(typed, 9_000, 8_001), true);
+	assert.equal(
+		questionTimedOut({ format: "recall", limitMs: null } as Question, 20_000, 20_000),
+		false
+	);
+	const trueFalse = { format: "truefalse", limitMs: TRUE_FALSE_LIMIT_MS } as Question;
+	assert.equal(questionTimedOut(trueFalse, 2_001, 100), true);
+	assert.equal(questionTimedOut(trueFalse, 2_000, 100), false);
 });

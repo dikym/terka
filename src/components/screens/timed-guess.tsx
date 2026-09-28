@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { PlateTile } from "@/components/terka/plate-tile";
 import { LevelChip } from "@/components/terka/level-chip";
 import { ModeBadge } from "@/components/terka/mode-badge";
+import { TIMED_LIMIT_MS } from "@/rules";
 
 const previewTimer = { value: 28, time: "2,2 s" };
 
@@ -21,7 +22,9 @@ export function TimedGuessScreen() {
 			total={24}
 			toolbar={
 				<span className="inline-flex shrink-0 items-center gap-3">
-					<ModeBadge className="bg-caution-100 text-ink-1000">Tebak berwaktu</ModeBadge>
+					<ModeBadge className="bg-caution-100 text-ink-1000">
+						{view?.masteryTest ? "Uji penguasaan" : "Tebak berwaktu"}
+					</ModeBadge>
 					<LevelChip level={3} label="Kuasai" filled={3} icon={Medal} />
 				</span>
 			}
@@ -50,8 +53,8 @@ export function TimedGuessScreen() {
 				Periksa
 			</Button>
 			<p className="text-body-sm leading-[1.4] text-ink-500">
-				Mulai mengetik dalam {(view?.question?.limitMs ?? 8_000) / 1000} detik. Lewat batas,
-				soal ditutup dengan <span className="font-mono">Waktu habis</span>.
+				Mulai mengetik dalam {(view?.question?.limitMs ?? TIMED_LIMIT_MS) / 1000} detik.
+				Lewat batas, soal ditutup dengan <span className="font-mono">Waktu habis</span>.
 			</p>
 		</SessionShell>
 	);
