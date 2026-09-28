@@ -2,7 +2,9 @@ import { z } from "zod";
 import {
 	bundleAreaSchema,
 	bundleRegionSchema,
+	contentHistorySchema,
 	contentId,
+	contentRevSchema,
 	contentSourceSchema,
 	referencePlateSchema,
 	specialSchema,
@@ -18,6 +20,8 @@ const editorialSource = z.object({
 });
 const curationSchema = z.object({
 	version: z.string().regex(/^\d{4}\.\d{2}\.\d{2}$/),
+	contentRev: contentRevSchema,
+	contentHistory: contentHistorySchema.min(1),
 	regions: z.array(
 		bundleRegionSchema
 			.omit({ facts: true })
@@ -47,6 +51,8 @@ export type BuildInput = {
 	today: string;
 	release: boolean;
 	revision: string;
+	// The plates.json currently on disk; null when there is none yet.
+	previous: unknown;
 };
 export type BuildResult = {
 	content: Bundle | null;
@@ -85,6 +91,16 @@ const holderKey = (value: string) =>
 	normalizeName(value, false)
 		.replace(/^(?:negara|kedutaan|kedubes|republik) (?=\S)/, "")
 		.replace(/ /g, "");
+// Everything a content revision covers: the bundle minus its release metadata.
+const payload = (bundle: Record<string, unknown>) =>
+	JSON.stringify(
+		Object.fromEntries(
+			Object.entries(bundle).filter(
+				([key]) =>
+					!["version", "contentRev", "contentHistory", "sourceRevision"].includes(key)
+			)
+		)
+	);
 const duplicates = (values: string[]) => [
 	...new Set(values.filter((value, index) => values.indexOf(value) !== index))
 ];
@@ -285,10 +301,23 @@ export function buildContent(input: BuildInput): BuildResult {
 			warnings.push(`${sourceId}: media source quoting an agency needs originalUrl`);
 	}
 
+	// Content revision (TRD 4.1): contentRev rises by one per change; old history never changes.
+	const history = curation.contentHistory;
+	for (const [index, entry] of history.entries())
+		if (entry.contentRev !== index + 1)
+			errors.push(`contentHistory entry ${index + 1} has contentRev ${entry.contentRev}`);
+	const latest = history.at(-1)!;
+	if (latest.contentRev !== curation.contentRev || latest.version !== curation.version)
+		errors.push(
+			`contentHistory must end with contentRev ${curation.contentRev} ${curation.version}`
+		);
+
 	if (input.release) errors.push(...warnings.map((warning) => `release: ${warning}`));
 	if (errors.length) return fail();
 	const content: Bundle = {
 		version: curation.version,
+		contentRev: curation.contentRev,
+		contentHistory: history,
 		sourceRevision: input.revision,
 		regions: curation.regions.map(({ sources: _sources, issues: _issues, ...region }) => ({
 			...region,
@@ -303,5 +332,21 @@ export function buildContent(input: BuildInput): BuildResult {
 		specials: specials.specials,
 		referencePlates: specials.referencePlates
 	};
+	const previous = input.previous as Partial<Bundle> | null;
+	if (previous) {
+		const before = previous.contentHistory ?? [];
+		if (JSON.stringify(history.slice(0, before.length)) !== JSON.stringify(before))
+			errors.push("contentHistory changed an existing entry");
+		const rev = previous.contentRev ?? 0;
+		if (content.contentRev < rev)
+			errors.push(`contentRev went back from ${rev} to ${content.contentRev}`);
+		// ponytail: compares with the file on disk, so a second edit before commit needs another bump
+		// (or restoring src/data/plates.json); compare against the last release if that gets noisy.
+		if (content.contentRev === rev && payload(content) !== payload(previous))
+			errors.push(
+				`content changed but contentRev is still ${rev}; bump contentRev in data/plate-curation.json`
+			);
+	}
+	if (errors.length) return fail();
 	return { content, errors, warnings, reports };
 }

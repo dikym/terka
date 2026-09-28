@@ -37,6 +37,8 @@ const tiers = [
 const valid = () => ({
 	curation: {
 		version: "2026.09.24",
+		contentRev: 1,
+		contentHistory: [{ contentRev: 1, version: "2026.09.24" }],
 		regions: tiers.map((tier, index) => region(idAt(index), tier, [`kab-${idAt(index)}`])),
 		areas: tiers.map((_, index) => area(`kab-${idAt(index)}`, `Area ${idAt(index)}`)),
 		factLinks: [{ number: 1, id: "f-001", regions: ["aa"] }],
@@ -103,7 +105,8 @@ const valid = () => ({
 	factsMarkdown: "1. **Draf · usulan label: legenda** — Cerita batalion.\n",
 	today: "2026-09-24",
 	release: false,
-	revision: "fixture"
+	revision: "fixture",
+	previous: null as unknown
 });
 type Input = ReturnType<typeof valid>;
 const failWith = (mutate: (input: Input) => void, needle: RegExp) => {
@@ -135,6 +138,35 @@ test("valid curation builds the TRD bundle and strips editorial fields", () => {
 	});
 	assert.equal(content.specials.length, 2);
 	assert.equal(content.sourceRevision, "fixture");
+});
+
+test("contentRev must rise when content changes and history stays append-only", () => {
+	const released = buildContent(valid()).content!;
+	const same = valid();
+	same.previous = released;
+	assert.deepEqual(buildContent(same).errors, []);
+	failWith((input) => {
+		input.previous = released;
+		input.curation.areas[0].name = "Area baru";
+	}, /content changed but contentRev is still 1/);
+	const bumped = valid();
+	bumped.previous = released;
+	bumped.curation.areas[0].name = "Area baru";
+	bumped.curation.version = "2026.10.01";
+	bumped.curation.contentRev = 2;
+	bumped.curation.contentHistory.push({ contentRev: 2, version: "2026.10.01" });
+	assert.deepEqual(buildContent(bumped).errors, []);
+	failWith((input) => {
+		input.previous = released;
+		input.curation.contentRev = 2;
+		input.curation.contentHistory = [
+			{ contentRev: 1, version: "2026.09.01" },
+			{ contentRev: 2, version: "2026.09.24" }
+		];
+	}, /contentHistory changed an existing entry/);
+	failWith((input) => {
+		input.curation.contentRev = 2;
+	}, /contentHistory must end with contentRev 2/);
 });
 
 test("output is deterministic", () => {

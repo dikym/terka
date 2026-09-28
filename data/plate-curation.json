@@ -1,5 +1,12 @@
 {
-	"version": "2026.09.24",
+	"version": "2026.09.28",
+	"contentRev": 1,
+	"contentHistory": [
+		{
+			"contentRev": 1,
+			"version": "2026.09.28"
+		}
+	],
 	"regions": [
 		{
 			"id": "bl",
@@ -8206,7 +8213,7 @@
 		{
 			"number": 20,
 			"id": "f-020",
-			"regions": ["pa", "pb", "py", "ps", "pt"]
+			"regions": ["pa", "pb", "py", "ps", "pt", "pg"]
 		},
 		{
 			"number": 21,

@@ -70,8 +70,14 @@ export const referencePlateSchema = z.object({
 	note: z.string().min(1).nullable(),
 	reviewBy: day
 });
+export const contentRevSchema = z.number().int().positive().max(32767);
+export const contentHistorySchema = z.array(
+	z.object({ contentRev: contentRevSchema, version: z.string().regex(/^\d{4}\.\d{2}\.\d{2}$/) })
+);
 export const bundleSchema = z.object({
 	version: z.string().regex(/^\d{4}\.\d{2}\.\d{2}$/),
+	contentRev: contentRevSchema,
+	contentHistory: contentHistorySchema.min(1),
 	sourceRevision: z.string().min(1),
 	regions: z.array(bundleRegionSchema).min(1),
 	areas: z.array(bundleAreaSchema).min(1),
