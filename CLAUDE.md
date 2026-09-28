@@ -15,7 +15,7 @@ Setelah Anda membuat, mengubah, atau menghapus kode, Anda **WAJIB** menjalankan 
 
 ## Git Commits
 
-**Wajib** menggunakan standar [Conventional Commits](https://www.conventionalcommits.org/) untuk setiap git commit. Jangan tambahkan deskripsi "Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>".
+**Wajib** menggunakan standar [Conventional Commits](https://www.conventionalcommits.org/) untuk setiap git commit. Jangan tambahkan deskripsi "Co-Authored-By: Claude ... <noreply@anthropic.com>".
 
 ### Format
 
@@ -54,7 +54,7 @@ refactor(ui): extract button component from dashboard
 ### Aturan
 
 - **Konfirmasi Sebelum Commit:** Setelah implementasi selesai dan tervalidasi, **SELALU** tanyakan konfirmasi ke user sebelum melakukan `git add` dan `git commit`. Jangan pernah commit tanpa persetujuan eksplisit dari user. Siapkan commit message yang sesuai Conventional Commits untuk ditinjau user sebelum dieksekusi.
-- **Jangan tambahkan Co-Authored-By:** Tidak perlu menambahkan footer `Co-Authored-By: Claude Sonnet ...` pada pesan commit.
+- **Jangan tambahkan Co-Authored-By:** Tidak perlu menambahkan footer `Co-Authored-By: Claude ...` pada pesan commit.
 - **Selalu berbahasa Inggris:** Pesan commit ditulis dalam bahasa Inggris, meskipun percakapan berlangsung dalam bahasa Indonesia.
 - **Tanpa body/description:** Cukup tulis baris subject saja. Buat subject yang jelas dan mewakili seluruh perubahan, sehingga _body_ tidak diperlukan. Tambahkan _body_ hanya jika user memintanya secara eksplisit.
 - Gunakan huruf kecil untuk type dan description
@@ -82,5 +82,3 @@ Saat menggunakan skill perencanaan, simpan output ke folder berikut:
 - **Plans:** `docs/superpowers/plans/YYYY-MM-DD-<feature-name>.md`
 
 Buat folder tersebut jika belum ada. Lokasi ini **menggantikan** default bawaan skill.
-
-Saat men-dispatch subagent untuk eksekusi plan (skill `superpowers:subagent-driven-development` atau `superpowers:executing-plans`), gunakan `model: "sonnet"` pada setiap panggilan Agent tool.
