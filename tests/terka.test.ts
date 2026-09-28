@@ -43,7 +43,7 @@ import {
 	searchReference
 } from "../src/lib/terka/statistics";
 
-import { region, fixture, NOW, raw, reviewing, answerCurrent } from "./fixtures";
+import { region, fixture, wideFixture, lcg, NOW, raw, reviewing, answerCurrent } from "./fixtures";
 import { TIMED_LIMIT_MS, TRUE_FALSE_LIMIT_MS } from "../src/rules";
 
 test("content rejects empty datasets and derives hierarchy from primary provinces", () => {
@@ -266,7 +266,11 @@ test("AC-2/12: maturity requires Level 3 and lapse 8 suspends; data updates reta
 	progress.cards[0] = { ...card, interval: 14 };
 	const updated = reconcileContent(progress, fixture());
 	assert.ok(updated.cards.some((card) => card.cardId === "be::region2code"));
-	assert.ok(updated.cards.some((card) => card.cardId === "be::setrecall"));
+	// SR-080: one-area codes never get set recall
+	assert.equal(
+		updated.cards.some((card) => card.cardId === "be::setrecall"),
+		false
+	);
 	const removed = reconcileContent(updated, {
 		...fixture(),
 		regions: fixture().regions.slice(1)
@@ -389,7 +393,7 @@ test("challenge is five questions once per day and never changes scheduling", ()
 		reps: card.reps,
 		lapses: card.lapses
 	}));
-	for (let index = 0; index < 5; index++) {
+	for (let index = 0; index < progress.sessions[0].cardIds.length; index++) {
 		progress = nextQuestion(progress, content, { id: `cq${index}`, now: NOW + index * 2000 });
 		progress = answerCurrent(progress, content, `ca${index}`);
 	}
@@ -628,7 +632,11 @@ test("daily learning can finish minute steps and eventually unlock and mature bo
 	assert.ok(
 		progress.cards.some((card) => card.mode === "region2code" && card.state === "mature")
 	);
-	assert.ok(progress.cards.some((card) => card.mode === "setrecall"));
+	// SR-080: fixture regions have one area each, so one-area codes never get set recall
+	assert.equal(
+		progress.cards.some((card) => card.mode === "setrecall"),
+		false
+	);
 	assert.ok(
 		progress.cards
 			.filter((card) => card.mode === "code2region")
@@ -855,4 +863,174 @@ test("SR-076: intro guesses never enter the latency percentile", () => {
 		raw({ id: `i-${index}`, ts: NOW - 1000 + index, msToFirstKey: 2000, intro: true })
 	);
 	assert.equal(gradeAnswer(raw({ msToFirstKey: 100 }), intro), 3);
+});
+
+const areaByName = (content: ReturnType<typeof wideFixture>) =>
+	new Map(content.areas.map((area) => [areaDisplayName(area), area]));
+
+test("SR-022/SR-217/SR-218/AC-26: Level 1 choices are scope areas, never members or province names", () => {
+	const content = wideFixture();
+	const byName = areaByName(content);
+	const members = new Set(content.regions[0].areas.map((membership) => membership.areaId));
+	const card = { ...newCard("be", "code2region", NOW), state: "review" as const };
+	for (let seed = 1; seed <= 20; seed++) {
+		const question = generateQuestion(content, card, {
+			id: `q${seed}`,
+			now: NOW,
+			level: 1,
+			scope: { level: "group", id: "island-a" },
+			random: lcg(seed)
+		});
+		assert.equal(question.choices.length, 4);
+		const areas = question.choices.map((choice) => byName.get(choice));
+		assert.ok(areas.every(Boolean), question.choices.join());
+		assert.equal(areas.filter((area) => members.has(area!.id)).length, 1);
+		assert.ok(
+			areas.every((area) =>
+				["province-be", "province-bd", "province-bk"].includes(area!.province)
+			)
+		);
+		const right = question.choices.find((choice) => members.has(byName.get(choice)!.id))!;
+		assert.equal(evaluateQuestion(content, question, [right]).correct, true);
+	}
+	const codeCard = { ...newCard("be", "region2code", NOW), state: "review" as const };
+	const codes = generateQuestion(content, codeCard, {
+		id: "c",
+		now: NOW,
+		level: 1,
+		random: lcg(3)
+	});
+	assert.equal(codes.choices.length, 4);
+	assert.ok(codes.choices.includes("BE"));
+	assert.ok(codes.choices.every((choice) => /^[A-Z]{2}$/.test(choice)));
+});
+
+test("SR-219/SR-220/SR-297: out-of-scope cards use their own group, then widen nationally", () => {
+	const content = wideFixture();
+	const byName = areaByName(content);
+	const dk = { ...newCard("dk", "code2region", NOW), state: "review" as const };
+	const own = generateQuestion(content, dk, {
+		id: "dk",
+		now: NOW,
+		level: 1,
+		scope: { level: "group", id: "island-a" },
+		random: lcg(1)
+	});
+	assert.ok(
+		own.choices.every((choice) =>
+			["province-dk", "province-dr"].includes(byName.get(choice)!.province)
+		)
+	);
+	const de = { ...newCard("de", "code2region", NOW), state: "review" as const };
+	const widened = generateQuestion(content, de, {
+		id: "de",
+		now: NOW,
+		level: 1,
+		scope: { level: "province", id: "province-de" },
+		random: lcg(2)
+	});
+	assert.equal(widened.choices.length, 4);
+});
+
+test("true/false and odd-one-out use areas and record the owner of a wrong area", () => {
+	const content = wideFixture();
+	const card = { ...newCard("be", "code2region", NOW), state: "review" as const };
+	for (let seed = 1; seed <= 10; seed++) {
+		const tf = generateQuestion(content, card, {
+			id: "t",
+			now: NOW,
+			level: 1,
+			format: "truefalse",
+			random: lcg(seed)
+		});
+		assert.match(tf.prompt, /^BE dipakai Kota .+\.$/);
+		if (tf.targets[0].name === "Salah") {
+			const result = evaluateQuestion(content, tf, ["Benar"]);
+			assert.deepEqual(result.confusedWith, [tf.targets[0].id]);
+			assert.notEqual(tf.targets[0].id, "be");
+		}
+	}
+	const notIn = generateQuestion(content, card, {
+		id: "n",
+		now: NOW,
+		level: 1,
+		format: "not-in",
+		random: lcg(4)
+	});
+	assert.equal(notIn.choices.length, 4);
+	assert.equal(evaluateQuestion(content, notIn, [notIn.targets[0].name]).correct, true);
+});
+
+test("every real code builds every Level 1 form", () => {
+	const content = parseContent(plates);
+	for (const item of content.regions) {
+		for (const mode of ["code2region", "region2code"] as const) {
+			const card = { ...newCard(item.id, mode, NOW), state: "review" as const };
+			const formats =
+				mode === "code2region"
+					? (["choice", "truefalse", "not-in"] as const)
+					: (["choice"] as const);
+			for (const format of formats) {
+				const question = generateQuestion(content, card, {
+					id: `${item.id}-${format}`,
+					now: NOW,
+					level: 1,
+					format,
+					random: lcg(7)
+				});
+				assert.ok(new Set(question.choices).size >= 2, `${item.code} ${mode} ${format}`);
+			}
+		}
+	}
+});
+
+test("SR-080/SR-098/SR-100: set recall needs three areas and asks min(5, n − 1)", () => {
+	const wide = wideFixture();
+	const three = generateQuestion(wide, newCard("be", "setrecall", NOW), { id: "s", now: NOW });
+	assert.equal(three.setTarget, 2);
+	const twelve = wideFixture();
+	const extra = Array.from({ length: 9 }, (_, index) => ({
+		...twelve.areas[0],
+		id: `kota-be-x${index}`,
+		name: `Lampung x${index}`
+	}));
+	twelve.areas.push(...extra);
+	twelve.regions[0].areas.push(
+		...extra.map((area) => ({ areaId: area.id, confidence: "high" as const }))
+	);
+	assert.equal(
+		generateQuestion(twelve, newCard("be", "setrecall", NOW), { id: "t", now: NOW }).setTarget,
+		5
+	);
+	const single = fixture();
+	const progress = reviewing(single);
+	for (const card of progress.cards) card.interval = 14;
+	assert.equal(
+		reconcileContent(progress, single).cards.some((card) => card.mode === "setrecall"),
+		false
+	);
+	const widened = reviewing(wide);
+	for (const card of widened.cards) card.interval = 14;
+	assert.ok(
+		reconcileContent(widened, wide).cards.some((card) => card.cardId === "be::setrecall")
+	);
+});
+
+test("SR-149: a challenge with fewer than five learned cards asks each once", () => {
+	const content = fixture();
+	let progress = startSession(reviewing(content), content, {
+		id: "c",
+		mode: "challenge",
+		now: NOW,
+		random: () => 0.5
+	});
+	const ids = progress.sessions[0].cardIds;
+	assert.equal(ids.length, 4);
+	assert.equal(new Set(ids).size, 4);
+	for (let index = 0; index < ids.length; index++) {
+		progress = nextQuestion(progress, content, { id: `q${index}`, now: NOW + index * 2000 });
+		progress = answerCurrent(progress, content, `a${index}`);
+	}
+	assert.notEqual(progress.sessions[0].completedAt, null);
+	assert.ok(progress.challengeDays.includes(progress.clock.sequence));
 });

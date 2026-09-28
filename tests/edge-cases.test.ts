@@ -582,7 +582,15 @@ test("streak grace expires after 30 days and completion days are deduplicated", 
 
 test("set sessions select unlocked cards in scope, consume one introduction and complete", () => {
 	const content = fixture();
-	let progress = reviewing();
+	content.areas.push(
+		{ ...content.areas[0], id: "kota-be-2", name: "Lampung Dua" },
+		{ ...content.areas[0], id: "kota-be-3", name: "Lampung Tiga" }
+	);
+	content.regions[0].areas.push(
+		{ areaId: "kota-be-2", confidence: "high" },
+		{ areaId: "kota-be-3", confidence: "high" }
+	);
+	let progress = reviewing(content);
 	for (const card of progress.cards.filter((card) => card.mode === "code2region"))
 		card.interval = 14;
 	progress = reconcileContent(progress, content);

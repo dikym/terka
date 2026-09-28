@@ -96,6 +96,41 @@ export const reviewing = (content = fixture()): Progress => {
 		});
 	return progress;
 };
+// Six codes in three groups, three high areas each: enough for scope distractors and set recall.
+export const wideFixture = (): Content => {
+	const codes = [
+		["be", "Lampung", "island-a"],
+		["bd", "Bengkulu", "island-a"],
+		["bk", "Medan", "island-a"],
+		["dk", "Bali", "island-b"],
+		["dr", "Lombok", "island-b"],
+		["de", "Maluku", "island-c"]
+	] as const;
+	const numbers = ["satu", "dua", "tiga"];
+	const content = fixture();
+	content.regions = codes.map(([id, name, group]) => ({
+		...region(id, name, group),
+		areas: numbers.map((n) => ({ areaId: `kota-${id}-${n}`, confidence: "high" as const }))
+	}));
+	content.areas = codes.flatMap(([id, name]) =>
+		numbers.map((n) => ({
+			id: `kota-${id}-${n}`,
+			type: "kota" as const,
+			name: `${name} ${n}`,
+			province: `province-${id}`,
+			aliases: [],
+			variants: []
+		}))
+	);
+	return content;
+};
+
+// Deterministic random stream for tests that need varied shuffles.
+export const lcg = (seed: number) => () => {
+	seed = (seed * 1664525 + 1013904223) % 4294967296;
+	return seed / 4294967296;
+};
+
 export function answerCurrent(
 	progress: Progress,
 	content: Content,
