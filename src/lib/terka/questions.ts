@@ -1,14 +1,21 @@
-import { areaDisplayName, memberAreas } from "./content";
+import { areaDisplayName, inScope, memberAreas } from "./content";
 import { matchAnswer } from "./grading";
 import {
+	type Area,
 	type CardProgress,
 	type Content,
 	type Level,
 	type Question,
 	type Region,
+	type Scope,
 	type Target
 } from "./model";
-import { MATURE_INTERVAL_DAYS, TIMED_LIMIT_MS, TRUE_FALSE_LIMIT_MS } from "../../rules";
+import {
+	MATURE_INTERVAL_DAYS,
+	SET_THRESHOLD_MAX,
+	TIMED_LIMIT_MS,
+	TRUE_FALSE_LIMIT_MS
+} from "../../rules";
 
 export function automaticLevel(card: CardProgress): Level {
 	if (card.mode === "setrecall" || card.state === "mature") return 3;
@@ -78,6 +85,34 @@ export function shuffled<T>(items: T[], random: () => number): T[] {
 	return result;
 }
 
+// SRD 2.8: the scope first (the card's own group when its code is outside the scope), then the group, then national.
+function sourceLayers(content: Content, region: Region, scope: Scope): Region[][] {
+	const eligible = content.regions.filter(
+		(item) => item.confidence === "high" && memberAreas(content, item).length > 0
+	);
+	const group = eligible.filter((item) => item.group === region.group);
+	return [
+		inScope(region, scope) ? eligible.filter((item) => inScope(item, scope)) : group,
+		group,
+		eligible
+	];
+}
+
+function pickLayered<T>(
+	layers: T[][],
+	key: (item: T) => string,
+	count: number,
+	random: () => number
+): T[] {
+	const chosen = new Map<string, T>();
+	for (const layer of layers)
+		for (const item of shuffled(layer, random)) {
+			if (chosen.size === count) return [...chosen.values()];
+			if (!chosen.has(key(item))) chosen.set(key(item), item);
+		}
+	return [...chosen.values()];
+}
+
 export function generateQuestion(
 	content: Content,
 	card: CardProgress,
@@ -87,6 +122,7 @@ export function generateQuestion(
 		level?: Level;
 		format?: Question["format"];
 		pair?: [string, string];
+		scope?: Scope;
 		random?: () => number;
 	}
 ): Question {
@@ -131,7 +167,7 @@ export function generateQuestion(
 		if (level !== 3) throw new Error("Set recall requires Level 3");
 		question.format = "set";
 		question.targets = areaTargets(content, region);
-		question.setTarget = Math.min(5, question.targets.length);
+		question.setTarget = Math.min(SET_THRESHOLD_MAX, question.targets.length - 1);
 		question.prompt = `Sebutkan daerah yang memakai ${region.code}.`;
 		question.answerKind = "set";
 		question.limitMs = null;
@@ -150,23 +186,37 @@ export function generateQuestion(
 	}
 	if (level === 1) {
 		question.limitMs = null;
-		const candidates = shuffled(
-			content.regions.filter(
-				(item) =>
-					item.id !== region.id &&
-					item.group !== region.group &&
-					item.confidence === "high"
-			),
-			random
+		const layers = sourceLayers(
+			content,
+			region,
+			options.scope ?? { level: "national", id: "indonesia" }
 		);
+		const members = memberAreas(content, region);
+		const memberIds = new Set(members.map((area) => area.id));
+		const foreignAreas = (count: number) =>
+			pickLayered(
+				layers.map((layer) =>
+					layer.flatMap((item) =>
+						memberAreas(content, item)
+							.filter((area) => !memberIds.has(area.id))
+							.map((area) => ({ owner: item, area }))
+					)
+				),
+				({ area }) => areaDisplayName(area),
+				count,
+				random
+			);
+		const anyMember = () => shuffled(members, random)[0];
 		if (options.format === "truefalse") {
-			if (!candidates.length) throw new Error("A distractor from another group is required");
 			const truthful = random() < 0.5;
+			const [foreign] = foreignAreas(1);
+			if (!truthful && !foreign) throw new Error("A non-member area is required");
+			const shown: Area = truthful ? anyMember() : foreign.area;
 			question.format = "truefalse";
-			question.prompt = `${region.code} dipakai ${truthful ? region.region : candidates[0].region}.`;
+			question.prompt = `${region.code} dipakai ${areaDisplayName(shown)}.`;
 			question.targets = [
 				{
-					id: truthful ? region.id : candidates[0].id,
+					id: truthful ? region.id : foreign.owner.id,
 					name: truthful ? "Benar" : "Salah",
 					aliases: []
 				}
@@ -175,25 +225,36 @@ export function generateQuestion(
 			question.choices = ["Benar", "Salah"];
 			question.limitMs = TRUE_FALSE_LIMIT_MS;
 		} else if (options.format === "not-in") {
-			if (!candidates.length) throw new Error("A distractor from another group is required");
+			const [foreign] = foreignAreas(1);
+			if (!foreign) throw new Error("A non-member area is required");
 			question.format = "not-in";
 			question.prompt = `Mana yang tidak memakai ${region.code}?`;
-			question.targets = [regionTarget(content, candidates[0])];
+			question.targets = [
+				{ id: foreign.owner.id, name: areaDisplayName(foreign.area), aliases: [] }
+			];
 			question.choices = shuffled(
 				[
-					candidates[0].region,
-					...memberAreas(content, region).slice(0, 3).map(areaDisplayName)
+					areaDisplayName(foreign.area),
+					...shuffled(members, random).slice(0, 3).map(areaDisplayName)
 				],
 				random
 			);
+		} else if (question.answerKind === "code") {
+			const valid = new Set(question.targets.map((target) => target.id));
+			const others = pickLayered(
+				layers.map((layer) => layer.filter((item) => !valid.has(item.id))),
+				(item) => item.code,
+				3,
+				random
+			);
+			question.format = "choice";
+			question.choices = shuffled([region.code, ...others.map((item) => item.code)], random);
 		} else {
 			question.format = "choice";
 			question.choices = shuffled(
 				[
-					question.targets[0].name,
-					...candidates
-						.slice(0, 3)
-						.map((item) => (question.answerKind === "code" ? item.code : item.region))
+					areaDisplayName(anyMember()),
+					...foreignAreas(3).map(({ area }) => areaDisplayName(area))
 				],
 				random
 			);

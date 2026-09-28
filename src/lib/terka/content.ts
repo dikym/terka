@@ -10,6 +10,7 @@ import {
 	type Scope
 } from "./model";
 import { createClock } from "./time";
+import { SET_MIN_AREAS } from "../../rules";
 
 function unique(values: string[], label: string) {
 	if (new Set(values).size !== values.length) throw new Error(`Duplicate ${label}`);
@@ -124,7 +125,11 @@ export function newCard(regionId: string, mode: CardMode, now: number): CardProg
 
 export function cardEligible(card: CardProgress, content: Content): boolean {
 	const region = content.regions.find((region) => region.id === card.regionId);
-	return Boolean(region && eligibleRegion(content, region));
+	return Boolean(
+		region &&
+		eligibleRegion(content, region) &&
+		(card.mode !== "setrecall" || memberAreas(content, region).length >= SET_MIN_AREAS)
+	);
 }
 
 export function reconcileContent(input: Progress, value: unknown): Progress {
@@ -138,9 +143,10 @@ export function reconcileContent(input: Progress, value: unknown): Progress {
 	for (const card of progress.cards) {
 		if (!cardEligible(card, content) && card.state !== "suspended") {
 			card.state = "suspended";
-			card.suspensionReason = content.regions.some((region) => region.id === card.regionId)
-				? "confidence"
-				: "missing-data";
+			const region = content.regions.find((item) => item.id === card.regionId);
+			const lacksAreas =
+				card.mode === "setrecall" && region && eligibleRegion(content, region);
+			card.suspensionReason = region && !lacksAreas ? "confidence" : "missing-data";
 			progress.notices.push(`${card.cardId}: ${card.suspensionReason}`);
 		}
 	}
@@ -162,7 +168,12 @@ export function reconcileContent(input: Progress, value: unknown): Progress {
 		add("code2region");
 		const primary = progress.cards.find((card) => card.cardId === `${region.id}::code2region`)!;
 		if (primary.interval >= 7 && primary.state !== "suspended") add("region2code");
-		if (primary.interval >= 14 && primary.state !== "suspended") add("setrecall");
+		if (
+			primary.interval >= 14 &&
+			primary.state !== "suspended" &&
+			memberAreas(content, region).length >= SET_MIN_AREAS
+		)
+			add("setrecall");
 	}
 	if (
 		!buildHierarchy(content).some(

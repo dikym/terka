@@ -228,7 +228,7 @@ export function startSession(
 			throw new Error("Resume today's challenge");
 		const choices = shuffled(learned, options.random ?? Math.random);
 		if (!choices.length) throw new Error("No learned cards available");
-		cardIds = Array.from({ length: 5 }, (_, index) => choices[index % choices.length].cardId);
+		cardIds = choices.slice(0, 5).map((card) => card.cardId);
 	} else if (mode === "set")
 		cardIds = progress.cards
 			.filter(
@@ -293,6 +293,9 @@ export function nextQuestion(
 ): Progress {
 	const progress = refreshProgress(input, content, options.now);
 	const session = activeSession(progress);
+	// SRD 2.8: distractors follow the active scope in daily and set sessions, the session scope elsewhere.
+	const scope =
+		session.mode === "daily" || session.mode === "set" ? progress.activeScope : session.scope;
 	if (session.mode === "sprint" && options.now >= session.startedAt + 60_000)
 		return finishSession(progress, options.now);
 	if (session.mode === "challenge" && session.day !== progress.clock.sequence)
@@ -305,7 +308,7 @@ export function nextQuestion(
 			const card = progress.cards.find((card) => card.cardId === question.cardId)!;
 			if (card.state === "new" && options.level !== undefined && options.level !== 1)
 				throw new Error("Perkenalan selalu Level 1");
-			progress.currentQuestion = generateQuestion(content, card, options);
+			progress.currentQuestion = generateQuestion(content, card, { ...options, scope });
 		}
 		return progress;
 	}
@@ -329,7 +332,8 @@ export function nextQuestion(
 	progress.currentQuestion = generateQuestion(content, card, {
 		...options,
 		level: session.mode === "sprint" ? 1 : options.level,
-		pair: item.pair
+		pair: item.pair,
+		scope
 	});
 	return progress;
 }
@@ -505,7 +509,7 @@ export function applyAnswer(
 	if (review.correct) session.correct++;
 	progress.currentQuestion = null;
 	if (
-		(session.mode === "challenge" && session.answered === 5) ||
+		(session.mode === "challenge" && session.answered >= session.cardIds.length) ||
 		((session.mode === "focused" || session.mode === "set") &&
 			session.answered >= session.cardIds.length)
 	) {
@@ -542,8 +546,8 @@ export function finishSession(input: Progress, now: number): Progress {
 	const session = activeSession(progress);
 	if (!Number.isFinite(now) || now < Math.max(session.startedAt, input.clock.lastSeen))
 		throw new Error("Invalid finish time");
-	if (session.mode === "challenge" && session.answered < 5)
-		throw new Error("Complete the five challenge questions or resume later");
+	if (session.mode === "challenge" && session.answered < session.cardIds.length)
+		throw new Error("Complete the challenge questions or resume later");
 	if (session.mode === "sprint" && now < session.startedAt + 60_000)
 		throw new Error("Sprint lasts 60 seconds");
 	session.completedAt = now;
