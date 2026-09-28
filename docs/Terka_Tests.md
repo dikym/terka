@@ -36,14 +36,14 @@ ID berikut sudah tidak digunakan: SR-211, SR-223–SR-229, SR-298, TR-58, TR-80,
 
 | Lapisan           | Alat                                            | Yang diuji                                                                                              |
 | ----------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| Unit              | Vitest                                          | Fungsi murni mesin penjadwalan: nilai penjadwalan, normalisasi jawaban, antrean, replay, batas hari     |
+| Unit              | `bun test`                                      | Fungsi murni mesin penjadwalan: nilai penjadwalan, normalisasi jawaban, antrean, replay, batas hari     |
 | Property-based    | fast-check                                      | Invarian replay: urutan kedatangan tidak memengaruhi hasil, idempotensi, replay bertahap = replay penuh |
-| Integrasi lokal   | Vitest + fake-indexeddb                         | Dexie, antrean kirim, cache `derived`, impor dan ekspor                                                 |
+| Integrasi lokal   | `bun test` + fake-indexeddb                     | Dexie, antrean kirim, cache `derived`, impor dan ekspor                                                 |
 | Integrasi server  | Supabase CLI (`supabase start`)                 | Push, pull, trigger LWW, constraint, FK                                                                 |
 | Keamanan database | pgTAP lewat `supabase test db`                  | RLS, grant, fungsi `delete_user()`                                                                      |
 | E2E               | Playwright                                      | Alur pengguna, offline, dua perangkat lewat dua browser context, zona waktu lewat `timezoneId`          |
-| Konten            | Vitest saat build                               | Validitas `plates.json`, AC-1, alias, ID yang tidak digunakan lagi, SVG                                 |
-| Performa          | Vitest bench + Playwright dengan CPU throttling | Replay, pembuatan antrean, sinkronisasi pertama                                                         |
+| Konten            | `bun test` saat build                           | Validitas `plates.json`, AC-1, alias, ID yang tidak digunakan lagi, SVG                                 |
+| Performa          | Skrip benchmark `bun` + Playwright dengan CPU throttling | Replay, pembuatan antrean, sinkronisasi pertama                                                         |
 
 ---
 
