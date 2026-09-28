@@ -25,6 +25,8 @@ Sebelum satu butir menjadi `ready`, editor wajib mencatat sumber yang dapat dite
 
 Konten draf boleh disimpan di repositori tetapi tidak dipilih aplikasi. Build menolak butir `ready` tanpa sumber atau tanggal pemeriksaan. Jika belum ada satu pun fakta `ready`, blok Fakta menarik tidak tampil dan tidak ada `fact_views` baru; latihan tetap berjalan. Tidak boleh mengubah `draft` menjadi `ready` otomatis hanya karena teks sumber tidak kosong. Format bundle mengikuti TRD 4.1 dan ERD 7.
 
+**Format butir.** Butir draf ditulis `N. **Draf · usulan label: X** — teks`. Butir yang sudah lolos pemeriksaan ditulis `N. **Siap · label: X** — teks`, dan sumber serta tanggal pemeriksaannya dicatat di `data/plate-curation.json` (`facts[].source` dan `facts[].sourceCheckedAt`). `X` adalah `terverifikasi`, `diperdebatkan`, atau `legenda`. Build menolak baris bernomor bercetak tebal yang tidak mengikuti salah satu format ini.
+
 ---
 
 ## 2. Asal-usul Sistem
