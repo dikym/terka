@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useLearning, useNow } from "@/components/learning/learning-provider";
 import { Callout } from "@/components/ui/callout";
 import { DAY } from "@/lib/terka/model";
+import { EXPORT_REMINDER_DAYS } from "@/rules";
 
 export function BackupStatus() {
 	const { progress } = useLearning();
@@ -16,8 +17,8 @@ export function BackupStatus() {
 			<p className="text-body-sm">
 				{age === null
 					? "Belum pernah dicadangkan."
-					: age > 30
-						? "Ekspor terakhir sudah lebih dari 30 hari."
+					: age > EXPORT_REMINDER_DAYS
+						? `Ekspor terakhir sudah lebih dari ${EXPORT_REMINDER_DAYS} hari.`
 						: age === 0
 							? "Cadangan diperbarui"
 							: `Terakhir dicadangkan ${age} hari lalu`}

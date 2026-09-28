@@ -1,7 +1,8 @@
 import { areaDisplayName, buildHierarchy, inScope, regionAreas } from "./content";
 import { normalizeName, percentile } from "./grading";
 import { addDays, createClock } from "./time";
-import { type Content, type Level, type Progress, type RawReview, type Scope } from "./model";
+import { DAY, type Content, type Level, type Progress, type RawReview, type Scope } from "./model";
+import { EXPORT_REMINDER_DAYS } from "../../rules";
 
 export function answerStats(reviews: RawReview[]) {
 	reviews = reviews.filter((review) => !review.intro);
@@ -35,7 +36,9 @@ export function scopeStats(progress: Progress, content: Content, scope: Scope) {
 }
 
 export function regionStats(progress: Progress, ids: Set<string>) {
-	const cards = progress.cards.filter((card) => ids.has(card.regionId));
+	const all = progress.cards.filter((card) => ids.has(card.regionId));
+	// SRD 2.5: suspended cards are neither mastered nor missing.
+	const cards = all.filter((card) => card.state !== "suspended");
 	const reviews = progress.reviews.filter((review) => ids.has(review.regionId));
 	const mature = cards.filter((card) => card.state === "mature").length;
 	const confusions = progress.confusions.filter(
@@ -49,7 +52,7 @@ export function regionStats(progress: Progress, ids: Set<string>) {
 		mastered: cards.length > 0 && mature === cards.length && confusions.length === 0,
 		confusions,
 		newCards: cards.filter((card) => card.state === "new").length,
-		suspendedCards: cards.filter((card) => card.state === "suspended").length,
+		suspendedCards: all.filter((card) => card.state === "suspended").length,
 		levels: ([1, 2, 3] as Level[]).map((level) => ({
 			level,
 			passed: cards.filter((card) => card.passedLevels.includes(level)).length,
@@ -177,6 +180,6 @@ export function sessionSummary(progress: Progress, content: Content, sessionId: 
 		masteryChange: session.mode === "focused" ? null : scope.mastery - session.masteryBefore,
 		backupOverdue:
 			progress.lastBackupAt === null ||
-			progress.clock.lastSeen - progress.lastBackupAt > 14 * 86_400_000
+			progress.clock.lastSeen - progress.lastBackupAt > EXPORT_REMINDER_DAYS * DAY
 	};
 }

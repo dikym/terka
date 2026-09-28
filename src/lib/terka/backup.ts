@@ -1,5 +1,6 @@
 import { DAY, type Progress } from "./model";
 import { exportBackup, type LearningStore, type Repository } from "./storage";
+import { EXPORT_REMINDER_DAYS } from "../../rules";
 
 export type BackupDirectory = {
 	queryPermission(options: { mode: "readwrite" }): Promise<PermissionState>;
@@ -39,12 +40,12 @@ export function backupStatus(
 	return {
 		automaticSupported: supported,
 		weeklyDue: age >= 7 * DAY,
-		overdue: age > 14 * DAY,
+		overdue: age > EXPORT_REMINDER_DAYS * DAY,
 		lastBackupAt: progress.lastBackupAt,
 		message: !supported
 			? "Cadangan otomatis belum didukung di peramban ini. Unduh cadangan secara manual."
-			: age > 14 * DAY
-				? "Cadangan terakhir sudah lebih dari 14 hari."
+			: age > EXPORT_REMINDER_DAYS * DAY
+				? `Ekspor terakhir sudah lebih dari ${EXPORT_REMINDER_DAYS} hari.`
 				: null
 	};
 }

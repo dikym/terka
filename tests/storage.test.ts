@@ -170,7 +170,7 @@ test("backup write failure never marks success; permissions and persistence fail
 		);
 		assert.equal(await requestPersistentStorage(client, { persist: async () => false }), false);
 		assert.equal(
-			backupStatus({ ...progress, lastBackupAt: NOW }, NOW + 15 * DAY, false).overdue,
+			backupStatus({ ...progress, lastBackupAt: NOW }, NOW + 31 * DAY, false).overdue,
 			true
 		);
 		let written = "";
@@ -408,16 +408,24 @@ test("manual download is a valid populated backup and only acknowledgement chang
 		await acknowledgeManualBackup(client, NOW);
 		assert.equal(client.store.getState().progress!.lastBackupAt, NOW);
 		assert.equal(
-			backupStatus(client.store.getState().progress!, NOW + 14 * DAY, true).overdue,
+			backupStatus(client.store.getState().progress!, NOW + 30 * DAY, true).overdue,
 			false
 		);
 		assert.equal(
-			backupStatus(client.store.getState().progress!, NOW + 14 * DAY + 1, true).overdue,
+			backupStatus(client.store.getState().progress!, NOW + 30 * DAY + 1, true).overdue,
 			true
 		);
 	} finally {
 		repository.close();
 	}
+});
+
+test("E2E-49: the export reminder starts after 30 days", () => {
+	const progress = { ...reviewing(fixture()), lastBackupAt: NOW };
+	assert.equal(backupStatus(progress, NOW + 30 * DAY, true).overdue, false);
+	const late = backupStatus(progress, NOW + 30 * DAY + 1, true);
+	assert.equal(late.overdue, true);
+	assert.equal(late.message, "Ekspor terakhir sudah lebih dari 30 hari.");
 });
 
 test("persistent storage is requested once after initialization and rejection is recoverable", async () => {
