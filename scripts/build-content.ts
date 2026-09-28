@@ -6,10 +6,11 @@ import { assertLevelThreeCoverage } from "../src/lib/terka/questions";
 
 const root = new URL("../", import.meta.url);
 const read = (path: string) => readFile(new URL(path, root), "utf8");
-const [curationText, specialsText, factsMarkdown] = await Promise.all([
+const [curationText, specialsText, factsMarkdown, previousText] = await Promise.all([
 	read("data/plate-curation.json"),
 	read("data/special-plates.json"),
-	read("docs/Terka_Facts.md")
+	read("docs/Terka_Facts.md"),
+	read("src/data/plates.json").catch(() => null)
 ]);
 const result = buildContent({
 	curation: JSON.parse(curationText),
@@ -17,6 +18,7 @@ const result = buildContent({
 	factsMarkdown,
 	today: new Date().toISOString().slice(0, 10),
 	release: process.argv.includes("--release"),
+	previous: previousText === null ? null : JSON.parse(previousText),
 	revision: createHash("sha256")
 		.update(curationText + specialsText + factsMarkdown)
 		.digest("hex")

@@ -1,6 +1,13 @@
 {
-	"version": "2026.09.24",
-	"sourceRevision": "7115b7f35b30139b1253588b43e2f88ed3ba96d79868d3c16f90e59815cbdb28",
+	"version": "2026.09.28",
+	"contentRev": 1,
+	"contentHistory": [
+		{
+			"contentRev": 1,
+			"version": "2026.09.28"
+		}
+	],
+	"sourceRevision": "092c0dd0c2fbe465ba22792cfd10afdb3162ce7266ca9c61ed51d4f18d27d5f6",
 	"regions": [
 		{
 			"id": "bl",
@@ -3053,6 +3060,7 @@
 				}
 			],
 			"facts": [
+				"f-020",
 				"f-037"
 			]
 		}
@@ -7440,7 +7448,7 @@
 		{
 			"id": "f-020",
 			"historyLabel": "terverifikasi",
-			"text": "Perubahan kode di Papua menunjukkan pentingnya versi data. Urutan DS, PA, PB, PY, PS, dan PT harus dijelaskan dengan tanggal serta wilayah yang jelas, tanpa menganggap semua perubahan terjadi sekaligus.",
+			"text": "Perubahan kode di Papua menunjukkan pentingnya versi data. Urutan DS, PA, PB, PY, PS, PT, dan PG harus dijelaskan dengan tanggal serta wilayah yang jelas, tanpa menganggap semua perubahan terjadi sekaligus.",
 			"publicationStatus": "draft",
 			"source": null,
 			"sourceCheckedAt": null
@@ -7616,7 +7624,7 @@
 		{
 			"id": "f-042",
 			"historyLabel": "terverifikasi",
-			"text": "Lampiran Perpol 7/2021 huruf B menetapkan empat kode registrasi khusus: CD untuk korps diplomatik, CC untuk korps konsulat, CH untuk konsul kehormatan, dan RI untuk kendaraan dinas Presiden, Wakil Presiden, ketua lembaga tinggi negara, serta pejabat setingkat menteri. Sumber sudah dicatat di `Terka_KodeKhusus.md` bagian 8.",
+			"text": "Lampiran Perpol 7/2021 huruf B menetapkan empat kode registrasi khusus: CD untuk korps diplomatik, CC untuk korps konsulat, CH untuk konsul kehormatan, dan RI untuk kendaraan dinas Presiden, Wakil Presiden, ketua lembaga tinggi negara, serta pejabat setingkat menteri. Sumber sudah dicatat di `Terka_Kode_Khusus.md` bagian 8.",
 			"publicationStatus": "draft",
 			"source": null,
 			"sourceCheckedAt": null

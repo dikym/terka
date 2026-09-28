@@ -33,6 +33,8 @@ const cityOf = (id: string, name: string): Area => ({
 });
 export const fixture = (): Content => ({
 	version: "2026.09.15",
+	contentRev: 1,
+	contentHistory: [{ contentRev: 1, version: "2026.09.15" }],
 	sourceRevision: "fixture",
 	regions: [
 		region("be", "Lampung"),
