@@ -97,6 +97,22 @@ export function dailyQueue(progress: Progress, content: Content, now: number): Q
 	return queue.sort((a, b) => a.priority - b.priority);
 }
 
+// Learning steps can come due again before the day ends, so the daily queue may reopen early.
+export function nextDailyAt(progress: Progress, content: Content, now: number): number {
+	return Math.min(
+		progress.clock.nextBoundary,
+		...progress.cards
+			.filter(
+				(card) =>
+					card.mode !== "setrecall" &&
+					(card.state === "learning" || card.state === "relearning") &&
+					card.due > now &&
+					cardEligible(card, content)
+			)
+			.map((card) => card.due)
+	);
+}
+
 export function refreshProgress(
 	input: Progress,
 	content: Content,

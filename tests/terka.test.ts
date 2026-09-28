@@ -29,6 +29,7 @@ import {
 	refreshProgress,
 	selectScope,
 	learnedCards,
+	nextDailyAt,
 	startSession,
 	undoAnswer
 } from "../src/lib/terka/engine";
@@ -733,6 +734,14 @@ test("region to code prompts name the administrative type", () => {
 	);
 	assert.match(question.prompt, /Kota Lampung/);
 	assert.equal(areaDisplayName(content.areas[0]), "Kota Lampung");
+});
+
+test("daily countdown targets the next learning step before the day boundary", () => {
+	const content = fixture();
+	const progress = reviewing(content);
+	assert.equal(nextDailyAt(progress, content, NOW), progress.clock.nextBoundary);
+	progress.cards[0] = { ...progress.cards[0], state: "relearning", due: NOW + 60_000 };
+	assert.equal(nextDailyAt(progress, content, NOW), NOW + 60_000);
 });
 
 test("SR-338: typed Level 2 and 3 questions show no partial hint", () => {

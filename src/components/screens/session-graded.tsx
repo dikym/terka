@@ -30,10 +30,17 @@ export function SessionGradedScreen() {
 	const review = view?.review;
 	const answer = view
 		? {
-				value: question?.targets.map((target) => target.name).join(" · ") ?? "",
-				alias: `Jawaban Anda: ${review?.answers.join(", ") || "Tidak dijawab"}`
+				value: review?.answers.join(", ") || "Tidak dijawab",
+				alias: `Jawaban: ${question?.targets.map((target) => target.name).join(" · ") ?? ""}`
 			}
 		: previewAnswer;
+	const verdict = review
+		? review.correct
+			? review.fuzzy
+				? "near"
+				: "right"
+			: "wrong"
+		: "right";
 	const region = view?.content.regions.find((region) => region.id === question?.regionId);
 	const storedFact = view?.content.facts.find(
 		(fact) => fact.publicationStatus === "ready" && region?.facts.includes(fact.id)
@@ -61,7 +68,7 @@ export function SessionGradedScreen() {
 				/>
 			</div>
 			<div className="flex flex-col gap-2">
-				<GradedAnswer>{answer.value}</GradedAnswer>
+				<GradedAnswer verdict={verdict}>{answer.value}</GradedAnswer>
 				<span className="text-body-sm text-ink-500">{answer.alias}</span>
 			</div>
 			{fact && (
@@ -73,15 +80,7 @@ export function SessionGradedScreen() {
 				</FactCard>
 			)}
 			<VerdictLine
-				verdict={
-					review
-						? review.correct
-							? review.fuzzy
-								? "near"
-								: "right"
-							: "wrong"
-						: "right"
-				}
+				verdict={verdict}
 				label={
 					review
 						? review.timedOut
