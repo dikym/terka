@@ -6,6 +6,11 @@ import { MATURE_INTERVAL_DAYS } from "../../rules";
 // Minute steps belong to Terka; FSRS only supplies the daily memory update.
 const scheduler = fsrs({ request_retention: 0.9, enable_fuzz: false, enable_short_term: false });
 
+// SRD 4.7: the first sighting is an ungraded guess; the first FSRS grade comes from the 1-minute step.
+export function introduceCard(card: CardProgress, now: number): CardProgress {
+	return { ...card, state: "learning", step: 1, due: now + 60_000 };
+}
+
 export function scheduleAnswer(
 	input: CardProgress,
 	review: RawReview,

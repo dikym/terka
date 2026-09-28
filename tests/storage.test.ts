@@ -22,7 +22,7 @@ import {
 import { DAY, type Content } from "../src/lib/terka/model";
 import plates from "../src/data/plates.json";
 import { parseContent, parseProgress } from "../src/lib/terka/content";
-import { fixture, reviewing, answerCurrent } from "./fixtures";
+import { fixture, raw, reviewing, answerCurrent } from "./fixtures";
 import { startSession, nextQuestion, refreshProgress, undoAnswer } from "../src/lib/terka/engine";
 
 const content: Content = parseContent(plates);
@@ -192,7 +192,18 @@ test("backup write failure never marks success; permissions and persistence fail
 
 test("restoring an older device backup preserves the logical day of its learning history", async () => {
 	const source = fixture();
-	let backup = createProgress(source, NOW - 100 * DAY, "Asia/Makassar");
+	const backupStart = NOW - 100 * DAY;
+	let backup = createProgress(source, backupStart, "Asia/Makassar");
+	// A review card (not a brand-new one) so its answer is FSRS-scheduled, not an ungraded intro.
+	for (const card of backup.cards.filter((card) => card.mode === "code2region"))
+		Object.assign(card, {
+			state: "review",
+			stability: 5,
+			difficulty: 5,
+			interval: 5,
+			reps: 3,
+			lastReview: backupStart - 5 * DAY
+		});
 	backup = refreshProgress(backup, source, NOW - DAY);
 	backup = startSession(backup, source, { id: "old", mode: "daily", now: NOW - DAY });
 	backup = nextQuestion(backup, source, { id: "old-q", now: NOW - DAY });
@@ -502,4 +513,24 @@ test("legacy blindrecall cards, reviews and first-letter questions are dropped o
 		false
 	);
 	assert.equal(loaded.currentQuestion, null);
+});
+
+test("reviews saved before the intro flag load as graded answers", () => {
+	const progress = reviewing(fixture());
+	progress.sessions.push({
+		id: "session",
+		mode: "daily",
+		scope: progress.activeScope,
+		startedAt: NOW,
+		day: progress.clock.sequence,
+		cardIds: [],
+		answered: 0,
+		correct: 0,
+		masteryBefore: 0,
+		completedAt: null
+	});
+	progress.reviews.push(raw());
+	const legacy = structuredClone(progress) as unknown as { reviews: Record<string, unknown>[] };
+	delete legacy.reviews[0].intro;
+	assert.equal(parseProgress(legacy).reviews[0].intro, false);
 });

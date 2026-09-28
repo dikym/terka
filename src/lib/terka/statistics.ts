@@ -4,6 +4,7 @@ import { addDays, createClock } from "./time";
 import { type Content, type Level, type Progress, type RawReview, type Scope } from "./model";
 
 export function answerStats(reviews: RawReview[]) {
+	reviews = reviews.filter((review) => !review.intro);
 	const samples = reviews.flatMap((review) =>
 		review.msToFirstKey === null ? [] : [review.msToFirstKey]
 	);

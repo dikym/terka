@@ -3,7 +3,8 @@ import { cn } from "@/lib/utils";
 const verdictClass = {
 	right: "border-go-500 bg-go-100",
 	near: "border-caution-500 bg-caution-100",
-	wrong: "border-stop-500 bg-stop-100"
+	wrong: "border-stop-500 bg-stop-100",
+	neutral: "border-ink-200 bg-paper-0"
 } as const;
 
 export function GradedAnswer({

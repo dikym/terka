@@ -140,6 +140,7 @@ export function gradeAnswer(review: RawReview, history: RawReview[]): Grade {
 	const samples = preceding
 		.filter(
 			(item) =>
+				!item.intro &&
 				item.ts <= review.ts &&
 				item.level === review.level &&
 				item.correct &&

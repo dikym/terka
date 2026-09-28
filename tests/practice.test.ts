@@ -47,7 +47,7 @@ test("UI session commands persist feedback, resume after reload and undo the las
 
 test("timed UI submissions record expiry; a finished sprint never accepts a late answer", () => {
 	const content = fixture();
-	let progress = beginPractice(createProgress(content, NOW), content, "daily", NOW, "daily");
+	let progress = beginPractice(reviewing(content), content, "daily", NOW, "daily");
 	progress = nextQuestion(progress, content, { id: "timed", now: NOW, level: 3 });
 	progress = answerPractice(
 		progress,

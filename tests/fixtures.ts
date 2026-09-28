@@ -79,6 +79,7 @@ export const raw = (overrides: Partial<RawReview> = {}): RawReview => ({
 	drillPair: null,
 	scheduled: true,
 	wasMature: false,
+	intro: false,
 	...overrides
 });
 

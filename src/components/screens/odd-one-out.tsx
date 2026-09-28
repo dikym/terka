@@ -27,11 +27,13 @@ export function OddOneOutScreen() {
 			toolbar={
 				<span className="inline-flex shrink-0 items-center gap-3">
 					<ModeBadge className="bg-stop-100 text-ink-1000">
-						{view?.question?.format !== "choice"
-							? "Mana yang bukan"
-							: view.question.answerKind === "code"
-								? "Tebak kode"
-								: "Tebak daerah"}
+						{view?.intro
+							? "Materi baru · tebak dulu"
+							: view?.question?.format !== "choice"
+								? "Mana yang bukan"
+								: view.question.answerKind === "code"
+									? "Tebak kode"
+									: "Tebak daerah"}
 					</ModeBadge>
 					<LevelChip level={1} label="Kenali" filled={1} icon={Eye} />
 				</span>

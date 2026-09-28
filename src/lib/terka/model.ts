@@ -72,7 +72,8 @@ export const reviewSchema = z.object({
 	setTarget: count.positive().nullable(),
 	drillPair: z.tuple([id, id]).nullable(),
 	scheduled: z.boolean(),
-	wasMature: z.boolean()
+	wasMature: z.boolean(),
+	intro: z.boolean().default(false)
 });
 export const confusionSchema = z.object({
 	pair: z.tuple([id, id]),

@@ -295,6 +295,9 @@ export function LearningSession({ initialMode = "daily" }: { initialMode?: Sessi
 			!feedback &&
 			progress.cards.find((card) => card.cardId === question.cardId)?.state !== "mature"
 		),
+		intro: feedback
+			? feedback.review.intro
+			: progress.cards.find((card) => card.cardId === question?.cardId)?.state === "new",
 		busy,
 		current: session.answered,
 		total:
