@@ -2,7 +2,7 @@
 
 **Status:** Draf · **Bahasa:** Indonesia
 **Acuan:** Dokumen Kode Plat Nomor Kendaraan Indonesia (sumber data)
-**Dokumen terkait:** PRD (produk dan alur pengguna) · TRD (arsitektur, model data, dan sinkronisasi) · ERD (skema database) · Facts (`Terka_Facts.md`) · Kode Khusus (`Terka_KodeKhusus.md`) · Microcopy (`Terka_Microcopy.md`) · Tests (`Terka_Tests.md`)
+**Dokumen terkait:** PRD (produk dan alur pengguna) · TRD (arsitektur, model data, dan sinkronisasi) · ERD (skema database) · Facts (`Terka_Facts.md`) · Kode Khusus (`Terka_Kode_Khusus.md`) · Microcopy (`Terka_Microcopy.md`) · Tests (`Terka_Tests.md`)
 
 > **Slogan:** Lihat pelatnya, terka asalnya.
 > **Fokus dokumen ini:** aturan pemilihan materi, penjadwalan, penilaian jawaban, siklus status kartu, dan konsistensi antarperangkat.
@@ -69,7 +69,7 @@ Aturannya: setiap kode memiliki tepat satu `province` primer dan boleh memiliki 
 
 **Keanggotaan kartu di tingkat provinsi:**
 
-- Kartu tingkat kode (`code2region`, `region2code`, `blindrecall`, `setrecall`) masuk provinsi primer kodenya.
+- Kartu tingkat kode (`code2region`, `region2code`, `setrecall`) masuk provinsi primer kodenya.
 
 Satu kartu tetap hanya memiliki satu provinsi, jadi persentase penguasaan tidak tumpang tindih.
 
@@ -112,7 +112,7 @@ Ini hanya saran urutan. Pengguna tetap bebas memilih Cakupan mana pun kapan pun.
 Dalam Cakupan aktif, materi baru diperkenalkan dengan urutan berikut:
 
 1. **Antar kode:** kode dengan jumlah Pelat Terlihat terbanyak dalam 90 hari terakhir lebih dulu. Jika seri, urutan kemunculan di `plates.json`.
-2. **Dalam satu kode:** `code2region`, lalu `blindrecall`. Kartu yang memiliki syarat membuka (bagian 4.8) baru ikut antre setelah syaratnya terpenuhi.
+2. **Dalam satu kode:** hanya `code2region` yang masuk sebagai materi baru. `region2code` dan `setrecall` memiliki syarat membuka (bagian 4.8) dan baru ikut antre setelah syaratnya terpenuhi.
 
 Pelat Terlihat yang lebih tua dari 90 hari tidak dihitung, supaya urutan mengikuti kebiasaan jalan yang sekarang, bukan setahun lalu. Kode yang belum pernah terlihat tidak pernah tertahan selamanya: begitu kode yang terlihat habis diperkenalkan, kode lain menyusul menurut urutan data.
 
@@ -122,23 +122,23 @@ Aturan ini menjawab asumsi di PRD bagian 4 bahwa frekuensi kemunculan nyata bisa
 
 Cakupan menentukan dua hal: materi baru mana yang dibuka, dan daftar nama yang boleh jadi pilihan jawaban.
 
-| Cakupan                           | Materi baru yang diperkenalkan                         | Jenis soal                                                              | Bentuk jawaban          | Sumber pilihan dan pengecoh    |
-| --------------------------------- | ------------------------------------------------------ | ----------------------------------------------------------------------- | ----------------------- | ------------------------------ |
-| Nasional                          | Kartu tingkat kode dari seluruh Indonesia              | Kode → daerah, Daerah → kode, Tanpa Petunjuk, Sebutkan sebanyak mungkin | Nama kab/kota atau kode | Kab/kota di seluruh Indonesia  |
-| Kawasan, misalnya Sumatera        | Kartu tingkat kode di kawasan itu                      | Sama dengan Nasional                                                    | Nama kab/kota atau kode | Hanya kab/kota di kawasan itu  |
-| Provinsi, misalnya Sumatera Utara | Kartu untuk kode yang dikelompokkan dalam provinsi itu | Sama dengan Nasional                                                    | Nama kab/kota atau kode | Hanya kab/kota di provinsi itu |
+| Cakupan                           | Materi baru yang diperkenalkan                         | Jenis soal                                                          | Bentuk jawaban          | Sumber pilihan dan pengecoh    |
+| --------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------- | ----------------------- | ------------------------------ |
+| Nasional                          | Kartu tingkat kode dari seluruh Indonesia              | Tebak daerah, Tebak kode, Tebak berwaktu, Sebutkan sebanyak mungkin | Nama kab/kota atau kode | Kab/kota di seluruh Indonesia  |
+| Kawasan, misalnya Sumatera        | Kartu tingkat kode di kawasan itu                      | Sama dengan Nasional                                                | Nama kab/kota atau kode | Hanya kab/kota di kawasan itu  |
+| Provinsi, misalnya Sumatera Utara | Kartu untuk kode yang dikelompokkan dalam provinsi itu | Sama dengan Nasional                                                | Nama kab/kota atau kode | Hanya kab/kota di provinsi itu |
 
 **Jawaban di tingkat kabupaten/kota.** Soal "Apa daerah kode BK?" diterima dengan nama kabupaten/kota mana pun yang memakai BK — Medan, Binjai, Deli Serdang. Satu nama sudah cukup. Menyebut sebanyak mungkin adalah tugas bentuk "sebutkan sebanyak mungkin", bukan bentuk ini. Setelah jawaban benar, UI menampilkan beberapa kab/kota lain dari kode yang sama.
 
 **Nama provinsi** tidak pernah jadi pilihan. Nama provinsi hanya diterima sebagai jawaban ketik jika kode itu mencakup seluruh provinsi dan provinsi itu tidak memakai kode lain, seperti DK untuk Bali atau BL untuk Aceh. BK tidak bisa dijawab "Sumatera Utara", karena provinsi itu juga memakai BB. Sifat "mencakup seluruh provinsi" dihitung saat build dari data kab/kota, bukan ditulis manual.
 
-**Pengecoh dan pilihan.** Untuk soal kode → daerah, ambil tiga nama kab/kota `high` dari kode lain dan satu jawaban benar. Tidak boleh ada pengecoh yang juga merupakan jawaban sah, termasuk akibat relasi banyak-ke-banyak. Sumber awal mengikuti tabel. Jika belum cukup tiga pengecoh unik, perluas ke kawasan kartu, lalu nasional. Ini berlaku juga di provinsi satu kode seperti Bali; perluasan hanya mengubah pilihan, tidak membuka materi baru di luar Cakupan. Jika data nasional pun tidak cukup, bentuk empat pilihan tidak dibuat: Perkenalan memakai kartu informasi tanpa tebakan, dicatat `context = intro`, `question_type = 'intro_read'`; selain Perkenalan gunakan jawaban ketik dengan level yang sesuai.
+**Pengecoh dan pilihan.** Untuk soal kode → daerah, ambil tiga nama kab/kota `high` dari kode lain dan satu jawaban benar. Tidak boleh ada pengecoh yang juga merupakan jawaban sah, termasuk akibat relasi banyak-ke-banyak. Sumber awal mengikuti tabel. Jika belum cukup tiga pengecoh unik, perluas ke kawasan kartu, lalu nasional. Ini berlaku juga di provinsi satu kode seperti Bali; perluasan hanya mengubah pilihan, tidak membuka materi baru di luar Cakupan. Jika data nasional pun tidak cukup, bentuk empat pilihan tidak dibuat: Perkenalan memakai soal informasi tanpa tebakan, dicatat `context = intro`, `question_type = 'intro_read'`; selain Perkenalan gunakan jawaban ketik dengan level yang sesuai.
 
 Untuk soal daerah → kode, pilihan Level 1 berupa kode yang berbeda. Semua kode berlabel `high` yang sah untuk daerah tersebut diterima dan tidak boleh menjadi pengecoh. Sumber pilihan diperluas dengan urutan yang sama seperti soal kode → daerah. Nama provinsi tidak digunakan sebagai pilihan jawaban.
 
 **Kartu dari luar Cakupan.** Kartu yang sudah perlu diulang tetap muncul dari seluruh kartu (bagian 2.4). Untuk kartu seperti itu, sumber pengecohnya kawasan kartu itu sendiri, supaya kartu DK tidak diberi pengecoh dari Sumatera hanya karena Cakupan aktifnya Sumatera.
 
-**Soal Daerah → kode.** Kartunya tetap satu per kode. Setiap kali tampil, soal menampilkan satu kab/kota anggota yang dipilih PRNG menggunakan seed `cardId` dan jumlah `reps`, dengan syarat tidak sama dengan daerah yang ditampilkan di tayangan sebelumnya bila tersedia lebih dari satu daerah sah; kode dengan satu daerah mengulang daerah yang sama. Nama ditampilkan lengkap dengan awalannya — "Kabupaten Tangerang", bukan "Tangerang" — supaya soal tidak ambigu.
+**Soal Tebak kode (daerah → kode).** Kartunya tetap satu per kode. Setiap kali tampil, soal menampilkan satu kab/kota anggota yang dipilih PRNG menggunakan seed `cardId` dan jumlah `reps`, dengan syarat tidak sama dengan daerah yang ditampilkan di tayangan sebelumnya bila tersedia lebih dari satu daerah sah; kode dengan satu daerah mengulang daerah yang sama. Nama ditampilkan lengkap dengan awalannya — "Kabupaten Tangerang", bukan "Tangerang" — supaya soal tidak ambigu.
 
 **Satu kab/kota, beberapa kode.** Sebagian Kabupaten Tangerang memakai A, sebagian B. Pada kode → daerah, nama diterima bila daerah itu memakai kode soal. Pada daerah → kode, seluruh kode `high` untuk daerah yang ditampilkan diterima; kartu tetap kartu asal yang sedang dijadwalkan, bukan dipindahkan ke kode jawaban.
 
@@ -162,15 +162,15 @@ Jalur ini melatih entri `specials[]` di `plates.json`, yaitu kode negara CD untu
 
 **Pilihan dan pengecoh.** Semua pilihan berasal dari entri CD `high`. `special2holder` memakai nama pemegang; `holder2special` memakai kode, misalnya CD 49. Tiga pengecoh dipilih dengan PRNG ber-seed `cardId` dan `reps`:
 
-| Level | `special2holder`                                                                  | `holder2special`                                                                                     |
-| ----- | --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| 1     | Pilihan ganda; pengecoh acak dari entri CD lain                                    | Pilihan ganda; satu pengecoh nomor bertetangga (n − 1 atau n + 1) jika ada, sisanya acak dari entri CD lain |
-| 2     | Ketik; petunjuk berupa tipe pemegang dan huruf pertama nama baku, misalnya "Negara · J…" | Ketik; petunjuk berupa digit pertama, misalnya "CD 4…"; kode tiga digit memakai "CD 1…" |
-| 3     | Ketik tanpa petunjuk; batas 8 detik sampai input pertama                          | Ketik tanpa petunjuk; batas 8 detik sampai input pertama                                              |
+| Level | `special2holder`                                | `holder2special`                                                                                            |
+| ----- | ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| 1     | Pilihan ganda; pengecoh acak dari entri CD lain | Pilihan ganda; satu pengecoh nomor bertetangga (n − 1 atau n + 1) jika ada, sisanya acak dari entri CD lain |
+| 2     | Ketik tanpa batas waktu                         | Ketik tanpa batas waktu                                                                                     |
+| 3     | Ketik; batas 8 detik sampai input pertama       | Ketik; batas 8 detik sampai input pertama                                                                   |
 
 Pengecoh tidak boleh berupa jawaban sah dari soal itu, termasuk alias pemegang yang sama. Seri CD berisi 130 entri, jadi empat pilihan sah selalu dapat dibentuk.
 
-**Yang tidak ditanyakan.** Nomor urut registrasi, nama duta besar atau pejabat perwakilan, dan warna pelat tidak menjadi soal, pilihan, petunjuk, atau jawaban. Referensi boleh menjelaskannya.
+**Yang tidak ditanyakan.** Nomor urut registrasi, nama duta besar atau pejabat perwakilan, dan warna pelat tidak menjadi soal, pilihan, atau jawaban. Referensi boleh menjelaskannya.
 
 **Penguasaan.** Syarat `mature` sama dengan bagian 3.4. Persentase penguasaan kode khusus dihitung terpisah dan tidak masuk penguasaan wilayah di bagian 2.5 maupun Uji Penguasaan Kawasan.
 
@@ -182,13 +182,13 @@ Pengecoh tidak boleh berupa jawaban sah dari soal itu, termasuk alias pemegang y
 
 ### 3.1 Tiga Tingkat
 
-Tingkat kesulitan didefinisikan dari **berapa banyak petunjuk yang tersedia sebelum pengguna menjawab**, bukan dari seberapa jarang materinya muncul. Definisi ini dipakai karena jumlah petunjuk langsung menentukan seberapa keras pengguna harus menarik informasi dari ingatan.
+Tingkat kesulitan didefinisikan dari **cara pengguna mengeluarkan jawaban**: memilih, mengetik, atau mengetik di bawah batas waktu. Tidak ada tingkat yang memakai petunjuk parsial seperti huruf pertama, digit pertama, atau tipe pemegang. Petunjuk seperti itu tanggung: terlalu banyak membantu untuk menguji ingatan, tetapi tidak cukup untuk mengajarkan jawabannya. Jika pengguna belum ingat, jalan keluarnya pilihan ganda di Level 1 atau jawaban yang ditampilkan setelah menjawab, bukan setengah jawaban sebelum menjawab.
 
-| Level | Nama   | Tuntutan                                                             | Bentuk soal khas                                                   |
-| ----- | ------ | -------------------------------------------------------------------- | ------------------------------------------------------------------ |
-| 1     | Kenali | Jawaban ada di layar, tinggal dipilih                                | Pilihan ganda, benar/salah kilat, mana yang bukan                  |
-| 2     | Ingat  | Jawaban diketik, satu petunjuk diberikan                             | Kode → daerah, daerah → kode                                       |
-| 3     | Kuasai | Jawaban ditarik tanpa petunjuk, atau harus membedakan dua item mirip | Tanpa Petunjuk, sebutkan sebanyak mungkin, latihan Bandingkan Kode |
+| Level | Nama   | Tuntutan                                                                                                         | Bentuk soal khas                                                   |
+| ----- | ------ | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| 1     | Kenali | Jawaban ada di layar, tinggal dipilih                                                                            | Pilihan ganda, benar atau salah, mana yang bukan                   |
+| 2     | Ingat  | Jawaban diketik tanpa pilihan dan tanpa batas waktu                                                              | Tebak daerah, Tebak kode                                           |
+| 3     | Kuasai | Jawaban diketik dengan batas waktu input pertama, disebut sebanyak mungkin, atau harus membedakan dua item mirip | Tebak berwaktu, Sebutkan sebanyak mungkin, latihan Bandingkan Kode |
 
 Pilihan dan pengecoh mengikuti mode serta sumber awal dan aturan perluasan di bagian 2.8; daerah → kode memakai pilihan kode. Di dalam sumber itu, pengecoh ikut berubah menurut level. Level 1 memakai daerah dari provinsi lain jika tersedia, jadi lebih mudah dieliminasi. Latihan Bandingkan Kode di Level 3 memakai daerah dari kode yang sering tertukar dengan kartu itu.
 
@@ -202,7 +202,7 @@ Secara bawaan, level ditentukan per kartu; pengguna tidak wajib menaikkannya unt
 | Latihan Bandingkan Kode                                                | 3 — Kuasai                                           |
 | Mode Kilat                                                             | 1 — Kenali; tidak mengubah jadwal                    |
 | Tes penempatan                                                         | 2 — Ingat                                            |
-| `blindrecall` atau `setrecall`, di luar Perkenalan                     | 3 — Kuasai, termasuk saat belajar awal/belajar ulang |
+| `setrecall`, di luar Perkenalan                                        | 3 — Kuasai, termasuk saat belajar awal/belajar ulang |
 | Kartu lain `new` atau `learning`                                       | 1 — Kenali                                           |
 | Kartu lain `review`, interval ≥ 21 hari, belum pernah benar di Level 3 | 3 — Kuasai sebagai uji penguasaan otomatis           |
 | Kartu lain `review` atau `relearning`                                  | 2 — Ingat                                            |
@@ -210,7 +210,7 @@ Secara bawaan, level ditentukan per kartu; pengguna tidak wajib menaikkannya unt
 
 `leech` adalah penanda di atas fase FSRS, bukan pengganti fase tersebut; penanda itu menambahkan konteks sesuai bagian 6.4. `locked` dan `suspended` tidak disajikan. Pengecualian bentuk soal karena pilihan tidak cukup mengikuti bagian 2.8.
 
-Pada uji penguasaan otomatis, `code2region` meminta satu kab/kota tanpa bantuan; `region2code` meminta kode dari nama daerah lengkap tanpa bantuan. Soal jawaban tunggal tanpa bantuan Level 3 memakai batas 8 detik sampai input pertama. Jawaban benar berlaku hanya untuk `card_id` yang dijawab. Bentuk Tanpa Petunjuk juga dapat dipakai kartu `code2region`; hal itu tidak mengubah identitasnya menjadi kartu `blindrecall`.
+Pada uji penguasaan otomatis, `code2region` meminta satu kab/kota tanpa bantuan; `region2code` meminta kode dari nama daerah lengkap tanpa bantuan. Soal jawaban tunggal tanpa bantuan Level 3 memakai batas 8 detik sampai input pertama. Jawaban benar berlaku hanya untuk `card_id` yang dijawab. Bentuk soal ini disebut **Tebak berwaktu**. Ia bukan kartu tersendiri: `code2region` dan `region2code` memakai bentuk ini setiap kali level otomatisnya 3, baik sebagai uji penguasaan maupun sebagai pengulangan kartu `mature`.
 
 Keberhasilan Level 3 dicatat historis per kartu dari jawaban sah yang tidak dibatalkan, bukan Perkenalan, bukan `unverified`, bukan jawaban saat suspended, dan tanpa konteks leech yang membocorkan jawaban. Untuk `setrecall`, keberhasilan berarti mencapai ambang. Setelah pembaruan jadwal, kartu menjadi `mature` hanya jika interval hasilnya ≥ 21 hari dan syarat historis itu terpenuhi. Menjawab kartu terkait tidak meluluskan kartu lain.
 
@@ -235,11 +235,11 @@ Pengguna tetap boleh menurunkan level karena fiturnya berguna di kondisi tertent
 
 Kartu hanya boleh mencapai status `mature` jika memenuhi keduanya: interval sudah 21 hari **dan** kartu pernah dijawab benar minimal sekali di Level 3.
 
-Syarat kedua membuat Level 3 benar-benar memiliki konsekuensi. Tanpanya, "Kuasai" hanya label tampilan, dan kartu bisa dinyatakan dikuasai tanpa pernah diuji tanpa petunjuk. Aturan ini merambat ke tingkat di atasnya: definisi cakupan tuntas di bagian 2.5 dan Uji Penguasaan Kawasan otomatis memakai syarat yang sama.
+Syarat kedua membuat Level 3 benar-benar memiliki konsekuensi. Tanpanya, "Kuasai" hanya label tampilan, dan kartu bisa dinyatakan dikuasai tanpa pernah diuji tanpa pilihan dan di bawah batas waktu. Aturan ini merambat ke tingkat di atasnya: definisi cakupan tuntas di bagian 2.5 dan Uji Penguasaan Kawasan otomatis memakai syarat yang sama.
 
-**Jaminan ketersediaan.** Setiap kartu harus memiliki bentuk Level 3 yang sesuai dengan modenya. Kartu kode → daerah dan daerah → kode memiliki uji tanpa bantuan, sedangkan `blindrecall` dan `setrecall` memakai Level 3 setelah Perkenalan. Penguasaan kartu tidak bergantung pada munculnya pasangan tertukar atau keberhasilan kartu lain.
+**Jaminan ketersediaan.** Setiap kartu harus memiliki bentuk Level 3 yang sesuai dengan modenya. Kartu `code2region` dan `region2code` diuji lewat Tebak berwaktu, sedangkan `setrecall` memakai Level 3 setelah Perkenalan. Penguasaan kartu tidak bergantung pada munculnya pasangan tertukar atau keberhasilan kartu lain.
 
-Kriteria penerimaan yang mengikat: untuk setiap kartu yang dapat dibuat dari `plates.json`, generator harus menyediakan bentuk Level 3 sah sesuai mode; khusus kartu kode → daerah dan Tanpa Petunjuk, bentuk itu tidak bergantung pada pasangan tertukar. Riwayat hanya menentukan kapan kartu dibuka dan level disajikan, bukan ketersediaan bentuk Level 3-nya. Ini dicek lewat tes otomatis saat build, bukan diasumsikan.
+Kriteria penerimaan yang mengikat: untuk setiap kartu yang dapat dibuat dari `plates.json`, generator harus menyediakan bentuk Level 3 sah sesuai mode; khusus kartu `code2region`, bentuk itu tidak bergantung pada pasangan tertukar. Riwayat hanya menentukan kapan kartu dibuka dan level disajikan, bukan ketersediaan bentuk Level 3-nya. Ini dicek lewat tes otomatis saat build, bukan diasumsikan.
 
 ### 3.5 Level pada Mode Khusus
 
@@ -362,7 +362,7 @@ Akibatnya, Mudah hanya untuk jawaban yang cepat **dan** bersih: latensi di bawah
 
 **Ketukan pertama.** Yang dihitung input karakter pertama di kolom jawaban, termasuk tempel (paste). Tombol modifier seperti Shift atau Cmd, tombol panah, dan Backspace di kolom kosong tidak dihitung. Untuk Level 1, waktu sampai pilihan diklik atau dipilih dengan angka dipakai sebagai latensi.
 
-**Batas waktu.** Soal jawaban tunggal tanpa bantuan Level 3 (termasuk Tanpa Petunjuk dan uji penguasaan otomatis) memakai batas 8 detik untuk input pertama, bukan Enter. Pengguna yang mulai di detik 7,9 boleh menyelesaikan jawaban panjang. Benar/salah kilat berbatas 2 detik sampai jawaban dikunci, di sesi harian maupun Mode Kilat. Mode Kilat juga memiliki batas putaran 60 detik; tes penempatan berbatas 15 detik sampai input pertama. `setrecall` dan bentuk lainnya tidak memakai batas waktu soal. Jika dua batas berlaku, batas yang lebih awal mengakhiri soal; putaran Kilat tidak menunggu soal selesai.
+**Batas waktu.** Soal jawaban tunggal tanpa bantuan Level 3 (termasuk Tebak berwaktu dan uji penguasaan otomatis) memakai batas 8 detik untuk input pertama, bukan Enter. Pengguna yang mulai di detik 7,9 boleh menyelesaikan jawaban panjang. Benar/salah kilat berbatas 2 detik sampai jawaban dikunci, di sesi harian maupun Mode Kilat. Mode Kilat juga memiliki batas putaran 60 detik; tes penempatan berbatas 15 detik sampai input pertama. `setrecall` dan bentuk lainnya tidak memakai batas waktu soal. Jika dua batas berlaku, batas yang lebih awal mengakhiri soal; putaran Kilat tidak menunggu soal selesai.
 
 **Yang tidak masuk persentil:** Perkenalan termasuk intro_read, jawaban himpunan, unverified, jawaban tes penempatan, jawaban dengan gangguan, jawaban yang dibatalkan lewat undo, dan jawaban di level manual yang lebih rendah dari level bawaan.
 
@@ -417,7 +417,7 @@ Hanya Golongan A masuk antrean harian. Sesi `setrecall` berjalan terpisah. Jika 
 
 **Mengapa peluang ingat, bukan interval.** Interval terpendek adalah proksi yang lemah. Kartu berinterval 3 hari yang terlambat sehari dan kartu berinterval 30 hari yang terlambat 20 hari sama-sama waktunya diulang. Tetapi peluang ingat kartu kedua jauh lebih kecil. R menggabungkan interval dan keterlambatan jadi satu angka. Jika tidak ada pengulangan tertunda, urutan ini hampir tidak berpengaruh. Bedanya terasa setelah beberapa hari tidak berlatih: jika sesi dihentikan sebelum antrean habis, kartu yang tertinggal adalah kartu yang masih paling kuat.
 
-**Perkenalan.** Materi baru tidak langsung dinilai. Jika empat pilihan sah tidak dapat dibentuk, gunakan intro_read sesuai 2.8; menutup kartu informasi itu memulai belajar awal tanpa tebakan. Tayangan pertamanya berupa soal Level 1 berlabel **Tebak dulu**. Apa pun jawabannya, sistem langsung menampilkan jawaban yang benar beserta daftar kab/kota kode itu. Tebakan ini dicatat dengan `context: intro`, tetapi tidak menghasilkan nilai penjadwalan, tidak masuk persentil, dan tidak dicatat sebagai pasangan tertukar. Kartu lalu jadi `learning`, dan nilai penjadwalan FSRS pertama datang dari langkah 1 menit.
+**Perkenalan.** Materi baru tidak langsung dinilai. Jika empat pilihan sah tidak dapat dibentuk, gunakan intro_read sesuai 2.8; menutup soal informasi itu memulai belajar awal tanpa tebakan. Tayangan pertamanya berupa soal Level 1 berlabel **Tebak dulu**. Apa pun jawabannya, sistem langsung menampilkan jawaban yang benar beserta daftar kab/kota kode itu. Tebakan ini dicatat dengan `context: intro`, tetapi tidak menghasilkan nilai penjadwalan, tidak masuk persentil, dan tidak dicatat sebagai pasangan tertukar. Kartu lalu jadi `learning`, dan nilai penjadwalan FSRS pertama datang dari langkah 1 menit.
 
 Dua alasan di balik aturan ini:
 
@@ -447,16 +447,16 @@ Aturan penahanan menjaga beban tetap terkendali dalam jangka panjang. Tanpanya, 
 
 **Kartu terkait** adalah kartu yang menguji fakta yang sama dari arah atau bentuk berbeda, sehingga menjawab satu kartu bisa membocorkan jawaban kartu lain. Kelompoknya:
 
-- Kartu tingkat kode dari satu kode: `code2region`, `region2code`, `blindrecall`, `setrecall`.
+- Kartu tingkat kode dari satu kode: `code2region`, `region2code`, `setrecall`.
 - Kartu dari satu entri kode khusus: `special2holder` dan `holder2special` (bagian 2.9).
 
 **Syarat membuka.** Dua jenis kartu baru dibuat setelah kartu `code2region` kode yang sama cukup stabil:
 
-| Kartu         | Syarat                                                                               | Rujukan                    |
-| ------------- | ------------------------------------------------------------------------------------ | -------------------------- |
-| `region2code` | Interval `code2region` minimal 7 hari                                                | Bagian 4.8                 |
-| `setrecall`   | Interval `code2region` minimal 14 hari, dan kode memiliki minimal 3 kab/kota anggota | PRD bagian 6.3, bagian 5.2 |
-| `holder2special` | Interval `special2holder` entri yang sama minimal 7 hari                        | Bagian 2.9                 |
+| Kartu            | Syarat                                                                               | Rujukan                    |
+| ---------------- | ------------------------------------------------------------------------------------ | -------------------------- |
+| `region2code`    | Interval `code2region` minimal 7 hari                                                | Bagian 4.8                 |
+| `setrecall`      | Interval `code2region` minimal 14 hari, dan kode memiliki minimal 3 kab/kota anggota | PRD bagian 6.3, bagian 5.2 |
+| `holder2special` | Interval `special2holder` entri yang sama minimal 7 hari                             | Bagian 2.9                 |
 
 Sebelum syaratnya terpenuhi, kartu berstatus `locked`. Setelah terbuka, kartu tidak dikunci lagi walaupun interval `code2region` kemudian turun karena lapse. Mengunci ulang kartu yang sudah memiliki riwayat hanya menyembunyikan jadwal yang sedang berjalan.
 
@@ -622,7 +622,7 @@ Tantangan Harian memuat paling banyak lima kartu Golongan A yang pernah dipelaja
 
 1. Materi baru ditahan karena antrean pengulangan melebihi ambang penahanan (bagian 4.7).
 2. Tingkat berubah hari ini, beserta batas materi baru yang baru (bagian 4.16).
-3. Ada soal Tanpa Petunjuk dengan batas 8 detik.
+3. Ada soal Tebak berwaktu dengan batas 8 detik.
 4. Ada kartu Sulit Dikuasai.
 5. Ada soal dari luar Cakupan karena sudah waktunya diulang.
 6. Pintasan keyboard: Enter untuk menjawab, Z untuk membatalkan. Hanya tampil jika metode input soal terakhir `keyboard`.
@@ -651,7 +651,7 @@ E = Σ d(soal yang benar-benar ada dalam snapshot antrean)
 
 ### 4.15 Fakta pada Akhir Sesi
 
-Layar akhir setiap mode, termasuk sesi himpunan, menampilkan satu **Fakta menarik** dari kandidat `publicationStatus = ready`, lengkap dengan label sejarah dan sumbernya. Jika tidak ada kandidat siap terbit, blok fakta disembunyikan dan tidak ada `fact_views` yang ditulis. Fakta tidak tampil di tempat lain: tidak di tengah sesi, tidak sebagai petunjuk, dan tidak sebagai soal.
+Layar akhir setiap mode, termasuk sesi himpunan, menampilkan satu **Fakta menarik** dari kandidat `publicationStatus = ready`, lengkap dengan label sejarah dan sumbernya. Jika tidak ada kandidat siap terbit, blok fakta disembunyikan dan tidak ada `fact_views` yang ditulis. Fakta tidak tampil di tempat lain: tidak di tengah sesi, tidak sebagai pilihan jawaban, dan tidak sebagai soal.
 
 **Pemilihan fakta:**
 
@@ -707,7 +707,7 @@ Tes penempatan hanya memberi tingkat awal. Setelah itu, tingkat naik atau turun 
 
 Jawaban ketik bebas memunculkan masalah yang tidak ada di pilihan ganda: kapan jawaban masih boleh dihitung benar. Tujuannya mirip cara Duolingo menilai jawaban ketik: salah ketik ringan diterima dan ditandai, tetapi nama daerah lain tetap salah. Urutan pemeriksaan berikut tetap dan dijalankan berurutan. Pemeriksaan berhenti di langkah pertama yang memberi hasil.
 
-**Kamus.** Semua langkah membandingkan jawaban dengan kamus nasional: seluruh kab/kota di `plates.json` beserta `aliases` dan `variants`-nya, ditambah nama provinsi. Kamusnya nasional, bukan kamus Cakupan aktif, karena kesalahan lintas pulau justru yang paling penting tercatat. **Jawaban yang diterima** untuk kode → daerah dan Tanpa Petunjuk adalah seluruh kab/kota `high` milik kode itu, ditambah nama provinsi jika eksklusif (bagian 2.8). Untuk `setrecall`, hanya anggota kab/kota `high`, tanpa jawaban provinsi. Daerah → kode menerima seluruh kode `high` daerah soal.
+**Kamus.** Semua langkah membandingkan jawaban dengan kamus nasional: seluruh kab/kota di `plates.json` beserta `aliases` dan `variants`-nya, ditambah nama provinsi. Kamusnya nasional, bukan kamus Cakupan aktif, karena kesalahan lintas pulau justru yang paling penting tercatat. **Jawaban yang diterima** untuk Tebak daerah, termasuk bentuk Tebak berwaktu, adalah seluruh kab/kota `high` milik kode itu, ditambah nama provinsi jika eksklusif (bagian 2.8). Untuk `setrecall`, hanya anggota kab/kota `high`, tanpa jawaban provinsi. Daerah → kode menerima seluruh kode `high` daerah soal.
 
 1. **Normalisasi.** Huruf kecil semua. Tanda baca diganti spasi, lalu spasi beruntun dipadatkan. Awalan administratif "kota", "kabupaten", "kab", dan "kotamadya" dibuang, hanya jika berdiri sebagai kata sendiri: "Kota Binjai" jadi "binjai", tetapi "Kotamobagu" tetap "kotamobagu".
 2. **Bentuk tanpa spasi.** Jawaban dan nama di kamus juga dibandingkan tanpa spasi. "Bukit Tinggi" dan "Bukittinggi", "Pematang Siantar" dan "Pematangsiantar", "Pare Pare" dan "Parepare" dianggap sama persis. Hasil: `exact`.
@@ -743,7 +743,7 @@ Jawaban ketik bebas memunculkan masalah yang tidak ada di pilihan ganda: kapan j
 Bentuk "sebutkan sebanyak mungkin" memerlukan aturan sendiri, karena tidak ada satu jawaban benar.
 
 1. **Pakai ambang, bukan kelengkapan penuh.** Ambangnya `min(5, n − 1)`, dengan `n` jumlah kab/kota anggota kode itu. Kode dengan 12 wilayah memiliki ambang 5; kode dengan 3 wilayah memiliki ambang 2. Menuntut semuanya membuat kode seperti B terlalu sulit dan kode kecil terlalu mudah.
-2. **Hanya untuk kode dengan minimal 3 kab/kota anggota.** Kode dengan satu atau dua kab/kota tidak memiliki himpunan yang layak disebutkan; bentuk ini tidak dibuat untuk kode seperti itu. Level 3 kode tersebut tetap terjamin lewat Tanpa Petunjuk (bagian 3.4).
+2. **Hanya untuk kode dengan minimal 3 kab/kota anggota.** Kode dengan satu atau dua kab/kota tidak memiliki himpunan yang layak disebutkan; bentuk ini tidak dibuat untuk kode seperti itu. Level 3 kode tersebut tetap terjamin lewat Tebak berwaktu (bagian 3.4).
 3. **Urutan bebas, tanpa batas waktu.** Jawaban diketik satu per satu. Yang diukur bukan kecepatan.
 4. **Berhenti kapan saja.** Tidak ada penalti tambahan karena berhenti; nilai penjadwalan tetap mengikuti jumlah hasil pada butir 8, termasuk Lagi bila nol. Maksimal 64 butir per soal; setelah batas tercapai, soal ditutup dan dinilai.
 5. **Duplikat dihitung sekali.** Wilayah yang diketik dua kali, atau diketik lewat nama baku lalu lewat aliasnya, tetap satu.
@@ -818,7 +818,7 @@ Batas penonaktifan diperlukan supaya satu kartu bermasalah tidak menyita antrean
 
 **Catatan pengingat.** Teks pendek buatan pengguna, maksimal 280 karakter, satu per kode — bukan per kartu, karena asosiasi untuk DK berlaku di semua mode DK. Catatan pengingat tampil setelah jawaban di semua kartu kode itu, dan sebelum pertanyaan hanya jika kartunya berstatus leech. Catatan pengingat kosong berarti dihapus.
 
-Alasannya: petunjuk yang dibuat sendiri cenderung lebih melekat daripada petunjuk yang diberikan (generation effect; Slamecka & Graf, 1978). Pengguna yang tinggal di Bali juga memiliki asosiasi lokal yang tidak mungkin ditulis di data bawaan. Tawaran muncul di `lapses` 4, bukan sejak awal, supaya menulis catatan pengingat tidak jadi tugas tambahan untuk setiap kartu. Tawaran hanya muncul sekali per kode; jika ditolak, tawaran berikutnya baru muncul di `lapses` 6. Catatan pengingat bisa ditulis atau diubah kapan saja dari halaman pemeriksaan kartu, tanpa menunggu tawaran.
+Alasannya: asosiasi yang dibuat sendiri cenderung lebih melekat daripada asosiasi yang diberikan (generation effect; Slamecka & Graf, 1978). Pengguna yang tinggal di Bali juga memiliki asosiasi lokal yang tidak mungkin ditulis di data bawaan. Tawaran muncul di `lapses` 4, bukan sejak awal, supaya menulis catatan pengingat tidak jadi tugas tambahan untuk setiap kartu. Tawaran hanya muncul sekali per kode; jika ditolak, tawaran berikutnya baru muncul di `lapses` 6. Catatan pengingat bisa ditulis atau diubah kapan saja dari halaman pemeriksaan kode, tanpa menunggu tawaran.
 
 ---
 
@@ -957,13 +957,13 @@ Kriteria berikut mengikat dan diperiksa lewat tes otomatis sebelum rilis. Tiap b
 | AC-34 | Fakta `ready` hanya tampil di layar akhir dengan sumber; kandidat menghindari N tampilan terakhir dan legenda berdekatan, kecuali pilihan cadangan 4.15. Tanpa kandidat, blok disembunyikan. Rotasi memakai riwayat lintas perangkat               | 4.15           |
 | AC-35 | Batas materi baru harian dan ambang penahanan mengikuti tabel tingkat di bagian 4.7; pengguna yang melewati tes memakai batas Menengah; tingkat awal diambil dari sesi tes penempatan terbaru yang selesai, lalu disesuaikan menurut 4.16          | 4.7, 4.13      |
 | AC-36 | Tingkat naik atau turun satu langkah menurut syarat bagian 4.16, paling cepat 14 hari setelah perubahan sebelumnya, dengan hasil yang sama di semua perangkat                                                                                      | 4.16           |
-| AC-37 | Hanya enam mode kartu yang dapat dibuat: `code2region`, `region2code`, `blindrecall`, dan `setrecall` untuk kode wilayah, serta `special2holder` dan `holder2special` untuk kode khusus; provinsi dan seri tidak menambah jenis kartu | 2.8, 2.9       |
+| AC-37 | Hanya lima mode kartu yang dapat dibuat: `code2region`, `region2code`, dan `setrecall` untuk kode wilayah, serta `special2holder` dan `holder2special` untuk kode khusus; provinsi dan seri tidak menambah jenis kartu                             | 2.8, 2.9       |
 | AC-38 | Catatan pencarian hanya menyimpan kode depan; input pelat lengkap tidak disimpan atau dikirim ke analitik maupun diagnostik                                                                                                                        | 4.11           |
-| AC-39 | Kartu kode khusus hanya dibuat dari entri `specials[]` berlabel `high` tanpa `needsReview`; `referencePlates[]` tidak pernah membentuk kartu; `holder2special` terkunci sampai interval `special2holder` mencapai 7 hari | 2.9 |
-| AC-40 | Jalur kode khusus nonaktif secara bawaan; kartunya tidak pernah masuk sesi harian, Tantangan Harian, Mode Kilat, tes penempatan, Latihan Terfokus, Bandingkan Kode, atau penguasaan wilayah | 2.9 |
-| AC-41 | Materi baru kode khusus dibatasi 5 per hari dengan ambang penahanan 25, terpisah dari kuota dan ambang wilayah | 2.9 |
-| AC-42 | Nomor urut registrasi dan nama pejabat perwakilan tidak pernah muncul sebagai soal, pilihan, petunjuk, atau jawaban | 2.9 |
-| AC-43 | Jawaban nama pemegang memakai kamus `specials[]`; nama 1–4 huruf dan singkatan huruf kapital tanpa toleransi; jawaban kode khusus dinilai persis dan menolak angka tambahan | 5.3 |
+| AC-39 | Kartu kode khusus hanya dibuat dari entri `specials[]` berlabel `high` tanpa `needsReview`; `referencePlates[]` tidak pernah membentuk kartu; `holder2special` terkunci sampai interval `special2holder` mencapai 7 hari                           | 2.9            |
+| AC-40 | Jalur kode khusus nonaktif secara bawaan; kartunya tidak pernah masuk sesi harian, Tantangan Harian, Mode Kilat, tes penempatan, Latihan Terfokus, Bandingkan Kode, atau penguasaan wilayah                                                        | 2.9            |
+| AC-41 | Materi baru kode khusus dibatasi 5 per hari dengan ambang penahanan 25, terpisah dari kuota dan ambang wilayah                                                                                                                                     | 2.9            |
+| AC-42 | Nomor urut registrasi dan nama pejabat perwakilan tidak pernah muncul sebagai soal, pilihan, atau jawaban                                                                                                                                          | 2.9            |
+| AC-43 | Jawaban nama pemegang memakai kamus `specials[]`; nama 1–4 huruf dan singkatan huruf kapital tanpa toleransi; jawaban kode khusus dinilai persis dan menolak angka tambahan                                                                        | 5.3            |
 
 ---
 
@@ -972,7 +972,7 @@ Kriteria berikut mengikat dan diperiksa lewat tes otomatis sebelum rilis. Tiap b
 Pertanyaan terbuka soal produk dan konten ada di PRD bagian 13.
 
 1. Apakah kawasan Jawa perlu dipecah jadi dua cakupan tetap (Jawa bagian barat dan timur) mengingat isinya 22 kode, atau cukup mengandalkan tingkat provinsi di bawahnya? Menunggu bukti bahwa tingkat provinsi memang terasa cukup saat dipakai.
-2. Berapa batas waktu yang tepat untuk mode Tanpa Petunjuk? Angka 8 detik dipakai sebagai titik awal. Perlu ditinjau setelah median waktu ketukan pertama terkumpul.
+2. Berapa batas waktu yang tepat untuk Tebak berwaktu? Angka 8 detik dipakai sebagai titik awal. Perlu ditinjau setelah median waktu ketukan pertama terkumpul.
 3. Apakah jenis kartu yang berbeda memiliki pola lupa yang cukup berbeda untuk membenarkan dua set parameter FSRS? Baru bisa dijawab setelah beberapa putaran optimasi di bagian 4.12.
 4. Apakah ambang persentil 20 dan 80 sudah tepat, dan apakah keduanya perlu beda antarlevel? Jawabannya menunggu Fase 3 tahap 3 di PRD bagian 11.
 5. Apakah aturan satu jawaban terjadwal per kode membuat kode dengan banyak kartu tertinggal terlalu jauh? Indikatornya jumlah kartu yang kena batas pelewatan dua hari. Jika sering terjadi, aturannya bisa dilonggarkan jadi satu jawaban per mode kelompok (pengenalan vs mengingat tanpa bantuan).

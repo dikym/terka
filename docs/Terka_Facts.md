@@ -2,7 +2,7 @@
 
 **Status:** Draf · **Bahasa:** Indonesia
 **Acuan:** Dokumen Kode Plat Nomor Kendaraan Indonesia (sumber data)
-**Dokumen terkait:** PRD (produk dan alur pengguna) · SRD (aturan perilaku sistem) · TRD (arsitektur dan model data) · Kode Khusus (`Terka_KodeKhusus.md`)
+**Dokumen terkait:** PRD (produk dan alur pengguna) · SRD (aturan perilaku sistem) · TRD (arsitektur dan model data) · Kode Khusus (`Terka_Kode_Khusus.md`)
 
 > **Slogan:** Lihat pelatnya, terka asalnya.
 > **Fokus dokumen ini:** kumpulan fakta historis beserta label statusnya, sebagai bahan penyuntingan Fakta menarik di layar akhir.
@@ -11,7 +11,7 @@
 
 ## 1. Tujuan dan Status Naskah
 
-Dokumen ini adalah naskah kandidat **Fakta menarik** untuk layar akhir setiap mode (PRD bagian 6.5). Hanya butir yang sudah lolos syarat penerbitan di bawah yang boleh tampil. Fakta tidak dipakai sebagai soal, petunjuk, atau materi di tengah sesi. Tiap butir diberi label status:
+Dokumen ini adalah naskah kandidat **Fakta menarik** untuk layar akhir setiap mode (PRD bagian 6.5). Hanya butir yang sudah lolos syarat penerbitan di bawah yang boleh tampil. Fakta tidak dipakai sebagai soal, pilihan jawaban, atau materi di tengah sesi. Tiap butir diberi label status:
 
 > **terverifikasi** — dikonfirmasi sumber resmi atau sumber primer.
 > **diperdebatkan** — beredar luas, tetapi sumbernya saling bertentangan.
@@ -58,7 +58,7 @@ Konten draf boleh disimpan di repositori tetapi tidak dipilih aplikasi. Build me
 17. **Draf · usulan label: terverifikasi** — Naskah awal mencatat peresmian PB untuk Papua Barat pada 29 April 2013. Tanggal, cakupan, dan acara penyerahannya memerlukan rujukan langsung.
 18. **Draf · usulan label: terverifikasi** — Perubahan DS menjadi PA disebut berlangsung pada 1 Juli 2016. Sumber penerapan dan cakupan kendaraan yang terdampak perlu dilampirkan.
 19. **Draf · usulan label: terverifikasi** — PY, PS, dan PT dikaitkan dengan provinsi hasil pemekaran di Papua pada 2024. Masing-masing kode memerlukan sumber penerapan tersendiri, termasuk peristiwa penyerahan pelat PT 1 pada Agustus 2024 jika tetap disebut.
-20. **Draf · usulan label: terverifikasi** — Perubahan kode di Papua menunjukkan pentingnya versi data. Urutan DS, PA, PB, PY, PS, dan PT harus dijelaskan dengan tanggal serta wilayah yang jelas, tanpa menganggap semua perubahan terjadi sekaligus.
+20. **Draf · usulan label: terverifikasi** — Perubahan kode di Papua menunjukkan pentingnya versi data. Urutan DS, PA, PB, PY, PS, PT, dan PG harus dijelaskan dengan tanggal serta wilayah yang jelas, tanpa menganggap semua perubahan terjadi sekaligus.
 
 ---
 
@@ -105,14 +105,14 @@ Konten draf boleh disimpan di repositori tetapi tidak dipilih aplikasi. Build me
 39. **Draf · usulan label: terverifikasi** — Warna pelat membedakan beberapa kategori kendaraan. Daftar warna dan kategorinya harus mengikuti aturan yang diperiksa pada tanggal penerbitan, bukan digunakan sebagai ringkasan tanpa batas waktu.
 40. **Draf · usulan label: terverifikasi** — TCKB digunakan dalam konteks tanda coba kendaraan bermotor. Nama, fungsi, dan warna tandanya perlu mengikuti definisi pada peraturan yang dirujuk.
 41. **Draf · usulan label: terverifikasi** — Peraturan Kepolisian Nomor 7 Tahun 2021 menjadi salah satu bahan untuk memeriksa registrasi dan identifikasi kendaraan. Status berlaku dan perubahan setelahnya harus diperiksa sebelum naskah menyebutnya sebagai dasar hukum terkini.
-42. **Draf · usulan label: terverifikasi** — Lampiran Perpol 7/2021 huruf B menetapkan empat kode registrasi khusus: CD untuk korps diplomatik, CC untuk korps konsulat, CH untuk konsul kehormatan, dan RI untuk kendaraan dinas Presiden, Wakil Presiden, ketua lembaga tinggi negara, serta pejabat setingkat menteri. Sumber sudah dicatat di `Terka_KodeKhusus.md` bagian 8.
+42. **Draf · usulan label: terverifikasi** — Lampiran Perpol 7/2021 huruf B menetapkan empat kode registrasi khusus: CD untuk korps diplomatik, CC untuk korps konsulat, CH untuk konsul kehormatan, dan RI untuk kendaraan dinas Presiden, Wakil Presiden, ketua lembaga tinggi negara, serta pejabat setingkat menteri. Sumber sudah dicatat di `Terka_Kode_Khusus.md` bagian 8.
 43. **Draf · usulan label: terverifikasi** — Untuk urusan administrasi kendaraan, arahkan pembaca ke instansi atau layanan resmi yang sesuai. Naskah harus menjelaskan bahwa Terka merupakan alat belajar, bukan bukti asal kendaraan atau panduan prosedur administratif.
 
 ---
 
 ## 10. Kode Khusus CD dan RI
 
-Butir di bagian ini sudah memiliki sumber yang dicatat pada 24 September 2026 (`Terka_KodeKhusus.md` bagian 8). Statusnya tetap `draft` sampai editor memeriksa teks dan label sesuai bagian 1.
+Butir di bagian ini sudah memiliki sumber yang dicatat pada 24 September 2026 (`Terka_Kode_Khusus.md` bagian 8). Statusnya tetap `draft` sampai editor memeriksa teks dan label sesuai bagian 1.
 
 44. **Draf · usulan label: terverifikasi** — Lampiran Perpol 7/2021 memuat 130 kode negara CD. Daftarnya dimulai dari CD 12 untuk Amerika Serikat dan berakhir di CD 145 untuk IFAD. Nomor 1 sampai 11 tidak dipakai, begitu juga 46, 91, 119, dan 124.
 45. **Draf · usulan label: terverifikasi** — Kode CD tidak hanya dimiliki negara. Sebanyak 29 organisasi internasional ikut tercantum, misalnya UNDP (CD 58), WHO (CD 74), Uni Eropa (CD 99), dan ASEAN (CD 100).

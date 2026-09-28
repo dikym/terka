@@ -1,7 +1,7 @@
 # TERKA — Katalog Pengujian
 
 **Status:** Draf · **Bahasa:** Indonesia
-**Dokumen terkait:** PRD (produk dan alur pengguna) · Microcopy (teks UI) · SRD (aturan perilaku) · TRD (arsitektur dan sinkronisasi) · ERD (skema database) · Kode Khusus (`Terka_KodeKhusus.md`)
+**Dokumen terkait:** PRD (produk dan alur pengguna) · Microcopy (teks UI) · SRD (aturan perilaku) · TRD (arsitektur dan sinkronisasi) · ERD (skema database) · Kode Khusus (`Terka_Kode_Khusus.md`)
 
 > **Slogan:** Lihat pelatnya, terka asalnya.
 > **Fokus dokumen ini:** seluruh katalog tes — perilaku, teknis, dan E2E — beserta alat, CI, dan data uji yang dipakai.
@@ -20,9 +20,11 @@ Dokumen ini satu-satunya tempat katalog tes Terka. Aturan yang diuji tetap ditul
 
 **Kategori:** `normal` untuk alur normal, `batas` untuk kondisi batas, `negatif` untuk input atau keadaan yang harus ditolak.
 
+**Angka di tes** adalah data uji konkret. Nilainya mengikuti pemilik angka yang berlaku (PRD, bagian pemilik angka); setelah kode ada, tes mengambilnya dari `src/rules.ts`. Tes E2E memeriksa teks UI hasil render, bukan template Microcopy, kecuali disebut lain.
+
 **Kolom Aturan** di tes perilaku berisi nomor bagian SRD (misalnya `SRD 4.10`), kriteria penerimaan SRD bagian 9 (misalnya `AC-9`), atau bagian PRD (misalnya `PRD 6.7`).
 
-ID berikut sudah tidak digunakan: SR-211, SR-223–SR-229, SR-298, TR-58, TR-80, E2E-73, dan E2E-85. Nomornya tidak dipakai ulang. TR-126 tetap berstatus Tidak aktif.
+ID berikut sudah tidak digunakan: SR-211, SR-223–SR-229, SR-298, TR-58, TR-80, E2E-73, dan E2E-85. Nomornya tidak dipakai ulang. TR-126 dan SR-296 tetap berstatus Tidak aktif.
 
 **ID stabil.** Satu ID untuk satu skenario. ID yang ditandai Tidak aktif disimpan sebagai catatan tetapi dikecualikan dari eksekusi dan hitungan cakupan; ID itu tidak boleh digunakan ulang. Jika aturannya berubah, isi tes diperbarui dengan ID yang sama. ID yang pernah dipakai tidak dipakai ulang untuk skenario lain.
 
@@ -34,14 +36,14 @@ ID berikut sudah tidak digunakan: SR-211, SR-223–SR-229, SR-298, TR-58, TR-80,
 
 | Lapisan           | Alat                                            | Yang diuji                                                                                              |
 | ----------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| Unit              | `bun test`                                      | Fungsi murni mesin penjadwalan: nilai penjadwalan, normalisasi jawaban, antrean, replay, batas hari     |
+| Unit              | Vitest                                          | Fungsi murni mesin penjadwalan: nilai penjadwalan, normalisasi jawaban, antrean, replay, batas hari     |
 | Property-based    | fast-check                                      | Invarian replay: urutan kedatangan tidak memengaruhi hasil, idempotensi, replay bertahap = replay penuh |
-| Integrasi lokal   | `bun test` + fake-indexeddb                     | Dexie, antrean kirim, titik pemulihan, impor dan ekspor                                                 |
+| Integrasi lokal   | Vitest + fake-indexeddb                         | Dexie, antrean kirim, cache `derived`, impor dan ekspor                                                 |
 | Integrasi server  | Supabase CLI (`supabase start`)                 | Push, pull, trigger LWW, constraint, FK                                                                 |
 | Keamanan database | pgTAP lewat `supabase test db`                  | RLS, grant, fungsi `delete_user()`                                                                      |
 | E2E               | Playwright                                      | Alur pengguna, offline, dua perangkat lewat dua browser context, zona waktu lewat `timezoneId`          |
-| Konten            | `bun run content:check` saat build              | Validitas `plates.json`, AC-1, alias, ID yang tidak digunakan lagi, SVG                                 |
-| Performa          | `bun test` + Playwright dengan CPU throttling   | Replay, pembuatan antrean, sinkronisasi pertama                                                         |
+| Konten            | Vitest saat build                               | Validitas `plates.json`, AC-1, alias, ID yang tidak digunakan lagi, SVG                                 |
+| Performa          | Vitest bench + Playwright dengan CPU throttling | Replay, pembuatan antrean, sinkronisasi pertama                                                         |
 
 ---
 
@@ -101,58 +103,62 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 
 ### 5.2 Tingkat Kesulitan
 
-| ID     | Skenario                                                                     | Hasil yang diharapkan                                                                                                                                                  | Kategori | Aturan           |
-| ------ | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ---------------- |
-| SR-018 | Level otomatis tiap fase, mode, dan ambang penguasaan                        | Mengikuti prioritas SRD 3.2: intro 1; `blindrecall`/`setrecall` non-intro 3; review biasa <21 hari 2; review ≥ 21 hari tanpa kelulusan Level 3 mendapat uji otomatis 3 | normal   | SRD 3.2          |
-| SR-019 | Level dinaikkan manual dari 2 ke 3, jawaban benar                            | Jadwal diperbarui seperti biasa                                                                                                                                        | normal   | SRD 3.3          |
-| SR-020 | Level diturunkan manual dari 3 ke 1, jawaban benar                           | D, S, dan interval tidak berubah; akurasi tercatat; tidak masuk persentil                                                                                              | batas    | AC-6             |
-| SR-021 | Level diturunkan manual, jawaban salah dengan wilayah valid lain             | `lapses` tidak bertambah; pasangan tertukar tercatat                                                                                                                   | batas    | AC-6             |
-| SR-022 | Pengecoh Level 1 di Cakupan kawasan                                          | Semua pengecoh kab/kota dari kawasan itu, dari provinsi lain jika tersedia                                                                                             | normal   | SRD 3.1          |
-| SR-023 | Kartu review interval 25 hari, belum pernah benar di Level 3                 | Tetap review; tayangan terjadwal berikutnya otomatis Level 3 pada `card_id` yang sama                                                                                  | batas    | AC-2             |
-| SR-024 | Benar di Level 3 saat interval 12 hari, interval mencapai 21 hari belakangan | Kartu jadi `mature` begitu interval mencapai 21 hari                                                                                                                   | batas    | AC-2             |
-| SR-025 | Satu-satunya jawaban benar Level 3 didapat lewat kenaikan level manual       | Memenuhi syarat Level 3                                                                                                                                                | batas    | SRD 3.3, SRD 3.4 |
-| SR-026 | Kode DG tanpa pasangan tertukar                                              | `code2region` dan `blindrecall` masing-masing memiliki bentuk Level 3 serta dapat dikuasai lewat jalur otomatis tanpa kelulusan kartu terkait                          | batas    | AC-1             |
-| SR-027 | Mode Kilat dimulai dengan kartu `mature`                                     | Soal tetap Level 1; jadwal tidak berubah                                                                                                                               | normal   | SRD 3.5          |
-| SR-028 | Latihan Bandingkan Kode pada kartu berstatus `learning`                      | Disajikan Level 3                                                                                                                                                      | batas    | SRD 3.5          |
+| ID     | Skenario                                                                     | Hasil yang diharapkan                                                                                                                                    | Kategori | Aturan           |
+| ------ | ---------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ---------------- |
+| SR-018 | Level otomatis tiap fase, mode, dan ambang penguasaan                        | Mengikuti prioritas SRD 3.2: intro 1; `setrecall` non-intro 3; review biasa <21 hari 2; review ≥ 21 hari tanpa kelulusan Level 3 mendapat uji otomatis 3 | normal   | SRD 3.2          |
+| SR-019 | Level dinaikkan manual dari 2 ke 3, jawaban benar                            | Jadwal diperbarui seperti biasa                                                                                                                          | normal   | SRD 3.3          |
+| SR-020 | Level diturunkan manual dari 3 ke 1, jawaban benar                           | D, S, dan interval tidak berubah; akurasi tercatat; tidak masuk persentil                                                                                | batas    | AC-6             |
+| SR-021 | Level diturunkan manual, jawaban salah dengan wilayah valid lain             | `lapses` tidak bertambah; pasangan tertukar tercatat                                                                                                     | batas    | AC-6             |
+| SR-022 | Pengecoh Level 1 di Cakupan kawasan                                          | Semua pengecoh kab/kota dari kawasan itu, dari provinsi lain jika tersedia                                                                               | normal   | SRD 3.1          |
+| SR-023 | Kartu review interval 25 hari, belum pernah benar di Level 3                 | Tetap review; tayangan terjadwal berikutnya otomatis Level 3 pada `card_id` yang sama                                                                    | batas    | AC-2             |
+| SR-024 | Benar di Level 3 saat interval 12 hari, interval mencapai 21 hari belakangan | Kartu jadi `mature` begitu interval mencapai 21 hari                                                                                                     | batas    | AC-2             |
+| SR-025 | Satu-satunya jawaban benar Level 3 didapat lewat kenaikan level manual       | Memenuhi syarat Level 3                                                                                                                                  | batas    | SRD 3.3, SRD 3.4 |
+| SR-026 | Kode DG tanpa pasangan tertukar                                              | `code2region` memiliki bentuk Level 3 Tebak berwaktu dan dapat dikuasai lewat jalur otomatis tanpa kelulusan kartu lain atau pasangan tertukar           | batas    | AC-1             |
+| SR-027 | Mode Kilat dimulai dengan kartu `mature`                                     | Soal tetap Level 1; jadwal tidak berubah                                                                                                                 | normal   | SRD 3.5          |
+| SR-028 | Latihan Bandingkan Kode pada kartu berstatus `learning`                      | Disajikan Level 3                                                                                                                                        | batas    | SRD 3.5          |
 
 ### 5.3 Penilaian Otomatis
 
-| ID     | Skenario                                                                         | Hasil yang diharapkan                                                             | Kategori | Aturan  |
-| ------ | -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | -------- | ------- |
-| SR-029 | Jawaban salah                                                                    | Nilai penjadwalan 1                                                               | normal   | SRD 4.4 |
-| SR-030 | Soal jawaban tunggal tanpa bantuan Level 3 tanpa input sampai 8 detik            | Nilai penjadwalan 1; timeout; latensi null                                        | batas    | SRD 4.4 |
-| SR-031 | Tanpa Petunjuk, ketukan pertama di detik 7,9, Enter di detik 11                  | Tidak dianggap waktu habis; dinilai menurut jawabannya                            | batas    | SRD 4.4 |
-| SR-032 | Benar, latensi di bawah P20, tanpa penalti                                       | Skor +2; nilai penjadwalan 4                                                      | normal   | AC-29   |
-| SR-033 | Benar, latensi di bawah P20, kecocokan `typo`                                    | Skor +1; nilai penjadwalan 3                                                      | batas    | AC-29   |
-| SR-034 | Benar, latensi di antara P20 dan P80, tanpa penalti                              | Skor 0; nilai penjadwalan 3                                                       | normal   | SRD 4.4 |
-| SR-035 | Benar, latensi di atas P80                                                       | Skor −2; nilai penjadwalan 2                                                      | normal   | SRD 4.4 |
-| SR-036 | Latensi tepat di P20, dan tepat di P80                                           | Komponen latensi 0 untuk keduanya                                                 | batas    | SRD 4.4 |
-| SR-037 | Latensi normal, milidetik per karakter di atas P80                               | Skor −1; nilai penjadwalan 2                                                      | batas    | SRD 4.4 |
-| SR-038 | Jeda terpanjang 1.500 ms dan di atas P90 kelompok                                | Penalti −1                                                                        | batas    | SRD 4.4 |
-| SR-039 | Jeda terpanjang di atas P90 kelompok tetapi hanya 900 ms                         | Tanpa penalti                                                                     | batas    | SRD 4.4 |
-| SR-040 | Jawaban akhir 8 huruf dengan 3 huruf dihapus, dan dengan 2 huruf dihapus         | Penalti −1 untuk 3 huruf (37,5%); tanpa penalti untuk 2 huruf (25%)               | batas    | SRD 4.4 |
-| SR-041 | Level 1 dengan keyboard, pilihan berpindah sekali sebelum Enter                  | Penalti −1                                                                        | batas    | SRD 4.4 |
-| SR-042 | Kelompok memiliki 29 data, kelompok lebar memiliki 30                            | Persentil memakai kelompok lebar                                                  | batas    | AC-30   |
-| SR-043 | Kelompok dan kelompok lebar sama-sama di bawah 30 data, jawaban cepat dan bersih | Komponen persentil 0; nilai penjadwalan 3, tidak pernah 4                         | batas    | SRD 4.4 |
-| SR-044 | Aplikasi tidak terlihat selama soal tampil, lalu dijawab benar                   | Nilai penjadwalan 3; tidak masuk persentil                                        | batas    | AC-29   |
-| SR-045 | Benar dengan latensi 75 detik                                                    | Dianggap gangguan; nilai penjadwalan 3; tidak masuk persentil                     | batas    | SRD 4.4 |
-| SR-046 | `GRADE_RULES_VERSION` naik dengan bobot baru                                     | Replay menghitung ulang seluruh nilai penjadwalan; benar/salah lama tidak berubah | batas    | AC-11   |
+| ID     | Skenario                                                                                        | Hasil yang diharapkan                                                                                                                    | Kategori | Aturan  |
+| ------ | ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | -------- | ------- |
+| SR-029 | Jawaban salah                                                                                   | Nilai penjadwalan 1                                                                                                                      | normal   | SRD 4.4 |
+| SR-030 | Soal jawaban tunggal tanpa bantuan Level 3 tanpa input sampai 8 detik                           | Nilai penjadwalan 1; timeout; latensi null                                                                                               | batas    | SRD 4.4 |
+| SR-031 | Tebak berwaktu, ketukan pertama di detik 7,9, Enter di detik 11                                 | Tidak dianggap waktu habis; dinilai menurut jawabannya                                                                                   | batas    | SRD 4.4 |
+| SR-338 | Soal Level 2 dan Level 3 di semua mode, termasuk Kode diplomat                                  | Tidak ada huruf pertama, digit pertama, tipe pemegang, atau sebagian jawaban yang tampil sebelum menjawab; kolom ketik kosong            | negatif  | SRD 3.1 |
+| SR-339 | Level 2 Tebak daerah, ketukan pertama di detik 20                                               | Tidak dianggap waktu habis; Level 2 tidak punya batas waktu                                                                              | batas    | SRD 3.1 |
+| SR-340 | Kartu `code2region` berstatus `review` dengan interval ≥ 21 hari dan belum pernah lulus Level 3 | Soal tampil sebagai Tebak berwaktu (`question_type = typed`, `level = 3`); tidak ada kartu `blindrecall` yang dibuat untuk kode mana pun | normal   | SRD 3.2 |
+| SR-032 | Benar, latensi di bawah P20, tanpa penalti                                                      | Skor +2; nilai penjadwalan 4                                                                                                             | normal   | AC-29   |
+| SR-033 | Benar, latensi di bawah P20, kecocokan `typo`                                                   | Skor +1; nilai penjadwalan 3                                                                                                             | batas    | AC-29   |
+| SR-034 | Benar, latensi di antara P20 dan P80, tanpa penalti                                             | Skor 0; nilai penjadwalan 3                                                                                                              | normal   | SRD 4.4 |
+| SR-035 | Benar, latensi di atas P80                                                                      | Skor −2; nilai penjadwalan 2                                                                                                             | normal   | SRD 4.4 |
+| SR-036 | Latensi tepat di P20, dan tepat di P80                                                          | Komponen latensi 0 untuk keduanya                                                                                                        | batas    | SRD 4.4 |
+| SR-037 | Latensi normal, milidetik per karakter di atas P80                                              | Skor −1; nilai penjadwalan 2                                                                                                             | batas    | SRD 4.4 |
+| SR-038 | Jeda terpanjang 1.500 ms dan di atas P90 kelompok                                               | Penalti −1                                                                                                                               | batas    | SRD 4.4 |
+| SR-039 | Jeda terpanjang di atas P90 kelompok tetapi hanya 900 ms                                        | Tanpa penalti                                                                                                                            | batas    | SRD 4.4 |
+| SR-040 | Jawaban akhir 8 huruf dengan 3 huruf dihapus, dan dengan 2 huruf dihapus                        | Penalti −1 untuk 3 huruf (37,5%); tanpa penalti untuk 2 huruf (25%)                                                                      | batas    | SRD 4.4 |
+| SR-041 | Level 1 dengan keyboard, pilihan berpindah sekali sebelum Enter                                 | Penalti −1                                                                                                                               | batas    | SRD 4.4 |
+| SR-042 | Kelompok memiliki 29 data, kelompok lebar memiliki 30                                           | Persentil memakai kelompok lebar                                                                                                         | batas    | AC-30   |
+| SR-043 | Kelompok dan kelompok lebar sama-sama di bawah 30 data, jawaban cepat dan bersih                | Komponen persentil 0; nilai penjadwalan 3, tidak pernah 4                                                                                | batas    | SRD 4.4 |
+| SR-044 | Aplikasi tidak terlihat selama soal tampil, lalu dijawab benar                                  | Nilai penjadwalan 3; tidak masuk persentil                                                                                               | batas    | AC-29   |
+| SR-045 | Benar dengan latensi 75 detik                                                                   | Dianggap gangguan; nilai penjadwalan 3; tidak masuk persentil                                                                            | batas    | SRD 4.4 |
+| SR-046 | `GRADE_RULES_VERSION` naik dengan bobot baru                                                    | Replay menghitung ulang seluruh nilai penjadwalan; benar/salah lama tidak berubah                                                        | batas    | AC-11   |
 
 ### 5.4 Penjadwalan dan Jarak Pengulangan
 
-| ID     | Skenario                                                              | Hasil yang diharapkan                                                                                                     | Kategori | Aturan            |
-| ------ | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | -------- | ----------------- |
-| SR-047 | Materi baru dari Perkenalan sampai jadwal FSRS                        | Intro pada sesi pertama; langkah 1 menit dan 10 menit di sesi berikutnya saat due; setelah langkah selesai mengikuti FSRS | normal   | SRD 4.6, SRD 4.14 |
-| SR-048 | Kartu `review` dijawab salah                                          | Status `relearning`, waktunya diulang 10 menit lagi, `lapses` bertambah 1                                                 | normal   | SRD 4.6           |
-| SR-049 | Kartu `mature` dijawab salah                                          | Status `relearning`; label Dikuasai hilang                                                                                | normal   | SRD 7             |
-| SR-050 | Kartu belajar ulang dijawab benar                                     | Interval berikutnya dari FSRS tanpa pemotongan 50% tambahan; review atau mature sesuai syarat                             | normal   | SRD 4.6, SRD 7    |
-| SR-051 | Langkah 1 menit baru dijawab keesokan harinya                         | Tetap dinilai sebagai langkah belajar awal                                                                                | batas    | SRD 4.6           |
-| SR-052 | Interval hasil hitungan 40 hari                                       | Tanggal `due` jatuh di rentang 38–42 hari, di hari dengan beban paling kecil                                              | normal   | SRD 4.6           |
-| SR-053 | Beberapa hari kandidat memiliki beban sama                            | Hari terpilih sama di setiap replay untuk `id` jawaban yang sama                                                          | batas    | AC-17             |
-| SR-054 | Interval hasil hitungan 2 hari                                        | Tidak digeser                                                                                                             | batas    | SRD 4.6           |
-| SR-055 | Property: jawaban benar pada R rendah vs R tinggi, kartu lain identik | Kenaikan S pada R rendah lebih besar                                                                                      | normal   | SRD 4.2           |
-| SR-056 | Target retensi                                                        | Selalu 0,90; tidak ada jalur untuk mengubahnya dari UI                                                                    | batas    | SRD 4.3           |
-| SR-057 | Kartu dengan `due` tepat di `local_day` hari ini, dibuka pukul 04.00  | Kartu masuk antrean hari ini                                                                                              | batas    | SRD 4.9           |
+| ID     | Skenario                                                                                        | Hasil yang diharapkan                                                                                                               | Kategori | Aturan            |
+| ------ | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------- | ----------------- |
+| SR-047 | Materi baru dari Perkenalan sampai jadwal FSRS                                                  | Intro pada sesi pertama; langkah 1 menit dan 10 menit di sesi berikutnya saat perlu diulang; setelah langkah selesai mengikuti FSRS | normal   | SRD 4.6, SRD 4.14 |
+| SR-048 | Kartu `review` dijawab salah                                                                    | Status `relearning`, waktunya diulang 10 menit lagi, `lapses` bertambah 1                                                           | normal   | SRD 4.6           |
+| SR-049 | Kartu `mature` dijawab salah                                                                    | Status `relearning`; label Dikuasai hilang                                                                                          | normal   | SRD 7             |
+| SR-337 | Dua jawaban `daily` untuk kartu `review` yang sama di satu perangkat pada `local_day` yang sama | Hanya jawaban pertama memperbarui jadwal; jawaban kedua tercatat tanpa mengubah `due`, stabilitas, atau kesulitan                   | batas    | AC-8              |
+| SR-050 | Kartu belajar ulang dijawab benar                                                               | Interval berikutnya dari FSRS tanpa pemotongan 50% tambahan; review atau mature sesuai syarat                                       | normal   | SRD 4.6, SRD 7    |
+| SR-051 | Langkah 1 menit baru dijawab keesokan harinya                                                   | Tetap dinilai sebagai langkah belajar awal                                                                                          | batas    | SRD 4.6           |
+| SR-052 | Interval hasil hitungan 40 hari                                                                 | Tanggal `due` jatuh di rentang 38–42 hari, di hari dengan beban paling kecil                                                        | normal   | SRD 4.6           |
+| SR-053 | Beberapa hari kandidat memiliki beban sama                                                      | Hari terpilih sama di setiap replay untuk `id` jawaban yang sama                                                                    | batas    | AC-17             |
+| SR-054 | Interval hasil hitungan 2 hari                                                                  | Tidak digeser                                                                                                                       | batas    | SRD 4.6           |
+| SR-055 | Property: jawaban benar pada R rendah vs R tinggi, kartu lain identik                           | Kenaikan S pada R rendah lebih besar                                                                                                | normal   | SRD 4.2           |
+| SR-056 | Target retensi                                                                                  | Selalu 0,90; tidak ada jalur untuk mengubahnya dari UI                                                                              | batas    | SRD 4.3           |
+| SR-057 | Kartu dengan `due` tepat di `local_day` hari ini, dibuka pukul 04.00                            | Kartu masuk antrean hari ini                                                                                                        | batas    | SRD 4.9           |
 
 ### 5.5 Antrean Harian
 
@@ -168,20 +174,20 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | SR-065 | Tiga kartu terkait waktunya diulang bersamaan selama tiga hari                             | Ketiganya tersaji dalam tiga hari; tidak ada yang dilewati lebih dari dua hari                                    | batas    | AC-15   |
 | SR-066 | Langkah belajar awal `dk::code2region` dan pengulangan `dk::region2code` di hari yang sama | Keduanya boleh tersaji; langkah belajar awal tidak dihitung dalam aturan kartu terkait                            | batas    | SRD 4.8 |
 | SR-067 | Dua kartu DK sama-sama `new`                                                               | Hanya satu Perkenalan DK hari ini                                                                                 | batas    | SRD 4.8 |
-| SR-068 | Urutan materi baru dalam satu kode                                                         | `code2region` lebih dulu, lalu `blindrecall`; kartu lainnya mengikuti prasyarat pembukaan                         | normal   | SRD 2.7 |
+| SR-068 | Urutan materi baru dalam satu kode                                                         | Hanya `code2region` masuk sebagai materi baru; `region2code` dan `setrecall` mengikuti prasyarat pembukaan        | normal   | SRD 2.7 |
 | SR-069 | Tidak ada kartu yang perlu diulang dan tidak ada materi baru                               | Antrean kosong; beranda menyatakan tidak ada soal yang perlu diulang                                              | batas    | SRD 4.7 |
 | SR-070 | Konstanta perhitungan durasi tiap tingkat                                                  | Perkiraan waktu aktif tiga tayangan Golongan A dan pengulangan ≤ 600 detik; bukan estimasi sesi atau waktu tunggu | normal   | SRD 4.7 |
 
 ### 5.6 Perkenalan
 
-| ID     | Skenario                                                        | Hasil yang diharapkan                                                                                 | Kategori | Aturan   |
-| ------ | --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | -------- | -------- |
-| SR-071 | Tebakan Perkenalan benar                                        | Tidak ada nilai penjadwalan; S belum terbentuk; belajar awal dengan due 1 menit untuk sesi berikutnya | normal   | AC-13    |
-| SR-072 | Tebakan Perkenalan salah dengan nama wilayah valid lain         | Tidak ada pasangan tertukar tercatat                                                                  | batas    | AC-13    |
-| SR-073 | Perkenalan ke-11 dalam satu hari                                | Tidak tersedia; kuota sudah habis                                                                     | batas    | AC-13    |
-| SR-074 | Undo tepat setelah Perkenalan                                   | Kartu kembali `new`; kuota kembali 1                                                                  | batas    | SRD 4.10 |
-| SR-075 | Aplikasi ditutup setelah Perkenalan, dibuka lagi 2 jam kemudian | Langkah 1 menit muncul di prioritas 1                                                                 | batas    | SRD 4.6  |
-| SR-076 | Waktu tebakan Perkenalan                                        | Tidak masuk hitungan persentil Level 1                                                                | batas    | SRD 4.4  |
+| ID     | Skenario                                                        | Hasil yang diharapkan                                                                                          | Kategori | Aturan   |
+| ------ | --------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------- | -------- |
+| SR-071 | Tebakan Perkenalan benar                                        | Tidak ada nilai penjadwalan; S belum terbentuk; belajar awal dengan jadwal ulang 1 menit untuk sesi berikutnya | normal   | AC-13    |
+| SR-072 | Tebakan Perkenalan salah dengan nama wilayah valid lain         | Tidak ada pasangan tertukar tercatat                                                                           | batas    | AC-13    |
+| SR-073 | Perkenalan ke-11 dalam satu hari                                | Tidak tersedia; kuota sudah habis                                                                              | batas    | AC-13    |
+| SR-074 | Undo tepat setelah Perkenalan                                   | Kartu kembali `new`; kuota kembali 1                                                                           | batas    | SRD 4.10 |
+| SR-075 | Aplikasi ditutup setelah Perkenalan, dibuka lagi 2 jam kemudian | Langkah 1 menit muncul di prioritas 1                                                                          | batas    | SRD 4.6  |
+| SR-076 | Waktu tebakan Perkenalan                                        | Tidak masuk hitungan persentil Level 1                                                                         | batas    | SRD 4.4  |
 
 ### 5.7 Pembukaan Kartu Terkait
 
@@ -237,8 +243,8 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | SR-109 | Drill benar 4 kali, lalu salah                            | Hitungan kembali ke 0                              | batas    | SRD 6.2           |
 | SR-110 | Pasangan yang tandanya sudah dihapus tertukar lagi 2 kali | Ditandai lagi                                      | batas    | SRD 6.2           |
 | SR-111 | Pasangan BE ↔ DE aktif, Cakupan hanya Sumatera            | Drill tetap muncul                                 | normal   | SRD 6.2           |
-| SR-112 | Drill pada kartu yang belum waktunya diulang              | Dicatat untuk hitungan drill; jadwal tidak berubah | batas    | SRD 4.11          |
-| SR-113 | Drill pada kartu yang sudah waktunya diulang              | Dihitung untuk jadwal                              | batas    | SRD 4.11          |
+| SR-112 | Drill pada kartu yang belum waktunya diulang              | Dicatat untuk hitungan drill; jadwal tidak berubah | batas    | SRD 4.11, AC-8    |
+| SR-113 | Drill pada kartu yang sudah waktunya diulang              | Dihitung untuk jadwal                              | batas    | SRD 4.11, AC-8    |
 | SR-114 | Dua kejadian di ponsel dan satu di laptop dalam 30 hari   | Ditandai setelah sinkron                           | batas    | SRD 6.2           |
 | SR-115 | Referensi dibuka untuk kode yang sudah dipelajari         | Tidak menghasilkan jawaban atau pasangan tertukar  | batas    | SRD 4.11, SRD 6.2 |
 | SR-116 | Jawaban salah yang kemudian dibatalkan                    | Tidak dihitung dalam pasangan                      | batas    | SRD 6.2           |
@@ -296,20 +302,20 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 
 ### 5.15 Mode Khusus
 
-| ID     | Skenario                                                         | Hasil yang diharapkan                                                    | Kategori | Aturan   |
-| ------ | ---------------------------------------------------------------- | ------------------------------------------------------------------------ | -------- | -------- |
-| SR-148 | Tantangan Harian                                                 | 5 soal dari kartu yang pernah dipelajari; jadwal tidak berubah           | normal   | SRD 4.11 |
-| SR-149 | Baru 3 kartu yang pernah dipelajari                              | Tantangan berisi 3 soal                                                  | batas    | SRD 4.11 |
-| SR-150 | Belum ada kartu yang pernah dipelajari                           | Tantangan tidak tersedia                                                 | batas    | SRD 4.11 |
-| SR-151 | Tantangan kedua di hari yang sama                                | Tidak tersedia; dinyatakan sudah selesai                                 | batas    | PRD 6.7  |
-| SR-152 | Satu hari terlewat dalam 30 hari bergulir                        | Hari Beruntun berlanjut; jatah toleransi terpakai                        | batas    | PRD 8    |
-| SR-153 | Hari kedua terlewat dalam 30 hari bergulir yang sama             | Hari Beruntun kembali ke 0                                               | batas    | PRD 8    |
-| SR-154 | Hari terlewat tanggal 31 Agustus lalu 1 September                | Dihitung dalam satu periode 30 hari bergulir; Hari Beruntun kembali ke 0 | batas    | PRD 8    |
-| SR-155 | Mode Kilat di Kawasan Maluku skor 24, rekor nasional 31          | Rekor Maluku 24; rekor nasional tetap 31                                 | normal   | PRD 6.7  |
-| SR-156 | Mode Kilat ditutup paksa di detik 40                             | Skor tidak dihitung untuk rekor                                          | batas    | SRD 8.8  |
-| SR-157 | Latihan Terfokus pada kartu yang belum waktunya diulang          | Jadwal tidak berubah                                                     | normal   | SRD 4.11 |
-| SR-158 | Latihan Terfokus pada kartu yang sudah waktunya diulang          | Dihitung untuk jadwal; kartu tidak muncul lagi di sesi harian hari itu   | batas    | SRD 4.11 |
-| SR-159 | Latihan Terfokus pada wilayah tanpa kartu yang pernah dipelajari | Latihan tidak dimulai                                                    | batas    | SRD 4.11 |
+| ID     | Skenario                                                         | Hasil yang diharapkan                                                    | Kategori | Aturan         |
+| ------ | ---------------------------------------------------------------- | ------------------------------------------------------------------------ | -------- | -------------- |
+| SR-148 | Tantangan Harian                                                 | 5 soal dari kartu yang pernah dipelajari; jadwal tidak berubah           | normal   | SRD 4.11, AC-8 |
+| SR-149 | Baru 3 kartu yang pernah dipelajari                              | Tantangan berisi 3 soal                                                  | batas    | SRD 4.11       |
+| SR-150 | Belum ada kartu yang pernah dipelajari                           | Tantangan tidak tersedia                                                 | batas    | SRD 4.11       |
+| SR-151 | Tantangan kedua di hari yang sama                                | Tidak tersedia; dinyatakan sudah selesai                                 | batas    | PRD 6.7        |
+| SR-152 | Satu hari terlewat dalam 30 hari bergulir                        | Hari Beruntun berlanjut; jatah toleransi terpakai                        | batas    | PRD 8          |
+| SR-153 | Hari kedua terlewat dalam 30 hari bergulir yang sama             | Hari Beruntun kembali ke 0                                               | batas    | PRD 8          |
+| SR-154 | Hari terlewat tanggal 31 Agustus lalu 1 September                | Dihitung dalam satu periode 30 hari bergulir; Hari Beruntun kembali ke 0 | batas    | PRD 8          |
+| SR-155 | Mode Kilat di Kawasan Maluku skor 24, rekor nasional 31          | Rekor Maluku 24; rekor nasional tetap 31                                 | normal   | PRD 6.7        |
+| SR-156 | Mode Kilat ditutup paksa di detik 40                             | Skor tidak dihitung untuk rekor                                          | batas    | SRD 8.8        |
+| SR-157 | Latihan Terfokus pada kartu yang belum waktunya diulang          | Jadwal tidak berubah                                                     | normal   | SRD 4.11, AC-8 |
+| SR-158 | Latihan Terfokus pada kartu yang sudah waktunya diulang          | Dihitung untuk jadwal; kartu tidak muncul lagi di sesi harian hari itu   | batas    | SRD 4.11, AC-8 |
+| SR-159 | Latihan Terfokus pada wilayah tanpa kartu yang pernah dipelajari | Latihan tidak dimulai                                                    | batas    | SRD 4.11       |
 
 ### 5.16 Pelat Terlihat
 
@@ -469,7 +475,7 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | SR-274 | Kartu yang sama dijawab hari ini sebagai anonim dan di perangkat lain milik akun, lalu login | Hanya jawaban paling awal yang dihitung untuk jadwal                                      | batas    | SRD 8.3  |
 | SR-275 | Dua pengguna dengan riwayat berbeda                                                          | Persentil, nilai penjadwalan, dan parameter masing-masing tidak dipengaruhi pengguna lain | negatif  | SRD 1    |
 
-### 5.26 Pembatalan melalui Layar Sentuh dan Petunjuk Keyboard
+### 5.26 Pembatalan melalui Layar Sentuh dan Pintasan Keyboard
 
 | ID     | Skenario                                                             | Hasil yang diharapkan                                                | Kategori | Aturan   |
 | ------ | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------- | -------- |
@@ -493,11 +499,11 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | ------ | ------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | -------- | -------- |
 | SR-284 | Menengah, 30 hari terakhir 250 jawaban pengulangan, akurasi 92%, materi baru ditahan 2 hari | Naik ke Mahir di awal `local_day` berikutnya                                                                    | normal   | AC-36    |
 | SR-285 | Mahir, akurasi 78% dari 220 jawaban pengulangan                                             | Turun ke Menengah                                                                                               | normal   | AC-36    |
-| SR-286 | Menengah, akurasi 85%, materi baru ditahan 12 hari                                          | Turun ke Pemula                                                                                                 | batas    | AC-36    |
+| SR-286 | Menengah, 250 jawaban pengulangan dalam 30 hari, akurasi 85%, materi baru ditahan 12 hari   | Turun ke Pemula                                                                                                 | batas    | AC-36    |
 | SR-287 | Akurasi 95% tetapi hanya 199 jawaban pengulangan                                            | Tidak dievaluasi                                                                                                | batas    | SRD 4.16 |
 | SR-288 | Syarat naik terpenuhi 10 hari setelah perubahan tingkat sebelumnya                          | Belum berubah; dievaluasi lagi di hari ke-14                                                                    | batas    | AC-36    |
-| SR-289 | Ahli dengan akurasi 97%                                                                     | Tetap Ahli                                                                                                      | batas    | SRD 4.16 |
-| SR-290 | Pemula dengan akurasi 70%                                                                   | Tetap Pemula                                                                                                    | batas    | SRD 4.16 |
+| SR-289 | Ahli, 250 jawaban pengulangan dalam 30 hari, akurasi 97%                                    | Tetap Ahli                                                                                                      | batas    | SRD 4.16 |
+| SR-290 | Pemula, 250 jawaban pengulangan dalam 30 hari, akurasi 70%                                  | Tetap Pemula                                                                                                    | batas    | SRD 4.16 |
 | SR-291 | Jawaban Perkenalan, langkah belajar awal, dan tes penempatan di periode 30 hari             | Tidak dihitung dalam akurasi maupun syarat 200 jawaban                                                          | batas    | SRD 4.16 |
 | SR-292 | Log yang sama direplay di dua perangkat                                                     | Tingkat dan hari perubahannya sama                                                                              | batas    | AC-36    |
 | SR-293 | Tingkat naik ke Mahir hari ini                                                              | Batas 12 dan ambang 32 berlaku hari ini; pratinjau menampilkan info perubahan tingkat                           | normal   | SRD 4.16 |
@@ -507,89 +513,92 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 
 ### 5.29 Pemeriksaan Konsistensi
 
-| ID     | Skenario                                                                    | Hasil yang diharapkan                                                                          | Kategori | Aturan                    |
-| ------ | --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | -------- | ------------------------- |
-| SR-295 | `code2region` interval ≥ 21 hari tanpa kelulusan Level 3                    | Otomatis Level 3 tanpa bantuan; benar dengan interval hasil ≥ 21 menjadi mature pada kartu itu | normal   | SRD 3.2, SRD 3.3, SRD 3.4 |
-| SR-296 | `blindrecall` benar Level 3, kartu terkait `code2region` belum pernah lulus | Kartu terkait tidak mendapat kelulusan; tetap mengikuti uji sendiri                            | batas    | SRD 3.2                   |
-| SR-297 | Cakupan Bali untuk Perkenalan DK                                            | Tiga pengecoh sah dicari di kawasan lalu nasional; materi baru tetap DK                        | batas    | SRD 2.8                   |
-| SR-299 | Data uji terlalu kecil untuk tiga pengecoh nasional                         | Perkenalan informasi tanpa tebakan/nilai penjadwalan; tetap intro dan memakai kuota            | batas    | SRD 2.8                   |
-| SR-300 | Benar/salah kilat di sesi harian lewat 2 detik                              | Timeout; nilai penjadwalan 1 jika berwenang menjadwal; di Kilat tidak mengubah jadwal          | batas    | SRD 4.4                   |
-| SR-301 | Pratinjau baru 1 menit tetapi pull mengubah keadaan aplikasi                | Pratinjau diperbarui sebelum Mulai; tidak memakai salinan antrean lama diam-diam               | batas    | SRD 4.14                  |
-| SR-302 | Satu-satunya jawaban terhitung di luar tes dibatalkan                       | Tawaran mengulang tes tersedia lagi; jawaban Perkenalan saja tidak menutup tawaran             | batas    | SRD 4.13                  |
-| SR-303 | Satu soal himpunan memuat dua pasangan salah dan satu pasangan diulang      | Kedua pasangan berbeda tercatat, masing-masing paling banyak sekali; undo membatalkan keduanya | batas    | SRD 5.2                   |
-| SR-304 | Himpunan memiliki 1 benar dari ambang 5                                     | correct false tetapi nilai penjadwalan 2 menurut pemetaan himpunan; tidak meluluskan Level 3   | batas    | SRD 5.2                   |
-| SR-305 | Himpunan memiliki 5 benar dari ambang 5 dan gangguan                        | Nilai penjadwalan 3; lulus Level 3 bila tanpa bantuan leech; tidak masuk persentil             | batas    | SRD 5.2                   |
-| SR-306 | Kartu `setrecall` waktunya diulang saat Cakupan berpindah                   | Tetap terlihat pada sesi himpunan terpisah; tidak masuk daily/challenge/kilat                  | batas    | SRD 5.2                   |
-| SR-307 | Seluruh fakta berstatus publikasi `draft`                                   | Tidak memilih fakta atau menulis `fact_views`; sesi selesai normal                             | batas    | SRD 4.15                  |
-| SR-308 | Optimasi anonim tanpa `server_seq`                                          | `training_set_hash` dan `training_event_ids` lokal terisi, `trained_through_seq` null; hasil aktif dapat direplay | normal   | SRD 4.12                  |
-| SR-309 | Akurasi dan 200 review terpenuhi sebelum 30 hari penuh                      | Tingkat belum berubah otomatis                                                                 | batas    | SRD 4.16                  |
-| SR-310 | Leech menjawab benar pada soal dengan jawaban dibocorkan di konteks         | Jadwal mengikuti fase FSRS; tidak meluluskan Level 3                                           | batas    | SRD 3.2, SRD 6.4          |
+| ID     | Skenario                                                               | Hasil yang diharapkan                                                                                             | Kategori | Aturan                    |
+| ------ | ---------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | -------- | ------------------------- |
+| SR-295 | `code2region` interval ≥ 21 hari tanpa kelulusan Level 3               | Otomatis Level 3 tanpa bantuan; benar dengan interval hasil ≥ 21 menjadi mature pada kartu itu                    | normal   | SRD 3.2, SRD 3.3, SRD 3.4 |
+| SR-296 | Tidak aktif: `blindrecall` dilebur ke `code2region`                    | Tidak dijalankan; ID tidak dipakai ulang. Pemeriksaan penggantinya SR-340                                         | batas    | SRD 3.2                   |
+| SR-297 | Cakupan Bali untuk Perkenalan DK                                       | Tiga pengecoh sah dicari di kawasan lalu nasional; materi baru tetap DK                                           | batas    | SRD 2.8                   |
+| SR-299 | Data uji terlalu kecil untuk tiga pengecoh nasional                    | Perkenalan informasi tanpa tebakan/nilai penjadwalan; tetap intro dan memakai kuota                               | batas    | SRD 2.8                   |
+| SR-300 | Benar/salah kilat di sesi harian lewat 2 detik                         | Timeout; nilai penjadwalan 1 jika berwenang menjadwal; di Kilat tidak mengubah jadwal                             | batas    | SRD 4.4                   |
+| SR-301 | Pratinjau baru 1 menit tetapi pull mengubah keadaan aplikasi           | Pratinjau diperbarui sebelum Mulai; tidak memakai salinan antrean lama diam-diam                                  | batas    | SRD 4.14                  |
+| SR-302 | Satu-satunya jawaban terhitung di luar tes dibatalkan                  | Tawaran mengulang tes tersedia lagi; jawaban Perkenalan saja tidak menutup tawaran                                | batas    | SRD 4.13                  |
+| SR-303 | Satu soal himpunan memuat dua pasangan salah dan satu pasangan diulang | Kedua pasangan berbeda tercatat, masing-masing paling banyak sekali; undo membatalkan keduanya                    | batas    | SRD 5.2                   |
+| SR-304 | Himpunan memiliki 1 benar dari ambang 5                                | correct false tetapi nilai penjadwalan 2 menurut pemetaan himpunan; tidak meluluskan Level 3                      | batas    | SRD 5.2                   |
+| SR-305 | Himpunan memiliki 5 benar dari ambang 5 dan gangguan                   | Nilai penjadwalan 3; lulus Level 3 bila tanpa bantuan leech; tidak masuk persentil                                | batas    | SRD 5.2                   |
+| SR-306 | Kartu `setrecall` waktunya diulang saat Cakupan berpindah              | Tetap terlihat pada sesi himpunan terpisah; tidak masuk daily/challenge/kilat                                     | batas    | SRD 5.2                   |
+| SR-307 | Seluruh fakta berstatus publikasi `draft`                              | Tidak memilih fakta atau menulis `fact_views`; sesi selesai normal                                                | batas    | SRD 4.15                  |
+| SR-308 | Optimasi anonim tanpa `server_seq`                                     | `training_set_hash` dan `training_event_ids` lokal terisi, `trained_through_seq` null; hasil aktif dapat direplay | normal   | SRD 4.12                  |
+| SR-309 | Akurasi dan 200 review terpenuhi sebelum 30 hari penuh                 | Tingkat belum berubah otomatis                                                                                    | batas    | SRD 4.16                  |
+| SR-310 | Leech menjawab benar pada soal dengan jawaban dibocorkan di konteks    | Jadwal mengikuti fase FSRS; tidak meluluskan Level 3                                                              | batas    | SRD 3.2, SRD 6.4          |
 
 ---
 
 ### 5.30 Pembatasan Materi
 
-| ID     | Skenario                                                               | Hasil yang diharapkan                                                                                                         | Kategori | Aturan |
-| ------ | ---------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | -------- | ------ |
-| SR-311 | Bentuk kartu dari seluruh konten dan semua tingkat Cakupan             | Kode wilayah hanya membentuk `code2region`, `region2code`, `blindrecall`, dan `setrecall`; kode khusus hanya `special2holder` dan `holder2special`; jumlah paling banyak 4 × N + 2 × S | normal   | AC-37  |
-| SR-312 | Pindah dari kawasan ke provinsi setelah interval kartu mencapai 3 hari | Jenis kartu tetap sama; kartu terkunci hanya dibuka menurut syarat `region2code` dan `setrecall`                              | batas    | AC-37  |
-| SR-313 | Cari pelat lengkap dua kali dengan kode depan sama dalam 10 menit      | Pencarian hanya menambah satu catatan kode depan dan tidak memengaruhi jadwal                                                 | batas    | AC-38  |
+| ID     | Skenario                                                               | Hasil yang diharapkan                                                                                                                                                   | Kategori | Aturan |
+| ------ | ---------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ------ |
+| SR-311 | Bentuk kartu dari seluruh konten dan semua tingkat Cakupan             | Kode wilayah hanya membentuk `code2region`, `region2code`, dan `setrecall`; kode khusus hanya `special2holder` dan `holder2special`; jumlah paling banyak 3 × N + 2 × S | normal   | AC-37  |
+| SR-312 | Pindah dari kawasan ke provinsi setelah interval kartu mencapai 3 hari | Jenis kartu tetap sama; kartu terkunci hanya dibuka menurut syarat `region2code` dan `setrecall`                                                                        | batas    | AC-37  |
+| SR-313 | Cari pelat lengkap dua kali dengan kode depan sama dalam 10 menit      | Pencarian hanya menambah satu catatan kode depan dan tidak memengaruhi jadwal                                                                                           | batas    | AC-38  |
 
 ### 5.31 Latihan Kode Khusus
 
-| ID     | Skenario                                                                                  | Hasil yang diharapkan                                                                                                   | Kategori | Aturan          |
-| ------ | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | -------- | --------------- |
-| SR-314 | Pengguna baru tanpa mengubah pengaturan                                                   | `special_enabled = false`; tidak ada kartu kode khusus di antrean mana pun; Beranda tanpa tombol Kode Khusus           | normal   | AC-40           |
-| SR-315 | Seri CD diaktifkan, 200 pengulangan wilayah jatuh tempo                                   | Materi baru CD tetap diperkenalkan sampai 5; antrean harian wilayah tidak berubah                                      | batas    | AC-41           |
-| SR-316 | Sesi Kode Khusus dengan 26 kartu kode khusus perlu diulang                                | Materi baru kode khusus ditahan hari itu; tepat 25 kartu masih mengizinkan materi baru                                  | batas    | AC-41, SRD 2.9  |
-| SR-317 | Sesi harian, Tantangan Harian, Mode Kilat, dan tes penempatan dengan jalur aktif          | Tidak satu pun menarik kartu `special2holder` atau `holder2special`                                                    | normal   | AC-40           |
-| SR-318 | Interval `special2holder` CD 49 mencapai 6 lalu 7 hari                                    | `holder2special` tetap `locked` di 6 hari, terbuka di 7 hari                                                            | batas    | AC-39           |
-| SR-319 | `special2holder` dan `holder2special` entri yang sama jatuh tempo di hari yang sama       | Hanya satu yang disajikan dan dihitung untuk jadwal, sesuai SRD 4.8                                                     | normal   | AC-14           |
-| SR-320 | Entri CD 92 dengan `needsReview = true`                                                   | Tidak membentuk kartu; tampil di Referensi                                                                              | batas    | AC-39           |
-| SR-321 | Seluruh entri `referencePlates[]` (format RI, CC, CH)                                     | Tidak membentuk kartu, tidak menjadi pengecoh, dan tidak masuk kamus jawaban; tampil di Referensi dengan keterangannya | negatif  | AC-39           |
-| SR-322 | Level 1 `holder2special` untuk CD 49                                                      | Empat pilihan kode CD; salah satu pengecoh CD 48 atau CD 50                                                            | normal   | SRD 2.9         |
-| SR-323 | Level 1 `special2holder` untuk CD 17 (Vatikan)                                            | Empat pemegang dari entri CD `high`; tidak ada pengecoh yang juga alias Takhta Suci                                   | normal   | SRD 2.9         |
-| SR-324 | Soal, pilihan, dan petunjuk seluruh kartu kode khusus pada seed revisi ini                | Tidak ada nomor urut registrasi atau nama pejabat perwakilan                                                            | normal   | AC-42           |
-| SR-325 | Jawaban "Japan", "jepang", dan "Kedubes Jepang" untuk CD 49                              | Ketiganya `exact`                                                                                                        | normal   | AC-43           |
-| SR-326 | Jawaban "Irak" untuk soal CD 45 (Iran)                                                  | Salah; `confused_with = cd-20-irak`; tanpa toleransi salah ketik                                                        | batas    | AC-43           |
-| SR-327 | Jawaban "Jepnag" untuk CD 49                                                            | `typo` dengan biaya 0,5                                                                                                  | normal   | AC-43           |
-| SR-328 | Jawaban "UNDF" untuk CD 58 (UNDP)                                                       | Salah; singkatan huruf kapital tanpa toleransi                                                                           | negatif  | AC-43           |
-| SR-329 | Jawaban "49", "CD 49", "cd49", dan "049" untuk soal kode Jepang                          | Keempatnya benar                                                                                                         | normal   | AC-43           |
-| SR-330 | Jawaban "CD 49 07" dan "CC 49" untuk soal kode Jepang                                   | Keduanya salah; "CC 49" tanpa pasangan                                                                                 | negatif  | AC-43           |
-| SR-331 | Jawaban "48" untuk soal kode Jepang                                                     | Salah; `confused_with = cd-48-turki`                                                                                     | normal   | AC-43           |
-| SR-332 | Seri CD dimatikan setelah 20 kartu CD dipelajari                                          | Materi baru CD berhenti; kartu CD yang jatuh tempo tetap muncul di sesi Kode Khusus                                     | batas    | SRD 2.9         |
-| SR-333 | Versi data baru memindahkan CD 39 ke pemegang lain dengan `id` baru                       | Kartu lama `suspended`; pemegang baru muncul sebagai materi baru tanpa mewarisi riwayat                                 | batas    | SRD 2.9, TRD 4.1 |
-| SR-334 | Semua kartu CD `mature`, kawasan Jawa belum dikuasai                                      | Penguasaan CD 100%; penguasaan wilayah dan Uji Penguasaan Kawasan tidak berubah                                         | normal   | AC-40           |
-| SR-335 | Pencarian "CD 49 07" di Referensi                                                        | Menampilkan CD 49; tidak membuat `sightings`; input lengkap tidak disimpan                                             | batas    | AC-38, SRD 4.11 |
-| SR-336 | Dua perangkat offline masing-masing memperkenalkan 5 kartu CD di hari yang sama           | Kelebihan 5 dipotong dari kuota kode khusus hari berikutnya, bukan dari kuota wilayah                                   | batas    | SRD 2.9, 8.4    |
+| ID     | Skenario                                                                              | Hasil yang diharapkan                                                                                                  | Kategori | Aturan           |
+| ------ | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | -------- | ---------------- |
+| SR-314 | Pengguna baru tanpa mengubah pengaturan                                               | `special_enabled = false`; tidak ada kartu kode khusus di antrean mana pun; Beranda tanpa tombol Kode Khusus           | normal   | AC-40            |
+| SR-315 | Seri CD diaktifkan, 200 kartu wilayah perlu diulang                                   | Materi baru CD tetap diperkenalkan sampai 5; antrean harian wilayah tidak berubah                                      | batas    | AC-41            |
+| SR-316 | Sesi Kode Khusus dengan 26 kartu kode khusus perlu diulang                            | Materi baru kode khusus ditahan hari itu; tepat 25 kartu masih mengizinkan materi baru                                 | batas    | AC-41, SRD 2.9   |
+| SR-317 | Sesi harian, Tantangan Harian, Mode Kilat, dan tes penempatan dengan jalur aktif      | Tidak satu pun menarik kartu `special2holder` atau `holder2special`                                                    | normal   | AC-40            |
+| SR-318 | Interval `special2holder` CD 49 mencapai 6 lalu 7 hari                                | `holder2special` tetap `locked` di 6 hari, terbuka di 7 hari                                                           | batas    | AC-39            |
+| SR-319 | `special2holder` dan `holder2special` entri yang sama perlu diulang di hari yang sama | Hanya satu yang disajikan dan dihitung untuk jadwal, sesuai SRD 4.8                                                    | normal   | AC-14            |
+| SR-320 | Entri CD 92 dengan `needsReview = true`                                               | Tidak membentuk kartu; tampil di Referensi                                                                             | batas    | AC-39            |
+| SR-321 | Seluruh entri `referencePlates[]` (format RI, CC, CH)                                 | Tidak membentuk kartu, tidak menjadi pengecoh, dan tidak masuk kamus jawaban; tampil di Referensi dengan keterangannya | negatif  | AC-39            |
+| SR-322 | Level 1 `holder2special` untuk CD 49                                                  | Empat pilihan kode CD; salah satu pengecoh CD 48 atau CD 50                                                            | normal   | SRD 2.9          |
+| SR-323 | Level 1 `special2holder` untuk CD 17 (Vatikan)                                        | Empat pemegang dari entri CD `high`; tidak ada pengecoh yang juga alias Takhta Suci                                    | normal   | SRD 2.9          |
+| SR-324 | Soal dan pilihan seluruh kartu kode khusus pada seed revisi ini                       | Tidak ada nomor urut registrasi atau nama pejabat perwakilan                                                           | normal   | AC-42            |
+| SR-325 | Jawaban "Japan", "jepang", dan "Kedubes Jepang" untuk CD 49                           | Ketiganya `exact`                                                                                                      | normal   | AC-43            |
+| SR-326 | Jawaban "Irak" untuk soal CD 45 (Iran)                                                | Salah; `confused_with = cd-20-irak`; tanpa toleransi salah ketik                                                       | batas    | AC-43            |
+| SR-327 | Jawaban "Jepnag" untuk CD 49                                                          | `typo` dengan biaya 0,5                                                                                                | normal   | AC-43            |
+| SR-328 | Jawaban "UNDF" untuk CD 58 (UNDP)                                                     | Salah; singkatan huruf kapital tanpa toleransi                                                                         | negatif  | AC-43            |
+| SR-329 | Jawaban "49", "CD 49", "cd49", dan "049" untuk soal kode Jepang                       | Keempatnya benar                                                                                                       | normal   | AC-43            |
+| SR-330 | Jawaban "CD 49 07" dan "CC 49" untuk soal kode Jepang                                 | Keduanya salah; "CC 49" tanpa pasangan                                                                                 | negatif  | AC-43            |
+| SR-331 | Jawaban "48" untuk soal kode Jepang                                                   | Salah; `confused_with = cd-48-turki`                                                                                   | normal   | AC-43            |
+| SR-332 | Seri CD dimatikan setelah 20 kartu CD dipelajari                                      | Materi baru CD berhenti; kartu CD yang perlu diulang tetap muncul di sesi Kode Khusus                                  | batas    | SRD 2.9          |
+| SR-333 | Versi data baru memindahkan CD 39 ke pemegang lain dengan `id` baru                   | Kartu lama `suspended`; pemegang baru muncul sebagai materi baru tanpa mewarisi riwayat                                | batas    | SRD 2.9, TRD 4.1 |
+| SR-334 | Semua kartu CD `mature`, kawasan Jawa belum dikuasai                                  | Penguasaan CD 100%; penguasaan wilayah dan Uji Penguasaan Kawasan tidak berubah                                        | normal   | AC-40            |
+| SR-335 | Pencarian "CD 49 07" di Referensi                                                     | Menampilkan CD 49; tidak membuat `sightings`; input lengkap tidak disimpan                                             | batas    | AC-38, SRD 4.11  |
+| SR-336 | Dua perangkat offline masing-masing memperkenalkan 5 kartu CD di hari yang sama       | Kelebihan 5 dipotong dari kuota kode khusus hari berikutnya, bukan dari kuota wilayah                                  | batas    | SRD 2.9, 8.4     |
 
 ## 6. Pengujian Teknis (TR-)
 
 ### 6.1 Pembuatan Aplikasi dan Konten
 
-| ID    | Skenario                                                  | Hasil yang diharapkan                                            | Kategori |
-| ----- | --------------------------------------------------------- | ---------------------------------------------------------------- | -------- |
-| TR-01 | Build dengan `plates.json` valid                          | Build lolos; versi bertanggal tertanam di bundle                 | normal   |
-| TR-02 | Satu region tanpa properti `aliases`                      | Build gagal dengan pesan yang menyebut `id` region-nya           | negatif  |
-| TR-03 | `aliases` berisi array kosong                             | Build lolos                                                      | batas    |
-| TR-04 | Kartu yang dapat dibuat tidak memiliki bentuk Level 3 sah | Build gagal (AC-1); pengujian berlaku per `card_id`/mode         | negatif  |
-| TR-05 | Region baru memakai `id` yang ada di daftar pensiun       | Build gagal                                                      | negatif  |
-| TR-06 | Dua region memakai `id` yang sama                         | Build gagal                                                      | negatif  |
-| TR-07 | Region dengan `group` yang tidak dikenal                  | Build gagal; kode itu tidak boleh diam-diam hilang dari hierarki | negatif  |
-| TR-08 | Cakupan tanpa elemen SVG dengan `id` yang sama            | Build gagal                                                      | negatif  |
-| TR-09 | Kode lintas provinsi dengan `spans` berisi dua provinsi   | Kode hanya muncul sekali di hierarki, di bawah `province` primer | batas    |
-| TR-10 | Jumlah pilihan per tingkat cakupan                        | Sama dengan hitungan dari data, tidak ada angka tertulis manual  | normal   |
+| ID     | Skenario                                                                               | Hasil yang diharapkan                                                                                                                | Kategori |
+| ------ | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| TR-01  | Build dengan `plates.json` valid                                                       | Build lolos; versi bertanggal dan `contentRev` tertanam di bundle                                                                    | normal   |
+| TR-193 | `next build` dengan `output: 'export'`                                                 | Folder `out/` berisi semua halaman utama sebagai HTML; tidak ada Route Handler, Server Action, atau Middleware; build gagal jika ada | negatif  |
+| TR-194 | Service worker dibuat dari `out/` dengan `workbox-build`                               | Semua halaman utama, `plates.json`, dan berkas WebAssembly optimizer ada di precache manifest                                        | normal   |
+| TR-195 | `plates.json` berubah tanpa `contentRev` naik, atau entri lama `contentHistory` diubah | Build gagal                                                                                                                          | negatif  |
+| TR-02  | Satu region tanpa properti `aliases`                                                   | Build gagal dengan pesan yang menyebut `id` region-nya                                                                               | negatif  |
+| TR-03  | `aliases` berisi array kosong                                                          | Build lolos                                                                                                                          | batas    |
+| TR-04  | Kartu yang dapat dibuat tidak memiliki bentuk Level 3 sah                              | Build gagal (AC-1); pengujian berlaku per `card_id`/mode                                                                             | negatif  |
+| TR-05  | Region baru memakai `id` yang ada di daftar pensiun                                    | Build gagal                                                                                                                          | negatif  |
+| TR-06  | Dua region memakai `id` yang sama                                                      | Build gagal                                                                                                                          | negatif  |
+| TR-07  | Region dengan `group` yang tidak dikenal                                               | Build gagal; kode itu tidak boleh diam-diam hilang dari hierarki                                                                     | negatif  |
+| TR-08  | Cakupan tanpa elemen SVG dengan `id` yang sama                                         | Build gagal                                                                                                                          | negatif  |
+| TR-09  | Kode lintas provinsi dengan `spans` berisi dua provinsi                                | Kode hanya muncul sekali di hierarki, di bawah `province` primer                                                                     | batas    |
+| TR-10  | Jumlah pilihan per tingkat cakupan                                                     | Sama dengan hitungan dari data, tidak ada angka tertulis manual                                                                      | normal   |
 
 ### 6.2 Penyimpanan Lokal
 
-| ID    | Skenario                                                     | Hasil yang diharapkan                                                                                                        | Kategori |
-| ----- | ------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------- | -------- |
-| TR-11 | Jawaban ditulis lalu aplikasi dimuat ulang                   | Jawaban dan keadaan aplikasi kartu utuh                                                                                      | normal   |
-| TR-12 | Aplikasi ditutup paksa di tengah transaksi penulisan jawaban | `review_logs` dan antrean kirim tersimpan atomik atau keduanya tidak tersimpan; tidak ada pengakuan tersimpan sebelum commit | batas    |
-| TR-13 | `QuotaExceededError` saat menulis                            | Jawaban tidak ditandai tersimpan; pesan penyimpanan penuh tampil                                                             | negatif  |
-| TR-14 | `persist()` ditolak                                          | Aplikasi jalan; ajakan login ditonjolkan                                                                                     | batas    |
-| TR-15 | Checkpoint dibuat tiap 500 event                             | Replay dari titik pemulihan menghasilkan keadaan aplikasi yang sama dengan replay penuh                                      | normal   |
-| TR-16 | Checkpoint rusak                                             | Checkpoint dibuang, replay penuh dijalankan, tidak ada kesalahan ke pengguna                                                 | batas    |
+| ID    | Skenario                                                            | Hasil yang diharapkan                                                                                                        | Kategori |
+| ----- | ------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | -------- |
+| TR-11 | Jawaban ditulis lalu aplikasi dimuat ulang                          | Jawaban dan keadaan aplikasi kartu utuh                                                                                      | normal   |
+| TR-12 | Aplikasi ditutup paksa di tengah transaksi penulisan jawaban        | `review_logs` dan antrean kirim tersimpan atomik atau keduanya tidak tersimpan; tidak ada pengakuan tersimpan sebelum commit | batas    |
+| TR-13 | `QuotaExceededError` saat menulis                                   | Jawaban tidak ditandai tersimpan; pesan penyimpanan penuh tampil                                                             | negatif  |
+| TR-14 | `persist()` ditolak                                                 | Aplikasi jalan; ajakan login ditonjolkan                                                                                     | batas    |
+| TR-15 | Cache `derived` disimpan setelah replay, lalu aplikasi dibuka ulang | Keadaan aplikasi dari cache sama dengan replay penuh; event berikutnya ditambahkan di ujung                                  | normal   |
+| TR-16 | Cache `derived` rusak                                               | Cache dibuang, replay penuh dijalankan, tidak ada kesalahan ke pengguna                                                      | batas    |
 
 ### 6.3 Autentikasi
 
@@ -631,20 +640,22 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 
 ### 6.6 Kepastian Hasil Penghitungan Ulang
 
-| ID    | Skenario                                                                 | Hasil yang diharapkan                                                          | Kategori |
-| ----- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | -------- |
-| TR-40 | Property: kumpulan event yang sama diterima dalam urutan kedatangan acak | Keadaan aplikasi akhir identik untuk semua urutan                              | batas    |
-| TR-41 | Property: event yang sama diterapkan dua kali                            | Keadaan aplikasi sama dengan diterapkan sekali                                 | batas    |
-| TR-42 | Property: replay bertahap vs replay penuh                                | Identik untuk semua log hasil generator                                        | batas    |
-| TR-43 | Golden logs dijalankan ulang                                             | Keadaan aplikasi sama persis dengan berkas hasil acuan                         | normal   |
-| TR-44 | Event datang terlambat dengan kunci pengurutan di tengah riwayat         | Replay dari titik pemulihan sebelum posisi itu; hasil sama dengan replay penuh | batas    |
-| TR-45 | Dua jawaban dengan `effective_ts` dan `device_id` sama                   | Diurut dengan `id`; hasil stabil                                               | batas    |
-| TR-46 | Event dengan `client_ts` 2 jam di depan `received_at`                    | `effective_ts` memakai `received_at`                                           | batas    |
-| TR-47 | Replay dijalankan dua kali dengan jam sistem berbeda                     | Hasil identik; replay tidak membaca jam sistem                                 | batas    |
-| TR-48 | `ENGINE_VERSION` naik                                                    | Checkpoint dibuang dan replay penuh berjalan sekali saat dibuka                | normal   |
-| TR-49 | Satu event berisi `card_id` yang formatnya rusak                         | Event dilewati, dicatat di layar diagnostik; event lain diterapkan             | negatif  |
-| TR-50 | `plates.json` versi baru menghapus satu `id`                             | Kartunya dihitung `suspended`; log tidak berubah                               | batas    |
-| TR-51 | `plates.json` berikutnya mengembalikan `id` itu                          | Riwayat kartu kembali utuh                                                     | batas    |
+| ID     | Skenario                                                                                     | Hasil yang diharapkan                                                                  | Kategori |
+| ------ | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------- |
+| TR-40  | Property: kumpulan event yang sama diterima dalam urutan kedatangan acak                     | Keadaan aplikasi akhir identik untuk semua urutan                                      | batas    |
+| TR-41  | Property: event yang sama diterapkan dua kali                                                | Keadaan aplikasi sama dengan diterapkan sekali                                         | batas    |
+| TR-42  | Property: replay bertahap vs replay penuh                                                    | Identik untuk semua log hasil generator                                                | batas    |
+| TR-43  | Golden logs dijalankan ulang                                                                 | Keadaan aplikasi sama persis dengan berkas hasil acuan                                 | normal   |
+| TR-44  | Event datang terlambat dengan kunci pengurutan di tengah riwayat                             | Replay penuh berjalan; hasil sama dengan replay penuh atas log akhir                   | batas    |
+| TR-45  | Dua jawaban dengan `effective_ts` dan `device_id` sama                                       | Diurut dengan `id`; hasil stabil                                                       | batas    |
+| TR-46  | Event dengan `client_ts` 2 jam di depan `received_at`                                        | `effective_ts` memakai `received_at`                                                   | batas    |
+| TR-47  | Replay dijalankan dua kali dengan jam sistem berbeda                                         | Hasil identik; replay tidak membaca jam sistem                                         | batas    |
+| TR-48  | `ENGINE_VERSION` naik                                                                        | Cache `derived` dibuang dan replay penuh berjalan sekali saat dibuka                   | normal   |
+| TR-49  | Satu event berisi `card_id` yang formatnya rusak                                             | Event dilewati, dicatat di layar diagnostik; event lain diterapkan                     | negatif  |
+| TR-50  | `plates.json` versi baru menghapus satu `id`                                                 | Kartunya dihitung `suspended`; log tidak berubah                                       | batas    |
+| TR-51  | `plates.json` berikutnya mengembalikan `id` itu                                              | Riwayat kartu kembali utuh                                                             | batas    |
+| TR-191 | Batch pull berisi 50 event, satu di antaranya memiliki kunci lebih kecil dari event terakhir | Tepat satu replay penuh untuk batch itu; hasil sama dengan replay penuh atas log akhir | batas    |
+| TR-192 | Batch pull yang seluruh kuncinya lebih besar dari event terakhir                             | Diurutkan lalu ditambahkan di ujung tanpa replay penuh; hasil sama dengan replay penuh | normal   |
 
 ### 6.7 Keamanan
 
@@ -660,12 +671,12 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 
 ### 6.8 Impor dan Ekspor
 
-| ID    | Skenario                                                                              | Hasil yang diharapkan                                                                                         | Kategori |
-| ----- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
-| TR-60 | Ekspor formatVersion 3 lalu impor ke akun kosong; impor versi 1–2 melalui normalisasi | Versi 3 menghasilkan keadaan identik; versi lama mengikuti penyaringan dalam TRD 6 sebelum penghitungan ulang | normal   |
-| TR-61 | File ekspor yang sama diimpor dua kali                                                | Impor kedua tidak menambah apa pun                                                                            | batas    |
-| TR-62 | File impor rusak atau bukan format `terka-export`                                     | Ditolak utuh; tidak ada data yang masuk sebagian                                                              | negatif  |
-| TR-63 | File ekspor berisi baris karantina                                                    | Baris karantina ikut, ditandai terpisah, tidak otomatis dikirim ulang                                         | batas    |
+| ID    | Skenario                                                                              | Hasil yang diharapkan                                                                                                                  | Kategori |
+| ----- | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| TR-60 | Ekspor formatVersion 4 lalu impor ke akun kosong; impor versi 1–3 melalui normalisasi | Versi 4 menghasilkan keadaan identik; versi 3 diubah bentuknya; versi 1–2 mengikuti penyaringan dalam TRD 6 sebelum penghitungan ulang | normal   |
+| TR-61 | File ekspor yang sama diimpor dua kali                                                | Impor kedua tidak menambah apa pun                                                                                                     | batas    |
+| TR-62 | File impor rusak atau bukan format `terka-export`                                     | Ditolak utuh; tidak ada data yang masuk sebagian                                                                                       | negatif  |
+| TR-63 | File ekspor berisi baris karantina                                                    | Baris karantina ikut, ditandai terpisah, tidak otomatis dikirim ulang                                                                  | batas    |
 
 ### 6.9 Penggunaan Tanpa Koneksi dan PWA
 
@@ -711,29 +722,36 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 
 ### 6.13 Pencatatan Sinyal Penilaian
 
-| ID    | Skenario                                                          | Hasil yang diharapkan                                              | Kategori |
-| ----- | ----------------------------------------------------------------- | ------------------------------------------------------------------ | -------- |
-| TR-87 | Playwright mengetik "medan" dengan jeda 150, 200, 900, dan 120 ms | `key_gaps_ms` berisi empat jeda itu dengan toleransi ±20 ms        | normal   |
-| TR-88 | Mengetik "mdan", Backspace dua kali, lalu "edan"                  | `deleted_chars` 2                                                  | batas    |
-| TR-89 | Tab lain dibuka selama soal tampil                                | `interrupted` true                                                 | batas    |
-| TR-90 | Emulasi perangkat sentuh dengan keyboard layar                    | `input_mode` `touch`                                               | batas    |
-| TR-91 | Jawaban dengan 200 input                                          | `key_gaps_ms` terpotong di 120 nilai; baris tetap lolos constraint | batas    |
+| ID     | Skenario                                                          | Hasil yang diharapkan                                                      | Kategori |
+| ------ | ----------------------------------------------------------------- | -------------------------------------------------------------------------- | -------- |
+| TR-87  | Playwright mengetik "medan" dengan jeda 150, 200, 900, dan 120 ms | `key_gaps_ms` berisi empat jeda itu dengan toleransi ±20 ms                | normal   |
+| TR-88  | Mengetik "mdan", Backspace dua kali, lalu "edan"                  | `deleted_chars` 2                                                          | batas    |
+| TR-89  | Tab lain dibuka selama soal tampil                                | `interrupted` true                                                         | batas    |
+| TR-90  | Emulasi perangkat sentuh dengan keyboard layar                    | `input_mode` `touch`                                                       | batas    |
+| TR-91  | Jawaban dengan 200 input                                          | `key_gaps_ms` terpotong di 120 nilai; baris tetap lolos constraint         | batas    |
+| TR-202 | Jawaban dengan satu jeda 45.000 ms                                | Nilai itu disimpan sebagai 30.000 di `key_gaps_ms`; baris lolos constraint | batas    |
 
 ### 6.14 Penggunaan Tanpa Akun dan Pencegahan Penyalahgunaan
 
-| ID     | Skenario                                                                  | Hasil yang diharapkan                                                                                                                                              | Kategori |
-| ------ | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
-| TR-92  | Sesi penuh tanpa login                                                    | Tidak ada request ke domain Supabase                                                                                                                               | normal   |
-| TR-93  | Permintaan magic link tanpa token CAPTCHA                                 | Ditolak Supabase Auth                                                                                                                                              | negatif  |
-| TR-94  | Permintaan magic link dengan token Turnstile uji yang selalu lolos        | Diterima                                                                                                                                                           | normal   |
-| TR-95  | Satu akun menyisipkan baris `review_logs` ke-3.001 dalam satu hari server | Ditolak trigger dengan kode kesalahan batas; baris tetap di antrean kirim klien                                                                                    | negatif  |
-| TR-96  | Baris yang tertahan batas dikirim ulang setelah hari server berganti      | Diterima                                                                                                                                                           | batas    |
-| TR-97  | Perangkat baru ke-21 saat akun sudah punya 20 perangkat dengan `last_seen_at` dalam 90 hari | Ditolak dengan kode batas perangkat; push perangkat itu berhenti tanpa karantina; latihan tetap berjalan | negatif  |
-| TR-98  | Akun tanpa consent versi wajib mengirim log latihan                       | Ditolak dengan kode consent khusus; dialog tampil dan log tetap di antrean kirim, tidak dikarantina                                                                | negatif  |
-| TR-99  | Versi kebijakan baru dengan `requires_reconsent = true` diterbitkan       | Push berhenti sampai baris `privacy_consents` untuk versi baru tersimpan                                                                                           | batas    |
-| TR-100 | 1.000 pengguna dengan data sintetis di database lokal                     | Query RLS milik satu pengguna tetap memakai index dan di bawah 50 ms                                                                                               | batas    |
-| TR-101 | Pemulihan cadangan `pg_dump` terenkripsi ke proyek kosong                 | Data aplikasi, objek Auth yang dibutuhkan, RLS, grant, dan migration pulih; login dan sinkronisasi diuji sebelum layanan dibuka                                    | normal   |
-| TR-102 | Header respons situs statis                                               | Tidak ada cookie pelacak; CSP mengizinkan origin aplikasi untuk aset dan endpoint analitik serta domain Supabase/Turnstile yang diperlukan; tidak memblokir TR-137 | batas    |
+| ID     | Skenario                                                                                          | Hasil yang diharapkan                                                                                                                                              | Kategori |
+| ------ | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| TR-92  | Sesi penuh tanpa login                                                                            | Tidak ada request ke domain Supabase                                                                                                                               | normal   |
+| TR-93  | Permintaan magic link tanpa token CAPTCHA                                                         | Ditolak Supabase Auth                                                                                                                                              | negatif  |
+| TR-94  | Permintaan magic link dengan token Turnstile uji yang selalu lolos                                | Diterima                                                                                                                                                           | normal   |
+| TR-95  | Satu akun menyisipkan baris `review_logs` ke-1.001 dalam satu hari server                         | Ditolak trigger dengan kode kesalahan batas; baris tetap di antrean kirim klien                                                                                    | negatif  |
+| TR-96  | Baris yang tertahan batas dikirim ulang setelah hari server berganti                              | Diterima                                                                                                                                                           | batas    |
+| TR-97  | Perangkat baru ke-21 saat akun sudah punya 20 perangkat dengan `last_seen_at` dalam 90 hari       | Ditolak dengan kode batas perangkat; push perangkat itu berhenti tanpa karantina; latihan tetap berjalan                                                           | negatif  |
+| TR-196 | Akun dengan 50.000 baris log mengirim satu baris lagi                                             | Ditolak dengan kode batas total; baris tetap di antrean kirim; ekspor tetap tersedia                                                                               | negatif  |
+| TR-197 | `service_flags.signups_open = false`, akun baru tanpa perangkat mendaftarkan perangkat            | Ditolak dengan kode pendaftaran ditutup; latihan tetap berjalan; pesan pendaftaran ditutup tampil                                                                  | negatif  |
+| TR-198 | `service_flags.signups_open = false`, akun yang sudah punya perangkat mendaftarkan perangkat baru | Diterima selama batas perangkat aktif belum tercapai                                                                                                               | batas    |
+| TR-199 | Role `authenticated` membaca atau mengubah `service_flags`                                        | Ditolak karena tidak ada grant                                                                                                                                     | negatif  |
+| TR-200 | Workflow alarm dijalankan dengan ambang uji di bawah ukuran database lokal                        | Workflow gagal dan menyebut ukuran database; di atas ambang uji workflow lolos                                                                                     | normal   |
+| TR-201 | Login pertama di perangkat dengan 2.500 jawaban lokal                                             | Terkirim 1.000 per hari server selama tiga hari; status pengiriman bertahap tampil; tidak ada karantina                                                            | batas    |
+| TR-98  | Akun tanpa consent versi wajib mengirim log latihan                                               | Ditolak dengan kode consent khusus; dialog tampil dan log tetap di antrean kirim, tidak dikarantina                                                                | negatif  |
+| TR-99  | Versi kebijakan baru dengan `requires_reconsent = true` diterbitkan                               | Push berhenti sampai baris `privacy_consents` untuk versi baru tersimpan                                                                                           | batas    |
+| TR-100 | 1.000 pengguna dengan data sintetis di database lokal                                             | Query RLS milik satu pengguna tetap memakai index dan di bawah 50 ms                                                                                               | batas    |
+| TR-101 | Pemulihan cadangan `pg_dump` terenkripsi ke proyek kosong                                         | Data aplikasi, objek Auth yang dibutuhkan, RLS, grant, dan migration pulih; login dan sinkronisasi diuji sebelum layanan dibuka                                    | normal   |
+| TR-102 | Header respons situs statis                                                                       | Tidak ada cookie pelacak; CSP mengizinkan origin aplikasi untuk aset dan endpoint analitik serta domain Supabase/Turnstile yang diperlukan; tidak memblokir TR-137 | batas    |
 
 ### 6.15 Masuk dengan Google
 
@@ -760,7 +778,7 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | TR-116 | Query DNS `terka.my.id` untuk SPF, DKIM, dan DMARC di CI           | Ketiganya ada dan sesuai konfigurasi Resend                               | batas    |
 | TR-117 | `redirectTo` ke `terka.vercel.app`                                 | Ditolak, karena hanya `terka.my.id` dan `localhost` yang diizinkan        | negatif  |
 | TR-118 | 81 permintaan email login dalam satu jam di stack lokal            | Permintaan ke-81 ditolak rate limit                                       | batas    |
-| TR-119 | Pemantau mengirim email uji ke `contact@terka.my.id`                  | Diteruskan ke email pribadi pemilik proyek                                | normal   |
+| TR-119 | Pemantau mengirim email uji ke `contact@terka.my.id`               | Diteruskan ke email pribadi pemilik proyek                                | normal   |
 
 ### 6.17 Tampilan Fakta dan Sesi Tes Penempatan
 
@@ -774,31 +792,32 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 
 ### 6.18 Skema Fisik (ERD)
 
-| ID     | Skenario                                                                           | Hasil yang diharapkan                                                                                            | Kategori |
-| ------ | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | -------- |
-| TR-125 | Pengguna A menyisipkan `review_voids` yang menunjuk id jawaban milik pengguna B    | Ditolak foreign key gabungan; tidak ada informasi apakah id itu ada                                              | negatif  |
-| TR-126 | Tidak aktif: foreign key `sightings.review_id` dari rancangan lama                 | Tidak dijalankan; kontrak baru menghapus relasi jawaban. ID tidak dipakai ulang; pemeriksaan penggantinya TR-154 | negatif  |
-| TR-127 | Klien mengirim nilai `received_at` atau `server_seq`                               | Ditolak karena tidak ada grant kolom                                                                             | negatif  |
-| TR-128 | Dua perangkat mengirim batch `review_logs` bersamaan untuk akun yang sama          | `usage_daily.row_count` sama dengan jumlah baris yang benar-benar masuk; baris duplikat yang dilewati tidak terhitung | batas    |
-| TR-129 | `review_logs` dengan `local_day` dua hari di depan tanggal server                  | Ditolak `CHECK`                                                                                                  | negatif  |
-| TR-130 | `review_logs` dengan `local_day` tujuh hari lalu                                   | Diterima                                                                                                         | batas    |
-| TR-131 | Klien mengirim `card_id` di payload `review_logs` atau `card_events`                | Ditolak; `card_id` kolom generated dari `content_id` dan `mode`, tidak bisa diisi klien                          | negatif  |
-| TR-132 | Job pembersihan harian                                                             | `usage_daily` lebih dari 30 hari terhapus; `review_logs` dan `fact_views` utuh                                   | normal   |
-| TR-133 | Pengguna menyetujui dua versi kebijakan berturut-turut                             | Dua baris `privacy_consents`; baris versi lama tetap ada                                                         | normal   |
-| TR-134 | Menghapus baris `privacy_policy_versions` yang pernah disetujui                    | Ditolak `on delete restrict`                                                                                     | negatif  |
-| TR-135 | `EXPLAIN` pull `review_logs` satu pengguna dengan 1 juta baris milik pengguna lain | Memakai index `(user_id, server_seq)`; tidak ada sequential scan                                                 | batas    |
-| TR-136 | Id dengan versi UUID selain 7                                                      | Ditolak domain `uuid_v7`; baris masuk karantina di klien                                                         | negatif  |
-| TR-180 | `delete_user()` untuk akun yang mengisi semua tabel pengguna: sesi, jawaban yang merujuk sesi, pembatalan, tampilan fakta, perangkat, parameter, catatan, persetujuan | Berhasil; tidak ada baris milik akun tersisa; tidak ada pelanggaran `NOT NULL` dari foreign key `(user_id, run_id)` | batas    |
-| TR-181 | Akun punya 20 perangkat, satu di antaranya terakhir terlihat 91 hari lalu; perangkat baru didaftarkan | Diterima; perangkat lama tetap ada dan log yang merujuknya utuh                                                  | batas    |
-| TR-182 | Klien mengirim `last_seen_at` bertanggal lama saat insert atau update `devices`    | Ditolak grant pada insert; pada update nilai ditimpa `now()`; perangkat tetap terhitung aktif                    | negatif  |
-| TR-183 | `fsrs_params` dengan `training_set_hash` bukan 32 byte, atau payload berisi daftar ID | Ditolak `CHECK` atau karena kolom tidak ada di skema                                                            | negatif  |
-| TR-184 | `set_items` sah terbesar di data uji, lalu `set_items` yang melewati batas byte    | Yang sah diterima; yang melewati batas ditolak `CHECK`. Angka batas terkunci di tes ini                          | batas    |
-| TR-185 | Batch 200 baris `review_logs` dari satu akun                                       | Penghitung naik 200; fungsi `bump_usage` dijalankan sekali per statement, bukan 200 kali                         | batas    |
-| TR-186 | `review_logs` dengan `tz` yang tidak ada di `timezones`, lalu batch 200 baris dengan `tz` sah | Yang pertama ditolak foreign key; batch sah tidak memanggil `pg_timezone_names`                              | negatif  |
-| TR-187 | Sesi ditutup di perangkat A setelah cursor perangkat B melewati insert sesi itu    | Pull berikutnya di B menerima penutupan lewat `server_seq` baru; `practice_runs` tidak ditarik utuh              | batas    |
-| TR-188 | `review_logs` dengan `correct = false` dan `match_type = 'unverified'`, lalu `correct` null dengan `match_type = 'exact'` | Keduanya ditolak `CHECK`; `correct` null dengan `unverified` atau `intro_read` diterima                       | negatif  |
-| TR-189 | Daftar nilai domain dan `CHECK` enum di database hasil migration dibandingkan dengan konstanta klien | CI gagal jika ada nilai yang hanya ada di salah satu sisi                                                     | normal   |
-| TR-190 | Setiap tabel dan kolom yang disebut `Terka_ERD.md` dan TRD bagian 4.2 dibandingkan dengan skema hasil migration | CI gagal jika dokumen menyebut tabel atau kolom yang tidak ada di skema                                    | normal   |
+| ID     | Skenario                                                                                                                                                              | Hasil yang diharapkan                                                                                                 | Kategori |
+| ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | -------- |
+| TR-125 | Pengguna A menyisipkan `review_voids` yang menunjuk id jawaban milik pengguna B                                                                                       | Ditolak foreign key gabungan; tidak ada informasi apakah id itu ada                                                   | negatif  |
+| TR-126 | Tidak aktif: foreign key `sightings.review_id` dari rancangan lama                                                                                                    | Tidak dijalankan; kontrak baru menghapus relasi jawaban. ID tidak dipakai ulang; pemeriksaan penggantinya TR-154      | negatif  |
+| TR-127 | Klien mengirim nilai `received_at` atau `server_seq`                                                                                                                  | Ditolak karena tidak ada grant kolom                                                                                  | negatif  |
+| TR-128 | Dua perangkat mengirim batch `review_logs` bersamaan untuk akun yang sama                                                                                             | `usage_daily.row_count` sama dengan jumlah baris yang benar-benar masuk; baris duplikat yang dilewati tidak terhitung | batas    |
+| TR-129 | `review_logs` dengan `local_day` dua hari di depan tanggal server                                                                                                     | Ditolak `CHECK`                                                                                                       | negatif  |
+| TR-130 | `review_logs` dengan `local_day` tujuh hari lalu                                                                                                                      | Diterima                                                                                                              | batas    |
+| TR-131 | Klien mengirim `card_id` di payload `review_logs` atau `card_events`                                                                                                  | Ditolak; kolom `card_id` tidak ada di skema server. Klien membentuk `card_id` lokal dari `content_id` dan `mode`      | negatif  |
+| TR-132 | Job pembersihan harian                                                                                                                                                | `usage_daily` lebih dari 30 hari terhapus; `review_logs` dan `fact_views` utuh                                        | normal   |
+| TR-133 | Pengguna menyetujui dua versi kebijakan berturut-turut                                                                                                                | Dua baris `privacy_consents`; baris versi lama tetap ada                                                              | normal   |
+| TR-134 | Menghapus baris `privacy_policy_versions` yang pernah disetujui                                                                                                       | Ditolak `on delete restrict`                                                                                          | negatif  |
+| TR-135 | `EXPLAIN` pull `review_logs` satu pengguna dengan 1 juta baris milik pengguna lain                                                                                    | Memakai index `(user_id, server_seq)`; tidak ada sequential scan                                                      | batas    |
+| TR-136 | Id dengan versi UUID selain 7                                                                                                                                         | Ditolak domain `uuid_v7`; baris masuk karantina di klien                                                              | negatif  |
+| TR-180 | `delete_user()` untuk akun yang mengisi semua tabel pengguna: sesi, jawaban yang merujuk sesi, pembatalan, tampilan fakta, perangkat, parameter, catatan, persetujuan | Berhasil; tidak ada baris milik akun tersisa; tidak ada pelanggaran `NOT NULL` dari foreign key `(user_id, run_id)`   | batas    |
+| TR-181 | Akun punya 20 perangkat, satu di antaranya terakhir terlihat 91 hari lalu; perangkat baru didaftarkan                                                                 | Diterima; perangkat lama tetap ada dan log yang merujuknya utuh                                                       | batas    |
+| TR-182 | Klien mengirim `last_seen_at` bertanggal lama saat insert atau update `devices`                                                                                       | Ditolak grant pada insert; pada update nilai ditimpa `now()`; perangkat tetap terhitung aktif                         | negatif  |
+| TR-183 | `fsrs_params` dengan `training_set_hash` bukan 32 byte, atau payload berisi daftar ID                                                                                 | Ditolak `CHECK` atau karena kolom tidak ada di skema                                                                  | negatif  |
+| TR-184 | `set_items` sah terbesar di data uji, lalu `set_items` yang melewati batas byte                                                                                       | Yang sah diterima; yang melewati batas ditolak `CHECK`. Angka batas terkunci di tes ini                               | batas    |
+| TR-203 | `set_items` berisi objek berkunci, tuple dengan jumlah elemen salah, atau `match_type` di luar domain                                                                 | Ditolak `valid_set_items`; tidak ada sebagian butir tersimpan                                                         | negatif  |
+| TR-185 | Batch 200 baris `review_logs` dari satu akun                                                                                                                          | Penghitung naik 200; fungsi `bump_usage` dijalankan sekali per statement, bukan 200 kali                              | batas    |
+| TR-186 | `review_logs` dengan `tz` yang tidak ada di `timezones`, lalu batch 200 baris dengan `tz` sah                                                                         | Yang pertama ditolak foreign key; batch sah tidak memanggil `pg_timezone_names`                                       | negatif  |
+| TR-187 | Sesi ditutup di perangkat A setelah cursor perangkat B melewati insert sesi itu                                                                                       | Pull berikutnya di B menerima penutupan lewat `server_seq` baru; `practice_runs` tidak ditarik utuh                   | batas    |
+| TR-188 | `review_logs` dengan `correct = false` dan `match_type = 'unverified'`, lalu `correct` null dengan `match_type = 'exact'`                                             | Keduanya ditolak `CHECK`; `correct` null dengan `unverified` atau `intro_read` diterima                               | negatif  |
+| TR-189 | Daftar nilai domain dan `CHECK` enum di database hasil migration dibandingkan dengan konstanta klien                                                                  | CI gagal jika ada nilai yang hanya ada di salah satu sisi                                                             | normal   |
+| TR-190 | Setiap tabel dan kolom yang disebut `Terka_ERD.md` dan TRD bagian 4.2 dibandingkan dengan skema hasil migration                                                       | CI gagal jika dokumen menyebut tabel atau kolom yang tidak ada di skema                                               | normal   |
 
 ### 6.19 Analitik Kunjungan
 
@@ -813,59 +832,62 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 
 ### 6.20 Pemeriksaan Konsistensi
 
-| ID     | Skenario                                                                                         | Hasil yang diharapkan                                                                                                                 | Kategori |
-| ------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| TR-141 | Persetujuan pertama dan persetujuan versi baru tanpa consent aktif                               | Insert consent diizinkan untuk pemilik dan versi valid; log baru tetap tertahan sampai consent tersimpan                              | normal   |
-| TR-142 | Retry `privacy_consents`                                                                         | Konflik memakai `(user_id, policy_version)`; tidak meminta id/`server_seq`; pull utuh menghasilkan satu baris                         | batas    |
-| TR-143 | Retry insert event memberi respons kosong akibat duplikat                                        | Klien membaca baris kanonis dan metadata server sebelum membersihkan antrean kirim                                                    | batas    |
-| TR-144 | Sesi placement ditutup tanpa `placement_level`, atau sesi non-placement dengan `placement_level` | Ditolak; penutupan valid wajib mengikuti jenis sesi                                                                                   | negatif  |
+| ID     | Skenario                                                                                         | Hasil yang diharapkan                                                                                                                         | Kategori |
+| ------ | ------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| TR-141 | Persetujuan pertama dan persetujuan versi baru tanpa consent aktif                               | Insert consent diizinkan untuk pemilik dan versi valid; log baru tetap tertahan sampai consent tersimpan                                      | normal   |
+| TR-142 | Retry `privacy_consents`                                                                         | Konflik memakai `(user_id, policy_version)`; tidak meminta id/`server_seq`; pull utuh menghasilkan satu baris                                 | batas    |
+| TR-143 | Retry insert event memberi respons kosong akibat duplikat                                        | Klien membaca baris kanonis dan metadata server sebelum membersihkan antrean kirim                                                            | batas    |
+| TR-144 | Sesi placement ditutup tanpa `placement_level`, atau sesi non-placement dengan `placement_level` | Ditolak; penutupan valid wajib mengikuti jenis sesi                                                                                           | negatif  |
 | TR-145 | Hasil optimasi anonim lalu diklaim akun dan disinkronkan                                         | `training_set_hash` tidak berubah; daftar ID tidak ikut terkirim; metadata sequence tidak diwajibkan atau digunakan sebagai identitas dataset | batas    |
-| TR-146 | Array `set_items` terlalu panjang, field invalid, atau agregat tidak konsisten                   | Ditolak utuh oleh validasi struktur; tidak ada sebagian butir tersimpan                                                               | negatif  |
-| TR-147 | Void baru menunjuk jawaban sebelum titik pemulihan                                               | Replay dimulai sebelum jawaban target; hasil sama dengan replay penuh                                                                 | batas    |
-| TR-148 | Penutupan sesi placement tiba setelah titik pemulihan yang memuat jawaban tes                    | Replay dari posisi jawaban sesi terdampak, bukan hanya waktu penutupan                                                                | batas    |
-| TR-149 | Kuota total akun tercapai lalu hari server berganti                                              | Tetap tertahan; antrean kirim utuh dan ekspor tersedia; tidak menjanjikan retry harian akan lolos                                     | batas    |
-| TR-150 | Fakta ready tanpa source atau sourceCheckedAt                                                    | Build gagal; fakta draft tanpa sumber sah tetapi tidak ditampilkan                                                                    | negatif  |
-| TR-151 | Jawaban dikirim lalu umpan balik dibiarkan terbuka                                               | Event dan antrean kirim langsung tersedia; sinkronisasi tidak menunggu Lanjut; durasi umpan balik masuk `active_ms` saat sesi ditutup | batas    |
-| TR-152 | Parameter aktif dengan timestamp identik di dua perangkat                                        | Tie-break `device_id` dan id identik pada replay penuh maupun bertahap                                                                | batas    |
-| TR-153 | `practice_runs` lebih dari 1.000 baris, sesi lama baru ditutup                                   | Pull seluruh sesi memakai pagination; penutupan terbaca walau sequence tetap                                                          | batas    |
-| TR-154 | Skema `sightings` baru dan push pencarian Referensi                                              | Tidak ada `review_id` atau FK ke `review_logs`; event hanya berisi metadata pencarian; `review_logs` tidak bertambah                  | normal   |
-| TR-155 | Impor format 1–2 berisi jawaban dari alur pencarian lama                                         | Jawaban tersebut dikeluarkan dari perhitungan dan ekspor baru; jumlahnya masuk ringkasan migrasi; file asal tetap utuh                | batas    |
-| TR-156 | Sesi selesai saat offline dan baru dikirim sesudahnya                                            | Insert sesi terbuka lalu log jawaban lalu update penutupan; tidak melanggar trigger insert/close                                      | normal   |
-| TR-157 | FK `user_id` berformat UUID Auth berbeda dari UUID v7 event                                      | `user_id` valid diterima; aturan v7 hanya untuk ID yang dibuat klien                                                                  | batas    |
+| TR-146 | Array `set_items` terlalu panjang, field invalid, atau agregat tidak konsisten                   | Ditolak utuh oleh validasi struktur; tidak ada sebagian butir tersimpan                                                                       | negatif  |
+| TR-147 | Void baru menunjuk jawaban lama di tengah riwayat                                                | Replay penuh berjalan; hasil sama dengan log tanpa jawaban target                                                                             | batas    |
+| TR-148 | Penutupan sesi placement tiba setelah jawaban lain diterapkan                                    | Replay penuh berjalan; jawaban sesi terdampak dihitung ulang, bukan hanya waktu penutupan                                                     | batas    |
+| TR-149 | Kuota total akun tercapai lalu hari server berganti                                              | Tetap tertahan; antrean kirim utuh dan ekspor tersedia; tidak menjanjikan retry harian akan lolos                                             | batas    |
+| TR-150 | Fakta ready tanpa source atau sourceCheckedAt                                                    | Build gagal; fakta draft tanpa sumber sah tetapi tidak ditampilkan                                                                            | negatif  |
+| TR-151 | Jawaban dikirim lalu umpan balik dibiarkan terbuka                                               | Event dan antrean kirim langsung tersedia; sinkronisasi tidak menunggu Lanjut; durasi umpan balik masuk `active_ms` saat sesi ditutup         | batas    |
+| TR-152 | Parameter aktif dengan timestamp identik di dua perangkat                                        | Tie-break `device_id` dan id identik pada replay penuh maupun bertahap                                                                        | batas    |
+| TR-153 | `practice_runs` lebih dari 1.000 baris, sesi lama baru ditutup                                   | Pull seluruh sesi memakai pagination; penutupan terbaca walau sequence tetap                                                                  | batas    |
+| TR-154 | Skema `sightings` baru dan push pencarian Referensi                                              | Tidak ada `review_id` atau FK ke `review_logs`; event hanya berisi metadata pencarian; `review_logs` tidak bertambah                          | normal   |
+| TR-155 | Impor format 1–2 berisi jawaban dari alur pencarian lama                                         | Jawaban tersebut dikeluarkan dari perhitungan dan ekspor baru; jumlahnya masuk ringkasan migrasi; file asal tetap utuh                        | batas    |
+| TR-156 | Sesi selesai saat offline dan baru dikirim sesudahnya                                            | Insert sesi terbuka lalu log jawaban lalu update penutupan; tidak melanggar trigger insert/close                                              | normal   |
+| TR-157 | FK `user_id` berformat UUID Auth berbeda dari UUID v7 event                                      | `user_id` valid diterima; aturan v7 hanya untuk ID yang dibuat klien                                                                          | batas    |
 
 ---
 
 ### 6.21 Format Data dan Migrasi
 
-| ID     | Skenario                                                                    | Hasil yang diharapkan                                                                                                                 | Kategori |
-| ------ | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| TR-158 | Payload kartu memakai mode di luar empat nilai yang didukung                | Ditolak validasi konten, klien, dan CHECK database versi akhir                                                                        | negatif  |
-| TR-159 | Impor format 1 atau 2 berisi campuran mode yang didukung dan tidak didukung | Hanya mode yang didukung masuk perhitungan; tidak ada pengubahan identitas mode; catatan terkait disaring sesuai TRD 6                | batas    |
-| TR-160 | Impor data lama dengan properti pencarian tambahan                          | Hanya kolom sightings yang didukung disimpan; bagian input lainnya tidak muncul di penyimpanan, antrean kirim, karantina, atau ekspor | batas    |
-| TR-161 | Impor dua kali, lalu ekspor                                                 | Hasil identik tanpa duplikat; formatVersion 3; ringkasan migrasi tersedia tanpa isi input yang dibuang                                | batas    |
-| TR-162 | Impor formatVersion lebih baru dari 3                                       | Ditolak sebelum penulisan; data lokal tetap utuh                                                                                      | negatif  |
-| TR-163 | Parameter optimasi merujuk jawaban yang dikeluarkan migrasi                 | Parameter itu tidak aktif; parameter bawaan dipakai sampai optimasi berikutnya                                                        | batas    |
-| TR-164 | Sesi lama berisi campuran jawaban yang didukung dan tidak didukung          | Jawaban yang didukung dipertahankan tanpa `run_id`; sesi tidak masuk rekor/Hari Beruntun; pembatalan tanpa induk dikeluarkan          | batas    |
-| TR-165 | Klien lama melakukan sinkronisasi setelah masa kompatibilitas selesai       | Aplikasi meminta pembaruan; data lokal tetap dapat diekspor; tidak ada penulisan ke skema akhir dengan format lama                    | batas    |
+| ID     | Skenario                                                                                                               | Hasil yang diharapkan                                                                                                                                             | Kategori |
+| ------ | ---------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| TR-158 | Payload kartu memakai mode di luar lima nilai domain `card_mode`                                                       | Ditolak validasi konten, klien, dan CHECK database versi akhir                                                                                                    | negatif  |
+| TR-159 | Impor format 1 atau 2 berisi campuran mode yang didukung dan tidak didukung                                            | Hanya mode yang didukung masuk perhitungan; tidak ada pengubahan identitas mode; catatan terkait disaring sesuai TRD 6                                            | batas    |
+| TR-160 | Impor data lama dengan properti pencarian tambahan                                                                     | Hanya kolom sightings yang didukung disimpan; bagian input lainnya tidak muncul di penyimpanan, antrean kirim, karantina, atau ekspor                             | batas    |
+| TR-161 | Impor dua kali, lalu ekspor                                                                                            | Hasil identik tanpa duplikat; formatVersion 4; ringkasan migrasi tersedia tanpa isi input yang dibuang                                                            | batas    |
+| TR-162 | Impor formatVersion lebih baru dari 4                                                                                  | Ditolak sebelum penulisan; data lokal tetap utuh                                                                                                                  | negatif  |
+| TR-163 | Parameter optimasi merujuk jawaban yang dikeluarkan migrasi                                                            | Parameter itu tidak aktif; parameter bawaan dipakai sampai optimasi berikutnya                                                                                    | batas    |
+| TR-164 | Sesi lama berisi campuran jawaban yang didukung dan tidak didukung                                                     | Jawaban yang didukung dipertahankan tanpa `run_id`; sesi tidak masuk rekor/Hari Beruntun; pembatalan tanpa induk dikeluarkan                                      | batas    |
+| TR-165 | Klien lama melakukan sinkronisasi setelah masa kompatibilitas selesai                                                  | Aplikasi meminta pembaruan; data lokal tetap dapat diekspor; tidak ada penulisan ke skema akhir dengan format lama                                                | batas    |
+| TR-204 | Impor formatVersion 3 berisi `set_items` objek dan `content_version` string                                            | `set_items` jadi tuple; `content_version` jadi `contentRev` lewat `contentHistory`; keadaan setelah replay sama dengan sebelum ekspor                             | normal   |
+| TR-205 | Klien dengan `ENGINE_VERSION` lama menarik event dengan `engine_version` lebih besar atau `mode` yang tidak dikenalnya | Event disimpan di Dexie; replay tidak berjalan; pesan versi baru tampil; latihan dan antrean kirim tetap berjalan; setelah pembaruan replay penuh berjalan sekali | batas    |
+| TR-206 | Impor data versi 1–3 berisi kartu dan jawaban `blindrecall`                                                            | Dikeluarkan dari riwayat aktif, jadwal, statistik, dan kuota; ringkasan migrasi mencatat jumlahnya; data `code2region` tidak berubah                              | batas    |
 
 ### 6.22 Data Kode Khusus
 
-| ID     | Skenario                                                                                   | Hasil yang diharapkan                                                                 | Kategori |
-| ------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- | -------- |
-| TR-166 | Build dengan `special_plates.json` revisi 2026.09.24                                | Lolos; `specials[]` berisi 130 entri CD; `referencePlates[]` berisi tiga entri format (RI, CC, CH); CD 92 `needsReview` | normal   |
-| TR-167 | Dua entri CD `high` memakai nomor yang sama                                                | Build gagal dengan pesan yang menyebut kedua `id`                                     | negatif  |
-| TR-168 | Alias satu entri CD sama dengan `holder` entri CD lain setelah normalisasi                 | Build gagal                                                                           | negatif  |
-| TR-169 | `specials[].id` sama dengan salah satu `regions[].id`                                      | Build gagal                                                                           | negatif  |
-| TR-170 | `regions[].id` diawali `cd-` diikuti angka                                                 | Build gagal                                                                           | negatif  |
-| TR-171 | Entri `high` tanpa sumber, atau sumbernya tanpa `checkedAt`                                | Build gagal                                                                           | negatif  |
-| TR-172 | Sumber `media-mengutip-instansi` tanpa `originalUrl`                                       | Peringatan pada build biasa; gagal pada build rilis publik                            | batas    |
-| TR-173 | `reviewBy` sudah lewat                                                                     | Peringatan build; entri tetap dipakai                                                 | batas    |
-| TR-174 | `review_logs` dengan `content_id = 'cd-49-jepang'` dan `mode = 'code2region'`              | Ditolak `CHECK`: mode wilayah tidak boleh memakai id kode khusus                      | negatif  |
-| TR-175 | `review_logs` dengan `content_id = 'dk'` dan `mode = 'special2holder'`                     | Ditolak `CHECK`: mode kode khusus wajib memakai id `cd-`                              | negatif  |
-| TR-176 | `specials[]` memuat entri dengan `series` selain CD, atau `id` berawalan `ref-`             | Build gagal                                                                           | negatif  |
-| TR-177 | Ekspor dengan kartu kode khusus lalu impor ke perangkat kosong                             | Keadaan identik, termasuk `special_enabled` dan kartu `holder2special` yang terbuka   | normal   |
-| TR-178 | Seed dibandingkan dengan tabel CD di `Terka_KodeKhusus.md` bagian 4                        | Nomor, pemegang, dan ejaan sumber identik untuk 130 baris                             | normal   |
-| TR-179 | `referencePlates[]` memuat entri RI dengan `number` terisi                                 | Build gagal                                                                           | negatif  |
+| ID     | Skenario                                                                        | Hasil yang diharapkan                                                                                                   | Kategori |
+| ------ | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | -------- |
+| TR-166 | Build dengan `special_plates.json` revisi 2026.09.24                            | Lolos; `specials[]` berisi 130 entri CD; `referencePlates[]` berisi tiga entri format (RI, CC, CH); CD 92 `needsReview` | normal   |
+| TR-167 | Dua entri CD `high` memakai nomor yang sama                                     | Build gagal dengan pesan yang menyebut kedua `id`                                                                       | negatif  |
+| TR-168 | Alias satu entri CD sama dengan `holder` entri CD lain setelah normalisasi      | Build gagal                                                                                                             | negatif  |
+| TR-169 | `specials[].id` sama dengan salah satu `regions[].id`                           | Build gagal                                                                                                             | negatif  |
+| TR-170 | `regions[].id` diawali `cd-` diikuti angka                                      | Build gagal                                                                                                             | negatif  |
+| TR-171 | Entri `high` tanpa sumber, atau sumbernya tanpa `checkedAt`                     | Build gagal                                                                                                             | negatif  |
+| TR-172 | Sumber `media-mengutip-instansi` tanpa `originalUrl`                            | Peringatan pada build biasa; gagal pada build rilis publik                                                              | batas    |
+| TR-173 | `reviewBy` sudah lewat                                                          | Peringatan build; entri tetap dipakai                                                                                   | batas    |
+| TR-174 | `review_logs` dengan `content_id = 'cd-49-jepang'` dan `mode = 'code2region'`   | Ditolak `CHECK`: mode wilayah tidak boleh memakai id kode khusus                                                        | negatif  |
+| TR-175 | `review_logs` dengan `content_id = 'dk'` dan `mode = 'special2holder'`          | Ditolak `CHECK`: mode kode khusus wajib memakai id `cd-`                                                                | negatif  |
+| TR-176 | `specials[]` memuat entri dengan `series` selain CD, atau `id` berawalan `ref-` | Build gagal                                                                                                             | negatif  |
+| TR-177 | Ekspor dengan kartu kode khusus lalu impor ke perangkat kosong                  | Keadaan identik, termasuk `special_enabled` dan kartu `holder2special` yang terbuka                                     | normal   |
+| TR-178 | Seed dibandingkan dengan tabel CD di `Terka_Kode_Khusus.md` bagian 4            | Nomor, pemegang, dan ejaan sumber identik untuk 130 baris                                                               | normal   |
+| TR-179 | `referencePlates[]` memuat entri RI dengan `number` terisi                      | Build gagal                                                                                                             | negatif  |
 
 ## 7. Pengujian Alur Menyeluruh (E2E-)
 
@@ -887,15 +909,15 @@ Tes E2E dijalankan dengan Playwright di Chromium dan WebKit (bagian 2). Setiap t
 
 ### 7.2 Perkenalan, Kartu Sulit, dan Catatan Pengingat
 
-| ID     | Skenario                                                               | Hasil yang diharapkan                                                                                | Kategori |
-| ------ | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | -------- |
-| E2E-10 | Materi baru pertama di sesi                                            | Label **Materi baru · tebak dulu**; setelah memilih, **Jawaban: …** dan **Tebakan tidak dinilai.**   | normal   |
-| E2E-11 | Perkenalan selesai, sesi ditutup, satu menit kemudian sesi baru dibuka | Kartu yang sama masuk salinan antrean baru dan kali ini dinilai; sesi lama tidak menunggu timer      | normal   |
-| E2E-12 | Kode terlewat untuk keempat kalinya                                    | Tawaran catatan pengingat tampil di bawah hasil; Enter tetap langsung lanjut                         | normal   |
-| E2E-13 | Menulis catatan pengingat 281 karakter                                 | **Maksimal 280 karakter.**; tidak tersimpan                                                          | negatif  |
-| E2E-14 | Kartu mencapai 6 kali terlewat                                         | Penanda **Sulit Dikuasai** dan penjelasan petunjuk tampil sebelum pertanyaan                         | normal   |
-| E2E-15 | Kartu mencapai 8 kali terlewat                                         | **Kode ini dinonaktifkan sementara. Tinjau di halaman statistik.**; kartu muncul di daftar Statistik | normal   |
-| E2E-16 | **Tinjau kartu** lalu aktifkan kembali                                 | **Kode ini diaktifkan kembali dan dimulai dari awal.**                                               | normal   |
+| ID     | Skenario                                                               | Hasil yang diharapkan                                                                                                                                                      | Kategori |
+| ------ | ---------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| E2E-10 | Materi baru pertama di sesi                                            | Label **Materi baru · tebak dulu**; setelah memilih, **Jawaban: …** dan **Tebakan tidak dinilai.**                                                                         | normal   |
+| E2E-11 | Perkenalan selesai, sesi ditutup, satu menit kemudian sesi baru dibuka | Kartu yang sama masuk salinan antrean baru dan kali ini dinilai; sesi lama tidak menunggu timer                                                                            | normal   |
+| E2E-12 | Kode terlewat untuk keempat kalinya                                    | Tawaran catatan pengingat tampil di bawah hasil; Enter tetap langsung lanjut                                                                                               | normal   |
+| E2E-13 | Menulis catatan pengingat 281 karakter                                 | **Maksimal 280 karakter.**; tidak tersimpan                                                                                                                                | negatif  |
+| E2E-14 | Kartu mencapai 6 kali terlewat                                         | Penanda **Sulit Dikuasai**, daftar daerah kode itu, dan **Kode ini beberapa kali terlewat. Jawabannya ditampilkan dulu untuk dipelajari ulang.** tampil sebelum pertanyaan | normal   |
+| E2E-15 | Kartu mencapai 8 kali terlewat                                         | **Kode ini dinonaktifkan sementara. Tinjau di halaman statistik.**; kartu muncul di daftar Statistik                                                                       | normal   |
+| E2E-16 | **Tinjau kode** lalu aktifkan kembali                                  | **Kode ini diaktifkan kembali dan dimulai dari awal.**                                                                                                                     | normal   |
 
 ### 7.3 Cakupan dan Latihan Terfokus
 
@@ -933,18 +955,18 @@ Tes E2E dijalankan dengan Playwright di Chromium dan WebKit (bagian 2). Setiap t
 
 ### 7.6 Akun dan Sinkronisasi
 
-| ID     | Skenario                                                                | Hasil yang diharapkan                                                                                                | Kategori |
-| ------ | ----------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | -------- |
-| E2E-36 | Login dengan Google di perangkat yang sudah memiliki riwayat            | Pesan penggabungan dengan jumlah jawaban yang ditambahkan                                                            | normal   |
-| E2E-37 | Tautan masuk kedaluwarsa                                                | **Kode ini sudah kedaluwarsa. Kirim kode baru.**                                                                     | negatif  |
-| E2E-38 | Dua browser context dengan akun sama; jawab 5 soal di context A         | Setelah pull, beranda context B menunjukkan jumlah soal yang sama dengan A                                           | normal   |
-| E2E-39 | Context A dan B offline, keduanya menjawab kartu yang sama, lalu online | Keduanya akhirnya menunjukkan jadwal yang sama untuk kartu itu                                                       | batas    |
-| E2E-40 | Offline selama satu sesi                                                | **Sedang offline. Perubahan disimpan di perangkat ini.**; sesi tetap berjalan; setelah online status jadi tersinkron | normal   |
-| E2E-41 | Session berakhir saat offline, lalu kembali online                      | **Sesi masuk berakhir. Masuk lagi untuk melanjutkan sinkronisasi.**; latihan tetap bisa dipakai                      | batas    |
-| E2E-42 | Login akun B di perangkat yang datanya milik akun A                     | **Data di perangkat ini milik akun lain.** dengan dua pilihan                                                        | negatif  |
-| E2E-43 | Keluar dengan perubahan tertunda                                        | Peringatan dengan **Sinkronkan dulu** dan **Keluar tetap**                                                           | batas    |
-| E2E-44 | Perangkat baru login                                                    | **Menyiapkan data belajar…**, lalu beranda menampilkan angka yang sama dengan perangkat lama                         | normal   |
-| E2E-45 | Hapus akun tanpa mengetik HAPUS                                         | Tombol konfirmasi tidak aktif                                                                                        | negatif  |
+| ID      | Skenario                                                                    | Hasil yang diharapkan                                                                                                                                                                                                      | Kategori |
+| ------- | --------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| E2E-36  | Login dengan Google di perangkat yang sudah memiliki riwayat                | Pesan penggabungan dengan jumlah jawaban yang ditambahkan                                                                                                                                                                  | normal   |
+| E2E-37  | Tautan masuk kedaluwarsa                                                    | **Kode ini sudah kedaluwarsa. Kirim kode baru.**                                                                                                                                                                           | negatif  |
+| E2E-38  | Dua browser context dengan akun sama; jawab 5 soal di context A             | Setelah pull, beranda context B menunjukkan jumlah soal yang sama dengan A                                                                                                                                                 | normal   |
+| E2E-39  | Context A dan B offline, keduanya menjawab kartu yang sama, lalu online     | Keduanya akhirnya menunjukkan jadwal yang sama untuk kartu itu                                                                                                                                                             | batas    |
+| E2E-40  | Offline selama satu sesi                                                    | **Sedang offline. Perubahan disimpan di perangkat ini.**; sesi tetap berjalan; setelah online status jadi tersinkron                                                                                                       | normal   |
+| E2E-41  | Session berakhir saat offline, lalu kembali online                          | **Sesi masuk berakhir. Masuk lagi untuk melanjutkan sinkronisasi.**; latihan tetap bisa dipakai                                                                                                                            | batas    |
+| E2E-42  | Login akun B di perangkat yang datanya milik akun A                         | **Data di perangkat ini milik akun lain.** dengan dua pilihan                                                                                                                                                              | negatif  |
+| E2E-43  | Keluar dengan perubahan tertunda                                            | Peringatan dengan **Sinkronkan dulu** dan **Keluar tetap**                                                                                                                                                                 | batas    |
+| E2E-44  | Perangkat baru login                                                        | **Menyiapkan data belajar…**, lalu beranda menampilkan angka yang sama dengan perangkat lama                                                                                                                               | normal   |
+| E2E-45  | Hapus akun tanpa mengetik HAPUS                                             | Tombol konfirmasi tidak aktif                                                                                                                                                                                              | negatif  |
 | E2E-133 | Login di perangkat baru saat akun sudah aktif di 20 perangkat dalam 90 hari | **Akun ini sudah dipakai di 20 perangkat dalam 90 hari terakhir. Latihan tetap berjalan, dan data tersimpan di perangkat ini. Sinkronisasi dicoba lagi besok.**; sesi tetap bisa dimulai; tidak ada perubahan di karantina | negatif  |
 
 ### 7.7 Ekspor dan Impor
@@ -971,28 +993,30 @@ Tes E2E dijalankan dengan Playwright di Chromium dan WebKit (bagian 2). Setiap t
 
 ### 7.9 Tes Penempatan
 
-| ID     | Skenario                                                                                               | Hasil yang diharapkan                                                                                              | Kategori |
-| ------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | -------- |
-| E2E-58 | Pembukaan pertama                                                                                      | Satu layar sambutan menawarkan tes penempatan sebelum beranda; pengguna dapat melewatinya                          | normal   |
-| E2E-59 | **Lewati, mulai dari awal**                                                                            | Beranda tampil; saran Cakupan Bali & Nusa Tenggara                                                                 | normal   |
-| E2E-60 | Menjawab benar semua soal                                                                              | Hasil **Tingkat: Ahli**; kode yang benar tidak muncul sebagai Perkenalan di sesi pertama                           | normal   |
-| E2E-61 | Menjawab 2 dari 8 soal pertama                                                                         | Tes berhenti setelah soal ke-8; hasil **Tingkat: Pemula**                                                          | batas    |
-| E2E-62 | **Tidak tahu** dengan mouse dan dengan keyboard                                                        | Soal berikutnya langsung tampil                                                                                    | normal   |
-| E2E-63 | Menjawab soal tes                                                                                      | Tidak ada teks **Benar** atau **Belum tepat** selama tes                                                           | batas    |
-| E2E-64 | **Pakai saran ini**                                                                                    | Cakupan di beranda berubah ke saran                                                                                | normal   |
-| E2E-65 | Aplikasi ditutup di tengah tes, lalu dibuka lagi                                                       | Tawaran tes muncul lagi dari awal; tidak ada kode yang masuk pengulangan                                           | batas    |
-| E2E-66 | Statistik sebelum/sesudah jawaban terhitung pertama di luar tes dari sesi harian atau Latihan Terfokus | Tawaran tes hilang setelah jawaban terhitung; pencarian Referensi, pratinjau, dan Perkenalan saja tidak menutupnya | batas    |
+| ID     | Skenario                                                                                               | Hasil yang diharapkan                                                                                                                                                         | Kategori |
+| ------ | ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| E2E-58 | Pembukaan pertama                                                                                      | Satu layar sambutan menawarkan tes penempatan sebelum beranda; pengguna dapat melewatinya                                                                                     | normal   |
+| E2E-59 | **Lewati, mulai dari awal**                                                                            | Beranda tampil; saran Cakupan Bali & Nusa Tenggara                                                                                                                            | normal   |
+| E2E-60 | Menjawab benar semua soal                                                                              | Hasil memakai template **Tingkat: {tingkat} · sekitar {persentase}% kode sudah dikenal** dengan tingkat Ahli; kode yang benar tidak muncul sebagai Perkenalan di sesi pertama | normal   |
+| E2E-61 | Menjawab 2 dari 8 soal pertama                                                                         | Tes berhenti setelah soal ke-8; hasil memakai template **Tingkat: {tingkat} · …** dengan tingkat Pemula                                                                       | batas    |
+| E2E-62 | **Tidak tahu** dengan mouse dan dengan keyboard                                                        | Soal berikutnya langsung tampil                                                                                                                                               | normal   |
+| E2E-63 | Menjawab soal tes                                                                                      | Tidak ada teks **Benar** atau **Belum tepat** selama tes                                                                                                                      | batas    |
+| E2E-64 | **Pakai saran ini**                                                                                    | Cakupan di beranda berubah ke saran                                                                                                                                           | normal   |
+| E2E-65 | Aplikasi ditutup di tengah tes, lalu dibuka lagi                                                       | Tawaran tes muncul lagi dari awal; tidak ada kode yang masuk pengulangan                                                                                                      | batas    |
+| E2E-66 | Statistik sebelum/sesudah jawaban terhitung pertama di luar tes dari sesi harian atau Latihan Terfokus | Tawaran tes hilang setelah jawaban terhitung; pencarian Referensi, pratinjau, dan Perkenalan saja tidak menutupnya                                                            | batas    |
 
 ### 7.10 Pratinjau Sesi
 
-| ID     | Skenario                                                               | Hasil yang diharapkan                                                                                                                     | Kategori |
-| ------ | ---------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| E2E-67 | **Mulai belajar**                                                      | **Pratinjau sesi** tampil; Enter memulai; Esc kembali ke beranda tanpa perubahan                                                          | normal   |
-| E2E-68 | Sesi berantrean tetap berisi Perkenalan dan review yang kemudian salah | Jumlah soal sama dengan salinan antrean; belajar awal/belajar ulang baru menunggu sesi berikutnya; jadwal pengulangan terlihat di beranda | normal   |
-| E2E-69 | Sesi tanpa soal Tanpa Petunjuk                                         | Info Tanpa Petunjuk tidak tampil                                                                                                          | batas    |
-| E2E-70 | Pratinjau dibiarkan 11 menit, lalu **Mulai**                           | Pratinjau diperbarui sebelum soal pertama tampil                                                                                          | batas    |
-| E2E-71 | Pratinjau Mode Kilat di Kawasan Maluku                                 | **60 detik · jawab sebanyak mungkin** dan rekor Maluku                                                                                    | normal   |
-| E2E-72 | Pratinjau di viewport 360 px                                           | Semua bagian terbaca tanpa gulir horizontal                                                                                               | batas    |
+| ID      | Skenario                                                                            | Hasil yang diharapkan                                                                                                                     | Kategori |
+| ------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| E2E-67  | **Mulai belajar**                                                                   | **Pratinjau sesi** tampil; Enter memulai; Esc kembali ke beranda tanpa perubahan                                                          | normal   |
+| E2E-68  | Sesi berantrean tetap berisi Perkenalan dan review yang kemudian salah              | Jumlah soal sama dengan salinan antrean; belajar awal/belajar ulang baru menunggu sesi berikutnya; jadwal pengulangan terlihat di beranda | normal   |
+| E2E-69  | Sesi tanpa soal Tebak berwaktu                                                      | Info Tebak berwaktu tidak tampil                                                                                                          | batas    |
+| E2E-70  | Pratinjau dibiarkan 11 menit, lalu **Mulai**                                        | Pratinjau diperbarui sebelum soal pertama tampil                                                                                          | batas    |
+| E2E-71  | Pratinjau Mode Kilat di Kawasan Maluku                                              | **60 detik · jawab sebanyak mungkin** dan rekor Maluku                                                                                    | normal   |
+| E2E-72  | Pratinjau di viewport 360 px                                                        | Semua bagian terbaca tanpa gulir horizontal                                                                                               | batas    |
+| E2E-134 | Buka pratinjau sesi harian berisi soal Tebak daerah, Tebak kode, dan Tebak berwaktu | Jenis soal tampil sebagai **Tebak daerah · …**, **Tebak kode · …**, **Tebak berwaktu · …**; tidak ada panah "→" di layar                  | normal   |
+| E2E-135 | Jawab satu soal dari setiap jenis soal                                              | Label di atas pertanyaan sesuai tabel label dan kalimat soal di Microcopy 3.3                                                             | normal   |
 
 ### 7.11 Fakta Menarik
 
@@ -1047,15 +1071,15 @@ Tes E2E dijalankan dengan Playwright di Chromium dan WebKit (bagian 2). Setiap t
 
 ### 7.15 Domain dan Email
 
-| ID      | Skenario                                                            | Hasil yang diharapkan                                                                | Kategori |
-| ------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | -------- |
-| E2E-106 | Kode salah tiga kali                                                | **Kode tidak cocok…** tiap kali; tidak ada data yang berubah                         | negatif  |
-| E2E-107 | Membuka `terka.vercel.app/statistik`                                | Dialihkan permanen ke `terka.my.id/statistik`                                        | normal   |
+| ID      | Skenario                                                            | Hasil yang diharapkan                                                                   | Kategori |
+| ------- | ------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | -------- |
+| E2E-106 | Kode salah tiga kali                                                | **Kode tidak cocok…** tiap kali; tidak ada data yang berubah                            | negatif  |
+| E2E-107 | Membuka `terka.vercel.app/statistik`                                | Dialihkan permanen ke `terka.my.id/statistik`                                           | normal   |
 | E2E-108 | Email login diterima di Gmail dan Outlook                           | Pengirim `no-reply@terka.my.id`; tidak masuk spam; lolos SPF, DKIM, dan DMARC di header | normal   |
-| E2E-109 | Halaman `terka.my.id/privasi`                                       | Bisa dibuka tanpa login dan tanpa JavaScript                                         | batas    |
-| E2E-110 | Ekspor di browser A tanpa akun, impor di browser B, lalu login di B | Riwayat dari A tergabung ke akun                                                     | normal   |
+| E2E-109 | Halaman `terka.my.id/privasi`                                       | Bisa dibuka tanpa login dan tanpa JavaScript                                            | batas    |
+| E2E-110 | Ekspor di browser A tanpa akun, impor di browser B, lalu login di B | Riwayat dari A tergabung ke akun                                                        | normal   |
 
-### 7.16 Pembatalan melalui Layar Sentuh dan Petunjuk Keyboard
+### 7.16 Pembatalan melalui Layar Sentuh dan Pintasan Keyboard
 
 | ID      | Skenario                                      | Hasil yang diharapkan                                                             | Kategori |
 | ------- | --------------------------------------------- | --------------------------------------------------------------------------------- | -------- |
@@ -1071,38 +1095,40 @@ Tes E2E dijalankan dengan Playwright di Chromium dan WebKit (bagian 2). Setiap t
 
 ### 7.18 Pemeriksaan Konsistensi
 
-| ID      | Skenario                                                 | Hasil yang diharapkan                                                                                                         | Kategori |
-| ------- | -------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | -------- |
-| E2E-115 | Latihan Terfokus dengan campuran kartu due dan belum due | Pengantar menyebut pengecualian jadwal; hanya soal yang benar-benar terhitung diberi penanda                                  | normal   |
-| E2E-116 | Kartu review mencapai ambang uji Level 3                 | Label Uji penguasaan tampil dan pengguna tidak perlu memilih level manual                                                     | normal   |
-| E2E-117 | Seluruh fakta draft                                      | Sesi selesai tanpa blok fakta dan tanpa pesan kesalahan                                                                       | batas    |
-| E2E-118 | Cakupan Bali, materi baru DK                             | Perkenalan memiliki jawaban dan pengecoh sah; tidak memperkenalkan kartu kawasan lain                                         | batas    |
-| E2E-119 | Sesi selesai setelah Perkenalan                          | Tidak menunggu 1 atau 10 menit; beranda menunjukkan waktu pengulangan berikutnya tanpa Tombol latihan tambahan di layar akhir | normal   |
-| E2E-120 | Membuka sesi himpunan dari Statistik                     | Pratinjau satu soal; banyak butir dapat dikirim; hasil akhir dan undo mencakup satu soal utuh                                 | normal   |
+| ID      | Skenario                                                                 | Hasil yang diharapkan                                                                                                         | Kategori |
+| ------- | ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- | -------- |
+| E2E-115 | Latihan Terfokus dengan campuran kartu yang perlu diulang dan yang belum | Pengantar menyebut pengecualian jadwal; hanya soal yang benar-benar terhitung diberi penanda                                  | normal   |
+| E2E-116 | Kartu review mencapai ambang uji Level 3                                 | Label Uji penguasaan tampil dan pengguna tidak perlu memilih level manual                                                     | normal   |
+| E2E-117 | Seluruh fakta draft                                                      | Sesi selesai tanpa blok fakta dan tanpa pesan kesalahan                                                                       | batas    |
+| E2E-118 | Cakupan Bali, materi baru DK                                             | Perkenalan memiliki jawaban dan pengecoh sah; tidak memperkenalkan kartu kawasan lain                                         | batas    |
+| E2E-119 | Sesi selesai setelah Perkenalan                                          | Tidak menunggu 1 atau 10 menit; beranda menunjukkan waktu pengulangan berikutnya tanpa Tombol latihan tambahan di layar akhir | normal   |
+| E2E-120 | Membuka sesi himpunan dari Statistik                                     | Pratinjau satu soal; banyak butir dapat dikirim; hasil akhir dan undo mencakup satu soal utuh                                 | normal   |
 
 ### 7.19 Referensi Tanpa Penilaian
 
-| ID      | Skenario                                            | Hasil yang diharapkan                                                                                                                    | Kategori |
-| ------- | --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| E2E-121 | Cari kode yang kartunya due, belum due, dan new     | Ketiganya langsung menampilkan konten tanpa tebakan atau penilaian; tidak membuat `review_logs` dan tidak mengubah keadaan aplikasi FSRS | normal   |
-| E2E-122 | Cari kode berulang dalam 10 menit di perangkat sama | Data selalu terbuka; satu Pelat Terlihat; tidak ada perubahan kuota atau pasangan tertukar                                               | batas    |
+| ID      | Skenario                                                                   | Hasil yang diharapkan                                                                                                                    | Kategori |
+| ------- | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| E2E-121 | Cari kode yang kartunya perlu diulang, belum perlu diulang, dan masih baru | Ketiganya langsung menampilkan konten tanpa tebakan atau penilaian; tidak membuat `review_logs` dan tidak mengubah keadaan aplikasi FSRS | normal   |
+| E2E-122 | Cari kode berulang dalam 10 menit di perangkat sama                        | Data selalu terbuka; satu Pelat Terlihat; tidak ada perubahan kuota atau pasangan tertukar                                               | batas    |
 
 ### 7.20 Cakupan Materi dan Bahasa
 
 | ID      | Skenario                                                       | Hasil yang diharapkan                                                                                                        | Kategori |
 | ------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | -------- |
-| E2E-123 | Telusuri semua mode dan Cakupan provinsi                       | Pilihan kartu hanya berasal dari enam mode yang didukung; tidak ada generator pertanyaan dari pelat lengkap                  | normal   |
+| E2E-123 | Telusuri semua mode dan Cakupan provinsi                       | Pilihan kartu hanya berasal dari lima mode yang didukung; tidak ada generator pertanyaan dari pelat lengkap                  | normal   |
 | E2E-124 | Masukkan pelat lengkap pada Referensi                          | Hasil memakai kode depan; jaringan, penyimpanan, analitik, dan diagnostik tidak menerima bagian input lainnya                | batas    |
 | E2E-125 | Impor versi lama yang memuat catatan yang tidak lagi digunakan | Ringkasan menyebut jumlah catatan yang dipertahankan dan dikeluarkan; latihan baru tidak memunculkan materi lama             | batas    |
 | E2E-126 | Baca semua layar jadwal, pratinjau, dan ringkasan              | Istilah mengikuti Microcopy 2: perlu diulang, perkiraan durasi, target waktu aktif, dan batas waktu digunakan sesuai konteks | normal   |
 
 ### 7.21 Kode Khusus
 
-| ID      | Skenario                                                          | Hasil yang diharapkan                                                                                                   | Kategori |
-| ------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | -------- |
-| E2E-127 | Aktifkan Latihan Kode Khusus dari Statistik, kembali ke Beranda   | Tombol **Kode Khusus** tampil; pratinjau berjudul **Kode Khusus · kode negara CD** menunjukkan materi baru CD            | normal   |
-| E2E-128 | Cari "RI", "RI 1", dan "RI 20" di Referensi                       | Ketiganya membuka entri format RI yang sama beserta **Tidak ada sumber valid yang memuat daftar lengkap kode RI, dan alokasi nomornya dapat berubah sewaktu-waktu.**; tidak ada jabatan per nomor | normal   |
-| E2E-129 | Cari "CD 49" di Referensi dengan jalur nonaktif                  | Hasil **CD 49 · Jepang** dengan sumber dan tanggal pemeriksaan; ajakan **Latih kode negara CD** tampil                  | normal   |
-| E2E-130 | Jawab "CD 49 07" pada soal kode Jepang                           | **Belum tepat** diikuti **Cukup kode negaranya: CD 49**                                                                  | negatif  |
-| E2E-131 | Cari "Jepang" di Referensi                                        | Hasil **CD 49 · Jepang** tampil bersama sumber dan tanggal pemeriksaan                                                  | normal   |
-| E2E-132 | Matikan seri CD saat masih ada kartu CD yang dipelajari           | Teks **Materi baru berhenti. Soal yang sudah dipelajari tetap muncul saat perlu diulang.** tampil                       | batas    |
+| ID      | Skenario                                                          | Hasil yang diharapkan                                                                                                                                                                                     | Kategori |
+| ------- | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| E2E-127 | Aktifkan Latihan Kode diplomat dari Statistik, kembali ke Beranda | Tombol **Kode diplomat** tampil; pratinjau berjudul **Kode diplomat · kode negara di pelat CD** menunjukkan materi baru CD; label soal **Tebak diplomat**                                                 | normal   |
+| E2E-136 | Buka Referensi, lalu kartu Kode Khusus dan daftar Kode diplomat   | Kartu berlabel **KODE KHUSUS** dengan judul **Pelat tanpa wilayah** dan empat baris CD, CC, CH, RI; daftar menampilkan **130** entri, **CD 12** sampai **CD 145**, dan catatan nomor yang tidak tercantum | normal   |
+| E2E-137 | Buka Statistik dengan 42 kartu Kode diplomat dikuasai             | Kartu **Kode diplomat** menampilkan **42** **dari 130 dikuasai** dan **Dihitung terpisah dari penguasaan wilayah.**                                                                                       | normal   |
+| E2E-128 | Cari "RI", "RI 1", dan "RI 20" di Referensi                       | Ketiganya membuka entri format RI yang sama beserta **Tidak ada sumber valid yang memuat daftar lengkap kode RI, dan alokasi nomornya dapat berubah sewaktu-waktu.**; tidak ada jabatan per nomor         | normal   |
+| E2E-129 | Cari "CD 49" di Referensi dengan jalur nonaktif                   | Hasil **CD 49 · Jepang** dengan sumber dan tanggal pemeriksaan; ajakan **Latih kode negara CD** tampil                                                                                                    | normal   |
+| E2E-130 | Jawab "CD 49 07" pada soal kode Jepang                            | **Belum tepat** diikuti **Cukup kode negaranya: CD 49**                                                                                                                                                   | negatif  |
+| E2E-131 | Cari "Jepang" di Referensi                                        | Hasil **CD 49 · Jepang** tampil bersama sumber dan tanggal pemeriksaan                                                                                                                                    | normal   |
+| E2E-132 | Matikan seri CD saat masih ada kartu CD yang dipelajari           | Teks **Materi baru berhenti. Soal yang sudah dipelajari tetap muncul saat perlu diulang.** tampil                                                                                                         | batas    |

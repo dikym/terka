@@ -1,11 +1,22 @@
 # TERKA — Product Requirements Document (PRD)
 
 **Status:** Draf · **Bahasa:** Indonesia  
-**Dokumen terkait:** `Terka_SRD.md`, `Terka_TRD.md`, `Terka_ERD.md`, `Terka_ERD.puml`, `Terka_Facts.md`, `Terka_KodeKhusus.md`, `Terka_Microcopy.md`, dan `Terka_Tests.md`.
+**Dokumen terkait:** `Terka_SRD.md`, `Terka_TRD.md`, `Terka_ERD.md`, `Terka_ERD.puml`, `Terka_Facts.md`, `Terka_Kode_Khusus.md`, `Terka_Microcopy.md`, dan `Terka_Tests.md`.
 
 > **Slogan:** Lihat pelatnya, terka asalnya.
 >
 > Dokumen ini menetapkan tujuan produk, fitur, alur pengguna, dan ukuran keberhasilannya. Aturan penilaian dan jadwal dijelaskan dalam SRD; rancangan implementasinya ada dalam TRD dan ERD.
+
+**Pemilik angka.** Setiap angka aturan ditulis sekali, di dokumen pemiliknya. Dokumen lain merujuk bagian itu tanpa mengulang angkanya, supaya mengubah satu angka cukup di satu tempat.
+
+| Jenis angka                                                   | Pemilik                             | Dokumen lain                                                |
+| ------------------------------------------------------------- | ----------------------------------- | ----------------------------------------------------------- |
+| Aturan perilaku: kuota, ambang, interval, batas waktu soal    | SRD                                 | Merujuk bagian SRD, misalnya "batas harian (SRD 4.7)"       |
+| Batas infrastruktur: baris, perangkat, email, ukuran database | TRD bagian 6 dan 9                  | ERD menjelaskan constraint-nya dan merujuk TRD              |
+| Target produk, KPI, dan kriteria keberhasilan                 | PRD                                 | Tidak diulang di SRD atau TRD                               |
+| Teks UI yang memuat angka aturan                              | Microcopy, dengan placeholder `{…}` | Tests memeriksa teks hasil render dengan nilai yang berlaku |
+
+Tests boleh memakai angka konkret sebagai data uji, karena tes memang harus memeriksa nilai tertentu. Setelah kode ada, angka aturan berpindah ke satu modul konstanta (`src/rules.ts`) yang dipakai aplikasi dan tes. Dokumen tetap menjelaskan alasan setiap angka.
 
 ## 1. Gambaran Produk
 
@@ -15,7 +26,7 @@ Membaca tabel belum tentu membuat seseorang mampu mengingat jawabannya. Terka me
 
 Materi dapat dipilih dari tingkat nasional, kawasan, atau provinsi. Semua soal memakai kode depan dan hubungan kode itu dengan daerah. Satu kode dapat digunakan oleh beberapa kabupaten/kota; aplikasi tidak menyimpulkan satu daerah tertentu dari pelat lengkap.
 
-Selain kode wilayah, Terka menyediakan **Latihan Kode Khusus** yang opsional. Jalur ini melatih kode negara pada pelat CD, dengan jadwal dan kuota yang terpisah dari latihan wilayah (bagian 6.16).
+Selain kode wilayah, Terka menyediakan latihan **Kode diplomat** yang opsional (nama internalnya Latihan Kode Khusus). Jalur ini melatih kode negara pada pelat CD, dengan jadwal dan kuota yang terpisah dari latihan wilayah (bagian 6.16).
 
 Proyek dikembangkan secara mandiri, gratis, dan tanpa iklan. Dokumen referensi menjadi bahan penyusunan data, tetapi setiap hubungan kode dan daerah tetap harus memenuhi pemeriksaan sumber sebelum digunakan dalam latihan. Terka bukan rujukan resmi untuk administrasi kendaraan.
 
@@ -35,17 +46,17 @@ Proyek dikembangkan secara mandiri, gratis, dan tanpa iklan. Dokumen referensi m
 
 **Tujuan utama:** pengguna mampu menyebut daerah yang sesuai dengan kode depan dengan akurasi minimal 95%, mulai mengetik dalam waktu kurang dari 3 detik, dan mempertahankan kemampuan itu setidaknya 30 hari tanpa latihan intensif.
 
-| Bidang          | Hasil yang diharapkan                                                                                                            |
-| --------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| Belajar         | Pengulangan memakai FSRS-6 dengan target retensi 0,90; parameter disesuaikan setelah data pribadi mencukupi                      |
-| Materi          | Latihan dua arah kode → daerah dan daerah → kode, dilengkapi soal tanpa petunjuk dan penyebutan beberapa daerah                  |
-| Penguasaan      | Setiap kartu memiliki jalur Level 3; status Dikuasai memerlukan interval minimal 21 hari dan keberhasilan Level 3 pada kartu itu |
-| Pengalaman awal | Pengguna baru dapat menjawab soal pertama dalam kurang dari 60 detik tanpa masuk akun                                            |
-| Durasi          | Isi dan perkiraan durasi terlihat sebelum sesi; waktu aktif latihan rutin ditargetkan di bawah 10 menit per hari                 |
-| Fleksibilitas   | Cakupan dapat diganti tanpa menghapus jadwal; latihan opsional dicatat terpisah                                                  |
-| Data            | Riwayat pengguna yang masuk akun dapat dipulihkan di perangkat lain; pengguna tanpa akun tetap dapat mengekspor riwayat          |
-| Operasional     | Pengeluaran awal dibatasi pada domain; pemicu penyesuaian layanan ditetapkan dalam TRD 6                                         |
-| Mutu            | Setiap aturan memiliki skenario uji; kegagalan pemeriksaan wajib menghentikan penerbitan                                         |
+| Bidang          | Hasil yang diharapkan                                                                                                              |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Belajar         | Pengulangan memakai FSRS-6 dengan target retensi 0,90; parameter disesuaikan setelah data pribadi mencukupi                        |
+| Materi          | Latihan dua arah kode → daerah dan daerah → kode, dilengkapi soal berwaktu dan penyebutan beberapa daerah                          |
+| Penguasaan      | Setiap kartu memiliki jalur Level 3; status Dikuasai memerlukan interval panjang dan keberhasilan Level 3 pada kartu itu (SRD 3.4) |
+| Pengalaman awal | Pengguna baru dapat menjawab soal pertama dalam kurang dari 60 detik tanpa masuk akun                                              |
+| Durasi          | Isi dan perkiraan durasi terlihat sebelum sesi; waktu aktif latihan rutin ditargetkan di bawah 10 menit per hari                   |
+| Fleksibilitas   | Cakupan dapat diganti tanpa menghapus jadwal; latihan opsional dicatat terpisah                                                    |
+| Data            | Riwayat pengguna yang masuk akun dapat dipulihkan di perangkat lain; pengguna tanpa akun tetap dapat mengekspor riwayat            |
+| Operasional     | Pengeluaran awal dibatasi pada domain; pemicu penyesuaian layanan ditetapkan dalam TRD 6                                           |
+| Mutu            | Setiap aturan memiliki skenario uji; kegagalan pemeriksaan wajib menghentikan penerbitan                                           |
 
 Tahap belajar awal dapat berlangsung dalam beberapa sesi. Sesi tidak menunggu hitungan satu atau sepuluh menit selesai dan tidak menambah soal baru setelah dimulai. Perhitungan durasi dijelaskan dalam SRD 4.7 dan 4.14.
 
@@ -72,20 +83,19 @@ Rilis ini tidak mencakup fitur sosial, papan peringkat, iklan, pembayaran, konte
 
 **Identitas kartu.** Setiap kartu memiliki jadwal sendiri. Untuk `N` kode yang memenuhi syarat latihan, kartu yang tersedia adalah:
 
-| Mode          | Fungsi                                                               | Jumlah maksimum |
-| ------------- | -------------------------------------------------------------------- | --------------- |
-| `code2region` | Menyebut daerah dari kode                                            | N               |
-| `region2code` | Menyebut kode dari nama daerah; terbuka bertahap                     | N               |
-| `blindrecall` | Menjawab tanpa petunjuk                                              | N               |
-| `setrecall`   | Menyebut beberapa daerah; memerlukan sedikitnya tiga daerah yang sah | N               |
-| **Subtotal wilayah** | Dihitung dari data saat aplikasi dibangun                     | **4 × N**       |
-| `special2holder` | Menyebut pemegang dari kode khusus, misalnya CD 49 → Jepang    | S               |
-| `holder2special` | Menyebut kode khusus dari pemegangnya; terbuka bertahap        | S               |
-| **Total**     | Dihitung dari data saat aplikasi dibangun                            | **4 × N + 2 × S** |
+| Mode                 | Fungsi                                                               | Jumlah maksimum   |
+| -------------------- | -------------------------------------------------------------------- | ----------------- |
+| `code2region`        | Menyebut daerah dari kode                                            | N                 |
+| `region2code`        | Menyebut kode dari nama daerah; terbuka bertahap                     | N                 |
+| `setrecall`          | Menyebut beberapa daerah; memerlukan sedikitnya tiga daerah yang sah | N                 |
+| **Subtotal wilayah** | Dihitung dari data saat aplikasi dibangun                            | **3 × N**         |
+| `special2holder`     | Menyebut pemegang dari kode khusus, misalnya CD 49 → Jepang          | S                 |
+| `holder2special`     | Menyebut kode khusus dari pemegangnya; terbuka bertahap              | S                 |
+| **Total**            | Dihitung dari data saat aplikasi dibangun                            | **3 × N + 2 × S** |
 
-Jika data berisi 60 kode yang memenuhi syarat, jumlahnya paling banyak 240 kartu wilayah. `S` adalah jumlah entri kode khusus berlabel `high`; revisi data ini memuat 130 entri CD, sehingga jalur kode khusus menambah paling banyak 260 kartu. Perkenalan, tes penempatan, benar/salah, dan Mana yang bukan tidak menambah jenis kartu. Referensi tidak membuat kartu atau jawaban latihan.
+Revisi data ini memuat 61 kode yang memenuhi syarat, sehingga jumlahnya paling banyak 183 kartu wilayah. `S` adalah jumlah entri kode khusus berlabel `high`; data yang sama memuat 130 entri CD, sehingga jalur kode khusus menambah paling banyak 260 kartu. Perkenalan, tes penempatan, Tebak berwaktu, Benar atau salah, dan Mana yang bukan tidak menambah jenis kartu. Tebak berwaktu adalah bentuk Level 3 kartu `code2region` dan `region2code`, bukan kartu dengan jadwal sendiri. Referensi tidak membuat kartu atau jawaban latihan.
 
-Batas materi baru berlaku global: 8–13 kartu per hari menurut tingkat pengguna, lintas Cakupan dan perangkat. Pengulangan yang sudah terjadwal mengikuti aturan SRD 4.7. Latihan Kode Khusus memakai kuota sendiri dan tidak mengurangi batas ini (SRD 2.9).
+Batas materi baru harian berlaku global menurut tingkat pengguna (SRD 4.7), lintas Cakupan dan perangkat. Pengulangan yang sudah terjadwal mengikuti aturan SRD 4.7. Latihan Kode Khusus memakai kuota sendiri dan tidak mengurangi batas ini (SRD 2.9).
 
 ## 6. Fitur Utama
 
@@ -115,21 +125,23 @@ Soal kode → daerah menerima salah satu kabupaten/kota yang sah. Nama provinsi 
 
 **Golongan A** berisi soal singkat yang dapat masuk sesi harian.
 
-| Bentuk            | Tugas                                                                       | Level |
-| ----------------- | --------------------------------------------------------------------------- | ----- |
-| Kode → daerah     | Menyebut satu kab/kota yang menggunakan kode; pilihan ganda saat tahap awal | 1–3   |
-| Daerah → kode     | Menyebut kode dari nama kab/kota lengkap; pilihan ganda saat tahap awal     | 1–3   |
-| Benar/salah kilat | Memeriksa pasangan kode dan daerah dalam 2 detik                            | 1     |
-| Mana yang bukan   | Memilih daerah yang tidak termasuk dalam kode soal                          | 1     |
-| Tanpa Petunjuk    | Menyebut satu daerah tanpa bantuan; mulai mengetik dalam 8 detik            | 3     |
+| Bentuk           | Tugas                                                                                                                 | Level |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------- | ----- |
+| Tebak daerah     | Menyebut satu kab/kota yang memakai kode; pilihan ganda saat tahap awal                                               | 1–3   |
+| Tebak kode       | Menyebut kode dari nama kab/kota lengkap; pilihan ganda saat tahap awal                                               | 1–3   |
+| Benar atau salah | Memeriksa pasangan kode dan daerah dalam 2 detik                                                                      | 1     |
+| Mana yang bukan  | Memilih daerah yang tidak memakai kode soal                                                                           | 1     |
+| Tebak berwaktu   | Bentuk Level 3 Tebak daerah dan Tebak kode: menjawab dengan batas waktu input pertama (SRD 4.4); bukan kartu terpisah | 3     |
 
-**Golongan B**, yaitu **Sebutkan sebanyak mungkin**, berjalan sebagai sesi terpisah satu soal. Kartu `setrecall` terbuka ketika `code2region` mencapai interval 14 hari dan kode tersebut memiliki minimal tiga kab/kota yang sah. Perkenalannya memakai Level 1; penilaian berikutnya memakai Level 3. Sesi ini dibuka dari Statistik atau pemeriksaan kode, mengikuti kuota global, dan tidak masuk sesi harian, Tantangan Harian, atau Mode Kilat.
+**Tanpa petunjuk parsial.** Tidak ada bentuk soal yang menampilkan huruf pertama, digit pertama, atau sebagian jawaban. Kesulitan naik dari memilih, ke mengetik, lalu ke mengetik dengan batas waktu (SRD 3.1). Nama bentuk di UI ditulis sebagai tindakan, seperti **Tebak daerah**, bukan arah panah (`Terka_Microcopy.md` bagian 1).
+
+**Golongan B**, yaitu **Sebutkan sebanyak mungkin**, berjalan sebagai sesi terpisah satu soal. Kartu `setrecall` terbuka setelah kartu `code2region` kode itu cukup stabil dan kodenya memiliki cukup kab/kota yang sah; syarat pastinya di SRD 4.8. Perkenalannya memakai Level 1; penilaian berikutnya memakai Level 3. Sesi ini dibuka dari Statistik atau pemeriksaan kode, mengikuti kuota global, dan tidak masuk sesi harian, Tantangan Harian, atau Mode Kilat.
 
 **Golongan C** khusus Mode Kilat: benar/salah, mengenali kawasan, atau mengenali huruf pertama. Jawabannya tidak mengubah jadwal.
 
 Setiap kartu memiliki bentuk Level 3 sesuai modenya. Keberhasilan satu kartu tidak meluluskan kartu lain. Kartu tidak perlu menunggu pasangan tertukar muncul untuk diuji penguasaannya.
 
-Pengecoh harus salah untuk pertanyaan yang diajukan. Pada soal kode → daerah, pilihan berupa kab/kota; pada soal daerah → kode, pilihan berupa kode. Jika empat pilihan sah tidak dapat dibentuk, Perkenalan menampilkan informasi tanpa tebakan dan soal berikutnya memakai bentuk ketik sesuai SRD 2.8.
+Pengecoh harus salah untuk pertanyaan yang diajukan. Pada soal Tebak daerah, pilihan berupa kab/kota; pada soal Tebak kode, pilihan berupa kode. Jika empat pilihan sah tidak dapat dibentuk, Perkenalan menampilkan informasi tanpa tebakan dan soal berikutnya memakai bentuk ketik sesuai SRD 2.8.
 
 ### 6.4 Bandingkan Kode
 
@@ -139,7 +151,7 @@ Sistem mengenali pasangan kode yang berulang kali tertukar. Latihan menampilkan 
 
 Satu fakta dapat muncul pada akhir setiap mode, lengkap dengan sumber dan label **Terverifikasi**, **Diperdebatkan**, atau **Legenda**. Hanya naskah berstatus publikasi `ready` yang dapat dipilih. Jika belum tersedia, bagian ini tidak ditampilkan dan sesi tetap selesai.
 
-Label sejarah menjelaskan kekuatan bukti; status publikasi menjelaskan kesiapan naskah. Keduanya berbeda. Fakta tidak menjadi soal atau petunjuk. Pemilihan mengutamakan kode yang baru dilatih, menghindari pengulangan dari N tampilan terakhir, dan membatasi legenda yang berdekatan. N dihitung dari jumlah naskah siap terbit menurut SRD 4.15. Riwayat tampil ikut disinkronkan.
+Label sejarah menjelaskan kekuatan bukti; status publikasi menjelaskan kesiapan naskah. Keduanya berbeda. Fakta tidak menjadi soal atau pilihan jawaban. Pemilihan mengutamakan kode yang baru dilatih, menghindari pengulangan dari N tampilan terakhir, dan membatasi legenda yang berdekatan. N dihitung dari jumlah naskah siap terbit menurut SRD 4.15. Riwayat tampil ikut disinkronkan.
 
 ### 6.6 Statistik dan Peta Penguasaan
 
@@ -151,7 +163,7 @@ Halaman ini juga memuat kartu Sulit Dikuasai, Pelat Terlihat, status sinkronisas
 
 **Tantangan Harian** tersedia sekali sehari dan berisi paling banyak lima kartu Golongan A yang sudah dipelajari. Jika hanya tiga kartu tersedia, tampilkan tiga; jika tidak ada, mode belum tersedia. Tantangan mengambil kartu lintas Cakupan dan mencatat Hari Beruntun.
 
-**Mode Kilat** berlangsung 60 detik. Skor dihitung dari jawaban benar, dan Rekor Terbaik disimpan per wilayah. Kedua mode tidak memperbarui jadwal belajar.
+**Mode Kilat** berlangsung dalam satu putaran berdurasi tetap (SRD 4.4). Skor dihitung dari jawaban benar, dan Rekor Terbaik disimpan per wilayah. Kedua mode tidak memperbarui jadwal belajar.
 
 ### 6.8 Referensi
 
@@ -177,15 +189,15 @@ Ajakan masuk tersedia di Statistik dan satu kali pada akhir sesi setelah tujuh h
 
 ### 6.10 Pelat Terlihat
 
-Pelat Terlihat mencatat frekuensi pencarian kode depan di Referensi. Catatan ini menunjukkan minat pencarian, bukan bukti bahwa kendaraan benar-benar dilihat. Frekuensi 90 hari terakhir membantu menentukan urutan materi baru.
+Pelat Terlihat mencatat frekuensi pencarian kode depan di Referensi. Catatan ini menunjukkan minat pencarian, bukan bukti bahwa kendaraan benar-benar dilihat. Frekuensi dalam jendela waktu terakhir membantu menentukan urutan materi baru (SRD 2.7).
 
-Pada perangkat yang sama, pencarian kode yang sama dalam kurang dari 10 menit sejak catatan terakhir tidak menambah catatan. Tepat 10 menit sudah boleh dicatat lagi. Pencarian nama daerah dan kode khusus RI/CD/CC/CH tidak dicatat.
+Pencarian kode yang sama berulang kali dalam waktu singkat di perangkat yang sama hanya dicatat sekali, dan pencarian nama daerah serta kode khusus RI/CD/CC/CH tidak dicatat. Aturan pastinya di SRD 4.11.
 
 Hanya identitas kode depan yang disimpan. Jika input berupa pelat lengkap, bagian lainnya dibuang sebelum penyimpanan, analitik, atau catatan diagnostik. Pencarian tidak membuat `review_logs`, menggunakan kuota belajar, meluluskan level, menambah pasangan tertukar, atau mengubah jadwal. PWA menyediakan pintasan ke Referensi.
 
 ### 6.11 Catatan Pengingat
 
-Pengguna dapat menulis asosiasi pribadi sepanjang maksimal 280 karakter, satu catatan per kode. Contohnya, “DR: Dari Rinjani”. Catatan dapat diubah melalui pemeriksaan kartu.
+Pengguna dapat menulis asosiasi pribadi sepanjang maksimal 280 karakter, satu catatan per kode. Contohnya, “DR: Dari Rinjani”. Catatan dapat diubah melalui pemeriksaan kode.
 
 Tawaran menulis catatan muncul setelah empat kegagalan pengulangan dan tetap opsional. Catatan ditampilkan setelah jawaban; pada kartu Sulit Dikuasai, catatan dapat muncul sebelum pertanyaan. Ambang dan pengecualian penilaian mengikuti SRD 6.4.
 
@@ -197,7 +209,7 @@ Perkenalan menggunakan kuota materi baru. Pengulangan pertama tersedia setelah s
 
 ### 6.13 Tes Penempatan
 
-Tes ditawarkan setelah layar sambutan dan boleh dilewati. Bentuknya kode → daerah dengan jawaban ketik, tombol **Tidak tahu**, tanpa hasil benar atau salah di setiap soal. Tiga tahap adaptif memuat paling banyak 28 soal, dengan perkiraan durasi tiga menit.
+Tes ditawarkan setelah layar sambutan dan boleh dilewati. Bentuknya kode → daerah dengan jawaban ketik, tombol **Tidak tahu**, tanpa hasil benar atau salah di setiap soal. Tes terdiri dari tiga tahap adaptif dengan jumlah soal dan perkiraan durasi di SRD 4.13.
 
 Hasil tes memberi tingkat awal, perkiraan kode yang sudah dikenal, dan saran Cakupan. Hanya kartu yang benar-benar dijawab benar tanpa gangguan yang langsung masuk tahap pengulangan. Kartu lain tetap baru. Syarat status Dikuasai tidak berubah.
 
@@ -209,7 +221,7 @@ Pratinjau menampilkan jumlah soal, rincian jenis dan level, perkiraan durasi, se
 
 Sesi dengan antrean tetap memakai daftar yang sudah ditampilkan. Pengulangan yang baru dijadwalkan setelah jawaban disimpan menunggu sesi berikutnya. Pratinjau diperbarui sebelum mulai jika sudah terbuka lebih dari 10 menit, hari berganti, atau data yang memengaruhi antrean berubah.
 
-Mode Kilat menampilkan durasi tetap 60 detik. Tes penempatan menampilkan batas atas 28 soal karena jumlah akhirnya bergantung pada hasil tiap tahap. Rumus durasi ada di SRD 4.14.
+Mode Kilat menampilkan durasi tetapnya. Tes penempatan menampilkan batas atas jumlah soal karena jumlah akhirnya bergantung pada hasil tiap tahap. Rumus durasi ada di SRD 4.14.
 
 ### 6.15 Layar Sambutan dan Halaman Tentang
 
@@ -219,21 +231,21 @@ Halaman Tentang menjelaskan sumber dan pembaruan konten, arti label kepercayaan,
 
 ### 6.16 Latihan Kode Khusus
 
-Latihan Kode Khusus melatih kode negara pada pelat CD, yang tidak menunjuk wilayah. Jalur ini nonaktif secara bawaan dan diaktifkan dari Statistik atau dari hasil pencarian kode khusus di Referensi. Setelah aktif, Beranda menampilkan tombol **Kode Khusus** di bawah tombol utama.
+Latihan Kode Khusus, yang tampil di UI sebagai **Kode diplomat**, melatih kode negara pada pelat CD, yang tidak menunjuk wilayah. Jalur ini nonaktif secara bawaan dan diaktifkan dari Statistik atau dari hasil pencarian kode khusus di Referensi. Setelah aktif, Beranda menampilkan tombol **Kode Khusus** di bawah tombol utama.
 
-| Seri | Yang dilatih                                               | Entri latihan pada revisi ini | Sumber utama                           |
-| ---- | ---------------------------------------------------------- | ----------------------------- | -------------------------------------- |
+| Seri | Yang dilatih                                              | Entri latihan pada revisi ini | Sumber utama                           |
+| ---- | --------------------------------------------------------- | ----------------------------- | -------------------------------------- |
 | CD   | Kode negara korps diplomatik dan organisasi internasional | 130 (CD 12 sampai CD 145)     | Lampiran Perpol 7/2021 huruf D angka 4 |
 
-Daftar lengkap, alias, sumber per entri, dan alasan setiap label ada di `Terka_KodeKhusus.md`.
+Daftar lengkap, alias, sumber per entri, dan alasan setiap label ada di `Terka_Kode_Khusus.md`.
 
-**Bentuk soal.** Setiap entri menghasilkan dua kartu. `special2holder` bertanya dari kode: "CD 49 dipakai perwakilan mana?". `holder2special` bertanya dari pemegang: "Berapa kode CD untuk Jepang?". Kartu `holder2special` terbuka setelah interval `special2holder` entri yang sama mencapai tujuh hari. Level 1 memakai pilihan ganda, Level 2 jawaban ketik dengan satu petunjuk, dan Level 3 jawaban ketik tanpa petunjuk.
+**Bentuk soal.** Setiap entri menghasilkan dua kartu. `special2holder` bertanya dari kode: "CD 49 dipakai perwakilan mana?". `holder2special` bertanya dari pemegang: "Berapa kode CD untuk Jepang?". Kartu `holder2special` terbuka setelah kartu `special2holder` entri yang sama cukup stabil (SRD 2.9). Level 1 memakai pilihan ganda, Level 2 jawaban ketik tanpa batas waktu, dan Level 3 jawaban ketik dengan batas waktu input pertama.
 
 **Yang tidak ditanyakan.** Nomor urut registrasi di belakang kode negara tidak pernah menjadi soal atau jawaban, karena nomor itu menunjuk kendaraan tertentu dan tidak memiliki daftar resmi yang terbuka.
 
 **Terpisah dari latihan wilayah.** Kartu kode khusus tidak masuk sesi harian, Tantangan Harian, Mode Kilat, tes penempatan, Bandingkan Kode, Peta Penguasaan, atau Uji Penguasaan Kawasan. Materi barunya memiliki kuota lima kartu per hari dan ambang penahanan sendiri. Menonaktifkan jalur hanya menghentikan materi baru, seperti Cakupan. Kartu yang sudah dipelajari tetap mengikuti jadwalnya walaupun jalur dinonaktifkan, dan tetap terlihat sebagai soal yang perlu diulang di tombol **Kode Khusus**.
 
-**Syarat materi.** Hanya entri `high` yang menjadi soal. Aturan labelnya ada di `Terka_KodeKhusus.md` bagian 3 dan TRD 4.1. Data CD diperiksa ulang setiap enam bulan. Jika pemegang satu nomor berubah, kartu lama dinonaktifkan dan pemegang baru hadir sebagai materi baru dengan `id` baru.
+**Syarat materi.** Hanya entri `high` yang menjadi soal. Aturan labelnya ada di `Terka_Kode_Khusus.md` bagian 3 dan TRD 4.1. Data CD diperiksa ulang setiap enam bulan. Jika pemegang satu nomor berubah, kartu lama dinonaktifkan dan pemegang baru hadir sebagai materi baru dengan `id` baru.
 
 **Penanda kemajuan.** Statistik menampilkan penguasaan CD secara terpisah dari penguasaan wilayah. Kartu kode khusus tidak dihitung dalam kriteria penguasaan wilayah di bagian 12.
 
@@ -242,7 +254,7 @@ Daftar lengkap, alias, sumber per entri, dan alasan setiap label ada di `Terka_K
 ### 7.1 Alur Utama
 
 1. Pada kunjungan pertama, tampilkan sambutan, lalu tawarkan tes penempatan atau pilihan melewatinya.
-2. Beranda menampilkan soal yang perlu diulang, materi baru yang tersedia, Cakupan, dan status sinkronisasi. Tombol utama adalah **Mulai belajar**, **Tantangan Harian**, dan **Mode Kilat**. Jika Latihan Kode Khusus aktif, tombol **Kode Khusus** tampil di bawahnya beserta jumlah soal yang perlu diulang.
+2. Beranda menampilkan soal yang perlu diulang, materi baru yang tersedia, Cakupan, dan status sinkronisasi. Tombol utama adalah **Mulai belajar**, **Tantangan Harian**, dan **Mode Kilat**. Jika Latihan Kode Khusus aktif, tombol **Kode diplomat** tampil di bawahnya beserta jumlah soal yang perlu diulang.
 3. Bilah bawah memuat Beranda, Cakupan, Statistik, dan Referensi. Menelusuri wilayah tidak mengubah Cakupan; pengguna menerapkannya melalui **Pilih wilayah ini**. **Latih wilayah ini** membuka Latihan Terfokus tanpa mengganti Cakupan.
 4. Sebelum latihan, tampilkan pratinjau. Setelah dimulai, pilihan keyboard 1–4 dikunci dengan Enter; ketukan atau klik langsung mengunci pilihan. Jawaban ketik dikirim dengan Enter. Kolom kosong tidak dikirim.
 5. Tampilkan hasil dan jawaban yang benar. Level ditentukan otomatis, tetapi dapat diubah manual dengan penjelasan dampaknya. Perkenalan tidak dinilai.
@@ -282,7 +294,7 @@ KPI belajar dihitung per pengguna. KPI produk memakai agregat akun yang masuk. A
 | Retensi kartu Dikuasai                                                | Minimal 90%                                                       |
 | Selisih retensi aktual dari target 0,90                               | Dalam rentang ±3 poin persentase                                  |
 | Median waktu sampai input pertama                                     | Kurang dari 3 detik                                               |
-| Penguasaan kartu inti seluruh kode                                    | 100% dalam 90 hari                                                |
+| Penguasaan kartu `code2region` seluruh kode                           | 100% dalam 90 hari                                                |
 | Kawasan dikuasai                                                      | 7 dari 7 dalam 120 hari                                           |
 | Kartu `mature` yang memenuhi syarat Level 3                           | 100%                                                              |
 | Beban pengulangan                                                     | Stabil di bawah ambang penahanan tingkat pengguna                 |
@@ -336,23 +348,23 @@ Kebijakan privasi dan ketentuan penyedia layanan perlu diperiksa sebelum login p
 
 ## 11. Rencana Pengembangan
 
-**Urutan rilis pertama:** selesaikan penjadwalan, penyimpanan lokal, sinkronisasi, dan tes; gunakan aplikasi selama 14 hari pada dua perangkat sebelum menyempurnakan Pelat Terlihat dan Catatan pengingat. Buka latihan tanpa akun lebih dulu. Login publik dibuka setelah autentikasi, kebijakan privasi, pengaman data, email, dan pencadangan siap.
+**Urutan rilis pertama:** selesaikan penjadwalan, penyimpanan lokal, sinkronisasi, dan tes; gunakan aplikasi selama 14 hari pada dua perangkat sebelum menyempurnakan Pelat Terlihat dan Catatan pengingat. Buka latihan tanpa akun lebih dulu. Login publik dibuka setelah sumber biaya paket Pro Supabase diputuskan (TRD bagian 10) dan setelah autentikasi, kebijakan privasi, pengaman data, email, dan pencadangan siap.
 
-**Fase 2 — Penguatan latihan:** soal peta, pemilihan beberapa Cakupan sekaligus, dan variasi soal berbasis kode depan. Kandidat variasinya adalah melengkapi deret, membalik urutan kode, skenario lokasi, petunjuk bertahap, mengenali kode tidak valid, memperbaiki pernyataan, mengelompokkan kode, soal berantai, dan wilayah berbatasan. Masing-masing memerlukan aturan dan tes sebelum ditambahkan.
+**Fase 2 — Penguatan latihan:** soal peta, pemilihan beberapa Cakupan sekaligus, dan variasi soal berbasis kode depan. Kandidat variasinya adalah melengkapi deret, membalik urutan kode, skenario lokasi, mengenali kode tidak valid, memperbaiki pernyataan, mengelompokkan kode, soal berantai, dan wilayah berbatasan. Masing-masing memerlukan aturan dan tes sebelum ditambahkan.
 
 **Fase 3 — Adaptasi dari riwayat pribadi.** Tabel berikut memuat tahap 1, 2, dan 3 secara berurutan. Tahap 1 sudah termasuk rilis pertama; tahap berikutnya menunggu data.
 
-| Pengembangan adaptasi                     | Syarat awal                                   | Status                                             |
-| ----------------------------------------- | --------------------------------------------- | -------------------------------------------------- |
-| Optimasi parameter FSRS pribadi           | Minimal 1.000 jawaban terhitung dan 200 kartu | Termasuk rilis pertama; mengikuti SRD 4.12         |
-| Pemilihan level berdasarkan peluang ingat | Sekitar 150 jawaban per level                 | Ditunda sampai data cukup                          |
-| Kalibrasi bobot penilaian                 | Sekitar 1.000 jawaban                         | Eksperimen; dipakai hanya jika hasilnya lebih baik |
+| Pengembangan adaptasi                     | Syarat awal                   | Status                                             |
+| ----------------------------------------- | ----------------------------- | -------------------------------------------------- |
+| Optimasi parameter FSRS pribadi           | Syarat data di SRD 4.12       | Termasuk rilis pertama; mengikuti SRD 4.12         |
+| Pemilihan level berdasarkan peluang ingat | Sekitar 150 jawaban per level | Ditunda sampai data cukup                          |
+| Kalibrasi bobot penilaian                 | Sekitar 1.000 jawaban         | Eksperimen; dipakai hanya jika hasilnya lebih baik |
 
 Parameter tetap satu set global sampai data menunjukkan perlunya pemisahan. **Fase 4 — Pengembangan setelah rilis publik** mencakup kemungkinan fitur kompetitif dan pemulihan satu akun dari cadangan server. Keduanya berada di luar rilis pertama. Fitur kompetitif memerlukan validasi server sebelum dibangun.
 
 ## 12. Kriteria Keberhasilan
 
-1. Kartu `code2region` dan `blindrecall` untuk semua kode yang memenuhi syarat berstatus Dikuasai dalam 90 hari sejak latihan dimulai. Kartu kode khusus tidak termasuk kriteria ini.
+1. Kartu `code2region` untuk semua kode yang memenuhi syarat berstatus Dikuasai, yang berarti pernah lulus Tebak berwaktu, dalam 90 hari sejak latihan dimulai. Kartu kode khusus tidak termasuk kriteria ini.
 2. Akurasi uji tanpa bantuan pada 30 soal acak nasional mencapai 90% setelah 14 hari tanpa latihan.
 3. Waktu aktif latihan rutin berada di bawah 10 menit per hari selama empat minggu; waktu menunggu jadwal dan latihan opsional, termasuk Latihan Kode Khusus, tidak dihitung.
 4. Aplikasi tetap digunakan pada hari ke-30, ke-60, dan ke-90.

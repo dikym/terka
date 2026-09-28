@@ -12,35 +12,43 @@
 
 Gunakan istilah berikut secara konsisten pada seluruh layar. Nama tabel dan properti tetap berada di spesifikasi teknis; label antarmuka menjelaskan tindakan atau keadaan yang perlu dipahami pengguna.
 
-| Konsep                                                      | Label UI                                          | Catatan                                                                   |
-| ----------------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------- |
-| `activeScope` / wilayah yang dipilih untuk materi baru      | **Cakupan**                                       | Dipakai di beranda dan pemilih wilayah                                    |
-| Sesi harian utama                                           | **Mulai belajar**                                 | Tombol utama di beranda                                                   |
-| Latihan tambahan untuk wilayah tertentu                     | **Latih wilayah ini**                             | Membuka **Latihan Terfokus** tanpa mengubah Cakupan                       |
-| Tantangan lima soal harian                                  | **Tantangan Harian**                              | Nama mode tetap                                                           |
-| Latihan kecepatan 60 detik                                  | **Mode Kilat**                                    | Nama resmi mode di UI                                                     |
-| Penelusuran dan pencarian data                              | **Referensi**                                     | Tujuan di bilah bawah, bukan tombol di beranda                            |
-| Pemilih materi baru                                         | **Cakupan**                                       | Tujuan di bilah bawah; sekaligus nama pengaturannya                       |
-| Satu node yang sedang disorot di pemilih                    | **wilayah**                                       | Bukan nama pengaturan — lihat aturan istilah di bawah                     |
-| Navigasi tetap di bagian bawah layar                        | **bilah bawah**                                   | Empat tujuan: Beranda, Cakupan, Statistik, Referensi                      |
-| Menerapkan pilihan wilayah                                  | **Pilih wilayah ini**                             | Pemilih memakai model dua langkah; menelusuri saja tidak mengubah apa pun |
-| Visual tingkat penguasaan wilayah                           | **Peta Penguasaan**                               | Nama resmi tampilan peta                                                  |
-| Latihan Bandingkan Kode untuk dua kode yang sering tertukar | **Bandingkan Kode**                               | Nama internalnya latihan Bandingkan Kode                                  |
-| Status `mature`                                             | **Dikuasai**                                      | Nama internal tidak ditampilkan                                           |
-| Status `leech`                                              | **Sulit Dikuasai**                                | Muncul sebagai penanda pada soal                                          |
-| Status `suspended`                                          | **Dinonaktifkan**                                 | Nama internal tidak ditampilkan                                           |
-| Tayangan pertama materi baru                                | **Perkenalan**                                    | Soalnya berlabel **Tebak dulu**                                           |
-| Pencarian kode di Referensi yang dicatat                    | **Pelat Terlihat**                                | Statistik frekuensi pencarian; tidak ada tahap menjawab di Referensi      |
-| Catatan asosiasi buatan pengguna                            | **Catatan pengingat**                             | Satu per kode                                                             |
-| Pengiriman dan penarikan data antarperangkat                | **Sinkronisasi**                                  | Status ringkasnya **Tersinkron**                                          |
-| Parameter FSRS hasil optimasi                               | **Parameter jadwal**                              | Hanya di pengaturan lanjutan                                              |
-| Tes awal untuk mengukur pengetahuan                         | **Tes penempatan**                                | Hasilnya disebut **Tingkat**                                              |
-| Layar sebelum soal pertama                                  | **Pratinjau sesi**                                | Judulnya mengikuti mode, misalnya **Sesi hari ini**                       |
-| Fakta sejarah di layar akhir                                | **Fakta menarik**                                 | Satu-satunya tempat fakta tampil                                          |
-| Kabupaten atau kota                                         | **daerah** di soal; **kab/kota** di tempat sempit | Nama lengkap dengan awalan di soal daerah → kode                          |
-| Jalur latihan kode negara CD                                | **Kode Khusus**                                   | Nama tombol dan judul sesi; bukan "pelat sakti" atau "pelat diplomat"  |
-| Negara atau organisasi pemilik kode CD                      | **pemegang** di teks bantuan; **perwakilan** di soal | —                                                                      |
-| Angka setelah CD                                            | **kode negara**                                   | Dipakai juga untuk organisasi internasional, mengikuti istilah Perpol     |
+| Konsep                                                      | Label UI                                             | Catatan                                                                                                                          |
+| ----------------------------------------------------------- | ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `activeScope` / wilayah yang dipilih untuk materi baru      | **Cakupan**                                          | Dipakai di beranda dan pemilih wilayah                                                                                           |
+| Sesi harian utama                                           | **Mulai belajar**                                    | Tombol utama di beranda                                                                                                          |
+| Latihan tambahan untuk wilayah tertentu                     | **Latih wilayah ini**                                | Membuka **Latihan Terfokus** tanpa mengubah Cakupan                                                                              |
+| Tantangan lima soal harian                                  | **Tantangan Harian**                                 | Nama mode tetap                                                                                                                  |
+| Latihan kecepatan 60 detik                                  | **Mode Kilat**                                       | Nama resmi mode di UI                                                                                                            |
+| Penelusuran dan pencarian data                              | **Referensi**                                        | Tujuan di bilah bawah, bukan tombol di beranda                                                                                   |
+| Pemilih materi baru                                         | **Cakupan**                                          | Tujuan di bilah bawah; sekaligus nama pengaturannya                                                                              |
+| Satu node yang sedang disorot di pemilih                    | **wilayah**                                          | Bukan nama pengaturan — lihat aturan istilah di bawah                                                                            |
+| Navigasi tetap di bagian bawah layar                        | **bilah bawah**                                      | Empat tujuan: Beranda, Cakupan, Statistik, Referensi                                                                             |
+| Menerapkan pilihan wilayah                                  | **Pilih wilayah ini**                                | Pemilih memakai model dua langkah; menelusuri saja tidak mengubah apa pun                                                        |
+| Visual tingkat penguasaan wilayah                           | **Peta Penguasaan**                                  | Nama resmi tampilan peta                                                                                                         |
+| Latihan Bandingkan Kode untuk dua kode yang sering tertukar | **Bandingkan Kode**                                  | Nama internalnya latihan Bandingkan Kode                                                                                         |
+| Status `mature`                                             | **Dikuasai**                                         | Nama internal tidak ditampilkan                                                                                                  |
+| Status `leech`                                              | **Sulit Dikuasai**                                   | Muncul sebagai penanda pada soal                                                                                                 |
+| Status `suspended`                                          | **Dinonaktifkan**                                    | Nama internal tidak ditampilkan                                                                                                  |
+| Tayangan pertama materi baru                                | **Perkenalan**                                       | Soalnya berlabel **Tebak dulu**                                                                                                  |
+| Pencarian kode di Referensi yang dicatat                    | **Pelat Terlihat**                                   | Statistik frekuensi pencarian; tidak ada tahap menjawab di Referensi                                                             |
+| Catatan asosiasi buatan pengguna                            | **Catatan pengingat**                                | Satu per kode                                                                                                                    |
+| Pengiriman dan penarikan data antarperangkat                | **Sinkronisasi**                                     | Status ringkasnya **Tersinkron**                                                                                                 |
+| Parameter FSRS hasil optimasi                               | **Parameter jadwal**                                 | Hanya di pengaturan lanjutan                                                                                                     |
+| Tes awal untuk mengukur pengetahuan                         | **Tes penempatan**                                   | Hasilnya disebut **Tingkat**                                                                                                     |
+| Layar sebelum soal pertama                                  | **Pratinjau sesi**                                   | Judulnya mengikuti mode, misalnya **Sesi hari ini**                                                                              |
+| Fakta sejarah di layar akhir                                | **Fakta menarik**                                    | Satu-satunya tempat fakta tampil                                                                                                 |
+| Kabupaten atau kota                                         | **daerah** di soal; **kab/kota** di tempat sempit    | Nama lengkap dengan awalan di soal **Tebak kode**                                                                                |
+| Kategori pelat tanpa wilayah: CD, CC, CH, RI                | **Kode Khusus**                                      | Label kategori kecil di atas judul Kode Khusus di Referensi dan Kode diplomat di Statistik. Bukan nama jalur latihan             |
+| Jalur latihan kode negara CD (`specials[]`)                 | **Kode diplomat**                                    | Nama tombol, judul sesi, dan judul di Statistik. Nama internalnya Latihan Kode Khusus. Bukan "pelat diplomat" atau "pelat sakti" |
+| Negara atau organisasi pemilik kode CD                      | **pemegang** di teks bantuan; **perwakilan** di soal | —                                                                                                                                |
+| `code2region` (kode → daerah)                               | **Tebak daerah**                                     | Label jenis soal; bukan "Kode → daerah"                                                                                          |
+| `region2code` (daerah → kode)                               | **Tebak kode**                                       | Label jenis soal; bukan "Daerah → kode"                                                                                          |
+| Soal Level 3 jawaban tunggal dengan batas waktu             | **Tebak berwaktu**                                   | Bentuk soal Tebak daerah atau Tebak kode di Level 3, bukan kartu terpisah                                                        |
+| `setrecall`                                                 | **Sebutkan sebanyak mungkin**                        | Nama sesi dan label soal                                                                                                         |
+| Soal benar/salah                                            | **Benar atau salah**                                 | Dipakai di sesi harian dan Mode Kilat                                                                                            |
+| Soal pilih daerah yang bukan anggota kode                   | **Mana yang bukan**                                  | —                                                                                                                                |
+| `special2holder` dan `holder2special`                       | **Tebak diplomat**                                   | Satu label untuk kedua arah; kalimat soal yang membedakan arahnya                                                                |
+| Angka setelah CD                                            | **kode negara**                                      | Dipakai juga untuk organisasi internasional, mengikuti istilah Perpol                                                            |
 
 Istilah teknis seperti FSRS, peluang ingat, `review`, `relearning`, dan nama properti JSON tetap dipakai di bagian spesifikasi teknis, tetapi tidak muncul di alur belajar biasa kecuali di layar diagnostik atau pengaturan lanjutan.
 
@@ -72,6 +80,9 @@ Microcopy Terka mengikuti aturan berikut supaya seluruh UI terasa konsisten:
 8. **Angka mengalahkan kalimat panjang.** Pakai **12 soal perlu diulang**, bukan "Terdapat dua belas soal yang sudah waktunya untuk diulang hari ini".
 9. **Pilih kata sesuai konteks belajar.** Jadwal ditulis **waktunya diulang** atau **perlu diulang**. Durasi ditulis **perkiraan durasi**, **target waktu aktif**, atau **batas waktu**, sesuai maksudnya. Hindari terjemahan harfiah dan istilah administrasi keuangan.
 10. **Status bersifat deskriptif, bukan motivasional.** Hindari "Hebat!", "Luar biasa!", atau "Jangan menyerah!" sebagai respons standar. Aplikasi memberi informasi, bukan menilai pengguna.
+11. **Angka aturan ditulis sebagai placeholder.** Angka yang berasal dari aturan, seperti batas harian, batas waktu, atau batas perangkat, ditulis `{nama}` dan diisi dari modul konstanta saat render. Pemilik angkanya ada di SRD atau TRD (PRD, bagian pemilik angka). Angka lain di dokumen ini, seperti **12 soal perlu diulang**, hanya contoh hasil render.
+12. **Jenis soal ditulis sebagai tindakan.** Pakai **Tebak daerah** dan **Tebak kode**, bukan panah seperti "Kode → daerah". Panah hanya dipakai di spesifikasi teknis.
+13. **Soal tidak menampilkan petunjuk parsial.** Tidak ada huruf pertama, digit pertama, atau tipe pemegang sebelum pengguna menjawab. Jawaban lengkap baru tampil setelah menjawab, atau sebelum pertanyaan pada kartu Sulit Dikuasai (bagian 3.9).
 
 ---
 
@@ -111,7 +122,7 @@ Bilah bawah tidak memakai lencana jumlah soal. Jumlah pengulangan cukup ditampil
 | Tombol sesi utama                                            | **Mulai belajar**                                                       |
 | Tombol tantangan                                             | **Tantangan Harian**                                                    |
 | Tombol latihan cepat                                         | **Mode Kilat**                                                          |
-| Tombol Kode Khusus, jalur aktif                              | **Kode Khusus** diikuti **· 6 perlu diulang** jika ada                  |
+| Tombol Kode diplomat, jalur aktif                            | **Kode diplomat** diikuti **· 6 perlu diulang** jika ada                |
 | Ikon sinkronisasi, sudah tersinkron                          | Ikon tanpa teks; saat ditekan: **Tersinkron 3 menit lalu**              |
 | Ikon sinkronisasi, ada yang menunggu                         | Ikon dengan titik; saat ditekan: **12 perubahan menunggu sinkronisasi** |
 | Memuat data di perangkat baru                                | **Menyiapkan data belajar…**                                            |
@@ -126,16 +137,16 @@ Tidak ada tombol **Latihan lagi** pada keadaan kosong setelah sesi harian selesa
 | Jawaban benar                             | **Benar**                                                                         |
 | Jawaban diterima dengan koreksi ejaan     | **Benar · ejaan diperbaiki** diikuti nama bakunya                                 |
 | Jawaban benar dengan penulisan tidak baku | **Benar** diikuti **Penulisan baku: Bukittinggi**                                 |
-| Jawaban benar untuk soal kode → daerah    | **Benar** diikuti **Juga benar: Medan, Deli Serdang, Tebing Tinggi**              |
+| Jawaban benar untuk soal Tebak daerah     | **Benar** diikuti **Juga benar: Medan, Deli Serdang, Tebing Tinggi**              |
 | Keanggotaan daerah belum terverifikasi    | **Data daerah ini belum terverifikasi penuh. Soal ini tidak dihitung.**           |
 | Jawaban salah                             | **Belum tepat**                                                                   |
 | Batas waktu habis                         | **Waktu habis**                                                                   |
 | Menampilkan jawaban                       | **Jawaban: Bengkulu**                                                             |
 | Level diturunkan manual                   | **Tidak memengaruhi jadwal**                                                      |
 | Level dinaikkan manual                    | **Dihitung penuh** — tetap tunduk syarat waktunya diulang dan aturan mode/sibling |
-| Uji penguasaan otomatis                   | **Uji penguasaan · jawab tanpa petunjuk**                                         |
+| Uji penguasaan otomatis                   | **Uji penguasaan · mulai mengetik dalam {detik} detik**                           |
 | Perkenalan tanpa pilihan cukup            | **Kenali kode ini** diikuti daerahnya; tanpa kolom tebakan                        |
-| Himpunan mencapai batas input             | **64 jawaban sudah dicatat. Hasil dihitung sekarang.**                            |
+| Himpunan mencapai batas input             | **{batas} jawaban sudah dicatat. Hasil dihitung sekarang.**                       |
 | Tombol batal di bawah hasil jawaban       | **Batalkan jawaban**                                                              |
 | Jawaban terakhir dibatalkan               | **Jawaban dibatalkan**                                                            |
 | Lanjut dengan keyboard                    | **Enter untuk lanjut**                                                            |
@@ -146,6 +157,20 @@ Tidak ada tombol **Latihan lagi** pada keadaan kosong setelah sesi harian selesa
 Untuk jawaban salah, UI menampilkan **Belum tepat** diikuti jawaban yang benar. Sistem tidak memakai teks seperti "Salah besar", "Coba lagi", atau pesan motivasional acak karena tidak menambah informasi.
 
 Tampilkan dampak perubahan level pada kedua arah. **Dihitung penuh** berarti hasil dapat memengaruhi jadwal jika syarat waktu pengulangan dan aturan mode terpenuhi; **Tidak memengaruhi jadwal** digunakan saat level diturunkan. Label harus sesuai hasil perhitungan, bukan menjanjikan perubahan jadwal pada setiap jawaban.
+
+**Label dan kalimat soal.** Label tampil kecil di atas pertanyaan.
+
+| Jenis soal                    | Label                         | Kalimat soal                                                                             |
+| ----------------------------- | ----------------------------- | ---------------------------------------------------------------------------------------- |
+| Tebak daerah                  | **Tebak daerah**              | **BK dipakai daerah mana?**                                                              |
+| Tebak kode                    | **Tebak kode**                | **Kode pelat Kabupaten Tangerang?**                                                      |
+| Tebak berwaktu                | **Tebak berwaktu**            | **BK dipakai daerah mana?** diikuti hitung mundur **{detik} detik** sampai input pertama |
+| Sebutkan sebanyak mungkin     | **Sebutkan sebanyak mungkin** | **Sebutkan daerah yang memakai BK.**                                                     |
+| Benar atau salah              | **Benar atau salah**          | **BK dipakai Kota Medan.** Tombol: **Benar** · **Salah**                                 |
+| Mana yang bukan               | **Mana yang bukan**           | **Mana yang tidak memakai BK?**                                                          |
+| Bandingkan Kode               | **Bandingkan Kode**           | **BK atau BB: Kota Sibolga?**                                                            |
+| Tebak diplomat, dari kode     | **Tebak diplomat**            | **CD 49 dipakai perwakilan mana?**                                                       |
+| Tebak diplomat, dari pemegang | **Tebak diplomat**            | **Berapa kode CD untuk Jepang?**                                                         |
 
 ### 3.4 Layar sambutan dan Tentang
 
@@ -160,7 +185,7 @@ Tampilkan dampak perubahan level pada kedua arah. **Dihitung penuh** berarti has
 | Tautan kebijakan               | **Kebijakan privasi**                                                                                                             |
 | Tautan laporan                 | **Laporkan data yang keliru**                                                                                                     |
 | Ajakan login di layar akhir    | **Progres ini hanya tersimpan di perangkat ini. Masuk untuk menyimpannya di akun.** Tombol: **Masuk** · **Nanti saja**            |
-| Email tidak kunjung datang     | **Belum menerima email? Cek folder spam, atau kirim ulang dalam 60 detik.**                                                       |
+| Email tidak kunjung datang     | **Belum menerima email? Cek folder spam, atau kirim ulang dalam {detik} detik.**                                                  |
 | CAPTCHA meminta interaksi      | Teks bawaan penyedia CAPTCHA, tanpa tambahan                                                                                      |
 | Persetujuan saat login pertama | **Dengan masuk, email dan riwayat latihan disimpan untuk sinkronisasi. Baca kebijakan privasi.** Tombol: **Setuju dan lanjutkan** |
 
@@ -169,7 +194,7 @@ Tampilkan dampak perubahan level pada kedua arah. **Dihitung penuh** berarti has
 | Situasi                      | Teks UI                                                                                                                  |
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
 | Tawaran di pembukaan pertama | **Sudah tahu sebagian kode pelat? Tes singkat ini memindahkan kode yang sudah dikenal langsung ke pengulangan.**         |
-| Keterangan                   | **Sekitar 3 menit · maksimal 28 soal · tanpa penilaian per soal**                                                        |
+| Keterangan                   | **Sekitar {menit} menit · maksimal {batas} soal · tanpa penilaian per soal**                                             |
 | Tombol                       | **Mulai tes** · **Lewati, mulai dari awal**                                                                              |
 | Tombol lewati soal           | **Tidak tahu**                                                                                                           |
 | Hasil                        | **Tingkat: Menengah · sekitar {persentase}% kode sudah dikenal**                                                         |
@@ -182,28 +207,28 @@ Tingkat tidak ditampilkan di beranda dan tidak dipakai sebagai label pengguna. T
 
 ### 3.6 Pratinjau sesi
 
-| Situasi                      | Teks UI                                                                           |
-| ---------------------------- | --------------------------------------------------------------------------------- |
-| Judul sesi harian            | **Sesi hari ini**                                                                 |
-| Judul Latihan Terfokus       | **Latihan Terfokus · Kawasan Maluku**                                             |
-| Jumlah soal                  | **18 soal · 12 pengulangan · 4 materi baru · 2 Bandingkan Kode**                  |
-| Jenis soal                   | **Kode → daerah · 11**, **Daerah → kode · 4**, **Tanpa Petunjuk · 3**             |
-| Tingkat kesulitan            | **Level 1 · 4**, **Level 2 · 10**, **Level 3 · 4**                                |
-| Estimasi                     | **Sekitar 6–9 menit waktu aktif**                                                 |
-| Pengulangan berikutnya       | **Pengulangan berikutnya tersedia pukul {waktu}.**                                |
-| Sesi himpunan                | **Sebutkan sebanyak mungkin · {kode}**; jumlah satu soal dan estimasi waktu aktif |
-| Estimasi sangat singkat      | **Kurang dari 1 menit**                                                           |
-| Info: materi baru dijeda     | **Materi baru dijeda hari ini agar sesi tetap ringan.**                           |
-| Info: tingkat naik           | **Tingkat naik ke Mahir. Materi baru per hari sekarang 12.**                      |
-| Info: tingkat turun          | **Tingkat disesuaikan ke Menengah. Materi baru per hari sekarang 10.**            |
-| Info: Tanpa Petunjuk         | **3 soal Tanpa Petunjuk: mulai mengetik dalam 8 detik.**                          |
-| Info: kartu Sulit Dikuasai   | **2 kode Sulit Dikuasai menampilkan petunjuk lebih dulu.**                        |
-| Info: soal dari luar Cakupan | **5 soal dari luar Cakupan karena sudah waktunya diulang.**                       |
-| Info: pintasan keyboard      | **Enter untuk menjawab · Z untuk membatalkan** — hanya untuk pengguna keyboard    |
-| Tombol                       | **Mulai** · **Kembali**                                                           |
-| Mode Kilat                   | **60 detik · jawab sebanyak mungkin** diikuti rekor wilayah itu                   |
-| Tantangan Harian             | **{jumlahSoal} soal · sekali sehari** — paling banyak 5                           |
-| Sesi Kode Khusus             | **Kode Khusus · kode negara CD**; jumlah soal, jenis, level, dan estimasi mengikuti sesi harian |
+| Situasi                      | Teks UI                                                                                                    |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Judul sesi harian            | **Sesi hari ini**                                                                                          |
+| Judul Latihan Terfokus       | **Latihan Terfokus · Kawasan Maluku**                                                                      |
+| Jumlah soal                  | **18 soal · 12 pengulangan · 4 materi baru · 2 Bandingkan Kode**                                           |
+| Jenis soal                   | **Tebak daerah · 11**, **Tebak kode · 4**, **Tebak berwaktu · 3**                                          |
+| Tingkat kesulitan            | **Level 1 · 4**, **Level 2 · 10**, **Level 3 · 4**                                                         |
+| Estimasi                     | **Sekitar 6–9 menit waktu aktif**                                                                          |
+| Pengulangan berikutnya       | **Pengulangan berikutnya tersedia pukul {waktu}.**                                                         |
+| Sesi himpunan                | **Sebutkan sebanyak mungkin · {kode}**; jumlah satu soal dan estimasi waktu aktif                          |
+| Estimasi sangat singkat      | **Kurang dari 1 menit**                                                                                    |
+| Info: materi baru dijeda     | **Materi baru dijeda hari ini agar sesi tetap ringan.**                                                    |
+| Info: tingkat naik           | **Tingkat naik ke {tingkat}. Materi baru per hari sekarang {batas}.**                                      |
+| Info: tingkat turun          | **Tingkat disesuaikan ke {tingkat}. Materi baru per hari sekarang {batas}.**                               |
+| Info: Tebak berwaktu         | **{jumlah} soal Tebak berwaktu: mulai mengetik dalam {detik} detik.**                                      |
+| Info: kartu Sulit Dikuasai   | **2 kode Sulit Dikuasai menampilkan jawabannya dulu untuk dipelajari ulang.**                              |
+| Info: soal dari luar Cakupan | **5 soal dari luar Cakupan karena sudah waktunya diulang.**                                                |
+| Info: pintasan keyboard      | **Enter untuk menjawab · Z untuk membatalkan** — hanya untuk pengguna keyboard                             |
+| Tombol                       | **Mulai** · **Kembali**                                                                                    |
+| Mode Kilat                   | **{detik} detik · jawab sebanyak mungkin** diikuti rekor wilayah itu                                       |
+| Tantangan Harian             | **{jumlahSoal} soal · sekali sehari** — paling banyak 5                                                    |
+| Sesi Kode diplomat           | **Kode diplomat · kode negara di pelat CD**; jumlah soal, jenis, level, dan estimasi mengikuti sesi harian |
 
 Pratinjau memakai angka, bukan kalimat panjang (aturan 8 di bagian 2 dokumen ini). Jika tidak ada info penting yang berlaku, bagian info tidak ditampilkan sama sekali.
 
@@ -235,15 +260,15 @@ Ringkasan Latihan Terfokus tidak menampilkan perubahan penguasaan wilayah, karen
 
 ### 3.9 Kartu Sulit Dikuasai
 
-| Situasi                                | Teks UI                                                                  |
-| -------------------------------------- | ------------------------------------------------------------------------ |
-| Penanda pada soal                      | **Sulit Dikuasai**                                                       |
-| Petunjuk tampil lebih dulu             | **Kode ini beberapa kali terlewat. Petunjuknya ditampilkan lebih dulu.** |
-| Kartu mencapai batas dan dinonaktifkan | **Kode ini dinonaktifkan sementara. Tinjau di halaman statistik.**       |
-| Tombol peninjauan                      | **Tinjau kartu**                                                         |
-| Diaktifkan kembali                     | **Kode ini diaktifkan kembali dan dimulai dari awal.**                   |
+| Situasi                                | Teks UI                                                                                  |
+| -------------------------------------- | ---------------------------------------------------------------------------------------- |
+| Penanda pada soal                      | **Sulit Dikuasai**                                                                       |
+| Jawaban tampil lebih dulu              | **Kode ini beberapa kali terlewat. Jawabannya ditampilkan dulu untuk dipelajari ulang.** |
+| Kartu mencapai batas dan dinonaktifkan | **Kode ini dinonaktifkan sementara. Tinjau di halaman statistik.**                       |
+| Tombol peninjauan                      | **Tinjau kode**                                                                          |
+| Diaktifkan kembali                     | **Kode ini diaktifkan kembali dan dimulai dari awal.**                                   |
 
-Pada kegagalan pengulangan keenam, aplikasi menampilkan bantuan sebelum soal. Pada kegagalan kedelapan, kartu dinonaktifkan untuk ditinjau. Kedua perubahan perlu dijelaskan singkat agar pengguna memahami mengapa tampilan atau ketersediaan kartu berubah.
+Pada kegagalan pengulangan keenam, aplikasi menampilkan jawaban lengkap sebelum soal, bukan petunjuk parsial. Pada kegagalan kedelapan, kartu dinonaktifkan untuk ditinjau. Kedua perubahan perlu dijelaskan singkat agar pengguna memahami mengapa tampilan atau ketersediaan kartu berubah.
 
 Nadanya menjelaskan keadaan kartu, bukan menilai pengguna. Pakai **beberapa kali terlewat**, bukan "kamu sering salah di kode ini".
 
@@ -256,7 +281,7 @@ Nadanya menjelaskan keadaan kartu, bukan menilai pengguna. Pakai **beberapa kali
 | Contoh isian                    | **Misalnya: DR — Dari Rinjani**                               |
 | Label saat tampil               | **Catatan pengingat**                                         |
 | Tersimpan                       | **Catatan disimpan**                                          |
-| Batas karakter terlampaui       | **Maksimal 280 karakter.**                                    |
+| Batas karakter terlampaui       | **Maksimal {batas} karakter.**                                |
 
 Tawaran catatan pengingat tidak muncul di tengah alur cepat: letaknya di bawah hasil jawaban, dan Enter tetap langsung lanjut ke soal berikutnya tanpa menyentuh tawaran itu.
 
@@ -322,16 +347,16 @@ Jika satu hari terlewat, aplikasi tidak memakai pesan seperti "Streak-mu rusak".
 
 ### 3.14 Mode Kilat
 
-| Situasi                        | Teks UI                                 |
-| ------------------------------ | --------------------------------------- |
-| Pengantar                      | **60 detik · jawab sebanyak mungkin**   |
-| Tombol                         | **Mulai**                               |
-| Waktu habis                    | **Waktu habis**                         |
-| Skor                           | **24 jawaban benar**                    |
-| Wilayah yang dimainkan         | **Mode Kilat · Kawasan Maluku**         |
-| Rekor baru                     | **Rekor baru di Kawasan Maluku: 24**    |
-| Bukan rekor baru               | **Rekor terbaik di Kawasan Maluku: 31** |
-| Belum ada rekor di wilayah ini | **Belum ada rekor untuk wilayah ini.**  |
+| Situasi                        | Teks UI                                    |
+| ------------------------------ | ------------------------------------------ |
+| Pengantar                      | **{detik} detik · jawab sebanyak mungkin** |
+| Tombol                         | **Mulai**                                  |
+| Waktu habis                    | **Waktu habis**                            |
+| Skor                           | **24 jawaban benar**                       |
+| Wilayah yang dimainkan         | **Mode Kilat · Kawasan Maluku**            |
+| Rekor baru                     | **Rekor baru di Kawasan Maluku: 24**       |
+| Bukan rekor baru               | **Rekor terbaik di Kawasan Maluku: 31**    |
+| Belum ada rekor di wilayah ini | **Belum ada rekor untuk wilayah ini.**     |
 
 Rekor baru boleh ditandai secara visual, tanpa kalimat perayaan tambahan.
 
@@ -339,20 +364,20 @@ Setiap rekor menyebut wilayahnya karena tingkat kesulitan nasional dan kawasan b
 
 ### 3.15 Referensi dan pencarian
 
-| Situasi                                      | Teks UI                                                                                  |
-| -------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| Kolom pencarian                              | **Cari kode atau wilayah…**                                                              |
-| Kode atau nama ditemukan                     | Langsung tampilkan kode, daerah, dan rincian datanya; tanpa kolom jawaban atau penilaian |
-| Tidak ada hasil                              | **Tidak ada hasil untuk "{query}".**                                                     |
-| Entri belum cukup kuat untuk latihan         | **Belum terverifikasi penuh**                                                            |
-| Data hanya untuk referensi                   | **Tersedia di Referensi, belum masuk latihan.**                                          |
-| Pencarian berulang dalam jendela deduplikasi | Hasil tetap tampil; tidak menambah Pelat Terlihat                                        |
-| Statistik Pelat Terlihat                     | **Pelat terlihat · 30 hari terakhir**                                                    |
-| Hasil kode CD                                | **CD 49 · Jepang** diikuti **Kode negara korps diplomatik · Sumber: Lampiran Perpol 7/2021 · diperiksa {tanggal}** |
-| Input CD dengan nomor urut                   | Hasil memakai kode negara saja; tanpa teks tambahan                                      |
+| Situasi                                      | Teks UI                                                                                                                                                                                                                                             |
+| -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Kolom pencarian                              | **Cari kode atau wilayah…**                                                                                                                                                                                                                         |
+| Kode atau nama ditemukan                     | Langsung tampilkan kode, daerah, dan rincian datanya; tanpa kolom jawaban atau penilaian                                                                                                                                                            |
+| Tidak ada hasil                              | **Tidak ada hasil untuk "{query}".**                                                                                                                                                                                                                |
+| Entri belum cukup kuat untuk latihan         | **Belum terverifikasi penuh**                                                                                                                                                                                                                       |
+| Data hanya untuk referensi                   | **Tersedia di Referensi, belum masuk latihan.**                                                                                                                                                                                                     |
+| Pencarian berulang dalam jendela deduplikasi | Hasil tetap tampil; tidak menambah Pelat Terlihat                                                                                                                                                                                                   |
+| Statistik Pelat Terlihat                     | **Pelat terlihat · 30 hari terakhir**                                                                                                                                                                                                               |
+| Hasil kode CD                                | **CD 49 · Jepang** diikuti **Kode negara korps diplomatik · Sumber: Lampiran Perpol 7/2021 · diperiksa {tanggal}**                                                                                                                                  |
+| Input CD dengan nomor urut                   | Hasil memakai kode negara saja; tanpa teks tambahan                                                                                                                                                                                                 |
 | Hasil pencarian RI, dengan atau tanpa nomor  | **Pelat RI dipakai kendaraan dinas Presiden, Wakil Presiden, ketua lembaga tinggi negara, dan pejabat setingkat menteri.** diikuti **Tidak ada sumber valid yang memuat daftar lengkap kode RI, dan alokasi nomornya dapat berubah sewaktu-waktu.** |
-| Hasil kode CC atau CH                        | **CC dipakai korps konsulat, CH dipakai konsul kehormatan. Tersedia di Referensi, belum masuk latihan.** |
-| Ajakan dari hasil kode CD, jalur nonaktif    | **Latih kode negara CD** — membuka pengaturan Kode Khusus; hanya tampil pada hasil CD |
+| Hasil kode CC atau CH                        | **CC dipakai korps konsulat, CH dipakai konsul kehormatan. Tersedia di Referensi, belum masuk latihan.**                                                                                                                                            |
+| Ajakan dari hasil kode CD, jalur nonaktif    | **Latih kode negara CD** — membuka pengaturan Kode diplomat; hanya tampil pada hasil CD                                                                                                                                                             |
 
 Referensi tidak memiliki Tombol menebak atau melihat jawaban, teks Benar/Belum tepat, maupun penanda dampak jadwal. Label **Tebak dulu** hanya digunakan pada Perkenalan di sesi belajar. Nilai high/medium/low tetap istilah internal; tampilkan label pengguna di tabel.
 
@@ -367,71 +392,104 @@ Referensi tidak memiliki Tombol menebak atau melihat jawaban, teks Benar/Belum t
 | `suspended` karena perlu verifikasi data    | **Dinonaktifkan · data perlu diverifikasi** |
 | `suspended` karena terlalu banyak kegagalan | **Dinonaktifkan · perlu ditinjau**          |
 
-Status detail hanya perlu muncul di halaman statistik atau pemeriksaan kartu. Status tidak ditampilkan di tiap soal karena tidak membantu proses menjawab.
+Status detail hanya perlu muncul di halaman statistik atau pemeriksaan kode. Status tidak ditampilkan di tiap soal karena tidak membantu proses menjawab.
 
 ### 3.17 Akun, sinkronisasi, dan ekspor
 
-| Situasi                          | Teks UI                                                                                                                                           |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Ajakan masuk di Statistik        | **Masuk untuk menyinkronkan progres antarperangkat**                                                                                              |
-| Tombol utama masuk               | **Masuk dengan Google**                                                                                                                           |
-| Pemisah                          | **atau**                                                                                                                                          |
-| Kolom email                      | **Email**                                                                                                                                         |
-| Tombol masuk dengan email        | **Kirim tautan dan kode masuk**                                                                                                                   |
-| Tautan terkirim                  | **Tautan dan kode masuk dikirim ke nama@email.com.**                                                                                              |
-| Kolom kode                       | **Kode 6 digit dari email**                                                                                                                       |
-| Tombol kode                      | **Masuk**                                                                                                                                         |
-| Kode salah                       | **Kode tidak cocok. Periksa lagi, atau kirim kode baru.**                                                                                         |
-| Kode atau tautan kedaluwarsa     | **Kode ini sudah kedaluwarsa. Kirim kode baru.**                                                                                                  |
-| Browser di dalam aplikasi lain   | **Masuk dengan Google tidak bisa dari browser aplikasi ini. Buka Terka di Chrome atau Safari, atau masuk dengan email.** Tombol: **Salin tautan** |
-| Login Google dibatalkan          | Tidak ada pesan; kembali ke layar masuk                                                                                                           |
-| Login Google gagal               | **Masuk dengan Google gagal. Coba lagi, atau masuk dengan email.**                                                                                |
-| Sedang offline                   | Tombol masuk nonaktif, dengan keterangan **Masuk memerlukan koneksi internet.**                                                                   |
-| Data lokal digabung ke akun      | **Riwayat di perangkat ini digabung ke akun. 1.240 jawaban ditambahkan.**                                                                         |
-| Data lokal milik akun lain       | **Data di perangkat ini milik akun lain.** Tombol: **Kembali ke akun sebelumnya** · **Hapus data di perangkat ini**                               |
-| Tersinkron                       | **Tersinkron 3 menit lalu**                                                                                                                       |
-| Ada perubahan menunggu           | **12 perubahan menunggu sinkronisasi**                                                                                                            |
-| Offline                          | **Sedang offline. Perubahan disimpan di perangkat ini.**                                                                                          |
-| Sesi masuk berakhir              | **Sesi masuk berakhir. Masuk lagi untuk melanjutkan sinkronisasi.**                                                                               |
-| Server tidak terjangkau 3 hari   | **Server sinkronisasi tidak terjangkau sejak 3 hari lalu. Latihan tetap berjalan.**                                                               |
-| Perubahan ditolak server         | **3 perubahan gagal dikirim. Data tetap tersimpan di perangkat ini dan ikut dalam ekspor.**                                                       |
-| Tombol ekspor                    | **Ekspor data**                                                                                                                                   |
-| Ekspor selesai                   | **Data diekspor**                                                                                                                                 |
-| Pengingat ekspor                 | **Ekspor terakhir sudah lebih dari 30 hari.**                                                                                                     |
-| Batas harian sinkronisasi        | **Batas pengiriman hari ini tercapai. Data tetap tersimpan dan akan dikirim setelah batas direset.**                                              |
-| Batas total penyimpanan akun     | **Batas penyimpanan akun tercapai. Data baru tetap di perangkat ini. Ekspor data untuk menyimpannya.**                                            |
-| Batas perangkat aktif            | **Akun ini sudah dipakai di 20 perangkat dalam 90 hari terakhir. Latihan tetap berjalan, dan data tersimpan di perangkat ini. Sinkronisasi dicoba lagi besok.** |
-| Kebijakan diperbarui             | **Kebijakan privasi diperbarui. Baca dan setujui untuk melanjutkan sinkronisasi.**                                                                |
-| Tombol impor                     | **Impor data**                                                                                                                                    |
-| Impor versi lama selesai         | **{ditambahkan} catatan ditambahkan. {dikeluarkan} catatan dari versi lama tidak digunakan dalam latihan ini. File asal tetap utuh.**             |
-| Pembaruan aplikasi diperlukan    | **Perbarui Terka untuk melanjutkan sinkronisasi. Data di perangkat ini tetap tersedia untuk diekspor.**                                           |
-| Impor selesai                    | **Data diimpor. 320 jawaban ditambahkan, 1.240 sudah ada.**                                                                                       |
-| File impor tidak valid           | **File ini bukan ekspor Terka. Tidak ada data yang diubah.**                                                                                      |
-| Tombol keluar                    | **Keluar**                                                                                                                                        |
-| Keluar dengan perubahan tertunda | **12 perubahan belum tersinkron. Keluar sekarang akan menghapusnya dari perangkat ini.** Tombol: **Sinkronkan dulu** · **Keluar tetap**           |
-| Tombol hapus akun                | **Hapus akun**                                                                                                                                    |
-| Konfirmasi hapus akun            | **Ketik HAPUS untuk menghapus akun dan seluruh data sinkron.**                                                                                    |
-| Akun terhapus                    | **Akun dan data sinkron sudah dihapus. Data di perangkat ini tetap ada.**                                                                         |
+| Situasi                                 | Teks UI                                                                                                                                                                  |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Ajakan masuk di Statistik               | **Masuk untuk menyinkronkan progres antarperangkat**                                                                                                                     |
+| Tombol utama masuk                      | **Masuk dengan Google**                                                                                                                                                  |
+| Pemisah                                 | **atau**                                                                                                                                                                 |
+| Kolom email                             | **Email**                                                                                                                                                                |
+| Tombol masuk dengan email               | **Kirim tautan dan kode masuk**                                                                                                                                          |
+| Tautan terkirim                         | **Tautan dan kode masuk dikirim ke nama@email.com.**                                                                                                                     |
+| Kolom kode                              | **Kode 6 digit dari email**                                                                                                                                              |
+| Tombol kode                             | **Masuk**                                                                                                                                                                |
+| Kode salah                              | **Kode tidak cocok. Periksa lagi, atau kirim kode baru.**                                                                                                                |
+| Kode atau tautan kedaluwarsa            | **Kode ini sudah kedaluwarsa. Kirim kode baru.**                                                                                                                         |
+| Browser di dalam aplikasi lain          | **Masuk dengan Google tidak bisa dari browser aplikasi ini. Buka Terka di Chrome atau Safari, atau masuk dengan email.** Tombol: **Salin tautan**                        |
+| Login Google dibatalkan                 | Tidak ada pesan; kembali ke layar masuk                                                                                                                                  |
+| Login Google gagal                      | **Masuk dengan Google gagal. Coba lagi, atau masuk dengan email.**                                                                                                       |
+| Sedang offline                          | Tombol masuk nonaktif, dengan keterangan **Masuk memerlukan koneksi internet.**                                                                                          |
+| Data lokal digabung ke akun             | **Riwayat di perangkat ini digabung ke akun. 1.240 jawaban ditambahkan.**                                                                                                |
+| Data lokal milik akun lain              | **Data di perangkat ini milik akun lain.** Tombol: **Kembali ke akun sebelumnya** · **Hapus data di perangkat ini**                                                      |
+| Tersinkron                              | **Tersinkron 3 menit lalu**                                                                                                                                              |
+| Ada perubahan menunggu                  | **12 perubahan menunggu sinkronisasi**                                                                                                                                   |
+| Offline                                 | **Sedang offline. Perubahan disimpan di perangkat ini.**                                                                                                                 |
+| Sesi masuk berakhir                     | **Sesi masuk berakhir. Masuk lagi untuk melanjutkan sinkronisasi.**                                                                                                      |
+| Server tidak terjangkau {hari} hari     | **Server sinkronisasi tidak terjangkau sejak {hari} hari lalu. Latihan tetap berjalan.**                                                                                 |
+| Perubahan ditolak server                | **3 perubahan gagal dikirim. Data tetap tersimpan di perangkat ini dan ikut dalam ekspor.**                                                                              |
+| Tombol ekspor                           | **Ekspor data**                                                                                                                                                          |
+| Ekspor selesai                          | **Data diekspor**                                                                                                                                                        |
+| Pengingat ekspor                        | **Ekspor terakhir sudah lebih dari {hari} hari.**                                                                                                                        |
+| Batas harian sinkronisasi               | **Batas pengiriman hari ini tercapai. Data tetap tersimpan dan akan dikirim setelah batas direset.**                                                                     |
+| Batas total penyimpanan akun            | **Batas penyimpanan akun tercapai. Data baru tetap di perangkat ini. Ekspor data untuk menyimpannya.**                                                                   |
+| Batas perangkat aktif                   | **Akun ini sudah dipakai di {batas} perangkat dalam {hari} hari terakhir. Latihan tetap berjalan, dan data tersimpan di perangkat ini. Sinkronisasi dicoba lagi besok.** |
+| Kebijakan diperbarui                    | **Kebijakan privasi diperbarui. Baca dan setujui untuk melanjutkan sinkronisasi.**                                                                                       |
+| Tombol impor                            | **Impor data**                                                                                                                                                           |
+| Impor versi lama selesai                | **{ditambahkan} catatan ditambahkan. {dikeluarkan} catatan dari versi lama tidak digunakan dalam latihan ini. File asal tetap utuh.**                                    |
+| Pembaruan aplikasi diperlukan           | **Perbarui Terka untuk melanjutkan sinkronisasi. Data di perangkat ini tetap tersedia untuk diekspor.**                                                                  |
+| Perangkat lain memakai versi lebih baru | **Perangkat lain memakai Terka versi baru. Perbarui Terka untuk melanjutkan sinkronisasi. Latihan tetap berjalan.**                                                      |
+| Pendaftaran akun baru ditutup           | **Sinkronisasi untuk akun baru sedang ditutup sementara. Latihan tetap berjalan, dan data tersimpan di perangkat ini.**                                                  |
+| Klaim riwayat besar dikirim bertahap    | **Riwayat di perangkat ini dikirim bertahap. {terkirim} dari {total} jawaban sudah tersinkron.**                                                                         |
+| Impor selesai                           | **Data diimpor. 320 jawaban ditambahkan, 1.240 sudah ada.**                                                                                                              |
+| File impor tidak valid                  | **File ini bukan ekspor Terka. Tidak ada data yang diubah.**                                                                                                             |
+| Tombol keluar                           | **Keluar**                                                                                                                                                               |
+| Keluar dengan perubahan tertunda        | **12 perubahan belum tersinkron. Keluar sekarang akan menghapusnya dari perangkat ini.** Tombol: **Sinkronkan dulu** · **Keluar tetap**                                  |
+| Tombol hapus akun                       | **Hapus akun**                                                                                                                                                           |
+| Konfirmasi hapus akun                   | **Ketik HAPUS untuk menghapus akun dan seluruh data sinkron.**                                                                                                           |
+| Akun terhapus                           | **Akun dan data sinkron sudah dihapus. Data di perangkat ini tetap ada.**                                                                                                |
 
 Status sinkronisasi bernada informatif. Selama latihan tetap berjalan, tidak ada keadaan sinkronisasi yang perlu ditampilkan sebagai peringatan merah.
 
-### 3.18 Kode Khusus
+### 3.18 Kode Khusus dan Kode diplomat
 
-| Situasi                                   | Teks UI                                                                                                   |
-| ----------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| Pengaturan, judul                         | **Latihan Kode Khusus**                                                                                   |
-| Pengaturan, penjelasan                    | **Latih kode negara pada pelat CD. Jadwal dan materi barunya terpisah dari latihan wilayah.**             |
-| Pengaturan, batas data                    | **Nomor urut di belakang kode negara tidak dilatih.**                                                     |
-| Jalur dinonaktifkan, masih ada kartu      | **Materi baru berhenti. Soal yang sudah dipelajari tetap muncul saat perlu diulang.**                     |
-| Soal CD → pemegang                        | **CD 49 dipakai perwakilan mana?**                                                                         |
-| Soal pemegang → CD                        | **Berapa kode CD untuk Jepang?**                                                                           |
-| Petunjuk Level 2, pemegang                | **Negara · J…** atau **Organisasi · U…**                                                                   |
-| Petunjuk Level 2, kode                    | **CD 4…**                                                                                                  |
-| Jawaban kode dengan angka tambahan        | **Belum tepat** diikuti **Cukup kode negaranya: CD 49**                                                    |
-| Semua materi baru diperkenalkan           | **Semua kode negara CD sudah diperkenalkan.**                                                              |
-| Materi baru kode khusus dijeda            | **Materi baru Kode Khusus dijeda hari ini agar sesi tetap ringan.**                                        |
-| Kartu dinonaktifkan karena data berubah   | **Pemegang kode ini berubah. Kartu lama dinonaktifkan; data terbaru ada di Referensi.**                   |
-| Statistik penguasaan                      | **CD · 42 dari 130 dikuasai**                                                                              |
+| Situasi                                 | Teks UI                                                                                       |
+| --------------------------------------- | --------------------------------------------------------------------------------------------- |
+| Pengaturan, judul                       | **Latihan Kode diplomat**                                                                     |
+| Pengaturan, penjelasan                  | **Latih kode negara pada pelat CD. Jadwal dan materi barunya terpisah dari latihan wilayah.** |
+| Pengaturan, batas data                  | **Nomor urut di belakang kode negara tidak dilatih.**                                         |
+| Jalur dinonaktifkan, masih ada kartu    | **Materi baru berhenti. Soal yang sudah dipelajari tetap muncul saat perlu diulang.**         |
+| Soal Tebak diplomat, dari kode          | **CD 49 dipakai perwakilan mana?**                                                            |
+| Soal Tebak diplomat, dari pemegang      | **Berapa kode CD untuk Jepang?**                                                              |
+| Jawaban kode dengan angka tambahan      | **Belum tepat** diikuti **Cukup kode negaranya: CD 49**                                       |
+| Semua materi baru diperkenalkan         | **Semua kode negara CD sudah diperkenalkan.**                                                 |
+| Materi baru Kode diplomat dijeda        | **Materi baru Kode diplomat dijeda hari ini agar sesi tetap ringan.**                         |
+| Kartu dinonaktifkan karena data berubah | **Pemegang kode ini berubah. Soal lamanya dinonaktifkan; data terbaru ada di Referensi.**     |
+
+**Kode Khusus di Referensi.** Semua pelat tanpa wilayah dirangkum dalam satu daftar. Setiap baris berisi contoh pelat dari lampiran Perpol, nama pemakai, dan status di Terka.
+
+| Bagian         | Teks UI                                                                                                  |
+| -------------- | -------------------------------------------------------------------------------------------------------- |
+| Label kategori | **KODE KHUSUS**                                                                                          |
+| Judul          | **Pelat tanpa wilayah**                                                                                  |
+| Baris CD       | Pelat **CD 12 5** · **Korps diplomatik dan organisasi internasional** · status **Latihan dan Referensi** |
+| Baris CC       | Pelat **CC 12 10** · **Korps konsulat** · status **Referensi saja**                                      |
+| Baris CH       | Pelat **CH 130 1** · **Konsul kehormatan** · status **Referensi saja**                                   |
+| Baris RI       | Pelat **RI 1** · **Pejabat negara** · status **Hanya format**                                            |
+
+Status **Latihan dan Referensi** ditandai titik hijau; dua status lain memakai titik abu-abu.
+
+**Kode diplomat di Statistik.**
+
+| Bagian         | Teks UI                                          |
+| -------------- | ------------------------------------------------ |
+| Label kategori | **KODE KHUSUS**                                  |
+| Judul          | **Kode diplomat**                                |
+| Angka utama    | **{dikuasai}** diikuti **dari {total} dikuasai** |
+| Catatan kaki   | **Dihitung terpisah dari penguasaan wilayah.**   |
+
+**Daftar Kode diplomat di Referensi.**
+
+| Bagian         | Teks UI                                                                                             |
+| -------------- | --------------------------------------------------------------------------------------------------- |
+| Label kategori | **KODE DIPLOMAT**                                                                                   |
+| Ringkasan      | **{total}** · **entri**, **CD {pertama}** · **kode pertama**, **CD {terakhir}** · **kode terakhir** |
+| Baris entri    | **CD {kode}**, bendera, nama pemegang, lalu tipe **negara** atau **organisasi** di kanan            |
+| Nomor kosong   | **Nomor {nomor} tidak tercantum di lampiran.** Tampil di bawah rentang yang memuat nomor itu        |
+
+Contoh render dengan data sekarang: **130 entri**, **CD 12** sampai **CD 145**, dan nomor kosong 46, 91, 119, serta 124 (`Terka_Kode_Khusus.md` bagian 1).
 
 ### 3.19 Pesan Kesalahan dan Kegagalan
 
