@@ -549,6 +549,7 @@ export function setCardSuspended(
 	if (!card) throw new Error("Card not found");
 	if (!suspended && !cardEligible(card, content))
 		throw new Error("Verify card content before reactivation");
+	if (suspended && card.state === "suspended") return progress;
 	if (suspended) {
 		if (card.state !== "suspended") card.resumeState = card.state;
 		card.state = "suspended";
