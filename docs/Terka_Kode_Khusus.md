@@ -1,7 +1,8 @@
 # TERKA — Data Kode Khusus CD dan Bahan Fakta RI
 
 **Status:** Draf · **Bahasa:** Indonesia
-**Dokumen terkait:** PRD 6.8 (Referensi) dan 6.16 (Latihan Kode Khusus) · SRD 2.9 dan 5.3 (aturan soal dan penilaian) · TRD 4.1 (`specials[]` dan `referencePlates[]`) · `special_plates.json` (data siap impor)
+**Versi data kode khusus:** 2026.09.24
+**Dokumen terkait:** PRD 6.8 (Referensi) dan 6.16 (Latihan Kode Khusus) · SRD 2.9 dan 5.3 (aturan soal dan penilaian) · TRD 4.1 (`specials[]` dan `referencePlates[]`) · `plates.json` (hasil build dari dokumen ini)
 
 > **Slogan:** Lihat pelatnya, terka asalnya.
 > **Fokus dokumen ini:** daftar kode negara CD yang menjadi materi latihan, bahan fakta pelat RI, sumber setiap entri, dan batas keandalannya. Pemeriksaan sumber dilakukan pada 24 September 2026.
@@ -18,12 +19,12 @@
 
 ## 2. Format Pelat Khusus
 
-| Kode | Pemakai                                                                          | Susunan menurut Perpol 7/2021                | Contoh di lampiran | Status di Terka         |
-| ---- | -------------------------------------------------------------------------------- | -------------------------------------------- | ------------------ | ----------------------- |
-| CD   | Korps diplomatik dan perwakilan tetap organisasi internasional                   | CD + kode negara + nomor urut registrasi     | CD 12 5            | Latihan dan Referensi   |
-| CC   | Korps konsulat                                                                   | CC + kode negara + nomor urut registrasi     | CC 12 10           | Referensi saja          |
-| CH   | Konsul kehormatan                                                                | CH + kode negara + nomor urut registrasi     | CH 130 1           | Referensi saja          |
-| RI   | Presiden, Wakil Presiden, ketua lembaga tinggi negara, pejabat setingkat menteri | RI + nomor urut registrasi, tanpa seri huruf | RI 1               | Referensi (format saja) |
+| Kode | Pemakai | Susunan menurut Perpol 7/2021 | Contoh di lampiran | Status di Terka | Sumber | Catatan |
+| --- | --- | --- | --- | --- | --- | --- |
+| CD | Korps diplomatik dan perwakilan tetap organisasi internasional | CD + kode negara + nomor urut registrasi | CD 12 5 | Latihan dan Referensi | `perpol-7-2021-lampiran` | — |
+| CC | Korps konsulat | CC + kode negara + nomor urut registrasi | CC 12 10 | Referensi saja | `perpol-7-2021-lampiran` | — |
+| CH | Konsul kehormatan | CH + kode negara + nomor urut registrasi | CH 130 1 | Referensi saja | `perpol-7-2021-lampiran` | — |
+| RI | Presiden, Wakil Presiden, ketua lembaga tinggi negara, pejabat setingkat menteri | RI + nomor urut registrasi, tanpa seri huruf | RI 1 | Referensi (format saja) | `perpol-7-2021-lampiran` | Tidak ada sumber valid yang memuat daftar lengkap kode RI, dan alokasi nomornya dapat berubah sewaktu-waktu. |
 
 Latihan hanya menanyakan **kode negara** pada CD. Nomor urut registrasi di belakang kode negara, misalnya 05 pada CD 12 05, tidak pernah ditanyakan. Beberapa artikel menyebut nomor urut 01 selalu milik duta besar, tetapi lampiran Perpol tidak memuat aturan itu.
 
@@ -45,140 +46,140 @@ Sumber jenis `media-mengutip-instansi` wajib dilengkapi tautan unggahan asli ins
 
 Sumber seluruh baris: `perpol-7-2021-lampiran`, Lampiran huruf D angka 4, hlm. 99–102. Kolom **Tertulis di lampiran** menyalin ejaan sumber, termasuk salah ketik seperti "Kazakhtan" dan "Inter-Paliamentary". Kolom **Pemegang** memakai nama baku yang ditampilkan aplikasi. Kolom **Alias** berisi nama lain yang diterima saat pengguna mengetik. Kolom **Tipe** memakai label UI; di data nilainya `country` atau `organization`.
 
-| Kode   | Pemegang (nama tampil) | Tipe       | Tertulis di lampiran                                                      | Alias yang diterima                                                        |
-| ------ | ---------------------- | ---------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| CD 12  | Amerika Serikat        | negara     | Amerika Serikat                                                           | AS, USA, United States, Amerika                                            |
-| CD 13  | India                  | negara     | India                                                                     | —                                                                          |
-| CD 14  | Prancis                | negara     | Perancis                                                                  | Perancis, France                                                           |
-| CD 15  | Inggris                | negara     | Inggris                                                                   | Britania Raya, Kerajaan Inggris, UK, United Kingdom                        |
-| CD 16  | Filipina               | negara     | Filipina                                                                  | Philippines                                                                |
-| CD 17  | Vatikan                | negara     | Vatikan                                                                   | Takhta Suci, Tahta Suci, Holy See                                          |
-| CD 18  | Australia              | negara     | Australia                                                                 | —                                                                          |
-| CD 19  | Norwegia               | negara     | Norwegia                                                                  | Norway                                                                     |
-| CD 20  | Irak                   | negara     | Irak                                                                      | Iraq                                                                       |
-| CD 21  | Pakistan               | negara     | Pakistan                                                                  | —                                                                          |
-| CD 22  | Belgia                 | negara     | Belgia                                                                    | Belgium                                                                    |
-| CD 23  | Myanmar                | negara     | Myanmar                                                                   | Burma                                                                      |
-| CD 24  | Uni Emirat Arab        | negara     | Uni Emirat Arab                                                           | UEA, UAE, Emirat Arab                                                      |
-| CD 25  | Tiongkok               | negara     | China                                                                     | China, Cina, RRT, Republik Rakyat Tiongkok, RRC                            |
-| CD 26  | Swedia                 | negara     | Swedia                                                                    | Sweden                                                                     |
-| CD 27  | Arab Saudi             | negara     | Saudi Arabia                                                              | Saudi Arabia, Saudi                                                        |
-| CD 28  | Thailand               | negara     | Thailand                                                                  | Muangthai                                                                  |
-| CD 29  | Mesir                  | negara     | Mesir                                                                     | Egypt                                                                      |
-| CD 30  | Italia                 | negara     | Italia                                                                    | Italy                                                                      |
-| CD 31  | Swiss                  | negara     | Swiss                                                                     | Switzerland                                                                |
-| CD 32  | Jerman                 | negara     | Jerman                                                                    | Germany                                                                    |
-| CD 33  | Sri Lanka              | negara     | Srilanka                                                                  | Srilanka                                                                   |
-| CD 34  | Denmark                | negara     | Denmark                                                                   | —                                                                          |
-| CD 35  | Kanada                 | negara     | Kanada                                                                    | Canada                                                                     |
-| CD 36  | Brasil                 | negara     | Brazil                                                                    | Brazil                                                                     |
-| CD 37  | Rusia                  | negara     | Rusia                                                                     | Russia, Federasi Rusia                                                     |
-| CD 38  | Afganistan             | negara     | Afganistan                                                                | Afghanistan                                                                |
-| CD 39  | Serbia                 | negara     | Serbia                                                                    | —                                                                          |
-| CD 40  | Ceko                   | negara     | Ceko                                                                      | Republik Ceko, Czech, Cheko                                                |
-| CD 41  | Finlandia              | negara     | Finlandia                                                                 | Finland                                                                    |
-| CD 42  | Meksiko                | negara     | Meksiko                                                                   | Mexico                                                                     |
-| CD 43  | Hungaria               | negara     | Hungaria                                                                  | Hungary                                                                    |
-| CD 44  | Polandia               | negara     | Polandia                                                                  | Poland                                                                     |
-| CD 45  | Iran                   | negara     | Iran                                                                      | —                                                                          |
-| CD 47  | Malaysia               | negara     | Malaysia                                                                  | —                                                                          |
-| CD 48  | Turki                  | negara     | Turki                                                                     | Turkiye, Türkiye, Turkey                                                   |
-| CD 49  | Jepang                 | negara     | Jepang                                                                    | Japan                                                                      |
-| CD 50  | Bulgaria               | negara     | Bulgaria                                                                  | —                                                                          |
-| CD 51  | Kamboja                | negara     | Kamboja                                                                   | Cambodia                                                                   |
-| CD 52  | Argentina              | negara     | Argentina                                                                 | —                                                                          |
-| CD 53  | Rumania                | negara     | Rumania                                                                   | Romania                                                                    |
-| CD 54  | Yunani                 | negara     | Yunani                                                                    | Greece                                                                     |
-| CD 55  | Yordania               | negara     | Yordania                                                                  | Jordan, Yordan                                                             |
-| CD 56  | Austria                | negara     | Austria                                                                   | —                                                                          |
-| CD 57  | Suriah                 | negara     | Syria                                                                     | Syria, Siria                                                               |
-| CD 58  | UNDP                   | organisasi | United Nations Development Programme (UNDP)                               | United Nations Development Programme, Program Pembangunan PBB              |
-| CD 59  | Selandia Baru          | negara     | Selandia Baru                                                             | New Zealand                                                                |
-| CD 60  | Belanda                | negara     | Belanda                                                                   | Netherlands, Nederland                                                     |
-| CD 61  | Yaman                  | negara     | Yaman                                                                     | Yemen                                                                      |
-| CD 62  | UPU                    | organisasi | Universal Postal Union (UPU)                                              | Universal Postal Union, Uni Pos Sedunia                                    |
-| CD 63  | Portugal               | negara     | Portugal                                                                  | —                                                                          |
-| CD 64  | Aljazair               | negara     | Aljazair                                                                  | Algeria                                                                    |
-| CD 65  | Korea Utara            | negara     | Korea Utara                                                               | RRDK, Republik Rakyat Demokratik Korea, DPRK                               |
-| CD 66  | Vietnam                | negara     | Vietnam                                                                   | Viet Nam                                                                   |
-| CD 67  | Singapura              | negara     | Singapura                                                                 | Singapore                                                                  |
-| CD 68  | Spanyol                | negara     | Spanyol                                                                   | Spain                                                                      |
-| CD 69  | Bangladesh             | negara     | Bangladesh                                                                | —                                                                          |
-| CD 70  | Panama                 | negara     | Panama                                                                    | —                                                                          |
-| CD 71  | UNICEF                 | organisasi | United Nations International Children's Emergency Fund (UNICEF)           | United Nations Children's Fund                                             |
-| CD 72  | UNESCO                 | organisasi | United Nations Educational, Scientific and Cultural Organization (UNESCO) | —                                                                          |
-| CD 73  | FAO                    | organisasi | Food and Agriculture Organization (FAO)                                   | Food and Agriculture Organization, Organisasi Pangan dan Pertanian         |
-| CD 74  | WHO                    | organisasi | World Health Organization (WHO)                                           | World Health Organization, Organisasi Kesehatan Dunia                      |
-| CD 75  | Korea Selatan          | negara     | Korea Selatan                                                             | Republik Korea, South Korea, Korsel                                        |
-| CD 76  | ADB                    | organisasi | Asian Development Bank (ADB)                                              | Asian Development Bank, Bank Pembangunan Asia                              |
-| CD 77  | Bank Dunia             | organisasi | International Bank for Reconstruction and Development (IBRD)/Bank Dunia   | IBRD, World Bank                                                           |
-| CD 78  | IMF                    | organisasi | International Monetary Fund (IMF)                                         | International Monetary Fund, Dana Moneter Internasional                    |
-| CD 79  | ILO                    | organisasi | International Labour Organisation (ILO)                                   | International Labour Organization, Organisasi Buruh Internasional          |
-| CD 80  | Papua Nugini           | negara     | Papua Nugini                                                              | Papua New Guinea, PNG                                                      |
-| CD 81  | Nigeria                | negara     | Nigeria                                                                   | —                                                                          |
-| CD 82  | Cile                   | negara     | Chili                                                                     | Chili, Chile                                                               |
-| CD 83  | UNHCR                  | organisasi | United Nations High Commissioner for Refugees (UNHCR)                     | Badan Pengungsi PBB                                                        |
-| CD 84  | WFP                    | organisasi | World Food Programme (WFP)                                                | World Food Programme, Program Pangan Dunia                                 |
-| CD 85  | Venezuela              | negara     | Venezuela                                                                 | —                                                                          |
-| CD 86  | ESCAP                  | organisasi | Economic and Social Commission for Asia and the Pacific (ESCAP)           | UNESCAP                                                                    |
-| CD 87  | Kolombia               | negara     | Kolombia                                                                  | Colombia                                                                   |
-| CD 88  | Brunei Darussalam      | negara     | Brunei Darussalam                                                         | Brunei                                                                     |
-| CD 89  | UNIC                   | organisasi | United Nations Information Center (UNIC)                                  | United Nations Information Centre, Pusat Informasi PBB                     |
-| CD 90  | IFC                    | organisasi | International Finance Corporation (IFC)                                   | International Finance Corporation                                          |
-| CD 92  | PTRI untuk ASEAN       | organisasi | Perutusan Tetap Republik Indonesia (PTRI) ASEAN                           | PTRI ASEAN, Perutusan Tetap RI untuk ASEAN                                 |
-| CD 93  | Fiji                   | negara     | Fiji                                                                      | —                                                                          |
-| CD 94  | Belarus                | negara     | Belarus                                                                   | Belarusia                                                                  |
-| CD 95  | Kazakhstan             | negara     | Kazakhtan                                                                 | Kazakhtan, Kazakstan                                                       |
-| CD 96  | UNIDO                  | organisasi | United Nations Industrial Development Organization (UNIDO)                | —                                                                          |
-| CD 97  | ICRC                   | organisasi | International Committee of the Red Cross (ICRC)                           | Komite Internasional Palang Merah                                          |
-| CD 98  | Maroko                 | negara     | Maroko                                                                    | Morocco                                                                    |
-| CD 99  | Uni Eropa              | organisasi | Uni Eropa                                                                 | UE, EU, European Union                                                     |
-| CD 100 | Sekretariat ASEAN      | organisasi | Association of Southeast Asian Nations (ASEAN)                            | ASEAN                                                                      |
-| CD 101 | Tunisia                | negara     | Tunisia                                                                   | —                                                                          |
-| CD 102 | Kuwait                 | negara     | Kuait                                                                     | Kuait                                                                      |
-| CD 103 | Laos                   | negara     | Laos                                                                      | Republik Demokratik Rakyat Laos                                            |
-| CD 104 | Palestina              | negara     | Palestina                                                                 | Palestine                                                                  |
-| CD 105 | Kuba                   | negara     | Kuba                                                                      | Cuba                                                                       |
-| CD 106 | AIPA                   | organisasi | ASEAN Inter-Paliamentary Organization (AIPA)                              | ASEAN Inter-Parliamentary Assembly, ASEAN Inter-Parliamentary Organization |
-| CD 107 | Libya                  | negara     | Libya                                                                     | —                                                                          |
-| CD 108 | Peru                   | negara     | Peru                                                                      | —                                                                          |
-| CD 109 | Slowakia               | negara     | Slovakia                                                                  | Slovakia                                                                   |
-| CD 110 | Sudan                  | negara     | Sudan                                                                     | —                                                                          |
-| CD 111 | Yayasan ASEAN          | organisasi | ASEAN Foundation                                                          | ASEAN Foundation                                                           |
-| CD 112 | Utusan Sekjen PBB      | organisasi | Utusan Sekjen PBB                                                         | Utusan Sekretaris Jenderal PBB                                             |
-| CD 113 | CIFOR                  | organisasi | Center for International Forestry Research (CIFOR)                        | Center for International Forestry Research                                 |
-| CD 114 | Bosnia dan Herzegovina | negara     | Bosnia Herzegovina                                                        | Bosnia Herzegovina, Bosnia                                                 |
-| CD 115 | Lebanon                | negara     | Lebanon                                                                   | Libanon                                                                    |
-| CD 116 | Afrika Selatan         | negara     | Afrika Selatan                                                            | South Africa                                                               |
-| CD 117 | Kroasia                | negara     | Kroasia                                                                   | Croatia                                                                    |
-| CD 118 | Ukraina                | negara     | Ukraina                                                                   | Ukraine                                                                    |
-| CD 120 | Uzbekistan             | negara     | Uzbekistan                                                                | —                                                                          |
-| CD 121 | Qatar                  | negara     | Qatar                                                                     | Katar                                                                      |
-| CD 122 | UNFPA                  | organisasi | United Nations Population Fund (UNFPA)                                    | United Nations Population Fund                                             |
-| CD 123 | Mozambik               | negara     | Mozambique                                                                | Mozambique                                                                 |
-| CD 125 | Timor Leste            | negara     | Timor Leste                                                               | Timor-Leste                                                                |
-| CD 126 | Suriname               | negara     | Suriname                                                                  | —                                                                          |
-| CD 127 | Ekuador                | negara     | Ecuador                                                                   | Ecuador                                                                    |
-| CD 128 | Zimbabwe               | negara     | Zimbabwe                                                                  | —                                                                          |
-| CD 129 | IOM                    | organisasi | Perwakilan International Organization for Migration (IOM)                 | International Organization for Migration                                   |
-| CD 130 | Azerbaijan             | negara     | Azerbaijan                                                                | —                                                                          |
-| CD 131 | Somalia                | negara     | Somalia                                                                   | —                                                                          |
-| CD 132 | Georgia                | negara     | Georgia                                                                   | —                                                                          |
-| CD 133 | Paraguay               | negara     | Paraguay                                                                  | —                                                                          |
-| CD 134 | Oman                   | negara     | Oman                                                                      | —                                                                          |
-| CD 135 | Armenia                | negara     | Armenia                                                                   | —                                                                          |
-| CD 136 | Bahrain                | negara     | Bahrain                                                                   | —                                                                          |
-| CD 137 | Mongolia               | negara     | Mongolia                                                                  | —                                                                          |
-| CD 138 | San Marino             | negara     | San Marino                                                                | —                                                                          |
-| CD 139 | Irlandia               | negara     | Irlandia                                                                  | Ireland                                                                    |
-| CD 140 | UNORCID                | organisasi | United Nations Office for REDD+ Coordination in Indonesia (UNORCID)       | —                                                                          |
-| CD 141 | IsDB                   | organisasi | Islamic Development Bank (IDB)                                            | IDB, Islamic Development Bank, Bank Pembangunan Islam                      |
-| CD 142 | Guinea-Bissau          | negara     | Guinea Bissau                                                             | Guinea Bissau                                                              |
-| CD 143 | Etiopia                | negara     | Ethiopia                                                                  | Ethiopia                                                                   |
-| CD 144 | Kepulauan Solomon      | negara     | Kep Solomon                                                               | Kep Solomon, Solomon Islands, Solomon                                      |
-| CD 145 | IFAD                   | organisasi | International Fund for Agricultural Development (IFAD)                    | International Fund for Agricultural Development                            |
+| Kode | Pemegang (nama tampil) | Tipe | Tertulis di lampiran | Alias yang diterima | Label | Tinjau |
+| --- | --- | --- | --- | --- | --- | --- |
+| CD 12 | Amerika Serikat | negara | Amerika Serikat | AS, USA, United States, Amerika | `high` | — |
+| CD 13 | India | negara | India | — | `high` | — |
+| CD 14 | Prancis | negara | Perancis | Perancis, France | `high` | — |
+| CD 15 | Inggris | negara | Inggris | Britania Raya, Kerajaan Inggris, UK, United Kingdom | `high` | — |
+| CD 16 | Filipina | negara | Filipina | Philippines | `high` | — |
+| CD 17 | Vatikan | negara | Vatikan | Takhta Suci, Tahta Suci, Holy See | `high` | — |
+| CD 18 | Australia | negara | Australia | — | `high` | — |
+| CD 19 | Norwegia | negara | Norwegia | Norway | `high` | — |
+| CD 20 | Irak | negara | Irak | Iraq | `high` | — |
+| CD 21 | Pakistan | negara | Pakistan | — | `high` | — |
+| CD 22 | Belgia | negara | Belgia | Belgium | `high` | — |
+| CD 23 | Myanmar | negara | Myanmar | Burma | `high` | — |
+| CD 24 | Uni Emirat Arab | negara | Uni Emirat Arab | UEA, UAE, Emirat Arab | `high` | — |
+| CD 25 | Tiongkok | negara | China | China, Cina, RRT, Republik Rakyat Tiongkok, RRC | `high` | — |
+| CD 26 | Swedia | negara | Swedia | Sweden | `high` | — |
+| CD 27 | Arab Saudi | negara | Saudi Arabia | Saudi Arabia, Saudi | `high` | — |
+| CD 28 | Thailand | negara | Thailand | Muangthai | `high` | — |
+| CD 29 | Mesir | negara | Mesir | Egypt | `high` | — |
+| CD 30 | Italia | negara | Italia | Italy | `high` | — |
+| CD 31 | Swiss | negara | Swiss | Switzerland | `high` | — |
+| CD 32 | Jerman | negara | Jerman | Germany | `high` | — |
+| CD 33 | Sri Lanka | negara | Srilanka | Srilanka | `high` | — |
+| CD 34 | Denmark | negara | Denmark | — | `high` | — |
+| CD 35 | Kanada | negara | Kanada | Canada | `high` | — |
+| CD 36 | Brasil | negara | Brazil | Brazil | `high` | — |
+| CD 37 | Rusia | negara | Rusia | Russia, Federasi Rusia | `high` | — |
+| CD 38 | Afganistan | negara | Afganistan | Afghanistan | `high` | — |
+| CD 39 | Serbia | negara | Serbia | — | `high` | — |
+| CD 40 | Ceko | negara | Ceko | Republik Ceko, Czech, Cheko | `high` | — |
+| CD 41 | Finlandia | negara | Finlandia | Finland | `high` | — |
+| CD 42 | Meksiko | negara | Meksiko | Mexico | `high` | — |
+| CD 43 | Hungaria | negara | Hungaria | Hungary | `high` | — |
+| CD 44 | Polandia | negara | Polandia | Poland | `high` | — |
+| CD 45 | Iran | negara | Iran | — | `high` | — |
+| CD 47 | Malaysia | negara | Malaysia | — | `high` | — |
+| CD 48 | Turki | negara | Turki | Turkiye, Türkiye, Turkey | `high` | — |
+| CD 49 | Jepang | negara | Jepang | Japan | `high` | — |
+| CD 50 | Bulgaria | negara | Bulgaria | — | `high` | — |
+| CD 51 | Kamboja | negara | Kamboja | Cambodia | `high` | — |
+| CD 52 | Argentina | negara | Argentina | — | `high` | — |
+| CD 53 | Rumania | negara | Rumania | Romania | `high` | — |
+| CD 54 | Yunani | negara | Yunani | Greece | `high` | — |
+| CD 55 | Yordania | negara | Yordania | Jordan, Yordan | `high` | — |
+| CD 56 | Austria | negara | Austria | — | `high` | — |
+| CD 57 | Suriah | negara | Syria | Syria, Siria | `high` | — |
+| CD 58 | UNDP | organisasi | United Nations Development Programme (UNDP) | United Nations Development Programme, Program Pembangunan PBB | `high` | — |
+| CD 59 | Selandia Baru | negara | Selandia Baru | New Zealand | `high` | — |
+| CD 60 | Belanda | negara | Belanda | Netherlands, Nederland | `high` | — |
+| CD 61 | Yaman | negara | Yaman | Yemen | `high` | — |
+| CD 62 | UPU | organisasi | Universal Postal Union (UPU) | Universal Postal Union, Uni Pos Sedunia | `high` | — |
+| CD 63 | Portugal | negara | Portugal | — | `high` | — |
+| CD 64 | Aljazair | negara | Aljazair | Algeria | `high` | — |
+| CD 65 | Korea Utara | negara | Korea Utara | RRDK, Republik Rakyat Demokratik Korea, DPRK | `high` | — |
+| CD 66 | Vietnam | negara | Vietnam | Viet Nam | `high` | — |
+| CD 67 | Singapura | negara | Singapura | Singapore | `high` | — |
+| CD 68 | Spanyol | negara | Spanyol | Spain | `high` | — |
+| CD 69 | Bangladesh | negara | Bangladesh | — | `high` | — |
+| CD 70 | Panama | negara | Panama | — | `high` | — |
+| CD 71 | UNICEF | organisasi | United Nations International Children's Emergency Fund (UNICEF) | United Nations Children's Fund | `high` | — |
+| CD 72 | UNESCO | organisasi | United Nations Educational, Scientific and Cultural Organization (UNESCO) | — | `high` | — |
+| CD 73 | FAO | organisasi | Food and Agriculture Organization (FAO) | Food and Agriculture Organization, Organisasi Pangan dan Pertanian | `high` | — |
+| CD 74 | WHO | organisasi | World Health Organization (WHO) | World Health Organization, Organisasi Kesehatan Dunia | `high` | — |
+| CD 75 | Korea Selatan | negara | Korea Selatan | Republik Korea, South Korea, Korsel | `high` | — |
+| CD 76 | ADB | organisasi | Asian Development Bank (ADB) | Asian Development Bank, Bank Pembangunan Asia | `high` | — |
+| CD 77 | Bank Dunia | organisasi | International Bank for Reconstruction and Development (IBRD)/Bank Dunia | IBRD, World Bank | `high` | — |
+| CD 78 | IMF | organisasi | International Monetary Fund (IMF) | International Monetary Fund, Dana Moneter Internasional | `high` | — |
+| CD 79 | ILO | organisasi | International Labour Organisation (ILO) | International Labour Organization, Organisasi Buruh Internasional | `high` | — |
+| CD 80 | Papua Nugini | negara | Papua Nugini | Papua New Guinea, PNG | `high` | — |
+| CD 81 | Nigeria | negara | Nigeria | — | `high` | — |
+| CD 82 | Cile | negara | Chili | Chili, Chile | `high` | — |
+| CD 83 | UNHCR | organisasi | United Nations High Commissioner for Refugees (UNHCR) | Badan Pengungsi PBB | `high` | — |
+| CD 84 | WFP | organisasi | World Food Programme (WFP) | World Food Programme, Program Pangan Dunia | `high` | — |
+| CD 85 | Venezuela | negara | Venezuela | — | `high` | — |
+| CD 86 | ESCAP | organisasi | Economic and Social Commission for Asia and the Pacific (ESCAP) | UNESCAP | `high` | — |
+| CD 87 | Kolombia | negara | Kolombia | Colombia | `high` | — |
+| CD 88 | Brunei Darussalam | negara | Brunei Darussalam | Brunei | `high` | — |
+| CD 89 | UNIC | organisasi | United Nations Information Center (UNIC) | United Nations Information Centre, Pusat Informasi PBB | `high` | — |
+| CD 90 | IFC | organisasi | International Finance Corporation (IFC) | International Finance Corporation | `high` | — |
+| CD 92 | PTRI untuk ASEAN | organisasi | Perutusan Tetap Republik Indonesia (PTRI) ASEAN | PTRI ASEAN, Perutusan Tetap RI untuk ASEAN | `high` | ya |
+| CD 93 | Fiji | negara | Fiji | — | `high` | — |
+| CD 94 | Belarus | negara | Belarus | Belarusia | `high` | — |
+| CD 95 | Kazakhstan | negara | Kazakhtan | Kazakhtan, Kazakstan | `high` | — |
+| CD 96 | UNIDO | organisasi | United Nations Industrial Development Organization (UNIDO) | — | `high` | — |
+| CD 97 | ICRC | organisasi | International Committee of the Red Cross (ICRC) | Komite Internasional Palang Merah | `high` | — |
+| CD 98 | Maroko | negara | Maroko | Morocco | `high` | — |
+| CD 99 | Uni Eropa | organisasi | Uni Eropa | UE, EU, European Union | `high` | — |
+| CD 100 | Sekretariat ASEAN | organisasi | Association of Southeast Asian Nations (ASEAN) | ASEAN | `high` | — |
+| CD 101 | Tunisia | negara | Tunisia | — | `high` | — |
+| CD 102 | Kuwait | negara | Kuait | Kuait | `high` | — |
+| CD 103 | Laos | negara | Laos | Republik Demokratik Rakyat Laos | `high` | — |
+| CD 104 | Palestina | negara | Palestina | Palestine | `high` | — |
+| CD 105 | Kuba | negara | Kuba | Cuba | `high` | — |
+| CD 106 | AIPA | organisasi | ASEAN Inter-Paliamentary Organization (AIPA) | ASEAN Inter-Parliamentary Assembly, ASEAN Inter-Parliamentary Organization | `high` | — |
+| CD 107 | Libya | negara | Libya | — | `high` | — |
+| CD 108 | Peru | negara | Peru | — | `high` | — |
+| CD 109 | Slowakia | negara | Slovakia | Slovakia | `high` | — |
+| CD 110 | Sudan | negara | Sudan | — | `high` | — |
+| CD 111 | Yayasan ASEAN | organisasi | ASEAN Foundation | ASEAN Foundation | `high` | — |
+| CD 112 | Utusan Sekjen PBB | organisasi | Utusan Sekjen PBB | Utusan Sekretaris Jenderal PBB | `high` | — |
+| CD 113 | CIFOR | organisasi | Center for International Forestry Research (CIFOR) | Center for International Forestry Research | `high` | — |
+| CD 114 | Bosnia dan Herzegovina | negara | Bosnia Herzegovina | Bosnia Herzegovina, Bosnia | `high` | — |
+| CD 115 | Lebanon | negara | Lebanon | Libanon | `high` | — |
+| CD 116 | Afrika Selatan | negara | Afrika Selatan | South Africa | `high` | — |
+| CD 117 | Kroasia | negara | Kroasia | Croatia | `high` | — |
+| CD 118 | Ukraina | negara | Ukraina | Ukraine | `high` | — |
+| CD 120 | Uzbekistan | negara | Uzbekistan | — | `high` | — |
+| CD 121 | Qatar | negara | Qatar | Katar | `high` | — |
+| CD 122 | UNFPA | organisasi | United Nations Population Fund (UNFPA) | United Nations Population Fund | `high` | — |
+| CD 123 | Mozambik | negara | Mozambique | Mozambique | `high` | — |
+| CD 125 | Timor Leste | negara | Timor Leste | Timor-Leste | `high` | — |
+| CD 126 | Suriname | negara | Suriname | — | `high` | — |
+| CD 127 | Ekuador | negara | Ecuador | Ecuador | `high` | — |
+| CD 128 | Zimbabwe | negara | Zimbabwe | — | `high` | — |
+| CD 129 | IOM | organisasi | Perwakilan International Organization for Migration (IOM) | International Organization for Migration | `high` | — |
+| CD 130 | Azerbaijan | negara | Azerbaijan | — | `high` | — |
+| CD 131 | Somalia | negara | Somalia | — | `high` | — |
+| CD 132 | Georgia | negara | Georgia | — | `high` | — |
+| CD 133 | Paraguay | negara | Paraguay | — | `high` | — |
+| CD 134 | Oman | negara | Oman | — | `high` | — |
+| CD 135 | Armenia | negara | Armenia | — | `high` | — |
+| CD 136 | Bahrain | negara | Bahrain | — | `high` | — |
+| CD 137 | Mongolia | negara | Mongolia | — | `high` | — |
+| CD 138 | San Marino | negara | San Marino | — | `high` | — |
+| CD 139 | Irlandia | negara | Irlandia | Ireland | `high` | — |
+| CD 140 | UNORCID | organisasi | United Nations Office for REDD+ Coordination in Indonesia (UNORCID) | — | `high` | — |
+| CD 141 | IsDB | organisasi | Islamic Development Bank (IDB) | IDB, Islamic Development Bank, Bank Pembangunan Islam | `high` | — |
+| CD 142 | Guinea-Bissau | negara | Guinea Bissau | Guinea Bissau | `high` | — |
+| CD 143 | Etiopia | negara | Ethiopia | Ethiopia | `high` | — |
+| CD 144 | Kepulauan Solomon | negara | Kep Solomon | Kep Solomon, Solomon Islands, Solomon | `high` | — |
+| CD 145 | IFAD | organisasi | International Fund for Agricultural Development (IFAD) | International Fund for Agricultural Development | `high` | — |
 
-**Catatan penamaan.** CD 92 tertulis "Perutusan Tetap Republik Indonesia (PTRI) ASEAN" di lampiran. Istilah itu biasanya merujuk perwakilan Indonesia untuk ASEAN, bukan perwakilan asing, sehingga maknanya perlu dikonfirmasi ke Kemlu sebelum dipakai sebagai soal. Entri ini tetap `high` karena tercantum di peraturan, tetapi diberi penanda `needsReview` di seed. CD 100 ditampilkan sebagai Sekretariat ASEAN dengan alias ASEAN, mengikuti fungsi kantornya di Jakarta.
+**Catatan penamaan.** CD 92 tertulis "Perutusan Tetap Republik Indonesia (PTRI) ASEAN" di lampiran. Istilah itu biasanya merujuk perwakilan Indonesia untuk ASEAN, bukan perwakilan asing, sehingga maknanya perlu dikonfirmasi ke Kemlu sebelum dipakai sebagai soal. Entri ini tetap `high` karena tercantum di peraturan, tetapi ditandai `ya` di kolom **Tinjau**. CD 100 ditampilkan sebagai Sekretariat ASEAN dengan alias ASEAN, mengikuti fungsi kantornya di Jakarta.
 
 **Keterbatasan.** Daftar ini berlaku sejak 5 Mei 2021. Perwakilan yang dibuka setelah tanggal itu mungkin sudah mendapat kode dari Kemlu tanpa masuk lampiran. Kode seperti itu tidak boleh ditambahkan dari foto pelat atau artikel media.
 
@@ -229,11 +230,11 @@ Daftar RI 14 sampai RI 100 yang beredar luas, misalnya RI 15 untuk Menko Polhuka
 
 ## 8. Daftar Sumber
 
-| ID                            | Sumber                                                                                                                                                                                        | Tanggal     |
-| ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `perpol-7-2021-lampiran`      | Lampiran Perpol 7/2021, JDIH BPK: https://peraturan.bpk.go.id/Details/225016/perpol-no-7-tahun-2021                                                                                           | 5 Mei 2021  |
-| `korlantas-ig-via-detik-2026` | detikOto, mengutip Instagram Korlantas: https://oto.detik.com/berita/d-8450080/daftar-pelat-nomor-mobil-dinas-pejabat-ri-dari-presiden-hingga-menteri                                         | 18 Apr 2026 |
-| `korlantas-cnn-2025-ri36`     | CNN Indonesia, pernyataan Kasubdit STNK Dit Regident Korlantas: https://www.cnnindonesia.com/otomotif/20250116110327-579-1187800/ada-angka-kecil-di-pelat-ri-36-mobil-utusan-presiden-apa-itu | 16 Jan 2025 |
-| `kompas-id-2025-ri36`         | Kompas.id: https://www.kompas.id/artikel/viral-mobil-ri-36-paksa-terobos-kemacetan-siapa-pejabat-penggunanya                                                                                  | 10 Jan 2025 |
-| `kumparan-2025-ri`            | kumparanNEWS: https://kumparan.com/kumparannews/daftar-pelat-nomor-terbaru-menteri-dan-pejabat-kabinet-merah-putih-24IM4mCmWt6                                                                | 13 Jan 2025 |
-| `otomotifnet-2023-ri`         | Otomotifnet: https://otomotifnet.gridoto.com/read/233769440/daftar-42-pelat-nomor-mobil-menteri-dan-pejabat-di-indonesia-istri-presiden-pakai-ri-3                                            | 26 Apr 2023 |
+| ID | Judul | Penerbit | Jenis | Tanggal | Diperiksa | URL | URL asli | Lokasi |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `perpol-7-2021-lampiran` | Lampiran Peraturan Kepolisian Negara RI Nomor 7 Tahun 2021 tentang Registrasi dan Identifikasi Kendaraan Bermotor | Polri; salinan JDIH BPK | peraturan | 2021-05-05 | 2026-09-24 | https://peraturan.bpk.go.id/Details/225016/perpol-no-7-tahun-2021 | https://peraturan.bpk.go.id/Download/219644/Perpol%20No.%207%20th%202021%20ttg%20regident_lampiran.pdf | Lampiran huruf B (kode registrasi), huruf D angka 4 (kode negara CD, hlm. 99–102), huruf F (TNKB khusus RI, hlm. 103–104) |
+| `korlantas-ig-via-detik-2026` | Daftar Pelat Nomor Mobil Dinas Pejabat RI dari Presiden hingga Menteri (mengutip Instagram Korlantas Polri) | detikOto | media-mengutip-instansi | 2026-04-18 | 2026-09-24 | https://oto.detik.com/berita/d-8450080/daftar-pelat-nomor-mobil-dinas-pejabat-ri-dari-presiden-hingga-menteri | — | Daftar RI 1–RI 13; unggahan Instagram asli Korlantas belum diarsipkan |
+| `korlantas-cnn-2025-ri36` | Ada Angka Kecil di Pelat RI 36 Mobil Utusan Presiden, Apa Itu? (pernyataan Kasubdit STNK Dit Regident Korlantas Polri) | CNN Indonesia | media-mengutip-instansi | 2025-01-16 | 2026-09-24 | https://www.cnnindonesia.com/otomotif/20250116110327-579-1187800/ada-angka-kecil-di-pelat-ri-36-mobil-utusan-presiden-apa-itu | — | RI 36 nomor kecil 1–7 untuk utusan khusus presiden; penomoran RI dikoordinasikan dengan Kemensetneg |
+| `kompas-id-2025-ri36` | Viral Mobil RI 36 Paksa Terobos Kemacetan, Siapa Pejabat Penggunanya? | Kompas.id | media | 2025-01-10 | 2026-09-24 | https://www.kompas.id/artikel/viral-mobil-ri-36-paksa-terobos-kemacetan-siapa-pejabat-penggunanya | — | Skema nomor kecil (RI 24 dan turunannya); RI 36.1–36.7 |
+| `kumparan-2025-ri` | Daftar Pelat Nomor Terbaru Menteri dan Pejabat Kabinet Merah Putih | kumparanNEWS | media | 2025-01-13 | 2026-09-24 | https://kumparan.com/kumparannews/daftar-pelat-nomor-terbaru-menteri-dan-pejabat-kabinet-merah-putih-24IM4mCmWt6 | — | Menyatakan belum ada aturan resmi; daftar tidak lengkap dan ada lompatan nomor |
+| `otomotifnet-2023-ri` | Daftar 42 Pelat Nomor Mobil Menteri dan Pejabat di Indonesia, Istri Presiden Pakai RI 3 | Otomotifnet (GridOto) | media | 2023-04-26 | 2026-09-24 | https://otomotifnet.gridoto.com/read/233769440/daftar-42-pelat-nomor-mobil-menteri-dan-pejabat-di-indonesia-istri-presiden-pakai-ri-3 | — | RI 1–RI 13 era kabinet sebelumnya; nomor 14 ke atas sudah tidak berlaku |
