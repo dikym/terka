@@ -1,6 +1,7 @@
 import { createEmptyCard, fsrs, State } from "ts-fsrs";
 import { gradeAnswer } from "./grading";
 import { DAY, type CardProgress, type LearningClock, type RawReview } from "./model";
+import { MATURE_INTERVAL_DAYS } from "../../rules";
 
 // Minute steps belong to Terka; FSRS only supplies the daily memory update.
 const scheduler = fsrs({ request_retention: 0.9, enable_fuzz: false, enable_short_term: false });
@@ -82,7 +83,11 @@ export function scheduleAnswer(
 		card.due = card.pendingDue ?? now + card.interval * DAY;
 		card.pendingDue = null;
 	}
-	if (card.state === "review" && card.interval >= 21 && card.passedLevels.includes(3))
+	if (
+		card.state === "review" &&
+		card.interval >= MATURE_INTERVAL_DAYS &&
+		card.passedLevels.includes(3)
+	)
 		card.state = "mature";
 	if (card.lapses >= 8) {
 		card.state = "suspended";

@@ -38,6 +38,7 @@ export function LearningSession({ initialMode = "daily" }: { initialMode?: Sessi
 	const [restoredKey, setRestoredKey] = useState<string | null>(null);
 	const [challengeQuestion, setChallengeQuestion] = useState<string | null>(null);
 	const firstKey = useRef<{ key: string; ms: number } | null>(null);
+	const [typedKey, setTypedKey] = useState<{ key: string; ms: number } | null>(null);
 	const booted = useRef(false);
 	const session = progress.sessions.at(-1);
 	const feedback = practiceFeedback(progress);
@@ -60,8 +61,10 @@ export function LearningSession({ initialMode = "daily" }: { initialMode?: Sessi
 		!(session.mode === "challenge" && session.day !== progress.clock.sequence)
 	);
 	function edit(next: string) {
-		if (question && firstKey.current?.key !== key)
+		if (question && firstKey.current?.key !== key) {
 			firstKey.current = { key, ms: Math.max(0, Date.now() - question.shownAt) };
+			setTypedKey(firstKey.current);
+		}
 		setDraft({ key, value: next, items });
 	}
 	async function submit(answers?: string[]) {
@@ -190,6 +193,7 @@ export function LearningSession({ initialMode = "daily" }: { initialMode?: Sessi
 			!restoredPreview &&
 			progress.currentQuestion?.limitMs !== null &&
 			progress.currentQuestion &&
+			(progress.currentQuestion.format === "truefalse" || firstKey.current?.key !== key) &&
 			Date.now() > progress.currentQuestion.shownAt + progress.currentQuestion.limitMs!
 		)
 			void submit([]);
@@ -269,8 +273,14 @@ export function LearningSession({ initialMode = "daily" }: { initialMode?: Sessi
 			</SessionShell>
 		);
 	const region = content.regions.find((region) => region.id === question?.regionId);
+	const started = typedKey?.key === key && question?.format !== "truefalse";
 	const remaining = question?.limitMs
-		? Math.max(0, question.shownAt + question.limitMs - now)
+		? Math.max(
+				0,
+				started
+					? question.limitMs - typedKey!.ms
+					: question.shownAt + question.limitMs - now
+			)
 		: 0;
 	const view: SessionView = {
 		progress,
@@ -279,6 +289,12 @@ export function LearningSession({ initialMode = "daily" }: { initialMode?: Sessi
 		question,
 		review: feedback?.review ?? null,
 		summary: showSummary ? sessionSummary(progress, content, session.id) : null,
+		masteryTest: Boolean(
+			question?.level === 3 &&
+			question.limitMs &&
+			!feedback &&
+			progress.cards.find((card) => card.cardId === question.cardId)?.state !== "mature"
+		),
 		busy,
 		current: session.answered,
 		total:

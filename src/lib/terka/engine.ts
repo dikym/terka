@@ -1,7 +1,13 @@
 import { z } from "zod";
 import { buildHierarchy, cardEligible, inScope, newCard, reconcileContent } from "./content";
 import { advanceClock } from "./time";
-import { automaticLevel, evaluateQuestion, generateQuestion, shuffled } from "./questions";
+import {
+	automaticLevel,
+	evaluateQuestion,
+	generateQuestion,
+	questionTimedOut,
+	shuffled
+} from "./questions";
 import { scheduleAnswer } from "./scheduler";
 import { scopeStats } from "./statistics";
 import {
@@ -423,7 +429,7 @@ export function applyAnswer(
 	if (!card || card.state === "suspended" || !cardEligible(card, content))
 		throw new Error("Card is unavailable");
 	const result = evaluateQuestion(content, question, submission.answers);
-	const timedOut = question.limitMs !== null && elapsedMs > question.limitMs;
+	const timedOut = questionTimedOut(question, elapsedMs, submission.msToFirstKey);
 	const lowerLevel = question.level < automaticLevel(card);
 	const isStep = card.state === "learning" || card.state === "relearning";
 	const siblingReviewed = progress.reviews.some(
