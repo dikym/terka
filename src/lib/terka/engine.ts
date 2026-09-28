@@ -10,6 +10,7 @@ import {
 } from "./questions";
 import { introduceCard, retrievability, scheduleAnswer } from "./scheduler";
 import { scopeStats } from "./statistics";
+import { ANSWER_MAX_CHARS } from "../../rules";
 import {
 	DAY,
 	scopeSchema,
@@ -322,7 +323,7 @@ const submissionSchema = z
 		questionId: z.string().min(1),
 		now: z.number().finite().nonnegative(),
 		msToFirstKey: z.number().finite().nonnegative().nullable(),
-		answers: z.array(z.string().max(500)).max(200)
+		answers: z.array(z.string().max(ANSWER_MAX_CHARS)).max(200)
 	})
 	.strict();
 export type Submission = z.infer<typeof submissionSchema>;

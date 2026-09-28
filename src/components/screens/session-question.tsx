@@ -7,6 +7,7 @@ import { LabelText } from "@/components/ui/label-text";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PlateTile } from "@/components/terka/plate-tile";
+import { ANSWER_MAX_CHARS } from "@/rules";
 
 const previewPlate = { code: "DA", number: "4821", suffix: "LK" };
 
@@ -40,7 +41,7 @@ export function SessionQuestionScreen() {
 				value={view?.value}
 				onChange={(event) => view?.setValue(event.target.value)}
 				disabled={view?.busy}
-				maxLength={500}
+				maxLength={ANSWER_MAX_CHARS}
 				autoComplete="off"
 			/>
 			<Button

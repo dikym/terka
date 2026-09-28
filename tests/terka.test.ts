@@ -12,7 +12,7 @@ import {
 } from "../src/lib/terka/content";
 import { boundary, createClock, advanceClock, addDays } from "../src/lib/terka/time";
 import { DAY, type CardProgress, type Question } from "../src/lib/terka/model";
-import { matchAnswer, gradeAnswer } from "../src/lib/terka/grading";
+import { matchAnswer, gradeAnswer, typoDistance } from "../src/lib/terka/grading";
 import {
 	dictionary,
 	generateQuestion,
@@ -46,7 +46,7 @@ import {
 } from "../src/lib/terka/statistics";
 
 import { region, fixture, wideFixture, lcg, NOW, raw, reviewing, answerCurrent } from "./fixtures";
-import { TIMED_LIMIT_MS, TRUE_FALSE_LIMIT_MS } from "../src/rules";
+import { TIMED_LIMIT_MS, TRUE_FALSE_LIMIT_MS, ANSWER_MAX_CHARS } from "../src/rules";
 
 test("content rejects empty datasets and derives hierarchy from primary provinces", () => {
 	assert.throws(() => parseContent({ ...fixture(), regions: [] }));
@@ -145,12 +145,12 @@ test("AC-7: codes never use typo tolerance; national dictionary precedes fuzzy",
 	);
 	assert.equal(
 		matchAnswer("B E", [{ id: "be", name: "BE", aliases: [] }], [], "code").correct,
-		false
+		true
 	);
 	const targets = [{ id: "one", name: "Balu", aliases: [] }];
 	assert.equal(matchAnswer("Bali", targets, dictionary(content, "name"), "name").correct, false);
 	assert.equal(
-		matchAnswer("Balu", [{ id: "dk", name: "Bali", aliases: [] }], [], "name").fuzzy,
+		matchAnswer("Medsn", [{ id: "bk", name: "Medan", aliases: [] }], [], "name").fuzzy,
 		true
 	);
 	assert.equal(
@@ -1202,4 +1202,112 @@ test("SR-057: a scheduled review is due at the start of its learning day", () =>
 	const next = scheduleAnswer(strongCard(), raw(), [], clock);
 	assert.equal(next.due, boundary(addDays(clock.day, next.interval), clock.timezone));
 	assert.equal(Number.isInteger(next.interval), true);
+});
+
+const target = (id: string, name: string, aliases: string[] = [], variants: string[] = []) => ({
+	id,
+	name,
+	aliases,
+	variants
+});
+
+test("SR-083/SR-086/SR-087/SR-206: case, punctuation and spaces collapse to exact", () => {
+	const targets = [
+		target("ba", "Bukittinggi"),
+		target("bk", "Pematangsiantar"),
+		target("bp", "Tanjungpinang")
+	];
+	for (const input of [
+		"  BUKITTINGGI!! ",
+		"Bukit Tinggi",
+		"Pematang Siantar",
+		"Tanjung-Pinang",
+		"Tanjung Pinang"
+	])
+		assert.equal(matchAnswer(input, targets, [], "name").matchType, "exact", input);
+	assert.equal(
+		matchAnswer("Kotamadya Binjai", [target("bk", "Binjai")], [], "name").matchType,
+		"exact"
+	);
+	assert.equal(
+		matchAnswer("Kotamobagu", [target("db", "Kotamobagu")], [], "name").matchType,
+		"exact"
+	);
+});
+
+test("SR-088/SR-089: old spelling and registered variants match as variant", () => {
+	assert.equal(matchAnswer("Djember", [target("p", "Jember")], [], "name").matchType, "variant");
+	assert.equal(
+		matchAnswer("Tjilatjap", [target("r", "Cilacap")], [], "name").matchType,
+		"variant"
+	);
+	assert.equal(
+		matchAnswer("Binjay", [target("bk", "Binjai", [], ["Binjay"])], [], "name").matchType,
+		"variant"
+	);
+});
+
+test("SR-090–SR-094/SR-212/SR-213: weighted typo costs, first letter and length thresholds", () => {
+	const cases: [string, string, number | null][] = [
+		["Pekanbru", "Pekanbaru", 1],
+		["Pekanbaur", "Pekanbaru", 0.5],
+		["Mdean", "Medan", 0.5],
+		["Medsn", "Medan", 0.5],
+		["Tebingtingi", "Tebing Tinggi", 0.5],
+		["Bim", "Bima", null],
+		["Vengkulu", "Bengkulu", null]
+	];
+	for (const [input, name, cost] of cases) {
+		const match = matchAnswer(input, [target("x", name)], [], "name");
+		assert.equal(match.matchType, cost === null ? "none" : "typo", input);
+		assert.equal(match.correct, cost !== null, input);
+		if (cost !== null) assert.equal(match.typoCost, cost, input);
+	}
+	assert.equal(typoDistance("mdean", "medan"), 0.5);
+});
+
+test("SR-095/SR-215: a typo must beat every other dictionary name by at least one", () => {
+	const accepted = [target("a", "Sabang")];
+	const crowded = matchAnswer("Sabanh", accepted, [...accepted, target("b", "Sabank")], "name");
+	assert.equal(crowded.correct, false);
+	assert.deepEqual(crowded.confusedWith, []);
+	assert.equal(
+		matchAnswer("Sabanh", accepted, [target("c", "Tarakan")], "name").matchType,
+		"typo"
+	);
+});
+
+test("SR-202/SR-203: codes ignore case and spaces and never tolerate typos", () => {
+	const code = [target("be", "BE")];
+	for (const input of ["be", "B E", " BE "])
+		assert.equal(matchAnswer(input, code, [], "code").correct, true, input);
+	const miss = matchAnswer("BX", code, [target("bd", "BD")], "code");
+	assert.equal(miss.correct, false);
+	assert.deepEqual(miss.confusedWith, []);
+	assert.equal(matchAnswer("benar", [target("x", "Benar")], [], "literal").correct, true);
+});
+
+test("SR-033: a fast typo loses one point and stays Good", () => {
+	const history = Array.from({ length: 30 }, (_, index) =>
+		raw({ id: `h${index}`, ts: NOW - 1000 + index, msToFirstKey: 2000 + index })
+	);
+	assert.equal(gradeAnswer(raw({ msToFirstKey: 100 }), history), 4);
+	assert.equal(gradeAnswer(raw({ msToFirstKey: 100, fuzzy: true }), history), 3);
+	assert.equal(gradeAnswer(raw({ msToFirstKey: 2015, fuzzy: true }), history), 2);
+});
+
+test("SR-205: answers longer than 120 characters are rejected", () => {
+	const content = fixture();
+	let progress = startSession(reviewing(content), content, { id: "s", mode: "daily", now: NOW });
+	progress = nextQuestion(progress, content, { id: "q", now: NOW });
+	assert.throws(() =>
+		applyAnswer(progress, content, {
+			id: "a",
+			sessionId: "s",
+			questionId: "q",
+			now: NOW + 1000,
+			msToFirstKey: 500,
+			answers: ["x".repeat(ANSWER_MAX_CHARS + 1)]
+		})
+	);
 });

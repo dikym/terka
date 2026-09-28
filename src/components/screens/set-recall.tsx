@@ -10,6 +10,7 @@ import { Callout } from "@/components/ui/callout";
 import { CodeBadge } from "@/components/terka/code-badge";
 import { LevelChip } from "@/components/terka/level-chip";
 import { ModeBadge } from "@/components/terka/mode-badge";
+import { ANSWER_MAX_CHARS } from "@/rules";
 
 const previewProgress = { found: 3, threshold: 5, total: 12, percent: 60 };
 
@@ -98,7 +99,7 @@ export function SetRecallScreen() {
 				value={view?.value}
 				onChange={(event) => view?.setValue(event.target.value)}
 				disabled={view?.busy}
-				maxLength={500}
+				maxLength={ANSWER_MAX_CHARS}
 			/>
 			<div className="grid grid-cols-2 gap-2">
 				<Button variant="secondary" kbd="Enter" disabled={view?.busy} onClick={view?.add}>

@@ -90,7 +90,9 @@ export function SessionGradedScreen() {
 							? review.timedOut
 								? "Waktu habis"
 								: review.correct
-									? "Benar"
+									? review.fuzzy
+										? "Benar · ejaan diperbaiki"
+										: "Benar"
 									: "Belum tepat"
 							: "Benar"
 					}
