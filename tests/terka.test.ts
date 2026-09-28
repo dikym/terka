@@ -288,6 +288,19 @@ test("SR-122: a leech is reset to a new card when reactivated", () => {
 	assert.equal(card.stability, 0);
 });
 
+test("SR-122: re-suspending a leech keeps its leech reset", () => {
+	const content = fixture();
+	const progress = reviewing(content);
+	Object.assign(progress.cards[0], { state: "suspended", suspensionReason: "leech", lapses: 8 });
+	const resuspended = setCardSuspended(progress, content, progress.cards[0].cardId, true, NOW);
+	assert.equal(resuspended.cards[0].suspensionReason, "leech");
+	const card = setCardSuspended(resuspended, content, progress.cards[0].cardId, false, NOW)
+		.cards[0];
+	assert.equal(card.state, "new");
+	assert.equal(card.lapses, 0);
+	assert.equal(card.stability, 0);
+});
+
 test("SR-131/SR-132: data-driven suspensions lift themselves when the data returns", () => {
 	const content = fixture();
 	let progress = reviewing(content);
