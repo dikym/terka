@@ -13,6 +13,7 @@ import { Callout } from "@/components/ui/callout";
 import { Card, CardTitle } from "@/components/ui/card";
 import { IconButton } from "@/components/ui/icon-button";
 import { LabelText } from "@/components/ui/label-text";
+import { EXPORT_REMINDER_DAYS } from "@/rules";
 
 export function BackupScreen() {
 	const { progress, busy } = useLearning();
@@ -27,7 +28,7 @@ export function BackupScreen() {
 			: progress.lastBackupAt === null
 				? "Belum ada cadangan."
 				: status.overdue
-					? "Cadangan terakhir sudah lebih dari 14 hari."
+					? `Ekspor terakhir sudah lebih dari ${EXPORT_REMINDER_DAYS} hari.`
 					: "Cadangan sudah diperbarui.",
 		body: backup.downloaded
 			? "Setelah unduhan tersimpan, tekan Berkas sudah tersimpan untuk mencatat cadangan ini."

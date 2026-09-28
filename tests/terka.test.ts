@@ -530,6 +530,23 @@ test("scope mastery includes cross-scope confusion, stats handle no samples and 
 	assert.equal(searchReference(parseContent(plates), "PG").regions[0].id, "pg");
 });
 
+test("SR-010/AC-24: suspended cards leave the mastery percentage", () => {
+	const content = fixture();
+	const progress = reviewing(content);
+	progress.cards.forEach((card, index) =>
+		Object.assign(
+			card,
+			index === 0
+				? { state: "suspended", suspensionReason: "confidence" }
+				: { state: "mature", interval: 30, passedLevels: [3] }
+		)
+	);
+	const stats = scopeStats(progress, content, { level: "national", id: "indonesia" });
+	assert.equal(stats.mastery, 1);
+	assert.equal(stats.mastered, true);
+	assert.equal(stats.suspendedCards, 1);
+});
+
 test("active questions can change level and an unanswered sprint still expires", () => {
 	const content = fixture();
 	let progress = startSession(reviewing(), content, {

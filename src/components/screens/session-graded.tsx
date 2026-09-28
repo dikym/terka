@@ -6,7 +6,6 @@ import { SessionShell } from "@/components/layout/session-shell";
 import { LabelText } from "@/components/ui/label-text";
 import { Button } from "@/components/ui/button";
 import { PlateTile } from "@/components/terka/plate-tile";
-import { FactCard } from "@/components/terka/fact-card";
 import { VerdictLine } from "@/components/terka/verdict-line";
 import { LevelChip } from "@/components/terka/level-chip";
 import { GradedAnswer } from "@/components/terka/graded-answer";
@@ -16,11 +15,6 @@ const previewPlate = { code: "DA", number: "4821", suffix: "LK" };
 const previewAnswer = {
 	value: "Kalimantan Selatan",
 	alias: "Alias diterima: Kalsel, Banjarmasin"
-};
-
-const previewFact = {
-	source: "Handboek voor automobilisten, Java Motor Club, 1920",
-	body: "Wilayah Zuider en Ooster Afdeeling van Borneo memakai satu kode tunggal, DA. Kalimantan Selatan adalah wilayah pertama di Kalimantan yang memakai pelat nomor."
 };
 
 export function SessionGradedScreen() {
@@ -42,15 +36,6 @@ export function SessionGradedScreen() {
 			: "wrong"
 		: "right";
 	const verdict = review?.intro ? "neutral" : gradedVerdict;
-	const region = view?.content.regions.find((region) => region.id === question?.regionId);
-	const storedFact = view?.content.facts.find(
-		(fact) => fact.publicationStatus === "ready" && region?.facts.includes(fact.id)
-	);
-	const fact = view
-		? storedFact
-			? { source: storedFact.source, body: storedFact.text }
-			: null
-		: previewFact;
 	const card = view?.progress.cards.find((card) => card.cardId === question?.cardId);
 
 	return (
@@ -72,14 +57,6 @@ export function SessionGradedScreen() {
 				<GradedAnswer verdict={verdict}>{answer.value}</GradedAnswer>
 				<span className="text-body-sm text-ink-500">{answer.alias}</span>
 			</div>
-			{fact && (
-				<FactCard
-					confidence={storedFact?.historyLabel ?? "terverifikasi"}
-					source={fact.source}
-				>
-					{fact.body}
-				</FactCard>
-			)}
 			{review?.intro ? (
 				<p className="text-body-sm text-ink-500">Tebakan tidak dinilai.</p>
 			) : (
