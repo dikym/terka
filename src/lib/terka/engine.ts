@@ -377,12 +377,7 @@ function recordConfusions(progress: Progress, review: RawReview) {
 	}
 }
 
-export function applyAnswer(
-	input: Progress,
-	content: Content,
-	value: Submission,
-	random = Math.random
-): Progress {
+export function applyAnswer(input: Progress, content: Content, value: Submission): Progress {
 	const submission = submissionSchema.parse(value);
 	const previous = input.reviews.find((review) => review.id === submission.id);
 	if (previous) {
@@ -474,7 +469,7 @@ export function applyAnswer(
 	if (scheduled) {
 		progress.cards[progress.cards.indexOf(card)] = intro
 			? introduceCard(card, submission.now)
-			: scheduleAnswer(card, review, progress.reviews, progress.clock, random);
+			: scheduleAnswer(card, review, progress.reviews, progress.clock, progress.cards);
 		if (isNew) progress.newCardsToday.push(card.cardId);
 	}
 	const updatedCard = progress.cards.find((item) => item.cardId === card.cardId)!;
