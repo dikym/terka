@@ -13,6 +13,15 @@ Setelah Anda membuat, mengubah, atau menghapus kode, Anda **WAJIB** menjalankan 
     bun run check
     ```
 
+### Komentar Kode
+
+- Jangan tambahkan komentar yang tidak penting, misalnya komentar yang hanya mengulang apa yang sudah jelas dari nama fungsi, variabel, atau kodenya.
+- Tulis komentar hanya jika memang penting, misalnya menjelaskan alasan, batasan, atau perilaku yang tidak terlihat dari kode.
+- Jangan tulis komentar yang merujuk dokumen (SRD, TRD, ERD, Microcopy, nomor bagian, ID katalog, dll).
+- Jangan tulis catatan `ponytail:` di kode.
+- Nama tes (`test`/`describe`) menjelaskan perilaku saja, tanpa ID katalog atau rujukan dokumen.
+- Komentar selalu ditulis dalam bahasa Inggris.
+
 ## Git Commits
 
 **Wajib** menggunakan standar [Conventional Commits](https://www.conventionalcommits.org/) untuk setiap git commit. Jangan tambahkan deskripsi "Co-Authored-By: Claude ... <noreply@anthropic.com>".
@@ -82,3 +91,7 @@ Saat menggunakan skill perencanaan, simpan output ke folder berikut:
 - **Plans:** `docs/superpowers/plans/YYYY-MM-DD-<feature-name>.md`
 
 Buat folder tersebut jika belum ada. Lokasi ini **menggantikan** default bawaan skill.
+
+### Setelah Implementasi Selesai
+
+Setelah implementasi sebuah plan selesai (seluruh task selesai dan sudah di-merge atau diserahkan ke user), hapus file spec dan plan milik fitur tersebut dari `docs/superpowers/specs/` dan `docs/superpowers/plans/`. Jangan hapus `.gitkeep` atau file spec/plan milik fitur lain yang belum selesai.
