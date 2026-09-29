@@ -24,7 +24,7 @@ Dokumen ini satu-satunya tempat katalog tes Terka. Aturan yang diuji tetap ditul
 
 **Kolom Aturan** di tes perilaku berisi nomor bagian SRD (misalnya `SRD 4.10`), kriteria penerimaan SRD bagian 9 (misalnya `AC-9`), atau bagian PRD (misalnya `PRD 6.7`).
 
-ID berikut sudah tidak digunakan: SR-211, SR-223–SR-229, SR-298, TR-58, TR-80, E2E-73, dan E2E-85. Nomornya tidak dipakai ulang. TR-126 dan SR-296 tetap berstatus Tidak aktif.
+ID berikut sudah tidak digunakan: SR-211, SR-223–SR-229, SR-298, TR-58, TR-80, TR-155, TR-159, TR-160, TR-163, TR-164, TR-204, TR-206, E2E-73, dan E2E-85. Nomornya tidak dipakai ulang. TR-126 dan SR-296 tetap berstatus Tidak aktif.
 
 **ID stabil.** Satu ID untuk satu skenario. ID yang ditandai Tidak aktif disimpan sebagai catatan tetapi dikecualikan dari eksekusi dan hitungan cakupan; ID itu tidak boleh digunakan ulang. Jika aturannya berubah, isi tes diperbarui dengan ID yang sama. ID yang pernah dipakai tidak dipakai ulang untuk skenario lain.
 
@@ -664,7 +664,7 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | TR-52 | Pengguna A membaca `review_logs`                                                             | Hanya baris milik A yang kembali                                                                                                 | normal   |
 | TR-53 | Pengguna A menyisipkan baris dengan `user_id` milik B                                        | Ditolak                                                                                                                          | negatif  |
 | TR-54 | Pengguna A mengubah atau menghapus baris `review_logs` miliknya sendiri                      | Ditolak                                                                                                                          | negatif  |
-| TR-55 | Request dengan anon key tanpa login ke semua tabel                                           | Ditolak untuk semua operasi                                                                                                      | negatif  |
+| TR-55 | Request dengan publishable key tanpa login ke semua tabel                                           | Ditolak untuk semua operasi                                                                                                      | negatif  |
 | TR-56 | Setiap tabel di schema `public`                                                              | Punya RLS aktif dan grant sesuai kelompoknya; tabel tanpa grant gagal tes                                                        | negatif  |
 | TR-57 | Update sesi yang `ended_at` sudah terisi; retry penutupan identik; payload penutupan berbeda | Update ditolak trigger; klien menganggap retry identik sukses setelah membaca baris kanonis; payload berbeda tidak menimpa hasil | negatif  |
 | TR-59 | `delete_user()` dipanggil pengguna A                                                         | Hanya akun A dan seluruh barisnya yang terhapus; data B utuh                                                                     | normal   |
@@ -673,7 +673,7 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 
 | ID    | Skenario                                                                              | Hasil yang diharapkan                                                                                                                  | Kategori |
 | ----- | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| TR-60 | Ekspor formatVersion 4 lalu impor ke akun kosong; impor versi 1–3 melalui normalisasi | Versi 4 menghasilkan keadaan identik; versi 3 diubah bentuknya; versi 1–2 mengikuti penyaringan dalam TRD 6 sebelum penghitungan ulang | normal   |
+| TR-60 | Ekspor formatVersion 4 lalu impor ke akun kosong | Keadaan setelah replay identik dengan sebelum ekspor | normal   |
 | TR-61 | File ekspor yang sama diimpor dua kali                                                | Impor kedua tidak menambah apa pun                                                                                                     | batas    |
 | TR-62 | File impor rusak atau bukan format `terka-export`                                     | Ditolak utuh; tidak ada data yang masuk sebagian                                                                                       | negatif  |
 | TR-63 | File ekspor berisi baris karantina                                                    | Baris karantina ikut, ditandai terpisah, tidak otomatis dikirim ulang                                                                  | batas    |
@@ -848,27 +848,20 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | TR-152 | Parameter aktif dengan timestamp identik di dua perangkat                                        | Tie-break `device_id` dan id identik pada replay penuh maupun bertahap                                                                        | batas    |
 | TR-153 | `practice_runs` lebih dari 1.000 baris, sesi lama baru ditutup                                   | Pull seluruh sesi memakai pagination; penutupan terbaca walau sequence tetap                                                                  | batas    |
 | TR-154 | Skema `sightings` baru dan push pencarian Referensi                                              | Tidak ada `review_id` atau FK ke `review_logs`; event hanya berisi metadata pencarian; `review_logs` tidak bertambah                          | normal   |
-| TR-155 | Impor format 1–2 berisi jawaban dari alur pencarian lama                                         | Jawaban tersebut dikeluarkan dari perhitungan dan ekspor baru; jumlahnya masuk ringkasan migrasi; file asal tetap utuh                        | batas    |
 | TR-156 | Sesi selesai saat offline dan baru dikirim sesudahnya                                            | Insert sesi terbuka lalu log jawaban lalu update penutupan; tidak melanggar trigger insert/close                                              | normal   |
 | TR-157 | FK `user_id` berformat UUID Auth berbeda dari UUID v7 event                                      | `user_id` valid diterima; aturan v7 hanya untuk ID yang dibuat klien                                                                          | batas    |
 
 ---
 
-### 6.21 Format Data dan Migrasi
+### 6.21 Format Data dan Kompatibilitas
 
 | ID     | Skenario                                                                                                               | Hasil yang diharapkan                                                                                                                                             | Kategori |
 | ------ | ---------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | TR-158 | Payload kartu memakai mode di luar lima nilai domain `card_mode`                                                       | Ditolak validasi konten, klien, dan CHECK database versi akhir                                                                                                    | negatif  |
-| TR-159 | Impor format 1 atau 2 berisi campuran mode yang didukung dan tidak didukung                                            | Hanya mode yang didukung masuk perhitungan; tidak ada pengubahan identitas mode; catatan terkait disaring sesuai TRD 6                                            | batas    |
-| TR-160 | Impor data lama dengan properti pencarian tambahan                                                                     | Hanya kolom sightings yang didukung disimpan; bagian input lainnya tidak muncul di penyimpanan, antrean kirim, karantina, atau ekspor                             | batas    |
-| TR-161 | Impor dua kali, lalu ekspor                                                                                            | Hasil identik tanpa duplikat; formatVersion 4; ringkasan migrasi tersedia tanpa isi input yang dibuang                                                            | batas    |
-| TR-162 | Impor formatVersion lebih baru dari 4                                                                                  | Ditolak sebelum penulisan; data lokal tetap utuh                                                                                                                  | negatif  |
-| TR-163 | Parameter optimasi merujuk jawaban yang dikeluarkan migrasi                                                            | Parameter itu tidak aktif; parameter bawaan dipakai sampai optimasi berikutnya                                                                                    | batas    |
-| TR-164 | Sesi lama berisi campuran jawaban yang didukung dan tidak didukung                                                     | Jawaban yang didukung dipertahankan tanpa `run_id`; sesi tidak masuk rekor/Hari Beruntun; pembatalan tanpa induk dikeluarkan                                      | batas    |
+| TR-161 | Impor dua kali, lalu ekspor                                                                                            | Hasil identik tanpa duplikat; formatVersion 4                                                            | batas    |
+| TR-162 | Impor formatVersion selain 4, lebih lama atau lebih baru                                                                                  | Ditolak sebelum penulisan; data lokal tetap utuh                                                                                                                  | negatif  |
 | TR-165 | Klien lama melakukan sinkronisasi setelah masa kompatibilitas selesai                                                  | Aplikasi meminta pembaruan; data lokal tetap dapat diekspor; tidak ada penulisan ke skema akhir dengan format lama                                                | batas    |
-| TR-204 | Impor formatVersion 3 berisi `set_items` objek dan `content_version` string                                            | `set_items` jadi tuple; `content_version` jadi `contentRev` lewat `contentHistory`; keadaan setelah replay sama dengan sebelum ekspor                             | normal   |
 | TR-205 | Klien dengan `ENGINE_VERSION` lama menarik event dengan `engine_version` lebih besar atau `mode` yang tidak dikenalnya | Event disimpan di Dexie; replay tidak berjalan; pesan versi baru tampil; latihan dan antrean kirim tetap berjalan; setelah pembaruan replay penuh berjalan sekali | batas    |
-| TR-206 | Impor data versi 1–3 berisi kartu dan jawaban `blindrecall`                                                            | Dikeluarkan dari riwayat aktif, jadwal, statistik, dan kuota; ringkasan migrasi mencatat jumlahnya; data `code2region` tidak berubah                              | batas    |
 
 ### 6.22 Data Kode Khusus
 
@@ -1117,7 +1110,7 @@ Tes E2E dijalankan dengan Playwright di Chromium dan WebKit (bagian 2). Setiap t
 | ------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | -------- |
 | E2E-123 | Telusuri semua mode dan Cakupan provinsi                       | Pilihan kartu hanya berasal dari lima mode yang didukung; tidak ada generator pertanyaan dari pelat lengkap                  | normal   |
 | E2E-124 | Masukkan pelat lengkap pada Referensi                          | Hasil memakai kode depan; jaringan, penyimpanan, analitik, dan diagnostik tidak menerima bagian input lainnya                | batas    |
-| E2E-125 | Impor versi lama yang memuat catatan yang tidak lagi digunakan | Ringkasan menyebut jumlah catatan yang dipertahankan dan dikeluarkan; latihan baru tidak memunculkan materi lama             | batas    |
+| E2E-125 | Impor berkas ekspor dari versi Terka sebelumnya | Pesan versi tidak didukung tampil; tidak ada data yang diubah | batas    |
 | E2E-126 | Baca semua layar jadwal, pratinjau, dan ringkasan              | Istilah mengikuti Microcopy 2: perlu diulang, perkiraan durasi, target waktu aktif, dan batas waktu digunakan sesuai konteks | normal   |
 
 ### 7.21 Kode Khusus

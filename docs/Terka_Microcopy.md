@@ -429,7 +429,7 @@ Status detail hanya perlu muncul di halaman statistik atau pemeriksaan kode. Sta
 | Batas perangkat aktif                   | **Akun ini sudah dipakai di {batas} perangkat dalam {hari} hari terakhir. Latihan tetap berjalan, dan data tersimpan di perangkat ini. Sinkronisasi dicoba lagi besok.** |
 | Kebijakan diperbarui                    | **Kebijakan privasi diperbarui. Baca dan setujui untuk melanjutkan sinkronisasi.**                                                                                       |
 | Tombol impor                            | **Impor data**                                                                                                                                                           |
-| Impor versi lama selesai                | **{ditambahkan} catatan ditambahkan. {dikeluarkan} catatan dari versi lama tidak digunakan dalam latihan ini. File asal tetap utuh.**                                    |
+| Versi file impor tidak didukung | **File ini dibuat Terka versi lain dan tidak dapat diimpor. Tidak ada data yang diubah.** |
 | Pembaruan aplikasi diperlukan           | **Perbarui Terka untuk melanjutkan sinkronisasi. Data di perangkat ini tetap tersedia untuk diekspor.**                                                                  |
 | Perangkat lain memakai versi lebih baru | **Perangkat lain memakai Terka versi baru. Perbarui Terka untuk melanjutkan sinkronisasi. Latihan tetap berjalan.**                                                      |
 | Pendaftaran akun baru ditutup           | **Sinkronisasi untuk akun baru sedang ditutup sementara. Latihan tetap berjalan, dan data tersimpan di perangkat ini.**                                                  |

@@ -268,7 +268,7 @@ Pengguna membuka akun dari Statistik, membaca kebijakan privasi, lalu memilih Go
 
 Pada perangkat baru, aplikasi mengambil riwayat sebelum menyusun jadwal. Tanpa koneksi, latihan memakai salinan lokal dan perubahan menunggu pengiriman. Jika sesi masuk berakhir, latihan tetap tersedia, tetapi sinkronisasi menunggu pengguna masuk kembali.
 
-Ekspor dan impor tersedia dari Statistik. Hasil impor menyebut jumlah data yang ditambahkan, sudah ada, atau tidak lagi digunakan. Berkas yang tidak didukung ditolak tanpa mengubah data yang tersimpan.
+Ekspor dan impor tersedia dari Statistik. Hasil impor menyebut jumlah data yang ditambahkan dan yang sudah ada. Berkas dari versi format lain atau yang bukan ekspor Terka ditolak tanpa mengubah data yang tersimpan; riwayat dari versi Terka sebelumnya tidak dimigrasikan.
 
 ### 7.3 Alur Referensi dan Pelat Terlihat
 
