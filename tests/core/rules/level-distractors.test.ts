@@ -53,7 +53,7 @@ describe("automatic level (SRD 3.2)", () => {
 		expect(resolveLevel(3, 1, "daily")).toEqual({ level: 1, levelSource: "manual_down" });
 		expect(resolveLevel(2, undefined, "daily")).toEqual({ level: 2, levelSource: "auto" });
 		expect(resolveLevel(2, 2, "daily")).toEqual({ level: 2, levelSource: "auto" });
-		for (const context of ["intro", "drill", "kilat", "placement"] as const)
+		for (const context of ["intro", "drill", "kilat", "placement", "setrecall"] as const)
 			expect(() => resolveLevel(1, 2, context)).toThrow("fixed");
 	});
 	test("card ids parse into content id and mode", () => {
@@ -147,6 +147,22 @@ describe("distractor sources (SRD 2.8, 2.9)", () => {
 				seeded(`l${seed}`)
 			);
 			expect(picked.some(({ area }) => area.name === "Langkat")).toBe(false);
+		}
+	});
+	test("SRD 3.1: preferOtherProvince avoids a same-province neighbour when other provinces suffice", () => {
+		// bk and bb are both sumatera-utara; the sumatera group also has ba, bm, bp, be, bd
+		// in other provinces, so bb's areas should never be needed as a distractor.
+		for (let seed = 0; seed < 10; seed++) {
+			const picked = foreignAreas(
+				bundle,
+				region("bk"),
+				{ level: "group", id: "sumatera" },
+				3,
+				seeded(`o${seed}`),
+				{ preferOtherProvince: true }
+			);
+			expect(picked).toHaveLength(3);
+			expect(picked.every(({ owner }) => owner.id !== "bb")).toBe(true);
 		}
 	});
 	test("other codes exclude every valid code", () => {

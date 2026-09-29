@@ -50,12 +50,15 @@ export function pickLayered<T>(
 // SRD 2.8 "Nama sama, daerah beda": a same-named Kota/Kabupaten twin under another code grades
 // correct too, so it is excluded by name (every membership of the asked code, any confidence),
 // not just by area id.
+// SRD 3.1: with preferOtherProvince, each layer offers its other-province owners before its
+// same-province owners, so a same-province neighbour is only used when the layer needs it.
 export function foreignAreas(
 	bundle: Pick<Bundle, "regions" | "areas">,
 	region: Region,
 	scope: Scope,
 	count: number,
-	random: () => number
+	random: () => number,
+	options: { preferOtherProvince?: boolean } = {}
 ): { owner: Region; area: Area }[] {
 	const memberNames = new Set(
 		region.areas
@@ -63,18 +66,20 @@ export function foreignAreas(
 			.filter((area): area is Area => area !== undefined)
 			.map((area) => compactName(area.name))
 	);
-	return pickLayered(
-		regionLayers(bundle, region, scope).map((layer) =>
-			layer.flatMap((owner) =>
-				highMembers(bundle, owner)
-					.filter((area) => !memberNames.has(compactName(area.name)))
-					.map((area) => ({ owner, area }))
-			)
-		),
-		({ area }) => areaDisplayName(area),
-		count,
-		random
+	const layers = regionLayers(bundle, region, scope).map((layer) =>
+		layer.flatMap((owner) =>
+			highMembers(bundle, owner)
+				.filter((area) => !memberNames.has(compactName(area.name)))
+				.map((area) => ({ owner, area }))
+		)
 	);
+	const split = options.preferOtherProvince
+		? layers.flatMap((layer) => [
+				layer.filter(({ owner }) => owner.province !== region.province),
+				layer.filter(({ owner }) => owner.province === region.province)
+			])
+		: layers;
+	return pickLayered(split, ({ area }) => areaDisplayName(area), count, random);
 }
 
 export function otherCodes(
