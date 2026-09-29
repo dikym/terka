@@ -2,7 +2,13 @@ import type { CardMemory } from "../scheduling/card-memory";
 import { MATURE_INTERVAL_DAYS } from "../scheduling/card";
 import type { CardMode, Level, LevelSource, QuestionContext } from "./question";
 
-const FIXED_CONTEXTS: readonly QuestionContext[] = ["intro", "drill", "kilat", "placement"];
+const FIXED_CONTEXTS: readonly QuestionContext[] = [
+	"intro",
+	"drill",
+	"kilat",
+	"placement",
+	"setrecall"
+];
 
 // SRD 3.2 "Penentuan Level Otomatis", checked in order.
 export function automaticLevel(card: CardMemory, mode: CardMode, context: QuestionContext): Level {
