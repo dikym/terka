@@ -1,7 +1,10 @@
 import { describe, expect, test } from "bun:test";
-import { buildDictionary, provinceName } from "../../../src/core/answers/dictionary";
+import { readFile } from "node:fs/promises";
+import { buildDictionary, highMembers, provinceName } from "../../../src/core/answers/dictionary";
 import { matchName } from "../../../src/core/answers/match-name";
 import { typoDistance, typoThreshold } from "../../../src/core/answers/typo";
+import { bundleSchema } from "../../../src/core/content/schema";
+import { compactName } from "../../../src/core/text";
 import { ruleBundle } from "./fixtures";
 
 const dictionary = buildDictionary(ruleBundle());
@@ -40,7 +43,8 @@ describe("region name matching (SRD 5.1)", () => {
 		expect(match("Tjilatjap", "r").matchType).toBe("variant");
 		expect(match("Binjay", "bk").matchType).toBe("variant");
 	});
-	test("SR-090/SR-092/SR-212/SR-213: typos within the threshold are accepted with their cost", () => {
+	test("SR-090/SR-091/SR-092/SR-212/SR-213: typos within the threshold are accepted with their cost", () => {
+		expect(match("Pekanbaur", "bm")).toMatchObject({ matchType: "typo", typoCost: 0.5 });
 		expect(match("Pekanbru", "bm")).toMatchObject({ matchType: "typo", typoCost: 1 });
 		expect(match("Mdean", "bk")).toMatchObject({ matchType: "typo", typoCost: 0.5 });
 		expect(match("Medsn", "bk")).toMatchObject({ matchType: "typo", typoCost: 0.5 });
@@ -133,7 +137,12 @@ describe("region name matching (SRD 5.1)", () => {
 			}
 		);
 		const crowded = matchName("Sabanh", "sa", buildDictionary(bundle));
-		expect(crowded).toMatchObject({ matchType: "none", confusedWith: null });
+		expect(crowded).toMatchObject({
+			matchType: "none",
+			confusedWith: null,
+			ambiguous: false,
+			tooClose: true
+		});
 		bundle.regions.pop();
 		bundle.areas.pop();
 		expect(matchName("Sabanh", "sa", buildDictionary(bundle)).matchType).toBe("typo");
@@ -178,6 +187,58 @@ describe("region name matching (SRD 5.1)", () => {
 		// a different first letter) is only 1 away — within the uniqueness margin. A dictionary
 		// prefiltered to the answer's first letter would never see Nedanx and would wrongly accept.
 		expect(matchName("Medanz", "yy", buildDictionary(bundle)).matchType).toBe("none");
+	});
+	test("a typo of a kota/kabupaten twin is accepted; the twins never block each other", () => {
+		const bundle = ruleBundle();
+		bundle.areas.push({
+			id: "kota-tangerang",
+			type: "kota",
+			name: "Tangerang",
+			province: "banten",
+			aliases: [],
+			variants: []
+		});
+		bundle.regions
+			.find((region) => region.id === "b")!
+			.areas.push({ areaId: "kota-tangerang", confidence: "high" });
+		const twins = buildDictionary(bundle);
+		expect(matchName("Tangrang", "a", twins)).toMatchObject({
+			matchType: "typo",
+			acceptedAreaId: "kab-tangerang",
+			tooClose: false
+		});
+		expect(matchName("Tangrang", "b", twins)).toMatchObject({
+			matchType: "typo",
+			acceptedAreaId: "kab-tangerang",
+			ambiguous: true
+		});
+		expect(matchName("Kota Tangrang", "b", twins)).toMatchObject({
+			matchType: "typo",
+			acceptedAreaId: "kota-tangerang",
+			ambiguous: false
+		});
+	});
+	test("a typo of an area name that is also an exclusive province name is accepted", () => {
+		expect(match("Benkgulu", "bd")).toMatchObject({
+			matchType: "typo",
+			acceptedAreaId: "kota-bengkulu",
+			typoCost: 0.5
+		});
+	});
+	test("real content: swapping the 3rd and 4th letters of any 8+ letter member is a typo", async () => {
+		const real = bundleSchema.parse(JSON.parse(await readFile("src/data/plates.json", "utf8")));
+		const realDictionary = buildDictionary(real);
+		const failures: string[] = [];
+		for (const region of real.regions)
+			for (const area of highMembers(real, region)) {
+				const name = compactName(area.name);
+				if (name.length < 8) continue;
+				const swapped = name.slice(0, 2) + name[3] + name[2] + name.slice(4);
+				const result = matchName(swapped, region.id, realDictionary).matchType;
+				if (result !== (swapped === name ? "exact" : "typo"))
+					failures.push(`${region.id} ${area.id} ${swapped}: ${result}`);
+			}
+		expect(failures).toEqual([]);
 	});
 	test("empty input matches nothing", () => {
 		expect(match("   ", "bk").matchType).toBe("none");

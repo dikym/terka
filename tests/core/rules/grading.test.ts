@@ -108,10 +108,29 @@ describe("grading (SRD 4.4)", () => {
 	test("Review Focus: a correct answer without a first input grades without the latency component", () => {
 		expect(gradeAnswer(answer({ msToFirstKey: null }), samples)).toBe(3);
 	});
+	test("SR-197: a fast clean exact answer with a spacing variant grades 4", () => {
+		// "Bukit Tinggi" matches Kota Bukittinggi as exact (see match-name.test.ts); spaces cost nothing.
+		expect(
+			gradeAnswer(
+				answer({ msToFirstKey: 100, matchType: "exact", answerLength: 12 }),
+				samples
+			)
+		).toBe(4);
+	});
 	test("SR-099/SR-104: set grading maps counts against the threshold", () => {
 		expect([0, 4, 5, 6, 7].map((count) => gradeSet(count, 5))).toEqual([1, 2, 3, 3, 4]);
 	});
-	test("SR-234–SR-237: placement grading", () => {
+	test("a set recall answer grades by its counts, ignoring correct and interrupted", () => {
+		const setrecall = { questionType: "setrecall" as const, setThreshold: 5 };
+		expect(
+			gradeAnswer(
+				answer({ ...setrecall, setCorrect: 4, correct: false, interrupted: true }),
+				samples
+			)
+		).toBe(2);
+		expect(() => gradeAnswer(answer({ ...setrecall, setCorrect: null }), samples)).toThrow();
+	});
+	test("SR-234/SR-235/SR-236/SR-237: placement grading", () => {
 		const placement = (overrides: Partial<AnswerSignals>) =>
 			answer({ context: "placement", ...overrides });
 		expect(gradePlacement(placement({ msToFirstKey: 2400 }))).toBe(4);

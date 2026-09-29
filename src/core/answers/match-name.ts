@@ -9,7 +9,10 @@ export type NameMatch = {
 	acceptedAreaId: string | null;
 	confusedWith: string | null;
 	correction: string | null;
+	// A bare name that several accepted areas share (kota/kabupaten twins).
 	ambiguous: boolean;
+	// A typo rejected because another name is within the uniqueness margin.
+	tooClose: boolean;
 };
 
 const OLD_SPELLING: [RegExp, string][] = [
@@ -22,13 +25,14 @@ const OLD_SPELLING: [RegExp, string][] = [
 ];
 const modernize = (value: string) =>
 	OLD_SPELLING.reduce((text, [pattern, next]) => text.replace(pattern, next), value);
-const none = (confusedWith: string | null = null, ambiguous = false): NameMatch => ({
+const none = (confusedWith: string | null = null, tooClose = false): NameMatch => ({
 	matchType: "none",
 	typoCost: 0,
 	acceptedAreaId: null,
 	confusedWith,
 	correction: null,
-	ambiguous
+	ambiguous: false,
+	tooClose
 });
 
 type Role = "accepted" | "pending" | "other";
@@ -59,6 +63,21 @@ export function matchName(
 	const variantHit = (entry: NameEntry) =>
 		entry.variants.some((form) => compactName(form) === answer) ||
 		[...entry.forms, ...entry.variants].some((form) => modernize(compactName(form)) === modern);
+	// An explicit "kota"/"kabupaten" prefix picks its type among accepted hits, when present;
+	// otherwise the first in dictionary order, flagged ambiguous when several areas share the name.
+	const accept = (accepted: NameEntry[], matchType: MatchType, typoCost: number): NameMatch => {
+		const prefixed = type ? accepted.find((entry) => entry.areaType === type) : undefined;
+		const chosen = prefixed ?? accepted[0];
+		return {
+			matchType,
+			typoCost,
+			acceptedAreaId: chosen.kind === "area" ? chosen.id : null,
+			confusedWith: null,
+			correction: chosen.canonical,
+			ambiguous: !prefixed && accepted.filter((entry) => entry.kind === "area").length > 1,
+			tooClose: false
+		};
+	};
 	const steps: [(entry: NameEntry) => boolean, "exact" | "variant"][] = [
 		[exactHit, "exact"],
 		[variantHit, "variant"]
@@ -67,19 +86,7 @@ export function matchName(
 		const hits = entries.filter(hit);
 		if (!hits.length) continue;
 		const accepted = hits.filter((entry) => role(entry) === "accepted");
-		if (accepted.length) {
-			// An explicit "kota"/"kabupaten" prefix picks its type among accepted hits, when present.
-			const prefixed = type ? accepted.find((entry) => entry.areaType === type) : undefined;
-			const chosen = prefixed ?? accepted[0];
-			return {
-				matchType,
-				typoCost: 0,
-				acceptedAreaId: chosen.kind === "area" ? chosen.id : null,
-				confusedWith: null,
-				correction: chosen.canonical,
-				ambiguous: prefixed ? false : accepted.length > 1
-			};
-		}
+		if (accepted.length) return accept(accepted, matchType, 0);
 		if (hits.some((entry) => role(entry) === "pending"))
 			return { ...none(), matchType: "unverified" };
 		return none(firstOtherOwner(hits, codeId, dictionary));
@@ -93,26 +100,26 @@ export function matchName(
 		.map((item) => ({ ...item, cost: typoDistance(answer, item.form) }))
 		.sort((a, b) => a.cost - b.cost);
 	const best = scored[0];
-	const bestRole = best ? role(best.entry) : "other";
-	if (
-		!best ||
-		best.form[0] !== answer[0] ||
-		(bestRole !== "accepted" && bestRole !== "pending") ||
-		best.cost > typoThreshold(best.form.length)
-	)
+	if (!best || best.form[0] !== answer[0] || best.cost > typoThreshold(best.form.length))
 		return none();
-	if (scored.some((item) => item.entry !== best.entry && item.cost < best.cost + 1))
+	// Entries sharing the best compact form (twins, a kota and its province) are one candidate;
+	// only a different form within one of the best cost blocks it (SRD 5.1 step 6).
+	const group = [
+		...new Set(scored.filter((item) => item.form === best.form).map((item) => item.entry))
+	];
+	const accepted = group.filter((entry) => role(entry) === "accepted");
+	const pending = !accepted.length && group.every((entry) => role(entry) === "pending");
+	if (!accepted.length && !pending) return none();
+	if (
+		scored.some(
+			(item) =>
+				item.form !== best.form && !group.includes(item.entry) && item.cost < best.cost + 1
+		)
+	)
 		return none(null, true);
 	// A typo of a not-yet-verified (medium) membership is unverified, same as an exact match would be.
-	if (bestRole === "pending") return { ...none(), matchType: "unverified" };
-	return {
-		matchType: "typo",
-		typoCost: best.cost,
-		acceptedAreaId: best.entry.kind === "area" ? best.entry.id : null,
-		confusedWith: null,
-		correction: best.entry.canonical,
-		ambiguous: false
-	};
+	if (pending) return { ...none(), matchType: "unverified" };
+	return accept(accepted, "typo", best.cost);
 }
 
 // The pair is recorded against the first other code in plates.json order that owns the name as high.

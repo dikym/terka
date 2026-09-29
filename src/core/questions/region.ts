@@ -21,6 +21,11 @@ const PLACEMENT_MS = 15_000;
 
 export type ResolvedLevels = { level: Level; autoLevel: Level; levelSource: LevelSource };
 
+// SRD 3.3/3.4: when a Level fallback lands on a level the request didn't ask for, the source
+// reflects the final level against what was automatically determined, not the original request.
+export const levelSourceFor = (level: Level, autoLevel: Level): LevelSource =>
+	level === autoLevel ? "auto" : level > autoLevel ? "manual_up" : "manual_down";
+
 function findRegion(bundle: Pick<Bundle, "regions">, id: string): Region {
 	const region = bundle.regions.find((item) => item.id === id);
 	if (!region) throw new Error(`unknown region ${id}`);
@@ -123,10 +128,6 @@ export function buildRegionQuestion(
 		label = LABELS.guessArea;
 	}
 
-	// SRD 3.3/3.4: when a Level fallback lands on a level the request didn't ask for, the source
-	// reflects the final level against what was automatically determined, not the original request.
-	const levelSourceFor = (level: Level, autoLevel: Level): LevelSource =>
-		level === autoLevel ? "auto" : level > autoLevel ? "manual_up" : "manual_down";
 	const typed = (level: Level, levelSource: LevelSource): Question => ({
 		...base,
 		level,

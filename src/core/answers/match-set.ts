@@ -41,7 +41,8 @@ export function matchSet(inputs: string[], codeId: string, dictionary: NameDicti
 			match.matchType === "exact" ||
 			match.matchType === "variant" ||
 			match.matchType === "typo";
-		if (isNameMatch && !match.ambiguous && areaId !== null) {
+		// A bare twin name counts once, as the first accepted area in dictionary order.
+		if (isNameMatch && areaId !== null) {
 			accepted.add(areaId);
 			return [raw, areaId, match.matchType, match.typoCost, null];
 		}

@@ -112,8 +112,12 @@ describe("set answers (SRD 5.2)", () => {
 		expect(matchSet(["Langkat", "Sumatera Utara"], "bk", dictionary).setCorrect).toBe(0);
 		expect(matchSet(["Bali"], "dk", dictionary).setCorrect).toBe(0);
 	});
-	test("an ambiguous bare twin does not count until specified", () => {
-		expect(matchSet(["Bima"], "ea", dictionary).setCorrect).toBe(0);
+	test("a bare twin counts once as the first twin; the other twin needs its prefix", () => {
+		const bare = matchSet(["Bima"], "ea", dictionary);
+		expect(bare.setCorrect).toBe(1);
+		expect(bare.items[0]).toEqual(["Bima", "kota-bima", "exact", 0, null]);
+		expect(matchSet(["Bima", "Kabupaten Bima"], "ea", dictionary).setCorrect).toBe(2);
+		expect(matchSet(["Bima", "Bima"], "ea", dictionary).setCorrect).toBe(1);
 		expect(matchSet(["Kota Bima", "Kabupaten Bima"], "ea", dictionary).setCorrect).toBe(2);
 	});
 });

@@ -18,12 +18,11 @@ export function gradeAnswer(signals: AnswerSignals, history: AnswerSignals[]): G
 		signals.matchType === "unverified"
 	)
 		return null;
-	if (
-		signals.questionType === "setrecall" &&
-		signals.setCorrect !== null &&
-		signals.setThreshold !== null
-	)
+	if (signals.questionType === "setrecall") {
+		if (signals.setCorrect === null || signals.setThreshold === null)
+			throw new Error("setrecall answers need setCorrect and setThreshold");
 		return gradeSet(signals.setCorrect, signals.setThreshold);
+	}
 	if (signals.correct !== true || signals.timedOut) return 1;
 	if (isInterrupted(signals)) return 3;
 	const score = fluencyScore(signals, comparisonGroup(signals, history));
