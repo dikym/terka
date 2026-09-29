@@ -13,9 +13,18 @@ Setelah Anda membuat, mengubah, atau menghapus kode, Anda **WAJIB** menjalankan 
     bun run check
     ```
 
+### Komentar Kode
+
+- Jangan tambahkan komentar yang tidak penting, misalnya komentar yang hanya mengulang apa yang sudah jelas dari nama fungsi, variabel, atau kodenya.
+- Tulis komentar hanya jika memang penting, misalnya menjelaskan alasan, batasan, atau perilaku yang tidak terlihat dari kode.
+- Jangan tulis komentar yang merujuk dokumen (SRD, TRD, ERD, Microcopy, nomor bagian, ID katalog, dll).
+- Jangan tulis catatan `ponytail:` di kode.
+- Nama tes (`test`/`describe`) menjelaskan perilaku saja, tanpa ID katalog atau rujukan dokumen.
+- Komentar selalu ditulis dalam bahasa Inggris.
+
 ## Git Commits
 
-**Wajib** menggunakan standar [Conventional Commits](https://www.conventionalcommits.org/) untuk setiap git commit. Jangan tambahkan deskripsi "Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>".
+**Wajib** menggunakan standar [Conventional Commits](https://www.conventionalcommits.org/) untuk setiap git commit. Jangan tambahkan deskripsi "Co-Authored-By: Claude ... <noreply@anthropic.com>".
 
 ### Format
 
@@ -54,7 +63,7 @@ refactor(ui): extract button component from dashboard
 ### Aturan
 
 - **Konfirmasi Sebelum Commit:** Setelah implementasi selesai dan tervalidasi, **SELALU** tanyakan konfirmasi ke user sebelum melakukan `git add` dan `git commit`. Jangan pernah commit tanpa persetujuan eksplisit dari user. Siapkan commit message yang sesuai Conventional Commits untuk ditinjau user sebelum dieksekusi.
-- **Jangan tambahkan Co-Authored-By:** Tidak perlu menambahkan footer `Co-Authored-By: Claude Sonnet ...` pada pesan commit.
+- **Jangan tambahkan Co-Authored-By:** Tidak perlu menambahkan footer `Co-Authored-By: Claude ...` pada pesan commit.
 - **Selalu berbahasa Inggris:** Pesan commit ditulis dalam bahasa Inggris, meskipun percakapan berlangsung dalam bahasa Indonesia.
 - **Tanpa body/description:** Cukup tulis baris subject saja. Buat subject yang jelas dan mewakili seluruh perubahan, sehingga _body_ tidak diperlukan. Tambahkan _body_ hanya jika user memintanya secara eksplisit.
 - Gunakan huruf kecil untuk type dan description
@@ -83,4 +92,6 @@ Saat menggunakan skill perencanaan, simpan output ke folder berikut:
 
 Buat folder tersebut jika belum ada. Lokasi ini **menggantikan** default bawaan skill.
 
-Saat men-dispatch subagent untuk eksekusi plan (skill `superpowers:subagent-driven-development` atau `superpowers:executing-plans`), gunakan `model: "sonnet"` pada setiap panggilan Agent tool.
+### Setelah Implementasi Selesai
+
+Setelah implementasi sebuah plan selesai (seluruh task selesai dan sudah di-merge atau diserahkan ke user), hapus file spec dan plan milik fitur tersebut dari `docs/superpowers/specs/` dan `docs/superpowers/plans/`. Jangan hapus `.gitkeep` atau file spec/plan milik fitur lain yang belum selesai.
