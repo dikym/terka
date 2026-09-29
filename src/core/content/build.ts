@@ -4,6 +4,7 @@ import { error, isError, report, type ContentMessage } from "./messages";
 import { readCuration } from "./read-curation";
 import { readFacts } from "./read-facts";
 import { readSpecials } from "./read-specials";
+import { coverageRules } from "./rules/coverage";
 import { factRules } from "./rules/facts";
 import { identityRules } from "./rules/identity";
 import { placementRules } from "./rules/placement";
@@ -78,6 +79,7 @@ export function buildFromDraft(draft: ContentDraft, options: BuildOptions): Buil
 		};
 	const bundle = parsed.data;
 	messages.push(...revisionRules(bundle, options.previous, draft.curation.retiredIds));
+	messages.push(...coverageRules(bundle));
 	for (const [regionId, province] of exclusiveProvinces(bundle))
 		messages.push(report("exclusive-province", `${regionId} covers ${province} exclusively`));
 	return { bundle: messages.some(isError) ? null : bundle, messages };

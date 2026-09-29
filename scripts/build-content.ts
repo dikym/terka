@@ -1,8 +1,5 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { buildContent } from "../src/core/content/build";
-// ponytail: AC-1 still uses the old question generator; sub-project 2 moves this check into the core build.
-import { parseContent } from "../src/lib/terka/content";
-import { assertLevelThreeCoverage } from "../src/lib/terka/questions";
 
 const root = new URL("../", import.meta.url);
 const read = (path: string) => readFile(new URL(path, root), "utf8");
@@ -27,7 +24,6 @@ for (const message of result.messages) {
 	else console.log(line);
 }
 if (!result.bundle) throw new Error("Content build failed");
-assertLevelThreeCoverage(parseContent(result.bundle));
 await writeFile(
 	new URL("src/data/plates.json", root),
 	JSON.stringify(result.bundle, null, "\t") + "\n"
