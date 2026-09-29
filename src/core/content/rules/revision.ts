@@ -12,8 +12,24 @@ const payload = (bundle: Record<string, unknown>) =>
 		)
 	);
 
+// Ids across the record collections a retirement can drop: regions, areas, facts and specials.
+const recordIds = (bundle: Record<string, unknown>) => {
+	const ids = new Set<string>();
+	for (const key of ["regions", "areas", "facts", "specials"]) {
+		const list = bundle[key];
+		if (Array.isArray(list))
+			for (const item of list)
+				if (item && typeof item === "object" && "id" in item) ids.add(String(item.id));
+	}
+	return ids;
+};
+
 // TRD 4.1 "Versi konten": contentRev rises by one per change; old history entries never change.
-export function revisionRules(bundle: Bundle, previous: unknown): ContentMessage[] {
+export function revisionRules(
+	bundle: Bundle,
+	previous: unknown,
+	retiredIds: string[]
+): ContentMessage[] {
 	const out: ContentMessage[] = [];
 	for (const [index, entry] of bundle.contentHistory.entries())
 		if (entry.contentRev !== index + 1)
@@ -33,6 +49,16 @@ export function revisionRules(bundle: Bundle, previous: unknown): ContentMessage
 		);
 	if (!previous || typeof previous !== "object") return out;
 	const before = previous as Partial<Bundle> & Record<string, unknown>;
+	const retired = new Set(retiredIds);
+	const afterIds = recordIds(bundle as unknown as Record<string, unknown>);
+	for (const id of recordIds(before))
+		if (!afterIds.has(id) && !retired.has(id))
+			out.push(
+				error(
+					"retired-id-missing",
+					`${id} is missing from the new bundle; list it in retiredIds if it was retired`
+				)
+			);
 	const history = before.contentHistory ?? [];
 	if (JSON.stringify(bundle.contentHistory.slice(0, history.length)) !== JSON.stringify(history))
 		out.push(error("content-history-changed", "contentHistory changed an existing entry"));
@@ -46,7 +72,8 @@ export function revisionRules(bundle: Bundle, previous: unknown): ContentMessage
 		out.push(
 			error(
 				"content-rev-not-bumped",
-				`content changed but contentRev is still ${rev}; bump it in data/plate-curation.json`
+				`content changed but contentRev is still ${rev}; bump it in data/plate-curation.json` +
+					" or restore src/data/plates.json from git if this change already bumped it"
 			)
 		);
 	return out;

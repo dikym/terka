@@ -125,6 +125,39 @@ describe("special plates reader", () => {
 		expect(specialId("17", "Vatikan")).toMatch(/^[a-z0-9-]{1,32}$/);
 	});
 
+	test("a first word that alone exceeds the remaining budget is hard-cut, never left empty", () => {
+		const id = specialId("1234567890123456789012345", "Indonesia");
+		expect(id).not.toBe("cd-1234567890123456789012345-");
+		expect(id.endsWith("-")).toBe(false);
+		expect(id.length).toBeGreaterThan("cd-1234567890123456789012345-".length - 1);
+	});
+
+	test("an invalid Tanggal in §8 Daftar Sumber fails and names the column", () => {
+		const markdown = doc([
+			"| CD 12 | Amerika Serikat | negara | Amerika Serikat | — | `high` | — |"
+		]).replace(
+			"| `perpol` | Lampiran | Polri | peraturan | 2021-05-05 | 2026-09-24 | https://x.example | — | D4 |",
+			"| `perpol` | Lampiran | Polri | peraturan | kemarin | 2026-09-24 | https://x.example | — | D4 |"
+		);
+		expect(() => readSpecials(markdown)).toThrow("Tanggal");
+	});
+
+	test("an invalid Diperiksa in §8 Daftar Sumber fails and names the column", () => {
+		const markdown = doc([
+			"| CD 12 | Amerika Serikat | negara | Amerika Serikat | — | `high` | — |"
+		]).replace(
+			"| `perpol` | Lampiran | Polri | peraturan | 2021-05-05 | 2026-09-24 | https://x.example | — | D4 |",
+			"| `perpol` | Lampiran | Polri | peraturan | 2021-05-05 | 24-09-2026 | https://x.example | — | D4 |"
+		);
+		expect(() => readSpecials(markdown)).toThrow("Diperiksa");
+	});
+
+	test("a markdown reader error is prefixed with the file name", () => {
+		const withoutSources = doc([]).split("## 8. Daftar Sumber")[0];
+		expect(() => readSpecials(withoutSources)).toThrow("Terka_Kode_Khusus.md");
+		expect(() => readSpecials(withoutSources)).toThrow("section not found");
+	});
+
 	test("addMonths keeps the day of month", () => {
 		expect(addMonths("2026-09-24", 6)).toBe("2027-03-24");
 	});

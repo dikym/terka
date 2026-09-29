@@ -29,6 +29,22 @@ describe("fact rules", () => {
 		draft.curation.facts[0].regions = ["zz"];
 		expect(errorCodes(factRules(draft))).toEqual(["fact-unknown-region"]);
 	});
+	test("duplicate fact numbers in Terka_Facts.md fail", () => {
+		const draft = validDraft();
+		draft.facts.push({
+			number: 1,
+			line: 2,
+			historyLabel: "legenda",
+			publicationStatus: "draft",
+			text: "Dua."
+		});
+		expect(errorCodes(factRules(draft))).toContain("duplicate-fact-number");
+	});
+	test("a duplicate curation.facts number is not silently overwritten", () => {
+		const draft = validDraft();
+		draft.curation.facts.push({ number: 1, id: "f-001-dup", regions: [] });
+		expect(errorCodes(factRules(draft))).toContain("duplicate-fact-entry");
+	});
 	test("TR-150: a ready fact without source or check date fails; with both it passes", () => {
 		const draft = validDraft();
 		draft.facts[0].publicationStatus = "ready";

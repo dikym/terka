@@ -874,7 +874,7 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 
 | ID     | Skenario                                                                        | Hasil yang diharapkan                                                                                                   | Kategori |
 | ------ | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | -------- |
-| TR-166 | Build dengan `special_plates.json` revisi 2026.09.24                            | Lolos; `specials[]` berisi 130 entri CD; `referencePlates[]` berisi tiga entri format (RI, CC, CH); CD 92 `needsReview` | normal   |
+| TR-166 | Build dengan dokumen Kode Khusus (`Terka_Kode_Khusus.md`) revisi 2026.09.24      | Lolos; `specials[]` berisi 130 entri CD; `referencePlates[]` berisi tiga entri format (RI, CC, CH); CD 92 `needsReview` | normal   |
 | TR-167 | Dua entri CD `high` memakai nomor yang sama                                     | Build gagal dengan pesan yang menyebut kedua `id`                                                                       | negatif  |
 | TR-168 | Alias satu entri CD sama dengan `holder` entri CD lain setelah normalisasi      | Build gagal                                                                                                             | negatif  |
 | TR-169 | `specials[].id` sama dengan salah satu `regions[].id`                           | Build gagal                                                                                                             | negatif  |

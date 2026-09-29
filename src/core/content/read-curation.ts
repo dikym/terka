@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { issueMessages } from "./issues";
 import {
 	areaSchema,
 	contentHistorySchema,
@@ -43,29 +44,11 @@ export const curationSchema = z
 
 export type Curation = z.infer<typeof curationSchema>;
 
-// Names the record that failed (e.g. "regions[3] (id bk)") so TR-02 errors point at the entry.
-function where(value: unknown, path: (string | number)[]): string {
-	const [list, index] = path;
-	if (
-		typeof index !== "number" ||
-		typeof list !== "string" ||
-		!value ||
-		typeof value !== "object"
-	)
-		return path.join(".");
-	const items = (value as Record<string, unknown>)[list];
-	const entry = Array.isArray(items) ? items[index] : undefined;
-	const id = entry && typeof entry === "object" && "id" in entry ? String(entry.id) : undefined;
-	return `${path.join(".")}${id ? ` (id ${id})` : ""}`;
-}
-
 export function readCuration(value: unknown): Curation {
 	const result = curationSchema.safeParse(value);
 	if (!result.success)
 		throw new Error(
-			`plate-curation.json: ${result.error.issues
-				.map((issue) => `${where(value, issue.path)}: ${issue.message}`)
-				.join("; ")}`
+			`plate-curation.json: ${issueMessages(value, result.error.issues).join("; ")}`
 		);
 	return result.data;
 }

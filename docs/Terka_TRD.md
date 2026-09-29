@@ -82,7 +82,7 @@ Seluruh konten berasal dari satu file JSON yang dihasilkan dari dokumen referens
       "id": "dk",
       "code": "DK",
       "region": "Bali",
-      "group": "bali-nusra",
+      "group": "bali-nusa-tenggara",
       "province": "bali",
       "spans": [],
       "placementTier": "common",
