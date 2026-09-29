@@ -1,16 +1,16 @@
 import {
-	contentSchema,
-	progressSchema,
 	type Area,
 	type CardMode,
 	type CardProgress,
 	type Content,
+	contentSchema,
 	type Progress,
+	progressSchema,
 	type Region,
 	type Scope
 } from "./model";
 import { createClock } from "./time";
-import { SET_MIN_AREAS } from "../../rules";
+import { SET_MIN_AREAS } from "@/rules";
 
 function unique(values: string[], label: string) {
 	if (new Set(values).size !== values.length) throw new Error(`Duplicate ${label}`);
