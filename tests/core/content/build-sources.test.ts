@@ -18,7 +18,7 @@ describe("build from the real sources", () => {
 		expect(bundle!.areas).toHaveLength(514);
 		expect(bundle!.specials).toHaveLength(130);
 		expect(bundle!.facts).toHaveLength(50);
-		expect(bundle!.contentRev).toBe(2);
+		expect(bundle!.contentRev).toBe(3);
 	});
 	test("building twice gives identical JSON", async () => {
 		const first = buildContent({ ...(await sources()), release: false });

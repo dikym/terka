@@ -1,6 +1,6 @@
 {
-	"version": "2026.09.28",
-	"contentRev": 2,
+	"version": "2026.09.29",
+	"contentRev": 3,
 	"contentHistory": [
 		{
 			"contentRev": 1,
@@ -9,6 +9,10 @@
 		{
 			"contentRev": 2,
 			"version": "2026.09.28"
+		},
+		{
+			"contentRev": 3,
+			"version": "2026.09.29"
 		}
 	],
 	"regions": [
@@ -617,7 +621,7 @@
 			"code": "BN",
 			"region": "Kepulauan Bangka Belitung",
 			"group": "sumatera",
-			"province": "bangka-belitung",
+			"province": "kepulauan-bangka-belitung",
 			"spans": [],
 			"placementTier": "rare",
 			"confidence": "high",
@@ -3908,7 +3912,7 @@
 			"id": "kota-pangkalpinang",
 			"type": "kota",
 			"name": "Pangkalpinang",
-			"province": "bangka-belitung",
+			"province": "kepulauan-bangka-belitung",
 			"aliases": [],
 			"variants": []
 		},
@@ -3916,7 +3920,7 @@
 			"id": "kab-bangka",
 			"type": "kabupaten",
 			"name": "Bangka",
-			"province": "bangka-belitung",
+			"province": "kepulauan-bangka-belitung",
 			"aliases": [],
 			"variants": []
 		},
@@ -3924,7 +3928,7 @@
 			"id": "kab-bangka-barat",
 			"type": "kabupaten",
 			"name": "Bangka Barat",
-			"province": "bangka-belitung",
+			"province": "kepulauan-bangka-belitung",
 			"aliases": [],
 			"variants": []
 		},
@@ -3932,7 +3936,7 @@
 			"id": "kab-bangka-tengah",
 			"type": "kabupaten",
 			"name": "Bangka Tengah",
-			"province": "bangka-belitung",
+			"province": "kepulauan-bangka-belitung",
 			"aliases": [],
 			"variants": []
 		},
@@ -3940,7 +3944,7 @@
 			"id": "kab-bangka-selatan",
 			"type": "kabupaten",
 			"name": "Bangka Selatan",
-			"province": "bangka-belitung",
+			"province": "kepulauan-bangka-belitung",
 			"aliases": [],
 			"variants": []
 		},
@@ -3948,7 +3952,7 @@
 			"id": "kab-belitung",
 			"type": "kabupaten",
 			"name": "Belitung",
-			"province": "bangka-belitung",
+			"province": "kepulauan-bangka-belitung",
 			"aliases": [],
 			"variants": []
 		},
@@ -3956,7 +3960,7 @@
 			"id": "kab-belitung-timur",
 			"type": "kabupaten",
 			"name": "Belitung Timur",
-			"province": "bangka-belitung",
+			"province": "kepulauan-bangka-belitung",
 			"aliases": [],
 			"variants": []
 		},
