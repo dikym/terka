@@ -17,6 +17,7 @@ const HOLDER_TYPES: Record<string, Special["holderType"]> = {
 	organisasi: "organization"
 };
 const CONFIDENCES = ["high", "medium", "low"];
+const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 const nullable = (cell: string) => (cell === "—" ? null : cell);
 
 export function addMonths(isoDate: string, months: number): string {
@@ -40,6 +41,9 @@ export function specialId(number: string, holder: string): string {
 		if (prefix.length + next.length > 32) break;
 		slug = next;
 	}
+	// The first word alone can still overflow the budget; hard-cut it so the id
+	// stays non-empty after the prefix and never ends on a trailing hyphen.
+	if (!slug && words[0]) slug = words[0].slice(0, Math.max(0, 32 - prefix.length));
 	return prefix + slug;
 }
 
@@ -48,6 +52,15 @@ function fail(line: number, message: string): never {
 }
 
 export function readSpecials(markdown: string): SpecialsSource {
+	try {
+		return readSpecialsSource(markdown);
+	} catch (cause) {
+		const message = cause instanceof Error ? cause.message : String(cause);
+		throw message.startsWith(FILE) ? cause : new Error(`${FILE}: ${message}`);
+	}
+}
+
+function readSpecialsSource(markdown: string): SpecialsSource {
 	const specialsVersion = readField(markdown, "Versi data kode khusus");
 	const sources: ContentSource[] = readTable(markdown, SOURCES, [
 		"ID",
@@ -59,17 +72,23 @@ export function readSpecials(markdown: string): SpecialsSource {
 		"URL",
 		"URL asli",
 		"Lokasi"
-	]).map(({ cells }) => ({
-		id: cells.ID,
-		title: cells.Judul,
-		publisher: cells.Penerbit,
-		type: cells.Jenis,
-		date: cells.Tanggal,
-		checkedAt: nullable(cells.Diperiksa),
-		url: cells.URL,
-		originalUrl: nullable(cells["URL asli"]),
-		locator: cells.Lokasi
-	}));
+	]).map(({ line, cells }) => {
+		if (!ISO_DATE.test(cells.Tanggal))
+			fail(line, `Tanggal "${cells.Tanggal}" is not an ISO date (YYYY-MM-DD)`);
+		if (cells.Diperiksa !== "—" && !ISO_DATE.test(cells.Diperiksa))
+			fail(line, `Diperiksa "${cells.Diperiksa}" is not an ISO date (YYYY-MM-DD) or "—"`);
+		return {
+			id: cells.ID,
+			title: cells.Judul,
+			publisher: cells.Penerbit,
+			type: cells.Jenis,
+			date: cells.Tanggal,
+			checkedAt: nullable(cells.Diperiksa),
+			url: cells.URL,
+			originalUrl: nullable(cells["URL asli"]),
+			locator: cells.Lokasi
+		};
+	});
 	const byId = new Map(sources.map((source) => [source.id, source]));
 	// Kode Khusus §7: entries are re-checked every six months from the source's check date.
 	const dates = (ids: string[], line: number) => {

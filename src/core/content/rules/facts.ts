@@ -8,6 +8,13 @@ export function factRules({ curation, facts }: ContentDraft): ContentMessage[] {
 	const entries = new Map(curation.facts.map((entry) => [entry.number, entry]));
 	for (const number of duplicates(facts.map((item) => String(item.number))))
 		out.push(error("duplicate-fact-number", `Terka_Facts.md lists fact ${number} twice`));
+	for (const number of duplicates(curation.facts.map((entry) => String(entry.number))))
+		out.push(
+			error(
+				"duplicate-fact-entry",
+				`plate-curation.json lists curation.facts ${number} twice`
+			)
+		);
 	for (const item of facts) {
 		const entry = entries.get(item.number);
 		if (!entry) {

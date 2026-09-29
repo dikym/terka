@@ -1,4 +1,5 @@
 import type { ContentDraft } from "./draft";
+import { issueMessages } from "./issues";
 import { error, isError, report, type ContentMessage } from "./messages";
 import { readCuration } from "./read-curation";
 import { readFacts } from "./read-facts";
@@ -65,14 +66,18 @@ export function buildFromDraft(draft: ContentDraft, options: BuildOptions): Buil
 				: message
 		);
 	if (messages.some(isError)) return { bundle: null, messages };
-	const parsed = bundleSchema.safeParse(assembleBundle(draft));
+	const assembled = assembleBundle(draft);
+	const parsed = bundleSchema.safeParse(assembled);
 	if (!parsed.success)
 		return {
 			bundle: null,
-			messages: [...messages, error("bundle-schema", parsed.error.message)]
+			messages: [
+				...messages,
+				error("bundle-schema", issueMessages(assembled, parsed.error.issues).join("; "))
+			]
 		};
 	const bundle = parsed.data;
-	messages.push(...revisionRules(bundle, options.previous));
+	messages.push(...revisionRules(bundle, options.previous, draft.curation.retiredIds));
 	for (const [regionId, province] of exclusiveProvinces(bundle))
 		messages.push(report("exclusive-province", `${regionId} covers ${province} exclusively`));
 	return { bundle: messages.some(isError) ? null : bundle, messages };

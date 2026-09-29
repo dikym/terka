@@ -74,6 +74,15 @@ describe("bundle build", () => {
 			errorCodes(buildFromDraft(validDraft(), { ...options, previous: released }).messages)
 		).toEqual([]);
 	});
+	test("a bundle schema failure is readable and names the special id", () => {
+		const draft = validDraft();
+		draft.specials.specials[0].holder = "";
+		const { bundle, messages } = buildFromDraft(draft, options);
+		expect(bundle).toBeNull();
+		const failure = messages.find((message) => message.code === "bundle-schema");
+		expect(failure?.message).toContain("cd-12-amerika-serikat");
+		expect(failure?.message).not.toMatch(/^\[/);
+	});
 	test("exclusive provinces are reported", () => {
 		const { messages } = buildFromDraft(validDraft(), options);
 		expect(messages.some((message) => message.code === "exclusive-province")).toBe(true);

@@ -8400,5 +8400,13 @@
 			"regions": []
 		}
 	],
-	"retiredIds": []
+	"retiredIds": [
+		"cd-24-uea",
+		"cd-88-brunei",
+		"cd-92-ptri-asean",
+		"cd-100-asean",
+		"cd-111-asean-foundation",
+		"cd-114-bosnia",
+		"cd-144-kep-solomon"
+	]
 }

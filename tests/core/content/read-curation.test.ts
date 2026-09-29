@@ -18,4 +18,7 @@ describe("curation reader", () => {
 			"plate-curation.json"
 		);
 	});
+	test("a top-level issue names (root) instead of leaving the path empty", () => {
+		expect(() => readCuration({ ...validDraft().curation, factLinks: [] })).toThrow("(root)");
+	});
 });
