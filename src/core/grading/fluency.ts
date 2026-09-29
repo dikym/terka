@@ -17,7 +17,6 @@ export const isInterrupted = (signals: AnswerSignals) =>
 	signals.interrupted ||
 	(signals.msToFirstKey !== null && signals.msToFirstKey > INTERRUPTED_LATENCY_MS);
 
-// SRD 4.4 "Yang tidak masuk persentil".
 export const isPercentileSample = (signals: AnswerSignals) =>
 	signals.context !== "intro" &&
 	signals.context !== "placement" &&
@@ -30,7 +29,6 @@ export const isPercentileSample = (signals: AnswerSignals) =>
 	signals.levelSource !== "manual_down" &&
 	signals.msToFirstKey !== null;
 
-// level × answer form × input method, falling back to level × input method below 30 samples.
 export function comparisonGroup(signals: AnswerSignals, history: AnswerSignals[]): AnswerSignals[] {
 	const samples = history.filter(
 		(item) =>
@@ -53,7 +51,6 @@ const longestGap = (signals: AnswerSignals) =>
 const present = (values: (number | null)[]) =>
 	values.filter((value): value is number => value !== null);
 
-// SRD 4.4 "Skor kelancaran".
 export function fluencyScore(signals: AnswerSignals, group: AnswerSignals[]): number {
 	let score = 0;
 	if (group.length) {

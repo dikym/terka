@@ -58,7 +58,6 @@ export function readTable(
 	return rows;
 }
 
-// A `**Label:** value` line anywhere in the document.
 export function readField(markdown: string, label: string): string {
 	const prefix = `**${label}:**`;
 	const line = markdown.split("\n").find((text) => text.trim().startsWith(prefix));

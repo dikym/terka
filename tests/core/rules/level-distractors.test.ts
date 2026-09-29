@@ -21,8 +21,8 @@ const card = (state: "new" | "learning" | "review" | "relearning" | "mature", ex
 	...extra
 });
 
-describe("automatic level (SRD 3.2)", () => {
-	test("SR-018/SR-023/SR-340: the table in order", () => {
+describe("automatic level", () => {
+	test("the table in order", () => {
 		expect(automaticLevel(card("review"), "code2region", "intro")).toBe(1);
 		expect(automaticLevel(card("new"), "code2region", "drill")).toBe(3);
 		expect(automaticLevel(card("mature"), "code2region", "kilat")).toBe(1);
@@ -48,7 +48,7 @@ describe("automatic level (SRD 3.2)", () => {
 		).toBe(2);
 		expect(automaticLevel(card("mature"), "holder2special", "special")).toBe(3);
 	});
-	test("SR-019/SR-020: manual levels are recorded; fixed contexts refuse them", () => {
+	test("manual levels are recorded; fixed contexts refuse them", () => {
 		expect(resolveLevel(2, 3, "daily")).toEqual({ level: 3, levelSource: "manual_up" });
 		expect(resolveLevel(3, 1, "daily")).toEqual({ level: 1, levelSource: "manual_down" });
 		expect(resolveLevel(2, undefined, "daily")).toEqual({ level: 2, levelSource: "auto" });
@@ -66,10 +66,10 @@ describe("automatic level (SRD 3.2)", () => {
 	});
 });
 
-describe("distractor sources (SRD 2.8, 2.9)", () => {
+describe("distractor sources", () => {
 	const members = (id: string) =>
 		new Set(region(id).areas.map((membership) => membership.areaId));
-	test("SR-022/SR-218: scope areas first, never a member of the asked code", () => {
+	test("scope areas first, never a member of the asked code", () => {
 		for (let seed = 0; seed < 10; seed++) {
 			const picked = foreignAreas(
 				bundle,
@@ -87,7 +87,7 @@ describe("distractor sources (SRD 2.8, 2.9)", () => {
 			expect(new Set(picked.map(({ area }) => areaDisplayName(area))).size).toBe(3);
 		}
 	});
-	test("SR-219: a card outside the scope starts from its own group", () => {
+	test("a card outside the scope starts from its own group", () => {
 		const picked = foreignAreas(
 			bundle,
 			region("dk"),
@@ -97,7 +97,7 @@ describe("distractor sources (SRD 2.8, 2.9)", () => {
 		);
 		expect(picked.every(({ owner }) => owner.group === "bali-nusa-tenggara")).toBe(true);
 	});
-	test("SR-220/SR-297: a thin group widens to national", () => {
+	test("a thin group widens to national", () => {
 		const picked = foreignAreas(
 			bundle,
 			region("db"),
@@ -108,7 +108,7 @@ describe("distractor sources (SRD 2.8, 2.9)", () => {
 		expect(picked).toHaveLength(3);
 		expect(picked.every(({ owner }) => owner.group !== "sulawesi")).toBe(true);
 	});
-	test("SR-218/SRD 2.8: a same-name twin under another code is excluded even under a different id", () => {
+	test("a same-name twin under another code is excluded even under a different id", () => {
 		const twin: Area = {
 			id: "kota-tangerang",
 			type: "kota",
@@ -149,7 +149,7 @@ describe("distractor sources (SRD 2.8, 2.9)", () => {
 			expect(picked.some(({ area }) => area.name === "Langkat")).toBe(false);
 		}
 	});
-	test("SRD 3.1: preferOtherProvince avoids a same-province neighbour when other provinces suffice", () => {
+	test("preferOtherProvince avoids a same-province neighbour when other provinces suffice", () => {
 		// bk and bb are both sumatera-utara; the sumatera group also has ba, bm, bp, be, bd
 		// in other provinces, so bb's areas should never be needed as a distractor.
 		for (let seed = 0; seed < 10; seed++) {
@@ -177,7 +177,7 @@ describe("distractor sources (SRD 2.8, 2.9)", () => {
 		expect(codes).toHaveLength(3);
 		expect(codes.some((item) => item.id === "a" || item.id === "b")).toBe(false);
 	});
-	test("SR-322: holder2special includes a neighbouring number", () => {
+	test("holder2special includes a neighbouring number", () => {
 		const japan = bundle.specials.find((entry) => entry.number === "49")!;
 		for (let seed = 0; seed < 10; seed++) {
 			const choices = specialChoices(bundle, japan, "holder2special", 3, seeded(`n${seed}`));
@@ -190,7 +190,7 @@ describe("distractor sources (SRD 2.8, 2.9)", () => {
 			).toBe(false);
 		}
 	});
-	test("SR-323: special2holder never offers an alias of the asked holder", () => {
+	test("special2holder never offers an alias of the asked holder", () => {
 		const usa = bundle.specials.find((entry) => entry.number === "12")!;
 		const lookalike = {
 			...bundle.specials[1],
@@ -210,7 +210,7 @@ describe("distractor sources (SRD 2.8, 2.9)", () => {
 			expect(choices.some((entry) => entry.id === "cd-99-amerika")).toBe(false);
 		}
 	});
-	test("SR-323: holder2special never offers an alias of the asked holder either", () => {
+	test("holder2special never offers an alias of the asked holder either", () => {
 		const usa = bundle.specials.find((entry) => entry.number === "12")!;
 		const lookalike = {
 			...bundle.specials[1],

@@ -30,7 +30,6 @@ export function dayNumber(localDay: string): number {
 	return Math.round(Date.parse(`${localDay}T00:00:00Z`) / DAY_MS);
 }
 
-// SRD 4.9: the learning day changes at 04:00 local time.
 export function localDay(at: number, tz: string): string {
 	const clock = wallClock(at, tz);
 	return clock.hour < BOUNDARY_HOUR ? addDays(clock.date, -1) : clock.date;
@@ -48,7 +47,7 @@ export function dayStart(localDay: string, tz: string): number {
 	return guess;
 }
 
-// SRD 4.9 travel rule: never go back, and never start a new day before the previous zone's 04:00.
+// Never go back, and never start a new day before the previous zone's 04:00.
 export function nextLocalDay(
 	at: number,
 	tz: string,

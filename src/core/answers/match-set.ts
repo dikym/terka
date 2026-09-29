@@ -18,7 +18,6 @@ export type SetResult = {
 
 const SET_THRESHOLD_MAX = 5;
 
-// SRD 5.2 rule 1.
 export const setThreshold = (memberCount: number) => Math.min(SET_THRESHOLD_MAX, memberCount - 1);
 
 export const memberCount = (dictionary: NameDictionary, codeId: string) =>
@@ -28,7 +27,6 @@ export const memberCount = (dictionary: NameDictionary, codeId: string) =>
 			entry.owners.some((owner) => owner.codeId === codeId && owner.confidence === "high")
 	).length;
 
-// SRD 5.2: high members only, no province answers, each area and each pair counted once.
 export function matchSet(inputs: string[], codeId: string, dictionary: NameDictionary): SetResult {
 	const accepted = new Set<string>();
 	const confusions: string[] = [];

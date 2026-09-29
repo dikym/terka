@@ -1,7 +1,6 @@
 import type { ContentDraft } from "../draft";
 import { duplicates, error, type ContentMessage } from "../messages";
 
-// TRD 4.1 and ERD 7: ids are unique per kind, never recycled, and regions/specials share `content_id`.
 export function identityRules({ curation, specials }: ContentDraft): ContentMessage[] {
 	const out: ContentMessage[] = [];
 	const regionIds = curation.regions.map((region) => region.id);

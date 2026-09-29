@@ -4,7 +4,6 @@ import { addDays, dayStart } from "../time/day";
 export const FUZZ_MIN_DAYS = 3;
 export const FUZZ_RATIO = 0.05;
 
-// SRD 4.6: within ±5% pick the least loaded learning day; ties follow the answer id; due at 04:00.
 export function fuzzDays(
 	days: number,
 	options: { today: string; tz: string; loadOn: (localDay: string) => number; seed: string }

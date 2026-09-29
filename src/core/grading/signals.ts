@@ -1,6 +1,5 @@
 import type { MatchType } from "../answers/match-name";
 
-// The review_logs columns (TRD 4.2) that grading reads, in camelCase.
 export type AnswerSignals = {
 	context:
 		| "intro"

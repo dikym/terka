@@ -17,7 +17,6 @@ import type { Bundle } from "../schema";
 
 const SET_MIN_AREAS = 3;
 
-// Cards that plates.json can create (SRD 2.9, 4.8, AC-37).
 export function cardIdsOf(bundle: Bundle): string[] {
 	const regionCards = eligibleRegions(bundle).flatMap((region) => {
 		// Count memberships, not resolved areas: a broken area id must fail per card below, not abort the whole check.
@@ -71,7 +70,6 @@ function answersCorrectly(question: Question, bundle: Bundle, dictionary: NameDi
 	}
 }
 
-// AC-1 / TR-04: every creatable card has a valid Level 3 form whose canonical answer is accepted.
 export function coverageRules(bundle: Bundle): ContentMessage[] {
 	const out: ContentMessage[] = [];
 	let dictionary: NameDictionary;

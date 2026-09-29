@@ -23,7 +23,6 @@ export const provinceName = (id: string) =>
 		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
 		.join(" ");
 
-// Only high memberships are asked, accepted or used as distractors (SRD 5.1, TRD 4.1).
 export function highMembers(bundle: Pick<Bundle, "areas">, region: Region): Area[] {
 	return region.areas
 		.filter((membership) => membership.confidence === "high")
@@ -34,7 +33,6 @@ export function highMembers(bundle: Pick<Bundle, "areas">, region: Region): Area
 		});
 }
 
-// SRD 5.1 "Kamus": every area of every code plus province names; region labels are not answers.
 export function buildDictionary(bundle: Pick<Bundle, "regions" | "areas">): NameDictionary {
 	const owners = new Map<string, NameOwner[]>();
 	for (const region of bundle.regions)

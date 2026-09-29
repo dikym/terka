@@ -2,7 +2,6 @@ import { holderKey } from "../../text";
 import type { ContentDraft } from "../draft";
 import { error, warning, type ContentMessage } from "../messages";
 
-// TRD 4.1 "Aturan build untuk kode khusus" and "Data Referensi".
 export function specialRules({ specials }: ContentDraft, today: string): ContentMessage[] {
 	const out: ContentMessage[] = [];
 	const sources = new Map(specials.sources.map((source) => [source.id, source]));

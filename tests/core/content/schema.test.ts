@@ -37,16 +37,16 @@ const bundle = () => ({
 	referencePlates: []
 });
 
-describe("bundle schema (TRD 4.1)", () => {
-	test("TR-03: an empty aliases array is valid", () => {
+describe("bundle schema", () => {
+	test("an empty aliases array is valid", () => {
 		expect(bundleSchema.safeParse(bundle()).success).toBe(true);
 	});
-	test("TR-02: a region without aliases is rejected", () => {
+	test("a region without aliases is rejected", () => {
 		const value = bundle() as Record<string, unknown> & { regions: Record<string, unknown>[] };
 		delete value.regions[0].aliases;
 		expect(bundleSchema.safeParse(value).success).toBe(false);
 	});
-	test("sourceRevision is not part of the TRD bundle", () => {
+	test("sourceRevision is not part of the bundle", () => {
 		expect(bundleSchema.safeParse({ ...bundle(), sourceRevision: "x" }).success).toBe(false);
 	});
 });

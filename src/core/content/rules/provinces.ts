@@ -1,6 +1,5 @@
 import type { Bundle } from "../schema";
 
-// SRD 2.8: a code covers a province exclusively when every area of that province uses it and no other code.
 export function exclusiveProvinces(bundle: Pick<Bundle, "regions" | "areas">): Map<string, string> {
 	const codesByArea = new Map<string, Set<string>>();
 	for (const region of bundle.regions)

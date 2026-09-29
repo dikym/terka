@@ -1,7 +1,6 @@
 import type { ContentDraft } from "../draft";
 import { duplicates, error, type ContentMessage } from "../messages";
 
-// TRD 4.1 "Publikasi fakta" and Facts §1: document items and curation entries pair up one to one.
 export function factRules({ curation, facts }: ContentDraft): ContentMessage[] {
 	const out: ContentMessage[] = [];
 	const regionIds = new Set(curation.regions.map((region) => region.id));

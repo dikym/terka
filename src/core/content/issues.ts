@@ -18,7 +18,6 @@ export function where(value: unknown, path: (string | number)[]): string {
 	return `${path.join(".")}${id ? ` (id ${id})` : ""}`;
 }
 
-// Turns zod issues into readable "path (id X): message" lines instead of a raw JSON dump.
 export function issueMessages(value: unknown, issues: z.ZodIssue[]): string[] {
 	return issues.map((issue) => `${where(value, issue.path)}: ${issue.message}`);
 }

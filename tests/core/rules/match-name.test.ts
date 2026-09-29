@@ -10,7 +10,7 @@ import { ruleBundle } from "./fixtures";
 const dictionary = buildDictionary(ruleBundle());
 const match = (input: string, codeId: string) => matchName(input, codeId, dictionary);
 
-describe("typo distance (SRD 5.1 step 6)", () => {
+describe("typo distance", () => {
 	test("weighted costs and thresholds", () => {
 		expect(typoDistance("mdean", "medan")).toBe(0.5);
 		expect(typoDistance("medsn", "medan")).toBe(0.5);
@@ -20,11 +20,11 @@ describe("typo distance (SRD 5.1 step 6)", () => {
 	});
 });
 
-describe("region name matching (SRD 5.1)", () => {
+describe("region name matching", () => {
 	test("province names are formed from ids in title case", () => {
 		expect(provinceName("kepulauan-riau")).toBe("Kepulauan Riau");
 	});
-	test("SR-082/SR-083/SR-084/SR-086/SR-087/SR-096: normalized, spaced, aliased and prefixed forms are exact", () => {
+	test("normalized, spaced, aliased and prefixed forms are exact", () => {
 		expect(match("Kab. Deli Serdang", "bk").matchType).toBe("exact");
 		expect(match("  MEDAN!! ", "bk")).toMatchObject({
 			matchType: "exact",
@@ -38,36 +38,36 @@ describe("region name matching (SRD 5.1)", () => {
 		expect(match("Pematang Siantar", "bk").matchType).toBe("exact");
 		expect(match("Kotamobagu", "db").matchType).toBe("exact");
 	});
-	test("SR-088/SR-089: old spellings and registered variants are variant matches", () => {
+	test("old spellings and registered variants are variant matches", () => {
 		expect(match("Djember", "p").matchType).toBe("variant");
 		expect(match("Tjilatjap", "r").matchType).toBe("variant");
 		expect(match("Binjay", "bk").matchType).toBe("variant");
 	});
-	test("SR-090/SR-091/SR-092/SR-212/SR-213: typos within the threshold are accepted with their cost", () => {
+	test("typos within the threshold are accepted with their cost", () => {
 		expect(match("Pekanbaur", "bm")).toMatchObject({ matchType: "typo", typoCost: 0.5 });
 		expect(match("Pekanbru", "bm")).toMatchObject({ matchType: "typo", typoCost: 1 });
 		expect(match("Mdean", "bk")).toMatchObject({ matchType: "typo", typoCost: 0.5 });
 		expect(match("Medsn", "bk")).toMatchObject({ matchType: "typo", typoCost: 0.5 });
 		expect(match("Tebingtingi", "bk")).toMatchObject({ matchType: "typo", typoCost: 0.5 });
 	});
-	test("SR-093/SR-094: four-letter names and a changed first letter get no tolerance", () => {
+	test("four-letter names and a changed first letter get no tolerance", () => {
 		expect(match("Bim", "ea").matchType).toBe("none");
 		expect(match("Vengkulu", "bd").matchType).toBe("none");
 	});
-	test("SR-085: a name of another code is wrong and records the pair", () => {
+	test("a name of another code is wrong and records the pair", () => {
 		expect(match("Bandar Lampung", "bd")).toMatchObject({
 			matchType: "none",
 			confusedWith: "be"
 		});
 	});
-	test("SR-097: an area used by two codes is accepted for both", () => {
+	test("an area used by two codes is accepted for both", () => {
 		expect(match("Tangerang", "a").matchType).toBe("exact");
 		expect(match("Tangerang", "b").matchType).toBe("exact");
 	});
-	test("SR-207: a medium membership is not graded", () => {
+	test("a medium membership is not graded", () => {
 		expect(match("Langkat", "bk").matchType).toBe("unverified");
 	});
-	test("SR-208/SR-209/SR-210: province names count only when exclusive", () => {
+	test("province names count only when exclusive", () => {
 		expect(match("Sumatera Utara", "bk")).toMatchObject({
 			matchType: "none",
 			confusedWith: null
@@ -81,7 +81,7 @@ describe("region name matching (SRD 5.1)", () => {
 			"none"
 		);
 	});
-	test("Review Focus: a bare kota/kabupaten twin is accepted; an explicit prefix picks one", () => {
+	test("a bare kota/kabupaten twin is accepted; an explicit prefix picks one", () => {
 		expect(match("Bima", "ea")).toMatchObject({ matchType: "exact", ambiguous: true });
 		expect(match("Kota Bima", "ea")).toMatchObject({
 			matchType: "exact",
@@ -90,7 +90,7 @@ describe("region name matching (SRD 5.1)", () => {
 		});
 		expect(match("Kabupaten Bima", "ea").acceptedAreaId).toBe("kab-bima");
 	});
-	test("SRD 5.1 step 1: an administrative prefix only picks among accepted hits, it does not filter the dictionary", () => {
+	test("an administrative prefix only picks among accepted hits, it does not filter the dictionary", () => {
 		expect(match("Kabupaten Medan", "bk")).toMatchObject({
 			matchType: "exact",
 			acceptedAreaId: "kota-medan"
@@ -100,7 +100,7 @@ describe("region name matching (SRD 5.1)", () => {
 	test("a typo of a medium membership is unverified, not typo", () => {
 		expect(match("Langkst", "bk").matchType).toBe("unverified");
 	});
-	test("SR-095/SR-215: a typo must beat every other name by at least one", () => {
+	test("a typo must beat every other name by at least one", () => {
 		const bundle = ruleBundle();
 		bundle.regions.push(
 			{

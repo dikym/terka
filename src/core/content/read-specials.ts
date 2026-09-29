@@ -25,7 +25,6 @@ export function addMonths(isoDate: string, months: number): string {
 	return new Date(Date.UTC(year, month - 1 + months, day)).toISOString().slice(0, 10);
 }
 
-// TRD 4.1: `cd-{number}-{slug}`, at most 32 characters, cut at a word boundary.
 export function specialId(number: string, holder: string): string {
 	const prefix = `cd-${number}-`;
 	const words = holder
@@ -90,7 +89,6 @@ function readSpecialsSource(markdown: string): SpecialsSource {
 		};
 	});
 	const byId = new Map(sources.map((source) => [source.id, source]));
-	// Kode Khusus §7: entries are re-checked every six months from the source's check date.
 	const dates = (ids: string[], line: number) => {
 		const first = byId.get(ids[0]) ?? fail(line, `unknown source ${ids[0] ?? "(none)"}`);
 		return { validFrom: first.date, reviewBy: addMonths(first.checkedAt ?? first.date, 6) };
@@ -99,9 +97,7 @@ function readSpecialsSource(markdown: string): SpecialsSource {
 	const listLine = sectionLines(markdown, CD_LIST).find((entry) =>
 		entry.text.startsWith("Sumber seluruh baris:")
 	);
-	// Only the run of backticked ids right after the prefix; stop at the first non-id token
-	// so later, unrelated backtick spans in the same paragraph (e.g. `country`/`organization`
-	// in the Tipe-column note) aren't picked up as sources.
+	// Only the leading backticked ids are sources; later backtick spans are notes.
 	const leading =
 		listLine?.text.match(/^Sumber seluruh baris:\s*((?:`[^`]+`(?:,\s*)?)+)/)?.[1] ?? "";
 	const listSources = [...leading.matchAll(/`([^`]+)`/g)].map((match) => match[1]);

@@ -132,7 +132,7 @@ describe("special plates reader", () => {
 		expect(id.length).toBeGreaterThan("cd-1234567890123456789012345-".length - 1);
 	});
 
-	test("an invalid Tanggal in §8 Daftar Sumber fails and names the column", () => {
+	test("an invalid Tanggal in Daftar Sumber fails and names the column", () => {
 		const markdown = doc([
 			"| CD 12 | Amerika Serikat | negara | Amerika Serikat | — | `high` | — |"
 		]).replace(
@@ -142,7 +142,7 @@ describe("special plates reader", () => {
 		expect(() => readSpecials(markdown)).toThrow("Tanggal");
 	});
 
-	test("an invalid Diperiksa in §8 Daftar Sumber fails and names the column", () => {
+	test("an invalid Diperiksa in Daftar Sumber fails and names the column", () => {
 		const markdown = doc([
 			"| CD 12 | Amerika Serikat | negara | Amerika Serikat | — | `high` | — |"
 		]).replace(
@@ -162,7 +162,7 @@ describe("special plates reader", () => {
 		expect(addMonths("2026-09-24", 6)).toBe("2027-03-24");
 	});
 
-	test("TR-166: the real document yields 130 CD entries, CD 92 under review and three format entries", async () => {
+	test("the real document yields 130 CD entries, CD 92 under review and three format entries", async () => {
 		const result = readSpecials(await readFile("docs/Terka_Kode_Khusus.md", "utf8"));
 		expect(result.specials).toHaveLength(130);
 		expect(

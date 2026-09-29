@@ -37,7 +37,6 @@ const none = (confusedWith: string | null = null, tooClose = false): NameMatch =
 
 type Role = "accepted" | "pending" | "other";
 
-// SRD 5.1 steps 1–7, stopping at the first step that decides.
 export function matchName(
 	input: string,
 	codeId: string,
@@ -49,8 +48,6 @@ export function matchName(
 	if (!answer) return none();
 	const prefix = normalizeName(input, false).match(/^(kotamadya|kota|kabupaten|kab) /)?.[1];
 	const type = prefix === undefined ? null : prefix.startsWith("kota") ? "kota" : "kabupaten";
-	// SRD 5.1 step 1 only strips the prefix before comparing; it does not narrow the dictionary.
-	// The prefix instead picks among several accepted hits (kota/kabupaten twins), when one matches.
 	const entries = dictionary.entries;
 	const role = (entry: NameEntry): Role => {
 		const own = entry.owners.find((owner) => owner.codeId === codeId);
@@ -63,8 +60,6 @@ export function matchName(
 	const variantHit = (entry: NameEntry) =>
 		entry.variants.some((form) => compactName(form) === answer) ||
 		[...entry.forms, ...entry.variants].some((form) => modernize(compactName(form)) === modern);
-	// An explicit "kota"/"kabupaten" prefix picks its type among accepted hits, when present;
-	// otherwise the first in dictionary order, flagged ambiguous when several areas share the name.
 	const accept = (accepted: NameEntry[], matchType: MatchType, typoCost: number): NameMatch => {
 		const prefixed = type ? accepted.find((entry) => entry.areaType === type) : undefined;
 		const chosen = prefixed ?? accepted[0];
@@ -91,8 +86,6 @@ export function matchName(
 			return { ...none(), matchType: "unverified" };
 		return none(firstOtherOwner(hits, codeId, dictionary));
 	}
-	// Score every dictionary form, not only ones sharing the answer's first letter: a closer
-	// different-first-letter name must still be able to block the match (SRD 5.1 step 6).
 	const scored = entries
 		.flatMap((entry) =>
 			[...entry.forms, ...entry.variants].map((form) => ({ entry, form: compactName(form) }))
@@ -103,7 +96,7 @@ export function matchName(
 	if (!best || best.form[0] !== answer[0] || best.cost > typoThreshold(best.form.length))
 		return none();
 	// Entries sharing the best compact form (twins, a kota and its province) are one candidate;
-	// only a different form within one of the best cost blocks it (SRD 5.1 step 6).
+	// only a different form within one of the best cost blocks it.
 	const group = [
 		...new Set(scored.filter((item) => item.form === best.form).map((item) => item.entry))
 	];

@@ -5,16 +5,16 @@ const WITA = "Asia/Makassar";
 const WIB = "Asia/Jakarta";
 const WIT = "Asia/Jayapura";
 
-describe("local day (SRD 4.9)", () => {
-	test("SR-133: 03:59 WITA is still the previous day, 04:00 starts the next", () => {
+describe("local day", () => {
+	test("03:59 WITA is still the previous day, 04:00 starts the next", () => {
 		expect(localDay(Date.parse("2026-09-21T03:59:00+08:00"), WITA)).toBe("2026-09-20");
 		expect(localDay(Date.parse("2026-09-21T04:00:00+08:00"), WITA)).toBe("2026-09-21");
 	});
-	test("SR-134: 23:00 and 01:00 the next night are the same learning day", () => {
+	test("23:00 and 01:00 the next night are the same learning day", () => {
 		expect(localDay(Date.parse("2026-09-21T23:00:00+08:00"), WITA)).toBe("2026-09-21");
 		expect(localDay(Date.parse("2026-09-22T01:00:00+08:00"), WITA)).toBe("2026-09-21");
 	});
-	test("SR-137: a later zone change does not rewrite an answer's recorded day", () => {
+	test("a later zone change does not rewrite an answer's recorded day", () => {
 		const at = Date.parse("2026-09-21T03:30:00+07:00");
 		const recorded = { localDay: localDay(at, WIB), tz: WIB };
 		expect(recorded.localDay).toBe("2026-09-20");
@@ -28,7 +28,7 @@ describe("local day (SRD 4.9)", () => {
 		expect(localDay(start, WITA)).toBe("2026-09-21");
 		expect(localDay(start - 1, WITA)).toBe("2026-09-20");
 	});
-	test("SR-138: Europe/Berlin keeps one boundary per date across daylight saving", () => {
+	test("Europe/Berlin keeps one boundary per date across daylight saving", () => {
 		const berlin = "Europe/Berlin";
 		expect(dayStart("2026-03-30", berlin) - dayStart("2026-03-29", berlin)).toBe(
 			24 * 3_600_000
@@ -47,7 +47,7 @@ describe("local day (SRD 4.9)", () => {
 		expect(dayNumber("1970-01-02")).toBe(1);
 		expect(dayNumber("2026-09-22") - dayNumber("2026-09-21")).toBe(1);
 	});
-	test("SR-136: travelling east does not start a new day before the old zone's 04:00", () => {
+	test("travelling east does not start a new day before the old zone's 04:00", () => {
 		const last = { localDay: "2026-09-20", tz: WIB };
 		// 03:30 WIB = 05:30 WIT: WIT says a new day started, WIB has not reached 04:00 yet.
 		const at = Date.parse("2026-09-21T03:30:00+07:00");
@@ -55,7 +55,7 @@ describe("local day (SRD 4.9)", () => {
 		expect(nextLocalDay(at, WIT, last)).toBe("2026-09-20");
 		expect(nextLocalDay(Date.parse("2026-09-21T04:00:00+07:00"), WIT, last)).toBe("2026-09-21");
 	});
-	test("SR-135 + Review Focus: travelling west never moves the day backwards", () => {
+	test("travelling west never moves the day backwards", () => {
 		const last = { localDay: "2026-09-21", tz: WITA };
 		// 04:30 WITA = 03:30 WIB: WIB alone would say 2026-09-20.
 		const at = Date.parse("2026-09-21T04:30:00+08:00");

@@ -25,7 +25,7 @@ const members = (id: string) =>
 		.map((m) => nameOf(m.areaId));
 
 describe("region questions", () => {
-	test("SR-217/AC-26: Tebak daerah Level 1 offers one member and three scope areas, never province names", () => {
+	test("Tebak daerah Level 1 offers one member and three scope areas, never province names", () => {
 		const question = buildQuestion(review("bk::code2region"), bundle, {
 			context: "daily",
 			level: 1,
@@ -41,7 +41,7 @@ describe("region questions", () => {
 		expect(question.choices.filter((choice) => members("bk").includes(choice))).toHaveLength(1);
 		expect(question.choices.some((choice) => choice === "Sumatera Utara")).toBe(false);
 	});
-	test("SR-221/SR-222 + Review Focus: Tebak kode rotates the shown area and allows a single area to repeat", () => {
+	test("Tebak kode rotates the shown area and allows a single area to repeat", () => {
 		const first = buildQuestion(review("dk::region2code"), bundle, { context: "daily" });
 		expect(first).toMatchObject({
 			questionType: "typed",
@@ -60,7 +60,7 @@ describe("region questions", () => {
 		});
 		expect(single.promptAreaId).toBe("kota-pekanbaru");
 	});
-	test("SR-097: Tebak kode for a shared area accepts both codes", () => {
+	test("Tebak kode for a shared area accepts both codes", () => {
 		let hit = false;
 		for (let reps = 0; reps < 10; reps++) {
 			const question = buildQuestion(review("a::region2code", { reps }), bundle, {
@@ -95,7 +95,7 @@ describe("region questions", () => {
 		}
 		expect(hit).toBe(true);
 	});
-	test("SR-338/SR-339/SR-340: typed levels show no partial hint; Level 3 is Tebak berwaktu", () => {
+	test("typed levels show no partial hint; Level 3 is Tebak berwaktu", () => {
 		const two = buildQuestion(review("bk::code2region"), bundle, { context: "daily" });
 		expect(two).toMatchObject({ level: 2, choices: [], reveal: null, limit: null });
 		const three = buildQuestion(review("bk::code2region", { intervalDays: 25 }), bundle, {
@@ -136,7 +136,7 @@ describe("region questions", () => {
 			true
 		);
 	});
-	test("SR-071/SR-299: Perkenalan is Level 1 'tebak dulu'; without enough distractors it is intro_read", () => {
+	test("Perkenalan is Level 1 'tebak dulu'; without enough distractors it is intro_read", () => {
 		const intro = buildQuestion(newCard("bk::code2region"), bundle, { context: "intro" });
 		expect(intro).toMatchObject({
 			level: 1,
@@ -159,11 +159,11 @@ describe("region questions", () => {
 			context: "daily",
 			level: 1
 		});
-		// SRD 3.3/3.4: the insufficient-distractor fallback recomputes levelSource against
+		// The insufficient-distractor fallback recomputes levelSource against
 		// autoLevel (here 2) rather than keeping the original manual_down request (level 1).
 		expect(typed).toMatchObject({ questionType: "typed", level: 2, levelSource: "auto" });
 	});
-	test("SRD 754: setrecall is Level 1 only in intro; every other context is fixed at Level 3", () => {
+	test("setrecall is Level 1 only in intro; every other context is fixed at Level 3", () => {
 		const intro = buildQuestion(newCard("bk::setrecall"), bundle, { context: "intro" });
 		expect(intro).toMatchObject({
 			level: 1,
@@ -204,7 +204,7 @@ describe("region questions", () => {
 		expect([...drill.choices].sort()).toEqual(["BB", "BK"]);
 		expect(drill.prompt).toMatch(/^BK atau BB: (Kota|Kabupaten) .+\?$/);
 	});
-	test("SR-120/SR-310: a leech shows its areas and note first and is marked assisted", () => {
+	test("a leech shows its areas and note first and is marked assisted", () => {
 		const question = buildQuestion(review("bk::code2region", { lapses: 6 }), bundle, {
 			context: "daily",
 			note: "BK: Bukit Kelapa"
@@ -212,7 +212,7 @@ describe("region questions", () => {
 		expect(question.reveal).toEqual({ lines: members("bk"), note: "BK: Bukit Kelapa" });
 		expect(question.assisted).toBe(true);
 	});
-	test("Review Focus: the same card and reps always build the same question", () => {
+	test("the same card and reps always build the same question", () => {
 		const options = { context: "daily" as const, level: 1 as const };
 		expect(buildQuestion(review("bk::code2region"), bundle, options)).toEqual(
 			buildQuestion(review("bk::code2region"), bundle, options)
@@ -220,8 +220,8 @@ describe("region questions", () => {
 	});
 });
 
-describe("special plate questions (SRD 2.9)", () => {
-	test("SR-322/SR-323/SR-324: Tebak diplomat in both directions", () => {
+describe("special plate questions", () => {
+	test("Tebak diplomat in both directions", () => {
 		const toHolder = buildQuestion(review("cd-49-jepang::special2holder"), bundle, {
 			context: "special",
 			level: 1
@@ -260,7 +260,7 @@ describe("special plate questions (SRD 2.9)", () => {
 			limit: { ms: 8000, until: "first-input" }
 		});
 	});
-	test("SRD 2.8: without three distractors Perkenalan is intro_read; otherwise typed Level 2", () => {
+	test("without three distractors Perkenalan is intro_read; otherwise typed Level 2", () => {
 		const few = {
 			...bundle,
 			specials: bundle.specials.filter((entry) => ["48", "49"].includes(entry.number))

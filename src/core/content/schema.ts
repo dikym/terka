@@ -76,7 +76,7 @@ export const referencePlateSchema = z.object({
 	reviewBy: isoDateSchema
 });
 
-// TRD 4.1 bundle: exactly these keys, nothing else ships to the browser.
+// Exactly these keys ship to the browser.
 export const bundleSchema = z
 	.object({
 		version: releaseVersionSchema,
