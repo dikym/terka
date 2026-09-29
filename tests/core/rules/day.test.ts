@@ -10,6 +10,18 @@ describe("local day (SRD 4.9)", () => {
 		expect(localDay(Date.parse("2026-09-21T03:59:00+08:00"), WITA)).toBe("2026-09-20");
 		expect(localDay(Date.parse("2026-09-21T04:00:00+08:00"), WITA)).toBe("2026-09-21");
 	});
+	test("SR-134: 23:00 and 01:00 the next night are the same learning day", () => {
+		expect(localDay(Date.parse("2026-09-21T23:00:00+08:00"), WITA)).toBe("2026-09-21");
+		expect(localDay(Date.parse("2026-09-22T01:00:00+08:00"), WITA)).toBe("2026-09-21");
+	});
+	test("SR-137: a later zone change does not rewrite an answer's recorded day", () => {
+		const at = Date.parse("2026-09-21T03:30:00+07:00");
+		const recorded = { localDay: localDay(at, WIB), tz: WIB };
+		expect(recorded.localDay).toBe("2026-09-20");
+		nextLocalDay(at + 3_600_000, WIT, recorded);
+		expect(recorded).toEqual({ localDay: "2026-09-20", tz: WIB });
+		expect(localDay(at, WIB)).toBe("2026-09-20");
+	});
 	test("dayStart is 04:00 local and round-trips through localDay", () => {
 		const start = dayStart("2026-09-21", WITA);
 		expect(start).toBe(Date.parse("2026-09-21T04:00:00+08:00"));

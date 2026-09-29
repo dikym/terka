@@ -3,8 +3,15 @@ import { seeded, shuffle } from "../random";
 import { isLeech } from "../scheduling/card";
 import type { CardMemory } from "../scheduling/card-memory";
 import { specialChoices } from "./distractors";
-import { LABELS, parseCardId, type Question, type QuestionOptions } from "./question";
-import type { ResolvedLevels } from "./region";
+import {
+	LABELS,
+	parseCardId,
+	type Level,
+	type LevelSource,
+	type Question,
+	type QuestionOptions
+} from "./question";
+import { levelSourceFor, type ResolvedLevels } from "./region";
 
 const TIMED_MS = 8_000;
 
@@ -43,16 +50,33 @@ export function buildSpecialQuestion(
 			: null,
 		assisted: leech
 	};
-	if (levels.level > 1)
-		return {
-			...base,
-			questionType: "typed",
-			answerForm: toHolder ? "name" : "code",
-			choices: [],
-			limit: levels.level === 3 ? { ms: TIMED_MS, until: "first-input" } : null
-		};
+	const typed = (level: Level, levelSource: LevelSource): Question => ({
+		...base,
+		level,
+		levelSource,
+		questionType: "typed",
+		answerForm: toHolder ? "name" : "code",
+		choices: [],
+		limit: level === 3 ? { ms: TIMED_MS, until: "first-input" } : null
+	});
+	if (levels.level > 1) return typed(levels.level, levels.levelSource);
 	const others = specialChoices(bundle, special, mode, 3, random("distractors"));
 	const correct = toHolder ? special.holder : code;
+	// SRD 2.8: without three valid distractors Perkenalan is informational; other questions become typed.
+	if (others.length < 3)
+		return intro
+			? {
+					...base,
+					questionType: "intro_read",
+					answerForm: "choice",
+					label: LABELS.intro,
+					prompt: "Kenali kode ini",
+					choices: [],
+					limit: null,
+					reveal: { lines: [correct], note: options.note ?? null },
+					assisted: false
+				}
+			: typed(2, levelSourceFor(2, levels.autoLevel));
 	return {
 		...base,
 		questionType: "choice",

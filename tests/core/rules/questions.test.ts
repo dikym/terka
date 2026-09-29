@@ -260,6 +260,32 @@ describe("special plate questions (SRD 2.9)", () => {
 			limit: { ms: 8000, until: "first-input" }
 		});
 	});
+	test("SRD 2.8: without three distractors Perkenalan is intro_read; otherwise typed Level 2", () => {
+		const few = {
+			...bundle,
+			specials: bundle.specials.filter((entry) => ["48", "49"].includes(entry.number))
+		};
+		const read = buildQuestion(newCard("cd-49-jepang::special2holder"), few, {
+			context: "intro"
+		});
+		expect(read).toMatchObject({ questionType: "intro_read", choices: [], limit: null });
+		expect(read.reveal?.lines).toEqual(["Jepang"]);
+		const toCode = buildQuestion(newCard("cd-49-jepang::holder2special"), few, {
+			context: "intro"
+		});
+		expect(toCode.reveal?.lines).toEqual(["CD 49"]);
+		const typed = buildQuestion(review("cd-49-jepang::special2holder"), few, {
+			context: "special",
+			level: 1
+		});
+		expect(typed).toMatchObject({
+			questionType: "typed",
+			answerForm: "name",
+			level: 2,
+			levelSource: "auto",
+			choices: []
+		});
+	});
 });
 
 describe("real content", () => {

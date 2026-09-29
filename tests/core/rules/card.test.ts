@@ -158,6 +158,16 @@ describe("card transitions (SRD 4.6, 6.4, 7)", () => {
 		expect(recovered.state).toBe("review");
 		expect(recovered.stability).toBeGreaterThan(0);
 	});
+	test("SR-130: a suspended learning card is not scheduled until it resumes its step", () => {
+		const learning = introduce(newCard("dk::code2region"), NOW);
+		const suspended = suspend(learning, "manual");
+		expect(suspended).toMatchObject({
+			state: "suspended",
+			suspension: { reason: "manual", resume: "learning" }
+		});
+		expect(() => answer(suspended, 3, ctx(NOW + MINUTE))).toThrow();
+		expect(unsuspend(suspended)).toEqual(learning);
+	});
 	test("SR-129/SR-131: manual and data suspensions resume the previous state", () => {
 		const before = strong();
 		const manual = suspend(before, "manual");
