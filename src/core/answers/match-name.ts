@@ -1,6 +1,7 @@
 import { compactName, normalizeName } from "../text";
 import type { NameDictionary, NameEntry } from "./dictionary";
-import { typoDistance, typoThreshold } from "./typo";
+import { typoThreshold } from "@/rules";
+import { typoDistance } from "./typo";
 
 export type MatchType = "exact" | "variant" | "typo" | "unverified" | "none";
 export type NameMatch = {

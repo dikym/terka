@@ -1,13 +1,14 @@
+import {
+	FIRST_STEP_MS,
+	LEECH_LAPSES,
+	MATURE_INTERVAL_DAYS,
+	SECOND_STEP_MS,
+	SUSPEND_LAPSES
+} from "../../rules";
 import type { Grade } from "../grading/signals";
 import type { CardMemory, SuspensionReason } from "./card-memory";
 import { nextMemory, type Scheduler } from "./fsrs";
 import { fuzzDays } from "./fuzz";
-
-export const MATURE_INTERVAL_DAYS = 21;
-export const LEECH_LAPSES = 6;
-export const SUSPEND_LAPSES = 8;
-const FIRST_STEP_MS = 60_000;
-const SECOND_STEP_MS = 600_000;
 
 export type AnswerContext = {
 	at: number;

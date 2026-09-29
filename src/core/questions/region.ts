@@ -1,3 +1,4 @@
+import { PLACEMENT_LIMIT_MS, TIMED_LIMIT_MS, TRUE_FALSE_LIMIT_MS } from "../../rules";
 import { areaDisplayName, highMembers } from "../answers/dictionary";
 import { setThreshold } from "../answers/match-set";
 import type { Area, Bundle, Region } from "../content/schema";
@@ -14,10 +15,6 @@ import {
 	type QuestionAnswer,
 	type QuestionOptions
 } from "./question";
-
-const TIMED_MS = 8_000;
-const TRUE_FALSE_MS = 2_000;
-const PLACEMENT_MS = 15_000;
 
 export type ResolvedLevels = { level: Level; autoLevel: Level; levelSource: LevelSource };
 
@@ -134,10 +131,10 @@ export function buildRegionQuestion(
 		prompt,
 		answer,
 		promptAreaId,
-		limit: level === 3 ? { ms: TIMED_MS, until: "first-input" } : null
+		limit: level === 3 ? { ms: TIMED_LIMIT_MS, until: "first-input" } : null
 	});
 	if (options.context === "placement")
-		return { ...typed(2, "auto"), limit: { ms: PLACEMENT_MS, until: "first-input" } };
+		return { ...typed(2, "auto"), limit: { ms: PLACEMENT_LIMIT_MS, until: "first-input" } };
 	if (levels.level > 1) return typed(levels.level, levels.levelSource);
 
 	const format = options.format ?? "choice";
@@ -160,7 +157,7 @@ export function buildRegionQuestion(
 				value: truthful ? "Benar" : "Salah",
 				confusedWith: truthful ? null : foreign.owner.id
 			},
-			limit: { ms: TRUE_FALSE_MS, until: "answer" }
+			limit: { ms: TRUE_FALSE_LIMIT_MS, until: "answer" }
 		};
 	}
 	if (mode === "code2region" && format === "oddoneout") {

@@ -1,9 +1,9 @@
+import { TARGET_RETENTION } from "../../rules";
 import { createEmptyCard, fsrs, State, type Card, type Grade as FsrsGrade } from "ts-fsrs";
 import type { Grade } from "../grading/signals";
 import type { CardMemory } from "./card-memory";
 
 export type Scheduler = ReturnType<typeof fsrs>;
-export const TARGET_RETENTION = 0.9;
 
 export function createScheduler(weights?: readonly number[]): Scheduler {
 	return fsrs({

@@ -1,10 +1,11 @@
+import {
+	DELETED_SHARE,
+	FLUENCY_MIN_SAMPLES,
+	FLUENCY_WINDOW,
+	INTERRUPTED_LATENCY_MS,
+	LONG_GAP_MS
+} from "../../rules";
 import type { AnswerSignals } from "./signals";
-
-const WINDOW = 200;
-const MIN_SAMPLES = 30;
-const INTERRUPTED_LATENCY_MS = 60_000;
-const LONG_GAP_MS = 1200;
-const DELETED_SHARE = 0.3;
 
 export function percentile(values: number[], fraction: number): number {
 	const sorted = [...values].sort((a, b) => a - b);
@@ -36,10 +37,12 @@ export function comparisonGroup(signals: AnswerSignals, history: AnswerSignals[]
 			item.level === signals.level &&
 			item.inputMode === signals.inputMode
 	);
-	const narrow = samples.filter((item) => item.answerForm === signals.answerForm).slice(-WINDOW);
-	if (narrow.length >= MIN_SAMPLES) return narrow;
-	const wide = samples.slice(-WINDOW);
-	return wide.length >= MIN_SAMPLES ? wide : [];
+	const narrow = samples
+		.filter((item) => item.answerForm === signals.answerForm)
+		.slice(-FLUENCY_WINDOW);
+	if (narrow.length >= FLUENCY_MIN_SAMPLES) return narrow;
+	const wide = samples.slice(-FLUENCY_WINDOW);
+	return wide.length >= FLUENCY_MIN_SAMPLES ? wide : [];
 }
 
 const msPerChar = (signals: AnswerSignals) =>
