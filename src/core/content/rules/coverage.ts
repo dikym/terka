@@ -1,3 +1,4 @@
+import { SET_MIN_AREAS } from "../../../rules";
 import {
 	areaDisplayName,
 	buildDictionary,
@@ -14,8 +15,6 @@ import type { Question } from "../../questions/question";
 import { newCard } from "../../scheduling/card-memory";
 import { error, type ContentMessage } from "../messages";
 import type { Bundle } from "../schema";
-
-const SET_MIN_AREAS = 3;
 
 export function cardIdsOf(bundle: Bundle): string[] {
 	const regionCards = eligibleRegions(bundle).flatMap((region) => {

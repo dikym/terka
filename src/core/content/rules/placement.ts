@@ -1,12 +1,10 @@
+import { PLACEMENT_STAGE_SIZES } from "../../../rules";
 import type { ContentDraft } from "../draft";
 import { error, type ContentMessage } from "../messages";
 
-const TIER_MINIMUM = { common: 8, medium: 10, rare: 10 } as const;
-const MAX_MEDIUM_GROUPS = 10;
-
 export function placementRules({ curation }: ContentDraft): ContentMessage[] {
 	const out: ContentMessage[] = [];
-	for (const [tier, minimum] of Object.entries(TIER_MINIMUM)) {
+	for (const [tier, minimum] of Object.entries(PLACEMENT_STAGE_SIZES)) {
 		const size = curation.regions.filter((region) => region.placementTier === tier).length;
 		if (size < minimum)
 			out.push(
@@ -21,11 +19,11 @@ export function placementRules({ curation }: ContentDraft): ContentMessage[] {
 			.filter((region) => region.placementTier === "medium")
 			.map((region) => region.group)
 	);
-	if (groups.size > MAX_MEDIUM_GROUPS)
+	if (groups.size > PLACEMENT_STAGE_SIZES.medium)
 		out.push(
 			error(
 				"placement-medium-groups",
-				`tier medium spans ${groups.size} groups; stage 2 fits ${MAX_MEDIUM_GROUPS}`
+				`tier medium spans ${groups.size} groups; stage 2 fits ${PLACEMENT_STAGE_SIZES.medium}`
 			)
 		);
 	return out;

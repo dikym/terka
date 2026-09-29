@@ -33,7 +33,3 @@ export function typoDistance(a: string, b: string): number {
 		}
 	return d[a.length][b.length];
 }
-
-export function typoThreshold(length: number): number {
-	return length <= 4 ? 0 : length <= 7 ? 1 : length <= 11 ? 1.5 : 2;
-}

@@ -1,3 +1,4 @@
+import { TIMED_LIMIT_MS } from "../../rules";
 import type { Bundle, Special } from "../content/schema";
 import { seeded, shuffle } from "../random";
 import { isLeech } from "../scheduling/card";
@@ -12,8 +13,6 @@ import {
 	type QuestionOptions
 } from "./question";
 import { levelSourceFor, type ResolvedLevels } from "./region";
-
-const TIMED_MS = 8_000;
 
 export function buildSpecialQuestion(
 	card: CardMemory,
@@ -56,7 +55,7 @@ export function buildSpecialQuestion(
 		questionType: "typed",
 		answerForm: toHolder ? "name" : "code",
 		choices: [],
-		limit: level === 3 ? { ms: TIMED_MS, until: "first-input" } : null
+		limit: level === 3 ? { ms: TIMED_LIMIT_MS, until: "first-input" } : null
 	});
 	if (levels.level > 1) return typed(levels.level, levels.levelSource);
 	const others = specialChoices(bundle, special, mode, 3, random("distractors"));

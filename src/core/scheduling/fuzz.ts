@@ -1,8 +1,6 @@
+import { FUZZ_MIN_DAYS, FUZZ_RATIO } from "../../rules";
 import { seeded } from "../random";
 import { addDays, dayStart } from "../time/day";
-
-export const FUZZ_MIN_DAYS = 3;
-export const FUZZ_RATIO = 0.05;
 
 export function fuzzDays(
 	days: number,

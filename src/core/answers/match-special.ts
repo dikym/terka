@@ -1,6 +1,7 @@
 import type { Bundle, Special } from "../content/schema";
 import { holderKey } from "../text";
-import { typoDistance, typoThreshold } from "./typo";
+import { typoThreshold } from "@/rules";
+import { typoDistance } from "./typo";
 
 export type HolderMatch = {
 	matchType: "exact" | "typo" | "none";

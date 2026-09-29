@@ -1,3 +1,4 @@
+import { SET_THRESHOLD_MAX } from "@/rules";
 import type { NameDictionary } from "./dictionary";
 import { matchName, type MatchType } from "./match-name";
 
@@ -15,8 +16,6 @@ export type SetResult = {
 	items: SetItem[];
 	confusions: string[];
 };
-
-const SET_THRESHOLD_MAX = 5;
 
 export const setThreshold = (memberCount: number) => Math.min(SET_THRESHOLD_MAX, memberCount - 1);
 

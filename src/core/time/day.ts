@@ -1,5 +1,5 @@
+import { DAY_BOUNDARY_HOUR } from "../../rules";
 const DAY_MS = 86_400_000;
-const BOUNDARY_HOUR = 4;
 
 function wallClock(at: number, tz: string) {
 	const parts = new Intl.DateTimeFormat("en-CA", {
@@ -32,12 +32,12 @@ export function dayNumber(localDay: string): number {
 
 export function localDay(at: number, tz: string): string {
 	const clock = wallClock(at, tz);
-	return clock.hour < BOUNDARY_HOUR ? addDays(clock.date, -1) : clock.date;
+	return clock.hour < DAY_BOUNDARY_HOUR ? addDays(clock.date, -1) : clock.date;
 }
 
 // The instant whose local wall clock reads `localDay` 04:00 (DST shifts happen before 04:00).
 export function dayStart(localDay: string, tz: string): number {
-	const desired = Date.parse(`${localDay}T0${BOUNDARY_HOUR}:00:00Z`);
+	const desired = Date.parse(`${localDay}T0${DAY_BOUNDARY_HOUR}:00:00Z`);
 	let guess = desired;
 	for (let attempt = 0; attempt < 4; attempt++) {
 		const correction = desired - wallClock(guess, tz).asUtc;
