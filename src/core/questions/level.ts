@@ -10,7 +10,6 @@ const FIXED_CONTEXTS: readonly QuestionContext[] = [
 	"setrecall"
 ];
 
-// SRD 3.2 "Penentuan Level Otomatis", checked in order.
 export function automaticLevel(card: CardMemory, mode: CardMode, context: QuestionContext): Level {
 	if (context === "intro") return 1;
 	if (context === "drill") return 3;
@@ -24,7 +23,6 @@ export function automaticLevel(card: CardMemory, mode: CardMode, context: Questi
 	return 2;
 }
 
-// SRD 3.3: manual changes are allowed except where SRD 3.5 fixes the level.
 export function resolveLevel(
 	auto: Level,
 	requested: Level | undefined,

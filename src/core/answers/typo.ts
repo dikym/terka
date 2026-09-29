@@ -13,7 +13,6 @@ function adjacentKeys(a: string, b: string): boolean {
 	return (rows === 0 && columns === 1) || (rows === 1 && columns <= 0.5);
 }
 
-// SRD 5.1 step 6: weighted Damerau-Levenshtein; transpositions, neighbouring keys and doubled letters cost 0.5.
 export function typoDistance(a: string, b: string): number {
 	const d = Array.from({ length: a.length + 1 }, (_, i) =>
 		Array.from({ length: b.length + 1 }, (_, j) => (i === 0 ? j : j === 0 ? i : 0))
@@ -35,7 +34,6 @@ export function typoDistance(a: string, b: string): number {
 	return d[a.length][b.length];
 }
 
-// SRD 5.1: budget by the length of the canonical name without spaces.
 export function typoThreshold(length: number): number {
 	return length <= 4 ? 0 : length <= 7 ? 1 : length <= 11 ? 1.5 : 2;
 }

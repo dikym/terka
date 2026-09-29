@@ -2,7 +2,6 @@ import type { Bundle } from "../content/schema";
 
 export type CodeMatch = { matchType: "exact" | "none"; confusedWith: string | null };
 
-// SRD 5.1: codes compare upper case without spaces and never tolerate typos.
 export function matchRegionCode(
 	input: string,
 	validCodeIds: readonly string[],

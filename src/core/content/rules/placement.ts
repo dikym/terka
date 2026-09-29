@@ -1,7 +1,6 @@
 import type { ContentDraft } from "../draft";
 import { error, type ContentMessage } from "../messages";
 
-// SRD 4.13: placement stages ask 8 common, 10 medium and 10 rare codes; stage 2 covers at most 10 groups.
 const TIER_MINIMUM = { common: 8, medium: 10, rare: 10 } as const;
 const MAX_MEDIUM_GROUPS = 10;
 

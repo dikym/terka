@@ -5,7 +5,7 @@ import { errorCodes, validDraft } from "./fixtures";
 const options = { today: "2026-09-28", release: false, previous: null as unknown };
 
 describe("bundle build", () => {
-	test("TR-01: a valid draft builds a TRD bundle with contentRev and no editorial fields", () => {
+	test("a valid draft builds a bundle with contentRev and no editorial fields", () => {
 		const { bundle, messages } = buildFromDraft(validDraft(), options);
 		expect(errorCodes(messages)).toEqual([]);
 		expect(bundle!.contentRev).toBe(1);
@@ -45,7 +45,7 @@ describe("bundle build", () => {
 		expect(release.bundle).toBeNull();
 		expect(errorCodes(release.messages)).toContain("review-due");
 	});
-	test("TR-195: content changed without a contentRev bump fails; history stays append-only", () => {
+	test("content changed without a contentRev bump fails; history stays append-only", () => {
 		const released = assembleBundle(validDraft());
 		const changed = validDraft();
 		changed.curation.areas[0].name = "Daerah baru";

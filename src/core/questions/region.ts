@@ -21,8 +21,6 @@ const PLACEMENT_MS = 15_000;
 
 export type ResolvedLevels = { level: Level; autoLevel: Level; levelSource: LevelSource };
 
-// SRD 3.3/3.4: when a Level fallback lands on a level the request didn't ask for, the source
-// reflects the final level against what was automatically determined, not the original request.
 export const levelSourceFor = (level: Level, autoLevel: Level): LevelSource =>
 	level === autoLevel ? "auto" : level > autoLevel ? "manual_up" : "manual_down";
 
@@ -32,7 +30,6 @@ function findRegion(bundle: Pick<Bundle, "regions">, id: string): Region {
 	return region;
 }
 
-// SRD 2.8, 3.1–3.5 and Microcopy 3.3 for code2region, region2code and setrecall cards.
 export function buildRegionQuestion(
 	card: CardMemory,
 	mode: "code2region" | "region2code" | "setrecall",
@@ -83,8 +80,7 @@ export function buildRegionQuestion(
 		};
 	}
 
-	// SRD 754: Perkenalan (context "intro") asks setrecall at Level 1; every other context is
-	// fixed at Level 3 regardless of what automaticLevel computed for that context alone.
+	// setrecall is Level 1 in Perkenalan and Level 3 everywhere else.
 	if (mode === "setrecall")
 		return {
 			...base,
@@ -220,7 +216,7 @@ export function buildRegionQuestion(
 							)
 						: [];
 				})();
-	// SRD 2.8: without three valid distractors Perkenalan is informational; other questions become typed.
+	// Without three valid distractors Perkenalan is informational; other questions become typed.
 	if (!choices.length)
 		return intro
 			? {

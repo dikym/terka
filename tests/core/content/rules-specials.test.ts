@@ -45,7 +45,7 @@ describe("fact rules", () => {
 		draft.curation.facts.push({ number: 1, id: "f-001-dup", regions: [] });
 		expect(errorCodes(factRules(draft))).toContain("duplicate-fact-entry");
 	});
-	test("TR-150: a ready fact without source or check date fails; with both it passes", () => {
+	test("a ready fact without source or check date fails; with both it passes", () => {
 		const draft = validDraft();
 		draft.facts[0].publicationStatus = "ready";
 		expect(errorCodes(factRules(draft))).toEqual(["ready-fact-source"]);
@@ -59,7 +59,7 @@ describe("special plate rules", () => {
 	test("the valid draft has no special errors", () => {
 		expect(errorCodes(specialRules(validDraft(), TODAY))).toEqual([]);
 	});
-	test("TR-167: two high entries with the same number fail and name both ids", () => {
+	test("two high entries with the same number fail and name both ids", () => {
 		const draft = validDraft();
 		draft.specials.specials[1] = {
 			...draft.specials.specials[1],
@@ -73,12 +73,12 @@ describe("special plate rules", () => {
 		expect(messages[0].message).toContain("cd-12-amerika-serikat");
 		expect(messages[0].message).toContain("cd-12-india");
 	});
-	test("TR-168: an alias equal to another holder after normalization fails", () => {
+	test("an alias equal to another holder after normalization fails", () => {
 		const draft = validDraft();
 		draft.specials.specials[0].aliases = ["Republik India"];
 		expect(errorCodes(specialRules(draft, TODAY))).toContain("special-holder-collision");
 	});
-	test("TR-168: three specials sharing a holder key report every clashing pair once", () => {
+	test("three specials sharing a holder key report every clashing pair once", () => {
 		const draft = validDraft();
 		draft.specials.specials[0].aliases = ["Republik India"];
 		draft.specials.specials.push({
@@ -118,7 +118,7 @@ describe("special plate rules", () => {
 			)
 		).toBe(true);
 	});
-	test("TR-171: a high entry whose source has no check date fails", () => {
+	test("a high entry whose source has no check date fails", () => {
 		const draft = validDraft();
 		draft.specials.sources[0].checkedAt = null;
 		expect(errorCodes(specialRules(draft, TODAY))).toContain("special-unchecked-source");
@@ -128,21 +128,21 @@ describe("special plate rules", () => {
 		draft.specials.specials[0].sources = ["hilang"];
 		expect(errorCodes(specialRules(draft, TODAY))).toContain("unknown-source");
 	});
-	test("TR-172: a media source quoting an agency without originalUrl is a warning", () => {
+	test("a media source quoting an agency without originalUrl is a warning", () => {
 		const draft = validDraft();
 		draft.specials.sources[0].type = "media-mengutip-instansi";
 		const messages = specialRules(draft, TODAY);
 		expect(errorCodes(messages)).toEqual([]);
 		expect(messages.some((message) => message.code === "source-original-url")).toBe(true);
 	});
-	test("TR-173: a passed reviewBy is a warning", () => {
+	test("a passed reviewBy is a warning", () => {
 		const draft = validDraft();
 		draft.specials.specials[0].reviewBy = "2026-01-01";
 		expect(specialRules(draft, TODAY).some((message) => message.code === "review-due")).toBe(
 			true
 		);
 	});
-	test("TR-176: a series other than CD fails", () => {
+	test("a series other than CD fails", () => {
 		const draft = validDraft();
 		draft.specials.specials[0].series = "CC";
 		expect(errorCodes(specialRules(draft, TODAY))).toContain("special-series");
@@ -154,7 +154,7 @@ describe("special plate rules", () => {
 			expect.arrayContaining(["special-number-format", "special-id-number"])
 		);
 	});
-	test("TR-179: an RI reference entry with a number fails", () => {
+	test("an RI reference entry with a number fails", () => {
 		const draft = validDraft();
 		draft.specials.referencePlates[0].number = "1";
 		expect(errorCodes(specialRules(draft, TODAY))).toContain("reference-ri-number");

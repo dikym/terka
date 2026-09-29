@@ -12,7 +12,6 @@ const ITEM = /^(\d+)\. \*\*(.+?)\*\* — (.+)$/;
 const DRAFT = /^Draf · usulan label: (terverifikasi|diperdebatkan|legenda)$/;
 const READY = /^Siap · label: (terverifikasi|diperdebatkan|legenda)$/;
 
-// Terka_Facts.md §1: every numbered bold line is a fact item and must follow one of two formats.
 export function readFacts(markdown: string): FactItem[] {
 	return markdown.split("\n").flatMap((text, index) => {
 		if (!/^\d+\. \*\*/.test(text)) return [];

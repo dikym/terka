@@ -3,10 +3,8 @@ import type { Grade } from "../grading/signals";
 import type { CardMemory } from "./card-memory";
 
 export type Scheduler = ReturnType<typeof fsrs>;
-// SRD 4.3: fixed, not a user setting.
 export const TARGET_RETENTION = 0.9;
 
-// Weights come from the fsrs_params timeline (SRD 4.12); default FSRS-6 otherwise.
 export function createScheduler(weights?: readonly number[]): Scheduler {
 	return fsrs({
 		request_retention: TARGET_RETENTION,
@@ -30,7 +28,6 @@ function toFsrsCard(card: CardMemory): Card {
 	};
 }
 
-// SRD 4.7: reviews are served from the lowest predicted recall.
 export function retrievability(scheduler: Scheduler, card: CardMemory, at: number): number {
 	if (card.lastReviewAt === null || card.stability === 0) return 0;
 	return scheduler.get_retrievability(toFsrsCard(card), new Date(at), false);

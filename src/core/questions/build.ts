@@ -5,7 +5,7 @@ import { parseCardId, type Question, type QuestionOptions } from "./question";
 import { buildRegionQuestion } from "./region";
 import { buildSpecialQuestion } from "./special";
 
-// One entry point for every card; deterministic for a given card id, reps and options.
+// Deterministic for a given card id, reps and options.
 export function buildQuestion(
 	card: CardMemory,
 	bundle: Bundle,

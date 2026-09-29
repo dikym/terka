@@ -4,7 +4,6 @@ import { duplicates, error, report, warning, type ContentMessage } from "../mess
 
 const REFERENCE_SERIES = ["RI", "CD", "CC", "CH"];
 
-// TRD 4.1 "Aturan data kab/kota" and "Aturan confidence".
 export function regionRules({ curation }: ContentDraft): ContentMessage[] {
 	const out: ContentMessage[] = [];
 	const groups = new Set(curation.groups.map((group) => group.id));

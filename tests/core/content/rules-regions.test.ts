@@ -15,37 +15,37 @@ describe("identity, region and placement rules", () => {
 	test("the valid draft has no errors", () => {
 		expect(errorCodes(all())).toEqual([]);
 	});
-	test("TR-06: two regions with the same id fail", () => {
+	test("two regions with the same id fail", () => {
 		const draft = validDraft();
 		draft.curation.regions[1].id = "aa";
 		expect(errorCodes(all(draft))).toContain("duplicate-id");
 	});
-	test("TR-05: a retired id cannot be reused", () => {
+	test("a retired id cannot be reused", () => {
 		const draft = validDraft();
 		draft.curation.retiredIds = ["ab"];
 		expect(errorCodes(identityRules(draft))).toContain("retired-id");
 	});
-	test("TR-170: a region id shaped like a special fails", () => {
+	test("a region id shaped like a special fails", () => {
 		const draft = validDraft();
 		draft.curation.regions[0].id = "cd-12";
 		expect(errorCodes(identityRules(draft))).toContain("region-special-prefix");
 	});
-	test("TR-169: a special id equal to a region id fails", () => {
+	test("a special id equal to a region id fails", () => {
 		const draft = validDraft();
 		draft.specials.specials[1].id = "ab";
 		expect(errorCodes(identityRules(draft))).toContain("special-region-collision");
 	});
-	test("TR-176: a ref- id inside specials fails", () => {
+	test("a ref- id inside specials fails", () => {
 		const draft = validDraft();
 		draft.specials.specials[1].id = "ref-cd-13";
 		expect(errorCodes(identityRules(draft))).toContain("reference-in-specials");
 	});
-	test("TR-07: a region in an unknown group fails", () => {
+	test("a region in an unknown group fails", () => {
 		const draft = validDraft();
 		draft.curation.regions[0].group = "atlantis";
 		expect(errorCodes(regionRules(draft))).toContain("unknown-group");
 	});
-	test("TR-79: a membership pointing at a missing area fails", () => {
+	test("a membership pointing at a missing area fails", () => {
 		const draft = validDraft();
 		draft.curation.regions[0].areas.push({ areaId: "kab-zz", confidence: "high" });
 		expect(errorCodes(regionRules(draft))).toContain("unknown-area");
@@ -59,7 +59,7 @@ describe("identity, region and placement rules", () => {
 		});
 		expect(errorCodes(regionRules(draft))).toContain("orphan-area");
 	});
-	test("TR-81: a variant equal to another area's name without spaces fails and names both ids", () => {
+	test("a variant equal to another area's name without spaces fails and names both ids", () => {
 		const draft = validDraft();
 		draft.curation.areas[0].variants = ["Daerahab"];
 		const messages = regionRules(draft).filter(
@@ -69,7 +69,7 @@ describe("identity, region and placement rules", () => {
 		expect(messages[0].message).toContain("kab-aa");
 		expect(messages[0].message).toContain("kab-ab");
 	});
-	test("TR-82: a kota and a kabupaten with the same name are reported, not rejected", () => {
+	test("a kota and a kabupaten with the same name are reported, not rejected", () => {
 		const draft = validDraft();
 		draft.curation.areas[1] = { ...draft.curation.areas[1], type: "kota", name: "Daerah aa" };
 		const messages = regionRules(draft);
@@ -100,12 +100,12 @@ describe("identity, region and placement rules", () => {
 		draft.curation.regions[0].confidence = "medium";
 		expect(regionRules(draft).some((message) => message.level === "warning")).toBe(true);
 	});
-	test("TR-84: fewer than 8 common codes fails", () => {
+	test("fewer than 8 common codes fails", () => {
 		const draft = validDraft();
 		draft.curation.regions[0].placementTier = "rare";
 		expect(errorCodes(placementRules(draft))).toContain("placement-tier-size");
 	});
-	test("TR-83: a code using every area of its province exclusively is found", () => {
+	test("a code using every area of its province exclusively is found", () => {
 		const draft = validDraft();
 		const bundle = {
 			regions: draft.curation.regions.map(

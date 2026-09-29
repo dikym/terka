@@ -46,7 +46,6 @@ export type QuestionOptions = {
 	previousPromptAreaId?: string | null;
 };
 
-// Microcopy 3.3 "Label dan kalimat soal".
 export const LABELS = {
 	guessArea: "Tebak daerah",
 	guessCode: "Tebak kode",

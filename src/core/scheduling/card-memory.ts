@@ -2,7 +2,6 @@ export type CardState =
 	"locked" | "new" | "learning" | "review" | "relearning" | "mature" | "suspended";
 export type SuspensionReason = "manual" | "leech" | "confidence" | "missing-data";
 
-// The state replay derives for one card (SRD 7).
 export type CardMemory = {
 	cardId: string;
 	state: CardState;

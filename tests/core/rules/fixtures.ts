@@ -1,7 +1,7 @@
 import type { Area, Bundle, Region, Special } from "../../../src/core/content/schema";
 
 export const WITA = "Asia/Makassar";
-// Tests §4: Monday 21 September 2026, 04:00 WITA.
+// Monday 21 September 2026, 04:00 WITA.
 export const NOW = Date.parse("2026-09-21T04:00:00+08:00");
 
 const H = "high" as const;

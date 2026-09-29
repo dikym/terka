@@ -6,7 +6,7 @@ describe("curation reader", () => {
 	test("a valid curation parses", () => {
 		expect(readCuration(validDraft().curation).regions).toHaveLength(28);
 	});
-	test("TR-02: a region without aliases fails and names the region id", () => {
+	test("a region without aliases fails and names the region id", () => {
 		const curation = structuredClone(validDraft().curation) as unknown as {
 			regions: Record<string, unknown>[];
 		};

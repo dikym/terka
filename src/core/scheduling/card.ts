@@ -27,13 +27,11 @@ export function unlock(card: CardMemory): CardMemory {
 	return { ...card, state: "new" };
 }
 
-// SRD 4.7: the first sighting is an ungraded guess; FSRS starts at the 1-minute step.
 export function introduce(card: CardMemory, at: number): CardMemory {
 	if (card.state !== "new") throw new Error(`${card.cardId} is not new`);
 	return { ...card, state: "learning", step: 1, due: at + FIRST_STEP_MS };
 }
 
-// One FSRS update per learning day, spread by the load-balanced fuzz.
 function updateMemory(
 	card: CardMemory,
 	grade: Grade,
@@ -57,7 +55,6 @@ function updateMemory(
 	};
 }
 
-// SRD 4.13: a clean placement answer is the card's first FSRS review.
 export function seedFromPlacement(
 	card: CardMemory,
 	grade: 3 | 4,
@@ -79,8 +76,7 @@ export function suspend(card: CardMemory, reason: SuspensionReason): CardMemory 
 	return { ...card, state: "suspended", suspension: { reason, resume: card.state } };
 }
 
-// SRD 7: manual and data suspensions resume as-is; SRD 6.4: a leech resets only D, S and
-// lapses to new-card values and resumes its prior state — history (reps, passedLevel3) stays.
+// A leech resets only D, S and lapses; its history (reps, passedLevel3) stays.
 export function unsuspend(card: CardMemory): CardMemory {
 	if (!card.suspension) throw new Error(`${card.cardId} is not suspended`);
 	if (card.suspension.reason === "leech")
@@ -95,14 +91,14 @@ export function unsuspend(card: CardMemory): CardMemory {
 	return { ...card, state: card.suspension.resume, suspension: null };
 }
 
-// SRD 4.6 and 7. The caller has already decided this answer may change the schedule.
+// The caller has already decided this answer may change the schedule.
 export function answer(input: CardMemory, grade: Grade, ctx: AnswerContext): CardMemory {
 	if (!["learning", "relearning", "review", "mature"].includes(input.state))
 		throw new Error(`${input.cardId}: cannot answer a ${input.state} card`);
 	const steps = input.state === "learning" || input.state === "relearning";
 	const newDay = input.scheduledDay !== ctx.localDay;
 	if (!newDay && !steps) {
-		// SRD 4.13: a Level 3 pass is historical even on an answer that doesn't touch the schedule.
+		// A Level 3 pass is recorded even when the schedule does not change.
 		if (ctx.passesLevel3 && !input.passedLevel3) return { ...input, passedLevel3: true };
 		return input;
 	}
@@ -129,7 +125,7 @@ export function answer(input: CardMemory, grade: Grade, ctx: AnswerContext): Car
 			due: ctx.at + SECOND_STEP_MS
 		};
 	} else {
-		// SRD 7: mature only leaves that state on a wrong answer; a correct one keeps it mature.
+		// A mature card leaves that state only on a wrong answer.
 		card = {
 			...card,
 			state: input.state === "mature" ? "mature" : "review",

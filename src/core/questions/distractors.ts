@@ -16,7 +16,7 @@ export const eligibleRegions = (bundle: Pick<Bundle, "regions">) =>
 			region.areas.some((membership) => membership.confidence === "high")
 	);
 
-// SRD 2.8: the scope first (the card's own group when its code is outside the scope), then the group, then national.
+// Scope first (the card's own group when its code is outside the scope), then group, then national.
 export function regionLayers(
 	bundle: Pick<Bundle, "regions">,
 	region: Region,
@@ -46,12 +46,7 @@ export function pickLayered<T>(
 	return [...chosen.values()];
 }
 
-// High areas of other codes that are not members of the asked code (shared areas never become distractors).
-// SRD 2.8 "Nama sama, daerah beda": a same-named Kota/Kabupaten twin under another code grades
-// correct too, so it is excluded by name (every membership of the asked code, any confidence),
-// not just by area id.
-// SRD 3.1: with preferOtherProvince, each layer offers its other-province owners before its
-// same-province owners, so a same-province neighbour is only used when the layer needs it.
+// Excludes every name the asked code uses: a same-named twin under another code grades correct.
 export function foreignAreas(
 	bundle: Pick<Bundle, "regions" | "areas">,
 	region: Region,
@@ -100,8 +95,6 @@ export function otherCodes(
 	);
 }
 
-// SRD 2.9 "Pilihan dan pengecoh": only high CD entries, never an alias of the asked holder
-// (in either direction), plus one n ± 1 neighbour for holder2special.
 export function specialChoices(
 	bundle: Pick<Bundle, "specials">,
 	special: Special,

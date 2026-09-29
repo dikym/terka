@@ -21,7 +21,6 @@ const noHolder = (confusedWith: string | null = null): HolderMatch => ({
 	correction: null
 });
 const pairId = (entry: Special) => (entry.confidence === "high" ? entry.id : null);
-// SRD 5.3: all-capital abbreviations (UNDP, WHO) get no typo tolerance.
 const isAbbreviation = (holder: string) => /[A-Z]/.test(holder) && holder === holder.toUpperCase();
 
 function target(bundle: Pick<Bundle, "specials">, specialId: string): Special {
@@ -30,7 +29,6 @@ function target(bundle: Pick<Bundle, "specials">, specialId: string): Special {
 	return entry;
 }
 
-// SRD 5.3 "Jawaban berupa nama pemegang".
 export function matchHolder(
 	input: string,
 	specialId: string,
@@ -49,8 +47,6 @@ export function matchHolder(
 	if (other) return noHolder(pairId(other.entry));
 	const canonical = holderKey(own.holder);
 	if (canonical.length <= 4 || isAbbreviation(own.holder)) return noHolder();
-	// Score every holder/alias key (not only ones sharing the answer's first letter): a closer
-	// different-first-letter holder must still be able to block the match (mirrors matchName).
 	const scored = forms
 		.flatMap((form) =>
 			form.keys.map((candidate) => ({
@@ -72,7 +68,6 @@ export function matchHolder(
 	return { matchType: "typo", typoCost: best.cost, confusedWith: null, correction: own.holder };
 }
 
-// SRD 5.3 "Jawaban berupa kode": optional CD prefix, leading zeros dropped, exact, no extra digits.
 export function matchSpecialCode(
 	input: string,
 	specialId: string,

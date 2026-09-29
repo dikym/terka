@@ -15,7 +15,6 @@ import { levelSourceFor, type ResolvedLevels } from "./region";
 
 const TIMED_MS = 8_000;
 
-// SRD 2.9: Tebak diplomat in both directions; the registration serial is never asked.
 export function buildSpecialQuestion(
 	card: CardMemory,
 	mode: "special2holder" | "holder2special",
@@ -62,7 +61,7 @@ export function buildSpecialQuestion(
 	if (levels.level > 1) return typed(levels.level, levels.levelSource);
 	const others = specialChoices(bundle, special, mode, 3, random("distractors"));
 	const correct = toHolder ? special.holder : code;
-	// SRD 2.8: without three valid distractors Perkenalan is informational; other questions become typed.
+	// Without three valid distractors Perkenalan is informational; other questions become typed.
 	if (others.length < 3)
 		return intro
 			? {

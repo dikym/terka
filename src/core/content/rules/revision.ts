@@ -12,7 +12,6 @@ const payload = (bundle: Record<string, unknown>) =>
 		)
 	);
 
-// Ids across the record collections a retirement can drop: regions, areas, facts and specials.
 const recordIds = (bundle: Record<string, unknown>) => {
 	const ids = new Set<string>();
 	for (const key of ["regions", "areas", "facts", "specials"]) {
@@ -24,7 +23,6 @@ const recordIds = (bundle: Record<string, unknown>) => {
 	return ids;
 };
 
-// TRD 4.1 "Versi konten": contentRev rises by one per change; old history entries never change.
 export function revisionRules(
 	bundle: Bundle,
 	previous: unknown,
@@ -67,7 +65,6 @@ export function revisionRules(
 		out.push(
 			error("content-rev-back", `contentRev went back from ${rev} to ${bundle.contentRev}`)
 		);
-	// ponytail: compares with the file on disk, so a second edit before commit needs another bump or a restored file.
 	if (bundle.contentRev === rev && payload(bundle) !== payload(before))
 		out.push(
 			error(
