@@ -337,7 +337,7 @@ Riwayat parameter FSRS hasil optimasi (SRD bagian 4.12). Insert-only.
 
 **Mengapa hash, bukan daftar ID.** Daftar ID data latih tumbuh bersama riwayat. Pengguna rajin setelah tiga tahun punya sekitar 27.000 jawaban terhitung, jadi satu baris parameter berisi daftar lengkap bisa mencapai sekitar 430 KB. Kuota pemakaian menghitung baris, bukan byte, sehingga kolom seperti itu jadi celah: satu baris `fsrs_params` tetap dihitung satu. Hash berukuran tetap 32 byte dan cukup untuk memastikan dua perangkat memakai dataset yang sama.
 
-Daftar ID lengkap (`training_event_ids`) tetap ada, tetapi hanya di salinan lokal perangkat yang menjalankan optimasi, dan ikut ekspor (TRD bagian 4.3). Pemeriksaan yang membutuhkan keanggotaan ID — normalisasi impor versi lama di TRD bagian 6 — hanya berjalan di perangkat yang memiliki daftarnya. Tanpa daftar, parameter itu diperlakukan tidak dapat diverifikasi dan tidak diaktifkan; parameter bawaan berlaku sampai optimasi berikutnya. Replay biasa tidak membutuhkan daftar ID.
+Daftar ID lengkap (`training_event_ids`) tetap ada, tetapi hanya di salinan lokal perangkat yang menjalankan optimasi, dan ikut ekspor (TRD bagian 4.3). Replay tidak membutuhkan daftar ID.
 
 Tidak ada kolom "parameter aktif" yang bisa diubah. Parameter yang berlaku untuk satu jawaban adalah baris `active` dengan `activated_at` terbaru yang tidak lebih lambat dari waktu jawaban itu. Jika waktu aktivasi sama, device_id lalu id menjadi pemecah seri; waktu aktivasi efektif tidak boleh melewati received_at untuk baris yang sudah tersinkron (TRD 4.4). Rollback menyisipkan baris `active` baru yang menyalin bobot lama.
 
@@ -450,7 +450,7 @@ Mode kode khusus hanya sah dengan id `cd-`, dan tiga mode wilayah tidak boleh me
 
 **`content_id` menampung dua jenis konten.** Isinya `regions[].id` untuk kartu wilayah atau `specials[].id` untuk kartu kode khusus. Hal yang sama berlaku untuk `card_notes.content_id` dan `review_logs.confused_with`. Nama sebelumnya, `region_id`, diganti sebelum rilis publik, karena nama itu menyesatkan begitu kolomnya juga berisi kode khusus. `sightings.region_id` tetap memakai nama lama, karena pencarian kode khusus tidak dicatat dan isinya memang hanya kode wilayah.
 
-Skema ini menggambarkan rancangan akhir yang digunakan. Pembersihan data lama dan masa kompatibilitas mengikuti TRD 6–7.
+Skema ini adalah rancangan akhir dan dibuat langsung oleh migration pertama. Perubahan sesudah rilis mengikuti TRD 7.
 
 ## 8. Aturan Integritas yang Ditegakkan di Database
 
@@ -525,7 +525,7 @@ Satu tabel tumbuh jauh lebih cepat dari yang lain, mengikuti jumlah jawaban:
 
 **Tidak ada indeks `(user_id, received_at)`.** Overlap pull untuk transaksi yang commit tidak berurutan memakai riwayat cursor `server_seq` di klien (TRD bagian 5.3), bukan query berdasarkan `received_at`. Hasilnya setara, dan tabel terbesar berkurang satu indeks yang harus diperbarui di setiap insert. Kolom `received_at` tetap ada, karena dipakai `effective_ts` dan sebagai bukti waktu terima.
 
-**Kapasitas paket Free.** Proyeksi kapasitas, alarm ukuran, dan pemicu pindah ke Pro ada di TRD bagian 6 dan 9. Hasil ukur tata letak lama dan baru ada di `Terka_Audit.md`.
+**Kapasitas paket Free.** Proyeksi kapasitas, alarm ukuran, dan pemicu pindah ke Pro ada di TRD bagian 6 dan 9.
 
 **Partisi belum direncanakan.** Semua query Terka dibatasi satu pengguna, dan indeks B-tree yang diawali `user_id` tetap menjangkau baris satu pengguna dalam beberapa langkah walaupun tabel berisi puluhan juta baris. Pada 50 juta baris, `review_logs` sekitar 22 GB — besar untuk paket Free, tetapi biasa untuk Postgres. Partisi `hash (user_id)` lebih membantu pemeliharaan, seperti vacuum dan rebuild indeks per partisi, daripada kecepatan query. Partisi baru dipertimbangkan jika autovacuum `review_logs` terbukti tidak mampu mengikuti laju tulis, atau ukuran tabel mendekati 100 GB.
 
@@ -541,7 +541,7 @@ Jika kelak diperlukan, perlu dicatat tiga hal:
 | --------------------------- | ------ | -------------------------------------- |
 | Bersihkan penghitung harian | Harian | Hapus `usage_daily` lebih dari 30 hari |
 
-Riwayat belajar yang masih didukung tidak dihapus dalam pembersihan rutin. Penghapusan akun dan migrasi yang secara eksplisit mengeluarkan materi lama mengikuti prosedur tersendiri dalam TRD 6–7; keduanya bukan pekerjaan pembersihan berkala.
+Riwayat belajar tidak dihapus dalam pembersihan rutin. Penghapusan akun mengikuti TRD 5.1 dan bukan pekerjaan pembersihan berkala.
 
 ## 11. Jalur Perluasan
 

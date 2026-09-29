@@ -52,7 +52,7 @@ Konsekuensinya, server tidak memeriksa apakah jawaban benar atau jadwal valid. T
 - **Data:** `plates.json` statis, dihasilkan dari dokumen referensi saat build; hierarki cakupan dibentuk dari properti `group` dan `province`
 - **PWA:** service worker dibuat setelah `next build` dengan `workbox-build` (`injectManifest`) atas isi folder `out/`, memakai strategi precache penuh. Cara ini tidak bergantung pada bundler Next.js yang dipakai
 - **Peta:** SVG statis wilayah Indonesia, diwarnai lewat CSS variable, dengan `id` elemen sama persis dengan `id` cakupan
-- **Deployment:** Vercel, situs statis tanpa server function. Environment variable `NEXT_PUBLIC_SUPABASE_URL` dan `NEXT_PUBLIC_SUPABASE_ANON_KEY` bersifat publik; keamanannya ada di RLS, bukan di kerahasiaan key. Paket Hobby hanya boleh untuk pemakaian pribadi non-komersial; Terka gratis tanpa iklan masih masuk batas itu, dan menambahkan iklan atau pembayaran berarti harus pindah ke Pro
+- **Deployment:** Vercel, situs statis tanpa server function. Environment variable `NEXT_PUBLIC_SUPABASE_URL` dan `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (publishable key `sb_publishable_…`, pengganti anon key lama) bersifat publik; keamanannya ada di RLS, bukan di kerahasiaan key. Paket Hobby hanya boleh untuk pemakaian pribadi non-komersial; Terka gratis tanpa iklan masih masuk batas itu, dan menambahkan iklan atau pembayaran berarti harus pindah ke Pro
 - **Region Supabase:** Singapura, wilayah terdekat untuk pengguna di Indonesia
 - **Domain:** `terka.my.id`, dipasang di Vercel sebagai domain produksi. `terka.vercel.app` tetap ada dan dialihkan permanen (308) ke `terka.my.id`. Preview deployment tetap memakai subdomain `vercel.app` dengan proyek Supabase staging. IndexedDB terikat ke origin, jadi progres tanpa akun di `terka.vercel.app` tidak terbaca di `terka.my.id`. Karena itu rilis publik langsung memakai `terka.my.id`, dan pengalihan dipasang sebelum ada pengguna di alamat lama
 - **DNS:** dikelola di Cloudflare paket gratis. Record untuk Vercel memakai mode DNS only, tanpa proxy Cloudflare, supaya sertifikat dan routing tetap diurus Vercel
@@ -374,7 +374,7 @@ Catatan pencarian kode wilayah di Referensi untuk frekuensi Pelat Terlihat (SRD 
 
 `received_at` dan `server_seq` mengikuti aturan catatan ber-ID. Tidak ada `review_id`, jawaban mentah, angka pelat, atau hasil penilaian. Aturan deduplikasi per perangkat dijalankan transaksional sebelum event dibuat, bukan lewat jendela waktu server.
 
-**Kompatibilitas data lama.** Rancangan baru menerima lima mode kartu dalam bagian 4.1 dan hanya kolom pencarian yang tercantum di tabel ini. Penanganan data dari format lama dijelaskan dalam bagian 6. Normalisasi menaikkan `ENGINE_VERSION`, membuang cache perhitungan lama, lalu menghitung kembali keadaan aplikasi dari catatan yang masih berlaku.
+**Tanpa data format lama.** Rilis ini hanya menerima lima mode kartu dalam bagian 4.1 dan kolom pencarian yang tercantum di tabel ini. Data dari versi Terka sebelumnya tidak dimigrasikan (bagian 6).
 
 #### `fact_views`
 
@@ -426,7 +426,7 @@ Riwayat parameter FSRS hasil optimasi (SRD bagian 4.12).
 
 Tidak ada kolom "parameter aktif" yang bisa diubah. Parameter yang berlaku untuk satu jawaban adalah baris `active` dengan `activated_at` terbaru yang tidak lebih lambat dari waktu jawaban itu. Jika activated_at sama, pilih device_id lalu id terbesar secara leksikografis. Untuk parameter yang sudah diterima server, waktu aktivasi efektif dibatasi maksimum received_at, sama seperti waktu dasar event; aturan ini juga berlaku di setiap replay. Sebelum ada baris seperti itu, yang berlaku parameter default FSRS-6. Rollback berarti menyisipkan baris `active` baru yang menyalin bobot lama.
 
-**Daftar ID data latih hanya lokal.** Daftar lengkap `training_event_ids` tidak dikirim ke server, karena ukurannya tumbuh bersama riwayat — sekitar 430 KB per baris untuk pengguna rajin setelah tiga tahun — sedangkan kuota menghitung baris, bukan byte. Salinan lokal `fsrs_params` di perangkat yang menjalankan optimasi menyimpan daftar itu sebagai kolom lokal, dan daftar itu ikut ekspor. Perangkat lain hanya menerima hash dan jumlahnya. Pemeriksaan yang membutuhkan keanggotaan ID (normalisasi impor versi lama, bagian 6) berjalan hanya jika daftarnya ada; tanpa daftar, parameter diperlakukan tidak dapat diverifikasi dan tidak diaktifkan, dan parameter bawaan berlaku sampai optimasi berikutnya. Replay biasa tidak membutuhkan daftar ID.
+**Daftar ID data latih hanya lokal.** Daftar lengkap `training_event_ids` tidak dikirim ke server, karena ukurannya tumbuh bersama riwayat — sekitar 430 KB per baris untuk pengguna rajin setelah tiga tahun — sedangkan kuota menghitung baris, bukan byte. Salinan lokal `fsrs_params` di perangkat yang menjalankan optimasi menyimpan daftar itu sebagai kolom lokal, dan daftar itu ikut ekspor. Perangkat lain hanya menerima hash dan jumlahnya. Replay tidak membutuhkan daftar ID; daftar itu hanya untuk menelusuri keputusan optimasi.
 
 ### 4.3 Penyimpanan Lokal
 
@@ -438,7 +438,6 @@ Dexie menyimpan salinan seluruh tabel di atas, ditambah store yang hanya ada di 
 | `outbox_quarantine` | Perubahan yang ditolak server dengan kesalahan yang tidak bisa diulang                                                                                                                                                          |
 | `sync_meta`         | `owner_user_id`, cursor per tabel, riwayat pull per tabel (waktu mulai dan cursor, bagian 5.3), `last_pull_started_at`, `last_push_at`, `last_export_at`                                                                        |
 | `derived`           | Cache keadaan aplikasi kartu, pasangan tertukar, dan persentil waktu jawab untuk tampilan cepat, beserta kunci pengurutan event terakhir yang sudah diterapkan dan `ENGINE_VERSION` serta versi `plates.json` saat cache dibuat |
-| `migration_reports` | Versi asal, jumlah catatan yang dipertahankan/dikeluarkan, dan ID sesi yang dikecualikan; tanpa isi input yang dibuang; ikut ekspor                                                                                             |
 | `ui_flags`          | Penanda tampilan lokal, misalnya perubahan `confidence` yang sudah diberitahukan                                                                                                                                                |
 
 `owner_user_id` bernilai null selama aplikasi dipakai tanpa akun. Nilai ini yang mencegah data satu akun terkirim ke akun lain (bagian 5.1).
@@ -551,18 +550,11 @@ Perangkat baru menarik seluruh data akun, lalu menjalankan replay penuh. Targetn
 | Rencana promosi terbuka                                 | Lonjakan pendaftaran memerlukan batas yang lebih longgar dan pemantauan                                                                                              |
 | Email login rata-rata di atas 80 per hari selama 7 hari | Resend Free dibatasi 100 email per hari. Langkah pertama pindah ke penyedia dengan jatah gratis lebih besar, seperti Brevo; berbayar hanya jika itu juga tidak cukup |
 
-**Ekspor JSON.** Format `terka-export` memakai `formatVersion` 4. Versi 4 menyimpan `set_items` sebagai tuple dan `content_version`/`engine_version` sebagai angka, sama seperti skema server. Berkas memuat riwayat yang masih didukung, pengaturan, catatan pengingat, catatan penolakan yang sudah dibersihkan, ringkasan migrasi, dan `training_event_ids` untuk parameter yang daftarnya tersimpan di perangkat itu. Kolom ini sudah bagian dari baris `fsrs_params` sejak versi 3. Berkas tidak memuat input pencarian lengkap atau data untuk mode yang tidak lagi digunakan. Pengingat ekspor muncul setelah 30 hari. Impor menggabungkan catatan berdasarkan ID; mengimpor berkas yang sama dua kali tidak menggandakan data.
+**Ekspor JSON.** Format `terka-export` memakai `formatVersion` 4. Versi 4 menyimpan `set_items` sebagai tuple dan `content_version`/`engine_version` sebagai angka, sama seperti skema server. Berkas memuat riwayat, pengaturan, catatan pengingat, catatan penolakan yang sudah dibersihkan, dan `training_event_ids` untuk parameter yang daftarnya tersimpan di perangkat itu. Berkas tidak memuat input pencarian lengkap. Pengingat ekspor muncul setelah 30 hari. Impor menggabungkan catatan berdasarkan ID; mengimpor berkas yang sama dua kali tidak menggandakan data.
 
-**Impor dan peningkatan format.** Importer menerima versi 1 sampai 4; versi yang lebih baru atau tidak dikenal ditolak sebelum data lokal berubah. Versi 3 diubah bentuknya: objek `set_items` menjadi tuple, dan string versi konten diganti `contentRev` lewat tabel `contentHistory` di `plates.json`. Semua versi 1–3 juga mengeluarkan kartu dan jawaban `blindrecall`, karena mode itu sudah dilebur ke `code2region`; aturannya sama dengan langkah 2 di bawah. Versi 1–2 dinormalisasi dalam satu transaksi:
+**Impor.** Importer hanya menerima `formatVersion` 4. Berkas dengan versi lain, lebih lama maupun lebih baru, atau berkas yang bukan ekspor Terka ditolak sebelum data lokal berubah. Data dari versi Terka sebelumnya tidak dimigrasikan; rilis ini memulai riwayat baru. Setelah impor, cache `derived` dibuang dan replay penuh dijalankan.
 
-1. Pertahankan kartu hanya jika mode termasuk lima mode yang didukung (bagian 4.1) dan `card_id` sesuai `region_id::mode` menurut format lama. Kartu yang lolos disimpan sebagai `content_id` dan `mode`; `card_id` dibentuk ulang dari keduanya. Versi 1–2 tidak pernah memuat mode kode khusus.
-2. Catatan untuk mode yang tidak didukung dan jawaban dari alur pencarian lama tidak masuk riwayat aktif, jadwal, statistik, kuota, pasangan tertukar, atau optimasi. Jangan mengubahnya menjadi mode lain.
-3. Hapus rujukan yang kehilangan induknya setelah penyaringan, termasuk pembatalan jawaban. Sesi historis yang ringkasannya memuat jawaban tidak didukung dikeluarkan dari riwayat sesi aktif, rekor, dan Hari Beruntun. Jawaban dan catatan tampilan fakta yang masih didukung tetap disimpan dengan `run_id` kosong. Ringkasan migrasi mencatat ID sesi terkait. Parameter optimasi yang memakai ID jawaban yang dikeluarkan tidak diaktifkan; gunakan parameter bawaan sampai optimasi berikutnya.
-4. Pada catatan pencarian, salin hanya kolom `sightings` yang masih didukung. Buang kolom tambahan dan isi pencarian lengkap sebelum data masuk penyimpanan, antrean kirim, karantina, atau ekspor baru.
-5. Simpan ringkasan migrasi berupa versi asal, jumlah catatan yang dipertahankan atau dikeluarkan, serta ID sesi yang dikecualikan; jangan menyimpan isi input yang dibuang. Tampilkan jumlah tersebut setelah impor. Berkas sumber tidak diubah.
-6. Buang cache lama dan jalankan penghitungan ulang penuh. Pengaturan serta catatan pribadi yang masih sah dipertahankan. Impor berulang tetap menghasilkan keadaan yang sama.
-
-Peningkatan database lokal memakai aturan penyaringan yang sama. Migrasi server memerlukan cadangan terlebih dahulu dan dilakukan bertahap sesuai bagian 7. Skema dalam ERD menggambarkan hasil akhir, bukan seluruh tahap peralihannya.
+**Database lokal.** Rilis ini memakai database Dexie baru dan tidak membaca database mesin penjadwalan sebelumnya. Perubahan skema Dexie berikutnya memakai upgrade versi Dexie tanpa membuang riwayat. Migrasi server memerlukan cadangan terlebih dahulu dan dilakukan bertahap sesuai bagian 7.
 
 **Skenario pemulihan:**
 
@@ -573,7 +565,7 @@ Peningkatan database lokal memakai aturan penyaringan yang sama. Migrasi server 
 | Server dan perangkat sama-sama hilang                | Pulihkan cadangan database terakhir; event yang lebih baru hanya pulih bila ada ekspor atau perangkat lain. Tanpa cadangan yang dapat dipakai, pemulihan per akun memakai ekspor terakhir            |
 | Satu akun perlu dipulihkan tanpa memulihkan database | Impor ekspor pengguna ke akun tujuan sesuai aturan kepemilikan; pemulihan satu akun dari `pg_dump` tetap di luar cakupan                                                                             |
 
-**Ukuran data.** Ukuran `review_logs` diukur di PostgreSQL 16 dengan 90.000 baris sintetis dari 25 pengguna yang disisipkan berselang-seling, termasuk 5% jawaban himpunan dan kedua indeksnya. Dengan tata letak kolom di ERD bagian 4, satu jawaban memakan sekitar 435 byte, turun dari 540 byte pada rancangan sebelumnya. Rincian dan skrip ukurnya ada di `Terka_Audit.md`. Daftar ID data latih tidak disimpan di server (bagian 4.2), jadi tidak ada kolom yang ukurannya mengikuti umur akun.
+**Ukuran data.** Ukuran `review_logs` diukur di PostgreSQL 16 dengan 90.000 baris sintetis dari 25 pengguna yang disisipkan berselang-seling, termasuk 5% jawaban himpunan dan kedua indeksnya. Dengan tata letak kolom di ERD bagian 4, satu jawaban memakan sekitar 435 byte, turun dari 540 byte pada rancangan sebelumnya. Daftar ID data latih tidak disimpan di server (bagian 4.2), jadi tidak ada kolom yang ukurannya mengikuti umur akun.
 
 Dengan 500 byte per jawaban sebagai angka aman, ditambah 20% untuk tabel lain, pengguna rajin (25 jawaban per hari) memakai sekitar 5,5 MB per tahun. Untuk campuran 20% pengguna rajin, 50% sedang (10 jawaban per hari), dan 30% ringan (4 jawaban per hari), pemicu 300 MB tercapai sekitar 27 bulan setelah ada 50 pengguna aktif ber-akun, 13 bulan dengan 100 pengguna, dan 5 bulan dengan 250 pengguna. Karena itu ukuran database dipantau dengan alarm di bagian 9, dan pengguna tanpa akun sengaja tidak menyentuh database.
 
@@ -597,7 +589,7 @@ Yang dikerjakan saat build:
 
 **Migration database.** Disimpan di `supabase/migrations` dalam repositori yang sama. CI menjalankan seluruh tes (Tests bagian 3), termasuk tes RLS terhadap database lokal, sebelum menerapkan migration ke produksi lewat Supabase CLI.
 
-**Migrasi bertahap.** Rilis pertama menambahkan versi skema dan jalur normalisasi tanpa langsung menghapus kolom lama. Klien baru berhenti membaca atau mengirim data yang tidak lagi didukung. Setelah masa kompatibilitas berakhir, klien lama diminta memperbarui aplikasi sebelum sinkronisasi; data lokalnya tetap dapat diekspor. Migrasi berikutnya membersihkan data yang sudah tidak digunakan, menghitung ulang penghitung pemakaian, dan menghapus kolom lama setelah cadangan serta pemeriksaan selesai. Selama peralihan, data lama tidak boleh masuk perhitungan belajar versi baru. Kolom tambahan untuk fitur yang tetap didukung harus memiliki nilai bawaan atau boleh kosong.
+**Migrasi bertahap.** Migration pertama langsung membuat skema akhir di ERD, karena belum ada data server sebelumnya. Perubahan skema setelah rilis dilakukan bertahap: kolom baru wajib memiliki nilai bawaan atau boleh kosong, klien lama tetap berjalan selama masa kompatibilitas, lalu diminta memperbarui aplikasi sebelum sinkronisasi; data lokalnya tetap dapat diekspor. Kolom yang tidak lagi dipakai baru dihapus setelah cadangan dan pemeriksaan selesai.
 
 **Kompatibilitas maju.** Rilis bertahap membuat satu akun bisa dipakai di perangkat dengan versi aplikasi berbeda. Perangkat versi lama bisa menarik event yang dibuat versi baru, misalnya jawaban `setrecall` sebelum perangkat itu mengenal mode tersebut. Event seperti itu tidak boleh dilewati, karena hasil replay perangkat lama akan berbeda dari perangkat baru. Aturannya:
 
@@ -693,7 +685,7 @@ Kiriman yang ditolak batas harian tetap di antrean kirim dan dikirim ulang setel
 
 **Kewajiban data pribadi.** Terka menyimpan email dan riwayat latihan orang lain, dan pengguna di Indonesia dilindungi UU No. 27 Tahun 2022 tentang Pelindungan Data Pribadi. Yang sudah dipenuhi desain: data seminimal mungkin, tujuan tunggal (sinkronisasi), persetujuan eksplisit, ekspor penuh, dan hapus akun beserta seluruh datanya. Yang perlu dipastikan sebelum login dibuka: isi kebijakan privasi, penyebutan bahwa server berada di Singapura, dan prosedur jika terjadi kebocoran data. Bagian ini sebaiknya ditinjau orang yang paham hukum; dokumen teknis tidak bisa menggantikannya.
 
-**Key.** Hanya anon key yang ada di bundle. Service role key tidak pernah dipakai di klien. Token akses Supabase CLI untuk migration disimpan sebagai secret di CI.
+**Key.** Hanya publishable key yang ada di bundle; request dengannya berjalan sebagai role `anon` sampai pengguna login. Service role key tidak pernah dipakai di klien. Token akses Supabase CLI untuk migration disimpan sebagai secret di CI.
 
 ---
 
