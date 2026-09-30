@@ -11,6 +11,8 @@ export type ContentStatus = "ok" | "confidence" | "missing-data";
 export type CardEntry = CardMemory & {
 	passedLevels: [boolean, boolean, boolean];
 	relatedSkips: number;
+	answered: number;
+	wrong: number;
 	dueDay: string | null;
 };
 export type PairState = {
@@ -36,6 +38,7 @@ export type AppState = {
 	openDue: string[];
 	tier: { current: Tier; changedOn: string | null; days: Map<string, DayStats> };
 	challengeDays: Set<string>;
+	activeDays: Set<string>;
 	kilatRecords: Map<string, number>;
 	factViews: { factId: string; localDay: string; runId: string | null }[];
 	sightings: Map<string, string[]>;
@@ -53,6 +56,8 @@ export const newEntry = (cardId: string, locked = false): CardEntry => ({
 	...newCard(cardId, locked),
 	passedLevels: [false, false, false],
 	relatedSkips: 0,
+	answered: 0,
+	wrong: 0,
 	dueDay: null
 });
 
@@ -81,6 +86,7 @@ export function initialState(
 			days: new Map()
 		},
 		challengeDays: new Set(),
+		activeDays: new Set(),
 		kilatRecords: new Map(),
 		factViews: [],
 		sightings: new Map(),

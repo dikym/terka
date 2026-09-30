@@ -1,4 +1,4 @@
-import { RELATED_SKIP_LIMIT, SIGHTING_WINDOW_DAYS, SPECIAL_HOLD, TIERS } from "@/rules";
+import { RELATED_SKIP_LIMIT, SPECIAL_HOLD, TIERS } from "@/rules";
 import type { Bundle, Region } from "../content/schema";
 import { inScope } from "../questions/distractors";
 import type { QuestionContext } from "../questions/question";
@@ -7,7 +7,7 @@ import { schedulerAt } from "../replay/params";
 import type { AppState, CardEntry } from "../replay/state";
 import { effectiveCard } from "../replay/universe";
 import { retrievability } from "../scheduling/fsrs";
-import { dayNumber } from "../time/day";
+import { sightingCounts } from "../views/stats";
 import {
 	ACTIVE,
 	cardsWhere,
@@ -105,19 +105,6 @@ function introductions(
 		items.push({ cardId: card.cardId, context: "intro", slot: "new", format: "choice" });
 	}
 	return items;
-}
-
-function sightingCounts(state: AppState, today: string): Map<string, number> {
-	const counts = new Map<string, number>();
-	const now = dayNumber(today);
-	for (const [regionId, days] of state.sightings) {
-		const recent = days.filter((day) => {
-			const age = now - dayNumber(day);
-			return age >= 0 && age < SIGHTING_WINDOW_DAYS;
-		}).length;
-		if (recent) counts.set(regionId, recent);
-	}
-	return counts;
 }
 
 export function dailyQueue(
