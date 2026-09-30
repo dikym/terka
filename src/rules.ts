@@ -90,3 +90,11 @@ export const NOMINAL_MS = {
 export const SET_MAX_ITEMS = 64;
 export const KEY_GAPS_MAX = 120;
 export const KEY_GAP_CAP_MS = 30_000;
+
+export const NOTE_OFFER_LAPSES = 4;
+export const LOGIN_PROMPT_ACTIVE_DAYS = 7;
+export const FACT_RECENT_MAX = 20;
+export const FORECAST_DAYS = 14;
+export const WEAKEST_LIMIT = 10;
+// Placement ties and the Pemula suggestion start here; other groups follow data order.
+export const SUGGESTED_GROUP_ORDER: readonly string[] = ["bali-nusa-tenggara", "jawa"];

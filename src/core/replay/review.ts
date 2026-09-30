@@ -50,11 +50,16 @@ function unlockRelated(state: AppState, card: CardEntry, tz: string) {
 
 function afterAnswer(state: AppState, row: ReviewLog, cardId: string, valid: boolean) {
 	const card = state.cards.get(cardId)!;
-	if (valid && !card.passedLevels[row.level - 1]) {
-		const passedLevels: CardEntry["passedLevels"] = [...card.passedLevels];
-		passedLevels[row.level - 1] = true;
-		state.cards.set(cardId, { ...card, passedLevels });
-	}
+	const passedLevels: CardEntry["passedLevels"] = [...card.passedLevels];
+	if (valid) passedLevels[row.level - 1] = true;
+	const graded = row.correct !== null;
+	state.cards.set(cardId, {
+		...card,
+		passedLevels,
+		answered: card.answered + (graded ? 1 : 0),
+		wrong: card.wrong + (row.correct === false ? 1 : 0)
+	});
+	state.activeDays.add(row.localDay);
 	for (const other of confusionsOf(row))
 		recordConfusion(state, row.contentId, other, row.localDay);
 	if (row.context === "drill" && row.drillPairWith)

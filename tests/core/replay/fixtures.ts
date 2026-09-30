@@ -287,6 +287,7 @@ export const snapshot = (state: AppState) => ({
 		days: entries(state.tier.days)
 	},
 	challengeDays: [...state.challengeDays].sort(),
+	activeDays: [...state.activeDays].sort(),
 	kilatRecords: entries(state.kilatRecords),
 	factViews: state.factViews,
 	sightings: entries(state.sightings),
