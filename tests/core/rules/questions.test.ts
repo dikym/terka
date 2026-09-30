@@ -168,7 +168,9 @@ describe("region questions", () => {
 		expect(intro).toMatchObject({
 			level: 1,
 			label: "Materi baru · tebak dulu",
-			questionType: "setrecall"
+			questionType: "choice",
+			answer: { kind: "area", codeId: "bk" },
+			setThreshold: null
 		});
 		expect(() =>
 			buildQuestion(review("bk::setrecall"), bundle, { context: "setrecall", level: 1 })

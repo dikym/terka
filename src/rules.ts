@@ -64,3 +64,29 @@ export const TIER_DOWN_MIN_HELD = 11;
 export const TIER_COOLDOWN_DAYS = 14;
 
 export const STREAK_WINDOW_DAYS = 30;
+
+export const ANSWER_RULES_VERSION = 1;
+export const KILAT_ROUND_MS = 60_000;
+export const SIGHTING_WINDOW_DAYS = 90;
+export const SIGHTING_DEDUPE_MS = 600_000;
+export const CHALLENGE_SIZE = 5;
+export const RELATED_SKIP_LIMIT = 2;
+export const PLACEMENT_PASS = { 1: 3, 2: 6 } as const;
+export const PLACEMENT_EXPERT_SHARE = 0.7;
+
+export const PREVIEW_STALE_MS = 600_000;
+export const PREVIEW_MAX_INFO = 3;
+export const KEYBOARD_HINT_SESSIONS = 5;
+// Reading the result after each answer; tested through the duration KPI, not measured per user.
+export const READ_MS = { intro: 10_000, other: 2_000 } as const;
+export const NOMINAL_MS = {
+	intro: 15_000,
+	step: 10_000,
+	drill: 8_000,
+	set: 60_000,
+	level: { 1: 4_000, 2: 6_000, 3: 9_000 }
+} as const;
+
+export const SET_MAX_ITEMS = 64;
+export const KEY_GAPS_MAX = 120;
+export const KEY_GAP_CAP_MS = 30_000;
