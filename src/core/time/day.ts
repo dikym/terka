@@ -1,4 +1,5 @@
-import { DAY_BOUNDARY_HOUR } from "../../rules";
+import { DAY_BOUNDARY_HOUR } from "@/rules";
+
 const DAY_MS = 86_400_000;
 
 const formatters = new Map<string, Intl.DateTimeFormat>();

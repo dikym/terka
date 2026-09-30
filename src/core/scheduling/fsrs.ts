@@ -1,5 +1,5 @@
-import { TARGET_RETENTION } from "../../rules";
-import { createEmptyCard, fsrs, State, type Card, type Grade as FsrsGrade } from "ts-fsrs";
+import { TARGET_RETENTION } from "@/rules";
+import { type Card, createEmptyCard, fsrs, type Grade as FsrsGrade, State } from "ts-fsrs";
 import type { Grade } from "../grading/signals";
 import type { CardMemory } from "./card-memory";
 

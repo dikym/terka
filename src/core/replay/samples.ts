@@ -1,4 +1,4 @@
-import { FLUENCY_WINDOW } from "../../rules";
+import { FLUENCY_WINDOW } from "@/rules";
 import {
 	isInterrupted,
 	isPercentileSample,

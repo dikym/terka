@@ -1,6 +1,6 @@
-import { PLACEMENT_STAGE_SIZES } from "../../../rules";
+import { PLACEMENT_STAGE_SIZES } from "@/rules";
 import type { ContentDraft } from "../draft";
-import { error, type ContentMessage } from "../messages";
+import { type ContentMessage, error } from "../messages";
 
 export function placementRules({ curation }: ContentDraft): ContentMessage[] {
 	const out: ContentMessage[] = [];

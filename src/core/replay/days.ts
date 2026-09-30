@@ -9,7 +9,7 @@ import {
 	TIER_UP_MAX_HELD,
 	TIER_WINDOW_DAYS,
 	TIERS
-} from "../../rules";
+} from "@/rules";
 import { addDays, dayNumber, dayStart } from "../time/day";
 import type { AppState, DayStats } from "./state";
 import { effectiveCard } from "./universe";

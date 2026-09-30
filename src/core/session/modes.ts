@@ -1,4 +1,4 @@
-import { CHALLENGE_SIZE, TIERS } from "../../rules";
+import { CHALLENGE_SIZE, TIERS } from "@/rules";
 import type { Bundle } from "../content/schema";
 import { inScope, type Scope } from "../questions/distractors";
 import { seeded, shuffle } from "../random";
@@ -14,12 +14,12 @@ import {
 	contentOf,
 	isGroupA,
 	prepare,
+	type QueueItem,
+	type SessionContext,
 	SETTLED,
 	STEPS,
 	tierOn,
-	todayOf,
-	type QueueItem,
-	type SessionContext
+	todayOf
 } from "./context";
 import { pickFormat } from "./forms";
 

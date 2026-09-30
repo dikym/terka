@@ -1,4 +1,4 @@
-import { RELATED_SKIP_LIMIT, SIGHTING_WINDOW_DAYS, SPECIAL_HOLD, TIERS } from "../../rules";
+import { RELATED_SKIP_LIMIT, SIGHTING_WINDOW_DAYS, SPECIAL_HOLD, TIERS } from "@/rules";
 import type { Bundle, Region } from "../content/schema";
 import { inScope } from "../questions/distractors";
 import type { QuestionContext } from "../questions/question";
@@ -17,14 +17,14 @@ import {
 	isSpecial,
 	modeOf,
 	prepare,
+	type QueueItem,
+	type SessionContext,
+	type SessionSettings,
 	SETTLED,
 	STEPS,
 	tierOn,
 	todayOf,
-	uniqueItems,
-	type QueueItem,
-	type SessionContext,
-	type SessionSettings
+	uniqueItems
 } from "./context";
 import { pickFormat } from "./forms";
 

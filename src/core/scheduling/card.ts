@@ -4,7 +4,7 @@ import {
 	MATURE_INTERVAL_DAYS,
 	SECOND_STEP_MS,
 	SUSPEND_LAPSES
-} from "../../rules";
+} from "@/rules";
 import type { Grade } from "../grading/signals";
 import type { CardMemory, SuspensionReason } from "./card-memory";
 import { nextMemory, type Scheduler } from "./fsrs";

@@ -1,4 +1,4 @@
-import { SET_MIN_AREAS } from "../../rules";
+import { SET_MIN_AREAS } from "@/rules";
 import { highMembers } from "../answers/dictionary";
 import type { Bundle } from "../content/schema";
 import type { CardMode } from "../questions/question";

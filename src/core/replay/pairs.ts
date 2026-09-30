@@ -1,9 +1,4 @@
-import {
-	DRILL_CLEAR_STREAK,
-	PAIR_RETHRESHOLD,
-	PAIR_THRESHOLD,
-	PAIR_WINDOW_DAYS
-} from "../../rules";
+import { DRILL_CLEAR_STREAK, PAIR_RETHRESHOLD, PAIR_THRESHOLD, PAIR_WINDOW_DAYS } from "@/rules";
 import type { ReviewLog } from "../log/events";
 import { dayNumber } from "../time/day";
 import type { AppState, PairState } from "./state";

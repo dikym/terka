@@ -1,4 +1,4 @@
-import { PLACEMENT_FAST_MS } from "../../rules";
+import { PLACEMENT_FAST_MS } from "@/rules";
 import { comparisonGroup, fluencyScore, isInterrupted } from "./fluency";
 import type { AnswerSignals, Grade } from "./signals";
 
