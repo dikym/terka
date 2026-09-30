@@ -1,4 +1,4 @@
-import type { Tier } from "../../rules";
+import type { Tier } from "@/rules";
 import type { Scope } from "../questions/distractors";
 import type { QuestionContext, QuestionFormat } from "../questions/question";
 import { advanceTo } from "../replay/days";

@@ -1,19 +1,19 @@
-import { UNLOCK_REVERSE_DAYS, UNLOCK_SET_DAYS } from "../../rules";
+import { UNLOCK_REVERSE_DAYS, UNLOCK_SET_DAYS } from "@/rules";
 import { gradePlacement, gradeWithGroup } from "../grading/grade";
 import type { ReviewLog } from "../log/events";
 import {
 	answer,
+	type AnswerContext,
 	introduce,
 	isLeech,
 	seedFromPlacement,
-	unlock,
-	type AnswerContext
+	unlock
 } from "../scheduling/card";
 import { dayStats } from "./days";
 import { schedulerAt } from "./params";
 import { confusionsOf, recordConfusion, recordDrill } from "./pairs";
 import { fluencyGroup, recordSample, toSignals } from "./samples";
-import { newEntry, putCard, type AppState, type CardEntry } from "./state";
+import { type AppState, type CardEntry, newEntry, putCard } from "./state";
 import { trackOf } from "./universe";
 
 const STEPS = new Set<string>(["learning", "relearning"]);

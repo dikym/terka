@@ -4,7 +4,7 @@ import {
 	FLUENCY_WINDOW,
 	INTERRUPTED_LATENCY_MS,
 	LONG_GAP_MS
-} from "../../rules";
+} from "@/rules";
 import type { AnswerSignals } from "./signals";
 
 export function percentile(values: number[], fraction: number): number {

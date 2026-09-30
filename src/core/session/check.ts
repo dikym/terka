@@ -1,4 +1,4 @@
-import { ANSWER_MAX_CHARS, SET_MAX_ITEMS } from "../../rules";
+import { ANSWER_MAX_CHARS, SET_MAX_ITEMS } from "@/rules";
 import type { NameDictionary } from "../answers/dictionary";
 import { matchRegionCode } from "../answers/match-code";
 import { matchName, type MatchType } from "../answers/match-name";

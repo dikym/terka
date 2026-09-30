@@ -1,4 +1,4 @@
-import { TIMED_LIMIT_MS } from "../../rules";
+import { TIMED_LIMIT_MS } from "@/rules";
 import type { Bundle, Special } from "../content/schema";
 import { seeded, shuffle } from "../random";
 import { isLeech } from "../scheduling/card";
@@ -6,9 +6,9 @@ import type { CardMemory } from "../scheduling/card-memory";
 import { specialChoices } from "./distractors";
 import {
 	LABELS,
-	parseCardId,
 	type Level,
 	type LevelSource,
+	parseCardId,
 	type Question,
 	type QuestionOptions
 } from "./question";

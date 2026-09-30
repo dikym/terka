@@ -7,7 +7,7 @@ import {
 	PREVIEW_MAX_INFO,
 	PREVIEW_STALE_MS,
 	READ_MS
-} from "../../rules";
+} from "@/rules";
 import type { Bundle } from "../content/schema";
 import { buildQuestion } from "../questions/build";
 import { inScope, type Scope } from "../questions/distractors";
@@ -17,10 +17,10 @@ import { effectiveCard } from "../replay/universe";
 import {
 	contentOf,
 	prepare,
-	todayOf,
 	type QueueItem,
 	type SessionContext,
-	type SessionSettings
+	type SessionSettings,
+	todayOf
 } from "./context";
 
 export type InfoItem = "held" | "tier-changed" | "timed" | "leech" | "outside-scope" | "keyboard";

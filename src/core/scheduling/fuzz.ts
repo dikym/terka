@@ -1,4 +1,4 @@
-import { FUZZ_MIN_DAYS, FUZZ_RATIO } from "../../rules";
+import { FUZZ_MIN_DAYS, FUZZ_RATIO } from "@/rules";
 import { seeded } from "../random";
 import { addDays, dayStart } from "../time/day";
 

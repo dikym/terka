@@ -1,4 +1,4 @@
-import { SET_MIN_AREAS } from "../../../rules";
+import { SET_MIN_AREAS } from "@/rules";
 import {
 	areaDisplayName,
 	buildDictionary,
@@ -13,7 +13,7 @@ import { buildQuestion } from "../../questions/build";
 import { eligibleRegions } from "../../questions/distractors";
 import type { Question } from "../../questions/question";
 import { newCard } from "../../scheduling/card-memory";
-import { error, type ContentMessage } from "../messages";
+import { type ContentMessage, error } from "../messages";
 import type { Bundle } from "../schema";
 
 export function cardIdsOf(bundle: Bundle): string[] {

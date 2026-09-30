@@ -1,4 +1,4 @@
-import type { Tier } from "../../rules";
+import type { Tier } from "@/rules";
 import type { MatchType } from "../answers/match-name";
 import type { SetItem } from "../answers/match-set";
 import type { AnswerSignals } from "../grading/signals";

@@ -1,10 +1,10 @@
-import { ENGINE_VERSION } from "../../rules";
+import { ENGINE_VERSION } from "@/rules";
 import type { Bundle } from "../content/schema";
 import type { LearningEvent, PracticeRun } from "../log/events";
 import { compareKeys, eventKey, sortEvents } from "../log/order";
 import { applyEvent } from "./apply";
 import { activation } from "./params";
-import { initialState, type AppState } from "./state";
+import { type AppState, initialState } from "./state";
 
 export type ReplayResult = { status: "ok"; state: AppState } | { status: "outdated" };
 

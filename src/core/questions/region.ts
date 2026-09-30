@@ -1,4 +1,4 @@
-import { PLACEMENT_LIMIT_MS, TIMED_LIMIT_MS, TRUE_FALSE_LIMIT_MS } from "../../rules";
+import { PLACEMENT_LIMIT_MS, TIMED_LIMIT_MS, TRUE_FALSE_LIMIT_MS } from "@/rules";
 import { areaDisplayName, highMembers } from "../answers/dictionary";
 import { setThreshold } from "../answers/match-set";
 import type { Area, Bundle, Region } from "../content/schema";
@@ -8,9 +8,9 @@ import type { CardMemory } from "../scheduling/card-memory";
 import { foreignAreas, NATIONAL, otherCodes } from "./distractors";
 import {
 	LABELS,
-	parseCardId,
 	type Level,
 	type LevelSource,
+	parseCardId,
 	type Question,
 	type QuestionAnswer,
 	type QuestionOptions

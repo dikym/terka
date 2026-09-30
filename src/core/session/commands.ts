@@ -5,7 +5,7 @@ import {
 	KEY_GAPS_MAX,
 	SIGHTING_DEDUPE_MS,
 	type Tier
-} from "../../rules";
+} from "@/rules";
 import type { Bundle } from "../content/schema";
 import type { CardEvent, LearningEvent, PracticeRun, ReviewLog, RunKind } from "../log/events";
 import type { Scope } from "../questions/distractors";

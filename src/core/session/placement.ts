@@ -1,9 +1,4 @@
-import {
-	PLACEMENT_EXPERT_SHARE,
-	PLACEMENT_PASS,
-	PLACEMENT_STAGE_SIZES,
-	type Tier
-} from "../../rules";
+import { PLACEMENT_EXPERT_SHARE, PLACEMENT_PASS, PLACEMENT_STAGE_SIZES, type Tier } from "@/rules";
 import type { Bundle, Region } from "../content/schema";
 import { eligibleRegions } from "../questions/distractors";
 import { seeded, shuffle } from "../random";

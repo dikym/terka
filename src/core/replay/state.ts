@@ -1,9 +1,9 @@
-import { DEFAULT_TIER, type Tier } from "../../rules";
+import { DEFAULT_TIER, type Tier } from "@/rules";
 import type { Bundle } from "../content/schema";
 import type { AnswerSignals } from "../grading/signals";
 import type { FsrsParams, PracticeRun } from "../log/events";
 import type { EventKey } from "../log/order";
-import { newCard, type CardMemory } from "../scheduling/card-memory";
+import { type CardMemory, newCard } from "../scheduling/card-memory";
 import { localDay } from "../time/day";
 import { contentIndex, universe } from "./universe";
 

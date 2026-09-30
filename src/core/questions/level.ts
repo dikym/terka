@@ -1,5 +1,5 @@
 import type { CardMemory } from "../scheduling/card-memory";
-import { MATURE_INTERVAL_DAYS } from "../../rules";
+import { MATURE_INTERVAL_DAYS } from "@/rules";
 import type { CardMode, Level, LevelSource, QuestionContext } from "./question";
 
 const FIXED_CONTEXTS: readonly QuestionContext[] = [

@@ -1,4 +1,4 @@
-import { STREAK_WINDOW_DAYS } from "../../rules";
+import { STREAK_WINDOW_DAYS } from "@/rules";
 import { addDays, dayNumber } from "../time/day";
 
 // One missed day is forgiven per rolling 30 days; a second one inside that window resets the count.
