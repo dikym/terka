@@ -30,19 +30,23 @@ export const isPercentileSample = (signals: AnswerSignals) =>
 	signals.levelSource !== "manual_down" &&
 	signals.msToFirstKey !== null;
 
+export const narrowKey = (signals: AnswerSignals) =>
+	`${signals.level}|${signals.inputMode}|${signals.answerForm}`;
+export const wideKey = (signals: AnswerSignals) => `${signals.level}|${signals.inputMode}`;
+
+export function pickGroup(narrow: AnswerSignals[], wide: AnswerSignals[]): AnswerSignals[] {
+	if (narrow.length >= FLUENCY_MIN_SAMPLES) return narrow;
+	return wide.length >= FLUENCY_MIN_SAMPLES ? wide : [];
+}
+
 export function comparisonGroup(signals: AnswerSignals, history: AnswerSignals[]): AnswerSignals[] {
 	const samples = history.filter(
-		(item) =>
-			isPercentileSample(item) &&
-			item.level === signals.level &&
-			item.inputMode === signals.inputMode
+		(item) => isPercentileSample(item) && wideKey(item) === wideKey(signals)
 	);
-	const narrow = samples
-		.filter((item) => item.answerForm === signals.answerForm)
-		.slice(-FLUENCY_WINDOW);
-	if (narrow.length >= FLUENCY_MIN_SAMPLES) return narrow;
-	const wide = samples.slice(-FLUENCY_WINDOW);
-	return wide.length >= FLUENCY_MIN_SAMPLES ? wide : [];
+	return pickGroup(
+		samples.filter((item) => item.answerForm === signals.answerForm).slice(-FLUENCY_WINDOW),
+		samples.slice(-FLUENCY_WINDOW)
+	);
 }
 
 const msPerChar = (signals: AnswerSignals) =>

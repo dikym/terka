@@ -1,17 +1,37 @@
 import { DAY_BOUNDARY_HOUR } from "../../rules";
 const DAY_MS = 86_400_000;
 
+const formatters = new Map<string, Intl.DateTimeFormat>();
+
+function formatter(tz: string): Intl.DateTimeFormat {
+	let format = formatters.get(tz);
+	if (!format) {
+		format = new Intl.DateTimeFormat("en-CA", {
+			timeZone: tz,
+			year: "numeric",
+			month: "2-digit",
+			day: "2-digit",
+			hour: "2-digit",
+			minute: "2-digit",
+			second: "2-digit",
+			hourCycle: "h23"
+		});
+		formatters.set(tz, format);
+	}
+	return format;
+}
+
+export function isTimeZone(tz: string): boolean {
+	try {
+		formatter(tz);
+		return true;
+	} catch {
+		return false;
+	}
+}
+
 function wallClock(at: number, tz: string) {
-	const parts = new Intl.DateTimeFormat("en-CA", {
-		timeZone: tz,
-		year: "numeric",
-		month: "2-digit",
-		day: "2-digit",
-		hour: "2-digit",
-		minute: "2-digit",
-		second: "2-digit",
-		hourCycle: "h23"
-	}).formatToParts(at);
+	const parts = formatter(tz).formatToParts(at);
 	const get = (type: string) => parts.find((part) => part.type === type)!.value;
 	return {
 		date: `${get("year")}-${get("month")}-${get("day")}`,

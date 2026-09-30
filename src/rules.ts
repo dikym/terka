@@ -31,3 +31,36 @@ export const EXPORT_REMINDER_DAYS = 30;
 export function typoThreshold(length: number): number {
 	return length <= 4 ? 0 : length <= 7 ? 1 : length <= 11 ? 1.5 : 2;
 }
+
+// Raise on any change to ts-fsrs, GRADE_RULES_VERSION or queue rules; clients then replay in full.
+export const ENGINE_VERSION = 1;
+
+export const TIERS = {
+	pemula: { newPerDay: 8, hold: 40 },
+	menengah: { newPerDay: 10, hold: 40 },
+	mahir: { newPerDay: 12, hold: 32 },
+	ahli: { newPerDay: 13, hold: 28 }
+} as const;
+export type Tier = keyof typeof TIERS;
+export const TIER_ORDER: readonly Tier[] = ["pemula", "menengah", "mahir", "ahli"];
+export const DEFAULT_TIER: Tier = "menengah";
+export const SPECIAL_NEW_PER_DAY = 5;
+export const SPECIAL_HOLD = 25;
+
+export const UNLOCK_REVERSE_DAYS = 7;
+export const UNLOCK_SET_DAYS = 14;
+
+export const PAIR_WINDOW_DAYS = 30;
+export const PAIR_THRESHOLD = 3;
+export const PAIR_RETHRESHOLD = 2;
+export const DRILL_CLEAR_STREAK = 5;
+
+export const TIER_WINDOW_DAYS = 30;
+export const TIER_MIN_REVIEWS = 200;
+export const TIER_UP_ACCURACY = 0.9;
+export const TIER_DOWN_ACCURACY = 0.8;
+export const TIER_UP_MAX_HELD = 3;
+export const TIER_DOWN_MIN_HELD = 11;
+export const TIER_COOLDOWN_DAYS = 14;
+
+export const STREAK_WINDOW_DAYS = 30;
