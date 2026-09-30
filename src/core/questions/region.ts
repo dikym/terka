@@ -77,16 +77,16 @@ export function buildRegionQuestion(
 		};
 	}
 
-	// setrecall is Level 1 in Perkenalan and Level 3 everywhere else.
-	if (mode === "setrecall")
+	// Perkenalan of a set card stays a single answer (Tebak daerah below); only later reviews ask for the set.
+	if (mode === "setrecall" && !intro)
 		return {
 			...base,
-			level: intro ? 1 : 3,
-			autoLevel: intro ? 1 : 3,
+			level: 3,
+			autoLevel: 3,
 			levelSource: "auto",
 			questionType: "setrecall",
 			answerForm: "name",
-			label: intro ? LABELS.intro : LABELS.set,
+			label: LABELS.set,
 			prompt: `Sebutkan daerah yang memakai ${region.code}.`,
 			answer: { kind: "set", codeId: region.id },
 			setThreshold: setThreshold(members.length)
