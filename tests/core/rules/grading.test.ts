@@ -1,6 +1,11 @@
 import { describe, expect, test } from "bun:test";
-import { percentile } from "../../../src/core/grading/fluency";
-import { gradeAnswer, gradePlacement, gradeSet } from "../../../src/core/grading/grade";
+import { narrowKey, percentile, pickGroup, wideKey } from "../../../src/core/grading/fluency";
+import {
+	gradeAnswer,
+	gradePlacement,
+	gradeSet,
+	gradeWithGroup
+} from "../../../src/core/grading/grade";
 import type { AnswerSignals } from "../../../src/core/grading/signals";
 
 const answer = (overrides: Partial<AnswerSignals> = {}): AnswerSignals => ({
@@ -138,5 +143,23 @@ describe("grading", () => {
 		expect(gradePlacement(placement({ msToFirstKey: 2000, matchType: "typo" }))).toBe(3);
 		expect(gradePlacement(placement({ correct: false }))).toBeNull();
 		expect(gradePlacement(placement({ interrupted: true }))).toBeNull();
+	});
+});
+
+describe("comparison group selection", () => {
+	test("narrow group wins once it has 30 samples, then the wide group, else none", () => {
+		const thirty = history(30);
+		expect(pickGroup(thirty, [])).toBe(thirty);
+		expect(pickGroup(history(29), thirty)).toBe(thirty);
+		expect(pickGroup(history(29), history(29))).toEqual([]);
+	});
+	test("keys split by level, input mode and answer form", () => {
+		expect(narrowKey(answer())).toBe("2|keyboard|name");
+		expect(wideKey(answer({ answerForm: "code" }))).toBe("2|keyboard");
+	});
+	test("grading against a chosen group matches grading against the raw history", () => {
+		const signals = answer({ msToFirstKey: 100 });
+		expect(gradeWithGroup(signals, samples)).toBe(gradeAnswer(signals, samples));
+		expect(gradeWithGroup(answer({ context: "intro" }), samples)).toBeNull();
 	});
 });

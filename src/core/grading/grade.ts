@@ -9,6 +9,10 @@ export function gradeSet(setCorrect: number, setThreshold: number): Grade {
 }
 
 export function gradeAnswer(signals: AnswerSignals, history: AnswerSignals[]): Grade | null {
+	return gradeWithGroup(signals, comparisonGroup(signals, history));
+}
+
+export function gradeWithGroup(signals: AnswerSignals, group: AnswerSignals[]): Grade | null {
 	if (
 		signals.context === "intro" ||
 		signals.questionType === "intro_read" ||
@@ -22,7 +26,7 @@ export function gradeAnswer(signals: AnswerSignals, history: AnswerSignals[]): G
 	}
 	if (signals.correct !== true || signals.timedOut) return 1;
 	if (isInterrupted(signals)) return 3;
-	const score = fluencyScore(signals, comparisonGroup(signals, history));
+	const score = fluencyScore(signals, group);
 	return score >= 2 ? 4 : score >= 0 ? 3 : 2;
 }
 
