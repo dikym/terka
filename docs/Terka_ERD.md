@@ -1,7 +1,7 @@
 # TERKA — Entity Relationship Diagram (ERD): Data Dictionary and Design Notes
 
 **Bahasa:** Indonesia
-**Acuan:** Terka PRD, SRD, TRD · **Diagram:** `Terka_ERD.puml`
+**Acuan:** Terka PRD, SRD, TRD · **Diagram:** `Terka_ERD.puml` · **Sumber entitas `content_`:** `Terka_Special_Codes.json`, `Terka_Fun_Facts.json`
 
 Dokumen ini menjadi kamus untuk `Terka_ERD.puml`: fungsi tabel, arti kolom, nilai yang didukung, dan aturan integritasnya. Diagram menunjukkan hubungan antardata, sedangkan uraian ini menjelaskan penerapannya.
 
@@ -423,8 +423,9 @@ Entitas berawalan `content_` menggambarkan isi `plates.json`. Semuanya dikunci s
 | `content_region_facts`     | Fakta mana terkait kode mana                                                                                                        | `regions[].facts[]`     |
 | `content_specials`         | Kode negara CD: nomor, pemegang, alias, label, `needs_review`, dan tanggal pemeriksaan ulang; satu-satunya sumber kartu kode khusus | `specials[]`            |
 | `content_reference_plates` | Entri format pelat RI, CC, dan CH untuk Referensi, beserta keterangannya; tanpa alias dan tidak pernah membentuk kartu              | `referencePlates[]`     |
-| `content_sources`          | Sumber data kode khusus beserta lokasi di dokumen dan tanggal pemeriksaan                                                           | `sources[]`             |
+| `content_sources`          | Sumber data kode khusus dan fakta: judul, penerbit, jenis, tanggal, URL, lokasi di dokumen, dan tanggal pemeriksaan               | `sources[]`             |
 | `content_special_sources`  | Sumber mana mendukung entri khusus mana                                                                                             | `specials[].sources[]`  |
+| `content_fact_sources`     | Sumber mana mendukung fakta mana; urutan pertama tampil di layar akhir                                                              | `facts[].source[]`      |
 
 **Mengapa relasi kode ↔ kab/kota banyak-ke-banyak.** Satu kode memiliki banyak kab/kota, dan satu kab/kota bisa dipakai lebih dari satu kode — sebagian Kabupaten Tangerang memakai A, sebagian B. Model satu-ke-banyak akan memaksa memilih salah satu, dan jawaban benar lainnya jadi ditolak.
 
@@ -437,7 +438,7 @@ Entitas berawalan `content_` menggambarkan isi `plates.json`. Semuanya dikunci s
 
 `id` konten yang pernah dipakai tidak boleh dipakai ulang untuk wilayah lain. Aturan ini dicek saat build terhadap daftar id yang tidak digunakan lagi di repositori, karena rujukan lunak tidak bisa menjaganya sendiri.
 
-`content_facts.history_label` bernilai `terverifikasi`, `diperdebatkan`, atau `legenda`, dipetakan dari `historyLabel`. Nama ini menggantikan `status`, yang terlalu umum dan mudah tertukar dengan `publication_status`. `content_facts.publication_status` bernilai `draft` atau `ready`, dipetakan dari `publicationStatus`; `source_checked_at` dipetakan dari `sourceCheckedAt`. Build menolak ready bila `source` kosong atau tanggal pemeriksaan tidak ada. Kumpulan ready kosong sah; aplikasi menyembunyikan blok fakta. Tidak ada perubahan label sejarah otomatis karena status publikasi berubah.
+`content_facts.history_label` bernilai `terverifikasi`, `diperdebatkan`, atau `mitos`, dipetakan dari `historyLabel`. Nama ini menggantikan `status`, yang terlalu umum dan mudah tertukar dengan `publication_status`. `content_facts.publication_status` bernilai `draft` atau `ready`, dipetakan dari `publicationStatus`; `source_checked_at` dipetakan dari `sourceCheckedAt`. Sumber fakta disimpan di `content_fact_sources` dengan kolom `position`; posisi 0 yang tampil di layar akhir. Naskah dan aturan editorialnya ada di `Terka_Fun_Facts.md`. Build menolak ready bila `source` kosong atau tanggal pemeriksaan tidak ada. Kumpulan ready kosong sah; aplikasi menyembunyikan blok fakta. Tidak ada perubahan label sejarah otomatis karena status publikasi berubah.
 
 **Identitas kartu.** Klien mengirim `content_id` dan `mode`, dan membentuk `card_id` (`content_id::mode`) di sisi klien. Database tidak menyimpan `card_id`. Domain `card_mode` membatasi mode ke lima nilai. `blindrecall` dilebur ke `code2region`; bentuk berwaktunya kini soal Level 3 biasa. Satu `CHECK` menjaga pasangan jenis id dan mode:
 

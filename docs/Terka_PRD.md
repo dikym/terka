@@ -1,7 +1,7 @@
 # TERKA — Product Requirements Document (PRD)
 
 **Status:** Draf · **Bahasa:** Indonesia  
-**Dokumen terkait:** `Terka_SRD.md`, `Terka_TRD.md`, `Terka_ERD.md`, `Terka_ERD.puml`, `Terka_Facts.md`, `Terka_Kode_Khusus.md`, `Terka_Microcopy.md`, dan `Terka_Tests.md`.
+**Dokumen terkait:** `Terka_SRD.md`, `Terka_TRD.md`, `Terka_ERD.md`, `Terka_ERD.puml`, `Terka_Fun_Facts.md`, `Terka_Fun_Facts.json`, `Terka_Special_Codes.md`, `Terka_Special_Codes.json`, `Terka_Microcopy.md`, dan `Terka_Tests.md`.
 
 > **Slogan:** Lihat pelatnya, terka asalnya.
 >
@@ -36,7 +36,7 @@ Proyek dikembangkan secara mandiri, gratis, dan tanpa iklan. Dokumen referensi m
 2. **Jaga latihan tetap ringan.** Sasaran rutinnya kurang dari 10 menit waktu aktif per hari. Materi baru dibatasi agar pengulangan tidak terus menumpuk.
 3. **Catat kode yang tertukar.** Jawaban salah yang cocok dengan daerah atau kode lain menjadi dasar latihan Bandingkan Kode.
 4. **Ajukan pertanyaan sesuai bukti.** Hanya kode dan hubungan daerah berlabel `high` yang menjadi materi latihan. Data yang belum cukup kuat diberi penanda di Referensi.
-5. **Pisahkan latihan dari bacaan sejarah.** Fakta menarik hanya muncul pada akhir sesi, jika naskahnya sudah siap diterbitkan.
+5. **Pisahkan latihan dari bacaan sejarah.** Fun Facts hanya muncul pada akhir sesi, jika naskahnya sudah siap diterbitkan.
 6. **Cakupan memilih materi baru.** Kartu yang sudah dipelajari tetap mengikuti jadwalnya, meskipun pengguna berpindah Cakupan.
 7. **Kesulitan mengikuti perkembangan kartu.** Sistem menentukan level bawaan. Menurunkan level secara manual tidak memberikan bukti penguasaan untuk memperpanjang jadwal.
 8. **Nilai jawaban secara otomatis.** Sistem memakai hasil jawaban dan sinyal interaksi; pengguna tidak diminta menilai sendiri seberapa mudah soalnya.
@@ -77,7 +77,7 @@ Penjelasan awal cukup satu layar. Bantuan lain diberikan saat diperlukan, sement
 
 Rilis pertama mencakup data kode depan dan kabupaten/kota, alias serta variasi penulisan, tiga tingkat Cakupan, penjadwalan FSRS-6, tiga level soal, penilaian ketik, Latihan Kode Khusus CD, Bandingkan Kode, Catatan pengingat, tes penempatan, pratinjau, statistik, Referensi, pencatatan Pelat Terlihat, akun opsional, sinkronisasi, ekspor, impor, dan pengaman layanan publik.
 
-Naskah sejarah hanya digunakan pada bagian Fakta menarik setelah lolos pemeriksaan sumber. Kode negara CD yang berlabel `high` dapat dilatih melalui Latihan Kode Khusus. Pelat RI, CC, dan CH hanya tersedia di Referensi.
+Naskah sejarah hanya digunakan pada bagian Fun Facts setelah lolos pemeriksaan sumber. Kode negara CD yang berlabel `high` dapat dilatih melalui Latihan Kode Khusus. Pelat RI, CC, dan CH hanya tersedia di Referensi.
 
 Rilis ini tidak mencakup fitur sosial, papan peringkat, iklan, pembayaran, konten di luar kode pelat, login selain Google dan email, atau pemulihan satu akun dari cadangan database. UI dan konten hanya tersedia dalam bahasa Indonesia; terjemahan tidak direncanakan. Pemulihan akun menggunakan sinkronisasi atau ekspor pengguna; cadangan database dipakai untuk pemulihan layanan secara keseluruhan.
 
@@ -147,11 +147,11 @@ Pengecoh harus salah untuk pertanyaan yang diajukan. Pada soal Tebak daerah, pil
 
 Sistem mengenali pasangan kode yang berulang kali tertukar. Latihan menampilkan kedua kode dan meminta pengguna membedakannya. Ambang pencatatan, penghentian latihan pasangan, dan pengaruhnya terhadap jadwal mengikuti SRD 6.
 
-### 6.5 Fakta Menarik
+### 6.5 Fun Facts
 
-Satu fakta dapat muncul pada akhir setiap mode, lengkap dengan sumber dan label **Terverifikasi**, **Diperdebatkan**, atau **Legenda**. Hanya naskah berstatus publikasi `ready` yang dapat dipilih. Jika belum tersedia, bagian ini tidak ditampilkan dan sesi tetap selesai.
+Satu fakta dapat muncul pada akhir setiap mode, lengkap dengan sumber dan label **Terverifikasi**, **Diperdebatkan**, atau **Mitos**. Hanya naskah berstatus publikasi `ready` yang dapat dipilih. Jika belum tersedia, bagian ini tidak ditampilkan dan sesi tetap selesai.
 
-Label sejarah menjelaskan kekuatan bukti; status publikasi menjelaskan kesiapan naskah. Keduanya berbeda. Fakta tidak menjadi soal atau pilihan jawaban. Pemilihan mengutamakan kode yang baru dilatih, menghindari pengulangan dari N tampilan terakhir, dan membatasi legenda yang berdekatan. N dihitung dari jumlah naskah siap terbit menurut SRD 4.15. Riwayat tampil ikut disinkronkan.
+Label sejarah menjelaskan kekuatan bukti; status publikasi menjelaskan kesiapan naskah. Keduanya berbeda. Fakta tidak menjadi soal atau pilihan jawaban. Pemilihan mengutamakan kode yang baru dilatih, menghindari pengulangan dari N tampilan terakhir, dan membatasi mitos yang berdekatan. N dihitung dari jumlah naskah siap terbit menurut SRD 4.15. Riwayat tampil ikut disinkronkan.
 
 ### 6.6 Statistik dan Peta Penguasaan
 
@@ -237,7 +237,7 @@ Latihan Kode Khusus, yang tampil di UI sebagai **Kode diplomat**, melatih kode n
 | ---- | --------------------------------------------------------- | ----------------------------- | -------------------------------------- |
 | CD   | Kode negara korps diplomatik dan organisasi internasional | 130 (CD 12 sampai CD 145)     | Lampiran Perpol 7/2021 huruf D angka 4 |
 
-Daftar lengkap, alias, sumber per entri, dan alasan setiap label ada di `Terka_Kode_Khusus.md`.
+Daftar lengkap, alias, sumber per entri, dan alasan setiap label ada di `Terka_Special_Codes.md`.
 
 **Bentuk soal.** Setiap entri menghasilkan dua kartu. `special2holder` bertanya dari kode: "CD 49 dipakai perwakilan mana?". `holder2special` bertanya dari pemegang: "Berapa kode CD untuk Jepang?". Kartu `holder2special` terbuka setelah kartu `special2holder` entri yang sama cukup stabil (SRD 2.9). Level 1 memakai pilihan ganda, Level 2 jawaban ketik tanpa batas waktu, dan Level 3 jawaban ketik dengan batas waktu input pertama.
 
@@ -245,7 +245,7 @@ Daftar lengkap, alias, sumber per entri, dan alasan setiap label ada di `Terka_K
 
 **Terpisah dari latihan wilayah.** Kartu kode khusus tidak masuk sesi harian, Tantangan Harian, Mode Kilat, tes penempatan, Bandingkan Kode, Peta Penguasaan, atau Uji Penguasaan Kawasan. Materi barunya memiliki kuota lima kartu per hari dan ambang penahanan sendiri. Menonaktifkan jalur hanya menghentikan materi baru, seperti Cakupan. Kartu yang sudah dipelajari tetap mengikuti jadwalnya walaupun jalur dinonaktifkan, dan tetap terlihat sebagai soal yang perlu diulang di tombol **Kode Khusus**.
 
-**Syarat materi.** Hanya entri `high` yang menjadi soal. Aturan labelnya ada di `Terka_Kode_Khusus.md` bagian 3 dan TRD 4.1. Data CD diperiksa ulang setiap enam bulan. Jika pemegang satu nomor berubah, kartu lama dinonaktifkan dan pemegang baru hadir sebagai materi baru dengan `id` baru.
+**Syarat materi.** Hanya entri `high` yang menjadi soal. Aturan labelnya ada di `Terka_Special_Codes.md` bagian 3 dan TRD 4.1. Data CD diperiksa ulang setiap enam bulan. Jika pemegang satu nomor berubah, kartu lama dinonaktifkan dan pemegang baru hadir sebagai materi baru dengan `id` baru.
 
 **Penanda kemajuan.** Statistik menampilkan penguasaan CD secara terpisah dari penguasaan wilayah. Kartu kode khusus tidak dihitung dalam kriteria penguasaan wilayah di bagian 12.
 
@@ -260,7 +260,7 @@ Daftar lengkap, alias, sumber per entri, dan alasan setiap label ada di `Terka_K
 5. Tampilkan hasil dan jawaban yang benar. Level ditentukan otomatis, tetapi dapat diubah manual dengan penjelasan dampaknya. Perkenalan tidak dinilai.
 6. Enter atau **Lanjut** membuka soal berikutnya. Pada ponsel, tombol tetap mudah dijangkau dan keyboard layar tidak ditutup di antara soal ketik.
 7. Jawaban terakhir pada perangkat yang sama dapat dibatalkan dengan Z atau **Batalkan jawaban**, sampai jawaban berikutnya masuk atau layar soal ditutup. Pembatalan tidak tersedia pada Mode Kilat.
-8. Setelah antrean selesai, tampilkan ringkasan, perubahan penguasaan yang relevan, dan Fakta menarik jika tersedia. Tombol penutup adalah **Kembali ke beranda**, tanpa ajakan menambah sesi.
+8. Setelah antrean selesai, tampilkan ringkasan, perubahan penguasaan yang relevan, dan Fun Facts jika tersedia. Tombol penutup adalah **Kembali ke beranda**, tanpa ajakan menambah sesi.
 
 ### 7.2 Alur Akun dan Sinkronisasi
 

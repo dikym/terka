@@ -1,7 +1,7 @@
 # TERKA — Panduan Teks Antarmuka
 
 **Status:** Draf · **Bahasa:** Indonesia
-**Dokumen terkait:** PRD (produk dan alur pengguna) · SRD (aturan perilaku) · Tests (tes E2E yang memeriksa teks UI)
+**Dokumen terkait:** PRD (produk dan alur pengguna) · SRD (aturan perilaku) · Fun Facts (`Terka_Fun_Facts.md`, teks fakta di layar akhir) · Special Codes (`Terka_Special_Codes.md`, data kode CD di Referensi) · Tests (tes E2E yang memeriksa teks UI)
 
 > **Slogan:** Lihat pelatnya, terka asalnya.
 > **Fokus dokumen ini:** istilah UI, aturan penulisan, dan seluruh teks yang dilihat pengguna.
@@ -36,7 +36,7 @@ Gunakan istilah berikut secara konsisten pada seluruh layar. Nama tabel dan prop
 | Parameter FSRS hasil optimasi                               | **Parameter jadwal**                                 | Hanya di pengaturan lanjutan                                                                                                     |
 | Tes awal untuk mengukur pengetahuan                         | **Tes penempatan**                                   | Hasilnya disebut **Tingkat**                                                                                                     |
 | Layar sebelum soal pertama                                  | **Pratinjau sesi**                                   | Judulnya mengikuti mode, misalnya **Sesi hari ini**                                                                              |
-| Fakta sejarah di layar akhir                                | **Fakta menarik**                                    | Satu-satunya tempat fakta tampil                                                                                                 |
+| Fakta sejarah di layar akhir                                | **Fun Facts**                                        | Satu-satunya tempat fakta tampil                                                                                                 |
 | Kabupaten atau kota                                         | **daerah** di soal; **kab/kota** di tempat sempit    | Nama lengkap dengan awalan di soal **Tebak kode**                                                                                |
 | Kategori pelat tanpa wilayah: CD, CC, CH, RI                | **Kode Khusus**                                      | Label kategori kecil di atas judul Kode Khusus di Referensi dan Kode diplomat di Statistik. Bukan nama jalur latihan             |
 | Jalur latihan kode negara CD (`specials[]`)                 | **Kode diplomat**                                    | Nama tombol, judul sesi, dan judul di Statistik. Nama internalnya Latihan Kode Khusus. Bukan "pelat diplomat" atau "pelat sakti" |
@@ -320,16 +320,16 @@ Keadaan khusus:
 - Penguasaan tidak berubah → **Penguasaan wilayah belum berubah pada sesi ini.**
 - Tombol keluar → **Kembali ke beranda**.
 
-**Fakta menarik** tampil di bawah metrik, sebelum tombol keluar:
+**Fun Facts** tampil di bawah metrik, sebelum tombol keluar:
 
 | Situasi                               | Teks UI                                                                       |
 | ------------------------------------- | ----------------------------------------------------------------------------- |
-| Judul                                 | **Fakta menarik**                                                             |
-| Label status                          | **Terverifikasi**, **Diperdebatkan**, atau **Legenda**                        |
+| Judul                                 | **Fun Facts**                                                                 |
+| Label status                          | **Terverifikasi**, **Diperdebatkan**, atau **Mitos**                          |
 | Sumber, wajib untuk fakta yang terbit | **Sumber: {rujukanYangSudahDiperiksa}**                                       |
-| Tidak ada fakta siap terbit           | Blok Fakta menarik tidak tampil; tidak ada pesan kesalahan atau sumber rekaan |
+| Tidak ada fakta siap terbit           | Blok Fun Facts tidak tampil; tidak ada pesan kesalahan atau sumber rekaan     |
 
-Komponen Fakta menarik juga tersedia di layar akhir Latihan Terfokus, Tantangan Harian, Mode Kilat, tes penempatan, dan sesi himpunan; faktanya dipilih per sesi dari kandidat siap terbit, bukan harus sama antarmode.
+Komponen Fun Facts juga tersedia di layar akhir Latihan Terfokus, Tantangan Harian, Mode Kilat, tes penempatan, dan sesi himpunan; faktanya dipilih per sesi dari kandidat siap terbit, bukan harus sama antarmode.
 
 Layar ini tidak menampilkan Tombol untuk mengulang sesi atau menambah materi baru.
 
@@ -490,7 +490,7 @@ Status **Latihan dan Referensi** ditandai titik hijau; dua status lain memakai t
 | Baris entri    | **CD {kode}**, bendera, nama pemegang, lalu tipe **negara** atau **organisasi** di kanan            |
 | Nomor kosong   | **Nomor {nomor} tidak tercantum di lampiran.** Tampil di bawah rentang yang memuat nomor itu        |
 
-Contoh render dengan data sekarang: **130 entri**, **CD 12** sampai **CD 145**, dan nomor kosong 46, 91, 119, serta 124 (`Terka_Kode_Khusus.md` bagian 1).
+Contoh render dengan data sekarang: **130 entri**, **CD 12** sampai **CD 145**, dan nomor kosong 46, 91, 119, serta 124 (`Terka_Special_Codes.md` bagian 1).
 
 ### 3.19 Pesan Kesalahan dan Kegagalan
 
