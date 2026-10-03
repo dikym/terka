@@ -504,7 +504,7 @@ Hal-hal berikut tidak cukup dijaga di kode klien. Klien berjalan di perangkat pe
 
 | Kelompok tabel                                                                                                          | Grant ke `authenticated`                                                                                                       |
 | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| Insert-only: `review_logs`, `review_voids`, `card_events`, `sightings`, `fact_views`, `fsrs_params`, `privacy_consents` | `select`; `insert` per kolom, tanpa `received_at`, `server_seq`, dan kolom generated `card_id`                                 |
+| Insert-only: `review_logs`, `review_voids`, `card_events`, `sightings`, `fact_views`, `fsrs_params`, `privacy_consents` | `select`; `insert` per kolom, tanpa `received_at` dan `server_seq`                                                              |
 | `practice_runs`                                                                                                         | `select`; `insert` per kolom; `update` hanya kolom penutup                                                                     |
 | `devices`                                                                                                               | `select`; `insert` per kolom tanpa `last_seen_at`; `update` hanya `last_seen_at`, yang nilainya ditimpa trigger dengan `now()` |
 | `user_settings`, `card_notes`                                                                                           | `select`, `insert`, `update` per kolom, tanpa `received_at`                                                                    |
@@ -556,7 +556,7 @@ Riwayat belajar tidak dihapus dalam pembersihan rutin. Penghapusan akun mengikut
 ## 12. Yang Masih Terbuka
 
 - **Pustaka UUID versi 7 di klien.** Browser belum memiliki fungsi bawaan untuk versi 7. Pustakanya perlu dipilih dan dikunci versinya, karena id yang salah format akan ditolak domain `uuid_v7` dan masuk karantina.
-- **Versi Postgres proyek Supabase.** Minimal 15, karena `on delete set null (run_id)` memakai sintaks daftar kolom. Versi dicek saat proyek dibuat dan dicatat di migration pertama.
+- **Versi Postgres proyek Supabase.** Minimal 15, karena `on delete set null (run_id)` memakai sintaks daftar kolom. Stack lokal memakai Postgres 17, dicatat di migration pertama; versi proyek Supabase dicek saat proyek dibuat.
 - **Batas byte `set_items`.** Angka 32 KB titik awal. Angka akhirnya ditetapkan dari payload sah terbesar di data uji (bagian 6).
 
 Keputusan yang sudah diambil dan tidak lagi terbuka: kolom `region_id` di `review_logs` dan `card_notes` diganti `content_id` sebelum rilis publik, dan `card_events` memakai pasangan `content_id` + `mode` yang sama (bagian 7), dan jumlah partisi awal tidak lagi relevan karena partisi belum direncanakan (bagian 10).
