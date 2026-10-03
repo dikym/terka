@@ -5,8 +5,8 @@ const root = new URL("../", import.meta.url);
 const read = (path: string) => readFile(new URL(path, root), "utf8");
 const [curationText, specialCodesText, funFactsText, previousText] = await Promise.all([
 	read("data/plate-curation.json"),
-	read("data/Terka_Special_Codes.json"),
-	read("data/Terka_Fun_Facts.json"),
+	read("data/special-codes.json"),
+	read("data/fun-facts.json"),
 	read("src/data/plates.json").catch(() => null)
 ]);
 const result = buildContent({

@@ -656,7 +656,7 @@ Layar akhir setiap mode, termasuk sesi himpunan, menampilkan satu fakta di blok 
 **Pemilihan fakta:**
 
 1. Kandidat awal: hanya fakta `ready` di `plates.json`; jika kosong, hentikan pemilihan tanpa kesalahan.
-2. Buang fakta yang termasuk `N` fakta terakhir yang tampil di layar akhir, dengan `N = min(20, ⌊jumlah fakta ready / 2⌋)`. Dengan 41 fakta siap terbit di `../data/Terka_Fun_Facts.json`, `N = 20`: satu fakta baru bisa tampil lagi setelah 20 fakta lain.
+2. Buang fakta yang termasuk `N` fakta terakhir yang tampil di layar akhir, dengan `N = min(20, ⌊jumlah fakta ready / 2⌋)`. Dengan 41 fakta siap terbit di `../data/fun-facts.json`, `N = 20`: satu fakta baru bisa tampil lagi setelah 20 fakta lain.
 3. Buang fakta berlabel `mitos` jika salah satu dari dua fakta layar akhir sebelumnya juga `mitos`. Cerita yang paling mudah diingat justru yang paling lemah dasarnya, jadi porsinya dibatasi.
 4. Dari sisa kandidat, utamakan fakta yang terkait kode yang dijawab di sesi itu. Jika tidak ada, pakai semua sisa kandidat.
 5. Pilih satu dengan PRNG yang di-seed `id` practice sesi.

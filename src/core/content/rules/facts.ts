@@ -6,7 +6,7 @@ export function factRules(draft: ContentDraft): ContentMessage[] {
 	const known = new Set(draftSources(draft).map((source) => source.id));
 	const facts = draft.funFacts.facts;
 	for (const ref of duplicates(facts.map((fact) => String(fact.ref))))
-		out.push(error("duplicate-fact-ref", `Terka_Fun_Facts.json lists ref ${ref} twice`));
+		out.push(error("duplicate-fact-ref", `fun-facts.json lists ref ${ref} twice`));
 	for (const fact of facts) {
 		for (const id of fact.source)
 			if (!known.has(id))

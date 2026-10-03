@@ -24,8 +24,6 @@ export type FunFacts = z.infer<typeof funFactsSchema>;
 export function readFunFacts(value: unknown): FunFacts {
 	const result = funFactsSchema.safeParse(value);
 	if (!result.success)
-		throw new Error(
-			`Terka_Fun_Facts.json: ${issueMessages(value, result.error.issues).join("; ")}`
-		);
+		throw new Error(`fun-facts.json: ${issueMessages(value, result.error.issues).join("; ")}`);
 	return result.data;
 }

@@ -1,7 +1,7 @@
 # TERKA — Product Requirements Document (PRD)
 
 **Status:** Draf · **Bahasa:** Indonesia  
-**Dokumen terkait:** `Terka_SRD.md`, `Terka_TRD.md`, `Terka_ERD.md`, `Terka_ERD.puml`, `Terka_Fun_Facts.md`, `../data/Terka_Fun_Facts.json`, `Terka_Special_Codes.md`, `../data/Terka_Special_Codes.json`, `Terka_Microcopy.md`, dan `Terka_Tests.md`.
+**Dokumen terkait:** `Terka_SRD.md`, `Terka_TRD.md`, `Terka_ERD.md`, `Terka_ERD.puml`, `Terka_Fun_Facts.md`, `../data/fun-facts.json`, `Terka_Special_Codes.md`, `../data/special-codes.json`, `Terka_Microcopy.md`, dan `Terka_Tests.md`.
 
 > **Slogan:** Lihat pelatnya, terka asalnya.
 >

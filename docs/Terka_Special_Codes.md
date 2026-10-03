@@ -1,7 +1,7 @@
 # TERKA — Special Codes
 
 **Status:** Draf · **Bahasa:** Indonesia
-**Data pendamping:** `../data/Terka_Special_Codes.json`
+**Data pendamping:** `../data/special-codes.json`
 **Dokumen terkait:** PRD 6.8 (Referensi) dan 6.16 (Latihan Kode Khusus) · SRD 2.9 dan 5.3 (aturan soal dan penilaian) · TRD 4.1 (`specials[]` dan `referencePlates[]`) · Fun Facts (`Terka_Fun_Facts.md`, fakta 35–39 dan 41) · `plates.json` (hasil build dari dokumen ini)
 
 > **Slogan:** Lihat pelatnya, terka asalnya.
@@ -241,17 +241,17 @@ Daftar RI 14 sampai RI 100 yang beredar luas, misalnya RI 15 untuk Menko Polhuka
 
 ## 9. Struktur Data JSON
 
-`../data/Terka_Special_Codes.json` berisi data yang dibaca build. Build tidak membaca tabel di dokumen ini.
+`../data/special-codes.json` berisi data yang dibaca build. Build tidak membaca tabel di dokumen ini.
 
 | Bagian JSON         | Isi                                                                                                         | Masuk `plates.json` |
 | ------------------- | ----------------------------------------------------------------------------------------------------------- | ------------------- |
 | `summary`           | Jumlah entri, sebaran label, entri yang perlu ditinjau, rentang nomor, dan nomor kosong                     | Tidak               |
 | `confidenceLabels`  | Arti `high`, `medium`, dan `low` menurut bagian 3                                                           | Tidak               |
-| `sources[]`         | Sumber di bagian 8, dengan properti yang sama seperti `sources[]` di `../data/Terka_Fun_Facts.json` (TRD 4.1)       | Ya                  |
+| `sources[]`         | Sumber di bagian 8, dengan properti yang sama seperti `sources[]` di `../data/fun-facts.json` (TRD 4.1)       | Ya                  |
 | `specials[]`        | 130 entri CD di bagian 4, dengan properti menurut TRD 4.1                                                   | Ya                  |
 | `referencePlates[]` | Entri format RI, CC, dan CH di bagian 2, termasuk `example` dan `note`                                      | Ya                  |
-| `riPairs[]`         | Pasangan RI di bagian 5 beserta `usedByFacts`, yaitu `id` fakta di `../data/Terka_Fun_Facts.json` yang memakainya   | Tidak               |
+| `riPairs[]`         | Pasangan RI di bagian 5 beserta `usedByFacts`, yaitu `id` fakta di `../data/fun-facts.json` yang memakainya   | Tidak               |
 | `rejectedSources`   | Sumber yang tidak dipakai di bagian 6 beserta alasannya                                                     | Tidak               |
 
-`id` sumber yang juga dipakai `../data/Terka_Fun_Facts.json` wajib berisi data yang sama di kedua berkas; jika berbeda, build gagal.
+`id` sumber yang juga dipakai `../data/fun-facts.json` wajib berisi data yang sama di kedua berkas; jika berbeda, build gagal.
 

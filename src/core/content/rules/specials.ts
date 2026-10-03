@@ -85,7 +85,7 @@ export function specialRules(draft: ContentDraft, today: string): ContentMessage
 			out.push(
 				error(
 					"source-conflict",
-					`${source.id}: Terka_Special_Codes.json and Terka_Fun_Facts.json hold different data`
+					`${source.id}: special-codes.json and fun-facts.json hold different data`
 				)
 			);
 	}
