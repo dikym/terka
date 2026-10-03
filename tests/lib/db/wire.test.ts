@@ -37,7 +37,10 @@ const others: [TableName, object][] = [
 		"devices",
 		{ id: device, label: "iPhone", platform: "Safari", createdAt: NOW, lastSeenAt: null }
 	],
-	["privacy_consents", { policyVersion: "2026-10", consentedAt: NOW, receivedAt: NOW + 5 }],
+	[
+		"privacy_consents",
+		{ policyVersion: "2026-10", deviceId: device, consentedAt: NOW, receivedAt: NOW + 5 }
+	],
 	[
 		"user_settings",
 		{
