@@ -8,6 +8,8 @@ export const contentRevSchema = z.number().int().positive().max(32767);
 export const contentHistorySchema = z.array(
 	z.object({ contentRev: contentRevSchema, version: releaseVersionSchema })
 );
+export const sourceDateSchema = z.string().regex(/^\d{4}(-\d{2}-\d{2})?$/);
+export const historyLabelSchema = z.enum(["terverifikasi", "diperdebatkan", "mitos"]);
 export const placementTierSchema = z.enum(["common", "medium", "rare"]);
 
 export const regionAreaSchema = z.object({ areaId: contentIdSchema, confidence: confidenceSchema });
@@ -34,10 +36,10 @@ export const areaSchema = z.object({
 });
 export const factSchema = z.object({
 	id: contentIdSchema,
-	historyLabel: z.enum(["terverifikasi", "diperdebatkan", "legenda"]),
+	historyLabel: historyLabelSchema,
 	text: z.string().min(1),
 	publicationStatus: z.enum(["draft", "ready"]),
-	source: z.string().min(1).nullable(),
+	source: z.array(contentIdSchema),
 	sourceCheckedAt: isoDateSchema.nullable()
 });
 export const contentSourceSchema = z.object({
@@ -45,7 +47,7 @@ export const contentSourceSchema = z.object({
 	title: z.string().min(1),
 	publisher: z.string().min(1),
 	type: z.string().min(1),
-	date: isoDateSchema,
+	date: sourceDateSchema.nullable(),
 	url: z.string().url(),
 	locator: z.string().min(1),
 	checkedAt: isoDateSchema.nullable(),
@@ -70,6 +72,7 @@ export const referencePlateSchema = z.object({
 	series: z.enum(["RI", "CC", "CH"]),
 	number: z.string().nullable(),
 	label: z.string().min(1),
+	example: z.string().min(1),
 	confidence: confidenceSchema,
 	sources: z.array(z.string()).min(1),
 	note: z.string().min(1).nullable(),
@@ -85,7 +88,6 @@ export const bundleSchema = z
 		regions: z.array(regionSchema).min(1),
 		areas: z.array(areaSchema).min(1),
 		facts: z.array(factSchema),
-		specialsVersion: releaseVersionSchema,
 		sources: z.array(contentSourceSchema),
 		specials: z.array(specialSchema),
 		referencePlates: z.array(referencePlateSchema)

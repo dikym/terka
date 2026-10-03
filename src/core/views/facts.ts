@@ -31,9 +31,9 @@ export function pickFact(
 	const history = readyHistory(state, new Set(byId.keys()));
 	const window = Math.min(FACT_RECENT_MAX, Math.floor(ready.length / 2));
 	const recent = new Set(window ? history.slice(-window) : []);
-	const legendNearby = history.slice(-2).some((id) => byId.get(id)?.historyLabel === "legenda");
+	const mythNearby = history.slice(-2).some((id) => byId.get(id)?.historyLabel === "mitos");
 	const candidates = ready.filter(
-		(fact) => !recent.has(fact.id) && !(legendNearby && fact.historyLabel === "legenda")
+		(fact) => !recent.has(fact.id) && !(mythNearby && fact.historyLabel === "mitos")
 	);
 	if (!candidates.length) return leastRecent(ready, history);
 	const related = new Set(

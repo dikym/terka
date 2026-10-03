@@ -16,21 +16,34 @@ describe("bundle build", () => {
 			"regions",
 			"areas",
 			"facts",
-			"specialsVersion",
 			"sources",
 			"specials",
 			"referencePlates"
 		]);
 		expect("sources" in bundle!.regions[0]).toBe(false);
-		expect(bundle!.regions[0].facts).toEqual(["f-001"]);
+		expect(bundle!.regions[0].facts).toEqual(["fact-aa"]);
 		expect(bundle!.facts[0]).toEqual({
-			id: "f-001",
-			historyLabel: "legenda",
+			id: "fact-aa",
+			historyLabel: "mitos",
 			text: "Cerita batalion.",
 			publicationStatus: "draft",
-			source: null,
+			source: [],
 			sourceCheckedAt: null
 		});
+	});
+	test("unknown related codes are ignored and other regions get no fact", () => {
+		const { bundle, messages } = buildFromDraft(validDraft(), options);
+		expect(errorCodes(messages)).toEqual([]);
+		expect(bundle!.regions.filter((region) => region.facts.length)).toHaveLength(1);
+	});
+	test("sources merge both files without duplicates, Special Codes first", () => {
+		const draft = validDraft();
+		draft.funFacts.sources.push(
+			{ ...draft.specials.sources[0] },
+			{ ...draft.specials.sources[0], id: "blog", date: "2018" }
+		);
+		const { bundle } = buildFromDraft(draft, options);
+		expect(bundle!.sources.map((source) => source.id)).toEqual(["perpol", "blog"]);
 	});
 	test("the same draft builds identical JSON", () => {
 		expect(JSON.stringify(buildFromDraft(validDraft(), options))).toBe(

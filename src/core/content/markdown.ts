@@ -1,3 +1,5 @@
+import type { ContentSource } from "./schema";
+
 export type SourceLine = { line: number; text: string };
 export type TableRow = { line: number; cells: Record<string, string> };
 
@@ -72,4 +74,44 @@ export function listCell(cell: string): string[] {
 		.split(",")
 		.map((part) => part.trim().replace(/^`|`$/g, ""))
 		.filter(Boolean);
+}
+
+const SOURCE_COLUMNS = [
+	"ID",
+	"Judul",
+	"Penerbit",
+	"Jenis",
+	"Tanggal",
+	"Diperiksa",
+	"URL",
+	"URL asli",
+	"Lokasi"
+];
+const SOURCE_DATE = /^\d{4}(-\d{2}-\d{2})?$/;
+const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+
+export const dashToNull = (cell: string) => (cell === "—" ? null : cell);
+
+export function readSources(markdown: string, heading: string): ContentSource[] {
+	return readTable(markdown, heading, SOURCE_COLUMNS).map(({ line, cells }) => {
+		if (cells.Tanggal !== "—" && !SOURCE_DATE.test(cells.Tanggal))
+			throw new Error(
+				`line ${line}: Tanggal "${cells.Tanggal}" is not YYYY, YYYY-MM-DD or "—"`
+			);
+		if (cells.Diperiksa !== "—" && !ISO_DATE.test(cells.Diperiksa))
+			throw new Error(
+				`line ${line}: Diperiksa "${cells.Diperiksa}" is not an ISO date (YYYY-MM-DD) or "—"`
+			);
+		return {
+			id: cells.ID,
+			title: cells.Judul,
+			publisher: cells.Penerbit,
+			type: cells.Jenis,
+			date: dashToNull(cells.Tanggal),
+			url: cells.URL,
+			originalUrl: dashToNull(cells["URL asli"]),
+			locator: cells.Lokasi,
+			checkedAt: dashToNull(cells.Diperiksa)
+		};
+	});
 }

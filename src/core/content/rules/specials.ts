@@ -1,14 +1,14 @@
 import { holderKey } from "../../text";
-import type { ContentDraft } from "../draft";
+import { draftSources, type ContentDraft } from "../draft";
 import { error, warning, type ContentMessage } from "../messages";
 
-export function specialRules({ specials }: ContentDraft, today: string): ContentMessage[] {
+export function specialRules(draft: ContentDraft, today: string): ContentMessage[] {
+	const { specials } = draft;
 	const out: ContentMessage[] = [];
-	const sources = new Map(specials.sources.map((source) => [source.id, source]));
-	const referenced = new Set<string>();
+	const merged = draftSources(draft);
+	const sources = new Map(merged.map((source) => [source.id, source]));
 	const checkSources = (id: string, ids: string[]) => {
 		for (const sourceId of ids) {
-			referenced.add(sourceId);
 			if (!sources.has(sourceId))
 				out.push(error("unknown-source", `${id}: unknown source ${sourceId}`));
 		}
@@ -78,15 +78,24 @@ export function specialRules({ specials }: ContentDraft, today: string): Content
 		if (plate.reviewBy < today)
 			out.push(warning("review-due", `${plate.id}: reviewBy ${plate.reviewBy} has passed`));
 	}
-	for (const sourceId of referenced) {
-		const source = sources.get(sourceId);
-		if (source?.type === "media-mengutip-instansi" && !source.originalUrl)
+	const factSources = new Map(draft.funFacts.sources.map((source) => [source.id, source]));
+	for (const source of specials.sources) {
+		const twin = factSources.get(source.id);
+		if (twin && JSON.stringify(twin) !== JSON.stringify(source))
 			out.push(
-				warning(
-					"source-original-url",
-					`${sourceId}: a media source quoting an agency needs originalUrl`
+				error(
+					"source-conflict",
+					`${source.id}: Terka_Special_Codes.json and Terka_Fun_Facts.json hold different data`
 				)
 			);
 	}
+	for (const source of merged)
+		if (source.type === "media-mengutip-instansi" && !source.originalUrl)
+			out.push(
+				warning(
+					"source-original-url",
+					`${source.id}: a media source quoting an agency needs originalUrl`
+				)
+			);
 	return out;
 }

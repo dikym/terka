@@ -5,7 +5,6 @@ import {
 	contentHistorySchema,
 	contentIdSchema,
 	contentRevSchema,
-	isoDateSchema,
 	regionSchema,
 	releaseVersionSchema
 } from "./schema";
@@ -29,15 +28,6 @@ export const curationSchema = z
 			})
 		),
 		areas: z.array(areaSchema),
-		facts: z.array(
-			z.object({
-				number: z.number().int().positive(),
-				id: contentIdSchema,
-				regions: z.array(z.string()),
-				source: z.string().min(1).optional(),
-				sourceCheckedAt: isoDateSchema.optional()
-			})
-		),
 		retiredIds: z.array(z.string())
 	})
 	.strict();

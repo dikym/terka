@@ -42,11 +42,9 @@ export function validDraft(): ContentDraft {
 				aliases: [],
 				variants: []
 			})),
-			facts: [{ number: 1, id: "f-001", regions: ["aa"] }],
 			retiredIds: []
 		},
 		specials: {
-			specialsVersion: "2026.09.24",
 			sources: [
 				{
 					id: "perpol",
@@ -92,10 +90,11 @@ export function validDraft(): ContentDraft {
 			],
 			referencePlates: [
 				{
-					id: "ref-ri-format",
+					id: "ref-ri",
 					series: "RI",
 					number: null,
-					label: "Presiden; format RI + nomor urut",
+					label: "RI + nomor urut. Untuk Presiden.",
+					example: "RI 1",
 					confidence: "high",
 					sources: ["perpol"],
 					note: "Tidak ada daftar lengkap.",
@@ -103,15 +102,22 @@ export function validDraft(): ContentDraft {
 				}
 			]
 		},
-		facts: [
-			{
-				number: 1,
-				line: 1,
-				historyLabel: "legenda",
-				publicationStatus: "draft",
-				text: "Cerita batalion."
-			}
-		]
+		funFacts: {
+			sources: [],
+			facts: [
+				{
+					ref: 1,
+					id: "fact-aa",
+					section: "Asal-usul",
+					text: "Cerita batalion.",
+					historyLabel: "mitos",
+					publicationStatus: "draft",
+					relatedCodes: ["AA", "TCKB"],
+					source: [],
+					sourceCheckedAt: null
+				}
+			]
+		}
 	};
 }
 

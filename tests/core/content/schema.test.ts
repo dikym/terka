@@ -31,7 +31,6 @@ const bundle = () => ({
 		}
 	],
 	facts: [],
-	specialsVersion: "2026.09.24",
 	sources: [],
 	specials: [],
 	referencePlates: []
@@ -48,5 +47,22 @@ describe("bundle schema", () => {
 	});
 	test("sourceRevision is not part of the bundle", () => {
 		expect(bundleSchema.safeParse({ ...bundle(), sourceRevision: "x" }).success).toBe(false);
+	});
+	test("specialsVersion is not part of the bundle", () => {
+		expect(bundleSchema.safeParse({ ...bundle(), specialsVersion: "2026.09.24" }).success).toBe(
+			false
+		);
+	});
+	test("a legenda history label is rejected", () => {
+		const value = bundle();
+		(value.facts as unknown[]).push({
+			id: "fact-a",
+			historyLabel: "legenda",
+			text: "A.",
+			publicationStatus: "draft",
+			source: [],
+			sourceCheckedAt: null
+		});
+		expect(bundleSchema.safeParse(value).success).toBe(false);
 	});
 });

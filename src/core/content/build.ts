@@ -1,9 +1,12 @@
-import type { ContentDraft } from "./draft";
+import { draftSources, type ContentDraft } from "./draft";
 import { issueMessages } from "./issues";
 import { error, isError, report, type ContentMessage } from "./messages";
 import { readCuration } from "./read-curation";
 import { readFacts } from "./read-facts";
+import { readFunFacts } from "./read-fun-facts";
+import { readSpecialCodes } from "./read-special-codes";
 import { readSpecials } from "./read-specials";
+import { consistencyRules } from "./rules/consistency";
 import { coverageRules } from "./rules/coverage";
 import { factRules } from "./rules/facts";
 import { identityRules } from "./rules/identity";
@@ -17,36 +20,28 @@ import { bundleSchema, type Bundle } from "./schema";
 export type BuildOptions = { today: string; release: boolean; previous: unknown };
 export type BuildResult = { bundle: Bundle | null; messages: ContentMessage[] };
 
-export function assembleBundle({ curation, specials, facts }: ContentDraft): Bundle {
-	const items = new Map(facts.map((item) => [item.number, item]));
+export function assembleBundle(draft: ContentDraft): Bundle {
+	const { curation, specials, funFacts } = draft;
 	return {
 		version: curation.version,
 		contentRev: curation.contentRev,
 		contentHistory: curation.contentHistory,
 		regions: curation.regions.map(({ sources: _sources, issues: _issues, ...region }) => ({
 			...region,
-			facts: curation.facts
-				.filter((entry) => entry.regions.includes(region.id))
-				.map((entry) => entry.id)
+			facts: funFacts.facts
+				.filter((fact) => fact.relatedCodes.includes(region.code))
+				.map((fact) => fact.id)
 		})),
 		areas: curation.areas,
-		facts: curation.facts.flatMap((entry) => {
-			const item = items.get(entry.number);
-			return item
-				? [
-						{
-							id: entry.id,
-							historyLabel: item.historyLabel,
-							text: item.text,
-							publicationStatus: item.publicationStatus,
-							source: entry.source ?? null,
-							sourceCheckedAt: entry.sourceCheckedAt ?? null
-						}
-					]
-				: [];
-		}),
-		specialsVersion: specials.specialsVersion,
-		sources: specials.sources,
+		facts: funFacts.facts.map((fact) => ({
+			id: fact.id,
+			historyLabel: fact.historyLabel,
+			text: fact.text,
+			publicationStatus: fact.publicationStatus,
+			source: fact.source,
+			sourceCheckedAt: fact.sourceCheckedAt
+		})),
+		sources: draftSources(draft),
 		specials: specials.specials,
 		referencePlates: specials.referencePlates
 	};
@@ -58,7 +53,8 @@ export function buildFromDraft(draft: ContentDraft, options: BuildOptions): Buil
 		...regionRules(draft),
 		...placementRules(draft),
 		...factRules(draft),
-		...specialRules(draft, options.today)
+		...specialRules(draft, options.today),
+		...consistencyRules(draft)
 	];
 	if (options.release)
 		messages = messages.map((message) =>
@@ -86,14 +82,24 @@ export function buildFromDraft(draft: ContentDraft, options: BuildOptions): Buil
 }
 
 export function buildContent(
-	input: { curation: unknown; specialsMarkdown: string; factsMarkdown: string } & BuildOptions
+	input: {
+		curation: unknown;
+		specialCodes: unknown;
+		funFacts: unknown;
+		specialsMarkdown: string;
+		factsMarkdown: string;
+	} & BuildOptions
 ): BuildResult {
 	let draft: ContentDraft;
 	try {
 		draft = {
 			curation: readCuration(input.curation),
-			specials: readSpecials(input.specialsMarkdown),
-			facts: readFacts(input.factsMarkdown)
+			specials: readSpecialCodes(input.specialCodes),
+			funFacts: readFunFacts(input.funFacts),
+			markdown: {
+				specials: readSpecials(input.specialsMarkdown),
+				facts: readFacts(input.factsMarkdown)
+			}
 		};
 	} catch (cause) {
 		return {
