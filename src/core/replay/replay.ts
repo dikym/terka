@@ -2,27 +2,26 @@ import { ENGINE_VERSION } from "@/rules";
 import type { Bundle } from "../content/schema";
 import type { LearningEvent, PracticeRun } from "../log/events";
 import { compareKeys, eventKey, sortEvents } from "../log/order";
+import { CARD_MODES, CONTEXTS, MATCH_TYPES, QUESTION_TYPES } from "../log/values";
 import { applyEvent } from "./apply";
 import { activation } from "./params";
 import { type AppState, initialState } from "./state";
 
 export type ReplayResult = { status: "ok"; state: AppState } | { status: "outdated" };
 
-const MODES = new Set([
-	"code2region",
-	"region2code",
-	"setrecall",
-	"special2holder",
-	"holder2special"
-]);
+const known = (values: Record<string, true>, value: string) => Object.hasOwn(values, value);
 
 // A newer client wrote these; replaying them with older rules would give a different state.
 const isOutdated = (events: readonly LearningEvent[]) =>
 	events.some(
 		(event) =>
 			(event.table === "review_logs" &&
-				(event.row.engineVersion > ENGINE_VERSION || !MODES.has(event.row.mode))) ||
-			(event.table === "card_events" && !MODES.has(event.row.mode))
+				(event.row.engineVersion > ENGINE_VERSION ||
+					!known(CARD_MODES, event.row.mode) ||
+					!known(CONTEXTS, event.row.context) ||
+					!known(QUESTION_TYPES, event.row.questionType) ||
+					!known(MATCH_TYPES, event.row.matchType))) ||
+			(event.table === "card_events" && !known(CARD_MODES, event.row.mode))
 	);
 
 const PRACTICE = new Set(["daily", "drill", "focused", "setrecall", "special"]);

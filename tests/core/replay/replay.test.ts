@@ -152,6 +152,17 @@ describe("bad and newer events", () => {
 		(unknown.row as { mode: string }).mode = "map2code";
 		expect(replay([unknown], ruleBundle())).toEqual({ status: "outdated" });
 	});
+	test("an unknown context, question type or match type also stops replay", () => {
+		for (const [field, value] of [
+			["context", "duel"],
+			["questionType", "voice"],
+			["matchType", "phonetic"]
+		] as const) {
+			const event = review("dk", "code2region", NOW);
+			(event.row as Record<string, unknown>)[field] = value;
+			expect(replay([event], ruleBundle())).toEqual({ status: "outdated" });
+		}
+	});
 });
 
 describe("append", () => {
