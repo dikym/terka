@@ -18,6 +18,13 @@ export type LogState = { state: AppState; logVersion: number; outdated: boolean 
 
 const logVersionOf = async (db: TerkaDb) => (await readMeta<number>(db, "logVersion")) ?? 0;
 
+// Call inside a transaction that includes sync_meta; a newer version makes every cached state stale.
+export async function bumpLogVersion(db: TerkaDb): Promise<number> {
+	const next = (await logVersionOf(db)) + 1;
+	await db.sync_meta.put({ key: "logVersion", value: next });
+	return next;
+}
+
 export async function readEvents(db: TerkaDb): Promise<LearningEvent[]> {
 	const events: LearningEvent[] = [];
 	for (const table of EVENT_TABLES)
@@ -169,4 +176,40 @@ export async function lastSightingAt(
 		.filter((row) => row.deviceId === deviceId)
 		.toArray();
 	return rows.length ? Math.max(...rows.map((row) => row.clientTs)) : null;
+}
+
+// Pulled rows are already stored page by page; the state follows once per pull, by append when every
+// pulled event is newer than the state and nobody else wrote meanwhile, else by one full replay.
+export async function settlePulled(
+	db: TerkaDb,
+	log: LogState,
+	pulled: LearningEvent[],
+	pagesStored: number,
+	bundle: Bundle
+): Promise<{ status: "ok" | "outdated"; log: LogState } | { status: "stale" } | Quota> {
+	if (!pulled.length) return { status: log.outdated ? "outdated" : "ok", log };
+	const current = await db.transaction("r", ["sync_meta"], () => logVersionOf(db));
+	const appended =
+		current === log.logVersion + pagesStored && !log.outdated
+			? append(log.state, pulled)
+			: "full";
+	const result = appended === "full" ? replay(await readEvents(db), bundle) : appended;
+	if (result.status === "outdated")
+		return { status: "outdated", log: { ...log, logVersion: current, outdated: true } };
+	return unlessQuota(() =>
+		db.transaction("rw", ["derived", "sync_meta"], async () => {
+			if ((await logVersionOf(db)) !== current) return { status: "stale" as const };
+			await db.derived.put({
+				key: "state",
+				state: result.state,
+				logVersion: current,
+				engineVersion: ENGINE_VERSION,
+				contentRev: bundle.contentRev
+			});
+			return {
+				status: "ok" as const,
+				log: { state: result.state, logVersion: current, outdated: false }
+			};
+		})
+	);
 }
