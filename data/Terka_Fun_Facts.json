@@ -1,6 +1,6 @@
 {
   "document": "Terka_Fun_Facts.md",
-  "note": "Data fakta untuk blok Fun Facts di layar akhir. Teks, label, dan sumber wajib sama dengan Terka_Fun_Facts.md. ref adalah nomor urut baca; id adalah pengenal tetap. source berisi id dari sources; id pertama ditampilkan di layar akhir. relatedCodes dipetakan build ke regions[].facts[].",
+  "note": "Data fakta untuk blok Fun Facts di layar akhir. ref adalah nomor urut baca; id adalah pengenal tetap. source berisi id dari sources; id pertama ditampilkan di layar akhir. relatedCodes dipetakan build ke regions[].facts[].",
   "summary": {
     "total": 41,
     "ready": 41,
