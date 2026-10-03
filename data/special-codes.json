@@ -1,2707 +1,2126 @@
 {
-  "document": "Terka_Special_Codes.md",
-  "note": "Data kode khusus untuk build plates.json. specials[] membentuk kartu Latihan Kode Khusus; referencePlates[] hanya tampil di Referensi; riPairs[] hanya bahan Fun Facts dan tidak pernah masuk plates.json. sources[] digabung dengan sources[] dari fun-facts.json; id yang sama wajib berisi data yang sama.",
-  "summary": {
-    "specials": {
-      "total": 130,
-      "country": 101,
-      "organization": 29,
-      "byConfidence": {
-        "high": 130
-      },
-      "needsReview": [
-        "cd-92-ptri-untuk-asean"
-      ],
-      "numberRange": [
-        "12",
-        "145"
-      ],
-      "missingNumbers": [
-        "46",
-        "91",
-        "119",
-        "124"
-      ]
-    },
-    "referencePlates": 3,
-    "riPairs": {
-      "total": 14,
-      "byConfidence": {
-        "high": 14
-      }
-    },
-    "sources": 6
-  },
-  "confidenceLabels": {
-    "high": "Pasangan kode dan pemegang tercantum langsung dalam peraturan yang berlaku, atau dipublikasikan instansi berwenang dan dikonfirmasi satu sumber independen lain tanpa kontradiksi.",
-    "medium": "Sumbernya media arus utama tanpa atribusi ke instansi, atau sumber resmi hanya menyebut kelompok jabatan tanpa pasangan nomor yang pasti.",
-    "low": "Sumber saling bertentangan, disusun sebelum perubahan kabinet yang relevan, atau merujuk peraturan yang sudah dicabut."
-  },
-  "sources": [
-    {
-      "id": "kompas-id-2025-ri36",
-      "title": "Viral Mobil RI 36 Paksa Terobos Kemacetan, Siapa Pejabat Penggunanya?",
-      "publisher": "Kompas.id",
-      "type": "media",
-      "date": "2025-01-10",
-      "url": "https://www.kompas.id/artikel/viral-mobil-ri-36-paksa-terobos-kemacetan-siapa-pejabat-penggunanya",
-      "originalUrl": null,
-      "locator": "Skema nomor kecil (RI 24 dan turunannya); RI 36.1–36.7",
-      "checkedAt": "2026-09-24"
-    },
-    {
-      "id": "korlantas-cnn-2025-ri36",
-      "title": "Ada Angka Kecil di Pelat RI 36 Mobil Utusan Presiden, Apa Itu? (pernyataan Kasubdit STNK Dit Regident Korlantas Polri)",
-      "publisher": "CNN Indonesia",
-      "type": "media-mengutip-instansi",
-      "date": "2025-01-16",
-      "url": "https://www.cnnindonesia.com/otomotif/20250116110327-579-1187800/ada-angka-kecil-di-pelat-ri-36-mobil-utusan-presiden-apa-itu",
-      "originalUrl": null,
-      "locator": "RI 36 nomor kecil 1–7 untuk utusan khusus presiden; penomoran RI dikoordinasikan dengan Kemensetneg",
-      "checkedAt": "2026-09-24"
-    },
-    {
-      "id": "korlantas-ig-via-detik-2026",
-      "title": "Daftar Pelat Nomor Mobil Dinas Pejabat RI dari Presiden hingga Menteri (mengutip Instagram Korlantas Polri)",
-      "publisher": "detikOto",
-      "type": "media-mengutip-instansi",
-      "date": "2026-04-18",
-      "url": "https://oto.detik.com/berita/d-8450080/daftar-pelat-nomor-mobil-dinas-pejabat-ri-dari-presiden-hingga-menteri",
-      "originalUrl": null,
-      "locator": "Daftar RI 1–RI 13; unggahan Instagram asli Korlantas belum diarsipkan",
-      "checkedAt": "2026-09-24"
-    },
-    {
-      "id": "kumparan-2025-ri",
-      "title": "Daftar Pelat Nomor Terbaru Menteri dan Pejabat Kabinet Merah Putih",
-      "publisher": "kumparanNEWS",
-      "type": "media",
-      "date": "2025-01-13",
-      "url": "https://kumparan.com/kumparannews/daftar-pelat-nomor-terbaru-menteri-dan-pejabat-kabinet-merah-putih-24IM4mCmWt6",
-      "originalUrl": null,
-      "locator": "Menyatakan belum ada aturan resmi; daftar tidak lengkap dan ada lompatan nomor",
-      "checkedAt": "2026-09-24"
-    },
-    {
-      "id": "otomotifnet-2023-ri",
-      "title": "Daftar 42 Pelat Nomor Mobil Menteri dan Pejabat di Indonesia, Istri Presiden Pakai RI 3",
-      "publisher": "Otomotifnet (GridOto)",
-      "type": "media",
-      "date": "2023-04-26",
-      "url": "https://otomotifnet.gridoto.com/read/233769440/daftar-42-pelat-nomor-mobil-menteri-dan-pejabat-di-indonesia-istri-presiden-pakai-ri-3",
-      "originalUrl": null,
-      "locator": "RI 1–RI 13 era kabinet sebelumnya; nomor 14 ke atas sudah tidak berlaku",
-      "checkedAt": "2026-09-24"
-    },
-    {
-      "id": "perpol-7-2021-lampiran",
-      "title": "Lampiran Peraturan Kepolisian Negara RI Nomor 7 Tahun 2021 tentang Registrasi dan Identifikasi Kendaraan Bermotor",
-      "publisher": "Polri; salinan JDIH BPK",
-      "type": "peraturan",
-      "date": "2021-05-05",
-      "url": "https://peraturan.bpk.go.id/Details/225016/perpol-no-7-tahun-2021",
-      "originalUrl": "https://peraturan.bpk.go.id/Download/219644/Perpol%20No.%207%20th%202021%20ttg%20regident_lampiran.pdf",
-      "locator": "Lampiran huruf B (kode registrasi), huruf D angka 4 (kode negara CD, hlm. 99–102), huruf F (TNKB khusus RI, hlm. 103–104)",
-      "checkedAt": "2026-09-24"
-    }
-  ],
-  "specials": [
-    {
-      "id": "cd-12-amerika-serikat",
-      "series": "CD",
-      "number": "12",
-      "holder": "Amerika Serikat",
-      "holderType": "country",
-      "aliases": [
-        "AS",
-        "USA",
-        "United States",
-        "Amerika"
-      ],
-      "sourceName": "Amerika Serikat",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-13-india",
-      "series": "CD",
-      "number": "13",
-      "holder": "India",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "India",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-14-prancis",
-      "series": "CD",
-      "number": "14",
-      "holder": "Prancis",
-      "holderType": "country",
-      "aliases": [
-        "Perancis",
-        "France"
-      ],
-      "sourceName": "Perancis",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-15-inggris",
-      "series": "CD",
-      "number": "15",
-      "holder": "Inggris",
-      "holderType": "country",
-      "aliases": [
-        "Britania Raya",
-        "Kerajaan Inggris",
-        "UK",
-        "United Kingdom"
-      ],
-      "sourceName": "Inggris",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-16-filipina",
-      "series": "CD",
-      "number": "16",
-      "holder": "Filipina",
-      "holderType": "country",
-      "aliases": [
-        "Philippines"
-      ],
-      "sourceName": "Filipina",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-17-vatikan",
-      "series": "CD",
-      "number": "17",
-      "holder": "Vatikan",
-      "holderType": "country",
-      "aliases": [
-        "Takhta Suci",
-        "Tahta Suci",
-        "Holy See"
-      ],
-      "sourceName": "Vatikan",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-18-australia",
-      "series": "CD",
-      "number": "18",
-      "holder": "Australia",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Australia",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-19-norwegia",
-      "series": "CD",
-      "number": "19",
-      "holder": "Norwegia",
-      "holderType": "country",
-      "aliases": [
-        "Norway"
-      ],
-      "sourceName": "Norwegia",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-20-irak",
-      "series": "CD",
-      "number": "20",
-      "holder": "Irak",
-      "holderType": "country",
-      "aliases": [
-        "Iraq"
-      ],
-      "sourceName": "Irak",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-21-pakistan",
-      "series": "CD",
-      "number": "21",
-      "holder": "Pakistan",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Pakistan",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-22-belgia",
-      "series": "CD",
-      "number": "22",
-      "holder": "Belgia",
-      "holderType": "country",
-      "aliases": [
-        "Belgium"
-      ],
-      "sourceName": "Belgia",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-23-myanmar",
-      "series": "CD",
-      "number": "23",
-      "holder": "Myanmar",
-      "holderType": "country",
-      "aliases": [
-        "Burma"
-      ],
-      "sourceName": "Myanmar",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-24-uni-emirat-arab",
-      "series": "CD",
-      "number": "24",
-      "holder": "Uni Emirat Arab",
-      "holderType": "country",
-      "aliases": [
-        "UEA",
-        "UAE",
-        "Emirat Arab"
-      ],
-      "sourceName": "Uni Emirat Arab",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-25-tiongkok",
-      "series": "CD",
-      "number": "25",
-      "holder": "Tiongkok",
-      "holderType": "country",
-      "aliases": [
-        "China",
-        "Cina",
-        "RRT",
-        "Republik Rakyat Tiongkok",
-        "RRC"
-      ],
-      "sourceName": "China",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-26-swedia",
-      "series": "CD",
-      "number": "26",
-      "holder": "Swedia",
-      "holderType": "country",
-      "aliases": [
-        "Sweden"
-      ],
-      "sourceName": "Swedia",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-27-arab-saudi",
-      "series": "CD",
-      "number": "27",
-      "holder": "Arab Saudi",
-      "holderType": "country",
-      "aliases": [
-        "Saudi Arabia",
-        "Saudi"
-      ],
-      "sourceName": "Saudi Arabia",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-28-thailand",
-      "series": "CD",
-      "number": "28",
-      "holder": "Thailand",
-      "holderType": "country",
-      "aliases": [
-        "Muangthai"
-      ],
-      "sourceName": "Thailand",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-29-mesir",
-      "series": "CD",
-      "number": "29",
-      "holder": "Mesir",
-      "holderType": "country",
-      "aliases": [
-        "Egypt"
-      ],
-      "sourceName": "Mesir",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-30-italia",
-      "series": "CD",
-      "number": "30",
-      "holder": "Italia",
-      "holderType": "country",
-      "aliases": [
-        "Italy"
-      ],
-      "sourceName": "Italia",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-31-swiss",
-      "series": "CD",
-      "number": "31",
-      "holder": "Swiss",
-      "holderType": "country",
-      "aliases": [
-        "Switzerland"
-      ],
-      "sourceName": "Swiss",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-32-jerman",
-      "series": "CD",
-      "number": "32",
-      "holder": "Jerman",
-      "holderType": "country",
-      "aliases": [
-        "Germany"
-      ],
-      "sourceName": "Jerman",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-33-sri-lanka",
-      "series": "CD",
-      "number": "33",
-      "holder": "Sri Lanka",
-      "holderType": "country",
-      "aliases": [
-        "Srilanka"
-      ],
-      "sourceName": "Srilanka",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-34-denmark",
-      "series": "CD",
-      "number": "34",
-      "holder": "Denmark",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Denmark",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-35-kanada",
-      "series": "CD",
-      "number": "35",
-      "holder": "Kanada",
-      "holderType": "country",
-      "aliases": [
-        "Canada"
-      ],
-      "sourceName": "Kanada",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-36-brasil",
-      "series": "CD",
-      "number": "36",
-      "holder": "Brasil",
-      "holderType": "country",
-      "aliases": [
-        "Brazil"
-      ],
-      "sourceName": "Brazil",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-37-rusia",
-      "series": "CD",
-      "number": "37",
-      "holder": "Rusia",
-      "holderType": "country",
-      "aliases": [
-        "Russia",
-        "Federasi Rusia"
-      ],
-      "sourceName": "Rusia",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-38-afganistan",
-      "series": "CD",
-      "number": "38",
-      "holder": "Afganistan",
-      "holderType": "country",
-      "aliases": [
-        "Afghanistan"
-      ],
-      "sourceName": "Afganistan",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-39-serbia",
-      "series": "CD",
-      "number": "39",
-      "holder": "Serbia",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Serbia",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-40-ceko",
-      "series": "CD",
-      "number": "40",
-      "holder": "Ceko",
-      "holderType": "country",
-      "aliases": [
-        "Republik Ceko",
-        "Czech",
-        "Cheko"
-      ],
-      "sourceName": "Ceko",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-41-finlandia",
-      "series": "CD",
-      "number": "41",
-      "holder": "Finlandia",
-      "holderType": "country",
-      "aliases": [
-        "Finland"
-      ],
-      "sourceName": "Finlandia",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-42-meksiko",
-      "series": "CD",
-      "number": "42",
-      "holder": "Meksiko",
-      "holderType": "country",
-      "aliases": [
-        "Mexico"
-      ],
-      "sourceName": "Meksiko",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-43-hungaria",
-      "series": "CD",
-      "number": "43",
-      "holder": "Hungaria",
-      "holderType": "country",
-      "aliases": [
-        "Hungary"
-      ],
-      "sourceName": "Hungaria",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-44-polandia",
-      "series": "CD",
-      "number": "44",
-      "holder": "Polandia",
-      "holderType": "country",
-      "aliases": [
-        "Poland"
-      ],
-      "sourceName": "Polandia",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-45-iran",
-      "series": "CD",
-      "number": "45",
-      "holder": "Iran",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Iran",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-47-malaysia",
-      "series": "CD",
-      "number": "47",
-      "holder": "Malaysia",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Malaysia",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-48-turki",
-      "series": "CD",
-      "number": "48",
-      "holder": "Turki",
-      "holderType": "country",
-      "aliases": [
-        "Turkiye",
-        "Türkiye",
-        "Turkey"
-      ],
-      "sourceName": "Turki",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-49-jepang",
-      "series": "CD",
-      "number": "49",
-      "holder": "Jepang",
-      "holderType": "country",
-      "aliases": [
-        "Japan"
-      ],
-      "sourceName": "Jepang",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-50-bulgaria",
-      "series": "CD",
-      "number": "50",
-      "holder": "Bulgaria",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Bulgaria",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-51-kamboja",
-      "series": "CD",
-      "number": "51",
-      "holder": "Kamboja",
-      "holderType": "country",
-      "aliases": [
-        "Cambodia"
-      ],
-      "sourceName": "Kamboja",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-52-argentina",
-      "series": "CD",
-      "number": "52",
-      "holder": "Argentina",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Argentina",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-53-rumania",
-      "series": "CD",
-      "number": "53",
-      "holder": "Rumania",
-      "holderType": "country",
-      "aliases": [
-        "Romania"
-      ],
-      "sourceName": "Rumania",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-54-yunani",
-      "series": "CD",
-      "number": "54",
-      "holder": "Yunani",
-      "holderType": "country",
-      "aliases": [
-        "Greece"
-      ],
-      "sourceName": "Yunani",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-55-yordania",
-      "series": "CD",
-      "number": "55",
-      "holder": "Yordania",
-      "holderType": "country",
-      "aliases": [
-        "Jordan",
-        "Yordan"
-      ],
-      "sourceName": "Yordania",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-56-austria",
-      "series": "CD",
-      "number": "56",
-      "holder": "Austria",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Austria",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-57-suriah",
-      "series": "CD",
-      "number": "57",
-      "holder": "Suriah",
-      "holderType": "country",
-      "aliases": [
-        "Syria",
-        "Siria"
-      ],
-      "sourceName": "Syria",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-58-undp",
-      "series": "CD",
-      "number": "58",
-      "holder": "UNDP",
-      "holderType": "organization",
-      "aliases": [
-        "United Nations Development Programme",
-        "Program Pembangunan PBB"
-      ],
-      "sourceName": "United Nations Development Programme (UNDP)",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-59-selandia-baru",
-      "series": "CD",
-      "number": "59",
-      "holder": "Selandia Baru",
-      "holderType": "country",
-      "aliases": [
-        "New Zealand"
-      ],
-      "sourceName": "Selandia Baru",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-60-belanda",
-      "series": "CD",
-      "number": "60",
-      "holder": "Belanda",
-      "holderType": "country",
-      "aliases": [
-        "Netherlands",
-        "Nederland"
-      ],
-      "sourceName": "Belanda",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-61-yaman",
-      "series": "CD",
-      "number": "61",
-      "holder": "Yaman",
-      "holderType": "country",
-      "aliases": [
-        "Yemen"
-      ],
-      "sourceName": "Yaman",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-62-upu",
-      "series": "CD",
-      "number": "62",
-      "holder": "UPU",
-      "holderType": "organization",
-      "aliases": [
-        "Universal Postal Union",
-        "Uni Pos Sedunia"
-      ],
-      "sourceName": "Universal Postal Union (UPU)",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-63-portugal",
-      "series": "CD",
-      "number": "63",
-      "holder": "Portugal",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Portugal",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-64-aljazair",
-      "series": "CD",
-      "number": "64",
-      "holder": "Aljazair",
-      "holderType": "country",
-      "aliases": [
-        "Algeria"
-      ],
-      "sourceName": "Aljazair",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-65-korea-utara",
-      "series": "CD",
-      "number": "65",
-      "holder": "Korea Utara",
-      "holderType": "country",
-      "aliases": [
-        "RRDK",
-        "Republik Rakyat Demokratik Korea",
-        "DPRK"
-      ],
-      "sourceName": "Korea Utara",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-66-vietnam",
-      "series": "CD",
-      "number": "66",
-      "holder": "Vietnam",
-      "holderType": "country",
-      "aliases": [
-        "Viet Nam"
-      ],
-      "sourceName": "Vietnam",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-67-singapura",
-      "series": "CD",
-      "number": "67",
-      "holder": "Singapura",
-      "holderType": "country",
-      "aliases": [
-        "Singapore"
-      ],
-      "sourceName": "Singapura",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-68-spanyol",
-      "series": "CD",
-      "number": "68",
-      "holder": "Spanyol",
-      "holderType": "country",
-      "aliases": [
-        "Spain"
-      ],
-      "sourceName": "Spanyol",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-69-bangladesh",
-      "series": "CD",
-      "number": "69",
-      "holder": "Bangladesh",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Bangladesh",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-70-panama",
-      "series": "CD",
-      "number": "70",
-      "holder": "Panama",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Panama",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-71-unicef",
-      "series": "CD",
-      "number": "71",
-      "holder": "UNICEF",
-      "holderType": "organization",
-      "aliases": [
-        "United Nations Children's Fund"
-      ],
-      "sourceName": "United Nations International Children's Emergency Fund (UNICEF)",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-72-unesco",
-      "series": "CD",
-      "number": "72",
-      "holder": "UNESCO",
-      "holderType": "organization",
-      "aliases": [],
-      "sourceName": "United Nations Educational, Scientific and Cultural Organization (UNESCO)",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-73-fao",
-      "series": "CD",
-      "number": "73",
-      "holder": "FAO",
-      "holderType": "organization",
-      "aliases": [
-        "Food and Agriculture Organization",
-        "Organisasi Pangan dan Pertanian"
-      ],
-      "sourceName": "Food and Agriculture Organization (FAO)",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-74-who",
-      "series": "CD",
-      "number": "74",
-      "holder": "WHO",
-      "holderType": "organization",
-      "aliases": [
-        "World Health Organization",
-        "Organisasi Kesehatan Dunia"
-      ],
-      "sourceName": "World Health Organization (WHO)",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-75-korea-selatan",
-      "series": "CD",
-      "number": "75",
-      "holder": "Korea Selatan",
-      "holderType": "country",
-      "aliases": [
-        "Republik Korea",
-        "South Korea",
-        "Korsel"
-      ],
-      "sourceName": "Korea Selatan",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-76-adb",
-      "series": "CD",
-      "number": "76",
-      "holder": "ADB",
-      "holderType": "organization",
-      "aliases": [
-        "Asian Development Bank",
-        "Bank Pembangunan Asia"
-      ],
-      "sourceName": "Asian Development Bank (ADB)",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-77-bank-dunia",
-      "series": "CD",
-      "number": "77",
-      "holder": "Bank Dunia",
-      "holderType": "organization",
-      "aliases": [
-        "IBRD",
-        "World Bank"
-      ],
-      "sourceName": "International Bank for Reconstruction and Development (IBRD)/Bank Dunia",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-78-imf",
-      "series": "CD",
-      "number": "78",
-      "holder": "IMF",
-      "holderType": "organization",
-      "aliases": [
-        "International Monetary Fund",
-        "Dana Moneter Internasional"
-      ],
-      "sourceName": "International Monetary Fund (IMF)",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-79-ilo",
-      "series": "CD",
-      "number": "79",
-      "holder": "ILO",
-      "holderType": "organization",
-      "aliases": [
-        "International Labour Organization",
-        "Organisasi Buruh Internasional"
-      ],
-      "sourceName": "International Labour Organisation (ILO)",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-80-papua-nugini",
-      "series": "CD",
-      "number": "80",
-      "holder": "Papua Nugini",
-      "holderType": "country",
-      "aliases": [
-        "Papua New Guinea",
-        "PNG"
-      ],
-      "sourceName": "Papua Nugini",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-81-nigeria",
-      "series": "CD",
-      "number": "81",
-      "holder": "Nigeria",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Nigeria",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-82-cile",
-      "series": "CD",
-      "number": "82",
-      "holder": "Cile",
-      "holderType": "country",
-      "aliases": [
-        "Chili",
-        "Chile"
-      ],
-      "sourceName": "Chili",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-83-unhcr",
-      "series": "CD",
-      "number": "83",
-      "holder": "UNHCR",
-      "holderType": "organization",
-      "aliases": [
-        "Badan Pengungsi PBB"
-      ],
-      "sourceName": "United Nations High Commissioner for Refugees (UNHCR)",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-84-wfp",
-      "series": "CD",
-      "number": "84",
-      "holder": "WFP",
-      "holderType": "organization",
-      "aliases": [
-        "World Food Programme",
-        "Program Pangan Dunia"
-      ],
-      "sourceName": "World Food Programme (WFP)",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-85-venezuela",
-      "series": "CD",
-      "number": "85",
-      "holder": "Venezuela",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Venezuela",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-86-escap",
-      "series": "CD",
-      "number": "86",
-      "holder": "ESCAP",
-      "holderType": "organization",
-      "aliases": [
-        "UNESCAP"
-      ],
-      "sourceName": "Economic and Social Commission for Asia and the Pacific (ESCAP)",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-87-kolombia",
-      "series": "CD",
-      "number": "87",
-      "holder": "Kolombia",
-      "holderType": "country",
-      "aliases": [
-        "Colombia"
-      ],
-      "sourceName": "Kolombia",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-88-brunei-darussalam",
-      "series": "CD",
-      "number": "88",
-      "holder": "Brunei Darussalam",
-      "holderType": "country",
-      "aliases": [
-        "Brunei"
-      ],
-      "sourceName": "Brunei Darussalam",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-89-unic",
-      "series": "CD",
-      "number": "89",
-      "holder": "UNIC",
-      "holderType": "organization",
-      "aliases": [
-        "United Nations Information Centre",
-        "Pusat Informasi PBB"
-      ],
-      "sourceName": "United Nations Information Center (UNIC)",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-90-ifc",
-      "series": "CD",
-      "number": "90",
-      "holder": "IFC",
-      "holderType": "organization",
-      "aliases": [
-        "International Finance Corporation"
-      ],
-      "sourceName": "International Finance Corporation (IFC)",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-92-ptri-untuk-asean",
-      "series": "CD",
-      "number": "92",
-      "holder": "PTRI untuk ASEAN",
-      "holderType": "organization",
-      "aliases": [
-        "PTRI ASEAN",
-        "Perutusan Tetap RI untuk ASEAN"
-      ],
-      "sourceName": "Perutusan Tetap Republik Indonesia (PTRI) ASEAN",
-      "confidence": "high",
-      "needsReview": true,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-93-fiji",
-      "series": "CD",
-      "number": "93",
-      "holder": "Fiji",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Fiji",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-94-belarus",
-      "series": "CD",
-      "number": "94",
-      "holder": "Belarus",
-      "holderType": "country",
-      "aliases": [
-        "Belarusia"
-      ],
-      "sourceName": "Belarus",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-95-kazakhstan",
-      "series": "CD",
-      "number": "95",
-      "holder": "Kazakhstan",
-      "holderType": "country",
-      "aliases": [
-        "Kazakhtan",
-        "Kazakstan"
-      ],
-      "sourceName": "Kazakhtan",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-96-unido",
-      "series": "CD",
-      "number": "96",
-      "holder": "UNIDO",
-      "holderType": "organization",
-      "aliases": [],
-      "sourceName": "United Nations Industrial Development Organization (UNIDO)",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-97-icrc",
-      "series": "CD",
-      "number": "97",
-      "holder": "ICRC",
-      "holderType": "organization",
-      "aliases": [
-        "Komite Internasional Palang Merah"
-      ],
-      "sourceName": "International Committee of the Red Cross (ICRC)",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-98-maroko",
-      "series": "CD",
-      "number": "98",
-      "holder": "Maroko",
-      "holderType": "country",
-      "aliases": [
-        "Morocco"
-      ],
-      "sourceName": "Maroko",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-99-uni-eropa",
-      "series": "CD",
-      "number": "99",
-      "holder": "Uni Eropa",
-      "holderType": "organization",
-      "aliases": [
-        "UE",
-        "EU",
-        "European Union"
-      ],
-      "sourceName": "Uni Eropa",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-100-sekretariat-asean",
-      "series": "CD",
-      "number": "100",
-      "holder": "Sekretariat ASEAN",
-      "holderType": "organization",
-      "aliases": [
-        "ASEAN"
-      ],
-      "sourceName": "Association of Southeast Asian Nations (ASEAN)",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-101-tunisia",
-      "series": "CD",
-      "number": "101",
-      "holder": "Tunisia",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Tunisia",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-102-kuwait",
-      "series": "CD",
-      "number": "102",
-      "holder": "Kuwait",
-      "holderType": "country",
-      "aliases": [
-        "Kuait"
-      ],
-      "sourceName": "Kuait",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-103-laos",
-      "series": "CD",
-      "number": "103",
-      "holder": "Laos",
-      "holderType": "country",
-      "aliases": [
-        "Republik Demokratik Rakyat Laos"
-      ],
-      "sourceName": "Laos",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-104-palestina",
-      "series": "CD",
-      "number": "104",
-      "holder": "Palestina",
-      "holderType": "country",
-      "aliases": [
-        "Palestine"
-      ],
-      "sourceName": "Palestina",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-105-kuba",
-      "series": "CD",
-      "number": "105",
-      "holder": "Kuba",
-      "holderType": "country",
-      "aliases": [
-        "Cuba"
-      ],
-      "sourceName": "Kuba",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-106-aipa",
-      "series": "CD",
-      "number": "106",
-      "holder": "AIPA",
-      "holderType": "organization",
-      "aliases": [
-        "ASEAN Inter-Parliamentary Assembly",
-        "ASEAN Inter-Parliamentary Organization"
-      ],
-      "sourceName": "ASEAN Inter-Paliamentary Organization (AIPA)",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-107-libya",
-      "series": "CD",
-      "number": "107",
-      "holder": "Libya",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Libya",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-108-peru",
-      "series": "CD",
-      "number": "108",
-      "holder": "Peru",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Peru",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-109-slowakia",
-      "series": "CD",
-      "number": "109",
-      "holder": "Slowakia",
-      "holderType": "country",
-      "aliases": [
-        "Slovakia"
-      ],
-      "sourceName": "Slovakia",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-110-sudan",
-      "series": "CD",
-      "number": "110",
-      "holder": "Sudan",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Sudan",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-111-yayasan-asean",
-      "series": "CD",
-      "number": "111",
-      "holder": "Yayasan ASEAN",
-      "holderType": "organization",
-      "aliases": [
-        "ASEAN Foundation"
-      ],
-      "sourceName": "ASEAN Foundation",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-112-utusan-sekjen-pbb",
-      "series": "CD",
-      "number": "112",
-      "holder": "Utusan Sekjen PBB",
-      "holderType": "organization",
-      "aliases": [
-        "Utusan Sekretaris Jenderal PBB"
-      ],
-      "sourceName": "Utusan Sekjen PBB",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-113-cifor",
-      "series": "CD",
-      "number": "113",
-      "holder": "CIFOR",
-      "holderType": "organization",
-      "aliases": [
-        "Center for International Forestry Research"
-      ],
-      "sourceName": "Center for International Forestry Research (CIFOR)",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-114-bosnia-dan-herzegovina",
-      "series": "CD",
-      "number": "114",
-      "holder": "Bosnia dan Herzegovina",
-      "holderType": "country",
-      "aliases": [
-        "Bosnia Herzegovina",
-        "Bosnia"
-      ],
-      "sourceName": "Bosnia Herzegovina",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-115-lebanon",
-      "series": "CD",
-      "number": "115",
-      "holder": "Lebanon",
-      "holderType": "country",
-      "aliases": [
-        "Libanon"
-      ],
-      "sourceName": "Lebanon",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-116-afrika-selatan",
-      "series": "CD",
-      "number": "116",
-      "holder": "Afrika Selatan",
-      "holderType": "country",
-      "aliases": [
-        "South Africa"
-      ],
-      "sourceName": "Afrika Selatan",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-117-kroasia",
-      "series": "CD",
-      "number": "117",
-      "holder": "Kroasia",
-      "holderType": "country",
-      "aliases": [
-        "Croatia"
-      ],
-      "sourceName": "Kroasia",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-118-ukraina",
-      "series": "CD",
-      "number": "118",
-      "holder": "Ukraina",
-      "holderType": "country",
-      "aliases": [
-        "Ukraine"
-      ],
-      "sourceName": "Ukraina",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-120-uzbekistan",
-      "series": "CD",
-      "number": "120",
-      "holder": "Uzbekistan",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Uzbekistan",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-121-qatar",
-      "series": "CD",
-      "number": "121",
-      "holder": "Qatar",
-      "holderType": "country",
-      "aliases": [
-        "Katar"
-      ],
-      "sourceName": "Qatar",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-122-unfpa",
-      "series": "CD",
-      "number": "122",
-      "holder": "UNFPA",
-      "holderType": "organization",
-      "aliases": [
-        "United Nations Population Fund"
-      ],
-      "sourceName": "United Nations Population Fund (UNFPA)",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-123-mozambik",
-      "series": "CD",
-      "number": "123",
-      "holder": "Mozambik",
-      "holderType": "country",
-      "aliases": [
-        "Mozambique"
-      ],
-      "sourceName": "Mozambique",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-125-timor-leste",
-      "series": "CD",
-      "number": "125",
-      "holder": "Timor Leste",
-      "holderType": "country",
-      "aliases": [
-        "Timor-Leste"
-      ],
-      "sourceName": "Timor Leste",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-126-suriname",
-      "series": "CD",
-      "number": "126",
-      "holder": "Suriname",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Suriname",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-127-ekuador",
-      "series": "CD",
-      "number": "127",
-      "holder": "Ekuador",
-      "holderType": "country",
-      "aliases": [
-        "Ecuador"
-      ],
-      "sourceName": "Ecuador",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-128-zimbabwe",
-      "series": "CD",
-      "number": "128",
-      "holder": "Zimbabwe",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Zimbabwe",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-129-iom",
-      "series": "CD",
-      "number": "129",
-      "holder": "IOM",
-      "holderType": "organization",
-      "aliases": [
-        "International Organization for Migration"
-      ],
-      "sourceName": "Perwakilan International Organization for Migration (IOM)",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-130-azerbaijan",
-      "series": "CD",
-      "number": "130",
-      "holder": "Azerbaijan",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Azerbaijan",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-131-somalia",
-      "series": "CD",
-      "number": "131",
-      "holder": "Somalia",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Somalia",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-132-georgia",
-      "series": "CD",
-      "number": "132",
-      "holder": "Georgia",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Georgia",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-133-paraguay",
-      "series": "CD",
-      "number": "133",
-      "holder": "Paraguay",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Paraguay",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-134-oman",
-      "series": "CD",
-      "number": "134",
-      "holder": "Oman",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Oman",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-135-armenia",
-      "series": "CD",
-      "number": "135",
-      "holder": "Armenia",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Armenia",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-136-bahrain",
-      "series": "CD",
-      "number": "136",
-      "holder": "Bahrain",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Bahrain",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-137-mongolia",
-      "series": "CD",
-      "number": "137",
-      "holder": "Mongolia",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "Mongolia",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-138-san-marino",
-      "series": "CD",
-      "number": "138",
-      "holder": "San Marino",
-      "holderType": "country",
-      "aliases": [],
-      "sourceName": "San Marino",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-139-irlandia",
-      "series": "CD",
-      "number": "139",
-      "holder": "Irlandia",
-      "holderType": "country",
-      "aliases": [
-        "Ireland"
-      ],
-      "sourceName": "Irlandia",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-140-unorcid",
-      "series": "CD",
-      "number": "140",
-      "holder": "UNORCID",
-      "holderType": "organization",
-      "aliases": [],
-      "sourceName": "United Nations Office for REDD+ Coordination in Indonesia (UNORCID)",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-141-isdb",
-      "series": "CD",
-      "number": "141",
-      "holder": "IsDB",
-      "holderType": "organization",
-      "aliases": [
-        "IDB",
-        "Islamic Development Bank",
-        "Bank Pembangunan Islam"
-      ],
-      "sourceName": "Islamic Development Bank (IDB)",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-142-guinea-bissau",
-      "series": "CD",
-      "number": "142",
-      "holder": "Guinea-Bissau",
-      "holderType": "country",
-      "aliases": [
-        "Guinea Bissau"
-      ],
-      "sourceName": "Guinea Bissau",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-143-etiopia",
-      "series": "CD",
-      "number": "143",
-      "holder": "Etiopia",
-      "holderType": "country",
-      "aliases": [
-        "Ethiopia"
-      ],
-      "sourceName": "Ethiopia",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-144-kepulauan-solomon",
-      "series": "CD",
-      "number": "144",
-      "holder": "Kepulauan Solomon",
-      "holderType": "country",
-      "aliases": [
-        "Kep Solomon",
-        "Solomon Islands",
-        "Solomon"
-      ],
-      "sourceName": "Kep Solomon",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "cd-145-ifad",
-      "series": "CD",
-      "number": "145",
-      "holder": "IFAD",
-      "holderType": "organization",
-      "aliases": [
-        "International Fund for Agricultural Development"
-      ],
-      "sourceName": "International Fund for Agricultural Development (IFAD)",
-      "confidence": "high",
-      "needsReview": false,
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "validFrom": "2021-05-05",
-      "reviewBy": "2027-03-24"
-    }
-  ],
-  "referencePlates": [
-    {
-      "id": "ref-ri",
-      "series": "RI",
-      "number": null,
-      "label": "RI + nomor urut registrasi, tanpa seri huruf. Untuk kendaraan dinas Presiden, Wakil Presiden, ketua lembaga tinggi negara, dan pejabat setingkat menteri.",
-      "example": "RI 1",
-      "confidence": "high",
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "note": "Tidak ada sumber valid yang memuat daftar lengkap kode RI, dan alokasi nomornya dapat berubah sewaktu-waktu.",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "ref-cc",
-      "series": "CC",
-      "number": null,
-      "label": "CC + kode negara + nomor urut registrasi. Untuk korps konsulat.",
-      "example": "CC 12 10",
-      "confidence": "high",
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "note": "Contoh di lampiran memakai kode negara yang sama dengan CD, tetapi lampiran tidak menyatakannya secara eksplisit.",
-      "reviewBy": "2027-03-24"
-    },
-    {
-      "id": "ref-ch",
-      "series": "CH",
-      "number": null,
-      "label": "CH + kode negara + nomor urut registrasi. Untuk konsul kehormatan.",
-      "example": "CH 130 1",
-      "confidence": "high",
-      "sources": [
-        "perpol-7-2021-lampiran"
-      ],
-      "note": "Contoh di lampiran memakai kode negara yang sama dengan CD, tetapi lampiran tidak menyatakannya secara eksplisit.",
-      "reviewBy": "2027-03-24"
-    }
-  ],
-  "riPairs": [
-    {
-      "id": "ri-1",
-      "series": "RI",
-      "number": "1",
-      "office": "Presiden",
-      "confidence": "high",
-      "sources": [
-        "perpol-7-2021-lampiran",
-        "korlantas-ig-via-detik-2026"
-      ],
-      "usedByFacts": [
-        "fact-ri-1-only-explicit",
-        "fact-indonesia-1-plate",
-        "fact-ri-1-13-korlantas"
-      ],
-      "note": null
-    },
-    {
-      "id": "ri-2",
-      "series": "RI",
-      "number": "2",
-      "office": "Wakil Presiden",
-      "confidence": "high",
-      "sources": [
-        "korlantas-ig-via-detik-2026",
-        "kompas-id-2025-ri36"
-      ],
-      "usedByFacts": [
-        "fact-ri-1-13-korlantas"
-      ],
-      "note": null
-    },
-    {
-      "id": "ri-3",
-      "series": "RI",
-      "number": "3",
-      "office": "Istri Presiden",
-      "confidence": "high",
-      "sources": [
-        "korlantas-ig-via-detik-2026",
-        "otomotifnet-2023-ri"
-      ],
-      "usedByFacts": [
-        "fact-ri-1-13-korlantas"
-      ],
-      "note": "Tercantum dalam publikasi Korlantas; Perpol 7/2021 huruf F tidak menyebut jabatan ini. Fakta yang memakainya wajib menyertakan catatan tersebut."
-    },
-    {
-      "id": "ri-4",
-      "series": "RI",
-      "number": "4",
-      "office": "Istri Wakil Presiden",
-      "confidence": "high",
-      "sources": [
-        "korlantas-ig-via-detik-2026",
-        "otomotifnet-2023-ri"
-      ],
-      "usedByFacts": [
-        "fact-ri-1-13-korlantas"
-      ],
-      "note": "Tercantum dalam publikasi Korlantas; Perpol 7/2021 huruf F tidak menyebut jabatan ini. Fakta yang memakainya wajib menyertakan catatan tersebut."
-    },
-    {
-      "id": "ri-5",
-      "series": "RI",
-      "number": "5",
-      "office": "Ketua MPR",
-      "confidence": "high",
-      "sources": [
-        "korlantas-ig-via-detik-2026",
-        "kumparan-2025-ri"
-      ],
-      "usedByFacts": [
-        "fact-ri-1-13-korlantas"
-      ],
-      "note": null
-    },
-    {
-      "id": "ri-6",
-      "series": "RI",
-      "number": "6",
-      "office": "Ketua DPR",
-      "confidence": "high",
-      "sources": [
-        "korlantas-ig-via-detik-2026",
-        "kumparan-2025-ri"
-      ],
-      "usedByFacts": [
-        "fact-ri-1-13-korlantas"
-      ],
-      "note": null
-    },
-    {
-      "id": "ri-7",
-      "series": "RI",
-      "number": "7",
-      "office": "Ketua DPD",
-      "confidence": "high",
-      "sources": [
-        "korlantas-ig-via-detik-2026",
-        "kumparan-2025-ri"
-      ],
-      "usedByFacts": [
-        "fact-ri-1-13-korlantas"
-      ],
-      "note": null
-    },
-    {
-      "id": "ri-8",
-      "series": "RI",
-      "number": "8",
-      "office": "Ketua MA",
-      "confidence": "high",
-      "sources": [
-        "korlantas-ig-via-detik-2026",
-        "otomotifnet-2023-ri"
-      ],
-      "usedByFacts": [
-        "fact-ri-1-13-korlantas"
-      ],
-      "note": null
-    },
-    {
-      "id": "ri-9",
-      "series": "RI",
-      "number": "9",
-      "office": "Ketua MK",
-      "confidence": "high",
-      "sources": [
-        "korlantas-ig-via-detik-2026",
-        "otomotifnet-2023-ri"
-      ],
-      "usedByFacts": [
-        "fact-ri-1-13-korlantas"
-      ],
-      "note": null
-    },
-    {
-      "id": "ri-10",
-      "series": "RI",
-      "number": "10",
-      "office": "Ketua BPK",
-      "confidence": "high",
-      "sources": [
-        "korlantas-ig-via-detik-2026",
-        "otomotifnet-2023-ri"
-      ],
-      "usedByFacts": [
-        "fact-ri-1-13-korlantas"
-      ],
-      "note": null
-    },
-    {
-      "id": "ri-11",
-      "series": "RI",
-      "number": "11",
-      "office": "Ketua KY",
-      "confidence": "high",
-      "sources": [
-        "korlantas-ig-via-detik-2026",
-        "otomotifnet-2023-ri"
-      ],
-      "usedByFacts": [
-        "fact-ri-1-13-korlantas"
-      ],
-      "note": null
-    },
-    {
-      "id": "ri-12",
-      "series": "RI",
-      "number": "12",
-      "office": "Gubernur BI",
-      "confidence": "high",
-      "sources": [
-        "korlantas-ig-via-detik-2026",
-        "kumparan-2025-ri"
-      ],
-      "usedByFacts": [
-        "fact-ri-1-13-korlantas"
-      ],
-      "note": null
-    },
-    {
-      "id": "ri-13",
-      "series": "RI",
-      "number": "13",
-      "office": "Ketua OJK",
-      "confidence": "high",
-      "sources": [
-        "korlantas-ig-via-detik-2026",
-        "otomotifnet-2023-ri"
-      ],
-      "usedByFacts": [
-        "fact-ri-1-13-korlantas"
-      ],
-      "note": null
-    },
-    {
-      "id": "ri-36",
-      "series": "RI",
-      "number": "36",
-      "office": "Utusan Khusus Presiden",
-      "confidence": "high",
-      "sources": [
-        "korlantas-cnn-2025-ri36",
-        "kompas-id-2025-ri36"
-      ],
-      "usedByFacts": [
-        "fact-ri-small-number"
-      ],
-      "note": null
-    }
-  ],
-  "rejectedSources": [
-    {
-      "source": "Daftar CD di beberapa portal berita (misalnya metro.suara.com, Juli 2023)",
-      "reason": "Nomor negara bergeser dari lampiran Perpol; ada nomor ganda untuk dua negara"
-    },
-    {
-      "source": "Artikel yang merujuk Perkap 5/2012 atau Perkap 4/2006 sebagai dasar CD/RI",
-      "reason": "Kedua peraturan dicabut oleh Perpol 7/2021"
-    },
-    {
-      "source": "Artikel yang merujuk \"Perkap 3/2012\" atau \"Perkap 5/2015\" untuk daftar RI",
-      "reason": "Isi peraturan yang dirujuk tidak dapat ditelusuri memuat daftar nomor RI"
-    },
-    {
-      "source": "Daftar RI 1–RI 100 versi kabinet 2014–2024",
-      "reason": "Alokasi berubah sejak Kabinet Merah Putih"
-    },
-    {
-      "source": "Auto2000, \"Daftar Plat Mobil RI Lengkap dengan Aturannya\" (9 Juli 2026)",
-      "reason": "Tanpa rujukan sumber; RI 14 ke atas memakai alokasi kabinet lama (misalnya RI 36 untuk Menkominfo dan RI 65 untuk UKP4); ada duplikasi internal, seperti Gubernur BI di RI 12 dan RI 63"
-    }
-  ]
+	"document": "Terka_Special_Codes.md",
+	"note": "Data kode khusus untuk build plates.json. specials[] membentuk kartu Latihan Kode Khusus; referencePlates[] hanya tampil di Referensi; riPairs[] hanya bahan Fun Facts dan tidak pernah masuk plates.json. sources[] digabung dengan sources[] dari fun-facts.json; id yang sama wajib berisi data yang sama.",
+	"summary": {
+		"specials": {
+			"total": 130,
+			"country": 101,
+			"organization": 29,
+			"byConfidence": {
+				"high": 130
+			},
+			"needsReview": ["cd-92-ptri-untuk-asean"],
+			"numberRange": ["12", "145"],
+			"missingNumbers": ["46", "91", "119", "124"]
+		},
+		"referencePlates": 3,
+		"riPairs": {
+			"total": 14,
+			"byConfidence": {
+				"high": 14
+			}
+		},
+		"sources": 6
+	},
+	"confidenceLabels": {
+		"high": "Pasangan kode dan pemegang tercantum langsung dalam peraturan yang berlaku, atau dipublikasikan instansi berwenang dan dikonfirmasi satu sumber independen lain tanpa kontradiksi.",
+		"medium": "Sumbernya media arus utama tanpa atribusi ke instansi, atau sumber resmi hanya menyebut kelompok jabatan tanpa pasangan nomor yang pasti.",
+		"low": "Sumber saling bertentangan, disusun sebelum perubahan kabinet yang relevan, atau merujuk peraturan yang sudah dicabut."
+	},
+	"sources": [
+		{
+			"id": "kompas-id-2025-ri36",
+			"title": "Viral Mobil RI 36 Paksa Terobos Kemacetan, Siapa Pejabat Penggunanya?",
+			"publisher": "Kompas.id",
+			"type": "media",
+			"date": "2025-01-10",
+			"url": "https://www.kompas.id/artikel/viral-mobil-ri-36-paksa-terobos-kemacetan-siapa-pejabat-penggunanya",
+			"originalUrl": null,
+			"locator": "Skema nomor kecil (RI 24 dan turunannya); RI 36.1–36.7",
+			"checkedAt": "2026-09-24"
+		},
+		{
+			"id": "korlantas-cnn-2025-ri36",
+			"title": "Ada Angka Kecil di Pelat RI 36 Mobil Utusan Presiden, Apa Itu? (pernyataan Kasubdit STNK Dit Regident Korlantas Polri)",
+			"publisher": "CNN Indonesia",
+			"type": "media-mengutip-instansi",
+			"date": "2025-01-16",
+			"url": "https://www.cnnindonesia.com/otomotif/20250116110327-579-1187800/ada-angka-kecil-di-pelat-ri-36-mobil-utusan-presiden-apa-itu",
+			"originalUrl": null,
+			"locator": "RI 36 nomor kecil 1–7 untuk utusan khusus presiden; penomoran RI dikoordinasikan dengan Kemensetneg",
+			"checkedAt": "2026-09-24"
+		},
+		{
+			"id": "korlantas-ig-via-detik-2026",
+			"title": "Daftar Pelat Nomor Mobil Dinas Pejabat RI dari Presiden hingga Menteri (mengutip Instagram Korlantas Polri)",
+			"publisher": "detikOto",
+			"type": "media-mengutip-instansi",
+			"date": "2026-04-18",
+			"url": "https://oto.detik.com/berita/d-8450080/daftar-pelat-nomor-mobil-dinas-pejabat-ri-dari-presiden-hingga-menteri",
+			"originalUrl": null,
+			"locator": "Daftar RI 1–RI 13; unggahan Instagram asli Korlantas belum diarsipkan",
+			"checkedAt": "2026-09-24"
+		},
+		{
+			"id": "kumparan-2025-ri",
+			"title": "Daftar Pelat Nomor Terbaru Menteri dan Pejabat Kabinet Merah Putih",
+			"publisher": "kumparanNEWS",
+			"type": "media",
+			"date": "2025-01-13",
+			"url": "https://kumparan.com/kumparannews/daftar-pelat-nomor-terbaru-menteri-dan-pejabat-kabinet-merah-putih-24IM4mCmWt6",
+			"originalUrl": null,
+			"locator": "Menyatakan belum ada aturan resmi; daftar tidak lengkap dan ada lompatan nomor",
+			"checkedAt": "2026-09-24"
+		},
+		{
+			"id": "otomotifnet-2023-ri",
+			"title": "Daftar 42 Pelat Nomor Mobil Menteri dan Pejabat di Indonesia, Istri Presiden Pakai RI 3",
+			"publisher": "Otomotifnet (GridOto)",
+			"type": "media",
+			"date": "2023-04-26",
+			"url": "https://otomotifnet.gridoto.com/read/233769440/daftar-42-pelat-nomor-mobil-menteri-dan-pejabat-di-indonesia-istri-presiden-pakai-ri-3",
+			"originalUrl": null,
+			"locator": "RI 1–RI 13 era kabinet sebelumnya; nomor 14 ke atas sudah tidak berlaku",
+			"checkedAt": "2026-09-24"
+		},
+		{
+			"id": "perpol-7-2021-lampiran",
+			"title": "Lampiran Peraturan Kepolisian Negara RI Nomor 7 Tahun 2021 tentang Registrasi dan Identifikasi Kendaraan Bermotor",
+			"publisher": "Polri; salinan JDIH BPK",
+			"type": "peraturan",
+			"date": "2021-05-05",
+			"url": "https://peraturan.bpk.go.id/Details/225016/perpol-no-7-tahun-2021",
+			"originalUrl": "https://peraturan.bpk.go.id/Download/219644/Perpol%20No.%207%20th%202021%20ttg%20regident_lampiran.pdf",
+			"locator": "Lampiran huruf B (kode registrasi), huruf D angka 4 (kode negara CD, hlm. 99–102), huruf F (TNKB khusus RI, hlm. 103–104)",
+			"checkedAt": "2026-09-24"
+		}
+	],
+	"specials": [
+		{
+			"id": "cd-12-amerika-serikat",
+			"series": "CD",
+			"number": "12",
+			"holder": "Amerika Serikat",
+			"holderType": "country",
+			"aliases": ["AS", "USA", "United States", "Amerika"],
+			"sourceName": "Amerika Serikat",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-13-india",
+			"series": "CD",
+			"number": "13",
+			"holder": "India",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "India",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-14-prancis",
+			"series": "CD",
+			"number": "14",
+			"holder": "Prancis",
+			"holderType": "country",
+			"aliases": ["Perancis", "France"],
+			"sourceName": "Perancis",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-15-inggris",
+			"series": "CD",
+			"number": "15",
+			"holder": "Inggris",
+			"holderType": "country",
+			"aliases": ["Britania Raya", "Kerajaan Inggris", "UK", "United Kingdom"],
+			"sourceName": "Inggris",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-16-filipina",
+			"series": "CD",
+			"number": "16",
+			"holder": "Filipina",
+			"holderType": "country",
+			"aliases": ["Philippines"],
+			"sourceName": "Filipina",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-17-vatikan",
+			"series": "CD",
+			"number": "17",
+			"holder": "Vatikan",
+			"holderType": "country",
+			"aliases": ["Takhta Suci", "Tahta Suci", "Holy See"],
+			"sourceName": "Vatikan",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-18-australia",
+			"series": "CD",
+			"number": "18",
+			"holder": "Australia",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Australia",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-19-norwegia",
+			"series": "CD",
+			"number": "19",
+			"holder": "Norwegia",
+			"holderType": "country",
+			"aliases": ["Norway"],
+			"sourceName": "Norwegia",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-20-irak",
+			"series": "CD",
+			"number": "20",
+			"holder": "Irak",
+			"holderType": "country",
+			"aliases": ["Iraq"],
+			"sourceName": "Irak",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-21-pakistan",
+			"series": "CD",
+			"number": "21",
+			"holder": "Pakistan",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Pakistan",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-22-belgia",
+			"series": "CD",
+			"number": "22",
+			"holder": "Belgia",
+			"holderType": "country",
+			"aliases": ["Belgium"],
+			"sourceName": "Belgia",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-23-myanmar",
+			"series": "CD",
+			"number": "23",
+			"holder": "Myanmar",
+			"holderType": "country",
+			"aliases": ["Burma"],
+			"sourceName": "Myanmar",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-24-uni-emirat-arab",
+			"series": "CD",
+			"number": "24",
+			"holder": "Uni Emirat Arab",
+			"holderType": "country",
+			"aliases": ["UEA", "UAE", "Emirat Arab"],
+			"sourceName": "Uni Emirat Arab",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-25-tiongkok",
+			"series": "CD",
+			"number": "25",
+			"holder": "Tiongkok",
+			"holderType": "country",
+			"aliases": ["China", "Cina", "RRT", "Republik Rakyat Tiongkok", "RRC"],
+			"sourceName": "China",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-26-swedia",
+			"series": "CD",
+			"number": "26",
+			"holder": "Swedia",
+			"holderType": "country",
+			"aliases": ["Sweden"],
+			"sourceName": "Swedia",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-27-arab-saudi",
+			"series": "CD",
+			"number": "27",
+			"holder": "Arab Saudi",
+			"holderType": "country",
+			"aliases": ["Saudi Arabia", "Saudi"],
+			"sourceName": "Saudi Arabia",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-28-thailand",
+			"series": "CD",
+			"number": "28",
+			"holder": "Thailand",
+			"holderType": "country",
+			"aliases": ["Muangthai"],
+			"sourceName": "Thailand",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-29-mesir",
+			"series": "CD",
+			"number": "29",
+			"holder": "Mesir",
+			"holderType": "country",
+			"aliases": ["Egypt"],
+			"sourceName": "Mesir",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-30-italia",
+			"series": "CD",
+			"number": "30",
+			"holder": "Italia",
+			"holderType": "country",
+			"aliases": ["Italy"],
+			"sourceName": "Italia",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-31-swiss",
+			"series": "CD",
+			"number": "31",
+			"holder": "Swiss",
+			"holderType": "country",
+			"aliases": ["Switzerland"],
+			"sourceName": "Swiss",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-32-jerman",
+			"series": "CD",
+			"number": "32",
+			"holder": "Jerman",
+			"holderType": "country",
+			"aliases": ["Germany"],
+			"sourceName": "Jerman",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-33-sri-lanka",
+			"series": "CD",
+			"number": "33",
+			"holder": "Sri Lanka",
+			"holderType": "country",
+			"aliases": ["Srilanka"],
+			"sourceName": "Srilanka",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-34-denmark",
+			"series": "CD",
+			"number": "34",
+			"holder": "Denmark",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Denmark",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-35-kanada",
+			"series": "CD",
+			"number": "35",
+			"holder": "Kanada",
+			"holderType": "country",
+			"aliases": ["Canada"],
+			"sourceName": "Kanada",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-36-brasil",
+			"series": "CD",
+			"number": "36",
+			"holder": "Brasil",
+			"holderType": "country",
+			"aliases": ["Brazil"],
+			"sourceName": "Brazil",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-37-rusia",
+			"series": "CD",
+			"number": "37",
+			"holder": "Rusia",
+			"holderType": "country",
+			"aliases": ["Russia", "Federasi Rusia"],
+			"sourceName": "Rusia",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-38-afganistan",
+			"series": "CD",
+			"number": "38",
+			"holder": "Afganistan",
+			"holderType": "country",
+			"aliases": ["Afghanistan"],
+			"sourceName": "Afganistan",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-39-serbia",
+			"series": "CD",
+			"number": "39",
+			"holder": "Serbia",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Serbia",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-40-ceko",
+			"series": "CD",
+			"number": "40",
+			"holder": "Ceko",
+			"holderType": "country",
+			"aliases": ["Republik Ceko", "Czech", "Cheko"],
+			"sourceName": "Ceko",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-41-finlandia",
+			"series": "CD",
+			"number": "41",
+			"holder": "Finlandia",
+			"holderType": "country",
+			"aliases": ["Finland"],
+			"sourceName": "Finlandia",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-42-meksiko",
+			"series": "CD",
+			"number": "42",
+			"holder": "Meksiko",
+			"holderType": "country",
+			"aliases": ["Mexico"],
+			"sourceName": "Meksiko",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-43-hungaria",
+			"series": "CD",
+			"number": "43",
+			"holder": "Hungaria",
+			"holderType": "country",
+			"aliases": ["Hungary"],
+			"sourceName": "Hungaria",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-44-polandia",
+			"series": "CD",
+			"number": "44",
+			"holder": "Polandia",
+			"holderType": "country",
+			"aliases": ["Poland"],
+			"sourceName": "Polandia",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-45-iran",
+			"series": "CD",
+			"number": "45",
+			"holder": "Iran",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Iran",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-47-malaysia",
+			"series": "CD",
+			"number": "47",
+			"holder": "Malaysia",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Malaysia",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-48-turki",
+			"series": "CD",
+			"number": "48",
+			"holder": "Turki",
+			"holderType": "country",
+			"aliases": ["Turkiye", "Türkiye", "Turkey"],
+			"sourceName": "Turki",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-49-jepang",
+			"series": "CD",
+			"number": "49",
+			"holder": "Jepang",
+			"holderType": "country",
+			"aliases": ["Japan"],
+			"sourceName": "Jepang",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-50-bulgaria",
+			"series": "CD",
+			"number": "50",
+			"holder": "Bulgaria",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Bulgaria",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-51-kamboja",
+			"series": "CD",
+			"number": "51",
+			"holder": "Kamboja",
+			"holderType": "country",
+			"aliases": ["Cambodia"],
+			"sourceName": "Kamboja",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-52-argentina",
+			"series": "CD",
+			"number": "52",
+			"holder": "Argentina",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Argentina",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-53-rumania",
+			"series": "CD",
+			"number": "53",
+			"holder": "Rumania",
+			"holderType": "country",
+			"aliases": ["Romania"],
+			"sourceName": "Rumania",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-54-yunani",
+			"series": "CD",
+			"number": "54",
+			"holder": "Yunani",
+			"holderType": "country",
+			"aliases": ["Greece"],
+			"sourceName": "Yunani",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-55-yordania",
+			"series": "CD",
+			"number": "55",
+			"holder": "Yordania",
+			"holderType": "country",
+			"aliases": ["Jordan", "Yordan"],
+			"sourceName": "Yordania",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-56-austria",
+			"series": "CD",
+			"number": "56",
+			"holder": "Austria",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Austria",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-57-suriah",
+			"series": "CD",
+			"number": "57",
+			"holder": "Suriah",
+			"holderType": "country",
+			"aliases": ["Syria", "Siria"],
+			"sourceName": "Syria",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-58-undp",
+			"series": "CD",
+			"number": "58",
+			"holder": "UNDP",
+			"holderType": "organization",
+			"aliases": ["United Nations Development Programme", "Program Pembangunan PBB"],
+			"sourceName": "United Nations Development Programme (UNDP)",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-59-selandia-baru",
+			"series": "CD",
+			"number": "59",
+			"holder": "Selandia Baru",
+			"holderType": "country",
+			"aliases": ["New Zealand"],
+			"sourceName": "Selandia Baru",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-60-belanda",
+			"series": "CD",
+			"number": "60",
+			"holder": "Belanda",
+			"holderType": "country",
+			"aliases": ["Netherlands", "Nederland"],
+			"sourceName": "Belanda",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-61-yaman",
+			"series": "CD",
+			"number": "61",
+			"holder": "Yaman",
+			"holderType": "country",
+			"aliases": ["Yemen"],
+			"sourceName": "Yaman",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-62-upu",
+			"series": "CD",
+			"number": "62",
+			"holder": "UPU",
+			"holderType": "organization",
+			"aliases": ["Universal Postal Union", "Uni Pos Sedunia"],
+			"sourceName": "Universal Postal Union (UPU)",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-63-portugal",
+			"series": "CD",
+			"number": "63",
+			"holder": "Portugal",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Portugal",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-64-aljazair",
+			"series": "CD",
+			"number": "64",
+			"holder": "Aljazair",
+			"holderType": "country",
+			"aliases": ["Algeria"],
+			"sourceName": "Aljazair",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-65-korea-utara",
+			"series": "CD",
+			"number": "65",
+			"holder": "Korea Utara",
+			"holderType": "country",
+			"aliases": ["RRDK", "Republik Rakyat Demokratik Korea", "DPRK"],
+			"sourceName": "Korea Utara",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-66-vietnam",
+			"series": "CD",
+			"number": "66",
+			"holder": "Vietnam",
+			"holderType": "country",
+			"aliases": ["Viet Nam"],
+			"sourceName": "Vietnam",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-67-singapura",
+			"series": "CD",
+			"number": "67",
+			"holder": "Singapura",
+			"holderType": "country",
+			"aliases": ["Singapore"],
+			"sourceName": "Singapura",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-68-spanyol",
+			"series": "CD",
+			"number": "68",
+			"holder": "Spanyol",
+			"holderType": "country",
+			"aliases": ["Spain"],
+			"sourceName": "Spanyol",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-69-bangladesh",
+			"series": "CD",
+			"number": "69",
+			"holder": "Bangladesh",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Bangladesh",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-70-panama",
+			"series": "CD",
+			"number": "70",
+			"holder": "Panama",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Panama",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-71-unicef",
+			"series": "CD",
+			"number": "71",
+			"holder": "UNICEF",
+			"holderType": "organization",
+			"aliases": ["United Nations Children's Fund"],
+			"sourceName": "United Nations International Children's Emergency Fund (UNICEF)",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-72-unesco",
+			"series": "CD",
+			"number": "72",
+			"holder": "UNESCO",
+			"holderType": "organization",
+			"aliases": [],
+			"sourceName": "United Nations Educational, Scientific and Cultural Organization (UNESCO)",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-73-fao",
+			"series": "CD",
+			"number": "73",
+			"holder": "FAO",
+			"holderType": "organization",
+			"aliases": ["Food and Agriculture Organization", "Organisasi Pangan dan Pertanian"],
+			"sourceName": "Food and Agriculture Organization (FAO)",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-74-who",
+			"series": "CD",
+			"number": "74",
+			"holder": "WHO",
+			"holderType": "organization",
+			"aliases": ["World Health Organization", "Organisasi Kesehatan Dunia"],
+			"sourceName": "World Health Organization (WHO)",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-75-korea-selatan",
+			"series": "CD",
+			"number": "75",
+			"holder": "Korea Selatan",
+			"holderType": "country",
+			"aliases": ["Republik Korea", "South Korea", "Korsel"],
+			"sourceName": "Korea Selatan",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-76-adb",
+			"series": "CD",
+			"number": "76",
+			"holder": "ADB",
+			"holderType": "organization",
+			"aliases": ["Asian Development Bank", "Bank Pembangunan Asia"],
+			"sourceName": "Asian Development Bank (ADB)",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-77-bank-dunia",
+			"series": "CD",
+			"number": "77",
+			"holder": "Bank Dunia",
+			"holderType": "organization",
+			"aliases": ["IBRD", "World Bank"],
+			"sourceName": "International Bank for Reconstruction and Development (IBRD)/Bank Dunia",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-78-imf",
+			"series": "CD",
+			"number": "78",
+			"holder": "IMF",
+			"holderType": "organization",
+			"aliases": ["International Monetary Fund", "Dana Moneter Internasional"],
+			"sourceName": "International Monetary Fund (IMF)",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-79-ilo",
+			"series": "CD",
+			"number": "79",
+			"holder": "ILO",
+			"holderType": "organization",
+			"aliases": ["International Labour Organization", "Organisasi Buruh Internasional"],
+			"sourceName": "International Labour Organisation (ILO)",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-80-papua-nugini",
+			"series": "CD",
+			"number": "80",
+			"holder": "Papua Nugini",
+			"holderType": "country",
+			"aliases": ["Papua New Guinea", "PNG"],
+			"sourceName": "Papua Nugini",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-81-nigeria",
+			"series": "CD",
+			"number": "81",
+			"holder": "Nigeria",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Nigeria",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-82-cile",
+			"series": "CD",
+			"number": "82",
+			"holder": "Cile",
+			"holderType": "country",
+			"aliases": ["Chili", "Chile"],
+			"sourceName": "Chili",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-83-unhcr",
+			"series": "CD",
+			"number": "83",
+			"holder": "UNHCR",
+			"holderType": "organization",
+			"aliases": ["Badan Pengungsi PBB"],
+			"sourceName": "United Nations High Commissioner for Refugees (UNHCR)",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-84-wfp",
+			"series": "CD",
+			"number": "84",
+			"holder": "WFP",
+			"holderType": "organization",
+			"aliases": ["World Food Programme", "Program Pangan Dunia"],
+			"sourceName": "World Food Programme (WFP)",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-85-venezuela",
+			"series": "CD",
+			"number": "85",
+			"holder": "Venezuela",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Venezuela",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-86-escap",
+			"series": "CD",
+			"number": "86",
+			"holder": "ESCAP",
+			"holderType": "organization",
+			"aliases": ["UNESCAP"],
+			"sourceName": "Economic and Social Commission for Asia and the Pacific (ESCAP)",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-87-kolombia",
+			"series": "CD",
+			"number": "87",
+			"holder": "Kolombia",
+			"holderType": "country",
+			"aliases": ["Colombia"],
+			"sourceName": "Kolombia",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-88-brunei-darussalam",
+			"series": "CD",
+			"number": "88",
+			"holder": "Brunei Darussalam",
+			"holderType": "country",
+			"aliases": ["Brunei"],
+			"sourceName": "Brunei Darussalam",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-89-unic",
+			"series": "CD",
+			"number": "89",
+			"holder": "UNIC",
+			"holderType": "organization",
+			"aliases": ["United Nations Information Centre", "Pusat Informasi PBB"],
+			"sourceName": "United Nations Information Center (UNIC)",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-90-ifc",
+			"series": "CD",
+			"number": "90",
+			"holder": "IFC",
+			"holderType": "organization",
+			"aliases": ["International Finance Corporation"],
+			"sourceName": "International Finance Corporation (IFC)",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-92-ptri-untuk-asean",
+			"series": "CD",
+			"number": "92",
+			"holder": "PTRI untuk ASEAN",
+			"holderType": "organization",
+			"aliases": ["PTRI ASEAN", "Perutusan Tetap RI untuk ASEAN"],
+			"sourceName": "Perutusan Tetap Republik Indonesia (PTRI) ASEAN",
+			"confidence": "high",
+			"needsReview": true,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-93-fiji",
+			"series": "CD",
+			"number": "93",
+			"holder": "Fiji",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Fiji",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-94-belarus",
+			"series": "CD",
+			"number": "94",
+			"holder": "Belarus",
+			"holderType": "country",
+			"aliases": ["Belarusia"],
+			"sourceName": "Belarus",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-95-kazakhstan",
+			"series": "CD",
+			"number": "95",
+			"holder": "Kazakhstan",
+			"holderType": "country",
+			"aliases": ["Kazakhtan", "Kazakstan"],
+			"sourceName": "Kazakhtan",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-96-unido",
+			"series": "CD",
+			"number": "96",
+			"holder": "UNIDO",
+			"holderType": "organization",
+			"aliases": [],
+			"sourceName": "United Nations Industrial Development Organization (UNIDO)",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-97-icrc",
+			"series": "CD",
+			"number": "97",
+			"holder": "ICRC",
+			"holderType": "organization",
+			"aliases": ["Komite Internasional Palang Merah"],
+			"sourceName": "International Committee of the Red Cross (ICRC)",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-98-maroko",
+			"series": "CD",
+			"number": "98",
+			"holder": "Maroko",
+			"holderType": "country",
+			"aliases": ["Morocco"],
+			"sourceName": "Maroko",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-99-uni-eropa",
+			"series": "CD",
+			"number": "99",
+			"holder": "Uni Eropa",
+			"holderType": "organization",
+			"aliases": ["UE", "EU", "European Union"],
+			"sourceName": "Uni Eropa",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-100-sekretariat-asean",
+			"series": "CD",
+			"number": "100",
+			"holder": "Sekretariat ASEAN",
+			"holderType": "organization",
+			"aliases": ["ASEAN"],
+			"sourceName": "Association of Southeast Asian Nations (ASEAN)",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-101-tunisia",
+			"series": "CD",
+			"number": "101",
+			"holder": "Tunisia",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Tunisia",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-102-kuwait",
+			"series": "CD",
+			"number": "102",
+			"holder": "Kuwait",
+			"holderType": "country",
+			"aliases": ["Kuait"],
+			"sourceName": "Kuait",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-103-laos",
+			"series": "CD",
+			"number": "103",
+			"holder": "Laos",
+			"holderType": "country",
+			"aliases": ["Republik Demokratik Rakyat Laos"],
+			"sourceName": "Laos",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-104-palestina",
+			"series": "CD",
+			"number": "104",
+			"holder": "Palestina",
+			"holderType": "country",
+			"aliases": ["Palestine"],
+			"sourceName": "Palestina",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-105-kuba",
+			"series": "CD",
+			"number": "105",
+			"holder": "Kuba",
+			"holderType": "country",
+			"aliases": ["Cuba"],
+			"sourceName": "Kuba",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-106-aipa",
+			"series": "CD",
+			"number": "106",
+			"holder": "AIPA",
+			"holderType": "organization",
+			"aliases": [
+				"ASEAN Inter-Parliamentary Assembly",
+				"ASEAN Inter-Parliamentary Organization"
+			],
+			"sourceName": "ASEAN Inter-Paliamentary Organization (AIPA)",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-107-libya",
+			"series": "CD",
+			"number": "107",
+			"holder": "Libya",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Libya",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-108-peru",
+			"series": "CD",
+			"number": "108",
+			"holder": "Peru",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Peru",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-109-slowakia",
+			"series": "CD",
+			"number": "109",
+			"holder": "Slowakia",
+			"holderType": "country",
+			"aliases": ["Slovakia"],
+			"sourceName": "Slovakia",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-110-sudan",
+			"series": "CD",
+			"number": "110",
+			"holder": "Sudan",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Sudan",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-111-yayasan-asean",
+			"series": "CD",
+			"number": "111",
+			"holder": "Yayasan ASEAN",
+			"holderType": "organization",
+			"aliases": ["ASEAN Foundation"],
+			"sourceName": "ASEAN Foundation",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-112-utusan-sekjen-pbb",
+			"series": "CD",
+			"number": "112",
+			"holder": "Utusan Sekjen PBB",
+			"holderType": "organization",
+			"aliases": ["Utusan Sekretaris Jenderal PBB"],
+			"sourceName": "Utusan Sekjen PBB",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-113-cifor",
+			"series": "CD",
+			"number": "113",
+			"holder": "CIFOR",
+			"holderType": "organization",
+			"aliases": ["Center for International Forestry Research"],
+			"sourceName": "Center for International Forestry Research (CIFOR)",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-114-bosnia-dan-herzegovina",
+			"series": "CD",
+			"number": "114",
+			"holder": "Bosnia dan Herzegovina",
+			"holderType": "country",
+			"aliases": ["Bosnia Herzegovina", "Bosnia"],
+			"sourceName": "Bosnia Herzegovina",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-115-lebanon",
+			"series": "CD",
+			"number": "115",
+			"holder": "Lebanon",
+			"holderType": "country",
+			"aliases": ["Libanon"],
+			"sourceName": "Lebanon",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-116-afrika-selatan",
+			"series": "CD",
+			"number": "116",
+			"holder": "Afrika Selatan",
+			"holderType": "country",
+			"aliases": ["South Africa"],
+			"sourceName": "Afrika Selatan",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-117-kroasia",
+			"series": "CD",
+			"number": "117",
+			"holder": "Kroasia",
+			"holderType": "country",
+			"aliases": ["Croatia"],
+			"sourceName": "Kroasia",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-118-ukraina",
+			"series": "CD",
+			"number": "118",
+			"holder": "Ukraina",
+			"holderType": "country",
+			"aliases": ["Ukraine"],
+			"sourceName": "Ukraina",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-120-uzbekistan",
+			"series": "CD",
+			"number": "120",
+			"holder": "Uzbekistan",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Uzbekistan",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-121-qatar",
+			"series": "CD",
+			"number": "121",
+			"holder": "Qatar",
+			"holderType": "country",
+			"aliases": ["Katar"],
+			"sourceName": "Qatar",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-122-unfpa",
+			"series": "CD",
+			"number": "122",
+			"holder": "UNFPA",
+			"holderType": "organization",
+			"aliases": ["United Nations Population Fund"],
+			"sourceName": "United Nations Population Fund (UNFPA)",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-123-mozambik",
+			"series": "CD",
+			"number": "123",
+			"holder": "Mozambik",
+			"holderType": "country",
+			"aliases": ["Mozambique"],
+			"sourceName": "Mozambique",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-125-timor-leste",
+			"series": "CD",
+			"number": "125",
+			"holder": "Timor Leste",
+			"holderType": "country",
+			"aliases": ["Timor-Leste"],
+			"sourceName": "Timor Leste",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-126-suriname",
+			"series": "CD",
+			"number": "126",
+			"holder": "Suriname",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Suriname",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-127-ekuador",
+			"series": "CD",
+			"number": "127",
+			"holder": "Ekuador",
+			"holderType": "country",
+			"aliases": ["Ecuador"],
+			"sourceName": "Ecuador",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-128-zimbabwe",
+			"series": "CD",
+			"number": "128",
+			"holder": "Zimbabwe",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Zimbabwe",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-129-iom",
+			"series": "CD",
+			"number": "129",
+			"holder": "IOM",
+			"holderType": "organization",
+			"aliases": ["International Organization for Migration"],
+			"sourceName": "Perwakilan International Organization for Migration (IOM)",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-130-azerbaijan",
+			"series": "CD",
+			"number": "130",
+			"holder": "Azerbaijan",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Azerbaijan",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-131-somalia",
+			"series": "CD",
+			"number": "131",
+			"holder": "Somalia",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Somalia",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-132-georgia",
+			"series": "CD",
+			"number": "132",
+			"holder": "Georgia",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Georgia",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-133-paraguay",
+			"series": "CD",
+			"number": "133",
+			"holder": "Paraguay",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Paraguay",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-134-oman",
+			"series": "CD",
+			"number": "134",
+			"holder": "Oman",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Oman",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-135-armenia",
+			"series": "CD",
+			"number": "135",
+			"holder": "Armenia",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Armenia",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-136-bahrain",
+			"series": "CD",
+			"number": "136",
+			"holder": "Bahrain",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Bahrain",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-137-mongolia",
+			"series": "CD",
+			"number": "137",
+			"holder": "Mongolia",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "Mongolia",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-138-san-marino",
+			"series": "CD",
+			"number": "138",
+			"holder": "San Marino",
+			"holderType": "country",
+			"aliases": [],
+			"sourceName": "San Marino",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-139-irlandia",
+			"series": "CD",
+			"number": "139",
+			"holder": "Irlandia",
+			"holderType": "country",
+			"aliases": ["Ireland"],
+			"sourceName": "Irlandia",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-140-unorcid",
+			"series": "CD",
+			"number": "140",
+			"holder": "UNORCID",
+			"holderType": "organization",
+			"aliases": [],
+			"sourceName": "United Nations Office for REDD+ Coordination in Indonesia (UNORCID)",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-141-isdb",
+			"series": "CD",
+			"number": "141",
+			"holder": "IsDB",
+			"holderType": "organization",
+			"aliases": ["IDB", "Islamic Development Bank", "Bank Pembangunan Islam"],
+			"sourceName": "Islamic Development Bank (IDB)",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-142-guinea-bissau",
+			"series": "CD",
+			"number": "142",
+			"holder": "Guinea-Bissau",
+			"holderType": "country",
+			"aliases": ["Guinea Bissau"],
+			"sourceName": "Guinea Bissau",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-143-etiopia",
+			"series": "CD",
+			"number": "143",
+			"holder": "Etiopia",
+			"holderType": "country",
+			"aliases": ["Ethiopia"],
+			"sourceName": "Ethiopia",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-144-kepulauan-solomon",
+			"series": "CD",
+			"number": "144",
+			"holder": "Kepulauan Solomon",
+			"holderType": "country",
+			"aliases": ["Kep Solomon", "Solomon Islands", "Solomon"],
+			"sourceName": "Kep Solomon",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "cd-145-ifad",
+			"series": "CD",
+			"number": "145",
+			"holder": "IFAD",
+			"holderType": "organization",
+			"aliases": ["International Fund for Agricultural Development"],
+			"sourceName": "International Fund for Agricultural Development (IFAD)",
+			"confidence": "high",
+			"needsReview": false,
+			"sources": ["perpol-7-2021-lampiran"],
+			"validFrom": "2021-05-05",
+			"reviewBy": "2027-03-24"
+		}
+	],
+	"referencePlates": [
+		{
+			"id": "ref-ri",
+			"series": "RI",
+			"number": null,
+			"label": "RI + nomor urut registrasi, tanpa seri huruf. Untuk kendaraan dinas Presiden, Wakil Presiden, ketua lembaga tinggi negara, dan pejabat setingkat menteri.",
+			"example": "RI 1",
+			"confidence": "high",
+			"sources": ["perpol-7-2021-lampiran"],
+			"note": "Tidak ada sumber valid yang memuat daftar lengkap kode RI, dan alokasi nomornya dapat berubah sewaktu-waktu.",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "ref-cc",
+			"series": "CC",
+			"number": null,
+			"label": "CC + kode negara + nomor urut registrasi. Untuk korps konsulat.",
+			"example": "CC 12 10",
+			"confidence": "high",
+			"sources": ["perpol-7-2021-lampiran"],
+			"note": "Contoh di lampiran memakai kode negara yang sama dengan CD, tetapi lampiran tidak menyatakannya secara eksplisit.",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "ref-ch",
+			"series": "CH",
+			"number": null,
+			"label": "CH + kode negara + nomor urut registrasi. Untuk konsul kehormatan.",
+			"example": "CH 130 1",
+			"confidence": "high",
+			"sources": ["perpol-7-2021-lampiran"],
+			"note": "Contoh di lampiran memakai kode negara yang sama dengan CD, tetapi lampiran tidak menyatakannya secara eksplisit.",
+			"reviewBy": "2027-03-24"
+		}
+	],
+	"riPairs": [
+		{
+			"id": "ri-1",
+			"series": "RI",
+			"number": "1",
+			"office": "Presiden",
+			"confidence": "high",
+			"sources": ["perpol-7-2021-lampiran", "korlantas-ig-via-detik-2026"],
+			"usedByFacts": [
+				"fact-ri-1-only-explicit",
+				"fact-indonesia-1-plate",
+				"fact-ri-1-13-korlantas"
+			],
+			"note": null
+		},
+		{
+			"id": "ri-2",
+			"series": "RI",
+			"number": "2",
+			"office": "Wakil Presiden",
+			"confidence": "high",
+			"sources": ["korlantas-ig-via-detik-2026", "kompas-id-2025-ri36"],
+			"usedByFacts": ["fact-ri-1-13-korlantas"],
+			"note": null
+		},
+		{
+			"id": "ri-3",
+			"series": "RI",
+			"number": "3",
+			"office": "Istri Presiden",
+			"confidence": "high",
+			"sources": ["korlantas-ig-via-detik-2026", "otomotifnet-2023-ri"],
+			"usedByFacts": ["fact-ri-1-13-korlantas"],
+			"note": "Tercantum dalam publikasi Korlantas; Perpol 7/2021 huruf F tidak menyebut jabatan ini. Fakta yang memakainya wajib menyertakan catatan tersebut."
+		},
+		{
+			"id": "ri-4",
+			"series": "RI",
+			"number": "4",
+			"office": "Istri Wakil Presiden",
+			"confidence": "high",
+			"sources": ["korlantas-ig-via-detik-2026", "otomotifnet-2023-ri"],
+			"usedByFacts": ["fact-ri-1-13-korlantas"],
+			"note": "Tercantum dalam publikasi Korlantas; Perpol 7/2021 huruf F tidak menyebut jabatan ini. Fakta yang memakainya wajib menyertakan catatan tersebut."
+		},
+		{
+			"id": "ri-5",
+			"series": "RI",
+			"number": "5",
+			"office": "Ketua MPR",
+			"confidence": "high",
+			"sources": ["korlantas-ig-via-detik-2026", "kumparan-2025-ri"],
+			"usedByFacts": ["fact-ri-1-13-korlantas"],
+			"note": null
+		},
+		{
+			"id": "ri-6",
+			"series": "RI",
+			"number": "6",
+			"office": "Ketua DPR",
+			"confidence": "high",
+			"sources": ["korlantas-ig-via-detik-2026", "kumparan-2025-ri"],
+			"usedByFacts": ["fact-ri-1-13-korlantas"],
+			"note": null
+		},
+		{
+			"id": "ri-7",
+			"series": "RI",
+			"number": "7",
+			"office": "Ketua DPD",
+			"confidence": "high",
+			"sources": ["korlantas-ig-via-detik-2026", "kumparan-2025-ri"],
+			"usedByFacts": ["fact-ri-1-13-korlantas"],
+			"note": null
+		},
+		{
+			"id": "ri-8",
+			"series": "RI",
+			"number": "8",
+			"office": "Ketua MA",
+			"confidence": "high",
+			"sources": ["korlantas-ig-via-detik-2026", "otomotifnet-2023-ri"],
+			"usedByFacts": ["fact-ri-1-13-korlantas"],
+			"note": null
+		},
+		{
+			"id": "ri-9",
+			"series": "RI",
+			"number": "9",
+			"office": "Ketua MK",
+			"confidence": "high",
+			"sources": ["korlantas-ig-via-detik-2026", "otomotifnet-2023-ri"],
+			"usedByFacts": ["fact-ri-1-13-korlantas"],
+			"note": null
+		},
+		{
+			"id": "ri-10",
+			"series": "RI",
+			"number": "10",
+			"office": "Ketua BPK",
+			"confidence": "high",
+			"sources": ["korlantas-ig-via-detik-2026", "otomotifnet-2023-ri"],
+			"usedByFacts": ["fact-ri-1-13-korlantas"],
+			"note": null
+		},
+		{
+			"id": "ri-11",
+			"series": "RI",
+			"number": "11",
+			"office": "Ketua KY",
+			"confidence": "high",
+			"sources": ["korlantas-ig-via-detik-2026", "otomotifnet-2023-ri"],
+			"usedByFacts": ["fact-ri-1-13-korlantas"],
+			"note": null
+		},
+		{
+			"id": "ri-12",
+			"series": "RI",
+			"number": "12",
+			"office": "Gubernur BI",
+			"confidence": "high",
+			"sources": ["korlantas-ig-via-detik-2026", "kumparan-2025-ri"],
+			"usedByFacts": ["fact-ri-1-13-korlantas"],
+			"note": null
+		},
+		{
+			"id": "ri-13",
+			"series": "RI",
+			"number": "13",
+			"office": "Ketua OJK",
+			"confidence": "high",
+			"sources": ["korlantas-ig-via-detik-2026", "otomotifnet-2023-ri"],
+			"usedByFacts": ["fact-ri-1-13-korlantas"],
+			"note": null
+		},
+		{
+			"id": "ri-36",
+			"series": "RI",
+			"number": "36",
+			"office": "Utusan Khusus Presiden",
+			"confidence": "high",
+			"sources": ["korlantas-cnn-2025-ri36", "kompas-id-2025-ri36"],
+			"usedByFacts": ["fact-ri-small-number"],
+			"note": null
+		}
+	],
+	"rejectedSources": [
+		{
+			"source": "Daftar CD di beberapa portal berita (misalnya metro.suara.com, Juli 2023)",
+			"reason": "Nomor negara bergeser dari lampiran Perpol; ada nomor ganda untuk dua negara"
+		},
+		{
+			"source": "Artikel yang merujuk Perkap 5/2012 atau Perkap 4/2006 sebagai dasar CD/RI",
+			"reason": "Kedua peraturan dicabut oleh Perpol 7/2021"
+		},
+		{
+			"source": "Artikel yang merujuk \"Perkap 3/2012\" atau \"Perkap 5/2015\" untuk daftar RI",
+			"reason": "Isi peraturan yang dirujuk tidak dapat ditelusuri memuat daftar nomor RI"
+		},
+		{
+			"source": "Daftar RI 1–RI 100 versi kabinet 2014–2024",
+			"reason": "Alokasi berubah sejak Kabinet Merah Putih"
+		},
+		{
+			"source": "Auto2000, \"Daftar Plat Mobil RI Lengkap dengan Aturannya\" (9 Juli 2026)",
+			"reason": "Tanpa rujukan sumber; RI 14 ke atas memakai alokasi kabinet lama (misalnya RI 36 untuk Menkominfo dan RI 65 untuk UKP4); ada duplikasi internal, seperti Gubernur BI di RI 12 dan RI 63"
+		}
+	]
 }
