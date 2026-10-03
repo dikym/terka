@@ -15,7 +15,7 @@ export function readSpecialCodes(value: unknown): SpecialCodes {
 	const result = specialCodesSchema.safeParse(value);
 	if (!result.success)
 		throw new Error(
-			`Terka_Special_Codes.json: ${issueMessages(value, result.error.issues).join("; ")}`
+			`special-codes.json: ${issueMessages(value, result.error.issues).join("; ")}`
 		);
 	return result.data;
 }

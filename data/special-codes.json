@@ -1,6 +1,6 @@
 {
   "document": "Terka_Special_Codes.md",
-  "note": "Data kode khusus untuk build plates.json. specials[] membentuk kartu Latihan Kode Khusus; referencePlates[] hanya tampil di Referensi; riPairs[] hanya bahan Fun Facts dan tidak pernah masuk plates.json. sources[] digabung dengan sources[] dari Terka_Fun_Facts.json; id yang sama wajib berisi data yang sama.",
+  "note": "Data kode khusus untuk build plates.json. specials[] membentuk kartu Latihan Kode Khusus; referencePlates[] hanya tampil di Referensi; riPairs[] hanya bahan Fun Facts dan tidak pernah masuk plates.json. sources[] digabung dengan sources[] dari fun-facts.json; id yang sama wajib berisi data yang sama.",
   "summary": {
     "specials": {
       "total": 130,

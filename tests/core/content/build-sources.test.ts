@@ -5,8 +5,8 @@ import { buildContent } from "../../../src/core/content/build";
 const text = (path: string) => readFile(path, "utf8");
 const sources = async () => ({
 	curation: JSON.parse(await text("data/plate-curation.json")),
-	specialCodes: JSON.parse(await text("data/Terka_Special_Codes.json")),
-	funFacts: JSON.parse(await text("data/Terka_Fun_Facts.json")),
+	specialCodes: JSON.parse(await text("data/special-codes.json")),
+	funFacts: JSON.parse(await text("data/fun-facts.json")),
 	today: "2026-10-02",
 	previous: null as unknown
 });

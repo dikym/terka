@@ -69,7 +69,7 @@ Satu tes otomatis gagal di langkah mana pun menghentikan migration dan deploy. E
 - **Pengguna sintetis:** generator yang mensimulasikan pengguna dengan kurva lupa yang diketahui. Dipakai untuk menguji apakah optimizer bisa menemukan kembali parameter yang dipakai untuk membangkitkan data.
 - **Konten mini:** `plates.json` kecil berisi 8 kode yang mewakili semua kasus khusus — kode lintas provinsi, kode dengan alias, entri `medium`, dan kode yang pernah pindah wilayah — beserta kab/kotanya. Data uji kab/kota wajib memuat: nama kota dan kabupaten yang sama, kab/kota yang dipakai dua kode, nama 4 huruf, nama berawalan "Kota" sebagai bagian nama, varian terdaftar, keanggotaan `medium`.
 
-**Data uji penempatan dan fakta.** Tes penempatan memakai data uji khusus minimal 28 kode (8 common, 10 medium, 10 rare), bukan data uji mini 8 kode. Tes rotasi memakai 43 fakta siap terbit bersumber sintetis untuk pengujian; data ini terpisah dari 41 fakta produksi di `../data/Terka_Fun_Facts.json`. Semua sumber sintetis hanya ada di data uji dan tidak boleh masuk konten produksi.
+**Data uji penempatan dan fakta.** Tes penempatan memakai data uji khusus minimal 28 kode (8 common, 10 medium, 10 rare), bukan data uji mini 8 kode. Tes rotasi memakai 43 fakta siap terbit bersumber sintetis untuk pengujian; data ini terpisah dari 41 fakta produksi di `../data/fun-facts.json`. Semua sumber sintetis hanya ada di data uji dan tidak boleh masuk konten produksi.
 
 **Data uji bawaan.** Kecuali disebut lain, tes perilaku memakai konten mini di atas beserta kab/kota, alias, dan varian penulisan. Tingkat pengguna Menengah: batas 10 materi baru per hari dan ambang penahanan 40. Zona waktu-nya `Asia/Makassar`, dan `local_day` awalnya Senin 21 September 2026.
 
@@ -879,7 +879,7 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | TR-175 | `review_logs` dengan `content_id = 'dk'` dan `mode = 'special2holder'`          | Ditolak `CHECK`: mode kode khusus wajib memakai id `cd-`                                                                | negatif  |
 | TR-176 | `specials[]` memuat entri dengan `series` selain CD, atau `id` berawalan `ref-` | Build gagal                                                                                                             | negatif  |
 | TR-177 | Ekspor dengan kartu kode khusus lalu impor ke perangkat kosong                  | Keadaan identik, termasuk `special_enabled` dan kartu `holder2special` yang terbuka                                     | normal   |
-| TR-178 | Seed dibandingkan dengan `specials[]` di `../data/Terka_Special_Codes.json`           | Nomor, pemegang, dan ejaan sumber identik untuk 130 baris                                                               | normal   |
+| TR-178 | Seed dibandingkan dengan `specials[]` di `../data/special-codes.json`           | Nomor, pemegang, dan ejaan sumber identik untuk 130 baris                                                               | normal   |
 | TR-179 | `referencePlates[]` memuat entri RI dengan `number` terisi                      | Build gagal                                                                                                             | negatif  |
 
 ## 7. Pengujian Alur Menyeluruh (E2E-)

@@ -17,7 +17,7 @@ cp .env.example .env.local
   penjadwalan FSRS, soal, batas hari) sebagai fungsi murni.
 - `src/rules.ts`: seluruh angka aturan.
 - `src/data/plates.json`: konten hasil build dari `data/plate-curation.json`,
-  `data/Terka_Special_Codes.json`, dan `data/Terka_Fun_Facts.json`.
+  `data/special-codes.json`, dan `data/fun-facts.json`.
 - `src/app/`: kerangka Next.js; UI sedang ditulis ulang dari desain v2.
 - `supabase/`: konfigurasi Supabase; migration belum ada.
 
