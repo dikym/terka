@@ -2,7 +2,7 @@
 
 **Status:** Draf · **Bahasa:** Indonesia
 **Acuan:** Dokumen Kode Plat Nomor Kendaraan Indonesia (sumber data)
-**Dokumen terkait:** PRD (produk dan alur pengguna) · SRD (aturan perilaku sistem) · ERD (`Terka_ERD.puml`, `Terka_ERD.md`) · Special Codes (`Terka_Special_Codes.md`, `Terka_Special_Codes.json`) · Fun Facts (`Terka_Fun_Facts.md`, `Terka_Fun_Facts.json`) · Microcopy (`Terka_Microcopy.md`) · Tests (`Terka_Tests.md`)
+**Dokumen terkait:** PRD (produk dan alur pengguna) · SRD (aturan perilaku sistem) · ERD (`Terka_ERD.puml`, `Terka_ERD.md`) · Special Codes (`Terka_Special_Codes.md`, `../data/Terka_Special_Codes.json`) · Fun Facts (`Terka_Fun_Facts.md`, `../data/Terka_Fun_Facts.json`) · Microcopy (`Terka_Microcopy.md`) · Tests (`Terka_Tests.md`)
 
 > **Slogan:** Lihat pelatnya, terka asalnya.
 > **Fokus dokumen ini:** arsitektur local-first, integrasi Supabase, model data, sinkronisasi, keamanan, dan pipeline build.
@@ -71,7 +71,7 @@ Konsekuensinya, server tidak memeriksa apakah jawaban benar atau jadwal valid. T
 
 ### 4.1 Konten: `plates.json`
 
-Seluruh konten berasal dari satu file JSON yang dihasilkan dari dokumen referensi, `Terka_Special_Codes.json`, dan `Terka_Fun_Facts.json`, lalu dikunci saat build. Contoh berikut adalah potongan skema, bukan dataset lengkap yang memenuhi jumlah tier atau cakupan nasional. Progres pengguna terhubung ke konten lewat `id` stabil, jadi pembaruan data tidak menghapus riwayat belajar.
+Seluruh konten berasal dari satu file JSON yang dihasilkan dari dokumen referensi, `../data/Terka_Special_Codes.json`, dan `../data/Terka_Fun_Facts.json`, lalu dikunci saat build. Contoh berikut adalah potongan skema, bukan dataset lengkap yang memenuhi jumlah tier atau cakupan nasional. Progres pengguna terhubung ke konten lewat `id` stabil, jadi pembaruan data tidak menghapus riwayat belajar.
 
 ```json
 {
@@ -153,9 +153,9 @@ Seluruh konten berasal dari satu file JSON yang dihasilkan dari dokumen referens
 
 **Satu mode, satu kartu.** Identitas kartu selalu berbentuk `contentId::mode`. Kode wilayah memakai `regions[].id` dengan tiga mode: `code2region`, `region2code`, dan `setrecall`. Bentuk Tebak berwaktu adalah soal Level 3 dari kartu `code2region` atau `region2code`, bukan mode kartu. Kode khusus memakai `specials[].id` dengan dua mode: `special2holder` dan `holder2special`. Kombinasi lain ditolak. Identitas ini tetap sama ketika bentuk soal atau tingkat kesulitan berubah. Kartu dibentuk dari `plates.json`; status dan jadwalnya dihitung dari riwayat. Tidak ada tabel tersendiri untuk menyimpan daftar kartu.
 
-**Publikasi fakta.** `facts[]` memuat `historyLabel`, `publicationStatus`, `source`, dan `sourceCheckedAt`. `source` berisi daftar `id` dari `sources[]`; `id` pertama tampil sebagai sumber di layar akhir. `historyLabel` berisi label sejarah — `terverifikasi`, `diperdebatkan`, atau `mitos` — dan menggantikan nama properti lama `status`, yang terlalu umum dan mudah tertukar dengan `publicationStatus`. Label sejarah tidak membuktikan sumber telah diperiksa. Butir `ready` wajib memiliki sumber yang dapat ditelusuri dan tanggal pemeriksaan; penetapan ready dilakukan editor setelah pemeriksaan, bukan otomatis. Butir draf tidak dipilih aplikasi. Jika tidak ada fakta siap terbit, layar akhir menghilangkan blok fakta dan tidak menulis `fact_views`. Prosedur editorial dan aturan build fakta ada di `Terka_Fun_Facts.md` bagian 2 dan 3. `sources[]` di `plates.json` menggabungkan sumber dari `Terka_Special_Codes.json` dan `Terka_Fun_Facts.json`; `id` yang sama di kedua berkas wajib berisi data yang sama.
+**Publikasi fakta.** `facts[]` memuat `historyLabel`, `publicationStatus`, `source`, dan `sourceCheckedAt`. `source` berisi daftar `id` dari `sources[]`; `id` pertama tampil sebagai sumber di layar akhir. `historyLabel` berisi label sejarah — `terverifikasi`, `diperdebatkan`, atau `mitos` — dan menggantikan nama properti lama `status`, yang terlalu umum dan mudah tertukar dengan `publicationStatus`. Label sejarah tidak membuktikan sumber telah diperiksa. Butir `ready` wajib memiliki sumber yang dapat ditelusuri dan tanggal pemeriksaan; penetapan ready dilakukan editor setelah pemeriksaan, bukan otomatis. Butir draf tidak dipilih aplikasi. Jika tidak ada fakta siap terbit, layar akhir menghilangkan blok fakta dan tidak menulis `fact_views`. Prosedur editorial dan aturan build fakta ada di `Terka_Fun_Facts.md` bagian 2 dan 3. `sources[]` di `plates.json` menggabungkan sumber dari `../data/Terka_Special_Codes.json` dan `../data/Terka_Fun_Facts.json`; `id` yang sama di kedua berkas wajib berisi data yang sama.
 
-**Kode khusus: `specials[]`, `referencePlates[]`, dan `sources[]`.** Data lengkap dan alasan label setiap entri ada di `Terka_Special_Codes.md`. Data yang dibaca build ada di `Terka_Special_Codes.json`, yang menjadi sumber `specials[]`, `referencePlates[]`, dan `sources[]`; isinya wajib sama dengan Markdown. `riPairs[]` di JSON itu hanya bahan Fun Facts dan tidak disalin ke `plates.json`. `specials[]` hanya berisi kode negara CD dan menjadi satu-satunya sumber kartu kode khusus. Properti per entri:
+**Kode khusus: `specials[]`, `referencePlates[]`, dan `sources[]`.** Data lengkap dan alasan label setiap entri ada di `Terka_Special_Codes.md`. Data yang dibaca build ada di `../data/Terka_Special_Codes.json`, yang menjadi sumber `specials[]`, `referencePlates[]`, dan `sources[]`; isinya wajib sama dengan Markdown. `riPairs[]` di JSON itu hanya bahan Fun Facts dan tidak disalin ke `plates.json`. `specials[]` hanya berisi kode negara CD dan menjadi satu-satunya sumber kartu kode khusus. Properti per entri:
 
 | Properti                | Isi                                                                             |
 | ----------------------- | ------------------------------------------------------------------------------- |
@@ -182,7 +182,7 @@ Aturan build untuk kode khusus:
 
 **Data Referensi: `referencePlates[]`.** Pelat RI, CC, dan CH hanya tampil di Referensi, masing-masing sebagai satu entri format. `note` pada entri RI wajib tampil dan menyatakan tidak ada sumber valid untuk daftar lengkap serta alokasi dapat berubah sewaktu-waktu. Build gagal jika `referencePlates[]` memuat entri RI dengan `number` terisi. Datanya disimpan di `referencePlates[]` dengan properti `id` (berawalan `ref-`), `series`, `number` (boleh null untuk entri format), `label`, `example` (contoh pelat dari lampiran, tampil di Referensi), `confidence`, `sources`, `note`, dan `reviewBy`. Entri ini tidak memiliki `aliases` atau `holderType`, tidak masuk kamus jawaban SRD 5.3, dan tidak pernah dibaca generator kartu. Build gagal jika `id` berawalan `ref-` muncul di `specials[]` atau sebagai `content_id` kartu. Aturan sumber, `checkedAt`, `originalUrl`, dan `reviewBy` sama dengan `specials[]`.
 
-**Properti `sources[]`.** Setiap sumber, dari `Terka_Special_Codes.json` maupun `Terka_Fun_Facts.json`, memuat `id`, `title`, `publisher`, `type`, `date`, `url`, `originalUrl`, `locator`, dan `checkedAt`. `date` boleh null hanya untuk halaman ensiklopedia atau wiki yang terus diperbarui; `originalUrl` boleh null.
+**Properti `sources[]`.** Setiap sumber, dari `../data/Terka_Special_Codes.json` maupun `../data/Terka_Fun_Facts.json`, memuat `id`, `title`, `publisher`, `type`, `date`, `url`, `originalUrl`, `locator`, dan `checkedAt`. `date` boleh null hanya untuk halaman ensiklopedia atau wiki yang terus diperbarui; `originalUrl` boleh null.
 
 **Properti `aliases` dan `variants` wajib ada** di setiap kab/kota, meski isinya array kosong. Langkah 3 dan 4 di SRD bagian 5.1 bergantung pada keduanya.
 

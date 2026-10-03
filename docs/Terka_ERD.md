@@ -1,7 +1,7 @@
 # TERKA — Entity Relationship Diagram (ERD): Data Dictionary and Design Notes
 
 **Bahasa:** Indonesia
-**Acuan:** Terka PRD, SRD, TRD · **Diagram:** `Terka_ERD.puml` · **Sumber entitas `content_`:** `Terka_Special_Codes.json`, `Terka_Fun_Facts.json`
+**Acuan:** Terka PRD, SRD, TRD · **Diagram:** `Terka_ERD.puml` · **Sumber entitas `content_`:** `../data/Terka_Special_Codes.json`, `../data/Terka_Fun_Facts.json`
 
 Dokumen ini menjadi kamus untuk `Terka_ERD.puml`: fungsi tabel, arti kolom, nilai yang didukung, dan aturan integritasnya. Diagram menunjukkan hubungan antardata, sedangkan uraian ini menjelaskan penerapannya.
 
