@@ -92,6 +92,7 @@ export const KEY_GAPS_MAX = 120;
 export const KEY_GAP_CAP_MS = 30_000;
 
 export const NOTE_OFFER_LAPSES = 4;
+export const NOTE_MAX_CHARS = 280;
 export const LOGIN_PROMPT_ACTIVE_DAYS = 7;
 export const FACT_RECENT_MAX = 20;
 export const FORECAST_DAYS = 14;
