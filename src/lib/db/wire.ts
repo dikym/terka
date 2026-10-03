@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { contentIdSchema } from "@/core/content/schema";
-import type { MatchType } from "@/core/answers/match-name";
 import type {
 	CardEvent,
 	FactView,
@@ -8,15 +7,25 @@ import type {
 	PracticeRun,
 	ReviewLog,
 	ReviewVoid,
-	RunKind,
 	Sighting
 } from "@/core/log/events";
-import type { Scope } from "@/core/questions/distractors";
-import type { CardMode, LevelSource, QuestionContext } from "@/core/questions/question";
-import { NOTE_MAX_CHARS, type Tier } from "@/rules";
+import { NOTE_MAX_CHARS } from "@/rules";
+import {
+	CARD_EVENT_KINDS,
+	CARD_MODES,
+	CONTEXTS,
+	FSRS_ALGORITHMS,
+	FSRS_STATUSES,
+	INPUT_MODES,
+	LEVEL_SOURCES,
+	MATCH_TYPES,
+	QUESTION_TYPES,
+	RUN_KINDS,
+	SCOPE_LEVELS,
+	TIERS
+} from "./enums";
 import type { ConsentRow, DeviceRow, NoteRow, SettingsRow, TableName } from "./schema";
 
-// A record forces every value of the union to be listed, so a new core value cannot be rejected on import.
 const oneOf = <T extends string>(values: Record<T, true>) =>
 	z.enum(Object.keys(values) as [T, ...T[]]);
 
@@ -35,21 +44,9 @@ const event = {
 	serverSeq: z.number().int().positive().nullable()
 };
 
-const mode = oneOf<CardMode>({
-	code2region: true,
-	region2code: true,
-	setrecall: true,
-	special2holder: true,
-	holder2special: true
-});
-const matchType = oneOf<MatchType>({
-	exact: true,
-	variant: true,
-	typo: true,
-	unverified: true,
-	none: true
-});
-const scopeLevel = oneOf<Scope["level"]>({ national: true, group: true, province: true });
+const mode = oneOf(CARD_MODES);
+const matchType = oneOf(MATCH_TYPES);
+const scopeLevel = oneOf(SCOPE_LEVELS);
 
 const reviewLog = z
 	.object({
@@ -57,19 +54,9 @@ const reviewLog = z
 		runId: uuid.nullable(),
 		contentId: contentIdSchema,
 		mode,
-		context: oneOf<QuestionContext>({
-			intro: true,
-			daily: true,
-			drill: true,
-			focused: true,
-			challenge: true,
-			kilat: true,
-			placement: true,
-			setrecall: true,
-			special: true
-		}),
+		context: oneOf(CONTEXTS),
 		level: z.union([z.literal(1), z.literal(2), z.literal(3)]),
-		levelSource: oneOf<LevelSource>({ auto: true, manual_up: true, manual_down: true }),
+		levelSource: oneOf(LEVEL_SOURCES),
 		correct: z.boolean().nullable(),
 		timedOut: z.boolean(),
 		msToFirstKey: count.nullable(),
@@ -79,7 +66,7 @@ const reviewLog = z
 		deletedChars: count,
 		optionChanges: count,
 		optionCount: count.nullable(),
-		inputMode: oneOf<ReviewLog["inputMode"]>({ keyboard: true, touch: true }),
+		inputMode: oneOf(INPUT_MODES),
 		interrupted: z.boolean(),
 		rawAnswer: z.string().nullable(),
 		matchType,
@@ -103,14 +90,7 @@ const reviewLog = z
 				])
 			)
 			.nullable(),
-		questionType: oneOf<ReviewLog["questionType"]>({
-			intro_read: true,
-			choice: true,
-			truefalse: true,
-			oddoneout: true,
-			typed: true,
-			setrecall: true
-		}),
+		questionType: oneOf(QUESTION_TYPES),
 		contentVersion: z.number().int().positive(),
 		engineVersion: z.number().int().positive(),
 		clientTs: time,
@@ -128,7 +108,7 @@ const cardEvent = z
 		...event,
 		contentId: contentIdSchema,
 		mode,
-		kind: oneOf<CardEvent["kind"]>({ suspend: true, unsuspend: true }),
+		kind: oneOf(CARD_EVENT_KINDS),
 		clientTs: time,
 		localDay: day
 	})
@@ -151,10 +131,10 @@ const factView = z
 const fsrsParams = z
 	.object({
 		...event,
-		algorithm: z.literal("fsrs-6"),
+		algorithm: oneOf(FSRS_ALGORITHMS),
 		libraryVersion: z.string().min(1),
 		weights: z.array(z.number()),
-		status: oneOf<FsrsParams["status"]>({ active: true, rejected: true }),
+		status: oneOf(FSRS_STATUSES),
 		activatedAt: time.nullable(),
 		trainedReviewCount: count,
 		trainedThroughSeq: z.number().int().nullable(),
@@ -171,15 +151,7 @@ const fsrsParams = z
 const practiceRun = z
 	.object({
 		...event,
-		kind: oneOf<RunKind>({
-			daily: true,
-			focused: true,
-			challenge: true,
-			kilat: true,
-			placement: true,
-			setrecall: true,
-			special: true
-		}),
+		kind: oneOf(RUN_KINDS),
 		scopeLevel,
 		scopeId: contentIdSchema.nullable(),
 		startedAt: time,
@@ -191,12 +163,7 @@ const practiceRun = z
 		score: count.nullable(),
 		estimatedMs: count.nullable(),
 		plannedCount: count.nullable(),
-		placementLevel: oneOf<Tier>({
-			pemula: true,
-			menengah: true,
-			mahir: true,
-			ahli: true
-		}).nullable()
+		placementLevel: oneOf(TIERS).nullable()
 	})
 	.strict() satisfies z.ZodType<PracticeRun>;
 
