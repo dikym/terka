@@ -879,7 +879,7 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | TR-175 | `review_logs` dengan `content_id = 'dk'` dan `mode = 'special2holder'`          | Ditolak `CHECK`: mode kode khusus wajib memakai id `cd-`                                                                | negatif  |
 | TR-176 | `specials[]` memuat entri dengan `series` selain CD, atau `id` berawalan `ref-` | Build gagal                                                                                                             | negatif  |
 | TR-177 | Ekspor dengan kartu kode khusus lalu impor ke perangkat kosong                  | Keadaan identik, termasuk `special_enabled` dan kartu `holder2special` yang terbuka                                     | normal   |
-| TR-178 | Seed dibandingkan dengan tabel CD di `Terka_Special_Codes.md` bagian 4            | Nomor, pemegang, dan ejaan sumber identik untuk 130 baris                                                               | normal   |
+| TR-178 | Seed dibandingkan dengan `specials[]` di `../data/Terka_Special_Codes.json`           | Nomor, pemegang, dan ejaan sumber identik untuk 130 baris                                                               | normal   |
 | TR-179 | `referencePlates[]` memuat entri RI dengan `number` terisi                      | Build gagal                                                                                                             | negatif  |
 
 ## 7. Pengujian Alur Menyeluruh (E2E-)

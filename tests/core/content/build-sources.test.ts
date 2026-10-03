@@ -7,8 +7,6 @@ const sources = async () => ({
 	curation: JSON.parse(await text("data/plate-curation.json")),
 	specialCodes: JSON.parse(await text("data/Terka_Special_Codes.json")),
 	funFacts: JSON.parse(await text("data/Terka_Fun_Facts.json")),
-	specialsMarkdown: await text("docs/Terka_Special_Codes.md"),
-	factsMarkdown: await text("docs/Terka_Fun_Facts.md"),
 	today: "2026-10-02",
 	previous: null as unknown
 });

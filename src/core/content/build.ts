@@ -2,11 +2,8 @@ import { draftSources, type ContentDraft } from "./draft";
 import { issueMessages } from "./issues";
 import { error, isError, report, type ContentMessage } from "./messages";
 import { readCuration } from "./read-curation";
-import { readFacts } from "./read-facts";
 import { readFunFacts } from "./read-fun-facts";
 import { readSpecialCodes } from "./read-special-codes";
-import { readSpecials } from "./read-specials";
-import { consistencyRules } from "./rules/consistency";
 import { coverageRules } from "./rules/coverage";
 import { factRules } from "./rules/facts";
 import { identityRules } from "./rules/identity";
@@ -53,8 +50,7 @@ export function buildFromDraft(draft: ContentDraft, options: BuildOptions): Buil
 		...regionRules(draft),
 		...placementRules(draft),
 		...factRules(draft),
-		...specialRules(draft, options.today),
-		...consistencyRules(draft)
+		...specialRules(draft, options.today)
 	];
 	if (options.release)
 		messages = messages.map((message) =>
@@ -82,24 +78,14 @@ export function buildFromDraft(draft: ContentDraft, options: BuildOptions): Buil
 }
 
 export function buildContent(
-	input: {
-		curation: unknown;
-		specialCodes: unknown;
-		funFacts: unknown;
-		specialsMarkdown: string;
-		factsMarkdown: string;
-	} & BuildOptions
+	input: { curation: unknown; specialCodes: unknown; funFacts: unknown } & BuildOptions
 ): BuildResult {
 	let draft: ContentDraft;
 	try {
 		draft = {
 			curation: readCuration(input.curation),
 			specials: readSpecialCodes(input.specialCodes),
-			funFacts: readFunFacts(input.funFacts),
-			markdown: {
-				specials: readSpecials(input.specialsMarkdown),
-				facts: readFacts(input.factsMarkdown)
-			}
+			funFacts: readFunFacts(input.funFacts)
 		};
 	} catch (cause) {
 		return {

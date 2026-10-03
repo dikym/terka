@@ -3,27 +3,16 @@ import { buildContent } from "../src/core/content/build";
 
 const root = new URL("../", import.meta.url);
 const read = (path: string) => readFile(new URL(path, root), "utf8");
-const [
-	curationText,
-	specialCodesText,
-	funFactsText,
-	specialsMarkdown,
-	factsMarkdown,
-	previousText
-] = await Promise.all([
+const [curationText, specialCodesText, funFactsText, previousText] = await Promise.all([
 	read("data/plate-curation.json"),
 	read("data/Terka_Special_Codes.json"),
 	read("data/Terka_Fun_Facts.json"),
-	read("docs/Terka_Special_Codes.md"),
-	read("docs/Terka_Fun_Facts.md"),
 	read("src/data/plates.json").catch(() => null)
 ]);
 const result = buildContent({
 	curation: JSON.parse(curationText),
 	specialCodes: JSON.parse(specialCodesText),
 	funFacts: JSON.parse(funFactsText),
-	specialsMarkdown,
-	factsMarkdown,
 	today: new Date().toISOString().slice(0, 10),
 	release: process.argv.includes("--release"),
 	previous: previousText === null ? null : JSON.parse(previousText)

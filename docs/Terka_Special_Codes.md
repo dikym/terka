@@ -241,7 +241,7 @@ Daftar RI 14 sampai RI 100 yang beredar luas, misalnya RI 15 untuk Menko Polhuka
 
 ## 9. Struktur Data JSON
 
-`../data/Terka_Special_Codes.json` berisi data yang dibaca build. Isinya wajib sama dengan tabel di dokumen ini.
+`../data/Terka_Special_Codes.json` berisi data yang dibaca build. Build tidak membaca tabel di dokumen ini.
 
 | Bagian JSON         | Isi                                                                                                         | Masuk `plates.json` |
 | ------------------- | ----------------------------------------------------------------------------------------------------------- | ------------------- |
