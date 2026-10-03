@@ -178,7 +178,12 @@ const device = z
 	.strict() satisfies z.ZodType<DeviceRow>;
 
 const consent = z
-	.object({ policyVersion: z.string().min(1), consentedAt: time, receivedAt: time.nullable() })
+	.object({
+		policyVersion: z.string().min(1),
+		deviceId: uuid,
+		consentedAt: time,
+		receivedAt: time.nullable()
+	})
 	.strict() satisfies z.ZodType<ConsentRow>;
 
 const settings = z
@@ -244,8 +249,9 @@ export function toWire(row: object): Record<string, unknown> {
 	);
 }
 
-export function fromWire(table: TableName, row: Record<string, unknown>) {
-	const local = Object.fromEntries(
+// Keys and times only; fromWire adds validation, pulled server rows skip it.
+export function toLocal(row: Record<string, unknown>): Record<string, unknown> {
+	return Object.fromEntries(
 		Object.entries(row).map(([key, value]) => {
 			const name = camel(key);
 			return [
@@ -254,5 +260,8 @@ export function fromWire(table: TableName, row: Record<string, unknown>) {
 			];
 		})
 	);
-	return ROW_SCHEMAS[table].safeParse(local);
+}
+
+export function fromWire(table: TableName, row: Record<string, unknown>) {
+	return ROW_SCHEMAS[table].safeParse(toLocal(row));
 }

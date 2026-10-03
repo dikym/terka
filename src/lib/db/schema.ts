@@ -35,7 +35,12 @@ export type DeviceRow = {
 	createdAt: number;
 	lastSeenAt: number | null;
 };
-export type ConsentRow = { policyVersion: string; consentedAt: number; receivedAt: number | null };
+export type ConsentRow = {
+	policyVersion: string;
+	deviceId: string;
+	consentedAt: number;
+	receivedAt: number | null;
+};
 export type SettingsRow = {
 	activeScopeLevel: Scope["level"];
 	activeScopeId: string | null;
