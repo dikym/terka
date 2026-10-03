@@ -12,7 +12,9 @@
 		"lint": "eslint",
 		"lint:fix": "eslint --fix",
 		"format": "prettier --write .",
-		"check": "tsc --noEmit"
+		"check": "tsc --noEmit",
+		"db:start": "supabase start -x studio,realtime,storage-api,imgproxy,edge-runtime,logflare,vector,supavisor,postgres-meta",
+		"db:test": "supabase db reset && supabase test db && bun test supabase/checks"
 	},
 	"dependencies": {
 		"@supabase/supabase-js": "^2.108.2",
