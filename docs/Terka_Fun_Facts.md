@@ -1,8 +1,8 @@
 # TERKA — Fun Facts
 
 **Status:** Siap terbit · **Bahasa:** Indonesia
-**Data pendamping:** `Terka_Fun_Facts.json`
-**Dokumen terkait:** PRD 6.5 (Fun Facts) · SRD 4.15 dan 8.10 (pemilihan dan pergiliran fakta) · TRD 4.1 (`facts[]` dan `sources[]`) · ERD (`content_facts`, `content_fact_sources`) · Special Codes (`Terka_Special_Codes.md`, `Terka_Special_Codes.json`) · Microcopy (`Terka_Microcopy.md`) · Tests (`Terka_Tests.md`)
+**Data pendamping:** `../data/Terka_Fun_Facts.json`
+**Dokumen terkait:** PRD 6.5 (Fun Facts) · SRD 4.15 dan 8.10 (pemilihan dan pergiliran fakta) · TRD 4.1 (`facts[]` dan `sources[]`) · ERD (`content_facts`, `content_fact_sources`) · Special Codes (`Terka_Special_Codes.md`, `../data/Terka_Special_Codes.json`) · Microcopy (`Terka_Microcopy.md`) · Tests (`Terka_Tests.md`)
 
 > **Slogan:** Lihat pelatnya, terka asalnya.
 > **Fokus dokumen ini:** 41 fakta untuk blok Fun Facts di layar akhir, label sejarahnya, sumber setiap fakta, dan aturan penerbitannya. Pemeriksaan sumber terakhir dilakukan pada 1 Oktober 2026.
@@ -11,7 +11,7 @@
 
 ## 1. Tujuan dan Ruang Lingkup
 
-Dokumen ini menjadi naskah sumber untuk blok **Fun Facts** di layar akhir setiap mode (PRD bagian 6.5). Data yang dibaca build ada di `Terka_Fun_Facts.json`; teks, label, dan sumber di kedua berkas wajib sama.
+Dokumen ini menjadi naskah sumber untuk blok **Fun Facts** di layar akhir setiap mode (PRD bagian 6.5). Data yang dibaca build ada di `../data/Terka_Fun_Facts.json`; teks, label, dan sumber di kedua berkas wajib sama.
 
 Fakta hanya tampil di layar akhir. Fakta tidak dipakai sebagai soal, pilihan jawaban, atau materi di tengah sesi. Aturan pemilihan dan pergiliran ada di SRD bagian 4.15 dan 8.10; teks UI-nya ada di Microcopy.
 
@@ -53,7 +53,7 @@ Build menolak fakta `ready` yang tidak memenuhi syarat 1 dan 2 (Tests TR-150). S
 
 ## 3. Struktur Data
 
-`Terka_Fun_Facts.json` berisi `summary`, `historyLabels`, `sources[]`, dan `facts[]`. Build menyalin `facts[]` dan `sources[]` ke `plates.json` (TRD bagian 4.1).
+`../data/Terka_Fun_Facts.json` berisi `summary`, `historyLabels`, `sources[]`, dan `facts[]`. Build menyalin `facts[]` dan `sources[]` ke `plates.json` (TRD bagian 4.1).
 
 **Properti `facts[]`:**
 
@@ -75,7 +75,7 @@ Build menolak fakta `ready` yang tidak memenuhi syarat 1 dan 2 (Tests TR-150). S
 
 - `id` fakta unik dan mengikuti pola domain `content_ref`, karena `fact_views.fact_id` memakai domain itu.
 - Setiap `id` di `source` wajib ada di `sources[]`.
-- `sources[]` dari `Terka_Fun_Facts.json` dan `Terka_Special_Codes.json` digabung. `id` yang sama di kedua berkas wajib berisi data yang sama; jika berbeda, build gagal.
+- `sources[]` dari `../data/Terka_Fun_Facts.json` dan `../data/Terka_Special_Codes.json` digabung. `id` yang sama di kedua berkas wajib berisi data yang sama; jika berbeda, build gagal.
 - Kode di `relatedCodes` yang tidak ada di `regions[]` — misalnya DS, BR, X, CD, RI, dan TCKB — tidak membentuk relasi dan tidak menggagalkan build.
 - Teks dan label di dokumen ini dan di JSON wajib sama; build membandingkan keduanya.
 
