@@ -1,6 +1,6 @@
 {
-	"version": "2026.09.29",
-	"contentRev": 3,
+	"version": "2026.10.02",
+	"contentRev": 4,
 	"contentHistory": [
 		{
 			"contentRev": 1,
@@ -13,6 +13,10 @@
 		{
 			"contentRev": 3,
 			"version": "2026.09.29"
+		},
+		{
+			"contentRev": 4,
+			"version": "2026.10.02"
 		}
 	],
 	"groups": [
@@ -8152,258 +8156,6 @@
 			"variants": []
 		}
 	],
-	"facts": [
-		{
-			"number": 1,
-			"id": "f-001",
-			"regions": []
-		},
-		{
-			"number": 2,
-			"id": "f-002",
-			"regions": []
-		},
-		{
-			"number": 3,
-			"id": "f-003",
-			"regions": []
-		},
-		{
-			"number": 4,
-			"id": "f-004",
-			"regions": []
-		},
-		{
-			"number": 5,
-			"id": "f-005",
-			"regions": []
-		},
-		{
-			"number": 6,
-			"id": "f-006",
-			"regions": []
-		},
-		{
-			"number": 7,
-			"id": "f-007",
-			"regions": []
-		},
-		{
-			"number": 8,
-			"id": "f-008",
-			"regions": []
-		},
-		{
-			"number": 9,
-			"id": "f-009",
-			"regions": []
-		},
-		{
-			"number": 10,
-			"id": "f-010",
-			"regions": ["kb", "kh", "kt", "ku", "da"]
-		},
-		{
-			"number": 11,
-			"id": "f-011",
-			"regions": ["da"]
-		},
-		{
-			"number": 12,
-			"id": "f-012",
-			"regions": ["kb", "kh", "kt", "da"]
-		},
-		{
-			"number": 13,
-			"id": "f-013",
-			"regions": ["da"]
-		},
-		{
-			"number": 14,
-			"id": "f-014",
-			"regions": ["da"]
-		},
-		{
-			"number": 15,
-			"id": "f-015",
-			"regions": ["da"]
-		},
-		{
-			"number": 16,
-			"id": "f-016",
-			"regions": ["ku"]
-		},
-		{
-			"number": 17,
-			"id": "f-017",
-			"regions": ["pb"]
-		},
-		{
-			"number": 18,
-			"id": "f-018",
-			"regions": ["pa"]
-		},
-		{
-			"number": 19,
-			"id": "f-019",
-			"regions": ["py", "ps", "pt"]
-		},
-		{
-			"number": 20,
-			"id": "f-020",
-			"regions": ["pa", "pb", "py", "ps", "pt", "pg"]
-		},
-		{
-			"number": 21,
-			"id": "f-021",
-			"regions": ["dd", "dp", "dw"]
-		},
-		{
-			"number": 22,
-			"id": "f-022",
-			"regions": ["dd"]
-		},
-		{
-			"number": 23,
-			"id": "f-023",
-			"regions": ["dd", "dp", "dw"]
-		},
-		{
-			"number": 24,
-			"id": "f-024",
-			"regions": ["dp", "dw"]
-		},
-		{
-			"number": 25,
-			"id": "f-025",
-			"regions": ["w", "l"]
-		},
-		{
-			"number": 26,
-			"id": "f-026",
-			"regions": ["z", "d"]
-		},
-		{
-			"number": 27,
-			"id": "f-027",
-			"regions": ["a", "b"]
-		},
-		{
-			"number": 28,
-			"id": "f-028",
-			"regions": ["b"]
-		},
-		{
-			"number": 29,
-			"id": "f-029",
-			"regions": ["bn", "bp"]
-		},
-		{
-			"number": 30,
-			"id": "f-030",
-			"regions": ["bp"]
-		},
-		{
-			"number": 31,
-			"id": "f-031",
-			"regions": ["bk", "bb"]
-		},
-		{
-			"number": 32,
-			"id": "f-032",
-			"regions": ["ba", "bb", "bd", "be", "bg", "bh", "bk", "bl", "bm", "bn", "bp"]
-		},
-		{
-			"number": 33,
-			"id": "f-033",
-			"regions": ["kb", "kh", "kt", "ku", "da"]
-		},
-		{
-			"number": 34,
-			"id": "f-034",
-			"regions": []
-		},
-		{
-			"number": 35,
-			"id": "f-035",
-			"regions": ["dk"]
-		},
-		{
-			"number": 36,
-			"id": "f-036",
-			"regions": ["aa", "ab", "ad", "ae", "ag"]
-		},
-		{
-			"number": 37,
-			"id": "f-037",
-			"regions": ["pa", "pb", "py", "ps", "pt", "pg"]
-		},
-		{
-			"number": 38,
-			"id": "f-038",
-			"regions": []
-		},
-		{
-			"number": 39,
-			"id": "f-039",
-			"regions": []
-		},
-		{
-			"number": 40,
-			"id": "f-040",
-			"regions": []
-		},
-		{
-			"number": 41,
-			"id": "f-041",
-			"regions": []
-		},
-		{
-			"number": 42,
-			"id": "f-042",
-			"regions": []
-		},
-		{
-			"number": 43,
-			"id": "f-043",
-			"regions": []
-		},
-		{
-			"number": 44,
-			"id": "f-044",
-			"regions": []
-		},
-		{
-			"number": 45,
-			"id": "f-045",
-			"regions": []
-		},
-		{
-			"number": 46,
-			"id": "f-046",
-			"regions": []
-		},
-		{
-			"number": 47,
-			"id": "f-047",
-			"regions": []
-		},
-		{
-			"number": 48,
-			"id": "f-048",
-			"regions": []
-		},
-		{
-			"number": 49,
-			"id": "f-049",
-			"regions": []
-		},
-		{
-			"number": 50,
-			"id": "f-050",
-			"regions": []
-		}
-	],
 	"retiredIds": [
 		"cd-24-uea",
 		"cd-88-brunei",
@@ -8411,6 +8163,57 @@
 		"cd-100-asean",
 		"cd-111-asean-foundation",
 		"cd-114-bosnia",
-		"cd-144-kep-solomon"
+		"cd-144-kep-solomon",
+		"f-001",
+		"f-002",
+		"f-003",
+		"f-004",
+		"f-005",
+		"f-006",
+		"f-007",
+		"f-008",
+		"f-009",
+		"f-010",
+		"f-011",
+		"f-012",
+		"f-013",
+		"f-014",
+		"f-015",
+		"f-016",
+		"f-017",
+		"f-018",
+		"f-019",
+		"f-020",
+		"f-021",
+		"f-022",
+		"f-023",
+		"f-024",
+		"f-025",
+		"f-026",
+		"f-027",
+		"f-028",
+		"f-029",
+		"f-030",
+		"f-031",
+		"f-032",
+		"f-033",
+		"f-034",
+		"f-035",
+		"f-036",
+		"f-037",
+		"f-038",
+		"f-039",
+		"f-040",
+		"f-041",
+		"f-042",
+		"f-043",
+		"f-044",
+		"f-045",
+		"f-046",
+		"f-047",
+		"f-048",
+		"f-049",
+		"f-050",
+		"fact-invasion-1811-numbered-units"
 	]
 }

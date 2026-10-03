@@ -156,7 +156,6 @@ export function ruleBundle(): Bundle {
 			area("kota-kotamobagu", "Kotamobagu", "sulawesi-utara")
 		],
 		facts: [],
-		specialsVersion: "2026.09.24",
 		sources: [],
 		specials: [
 			special("12", "Amerika Serikat", {

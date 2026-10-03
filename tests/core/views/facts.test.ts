@@ -10,7 +10,7 @@ const fact = (index: number, overrides: Partial<Fact> = {}): Fact => ({
 	historyLabel: "terverifikasi",
 	text: `Fakta ${index}`,
 	publicationStatus: "ready",
-	source: "Sumber",
+	source: ["sumber"],
 	sourceCheckedAt: "2026-09-01",
 	...overrides
 });
@@ -22,7 +22,7 @@ function withFacts(facts: Fact[]): Bundle {
 const show = (state: AppState, factId: string) =>
 	state.factViews.push({ factId, localDay: "2026-09-21", runId: null });
 
-describe("Fakta menarik", () => {
+describe("Fun Facts", () => {
 	test("with 43 ready facts none repeats within 20 screens", () => {
 		const bundle = withFacts(Array.from({ length: 43 }, (_, index) => fact(index)));
 		const state = fresh(bundle);
@@ -57,10 +57,10 @@ describe("Fakta menarik", () => {
 		show(state, "f-002");
 		expect(pickFact(state, bundle, ["dk"], "run-b")?.id).not.toBe("f-002");
 	});
-	test("no legend right after a legend in the last two screens", () => {
+	test("no myth right after a myth in the last two screens", () => {
 		const bundle = withFacts([
-			fact(0, { historyLabel: "legenda" }),
-			fact(1, { historyLabel: "legenda" }),
+			fact(0, { historyLabel: "mitos" }),
+			fact(1, { historyLabel: "mitos" }),
 			fact(2),
 			fact(3),
 			fact(4),
@@ -69,12 +69,12 @@ describe("Fakta menarik", () => {
 		const state = fresh(bundle);
 		show(state, "f-000");
 		for (let index = 0; index < 10; index++)
-			expect(pickFact(state, bundle, [], `run-${index}`)?.historyLabel).not.toBe("legenda");
+			expect(pickFact(state, bundle, [], `run-${index}`)?.historyLabel).not.toBe("mitos");
 	});
 	test("when the filters leave nothing, the fact unseen the longest is picked", () => {
 		const bundle = withFacts([
-			fact(0, { historyLabel: "legenda" }),
-			fact(1, { historyLabel: "legenda" })
+			fact(0, { historyLabel: "mitos" }),
+			fact(1, { historyLabel: "mitos" })
 		]);
 		const state = fresh(bundle);
 		show(state, "f-000");

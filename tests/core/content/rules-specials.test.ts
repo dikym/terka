@@ -1,5 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { factRules } from "../../../src/core/content/rules/facts";
+import { identityRules } from "../../../src/core/content/rules/identity";
 import { specialRules } from "../../../src/core/content/rules/specials";
 import { errorCodes, validDraft } from "./fixtures";
 
@@ -9,49 +10,37 @@ describe("fact rules", () => {
 	test("the valid draft has no fact errors", () => {
 		expect(errorCodes(factRules(validDraft()))).toEqual([]);
 	});
-	test("a document item without a curation entry fails, and vice versa", () => {
+	test("a duplicate ref fails", () => {
 		const draft = validDraft();
-		draft.facts.push({
-			number: 2,
-			line: 2,
-			historyLabel: "legenda",
-			publicationStatus: "draft",
-			text: "Dua."
-		});
-		draft.curation.facts.push({ number: 3, id: "f-003", regions: [] });
-		expect(errorCodes(factRules(draft)).sort()).toEqual([
-			"entry-without-fact",
-			"fact-without-entry"
-		]);
+		draft.funFacts.facts.push({ ...draft.funFacts.facts[0], id: "fact-ab" });
+		expect(errorCodes(factRules(draft))).toEqual(["duplicate-fact-ref"]);
 	});
-	test("a fact linked to an unknown region fails", () => {
+	test("a fact citing an unknown source fails", () => {
 		const draft = validDraft();
-		draft.curation.facts[0].regions = ["zz"];
-		expect(errorCodes(factRules(draft))).toEqual(["fact-unknown-region"]);
+		draft.funFacts.facts[0].source = ["hilang"];
+		expect(errorCodes(factRules(draft))).toEqual(["fact-unknown-source"]);
 	});
-	test("duplicate fact numbers in Terka_Facts.md fail", () => {
+	test("a fact may cite a source listed only in the Special Codes file", () => {
 		const draft = validDraft();
-		draft.facts.push({
-			number: 1,
-			line: 2,
-			historyLabel: "legenda",
-			publicationStatus: "draft",
-			text: "Dua."
-		});
-		expect(errorCodes(factRules(draft))).toContain("duplicate-fact-number");
-	});
-	test("a duplicate curation.facts number is not silently overwritten", () => {
-		const draft = validDraft();
-		draft.curation.facts.push({ number: 1, id: "f-001-dup", regions: [] });
-		expect(errorCodes(factRules(draft))).toContain("duplicate-fact-entry");
+		draft.funFacts.facts[0].source = ["perpol"];
+		expect(errorCodes(factRules(draft))).toEqual([]);
 	});
 	test("a ready fact without source or check date fails; with both it passes", () => {
 		const draft = validDraft();
-		draft.facts[0].publicationStatus = "ready";
+		draft.funFacts.facts[0].publicationStatus = "ready";
 		expect(errorCodes(factRules(draft))).toEqual(["ready-fact-source"]);
-		draft.curation.facts[0].source = "Handboek, 1920, hlm. 3";
-		draft.curation.facts[0].sourceCheckedAt = "2026-09-28";
+		draft.funFacts.facts[0].source = ["perpol"];
+		expect(errorCodes(factRules(draft))).toEqual(["ready-fact-source"]);
+		draft.funFacts.facts[0].sourceCheckedAt = "2026-10-01";
 		expect(errorCodes(factRules(draft))).toEqual([]);
+	});
+});
+
+describe("fact identity", () => {
+	test("a retired fact id cannot come back", () => {
+		const draft = validDraft();
+		draft.curation.retiredIds.push("fact-aa");
+		expect(errorCodes(identityRules(draft))).toContain("retired-id");
 	});
 });
 
@@ -158,5 +147,23 @@ describe("special plate rules", () => {
 		const draft = validDraft();
 		draft.specials.referencePlates[0].number = "1";
 		expect(errorCodes(specialRules(draft, TODAY))).toContain("reference-ri-number");
+	});
+	test("a shared source id with different data fails", () => {
+		const draft = validDraft();
+		draft.funFacts.sources.push({ ...draft.specials.sources[0], locator: "D5" });
+		expect(errorCodes(specialRules(draft, TODAY))).toEqual(["source-conflict"]);
+		draft.funFacts.sources[0] = { ...draft.specials.sources[0] };
+		expect(errorCodes(specialRules(draft, TODAY))).toEqual([]);
+	});
+	test("a Fun Facts media source quoting an agency without originalUrl is a warning", () => {
+		const draft = validDraft();
+		draft.funFacts.sources.push({
+			...draft.specials.sources[0],
+			id: "detik",
+			type: "media-mengutip-instansi"
+		});
+		expect(
+			specialRules(draft, TODAY).some((message) => message.code === "source-original-url")
+		).toBe(true);
 	});
 });

@@ -1,6 +1,6 @@
 {
-	"version": "2026.09.29",
-	"contentRev": 3,
+	"version": "2026.10.02",
+	"contentRev": 4,
 	"contentHistory": [
 		{
 			"contentRev": 1,
@@ -13,6 +13,10 @@
 		{
 			"contentRev": 3,
 			"version": "2026.09.29"
+		},
+		{
+			"contentRev": 4,
+			"version": "2026.10.02"
 		}
 	],
 	"regions": [
@@ -120,7 +124,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-032"]
+			"facts": []
 		},
 		{
 			"id": "bb",
@@ -206,7 +210,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-031", "f-032"]
+			"facts": []
 		},
 		{
 			"id": "bk",
@@ -280,7 +284,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-031", "f-032"]
+			"facts": []
 		},
 		{
 			"id": "ba",
@@ -370,7 +374,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-032"]
+			"facts": []
 		},
 		{
 			"id": "bm",
@@ -432,7 +436,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-032"]
+			"facts": []
 		},
 		{
 			"id": "bp",
@@ -474,7 +478,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-029", "f-030", "f-032"]
+			"facts": ["fact-kepri-bp"]
 		},
 		{
 			"id": "bh",
@@ -532,7 +536,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-032"]
+			"facts": []
 		},
 		{
 			"id": "bg",
@@ -614,7 +618,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-032"]
+			"facts": []
 		},
 		{
 			"id": "bn",
@@ -656,7 +660,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-029", "f-032"]
+			"facts": ["fact-kepri-bp"]
 		},
 		{
 			"id": "be",
@@ -730,7 +734,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-032"]
+			"facts": []
 		},
 		{
 			"id": "bd",
@@ -784,7 +788,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-032"]
+			"facts": []
 		},
 		{
 			"id": "a",
@@ -822,7 +826,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-027"]
+			"facts": ["fact-origin-battalion-myth"]
 		},
 		{
 			"id": "b",
@@ -884,7 +888,13 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-027", "f-028"]
+			"facts": [
+				"fact-origin-battalion-myth",
+				"fact-origin-motorreglement-1917",
+				"fact-jakarta-number-range",
+				"fact-jakarta-suffix-area",
+				"fact-b-beyond-jakarta"
+			]
 		},
 		{
 			"id": "d",
@@ -914,7 +924,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-026"]
+			"facts": ["fact-origin-motorreglement-1917"]
 		},
 		{
 			"id": "f",
@@ -982,7 +992,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": []
+			"facts": ["fact-origin-1900-gewest-names"]
 		},
 		{
 			"id": "t",
@@ -1050,7 +1060,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-026"]
+			"facts": ["fact-legend-reserve-letters-w-z"]
 		},
 		{
 			"id": "g",
@@ -1164,7 +1174,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": []
+			"facts": ["fact-k-is-pati-not-kalimantan"]
 		},
 		{
 			"id": "r",
@@ -1232,7 +1242,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-036"]
+			"facts": ["fact-no-ac-af"]
 		},
 		{
 			"id": "ad",
@@ -1274,7 +1284,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-036"]
+			"facts": ["fact-no-ac-af"]
 		},
 		{
 			"id": "ab",
@@ -1308,7 +1318,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-036"]
+			"facts": ["fact-no-ac-af"]
 		},
 		{
 			"id": "l",
@@ -1326,7 +1336,11 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-025"]
+			"facts": [
+				"fact-origin-battalion-myth",
+				"fact-origin-motorreglement-1917",
+				"fact-origin-1900-gewest-names"
+			]
 		},
 		{
 			"id": "w",
@@ -1348,7 +1362,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-025"]
+			"facts": ["fact-legend-reserve-letters-w-z"]
 		},
 		{
 			"id": "m",
@@ -1378,7 +1392,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": []
+			"facts": ["fact-origin-battalion-myth"]
 		},
 		{
 			"id": "n",
@@ -1454,7 +1468,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": []
+			"facts": ["fact-kab-besuki"]
 		},
 		{
 			"id": "s",
@@ -1534,7 +1548,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-036"]
+			"facts": ["fact-no-ac-af"]
 		},
 		{
 			"id": "ae",
@@ -1572,7 +1586,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-036"]
+			"facts": ["fact-no-ac-af"]
 		},
 		{
 			"id": "dk",
@@ -1622,7 +1636,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-035"]
+			"facts": ["fact-bali-lombok-dk"]
 		},
 		{
 			"id": "dr",
@@ -1656,7 +1670,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": []
+			"facts": ["fact-bali-lombok-dk"]
 		},
 		{
 			"id": "ea",
@@ -1890,7 +1904,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-010", "f-012", "f-033"]
+			"facts": ["fact-kalsel-da-only", "fact-kalimantan-br-to-kb"]
 		},
 		{
 			"id": "da",
@@ -1956,7 +1970,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-010", "f-011", "f-012", "f-013", "f-014", "f-015", "f-033"]
+			"facts": ["fact-kalsel-da-only", "fact-da-distrik-amandit"]
 		},
 		{
 			"id": "kh",
@@ -2026,7 +2040,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-010", "f-012", "f-033"]
+			"facts": ["fact-kalsel-da-only"]
 		},
 		{
 			"id": "kt",
@@ -2080,7 +2094,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-010", "f-012", "f-033"]
+			"facts": ["fact-kalsel-da-only"]
 		},
 		{
 			"id": "ku",
@@ -2114,7 +2128,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-010", "f-016", "f-033"]
+			"facts": ["fact-kalsel-da-only"]
 		},
 		{
 			"id": "db",
@@ -2438,7 +2452,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-021", "f-022", "f-023"]
+			"facts": ["fact-sulsel-growth-reason"]
 		},
 		{
 			"id": "dw",
@@ -2468,7 +2482,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-021", "f-023", "f-024"]
+			"facts": ["fact-sulsel-growth-reason", "fact-sulsel-date-conflict"]
 		},
 		{
 			"id": "dp",
@@ -2526,7 +2540,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-021", "f-023", "f-024"]
+			"facts": ["fact-sulsel-growth-reason", "fact-sulsel-date-conflict"]
 		},
 		{
 			"id": "dc",
@@ -2726,7 +2740,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-018", "f-020", "f-037"]
+			"facts": ["fact-papua-ds-to-p"]
 		},
 		{
 			"id": "pb",
@@ -2768,7 +2782,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-017", "f-020", "f-037"]
+			"facts": []
 		},
 		{
 			"id": "py",
@@ -2806,7 +2820,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-019", "f-020", "f-037"]
+			"facts": ["fact-papua-ds-to-p"]
 		},
 		{
 			"id": "ps",
@@ -2836,7 +2850,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-019", "f-020", "f-037"]
+			"facts": ["fact-papua-ds-to-p"]
 		},
 		{
 			"id": "pt",
@@ -2882,7 +2896,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-019", "f-020", "f-037"]
+			"facts": ["fact-papua-ds-to-p"]
 		},
 		{
 			"id": "pg",
@@ -2928,7 +2942,7 @@
 					"confidence": "high"
 				}
 			],
-			"facts": ["f-020", "f-037"]
+			"facts": []
 		}
 	],
 	"areas": [
@@ -7047,427 +7061,348 @@
 	],
 	"facts": [
 		{
-			"id": "f-001",
-			"historyLabel": "legenda",
-			"text": "Cerita populer menghubungkan kode wilayah dengan batalion Inggris yang menyerang Batavia pada 1811. Dalam cerita itu, B dikaitkan dengan Batavia, L dengan Surabaya, A dengan Banten, dan M dengan Madura. Hubungan tersebut perlu ditelusuri sebagai cerita, bukan dianggap sebagai asal-usul yang sudah terbukti.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
+			"id": "fact-origin-battalion-myth",
+			"historyLabel": "mitos",
+			"text": "Ada cerita populer yang menyebut kode pelat berasal dari 26 batalion Inggris yang menyerbu Jawa pada 1811. Cerita ini sudah dimuat media besar, tetapi bukti sejarah yang mendukungnya belum ditemukan.",
+			"publicationStatus": "ready",
+			"source": ["mobilmotorlama-2018", "gnfi-2021-batalion", "kompas-2024-batalion"],
+			"sourceCheckedAt": "2026-10-01"
 		},
 		{
-			"id": "f-002",
+			"id": "fact-invasion-1811-regiments",
+			"historyLabel": "terverifikasi",
+			"text": "Pasukan Inggris yang menyerbu Jawa pada 1811 memakai nomor resimen, seperti ke-59 dan ke-78, bukan huruf. Jumlah pasukannya disebut sekitar 11.960 orang, berbeda dari angka 15.600 yang beredar dalam cerita batalion.",
+			"publicationStatus": "ready",
+			"source": ["fibis-java-expedition", "highlanders-java-1811", "mobilmotorlama-2018"],
+			"sourceCheckedAt": "2026-10-01"
+		},
+		{
+			"id": "fact-afnei-1945-too-late",
+			"historyLabel": "terverifikasi",
+			"text": "Kode pelat juga tidak berasal dari tentara Inggris yang datang pada 1945. Kode wilayah berbentuk huruf sudah berlaku sejak 1917, 28 tahun sebelum pasukan Sekutu pimpinan Inggris mendarat di Jakarta.",
+			"publicationStatus": "ready",
+			"source": ["nlwiki-kentekens", "avatara-unesa-afnei", "conam-ned-indie"],
+			"sourceCheckedAt": "2026-10-01"
+		},
+		{
+			"id": "fact-battalion-story-trace-2018",
+			"historyLabel": "terverifikasi",
+			"text": "Salah satu versi lengkap cerita batalion Inggris dimuat blog otomotif pada Mei 2018. Saat ditanya pembaca, penulisnya menyebut forum, grup Facebook, dan buku sebagai bahan bacaannya. Cerita serupa kemudian dimuat media nasional sebagai sejarah kode pelat.",
+			"publicationStatus": "ready",
+			"source": ["mobilmotorlama-2018", "gnfi-2021-batalion", "kompas-2024-batalion"],
+			"sourceCheckedAt": "2026-10-01"
+		},
+		{
+			"id": "fact-origin-motorreglement-1917",
+			"historyLabel": "terverifikasi",
+			"text": "Kode wilayah berbentuk huruf mulai berlaku di Jawa pada Oktober 1917. Daftar kode masa Hindia Belanda sudah memuat B untuk Batavia, D untuk Priangan, dan L untuk Surabaya, hampir 30 tahun sebelum proklamasi.",
+			"publicationStatus": "ready",
+			"source": ["conam-ned-indie", "nlwiki-kentekens"],
+			"sourceCheckedAt": "2026-10-01"
+		},
+		{
+			"id": "fact-origin-1900-gewest-names",
+			"historyLabel": "terverifikasi",
+			"text": "Sebelum 1917, pelat di Hindia Belanda memakai nama atau singkatan daerah, misalnya “Preanger 10”. Surabaya memakai SB, sedangkan Cirebon memakai CH. Bentuknya berbeda dari kode wilayah yang dipakai sekarang.",
+			"publicationStatus": "ready",
+			"source": ["conam-ned-indie", "kompas-2022-stori"],
+			"sourceCheckedAt": "2026-10-01"
+		},
+		{
+			"id": "fact-origin-1909-in-oval",
+			"historyLabel": "terverifikasi",
+			"text": "Hindia Belanda punya kode negara sendiri untuk kendaraan: IN, singkatan dari Indes Néerlandaises. Tanda ini berbentuk oval, mirip stiker kode negara pada mobil di Eropa.",
+			"publicationStatus": "ready",
+			"source": ["conam-ned-indie", "nlwiki-kentekens"],
+			"sourceCheckedAt": "2026-10-01"
+		},
+		{
+			"id": "fact-export-x-1937",
+			"historyLabel": "terverifikasi",
+			"text": "Huruf X pernah dipakai sebagai kode pelat di Hindia Belanda. Kode ini dipakai untuk kendaraan yang dibawa ke luar negeri, dan pelatnya dipasang bersama tanda oval IN.",
+			"publicationStatus": "ready",
+			"source": ["conam-ned-indie", "nlwiki-kentekens"],
+			"sourceCheckedAt": "2026-10-01"
+		},
+		{
+			"id": "fact-black-plate-century",
+			"historyLabel": "terverifikasi",
+			"text": "Pelat hitam dengan tulisan putih sudah digunakan sejak zaman Belanda dan bertahan lebih dari seratus tahun. Pada 2022, pelat kendaraan pribadi mulai diganti menjadi putih agar lebih mudah dibaca kamera tilang elektronik.",
+			"publicationStatus": "ready",
+			"source": ["detikoto-2022-pelat-putih", "conam-ned-indie"],
+			"sourceCheckedAt": "2026-10-01"
+		},
+		{
+			"id": "fact-number-range-vehicle-type",
+			"historyLabel": "terverifikasi",
+			"text": "Angka pada pelat dibagi menurut jenis kendaraan. Rentang 1–1999 digunakan untuk mobil penumpang dan 2000–6999 untuk sepeda motor. Nomor 7000-an untuk bus, 8000-an untuk mobil barang, dan 9000-an untuk kendaraan khusus.",
+			"publicationStatus": "ready",
+			"source": ["perpol-7-2021"],
+			"sourceCheckedAt": "2026-09-30"
+		},
+		{
+			"id": "fact-jakarta-number-range",
+			"historyLabel": "terverifikasi",
+			"text": "Pembagian nomor pelat di Jakarta punya pengecualian. Nomor 8000-an digunakan untuk mobil penumpang, sedangkan mobil barang memakai nomor 9000-an.",
+			"publicationStatus": "ready",
+			"source": ["perpol-7-2021"],
+			"sourceCheckedAt": "2026-09-30"
+		},
+		{
+			"id": "fact-suffix-letter-sequence",
+			"historyLabel": "terverifikasi",
+			"text": "Saat jatah angka habis, penomoran dapat diulang dengan tambahan huruf di belakangnya. Urutannya dimulai dari A sampai Z, lalu AA sampai ZZ. Jika kombinasi itu juga habis, urutannya berlanjut ke AAA.",
+			"publicationStatus": "ready",
+			"source": ["perpol-7-2021"],
+			"sourceCheckedAt": "2026-09-30"
+		},
+		{
+			"id": "fact-jakarta-suffix-area",
+			"historyLabel": "terverifikasi",
+			"text": "Pada pelat B, huruf pertama setelah angka dapat menunjukkan wilayah pendaftaran kendaraan. S untuk Jakarta Selatan, T untuk Jakarta Timur, U untuk Jakarta Utara, P untuk Jakarta Pusat, dan B untuk Jakarta Barat.",
+			"publicationStatus": "ready",
+			"source": ["detikoto-2021-ntmc", "detik-2012-polda-metro"],
+			"sourceCheckedAt": "2026-10-01"
+		},
+		{
+			"id": "fact-no-official-expansion",
+			"historyLabel": "terverifikasi",
+			"text": "Kode pelat tidak selalu bisa dibaca sebagai singkatan nama daerah. Peraturan Polri mencantumkan kode dan wilayahnya, tetapi tidak menjelaskan kepanjangan huruf-huruf tersebut.",
+			"publicationStatus": "ready",
+			"source": ["perpol-7-2021"],
+			"sourceCheckedAt": "2026-09-30"
+		},
+		{
+			"id": "fact-no-ac-af",
+			"historyLabel": "terverifikasi",
+			"text": "Di Jawa ada kode AA, AB, AD, AE, dan AG, tetapi tidak ada AC atau AF. Kode-kode ini tercantum dalam daftar peninggalan Belanda. Daftar tersebut tidak menjelaskan mengapa beberapa huruf dilewati.",
+			"publicationStatus": "ready",
+			"source": ["conam-ned-indie", "perpol-7-2021"],
+			"sourceCheckedAt": "2026-10-01"
+		},
+		{
+			"id": "fact-legend-reserve-letters-w-z",
+			"historyLabel": "terverifikasi",
+			"text": "Cerita batalion Inggris menyebut W dan Z tidak dipakai karena menjadi kode pasukan cadangan. Namun, keduanya tercantum dalam daftar kode pelat. W mencakup Gresik, Sidoarjo, Mojokerto, dan Jombang, sedangkan Z mencakup Garut, Tasikmalaya, dan sekitarnya.",
+			"publicationStatus": "ready",
+			"source": ["perpol-7-2021", "kompas-2021-lampiran", "mobilmotorlama-2018"],
+			"sourceCheckedAt": "2026-10-01"
+		},
+		{
+			"id": "fact-b-beyond-jakarta",
+			"historyLabel": "terverifikasi",
+			"text": "Pelat B dipakai di tiga provinsi. Selain Jakarta, kode ini digunakan di Depok dan Bekasi, Jawa Barat, serta Kota Tangerang dan Tangerang Selatan, Banten.",
+			"publicationStatus": "ready",
+			"source": ["perpol-7-2021"],
+			"sourceCheckedAt": "2026-09-30"
+		},
+		{
+			"id": "fact-k-is-pati-not-kalimantan",
+			"historyLabel": "terverifikasi",
+			"text": "Pelat K ternyata berasal dari Jawa Tengah. Kode ini digunakan di Pati, Kudus, Jepara, Rembang, Blora, dan Grobogan.",
+			"publicationStatus": "ready",
+			"source": ["perpol-7-2021"],
+			"sourceCheckedAt": "2026-09-30"
+		},
+		{
+			"id": "fact-kalsel-da-only",
+			"historyLabel": "terverifikasi",
+			"text": "Dari lima provinsi di Kalimantan, hanya Kalimantan Selatan yang kode pelatnya tidak diawali K. Provinsi ini memakai DA, kode yang sudah digunakan sejak zaman Belanda.",
+			"publicationStatus": "ready",
+			"source": ["perpol-7-2021", "conam-ned-indie"],
+			"sourceCheckedAt": "2026-10-01"
+		},
+		{
+			"id": "fact-kalimantan-br-to-kb",
+			"historyLabel": "terverifikasi",
+			"text": "Kalimantan Barat pernah memakai kode BR, sebelum berganti menjadi KB. Awalan B itu serupa dengan sejumlah kode di Sumatra, seperti BA, BK, dan BM.",
+			"publicationStatus": "ready",
+			"source": ["conam-ned-indie", "perpol-7-2021"],
+			"sourceCheckedAt": "2026-10-01"
+		},
+		{
+			"id": "fact-da-distrik-amandit",
 			"historyLabel": "diperdebatkan",
-			"text": "Asal-usul kode juga dijelaskan melalui pembagian karesidenan pada masa Hindia Belanda. Versi ini berbeda dari cerita batalion dan perlu dibandingkan menggunakan sumber sejarah yang dapat diperiksa.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
+			"text": "Polda Kalimantan Selatan pernah menjelaskan DA sebagai singkatan Distrik Amandit, kini Kandangan. Namun, daftar kode masa Hindia Belanda mencantumkan DA untuk wilayah selatan dan timur Kalimantan, bukan satu distrik. Asal huruf DA belum punya penjelasan yang disepakati.",
+			"publicationStatus": "ready",
+			"source": ["otomotifnet-2022-da", "conam-ned-indie"],
+			"sourceCheckedAt": "2026-10-01"
 		},
 		{
-			"id": "f-003",
+			"id": "fact-bali-lombok-dk",
 			"historyLabel": "terverifikasi",
-			"text": "Naskah awal menyebut penomoran kendaraan berlaku secara menyeluruh pada 1921–1922, setelah pemerintahan Inggris berakhir pada 1816. Tahun dan cakupan pemberlakuannya perlu diperiksa dari aturan pada masa itu.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
+			"text": "Bali dan Lombok pernah memakai kode pelat yang sama, yaitu DK. Setelah Lombok beralih ke DR, kode DK tetap digunakan di Bali.",
+			"publicationStatus": "ready",
+			"source": ["conam-ned-indie", "perpol-7-2021"],
+			"sourceCheckedAt": "2026-10-01"
 		},
 		{
-			"id": "f-004",
+			"id": "fact-kepri-bp",
 			"historyLabel": "terverifikasi",
-			"text": "Prancis pada 1893 sering disebut dalam pembahasan awal penggunaan pelat nomor. Klaim sebagai negara pertama perlu dibatasi menurut jenis aturan dan wilayah penerapannya.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
+			"text": "Kode BP pernah digunakan di Belitung. Kini Belitung memakai BN bersama Bangka, sedangkan BP digunakan di Kepulauan Riau, termasuk Batam.",
+			"publicationStatus": "ready",
+			"source": ["conam-ned-indie", "perpol-7-2021"],
+			"sourceCheckedAt": "2026-10-01"
 		},
 		{
-			"id": "f-005",
+			"id": "fact-papua-ds-to-p",
 			"historyLabel": "terverifikasi",
-			"text": "Istilah kentekens digunakan dalam sumber berbahasa Belanda untuk tanda pengenal kendaraan. Kemunculannya dalam konteks kendaraan di Hindia Belanda perlu ditelusuri dari dokumen masa tersebut.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
+			"text": "Papua pernah memakai kode DS sebelum berganti menjadi PA pada 2016. Awalan D itu juga ditemukan pada sejumlah kode di Sulawesi dan Maluku. Sejak 2024, provinsi hasil pemekaran mulai memakai kode sendiri, seperti PS, PT, dan PY.",
+			"publicationStatus": "ready",
+			"source": ["jpnn-2016-papua", "detikoto-2024-papua", "ddtc-2024-papua-selatan"],
+			"sourceCheckedAt": "2026-10-01"
 		},
 		{
-			"id": "f-006",
+			"id": "fact-kab-besuki",
 			"historyLabel": "terverifikasi",
-			"text": "Handboek voor automobilisten en motorwielrijders, terbitan Java Motor Club tahun 1920, dapat menjadi bahan penelusuran kode wilayah. Jumlah kode dan halaman pendukungnya harus diperiksa sebelum naskah diterbitkan.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
+			"text": "Lampiran peraturan Polri mencantumkan “Kab. Besuki” dalam daftar wilayah berkode P. Padahal, sekarang tidak ada kabupaten dengan nama itu. Besuki adalah nama karesidenan pada masa Hindia Belanda.",
+			"publicationStatus": "ready",
+			"source": ["perpol-7-2021", "kompas-2021-lampiran", "conam-ned-indie"],
+			"sourceCheckedAt": "2026-10-01"
 		},
 		{
-			"id": "f-007",
-			"historyLabel": "legenda",
-			"text": "Cerita batalion juga dikaitkan dengan penggunaan tanda pengenal pada kereta kuda di Batavia. Bagian cerita ini memerlukan sumber tersendiri; pengulangan cerita yang sama di beberapa laman belum menjadi bukti independen.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-008",
-			"historyLabel": "legenda",
-			"text": "Dalam cerita populer, AB dan AD dikaitkan dengan gabungan huruf batalion serta kedudukan wilayah Mataram. Penjelasan ini tetap diperlakukan sebagai legenda sampai ada bukti yang mendukungnya.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-009",
-			"historyLabel": "diperdebatkan",
-			"text": "Cerita bahwa sebagian huruf hanya mewakili pasukan cadangan perlu dibandingkan dengan sejarah pemakaian kode W dan Z. Jangan menyimpulkan asal kode hanya dari kesamaan huruf.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-010",
+			"id": "fact-sulsel-growth-reason",
 			"historyLabel": "terverifikasi",
-			"text": "Kode KB, KH, KT, dan KU memiliki huruf awal yang sama, sedangkan DA berbeda. Pola ini dapat menjadi bahan pengingat setelah daftar wilayah penggunaannya diperiksa.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
+			"text": "Sulawesi Selatan menambah kode DP dan DW pada 2012 karena ingin menghemat biaya. Sebelumnya, seluruh wilayah memakai DD. Menambah kode dinilai lebih murah daripada membeli mesin pencetak pelat bernomor lebih panjang yang harganya miliaran rupiah.",
+			"publicationStatus": "ready",
+			"source": ["detikoto-2012-sulsel", "bisnis-2012-sulsel", "perkap-5-2012"],
+			"sourceCheckedAt": "2026-09-30"
 		},
 		{
-			"id": "f-011",
+			"id": "fact-sulsel-date-conflict",
 			"historyLabel": "terverifikasi",
-			"text": "Salah satu penjelasan menelusuri DA ke wilayah Zuider en Ooster Afdeeling van Borneo pada masa Hindia Belanda. Cakupan wilayah dan urutan penerapannya perlu didukung sumber primer.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
+			"text": "Sejumlah situs menyebut DP dan DW mulai berlaku pada 2021. Namun, pemberitaan Juni 2012 sudah memuat pengumuman Polda Sulawesi Selatan tentang kedua kode tersebut. Tanggal 2021 tidak sesuai dengan catatan itu.",
+			"publicationStatus": "ready",
+			"source": [
+				"detikoto-2012-sulsel",
+				"bisnis-2012-sulsel",
+				"detik-2020-sulsel",
+				"bapenda-sulsel-2021"
+			],
+			"sourceCheckedAt": "2026-09-30"
 		},
 		{
-			"id": "f-012",
+			"id": "fact-plate-colors",
 			"historyLabel": "terverifikasi",
-			"text": "Pembentukan KB, KH, dan KT dikaitkan dengan pembagian wilayah setelah kemerdekaan, sementara DA dipertahankan. Riwayat BR sebelum KB perlu diperiksa secara terpisah.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
+			"text": "Warna pelat menunjukkan peruntukan kendaraan: putih untuk kendaraan pribadi, kuning untuk angkutan umum, dan merah untuk kendaraan pemerintah. Ada juga pelat hijau untuk kendaraan di kawasan perdagangan bebas yang mendapat pembebasan bea masuk.",
+			"publicationStatus": "ready",
+			"source": ["perpol-7-2021"],
+			"sourceCheckedAt": "2026-09-30"
 		},
 		{
-			"id": "f-013",
-			"historyLabel": "diperdebatkan",
-			"text": "Ada penjelasan yang mengartikan DA sebagai Distrik Amandit. Atribusi kepada Ditlantas Polda Kalimantan Selatan harus disertai sumber yang dapat ditelusuri dan dibandingkan dengan bukti sejarah.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-014",
-			"historyLabel": "diperdebatkan",
-			"text": "Penjelasan lain menghubungkan DA dengan urutan terbalik AD dan jabatan F. N. Nieuwenhuyzen. Hubungan sebab akibat tersebut belum boleh dinyatakan pasti tanpa sumber yang mendukung.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-015",
+			"id": "fact-silver-foreign-plate",
 			"historyLabel": "terverifikasi",
-			"text": "Tidak ditemukannya kepanjangan DA dalam satu buku tidak otomatis membuktikan bahwa kode itu hanya nomor urut. Naskah perlu membedakan isi sumber dari dugaan penyunting.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
+			"text": "Ada pelat perak bertulisan hitam untuk kendaraan asing yang beroperasi di Indonesia. Pelat ini dipasang di kaca depan dan belakang, bukan di bemper. Wilayah berlakunya terbatas pada provinsi yang menerbitkannya.",
+			"publicationStatus": "ready",
+			"source": ["perpol-7-2021"],
+			"sourceCheckedAt": "2026-09-30"
 		},
 		{
-			"id": "f-016",
+			"id": "fact-tckb-red-text",
 			"historyLabel": "terverifikasi",
-			"text": "Pemakaian KU dikaitkan dengan pembentukan Kalimantan Utara pada 2012. Tanggal pembentukan provinsi dan tanggal penerapan kode kendaraan harus diperiksa sebagai dua peristiwa yang berbeda.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
+			"text": "Mobil baru yang belum terdaftar dapat memakai pelat sementara berwarna putih dengan tulisan merah, yang disebut TCKB. Penggunaannya terbatas: mobil hanya boleh dikemudikan petugas dealer atau pabrik yang berseragam.",
+			"publicationStatus": "ready",
+			"source": ["perpol-7-2021"],
+			"sourceCheckedAt": "2026-09-30"
 		},
 		{
-			"id": "f-017",
+			"id": "fact-secret-plate",
 			"historyLabel": "terverifikasi",
-			"text": "Naskah awal mencatat peresmian PB untuk Papua Barat pada 29 April 2013. Tanggal, cakupan, dan acara penyerahannya memerlukan rujukan langsung.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
+			"text": "Pelat rahasia memang diatur dalam peraturan Polri. STNK dan pelat ini digunakan untuk melindungi identitas petugas intelijen atau penyidik beserta kendaraannya.",
+			"publicationStatus": "ready",
+			"source": ["perpol-7-2021"],
+			"sourceCheckedAt": "2026-09-30"
 		},
 		{
-			"id": "f-018",
+			"id": "fact-registration-deleted",
 			"historyLabel": "terverifikasi",
-			"text": "Perubahan DS menjadi PA disebut berlangsung pada 1 Juli 2016. Sumber penerapan dan cakupan kendaraan yang terdampak perlu dilampirkan.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
+			"text": "Kendaraan yang tidak diregistrasi ulang selama dua tahun setelah masa berlaku STNK habis dapat dihapus datanya. Prosesnya didahului tiga kali peringatan. Setelah datanya dihapus, kendaraan tidak dapat didaftarkan kembali.",
+			"publicationStatus": "ready",
+			"source": ["perpol-7-2021", "detikoto-2022-stnk-mati", "detikoto-2024-stnk-korlantas"],
+			"sourceCheckedAt": "2026-10-01"
 		},
 		{
-			"id": "f-019",
+			"id": "fact-electric-plate-blue-strip",
 			"historyLabel": "terverifikasi",
-			"text": "PY, PS, dan PT dikaitkan dengan provinsi hasil pemekaran di Papua pada 2024. Masing-masing kode memerlukan sumber penerapan tersendiri, termasuk peristiwa penyerahan pelat PT 1 pada Agustus 2024 jika tetap disebut.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
+			"text": "Pelat kendaraan listrik tidak seluruhnya berwarna biru. Warna biru hanya menjadi lis tambahan, sementara warna dasar pelat tetap menunjukkan peruntukan kendaraan, seperti kuning untuk angkutan umum atau merah untuk kendaraan pemerintah.",
+			"publicationStatus": "ready",
+			"source": ["polri-2022-lis-biru"],
+			"sourceCheckedAt": "2026-09-30"
 		},
 		{
-			"id": "f-020",
+			"id": "fact-choice-number-transfer-fee",
 			"historyLabel": "terverifikasi",
-			"text": "Perubahan kode di Papua menunjukkan pentingnya versi data. Urutan DS, PA, PB, PY, PS, PT, dan PG harus dijelaskan dengan tanggal serta wilayah yang jelas, tanpa menganggap semua perubahan terjadi sekaligus.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
+			"text": "Nomor cantik tidak bisa langsung dipindahkan ke kendaraan lain begitu saja. Menurut Pasal 7 ayat (5) Perpol 7/2021, pemindahan nomor pilihan ke kendaraan lain atau pemilik lain tetap dikenai biaya penerimaan negara bukan pajak (PNBP).",
+			"publicationStatus": "ready",
+			"source": ["bapenda-jateng-2025-nrkb-pilihan"],
+			"sourceCheckedAt": "2026-09-30"
 		},
 		{
-			"id": "f-021",
+			"id": "fact-cd-count",
 			"historyLabel": "terverifikasi",
-			"text": "Pembagian DD menjadi DD, DP, dan DW disebut berlaku sejak 1 Juni 2012. Tanggal dan dasar peraturannya harus diperiksa dari dokumen penerapan, bukan hanya dari kutipan ulang.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
+			"text": "Daftar kode diplomatik dalam peraturan dimulai dari CD 12 untuk Amerika Serikat. Nomor 1 sampai 11 tidak tercantum dalam daftar tersebut.",
+			"publicationStatus": "ready",
+			"source": ["perpol-7-2021-lampiran"],
+			"sourceCheckedAt": "2026-09-24"
 		},
 		{
-			"id": "f-022",
+			"id": "fact-cd-international-orgs",
 			"historyLabel": "terverifikasi",
-			"text": "Pertumbuhan kendaraan disebut sebagai salah satu alasan pembagian wilayah kode DD. Angka pertumbuhan bulanan perlu memiliki periode, sumber, dan cakupan yang jelas.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
+			"text": "Kode CD juga dipakai organisasi internasional. WHO memakai CD 74, sedangkan Sekretariat ASEAN memakai CD 100. Seluruhnya ada 29 organisasi internasional dalam daftar.",
+			"publicationStatus": "ready",
+			"source": ["perpol-7-2021-lampiran"],
+			"sourceCheckedAt": "2026-09-24"
 		},
 		{
-			"id": "f-023",
+			"id": "fact-cd-list-mismatch",
 			"historyLabel": "terverifikasi",
-			"text": "Naskah awal membagi wilayah DD, DP, dan DW menjadi 9, 11, dan 4 kabupaten/kota. Jumlah serta daftar wilayah harus diperiksa pada versi data yang sama.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
+			"text": "Sejumlah daftar di internet menulis CD 14 untuk Inggris. Dalam peraturan, CD 14 justru digunakan oleh Prancis, sedangkan Inggris memakai CD 15.",
+			"publicationStatus": "ready",
+			"source": ["perpol-7-2021-lampiran"],
+			"sourceCheckedAt": "2026-09-24"
 		},
 		{
-			"id": "f-024",
+			"id": "fact-ri-1-only-explicit",
 			"historyLabel": "terverifikasi",
-			"text": "Ada perbedaan tahun penerapan DP dan DW dalam bahan awal. Sebelum diterbitkan, telusuri sumber yang menyebut 2012 dan 2021 serta bedakan tanggal penerapan dari tanggal penulisan laman.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
+			"text": "Peraturan Polri secara jelas menyebut RI 1 untuk Presiden. Pembagian nomor RI lainnya dikoordinasikan dengan Sekretariat Negara.",
+			"publicationStatus": "ready",
+			"source": ["perpol-7-2021-lampiran"],
+			"sourceCheckedAt": "2026-09-24"
 		},
 		{
-			"id": "f-025",
+			"id": "fact-ri-small-number",
 			"historyLabel": "terverifikasi",
-			"text": "Kode W untuk Gresik dan Sidoarjo disebut terpisah dari wilayah L sekitar tahun 2000. Tahun dan dasar penerapannya perlu diperiksa sebelum dikaitkan dengan periode sejarah tertentu.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
+			"text": "Menurut penjelasan Korlantas, tujuh utusan khusus presiden memakai kode pelat RI 36. Masing-masing dibedakan dengan angka kecil 1 sampai 7 di sudut kanan bawah pelat.",
+			"publicationStatus": "ready",
+			"source": ["korlantas-cnn-2025-ri36", "kompas-id-2025-ri36"],
+			"sourceCheckedAt": "2026-09-24"
 		},
 		{
-			"id": "f-026",
+			"id": "fact-indonesia-1-plate",
 			"historyLabel": "terverifikasi",
-			"text": "Kode Z dikaitkan dengan pemisahan wilayah yang sebelumnya menggunakan D. Naskah perlu mencantumkan daerah dan waktu perubahan secara jelas.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
+			"text": "Saat pelantikan pada Oktober 2024, mobil presiden memakai pelat bertuliskan “Indonesia 1”. Pada acara berikutnya, mobil tersebut kembali memakai RI 1.",
+			"publicationStatus": "ready",
+			"source": ["detikoto-2024-indonesia-1", "suara-2024-indonesia-1"],
+			"sourceCheckedAt": "2026-10-01"
 		},
 		{
-			"id": "f-027",
+			"id": "fact-ri-1-13-korlantas",
 			"historyLabel": "terverifikasi",
-			"text": "Sebagian Kabupaten Tangerang menggunakan A, sementara wilayah lain terkait dengan B. Rincian wilayah dan perubahan jumlah kecamatan perlu disesuaikan dengan sumber resmi yang berlaku pada tanggal pemeriksaan.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-028",
-			"historyLabel": "terverifikasi",
-			"text": "Kota Tangerang Selatan dikaitkan dengan kode B. Perbandingan dengan Kabupaten Tangerang dapat menunjukkan bahwa daerah bertetangga tidak selalu menggunakan kode yang sama.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-029",
-			"historyLabel": "terverifikasi",
-			"text": "Foto atau dokumen lama disebut memperlihatkan BN untuk Bangka dan BP untuk Belitung. Setiap bukti perlu memiliki tanggal, lokasi, dan asal arsip yang dapat ditelusuri.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-030",
-			"historyLabel": "terverifikasi",
-			"text": "Pemakaian BP di Kepulauan Riau dapat dibandingkan dengan riwayat pemakaian huruf yang sama di wilayah lain. Perubahan wilayah tidak berarti identitas konten lama boleh digunakan ulang.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-031",
-			"historyLabel": "terverifikasi",
-			"text": "Sumatera Utara menggunakan BK dan BB. Batas wilayah masing-masing perlu dijelaskan melalui daftar kabupaten/kota yang terverifikasi, bukan hanya sebutan bagian timur atau Tapanuli.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-032",
-			"historyLabel": "terverifikasi",
-			"text": "BA, BB, BD, BE, BG, BH, BK, BL, BM, BN, dan BP membentuk pola huruf B pada kode di kawasan Sumatera. B tunggal perlu dibedakan dari kelompok dua huruf tersebut.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-033",
-			"historyLabel": "terverifikasi",
-			"text": "Kode di Kalimantan memperlihatkan pola awal K, dengan DA sebagai pengecualian dalam daftar kerja. Pola huruf membantu mengingat, tetapi tidak menggantikan pemeriksaan data wilayah.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-034",
-			"historyLabel": "terverifikasi",
-			"text": "Sejumlah kode berawalan D tersebar di Sulawesi, Bali, Nusa Tenggara, dan Maluku. Kelompok ini perlu dibedakan dari EA, EB, dan ED yang juga terdapat di Nusa Tenggara.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-035",
-			"historyLabel": "terverifikasi",
-			"text": "DK dapat dipelajari bersama kelompok kode berawalan D. Pengelompokan untuk hafalan tidak membuktikan bahwa seluruh kode tersebut memiliki asal-usul sejarah yang sama.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-036",
-			"historyLabel": "terverifikasi",
-			"text": "Jawa menggunakan kode satu huruf serta beberapa kode dua huruf seperti AA, AB, AD, AE, dan AG. Hindari menyebut rentang AA–AG seolah setiap kombinasi di dalamnya digunakan.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-037",
-			"historyLabel": "terverifikasi",
-			"text": "Daftar kerja kode Papua memperlihatkan pola awal P. Klaim bahwa seluruhnya ditetapkan pada abad yang sama harus menunggu pemeriksaan tanggal setiap kode.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-038",
-			"historyLabel": "terverifikasi",
-			"text": "Perubahan warna pelat kendaraan pribadi dikaitkan dengan penerapan dasar putih dan tulisan hitam pada 2022. Tanggal awal, tahap penerapan, serta hubungannya dengan ETLE perlu diperiksa.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-039",
-			"historyLabel": "terverifikasi",
-			"text": "Warna pelat membedakan beberapa kategori kendaraan. Daftar warna dan kategorinya harus mengikuti aturan yang diperiksa pada tanggal penerbitan, bukan digunakan sebagai ringkasan tanpa batas waktu.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-040",
-			"historyLabel": "terverifikasi",
-			"text": "TCKB digunakan dalam konteks tanda coba kendaraan bermotor. Nama, fungsi, dan warna tandanya perlu mengikuti definisi pada peraturan yang dirujuk.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-041",
-			"historyLabel": "terverifikasi",
-			"text": "Peraturan Kepolisian Nomor 7 Tahun 2021 menjadi salah satu bahan untuk memeriksa registrasi dan identifikasi kendaraan. Status berlaku dan perubahan setelahnya harus diperiksa sebelum naskah menyebutnya sebagai dasar hukum terkini.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-042",
-			"historyLabel": "terverifikasi",
-			"text": "Lampiran Perpol 7/2021 huruf B menetapkan empat kode registrasi khusus: CD untuk korps diplomatik, CC untuk korps konsulat, CH untuk konsul kehormatan, dan RI untuk kendaraan dinas Presiden, Wakil Presiden, ketua lembaga tinggi negara, serta pejabat setingkat menteri. Sumber sudah dicatat di `Terka_Kode_Khusus.md` bagian 8.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-043",
-			"historyLabel": "terverifikasi",
-			"text": "Untuk urusan administrasi kendaraan, arahkan pembaca ke instansi atau layanan resmi yang sesuai. Naskah harus menjelaskan bahwa Terka merupakan alat belajar, bukan bukti asal kendaraan atau panduan prosedur administratif.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-044",
-			"historyLabel": "terverifikasi",
-			"text": "Lampiran Perpol 7/2021 memuat 130 kode negara CD. Daftarnya dimulai dari CD 12 untuk Amerika Serikat dan berakhir di CD 145 untuk IFAD. Nomor 1 sampai 11 tidak dipakai, begitu juga 46, 91, 119, dan 124.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-045",
-			"historyLabel": "terverifikasi",
-			"text": "Kode CD tidak hanya dimiliki negara. Sebanyak 29 organisasi internasional ikut tercantum, misalnya UNDP (CD 58), WHO (CD 74), Uni Eropa (CD 99), dan ASEAN (CD 100).",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-046",
-			"historyLabel": "terverifikasi",
-			"text": "Dari seluruh nomor RI, Perpol 7/2021 hanya menulis satu secara eksplisit: RI 1 untuk Presiden. Nomor lain dikoordinasikan dengan Kementerian Sekretariat Negara.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-047",
-			"historyLabel": "terverifikasi",
-			"text": "Sejak Kabinet Merah Putih, sebagian pelat RI memakai nomor kecil di kanan bawah. Korlantas menjelaskan RI 36 dipakai tujuh utusan khusus presiden, dibedakan dengan nomor kecil 1 sampai 7.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-048",
-			"historyLabel": "terverifikasi",
-			"text": "Pada hari pelantikan Oktober 2024, mobil kepresidenan memakai pelat bertuliskan \"Indonesia 1\", lalu kembali memakai RI 1 pada acara berikutnya. Sumber saat ini berupa laporan media; foto atau pernyataan resmi Sekretariat Presiden perlu dicari sebelum terbit.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-049",
-			"historyLabel": "terverifikasi",
-			"text": "Sebagian daftar CD yang beredar di internet tidak cocok dengan lampiran Perpol. Salah satu daftar menyebut Britania Raya CD 14, padahal lampiran mencantumkan Inggris di CD 15; CD 14 milik Prancis.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
-		},
-		{
-			"id": "f-050",
-			"historyLabel": "terverifikasi",
-			"text": "Menurut publikasi Korlantas, RI 1 sampai RI 13 dipakai Presiden, Wakil Presiden, Istri Presiden, Istri Wakil Presiden, Ketua MPR, Ketua DPR, Ketua DPD, Ketua MA, Ketua MK, Ketua BPK, Ketua KY, Gubernur BI, dan Ketua OJK. Fakta ini wajib menyebut bahwa tidak ada sumber valid untuk daftar lengkap kode RI dan alokasinya dapat berubah sewaktu-waktu. Unggahan asli Korlantas perlu diarsipkan sebelum terbit.",
-			"publicationStatus": "draft",
-			"source": null,
-			"sourceCheckedAt": null
+			"text": "Menurut Korlantas, urutan RI 1 sampai RI 13 juga mencakup istri presiden, istri wakil presiden, Gubernur BI, dan Ketua OJK. Peraturan Polri sendiri hanya menyebut presiden, wakil presiden, ketua lembaga tinggi negara, dan pejabat setingkat menteri. Daftar lengkap seluruh nomor RI belum tersedia, dan pembagiannya bisa berubah.",
+			"publicationStatus": "ready",
+			"source": ["korlantas-ig-via-detik-2026", "perpol-7-2021-lampiran"],
+			"sourceCheckedAt": "2026-09-24"
 		}
 	],
-	"specialsVersion": "2026.09.24",
 	"sources": [
 		{
-			"id": "perpol-7-2021-lampiran",
-			"title": "Lampiran Peraturan Kepolisian Negara RI Nomor 7 Tahun 2021 tentang Registrasi dan Identifikasi Kendaraan Bermotor",
-			"publisher": "Polri; salinan JDIH BPK",
-			"type": "peraturan",
-			"date": "2021-05-05",
-			"url": "https://peraturan.bpk.go.id/Details/225016/perpol-no-7-tahun-2021",
-			"locator": "Lampiran huruf B (kode registrasi), huruf D angka 4 (kode negara CD, hlm. 99–102), huruf F (TNKB khusus RI, hlm. 103–104)",
-			"checkedAt": "2026-09-24",
-			"originalUrl": "https://peraturan.bpk.go.id/Download/219644/Perpol%20No.%207%20th%202021%20ttg%20regident_lampiran.pdf"
-		},
-		{
-			"id": "korlantas-ig-via-detik-2026",
-			"title": "Daftar Pelat Nomor Mobil Dinas Pejabat RI dari Presiden hingga Menteri (mengutip Instagram Korlantas Polri)",
-			"publisher": "detikOto",
-			"type": "media-mengutip-instansi",
-			"date": "2026-04-18",
-			"url": "https://oto.detik.com/berita/d-8450080/daftar-pelat-nomor-mobil-dinas-pejabat-ri-dari-presiden-hingga-menteri",
-			"locator": "Daftar RI 1–RI 13; unggahan Instagram asli Korlantas belum diarsipkan",
+			"id": "kompas-id-2025-ri36",
+			"title": "Viral Mobil RI 36 Paksa Terobos Kemacetan, Siapa Pejabat Penggunanya?",
+			"publisher": "Kompas.id",
+			"type": "media",
+			"date": "2025-01-10",
+			"url": "https://www.kompas.id/artikel/viral-mobil-ri-36-paksa-terobos-kemacetan-siapa-pejabat-penggunanya",
+			"locator": "Skema nomor kecil (RI 24 dan turunannya); RI 36.1–36.7",
 			"checkedAt": "2026-09-24",
 			"originalUrl": null
 		},
@@ -7483,13 +7418,13 @@
 			"originalUrl": null
 		},
 		{
-			"id": "kompas-id-2025-ri36",
-			"title": "Viral Mobil RI 36 Paksa Terobos Kemacetan, Siapa Pejabat Penggunanya?",
-			"publisher": "Kompas.id",
-			"type": "media",
-			"date": "2025-01-10",
-			"url": "https://www.kompas.id/artikel/viral-mobil-ri-36-paksa-terobos-kemacetan-siapa-pejabat-penggunanya",
-			"locator": "Skema nomor kecil (RI 24 dan turunannya); RI 36.1–36.7",
+			"id": "korlantas-ig-via-detik-2026",
+			"title": "Daftar Pelat Nomor Mobil Dinas Pejabat RI dari Presiden hingga Menteri (mengutip Instagram Korlantas Polri)",
+			"publisher": "detikOto",
+			"type": "media-mengutip-instansi",
+			"date": "2026-04-18",
+			"url": "https://oto.detik.com/berita/d-8450080/daftar-pelat-nomor-mobil-dinas-pejabat-ri-dari-presiden-hingga-menteri",
+			"locator": "Daftar RI 1–RI 13; unggahan Instagram asli Korlantas belum diarsipkan",
 			"checkedAt": "2026-09-24",
 			"originalUrl": null
 		},
@@ -7513,6 +7448,336 @@
 			"url": "https://otomotifnet.gridoto.com/read/233769440/daftar-42-pelat-nomor-mobil-menteri-dan-pejabat-di-indonesia-istri-presiden-pakai-ri-3",
 			"locator": "RI 1–RI 13 era kabinet sebelumnya; nomor 14 ke atas sudah tidak berlaku",
 			"checkedAt": "2026-09-24",
+			"originalUrl": null
+		},
+		{
+			"id": "perpol-7-2021-lampiran",
+			"title": "Lampiran Peraturan Kepolisian Negara RI Nomor 7 Tahun 2021 tentang Registrasi dan Identifikasi Kendaraan Bermotor",
+			"publisher": "Polri; salinan JDIH BPK",
+			"type": "peraturan",
+			"date": "2021-05-05",
+			"url": "https://peraturan.bpk.go.id/Details/225016/perpol-no-7-tahun-2021",
+			"locator": "Lampiran huruf B (kode registrasi), huruf D angka 4 (kode negara CD, hlm. 99–102), huruf F (TNKB khusus RI, hlm. 103–104)",
+			"checkedAt": "2026-09-24",
+			"originalUrl": "https://peraturan.bpk.go.id/Download/219644/Perpol%20No.%207%20th%202021%20ttg%20regident_lampiran.pdf"
+		},
+		{
+			"id": "avatara-unesa-afnei",
+			"title": "Perjuangan Laskar Hizbullah Jombang dalam Mempertahankan Kemerdekaan 1944-1950 (Syamsul Ustadziya Rofif dan Wisnu)",
+			"publisher": "AVATARA, e-Journal Pendidikan Sejarah, Vol. 15 No. 1, Universitas Negeri Surabaya",
+			"type": "jurnal",
+			"date": "2023",
+			"url": "https://ejournal.unesa.ac.id/index.php/avatara/article/view/58453/45563",
+			"locator": "Pendahuluan, paragraf 1: AFNEI mendarat di Kemayoran 14 September 1945 dan di Tanjung Priok 29 September 1945; merujuk Sejarah Nasional Indonesia VI (Balai Pustaka, 2011), hlm. 188",
+			"checkedAt": "2026-10-01",
+			"originalUrl": null
+		},
+		{
+			"id": "bapenda-jateng-2025-nrkb-pilihan",
+			"title": "Penjelasan Bapenda Jawa Tengah tentang NRKB pilihan — tanggapan resmi aduan LGWP66964724",
+			"publisher": "Badan Pengelola Pendapatan Daerah Provinsi Jawa Tengah — LaporGub",
+			"type": "instansi",
+			"date": "2025-02-12",
+			"url": "https://laporgub.jatengprov.go.id/detail/LGWP66964724.html",
+			"locator": "Tanggapan Bapenda, 12 Februari 2025 pukul 16.35 WIB; kutipan Perpol 7/2021 Pasal 7 ayat (5)",
+			"checkedAt": "2026-09-30",
+			"originalUrl": null
+		},
+		{
+			"id": "bapenda-sulsel-2021",
+			"title": "Nomor Kendaraan DD Warisan Belanda",
+			"publisher": "Bapenda Provinsi Sulawesi Selatan",
+			"type": "instansi",
+			"date": "2021-05-21",
+			"url": "https://bapenda.sulselprov.go.id/v1/2021/05/21/nomor-kendaraan-dd-warisan-belanda/",
+			"locator": "Memuat tanggal 1 Juni 2021 untuk DP dan DW; dipakai sebagai contoh tanggal yang bertentangan dengan pemberitaan 2012",
+			"checkedAt": "2026-09-30",
+			"originalUrl": null
+		},
+		{
+			"id": "bisnis-2012-sulsel",
+			"title": "Sulsel Berlakukan Tiga Kode Pelat Kendaraan",
+			"publisher": "Kabar24 Bisnis.com",
+			"type": "media-mengutip-instansi",
+			"date": "2012-06-07",
+			"url": "https://kabar24.bisnis.com/read/20120607/78/80327/sulsel-berlakukan-tiga-kode-pelat-kendaraan",
+			"locator": "Wawancara Regident Ditlantas Polda Sulsel",
+			"checkedAt": "2026-09-30",
+			"originalUrl": null
+		},
+		{
+			"id": "conam-ned-indie",
+			"title": "Kentekens in Nederlands-Indië tot 1945",
+			"publisher": "Conam (Contactgroep Auto- en Motorrijwiel Historie)",
+			"type": "situs-sejarah",
+			"date": "2025-10-22",
+			"url": "https://conam.info/kentekens/kentekens-in-nederlands-indie",
+			"locator": "Paragraf pelat 1900–1917 (nama gewest, SB, CH, foto “Preanger 10”); oval IN 1909; daftar kode huruf setelah 1917; huruf X sejak 1937; salinan halaman Handboek voor automobilisten en motorwielrijders terbitan Java Motor Club",
+			"checkedAt": "2026-10-01",
+			"originalUrl": null
+		},
+		{
+			"id": "ddtc-2024-papua-selatan",
+			"title": "Dorong Kendaraan Mutasi ke Pelat PS, Papua Selatan Bebaskan BBNKB",
+			"publisher": "DDTCNews",
+			"type": "media-mengutip-instansi",
+			"date": "2024",
+			"url": "https://news.ddtc.co.id/berita/daerah/1804029/dorong-kendaraan-mutasi-ke-pelat-ps-papua-selatan-bebaskan-bbnkb",
+			"locator": "Peluncuran pelat PS berdasarkan Peraturan Kapolda Papua 1/2024 tentang Penomoran Kendaraan Bermotor Daerah Papua dan DOB",
+			"checkedAt": "2026-10-01",
+			"originalUrl": null
+		},
+		{
+			"id": "detik-2012-polda-metro",
+			"title": "Polda Metro: Selama Tersedia, Silakan Pesan Nopol Kendaraan Cantik",
+			"publisher": "detikNews",
+			"type": "media-mengutip-instansi",
+			"date": "2012-02-20",
+			"url": "https://news.detik.com/berita/d-1846949/polda-metro-selama-tersedia-silakan-pesan-nopol-kendaraan-cantik",
+			"locator": "Pernyataan Kabag Regident Ditlantas Polda Metro Jaya: seri huruf belakang mengikuti wilayah alamat pemohon, misalnya T untuk Jakarta Timur",
+			"checkedAt": "2026-10-01",
+			"originalUrl": null
+		},
+		{
+			"id": "detik-2020-sulsel",
+			"title": "Polda Sulsel Resmi Berlakukan Nopol Baru Tiga Huruf untuk Mobil",
+			"publisher": "detikNews",
+			"type": "media",
+			"date": "2020-06-11",
+			"url": "https://news.detik.com/berita/d-5049710/polda-sulsel-resmi-berlakukan-nopol-baru-tiga-huruf-untuk-mobil",
+			"locator": "Bukti DP dan DW sudah dipakai sebelum 2021",
+			"checkedAt": "2026-09-30",
+			"originalUrl": null
+		},
+		{
+			"id": "detikoto-2012-sulsel",
+			"title": "Kode Huruf Nomor Polisi Kendaraan Bermotor di Sulsel Bertambah Jadi Tiga",
+			"publisher": "detikOto",
+			"type": "media-mengutip-instansi",
+			"date": "2012-06-06",
+			"url": "https://oto.detik.com/mobil/d-1934705/kode-huruf-nomor-polisi-kendaraan-bermotor-di-sulsel-bertambah-jadi-tiga",
+			"locator": "Keterangan pers Kasubdit Regident Ditlantas Polda Sulsel, 6 Juni 2012: DP dan DW, alasan biaya mesin cetak",
+			"checkedAt": "2026-09-30",
+			"originalUrl": null
+		},
+		{
+			"id": "detikoto-2021-ntmc",
+			"title": "Ini Arti Kode Angka dan Huruf di Pelat Nomor Kendaraan",
+			"publisher": "detikOto (mengutip NTMC Polri)",
+			"type": "media-mengutip-instansi",
+			"date": "2021-10-30",
+			"url": "https://oto.detik.com/tips-and-tricks/d-5789056/ini-arti-kode-angka-dan-huruf-di-pelat-nomor-kendaraan",
+			"locator": "Penjelasan NTMC Polri tentang seri huruf wilayah Polda Metro Jaya: B, P, S, T, U",
+			"checkedAt": "2026-10-01",
+			"originalUrl": null
+		},
+		{
+			"id": "detikoto-2022-pelat-putih",
+			"title": "Ini Alasan Polisi Ubah Pelat Hitam Jadi Putih",
+			"publisher": "detikOto",
+			"type": "media-mengutip-instansi",
+			"date": "2022-05-31",
+			"url": "https://oto.detik.com/berita/d-6102996/ini-alasan-polisi-ubah-pelat-hitam-jadi-putih",
+			"locator": "Pernyataan Kasubdit STNK Ditregident Korlantas Polri: pelat putih berlaku mulai Juni 2022 untuk mendukung kamera ETLE",
+			"checkedAt": "2026-10-01",
+			"originalUrl": null
+		},
+		{
+			"id": "detikoto-2022-stnk-mati",
+			"title": "STNK Mati 2 Tahun Jadi Bodong, Punya Mobil-motor tapi Cuma Jadi Pajangan",
+			"publisher": "detikOto",
+			"type": "media",
+			"date": "2022-12-17",
+			"url": "https://oto.detik.com/berita/d-6466252/stnk-mati-2-tahun-jadi-bodong-punya-mobil-motor-tapi-cuma-jadi-pajangan",
+			"locator": "Kutipan lengkap UU 22/2009 Pasal 74 ayat (2) dan (3)",
+			"checkedAt": "2026-10-01",
+			"originalUrl": null
+		},
+		{
+			"id": "detikoto-2024-indonesia-1",
+			"title": "Bukan 'Indonesia 1', Kini Mobil Kepresidenan Prabowo Pakai Pelat Nomor Ini",
+			"publisher": "detikOto",
+			"type": "media",
+			"date": "2024-10-22",
+			"url": "https://oto.detik.com/mobil/d-7601151/bukan-indonesia-1-kini-mobil-kepresidenan-prabowo-pakai-pelat-nomor-ini",
+			"locator": "Pelat “Indonesia 1” usai pelantikan, lalu RI 1 pada acara serah terima memorandum Menteri Pertahanan",
+			"checkedAt": "2026-10-01",
+			"originalUrl": null
+		},
+		{
+			"id": "detikoto-2024-papua",
+			"title": "Kode Pelat Nomor di 3 Provinsi Papua Diubah",
+			"publisher": "detikOto (mengutip situs Korlantas Polri)",
+			"type": "media-mengutip-instansi",
+			"date": "2024-08-21",
+			"url": "https://oto.detik.com/berita/d-7501604/kode-pelat-nomor-di-3-provinsi-papua-diubah",
+			"locator": "Papua Barat Daya PY, Papua Selatan PS, Papua Tengah PT pada 2024",
+			"checkedAt": "2026-10-01",
+			"originalUrl": null
+		},
+		{
+			"id": "detikoto-2024-stnk-korlantas",
+			"title": "STNK Mati 2 Tahun Bakal Dihapus, Bagaimana Aturannya?",
+			"publisher": "detikOto (mengutip situs Korlantas Polri)",
+			"type": "media-mengutip-instansi",
+			"date": "2024-02-26",
+			"url": "https://oto.detik.com/berita/d-7211704/stnk-mati-2-tahun-bakal-dihapus-bagaimana-aturannya",
+			"locator": "Pernyataan Korlantas tentang implementasi Pasal 74 UU 22/2009; surat peringatan mengacu Perpol 7/2021; kendaraan yang dihapus tidak dapat didaftarkan kembali",
+			"checkedAt": "2026-10-01",
+			"originalUrl": null
+		},
+		{
+			"id": "fibis-java-expedition",
+			"title": "Java Expedition",
+			"publisher": "FIBIS (Families in British India Society)",
+			"type": "ensiklopedia",
+			"date": null,
+			"url": "https://wiki.fibis.org/w/Java_Expedition",
+			"locator": "Tabel kekuatan pasukan 1811: total 11.960; daftar resimen bernomor, antara lain HM 59th dan HM 78th",
+			"checkedAt": "2026-10-01",
+			"originalUrl": null
+		},
+		{
+			"id": "gnfi-2021-batalion",
+			"title": "Alasan Tidak Digunakannya Huruf C pada Plat Kendaraan Bermotor di Indonesia",
+			"publisher": "Good News From Indonesia",
+			"type": "media",
+			"date": "2021-05-18",
+			"url": "https://www.goodnewsfromindonesia.id/2021/05/18/alasan-tidak-digunakannya-huruf-c-pada-plat-kendaraan-bermotor-di-indonesia",
+			"locator": "Paragraf sejarah: 15.600 pasukan Inggris dan kode batalion B untuk Batavia, disajikan tanpa rujukan sejarah",
+			"checkedAt": "2026-10-01",
+			"originalUrl": null
+		},
+		{
+			"id": "highlanders-java-1811",
+			"title": "The Invasion of Java",
+			"publisher": "The Highlanders’ Museum",
+			"type": "museum",
+			"date": null,
+			"url": "https://thehighlandersmuseum.com/?p=30029",
+			"locator": "Resimen ke-78 dalam invasi Jawa 1811; kekuatan pasukan 11.960 orang",
+			"checkedAt": "2026-10-01",
+			"originalUrl": null
+		},
+		{
+			"id": "jpnn-2016-papua",
+			"title": "Nomor Polisi di Papua Bukan DS Lagi",
+			"publisher": "JPNN.com (mengutip Cenderawasih Pos)",
+			"type": "media-mengutip-instansi",
+			"date": "2016-07-02",
+			"url": "https://www.jpnn.com/news/resmi-nomor-polisi-di-papua-bukan-ds-lagi",
+			"locator": "Peluncuran PA 1 oleh Kapolda Papua, 1 Juli 2016; Keputusan Korlantas 168/VI/2016",
+			"checkedAt": "2026-10-01",
+			"originalUrl": null
+		},
+		{
+			"id": "kompas-2021-lampiran",
+			"title": "Ini Kode Wilayah pada Pelat Nomor Kendaraan yang Jarang Orang Tahu",
+			"publisher": "Kompas.com",
+			"type": "media",
+			"date": "2021-08-19",
+			"url": "https://otomotif.kompas.com/read/2021/08/19/132208115/ini-kode-wilayah-pada-pelat-nomor-kendaraan-yang-jarang-orang-tahu?page=all",
+			"locator": "Salinan daftar kode wilayah Lampiran Perpol 7/2021: W (Gresik, Sidoarjo, Mojokerto, Jombang), P (Kab. Besuki, Situbondo, Bondowoso, Jember, Banyuwangi)",
+			"checkedAt": "2026-10-01",
+			"originalUrl": null
+		},
+		{
+			"id": "kompas-2022-stori",
+			"title": "Sejarah Pelat Nomor Kendaraan di Indonesia",
+			"publisher": "Kompas.com",
+			"type": "media",
+			"date": "2022-12-23",
+			"url": "https://www.kompas.com/stori/read/2022/12/23/150000379/sejarah-pelat-nomor-kendaraan-di-indonesia",
+			"locator": "Pelat dikenalkan Belanda di Jawa pada 1900 dengan kode daerah seperti SB untuk Surabaya; pemasangan kadang di samping kendaraan",
+			"checkedAt": "2026-10-01",
+			"originalUrl": null
+		},
+		{
+			"id": "kompas-2024-batalion",
+			"title": "Asal-usul Kode Wilayah Pelat Nomor Kendaraan di Indonesia, Berawal dari Tentara Inggris",
+			"publisher": "Kompas.com",
+			"type": "media",
+			"date": "2024-04-17",
+			"url": "https://otomotif.kompas.com/read/2024/04/17/150100215/asal-usul-kode-wilayah-pelat-nomor-kendaraan-di-indonesia-berawal-dari",
+			"locator": "Cerita batalion B untuk Batavia, dikutip dari laman Pemerintah Kota Surakarta",
+			"checkedAt": "2026-10-01",
+			"originalUrl": null
+		},
+		{
+			"id": "mobilmotorlama-2018",
+			"title": "Sejarah Asal Usul Plat Nomor Kendaraan di Indonesia",
+			"publisher": "mobilmotorlama.com",
+			"type": "blog",
+			"date": "2018-05-12",
+			"url": "https://www.mobilmotorlama.com/2018/05/sejarah-asal-usul-plat-nomor-kendaraan.html",
+			"locator": "Paragraf 2 (15.600 tentara, 26 batalion A–Z); paragraf 4 (batalion cadangan, termasuk W dan Z); komentar penulis 20 Mei 2018 dan 16 Agustus 2020 tentang bahan bacaannya",
+			"checkedAt": "2026-10-01",
+			"originalUrl": null
+		},
+		{
+			"id": "nlwiki-kentekens",
+			"title": "Nederlands-Indische kentekens",
+			"publisher": "Wikipedia bahasa Belanda",
+			"type": "ensiklopedia",
+			"date": null,
+			"url": "https://nl.wikipedia.org/wiki/Nederlands-Indische_kentekens",
+			"locator": "Bagian “Periode 1917-1949”: Motorreglement berlaku 1 Oktober 1917 dan memperkenalkan sistem kode baru; subbagian “Internationaal kenteken en de landcode IN”: kode X untuk kenteken internasional bersama landcode IN. Tahun mulai IN dan X berbeda dari Conam (1933 di sini, 1909 dan 1937 di Conam), jadi teks fakta tidak menyebut tahun",
+			"checkedAt": "2026-10-01",
+			"originalUrl": null
+		},
+		{
+			"id": "otomotifnet-2022-da",
+			"title": "Berbau Kolonial, Pelat Nomor Kalsel Emang Beda, DA Singkatan Dari Ini",
+			"publisher": "Otomotifnet (mengutip Kompas.com, 18 Oktober 2022)",
+			"type": "media-mengutip-instansi",
+			"date": "2022-10-19",
+			"url": "https://otomotifnet.gridoto.com/read/233532243/berbau-kolonial-pelat-nomor-kalsel-emang-beda-da-singkatan-dari-ini",
+			"locator": "Pernyataan Kasubdit Regident Ditlantas Polda Kalsel: DA = Distrik Amandit; DA dipakai untuk Zuider en Ooster Afdeeling van Borneo",
+			"checkedAt": "2026-10-01",
+			"originalUrl": null
+		},
+		{
+			"id": "perkap-5-2012",
+			"title": "Peraturan Kapolri Nomor 5 Tahun 2012 tentang Registrasi dan Identifikasi Kendaraan Bermotor",
+			"publisher": "Berita Negara RI 2012 No. 209 (peraturan.go.id)",
+			"type": "peraturan",
+			"date": "2012",
+			"url": "https://peraturan.go.id/files/bn209-2012.pdf",
+			"locator": "Dasar hukum yang disebut Ditlantas Polda Sulsel pada 2012; dicabut Perpol 7/2021",
+			"checkedAt": "2026-09-30",
+			"originalUrl": null
+		},
+		{
+			"id": "perpol-7-2021",
+			"title": "Peraturan Kepolisian Nomor 7 Tahun 2021 tentang Registrasi dan Identifikasi Kendaraan Bermotor",
+			"publisher": "Berita Negara RI 2021 No. 476 (peraturan.go.id)",
+			"type": "peraturan",
+			"date": "2021-05-05",
+			"url": "https://peraturan.go.id/files/bn476-2021.pdf",
+			"locator": "Batang tubuh dan Lampiran: pembagian nomor urut, seri huruf, warna TNKB, TNKB khusus dan rahasia, penghapusan registrasi, kode wilayah",
+			"checkedAt": "2026-09-30",
+			"originalUrl": null
+		},
+		{
+			"id": "polri-2022-lis-biru",
+			"title": "Ditlantas Polda Sulteng Terapkan Aturan Penggunaan Nomor Kendaraan",
+			"publisher": "Divisi Humas Polri — Tribratanews",
+			"type": "instansi",
+			"date": "2022-08-16",
+			"url": "https://tribratanews.polri.go.id/blog/nasional-3/ditlantas-polda-sulteng-terapkan-aturan-penggunaan-nomor-kendaraan-48992",
+			"locator": "Penjelasan empat warna dasar TNKB dan lis biru kendaraan listrik pada akhir artikel",
+			"checkedAt": "2026-09-30",
+			"originalUrl": null
+		},
+		{
+			"id": "suara-2024-indonesia-1",
+			"title": "Usai Dilantik Jadi Presiden, Prabowo Tinggalkan Gedung MPR Naik Mobil Maung Garuda Putih",
+			"publisher": "Suara.com",
+			"type": "media",
+			"date": "2024-10-20",
+			"url": "https://www.suara.com/news/2024/10/20/135903/usai-dilantik-jadi-presiden-prabowo-tinggalkan-gedung-mpr-naik-mobil-maung-garuda-putih",
+			"locator": "Mobil presiden berpelat “Indonesia 1” setelah pelantikan, 20 Oktober 2024",
+			"checkedAt": "2026-10-01",
 			"originalUrl": null
 		}
 	],
@@ -9343,33 +9608,36 @@
 	],
 	"referencePlates": [
 		{
-			"id": "ref-cc-format",
-			"series": "CC",
-			"number": null,
-			"label": "Korps konsulat; format CC + kode negara + nomor urut registrasi",
-			"confidence": "high",
-			"sources": ["perpol-7-2021-lampiran"],
-			"note": null,
-			"reviewBy": "2027-03-24"
-		},
-		{
-			"id": "ref-ch-format",
-			"series": "CH",
-			"number": null,
-			"label": "Konsul kehormatan; format CH + kode negara + nomor urut registrasi",
-			"confidence": "high",
-			"sources": ["perpol-7-2021-lampiran"],
-			"note": null,
-			"reviewBy": "2027-03-24"
-		},
-		{
-			"id": "ref-ri-format",
+			"id": "ref-ri",
 			"series": "RI",
 			"number": null,
-			"label": "Presiden, Wakil Presiden, ketua lembaga tinggi negara, pejabat setingkat menteri; format RI + nomor urut registrasi, tanpa seri huruf",
+			"label": "RI + nomor urut registrasi, tanpa seri huruf. Untuk kendaraan dinas Presiden, Wakil Presiden, ketua lembaga tinggi negara, dan pejabat setingkat menteri.",
+			"example": "RI 1",
 			"confidence": "high",
 			"sources": ["perpol-7-2021-lampiran"],
 			"note": "Tidak ada sumber valid yang memuat daftar lengkap kode RI, dan alokasi nomornya dapat berubah sewaktu-waktu.",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "ref-cc",
+			"series": "CC",
+			"number": null,
+			"label": "CC + kode negara + nomor urut registrasi. Untuk korps konsulat.",
+			"example": "CC 12 10",
+			"confidence": "high",
+			"sources": ["perpol-7-2021-lampiran"],
+			"note": "Contoh di lampiran memakai kode negara yang sama dengan CD, tetapi lampiran tidak menyatakannya secara eksplisit.",
+			"reviewBy": "2027-03-24"
+		},
+		{
+			"id": "ref-ch",
+			"series": "CH",
+			"number": null,
+			"label": "CH + kode negara + nomor urut registrasi. Untuk konsul kehormatan.",
+			"example": "CH 130 1",
+			"confidence": "high",
+			"sources": ["perpol-7-2021-lampiran"],
+			"note": "Contoh di lampiran memakai kode negara yang sama dengan CD, tetapi lampiran tidak menyatakannya secara eksplisit.",
 			"reviewBy": "2027-03-24"
 		}
 	]

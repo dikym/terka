@@ -5,7 +5,6 @@ import { addMonths, readSpecials, specialId } from "../../../src/core/content/re
 const doc = (cdRows: string[], sourceLine = "Sumber seluruh baris: `perpol`, hlm. 99.") =>
 	[
 		"# Kode Khusus",
-		"**Versi data kode khusus:** 2026.09.24",
 		"",
 		"## 2. Format Pelat Khusus",
 		"",
@@ -38,7 +37,6 @@ describe("special plates reader", () => {
 				"| CD 92 | PTRI untuk ASEAN | organisasi | PTRI ASEAN | — | `high` | ya |"
 			])
 		);
-		expect(result.specialsVersion).toBe("2026.09.24");
 		expect(result.specials[0]).toEqual({
 			id: "cd-12-amerika-serikat",
 			series: "CD",
@@ -72,20 +70,21 @@ describe("special plates reader", () => {
 		});
 	});
 
-	test("reads RI/CC/CH format rows as reference plates and skips the CD row", () => {
-		const result = readSpecials(doc([]));
-		expect(result.referencePlates).toEqual([
-			{
-				id: "ref-ri-format",
-				series: "RI",
-				number: null,
-				label: "Presiden; format RI + nomor urut",
-				confidence: "high",
-				sources: ["perpol"],
-				note: "Tidak ada daftar lengkap.",
-				reviewBy: "2027-03-24"
-			}
+	test("reads RI/CC/CH format rows with their example and skips the CD row", () => {
+		expect(readSpecials(doc([])).formats).toEqual([
+			{ series: "RI", example: "RI 1", sources: ["perpol"] }
 		]);
+	});
+	test("a year-only or empty Tanggal is accepted", () => {
+		const markdown = doc([]).replace(
+			"| `perpol` | Lampiran | Polri | peraturan | 2021-05-05 |",
+			"| `perpol` | Lampiran | Polri | peraturan | 2021 |"
+		);
+		expect(readSpecials(markdown).sources[0].date).toBe("2021");
+		expect(
+			readSpecials(markdown.replace("| peraturan | 2021 |", "| peraturan | — |")).sources[0]
+				.date
+		).toBeNull();
 	});
 
 	test("an unknown holder type fails with its line number", () => {
@@ -93,7 +92,7 @@ describe("special plates reader", () => {
 			readSpecials(
 				doc(["| CD 12 | Amerika Serikat | benua | Amerika Serikat | — | `high` | — |"])
 			)
-		).toThrow("line 17");
+		).toThrow("line 16");
 	});
 
 	test('a code that is not "CD <number>" fails', () => {
@@ -154,7 +153,7 @@ describe("special plates reader", () => {
 
 	test("a markdown reader error is prefixed with the file name", () => {
 		const withoutSources = doc([]).split("## 8. Daftar Sumber")[0];
-		expect(() => readSpecials(withoutSources)).toThrow("Terka_Kode_Khusus.md");
+		expect(() => readSpecials(withoutSources)).toThrow("Terka_Special_Codes.md");
 		expect(() => readSpecials(withoutSources)).toThrow("section not found");
 	});
 
@@ -162,15 +161,13 @@ describe("special plates reader", () => {
 		expect(addMonths("2026-09-24", 6)).toBe("2027-03-24");
 	});
 
-	test("the real document yields 130 CD entries, CD 92 under review and three format entries", async () => {
-		const result = readSpecials(await readFile("docs/Terka_Kode_Khusus.md", "utf8"));
+	test("the real document yields 130 CD entries, CD 92 under review and three format rows", async () => {
+		const result = readSpecials(await readFile("docs/Terka_Special_Codes.md", "utf8"));
 		expect(result.specials).toHaveLength(130);
 		expect(
 			result.specials.filter((entry) => entry.needsReview).map((entry) => entry.number)
 		).toEqual(["92"]);
-		expect(new Set(result.referencePlates.map((plate) => plate.series))).toEqual(
-			new Set(["RI", "CC", "CH"])
-		);
+		expect(result.formats.map((row) => row.series).sort()).toEqual(["CC", "CH", "RI"]);
 		for (const special of result.specials)
 			expect(special.sources).toEqual(["perpol-7-2021-lampiran"]);
 	});

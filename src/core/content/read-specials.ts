@@ -1,14 +1,14 @@
-import { listCell, readField, readTable, sectionLines } from "./markdown";
-import type { Confidence, ContentSource, ReferencePlate, Special } from "./schema";
+import { listCell, readSources, readTable, sectionLines } from "./markdown";
+import type { Confidence, ContentSource, Special } from "./schema";
 
-export type SpecialsSource = {
-	specialsVersion: string;
+export type FormatRow = { series: string; example: string; sources: string[] };
+export type SpecialsMarkdown = {
 	sources: ContentSource[];
 	specials: Special[];
-	referencePlates: ReferencePlate[];
+	formats: FormatRow[];
 };
 
-const FILE = "Terka_Kode_Khusus.md";
+const FILE = "Terka_Special_Codes.md";
 const FORMATS = "## 2. Format Pelat Khusus";
 const CD_LIST = "## 4. Daftar Kode CD";
 const SOURCES = "## 8. Daftar Sumber";
@@ -18,7 +18,6 @@ const HOLDER_TYPES: Record<string, Special["holderType"]> = {
 };
 const CONFIDENCES = ["high", "medium", "low"];
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
-const nullable = (cell: string) => (cell === "—" ? null : cell);
 
 export function addMonths(isoDate: string, months: number): string {
 	const [year, month, day] = isoDate.split("-").map(Number);
@@ -50,7 +49,7 @@ function fail(line: number, message: string): never {
 	throw new Error(`${FILE} line ${line}: ${message}`);
 }
 
-export function readSpecials(markdown: string): SpecialsSource {
+export function readSpecials(markdown: string): SpecialsMarkdown {
 	try {
 		return readSpecialsSource(markdown);
 	} catch (cause) {
@@ -59,38 +58,13 @@ export function readSpecials(markdown: string): SpecialsSource {
 	}
 }
 
-function readSpecialsSource(markdown: string): SpecialsSource {
-	const specialsVersion = readField(markdown, "Versi data kode khusus");
-	const sources: ContentSource[] = readTable(markdown, SOURCES, [
-		"ID",
-		"Judul",
-		"Penerbit",
-		"Jenis",
-		"Tanggal",
-		"Diperiksa",
-		"URL",
-		"URL asli",
-		"Lokasi"
-	]).map(({ line, cells }) => {
-		if (!ISO_DATE.test(cells.Tanggal))
-			fail(line, `Tanggal "${cells.Tanggal}" is not an ISO date (YYYY-MM-DD)`);
-		if (cells.Diperiksa !== "—" && !ISO_DATE.test(cells.Diperiksa))
-			fail(line, `Diperiksa "${cells.Diperiksa}" is not an ISO date (YYYY-MM-DD) or "—"`);
-		return {
-			id: cells.ID,
-			title: cells.Judul,
-			publisher: cells.Penerbit,
-			type: cells.Jenis,
-			date: cells.Tanggal,
-			checkedAt: nullable(cells.Diperiksa),
-			url: cells.URL,
-			originalUrl: nullable(cells["URL asli"]),
-			locator: cells.Lokasi
-		};
-	});
+function readSpecialsSource(markdown: string): SpecialsMarkdown {
+	const sources = readSources(markdown, SOURCES);
 	const byId = new Map(sources.map((source) => [source.id, source]));
 	const dates = (ids: string[], line: number) => {
 		const first = byId.get(ids[0]) ?? fail(line, `unknown source ${ids[0] ?? "(none)"}`);
+		if (!first.date || !ISO_DATE.test(first.date))
+			fail(line, `source ${first.id} needs a full date (YYYY-MM-DD) for validFrom`);
 		return { validFrom: first.date, reviewBy: addMonths(first.checkedAt ?? first.date, 6) };
 	};
 
@@ -139,7 +113,7 @@ function readSpecialsSource(markdown: string): SpecialsSource {
 		};
 	});
 
-	const referencePlates: ReferencePlate[] = readTable(markdown, FORMATS, [
+	const formats: FormatRow[] = readTable(markdown, FORMATS, [
 		"Kode",
 		"Pemakai",
 		"Susunan menurut Perpol 7/2021",
@@ -150,21 +124,14 @@ function readSpecialsSource(markdown: string): SpecialsSource {
 	])
 		.filter(({ cells }) => cells.Kode !== "CD")
 		.map(({ line, cells }) => {
-			const series = cells.Kode;
-			if (series !== "RI" && series !== "CC" && series !== "CH")
-				fail(line, `unknown format series "${series}"`);
-			const ids = listCell(cells.Sumber);
+			if (!["RI", "CC", "CH"].includes(cells.Kode))
+				fail(line, `unknown format series "${cells.Kode}"`);
 			return {
-				id: `ref-${series.toLowerCase()}-format`,
-				series,
-				number: null,
-				label: `${cells.Pemakai}; format ${cells["Susunan menurut Perpol 7/2021"]}`,
-				confidence: "high" as const,
-				sources: ids,
-				note: nullable(cells.Catatan),
-				reviewBy: dates(ids, line).reviewBy
+				series: cells.Kode,
+				example: cells["Contoh di lampiran"],
+				sources: listCell(cells.Sumber)
 			};
 		});
 
-	return { specialsVersion, sources, specials, referencePlates };
+	return { sources, specials, formats };
 }

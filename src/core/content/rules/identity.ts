@@ -1,14 +1,14 @@
 import type { ContentDraft } from "../draft";
 import { type ContentMessage, duplicates, error } from "../messages";
 
-export function identityRules({ curation, specials }: ContentDraft): ContentMessage[] {
+export function identityRules({ curation, specials, funFacts }: ContentDraft): ContentMessage[] {
 	const out: ContentMessage[] = [];
 	const regionIds = curation.regions.map((region) => region.id);
 	const specialIds = specials.specials.map((entry) => entry.id);
 	const kinds: [string, string[]][] = [
 		["region", regionIds],
 		["area", curation.areas.map((area) => area.id)],
-		["fact", curation.facts.map((fact) => fact.id)],
+		["fact", funFacts.facts.map((fact) => fact.id)],
 		["special", specialIds],
 		["reference plate", specials.referencePlates.map((plate) => plate.id)]
 	];
