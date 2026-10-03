@@ -2,7 +2,7 @@
 
 **Status:** Draf · **Bahasa:** Indonesia
 **Acuan:** Dokumen Kode Plat Nomor Kendaraan Indonesia (sumber data)
-**Dokumen terkait:** PRD (produk dan alur pengguna) · TRD (arsitektur, model data, dan sinkronisasi) · ERD (skema database) · Facts (`Terka_Facts.md`) · Kode Khusus (`Terka_Kode_Khusus.md`) · Microcopy (`Terka_Microcopy.md`) · Tests (`Terka_Tests.md`)
+**Dokumen terkait:** PRD (produk dan alur pengguna) · TRD (arsitektur, model data, dan sinkronisasi) · ERD (skema database) · Fun Facts (`Terka_Fun_Facts.md`) · Special Codes (`Terka_Special_Codes.md`) · Microcopy (`Terka_Microcopy.md`) · Tests (`Terka_Tests.md`)
 
 > **Slogan:** Lihat pelatnya, terka asalnya.
 > **Fokus dokumen ini:** aturan pemilihan materi, penjadwalan, penilaian jawaban, siklus status kartu, dan konsistensi antarperangkat.
@@ -649,15 +649,15 @@ E = Σ d(soal yang benar-benar ada dalam snapshot antrean)
 
 **Memulai sesi.** Enter atau **Mulai** membuka antrean yang sudah ditinjau. Esc atau **Kembali** menutup pratinjau tanpa mengubah riwayat belajar.
 
-### 4.15 Fakta pada Akhir Sesi
+### 4.15 Fun Facts pada Akhir Sesi
 
-Layar akhir setiap mode, termasuk sesi himpunan, menampilkan satu **Fakta menarik** dari kandidat `publicationStatus = ready`, lengkap dengan label sejarah dan sumbernya. Jika tidak ada kandidat siap terbit, blok fakta disembunyikan dan tidak ada `fact_views` yang ditulis. Fakta tidak tampil di tempat lain: tidak di tengah sesi, tidak sebagai pilihan jawaban, dan tidak sebagai soal.
+Layar akhir setiap mode, termasuk sesi himpunan, menampilkan satu fakta di blok **Fun Facts** dari kandidat `publicationStatus = ready`, lengkap dengan label sejarah dan sumbernya. Jika tidak ada kandidat siap terbit, blok fakta disembunyikan dan tidak ada `fact_views` yang ditulis. Fakta tidak tampil di tempat lain: tidak di tengah sesi, tidak sebagai pilihan jawaban, dan tidak sebagai soal.
 
 **Pemilihan fakta:**
 
 1. Kandidat awal: hanya fakta `ready` di `plates.json`; jika kosong, hentikan pemilihan tanpa kesalahan.
-2. Buang fakta yang termasuk `N` fakta terakhir yang tampil di layar akhir, dengan `N = min(20, ⌊jumlah fakta ready / 2⌋)`. Dengan 43 fakta siap terbit, `N = 20`: satu fakta baru bisa tampil lagi setelah 20 fakta lain.
-3. Buang fakta berlabel `legenda` jika salah satu dari dua fakta layar akhir sebelumnya juga `legenda`. Cerita yang paling mudah diingat justru yang paling lemah dasarnya, jadi porsinya dibatasi.
+2. Buang fakta yang termasuk `N` fakta terakhir yang tampil di layar akhir, dengan `N = min(20, ⌊jumlah fakta ready / 2⌋)`. Dengan 41 fakta siap terbit di `Terka_Fun_Facts.json`, `N = 20`: satu fakta baru bisa tampil lagi setelah 20 fakta lain.
+3. Buang fakta berlabel `mitos` jika salah satu dari dua fakta layar akhir sebelumnya juga `mitos`. Cerita yang paling mudah diingat justru yang paling lemah dasarnya, jadi porsinya dibatasi.
 4. Dari sisa kandidat, utamakan fakta yang terkait kode yang dijawab di sesi itu. Jika tidak ada, pakai semua sisa kandidat.
 5. Pilih satu dengan PRNG yang di-seed `id` practice sesi.
 6. Jika langkah 2–3 menghabiskan kandidat, pilih fakta yang paling lama tidak tampil di layar akhir.
@@ -666,9 +666,9 @@ Layar akhir setiap mode, termasuk sesi himpunan, menampilkan satu **Fakta menari
 
 **Riwayat tampil** dicatat di tabel `fact_views` (TRD bagian 4.2) dan ikut sinkron. Fakta yang baru tampil di ponsel tidak akan tampil lagi di laptop dalam rentang yang sama.
 
-**Fakta yang berubah.** Fakta yang statusnya berubah tampil dengan status terbaru. Fakta yang dihapus atau diturunkan kembali menjadi draf tidak tampil lagi; riwayatnya diabaikan dalam jendela pemilihan. Jumlah kandidat siap terbit menentukan N. Jika langkah cadangan terpakai, pengulangan atau legenda berdekatan boleh terjadi; preferensi rotasi bukan larangan mutlak pada kumpulan kecil.
+**Fakta yang berubah.** Fakta yang statusnya berubah tampil dengan status terbaru. Fakta yang dihapus atau diturunkan kembali menjadi draf tidak tampil lagi; riwayatnya diabaikan dalam jendela pemilihan. Jumlah kandidat siap terbit menentukan N. Jika langkah cadangan terpakai, pengulangan atau mitos berdekatan boleh terjadi; preferensi rotasi bukan larangan mutlak pada kumpulan kecil.
 
-Fakta menarik bukan ajakan latihan. Layar akhir tetap tanpa Tombol untuk menambah sesi (Microcopy bagian 2, aturan 6).
+Fun Facts bukan ajakan latihan. Layar akhir tetap tanpa Tombol untuk menambah sesi (Microcopy bagian 2, aturan 6).
 
 ### 4.16 Penyesuaian Tingkat Otomatis
 
@@ -954,7 +954,7 @@ Kriteria berikut mengikat dan diperiksa lewat tes otomatis sebelum rilis. Tiap b
 | AC-30 | Persentil dihitung per kelompok `level × bentuk jawaban × metode input`, dengan kelompok lebar sebagai cadangan di bawah 30 data                                                                                                                   | 4.4            |
 | AC-32 | Tes penempatan hanya mengubah kartu kode yang ditanyakan; jawaban benar tanpa gangguan menjadi review pertama FSRS; hanya sesi terbaru yang selesai yang berlaku                                                                                   | 4.13           |
 | AC-33 | Sesi berantrean tetap memakai salinan antrean pratinjau tanpa menyisipkan langkah baru; salinan antrean diperbarui jika lebih dari 10 menit, hari berganti, atau revisi keadaan aplikasi berubah. Kilat berdurasi tetap dan tes penempatan adaptif | 4.14           |
-| AC-34 | Fakta `ready` hanya tampil di layar akhir dengan sumber; kandidat menghindari N tampilan terakhir dan legenda berdekatan, kecuali pilihan cadangan 4.15. Tanpa kandidat, blok disembunyikan. Rotasi memakai riwayat lintas perangkat               | 4.15           |
+| AC-34 | Fakta `ready` hanya tampil di layar akhir dengan sumber; kandidat menghindari N tampilan terakhir dan mitos berdekatan, kecuali pilihan cadangan 4.15. Tanpa kandidat, blok disembunyikan. Rotasi memakai riwayat lintas perangkat               | 4.15           |
 | AC-35 | Batas materi baru harian dan ambang penahanan mengikuti tabel tingkat di bagian 4.7; pengguna yang melewati tes memakai batas Menengah; tingkat awal diambil dari sesi tes penempatan terbaru yang selesai, lalu disesuaikan menurut 4.16          | 4.7, 4.13      |
 | AC-36 | Tingkat naik atau turun satu langkah menurut syarat bagian 4.16, paling cepat 14 hari setelah perubahan sebelumnya, dengan hasil yang sama di semua perangkat                                                                                      | 4.16           |
 | AC-37 | Hanya lima mode kartu yang dapat dibuat: `code2region`, `region2code`, dan `setrecall` untuk kode wilayah, serta `special2holder` dan `holder2special` untuk kode khusus; provinsi dan seri tidak menambah jenis kartu                             | 2.8, 2.9       |

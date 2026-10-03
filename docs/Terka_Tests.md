@@ -1,7 +1,7 @@
 # TERKA — Katalog Pengujian
 
 **Status:** Draf · **Bahasa:** Indonesia
-**Dokumen terkait:** PRD (produk dan alur pengguna) · Microcopy (teks UI) · SRD (aturan perilaku) · TRD (arsitektur dan sinkronisasi) · ERD (skema database) · Kode Khusus (`Terka_Kode_Khusus.md`)
+**Dokumen terkait:** PRD (produk dan alur pengguna) · Microcopy (teks UI) · SRD (aturan perilaku) · TRD (arsitektur dan sinkronisasi) · ERD (skema database) · Special Codes (`Terka_Special_Codes.md`) · Fun Facts (`Terka_Fun_Facts.md`)
 
 > **Slogan:** Lihat pelatnya, terka asalnya.
 > **Fokus dokumen ini:** seluruh katalog tes — perilaku, teknis, dan E2E — beserta alat, CI, dan data uji yang dipakai.
@@ -69,7 +69,7 @@ Satu tes otomatis gagal di langkah mana pun menghentikan migration dan deploy. E
 - **Pengguna sintetis:** generator yang mensimulasikan pengguna dengan kurva lupa yang diketahui. Dipakai untuk menguji apakah optimizer bisa menemukan kembali parameter yang dipakai untuk membangkitkan data.
 - **Konten mini:** `plates.json` kecil berisi 8 kode yang mewakili semua kasus khusus — kode lintas provinsi, kode dengan alias, entri `medium`, dan kode yang pernah pindah wilayah — beserta kab/kotanya. Data uji kab/kota wajib memuat: nama kota dan kabupaten yang sama, kab/kota yang dipakai dua kode, nama 4 huruf, nama berawalan "Kota" sebagai bagian nama, varian terdaftar, keanggotaan `medium`.
 
-**Data uji penempatan dan fakta.** Tes penempatan memakai data uji khusus minimal 28 kode (8 common, 10 medium, 10 rare), bukan data uji mini 8 kode. Tes rotasi memakai 43 fakta siap terbit bersumber sintetis untuk pengujian; ini tidak berarti 43 kandidat dalam Facts sudah diverifikasi. Semua sumber sintetis hanya ada di data uji dan tidak boleh masuk konten produksi.
+**Data uji penempatan dan fakta.** Tes penempatan memakai data uji khusus minimal 28 kode (8 common, 10 medium, 10 rare), bukan data uji mini 8 kode. Tes rotasi memakai 43 fakta siap terbit bersumber sintetis untuk pengujian; data ini terpisah dari 41 fakta produksi di `Terka_Fun_Facts.json`. Semua sumber sintetis hanya ada di data uji dan tidak boleh masuk konten produksi.
 
 **Data uji bawaan.** Kecuali disebut lain, tes perilaku memakai konten mini di atas beserta kab/kota, alias, dan varian penulisan. Tingkat pengguna Menengah: batas 10 materi baru per hari dan ambang penahanan 40. Zona waktu-nya `Asia/Makassar`, dan `local_day` awalnya Senin 21 September 2026.
 
@@ -449,7 +449,7 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | SR-258 | Sesi dengan antrean tetap selesai                                                        | `estimated_ms`, `active_ms`, dan waktu mulai/selesai tersimpan; KPI membandingkan E dengan `active_ms`, bukan waktu kalender           | normal   | SRD 4.14 |
 | SR-259 | Antrean kosong                                                                           | Pratinjau tidak ditampilkan                                                                                                            | batas    | SRD 4.14 |
 
-### 5.24 Fakta pada Akhir Sesi
+### 5.24 Fun Facts pada Akhir Sesi
 
 | ID     | Skenario                                                            | Hasil yang diharapkan                                                                       | Kategori | Aturan   |
 | ------ | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | -------- | -------- |
@@ -459,7 +459,7 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | SR-263 | Sesi menjawab DA dan DK, ada fakta terkait keduanya di kandidat     | Fakta yang dipilih salah satu fakta terkait                                                 | normal   | SRD 4.15 |
 | SR-264 | Tidak ada fakta terkait yang tersisa                                | Dipilih dari sisa kandidat lain                                                             | batas    | SRD 4.15 |
 | SR-265 | Semua kandidat habis karena langkah 2–3                             | Dipilih fakta yang paling lama tidak tampil                                                 | batas    | SRD 4.15 |
-| SR-266 | Salah satu dari dua fakta layar akhir sebelumnya berlabel `legenda` | Fakta `legenda` tidak dipilih                                                               | batas    | SRD 4.15 |
+| SR-266 | Salah satu dari dua fakta layar akhir sebelumnya berlabel `mitos`   | Fakta `mitos` tidak dipilih                                                                 | batas    | SRD 4.15 |
 | SR-267 | Sesi ID, konten `ready`, dan riwayat `fact_views` sebelumnya sama   | Pilihan fakta identik; sesi ID saja tidak menjamin hasil sama bila kandidat/riwayat berbeda | batas    | SRD 4.15 |
 | SR-268 | Fakta tampil di ponsel, lalu layar akhir di laptop setelah sinkron  | Fakta itu tidak dipilih di laptop                                                           | batas    | SRD 8.10 |
 | SR-269 | Fakta dihapus dari data                                             | Tidak pernah tampil lagi                                                                    | batas    | SRD 4.15 |
@@ -867,7 +867,7 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 
 | ID     | Skenario                                                                        | Hasil yang diharapkan                                                                                                   | Kategori |
 | ------ | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | -------- |
-| TR-166 | Build dengan dokumen Kode Khusus (`Terka_Kode_Khusus.md`) revisi 2026.09.24      | Lolos; `specials[]` berisi 130 entri CD; `referencePlates[]` berisi tiga entri format (RI, CC, CH); CD 92 `needsReview` | normal   |
+| TR-166 | Build dengan dokumen Special Codes (`Terka_Special_Codes.md`)                       | Lolos; `specials[]` berisi 130 entri CD; `referencePlates[]` berisi tiga entri format (RI, CC, CH); CD 92 `needsReview` | normal   |
 | TR-167 | Dua entri CD `high` memakai nomor yang sama                                     | Build gagal dengan pesan yang menyebut kedua `id`                                                                       | negatif  |
 | TR-168 | Alias satu entri CD sama dengan `holder` entri CD lain setelah normalisasi      | Build gagal                                                                                                             | negatif  |
 | TR-169 | `specials[].id` sama dengan salah satu `regions[].id`                           | Build gagal                                                                                                             | negatif  |
@@ -879,7 +879,7 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | TR-175 | `review_logs` dengan `content_id = 'dk'` dan `mode = 'special2holder'`          | Ditolak `CHECK`: mode kode khusus wajib memakai id `cd-`                                                                | negatif  |
 | TR-176 | `specials[]` memuat entri dengan `series` selain CD, atau `id` berawalan `ref-` | Build gagal                                                                                                             | negatif  |
 | TR-177 | Ekspor dengan kartu kode khusus lalu impor ke perangkat kosong                  | Keadaan identik, termasuk `special_enabled` dan kartu `holder2special` yang terbuka                                     | normal   |
-| TR-178 | Seed dibandingkan dengan tabel CD di `Terka_Kode_Khusus.md` bagian 4            | Nomor, pemegang, dan ejaan sumber identik untuk 130 baris                                                               | normal   |
+| TR-178 | Seed dibandingkan dengan tabel CD di `Terka_Special_Codes.md` bagian 4            | Nomor, pemegang, dan ejaan sumber identik untuk 130 baris                                                               | normal   |
 | TR-179 | `referencePlates[]` memuat entri RI dengan `number` terisi                      | Build gagal                                                                                                             | negatif  |
 
 ## 7. Pengujian Alur Menyeluruh (E2E-)
@@ -1011,11 +1011,11 @@ Tes E2E dijalankan dengan Playwright di Chromium dan WebKit (bagian 2). Setiap t
 | E2E-134 | Buka pratinjau sesi harian berisi soal Tebak daerah, Tebak kode, dan Tebak berwaktu | Jenis soal tampil sebagai **Tebak daerah · …**, **Tebak kode · …**, **Tebak berwaktu · …**; tidak ada panah "→" di layar                  | normal   |
 | E2E-135 | Jawab satu soal dari setiap jenis soal                                              | Label di atas pertanyaan sesuai tabel label dan kalimat soal di Microcopy 3.3                                                             | normal   |
 
-### 7.11 Fakta Menarik
+### 7.11 Fun Facts
 
 | ID     | Skenario                                                                      | Hasil yang diharapkan                                        | Kategori |
 | ------ | ----------------------------------------------------------------------------- | ------------------------------------------------------------ | -------- |
-| E2E-74 | Sesi selesai dengan fakta siap terbit                                         | Fakta menarik dengan label dan sumber tampil di bawah metrik | normal   |
+| E2E-74 | Sesi selesai dengan fakta siap terbit                                         | Fun Facts dengan label dan sumber tampil di bawah metrik     | normal   |
 | E2E-75 | 21 sesi berturut-turut dengan jam yang dimajukan                              | Tidak ada fakta yang sama dalam 20 layar akhir berurutan     | batas    |
 | E2E-76 | Dua browser context, fakta tampil di A, lalu layar akhir di B setelah sinkron | Fakta itu tidak tampil di B                                  | batas    |
 | E2E-77 | Layar akhir dengan fakta                                                      | Tidak ada tombol untuk menambah sesi                         | negatif  |
