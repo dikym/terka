@@ -127,6 +127,9 @@ export async function readMeta<T>(db: TerkaDb, key: string): Promise<T | undefin
 	return (await db.sync_meta.get(key))?.value as T | undefined;
 }
 
+// Counts local wipes, so a sync round started before one never writes into the wiped data.
+export const wipesOf = async (db: TerkaDb) => (await readMeta<number>(db, "wipes")) ?? 0;
+
 export const isQuotaError = (error: unknown) => {
 	const failure = error as { name?: string; inner?: { name?: string } | null } | null;
 	return failure?.name === "QuotaExceededError" || failure?.inner?.name === "QuotaExceededError";

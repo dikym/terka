@@ -2,6 +2,7 @@ import { describe, expect, test } from "bun:test";
 import type { PracticeRun } from "../../src/core/log/events";
 import type { AppState } from "../../src/core/replay/state";
 import { loadState, type LogState } from "../../src/lib/db/log";
+import { wipesOf } from "../../src/lib/db/schema";
 import { runPull } from "../../src/lib/sync/pull";
 import { runPush } from "../../src/lib/sync/push";
 import { toServer } from "../../src/lib/sync/server";
@@ -23,7 +24,15 @@ const push = (phone: Awaited<ReturnType<typeof device>>) =>
 	runPush(phone.db, phone.client, { now: NOW, retryAfter: noRetryAfter });
 
 async function pulled(phone: Awaited<ReturnType<typeof device>>, log: LogState, pageSize?: number) {
-	const outcome = await runPull(phone.db, phone.client, log, bundle, NOW, pageSize);
+	const outcome = await runPull(
+		phone.db,
+		phone.client,
+		log,
+		bundle,
+		NOW,
+		await wipesOf(phone.db),
+		pageSize
+	);
 	if (outcome.status !== "ok" && outcome.status !== "outdated")
 		throw new Error(`pull ended ${outcome.status}`);
 	return outcome;
@@ -137,7 +146,15 @@ describe("pulling other devices' rows", () => {
 			return original(table);
 		}) as typeof laptop.client.from;
 		await expect(
-			runPull(laptop.db, laptop.client, await opened(laptop.db), bundle, NOW, 2)
+			runPull(
+				laptop.db,
+				laptop.client,
+				await opened(laptop.db),
+				bundle,
+				NOW,
+				await wipesOf(laptop.db),
+				2
+			)
 		).rejects.toThrow("connection lost");
 		expect(await laptop.db.review_logs.count()).toBe(4);
 		laptop.client.from = original;

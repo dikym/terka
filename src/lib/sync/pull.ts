@@ -5,6 +5,7 @@ import { bumpLogVersion, settlePulled, type LogState } from "@/lib/db/log";
 import {
 	EVENT_TABLES,
 	readMeta,
+	wipesOf,
 	type ConsentRow,
 	type DeviceRow,
 	type EventTable,
@@ -21,7 +22,7 @@ import { fromServer } from "./server";
 export type PullEntry = { startedAt: number; cursor: number };
 export type PullOutcome =
 	| { status: "ok" | "outdated"; log: LogState; action: Action | null }
-	| { status: "stale" }
+	| { status: "stale" | "wiped" }
 	| Quota;
 
 const OVERLAP_MS = 5 * 60_000;
@@ -39,6 +40,8 @@ export function pullStart(
 	return { cursor: chosen.cursor, history: sorted.slice(sorted.indexOf(chosen)) };
 }
 
+const unwiped = async (db: TerkaDb, wipes: number) => (await wipesOf(db)) === wipes;
+
 const newer = (
 	a: { updatedAt: number; updatedByDevice: string },
 	b: { updatedAt: number; updatedByDevice: string }
@@ -51,9 +54,11 @@ async function storePage(
 	db: TerkaDb,
 	table: EventTable,
 	rows: Record<string, unknown>[],
-	history: Record<string, PullEntry[]>
-): Promise<LearningEvent[]> {
+	history: Record<string, PullEntry[]>,
+	wipes: number
+): Promise<LearningEvent[] | null> {
 	return db.transaction("rw", [table, "sync_meta"], async () => {
+		if (!(await unwiped(db, wipes))) return null;
 		const changed: LearningEvent[] = [];
 		for (const row of rows) {
 			const existing = (await db.table(table).get(row.id as string)) as
@@ -79,7 +84,12 @@ async function storePage(
 	});
 }
 
-async function pullWhole(db: TerkaDb, client: SupabaseClient, now: number): Promise<Action | null> {
+async function pullWhole(
+	db: TerkaDb,
+	client: SupabaseClient,
+	now: number,
+	wipes: number
+): Promise<Action | null | "wiped"> {
 	const [settings, notes, devices, consents, versions] = await Promise.all([
 		client.from("user_settings").select("*").retry(false),
 		client.from("card_notes").select("*").retry(false),
@@ -90,10 +100,11 @@ async function pullWhole(db: TerkaDb, client: SupabaseClient, now: number): Prom
 	for (const response of [settings, notes, devices, consents, versions])
 		if (response.error)
 			return classify({ status: response.status, ...response.error }, "user_settings", now);
-	await db.transaction(
+	return db.transaction(
 		"rw",
 		["user_settings", "card_notes", "devices", "privacy_consents", "sync_meta"],
 		async () => {
+			if (!(await unwiped(db, wipes))) return "wiped" as const;
 			const local = (table: TableName, row: Record<string, unknown>) =>
 				fromServer(table, row);
 			for (const row of settings.data!) {
@@ -132,9 +143,9 @@ async function pullWhole(db: TerkaDb, client: SupabaseClient, now: number): Prom
 				key: "policyVersions",
 				value: versions.data!.map((row) => toLocal(row))
 			});
+			return null;
 		}
 	);
-	return null;
 }
 
 export async function runPull(
@@ -143,10 +154,16 @@ export async function runPull(
 	log: LogState,
 	bundle: Bundle,
 	now: number,
+	wipes: number,
 	pageSize = PAGE
 ): Promise<PullOutcome> {
+	const started = await db.transaction("rw", ["sync_meta"], async () => {
+		if (!(await unwiped(db, wipes))) return false;
+		await db.sync_meta.put({ key: "lastPullStartedAt", value: now });
+		return true;
+	});
+	if (!started) return { status: "wiped" };
 	const history = (await readMeta<Record<string, PullEntry[]>>(db, "pullHistory")) ?? {};
-	await db.sync_meta.put({ key: "lastPullStartedAt", value: now });
 	const pulled: LearningEvent[] = [];
 	let pages = 0;
 	let action: Action | null = null;
@@ -176,14 +193,25 @@ export async function runPull(
 				db,
 				table,
 				response.data.map((row) => fromServer(table, row)),
-				history
+				history,
+				wipes
 			);
+			if (!changed) return { status: "wiped" };
 			if (changed.length) pages += 1;
 			pulled.push(...changed);
 		}
 	}
-	await db.sync_meta.put({ key: "pullHistory", value: history });
-	if (!action) action = await pullWhole(db, client, now);
+	const kept = await db.transaction("rw", ["sync_meta"], async () => {
+		if (!(await unwiped(db, wipes))) return false;
+		await db.sync_meta.put({ key: "pullHistory", value: history });
+		return true;
+	});
+	if (!kept) return { status: "wiped" };
+	if (!action) {
+		const whole = await pullWhole(db, client, now, wipes);
+		if (whole === "wiped") return { status: "wiped" };
+		action = whole;
+	}
 	const settled = await settlePulled(db, log, pulled, pages, bundle);
 	if (settled.status === "stale" || settled.status === "quota") return settled;
 	return { ...settled, action };
