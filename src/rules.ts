@@ -93,6 +93,10 @@ export const KEY_GAP_CAP_MS = 30_000;
 
 export const NOTE_OFFER_LAPSES = 4;
 export const NOTE_MAX_CHARS = 280;
+// Shown in the consent dialog before sign-in; a newer required version arrives through sync.
+export const PRIVACY_POLICY_VERSION = "2026-10-01";
+// As long as an emailed code lives; on a shared device an older consent may be someone else's.
+export const CONSENT_PENDING_MS = 60 * 60_000;
 export const LOGIN_PROMPT_ACTIVE_DAYS = 7;
 export const FACT_RECENT_MAX = 20;
 export const FORECAST_DAYS = 14;
