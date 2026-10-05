@@ -1,7 +1,7 @@
 import { isAuthRetryableFetchError, type SupabaseClient } from "@supabase/supabase-js";
 import type { Bundle } from "@/core/content/schema";
 import { loadState, type LogState } from "@/lib/db/log";
-import { readMeta, type TerkaDb } from "@/lib/db/schema";
+import { readMeta, wipesOf, type TerkaDb } from "@/lib/db/schema";
 import { backoff, type Action, type Block } from "./errors";
 import { runPull } from "./pull";
 import { runPush, touchDevice } from "./push";
@@ -73,6 +73,7 @@ export async function syncNow(
 		return ended(db, log, ctx);
 	}
 	await put(db, "sessionEnded", false);
+	const wipes = await wipesOf(db);
 	// Rows of one account must never reach another; claiming and switching accounts belong to sign-in.
 	if ((await readMeta<string>(db, "ownerUserId")) !== data.session.user.id)
 		return { log, status: await statusOf(db, log, ctx, true), nextAt: null };
@@ -91,7 +92,10 @@ export async function syncNow(
 		return failed(db, log, ctx, push.action);
 	await touchDevice(db, client, ctx.now);
 
-	const pulled = await runPull(db, client, log, bundle, ctx.now);
+	const pulled = await runPull(db, client, log, bundle, ctx.now, wipes);
+	// Signed out or switched account mid-round: the wiped data is not this round's to touch.
+	if (pulled.status === "wiped")
+		return { log, status: await statusOf(db, log, ctx), nextAt: null };
 	let next = log;
 	if (pulled.status === "ok" || pulled.status === "outdated") {
 		next = pulled.log;
