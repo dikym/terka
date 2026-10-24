@@ -39,7 +39,11 @@ function Meter({
 	);
 }
 
+// Phones indent less and pad nested rows tighter to keep room for the code chips.
+const INDENT = ["p-3", "ml-3 px-3 py-2 lg:ml-5 lg:py-3", "ml-6 px-3 py-2 lg:ml-10 lg:py-3"];
+
 function Row({
+	node,
 	indent,
 	state,
 	chevron,
@@ -48,11 +52,13 @@ function Row({
 	onToggle,
 	children
 }: {
-	indent: "ml-0" | "ml-5" | "ml-10";
+	indent: 0 | 1 | 2;
 	state: "idle" | "highlight" | "active";
 	chevron?: "open" | "closed";
 	dot: string;
 	onClick?: () => void;
+	/** The node this row highlights; Enter on the highlighted row picks it. */
+	node?: Node;
 	onToggle?: () => void;
 	children: React.ReactNode;
 }) {
@@ -64,7 +70,7 @@ function Row({
 	const Tag = onClick ? "button" : "div";
 	return (
 		<div
-			className={`flex min-h-12 items-center gap-3 rounded-sm p-3 text-left ${indent} ${look}`}
+			className={`flex min-h-12 items-center gap-3 rounded-sm text-left ${INDENT[indent]} ${look}`}
 		>
 			{chevron && (
 				<button
@@ -78,7 +84,7 @@ function Row({
 				</button>
 			)}
 			<Tag
-				{...(onClick ? { type: "button" as const, onClick } : {})}
+				{...(onClick ? { type: "button" as const, onClick, "data-node": node } : {})}
 				className={`flex min-w-0 flex-1 items-center gap-3 text-left ${onClick ? "cursor-pointer" : ""}`}
 			>
 				<span className={`size-2.5 flex-none rounded-full ${dot}`} />
@@ -111,8 +117,8 @@ function NodeHeading({
 
 function ProvinceRow({ province, group }: { province: Province; group: GroupId }) {
 	return (
-		<Row indent="ml-10" state="idle" dot={GROUP_BG[group]}>
-			<span className="flex items-start justify-between gap-2">
+		<Row indent={2} state="idle" dot={GROUP_BG[group]}>
+			<span className="flex flex-wrap items-start justify-between gap-x-2 gap-y-1.5">
 				<span className="min-w-0 font-sans text-body-md leading-[1.2] font-medium tracking-title">
 					{province.name}
 				</span>
@@ -273,13 +279,14 @@ export function Cakupan({ loading }: { loading: boolean }) {
 				{ key: event.key, target: event.target as HTMLElement },
 				"app"
 			);
-			if (
-				action === "confirm" &&
-				highlight &&
-				highlight !== active &&
-				event.target === document.body
-			)
-				pick();
+			if (!highlight || highlight === active) return;
+			const target = event.target as HTMLElement;
+			// A row button keeps focus after its click; Enter there picks instead of clicking again.
+			const onHighlightedRow =
+				event.key === "Enter" &&
+				target.closest("[data-node]")?.getAttribute("data-node") === highlight;
+			if (onHighlightedRow) event.preventDefault();
+			if ((action === "confirm" && target === document.body) || onHighlightedRow) pick();
 		};
 		window.addEventListener("keydown", onKey);
 		return () => window.removeEventListener("keydown", onKey);
@@ -295,8 +302,9 @@ export function Cakupan({ loading }: { loading: boolean }) {
 					<h1 className="type-screen-title">Cakupan</h1>
 				</div>
 			</div>
-			<div className="grid grid-cols-[minmax(0,1fr)_340px] items-start gap-8">
-				<div className="flex min-w-0 flex-col gap-5">
+			{/* On a phone the left column dissolves so the panel can sit between the intro and the tree. */}
+			<div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-8">
+				<div className="contents lg:flex lg:min-w-0 lg:flex-col lg:gap-5">
 					<div className="flex items-center gap-2 font-sans text-body-sm leading-none font-medium text-ink-700">
 						{shown === "national" ? (
 							<span className="font-semibold text-ink-1000" aria-current="location">
@@ -327,9 +335,10 @@ export function Cakupan({ loading }: { loading: boolean }) {
 						Menelusuri hanya menyorot. Cakupan berganti setelah Pilih wilayah ini
 						ditekan.
 					</p>
-					<div className="flex flex-col gap-2">
+					<div className="order-1 flex flex-col gap-2 lg:order-none">
 						<Row
-							indent="ml-0"
+							node="national"
+							indent={0}
 							state={loading ? "idle" : state("national")}
 							dot={loading ? "bg-ink-100" : "bg-ink-1000"}
 							onClick={loading ? undefined : () => setHighlight("national")}
@@ -354,7 +363,8 @@ export function Cakupan({ loading }: { loading: boolean }) {
 							return (
 								<div key={group.id} className="contents">
 									<Row
-										indent="ml-5"
+										node={group.id}
+										indent={1}
 										state={loading ? "idle" : state(group.id)}
 										chevron={expanded ? "open" : "closed"}
 										dot={loading ? "bg-ink-100" : GROUP_BG[group.id]}
@@ -399,7 +409,7 @@ export function Cakupan({ loading }: { loading: boolean }) {
 							);
 						})}
 					</div>
-					<div className="flex items-center justify-between gap-4 rounded-sm border border-ink-200 bg-paper-50 px-4 py-3">
+					<div className="order-1 flex items-center justify-between gap-4 rounded-sm border border-ink-200 bg-paper-50 px-4 py-3 lg:order-none">
 						<div className="flex min-w-0 flex-col gap-1">
 							<span className="type-label text-ink-700">Aturan</span>
 							<span className="text-ink-900 type-body">
@@ -409,7 +419,7 @@ export function Cakupan({ loading }: { loading: boolean }) {
 						</div>
 					</div>
 				</div>
-				<aside className="flex min-w-0 flex-col gap-5">
+				<aside className="flex min-w-0 flex-col gap-5 lg:sticky lg:top-8">
 					<Panel node={shown} active={shown === active} loading={loading} onPick={pick} />
 				</aside>
 			</div>
