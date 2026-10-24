@@ -1,4 +1,4 @@
-import { expect, type Page, test } from "@playwright/test";
+import { expect, type Locator, type Page, test } from "@playwright/test";
 import { pageErrors } from "./support/pwa";
 
 test.skip(({ browserName }) => browserName !== "chromium", "desktop screens");
@@ -189,4 +189,22 @@ test("the sidebar leaves the keyboard page for the page it came from", async ({ 
 	await page.getByRole("link", { name: "Setelan" }).click();
 	await expect(page).toHaveURL(/\/setelan$/);
 	await expect(page.getByRole("heading", { level: 1, name: "Setelan" })).toBeVisible();
+});
+
+test("shadowed buttons sink while pressed, links included", async ({ page }) => {
+	const shadow = (locator: Locator) =>
+		locator.evaluate((element) => getComputedStyle(element).boxShadow);
+	await seen(page);
+	await page.goto("/");
+	const start = page.getByRole("link", { name: "Mulai belajar" });
+	await start.hover();
+	await page.mouse.down();
+	await expect.poll(() => shadow(start)).not.toContain("3px 3px");
+	await page.mouse.up();
+	await page.goto("/statistik");
+	const zoomIn = page.getByRole("button", { name: "Perbesar" });
+	await zoomIn.hover();
+	await page.mouse.down();
+	await expect.poll(() => shadow(zoomIn.locator("xpath=.."))).not.toContain("3px 3px");
+	await page.mouse.up();
 });
