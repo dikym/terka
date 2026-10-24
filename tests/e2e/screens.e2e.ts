@@ -111,13 +111,14 @@ test("coverage selection changes the side panel", async ({ page }) => {
 	await expect(page.getByText("34 materi baru tersedia")).toBeVisible();
 });
 
-test("shortcuts overlay opens and closes", async ({ page }) => {
+test("the keyboard page has its own address and Esc goes back", async ({ page }) => {
 	await seen(page);
 	await page.goto("/");
-	await page.getByRole("button", { name: "Papan tombol" }).click();
-	await expect(page.getByRole("dialog", { name: "Papan tombol" })).toBeVisible();
+	await page.getByRole("link", { name: "Papan tombol" }).click();
+	await expect(page).toHaveURL(/\/papan-tombol$/);
+	await expect(page.getByRole("heading", { level: 1, name: "Papan tombol" })).toBeVisible();
 	await page.keyboard.press("Escape");
-	await expect(page.getByRole("dialog", { name: "Papan tombol" })).toBeHidden();
+	await expect(page).toHaveURL(/\/$/);
 });
 
 test("every text uses a design font", async ({ page }) => {
@@ -175,7 +176,17 @@ test("the wheel zooms the map without scrolling the page", async ({ page }) => {
 	await map.scrollIntoViewIfNeeded();
 	const before = await page.evaluate(() => window.scrollY);
 	await map.hover();
-	await page.mouse.wheel(0, -200);
-	await expect(page.getByText(/^1\d\d%$/).first()).toBeVisible();
+	await page.mouse.wheel(0, -100);
+	await expect(page.getByText("200%", { exact: true })).toBeVisible();
 	expect(await page.evaluate(() => window.scrollY)).toBe(before);
+});
+
+test("the sidebar leaves the keyboard page for the page it came from", async ({ page }) => {
+	await seen(page);
+	await page.goto("/setelan");
+	await page.getByRole("link", { name: "Papan tombol" }).click();
+	await expect(page).toHaveURL(/\/papan-tombol$/);
+	await page.getByRole("link", { name: "Setelan" }).click();
+	await expect(page).toHaveURL(/\/setelan$/);
+	await expect(page.getByRole("heading", { level: 1, name: "Setelan" })).toBeVisible();
 });
