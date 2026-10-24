@@ -55,6 +55,13 @@ describe("buildServiceWorker", () => {
 		expect(sw).not.toContain("self.__WB_MANIFEST");
 	}, 30_000);
 
+	test("precaches the self-hosted fonts so text keeps its face offline", async () => {
+		const font = "_next/static/media/space-grotesk.woff2";
+		await tree([...complete, font]);
+		expect(await buildServiceWorker(out)).toEqual([]);
+		expect(await readFile(join(out, "sw.js"), "utf8")).toContain(font);
+	}, 30_000);
+
 	test("fails without writing when a main page is missing", async () => {
 		await tree(complete.filter((url) => url !== "tentang.html"));
 		expect(await buildServiceWorker(out)).toEqual([
