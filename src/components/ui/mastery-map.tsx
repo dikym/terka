@@ -211,6 +211,8 @@ export function MasteryMap({
 	const [tip, setTip] = useState<Tip | null>(null);
 	const [selected, setSelected] = useState(FIRST_SELECTED);
 	const dragged = useRef(false);
+	// The province under the first finger: the capture below sends the click to the map, not the path.
+	const pressed = useRef<string | null>(null);
 	const svg = useRef<SVGSVGElement>(null);
 	const wrap = useRef<HTMLDivElement>(null);
 	const box = useRef<HTMLDivElement>(null);
@@ -336,21 +338,30 @@ export function MasteryMap({
 					// Overflow shows the zoomed map in the room above it; the box still clips at its edges.
 					className="block aspect-[1080/403] w-full cursor-grab touch-none active:cursor-grabbing max-lg:overflow-visible lg:aspect-auto lg:size-full"
 					onPointerDown={(event) => {
+						// A new gesture's first finger: drop any finger whose pointerup never reached the map.
+						if (event.isPrimary) {
+							pointers.current.clear();
+							pressed.current =
+								(event.target as Element).closest("path[id]")?.id ?? null;
+						}
 						if (!pointers.current.size) dragged.current = false;
 						pointers.current.set(event.pointerId, {
 							x: event.clientX,
 							y: event.clientY
 						});
+						// Keeps the drag going when the finger slides past the map's edge.
+						event.currentTarget.setPointerCapture(event.pointerId);
 						setAnimate(false);
 						setTip(null);
 					}}
 					onPointerMove={move}
-					onPointerUp={release}
-					onPointerCancel={release}
-					onClick={(event) => {
-						const path = (event.target as Element).closest("path[id]");
-						if (path && provinces[path.id] && !dragged.current) setSelected(path.id);
+					onPointerUp={(event) => {
+						release(event);
+						const id = pressed.current;
+						if (!pointers.current.size && !dragged.current && id && provinces[id])
+							setSelected(id);
 					}}
+					onPointerCancel={release}
 					onPointerLeave={(event) => {
 						release(event);
 						setTip(null);
