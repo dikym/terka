@@ -23,9 +23,9 @@ function Stat({
 	children: React.ReactNode;
 }) {
 	return (
-		<div className="flex min-w-0 flex-col gap-2 border-r border-hairline p-4 last:border-r-0">
+		<div className="grid min-w-0 grid-cols-[112px_minmax(0,1fr)] items-start gap-x-4 gap-y-1 border-b border-hairline p-4 last:border-b-0 lg:flex lg:flex-col lg:items-stretch lg:gap-2 lg:border-r lg:border-b-0 lg:last:border-r-0">
 			<span className="type-label text-ink-500">{label}</span>
-			<div className="flex items-baseline gap-2">
+			<div className="col-start-1 flex items-baseline gap-2">
 				<span className="font-display text-heading leading-none font-bold tabular-nums">
 					{value}
 				</span>
@@ -33,7 +33,7 @@ function Stat({
 					{unit}
 				</span>
 			</div>
-			{children}
+			<div className="col-start-2 row-span-2 row-start-1">{children}</div>
 		</div>
 	);
 }
@@ -84,6 +84,121 @@ function Day({ mark, loading }: { mark: DayMark; loading: boolean }) {
 	);
 }
 
+const TILE =
+	"flex aspect-square flex-col items-start justify-between gap-2 rounded-sm border p-3 text-left font-display text-body-sm leading-[1.2] font-semibold text-balance text-ink-1000";
+const TILE_PRESS =
+	"border-ink-1000 shadow-block transition-[box-shadow,translate] duration-90 ease-out active:translate-0.5 active:shadow-none";
+
+/** The phone's square shortcut under Mulai belajar; a skeleton keeps its size while loading. */
+function Tile({
+	icon,
+	label,
+	href,
+	color,
+	loading,
+	children
+}: {
+	icon: "calendar-check" | "zap" | "flag";
+	label: string;
+	href: string;
+	color: string;
+	loading: boolean;
+	children?: React.ReactNode;
+}) {
+	const content = (
+		<>
+			<Icon name={icon} size={18} className={loading ? "invisible" : ""} />
+			<span className="flex flex-col gap-1">
+				<span>{label}</span>
+				{children}
+			</span>
+		</>
+	);
+	if (loading)
+		return (
+			<span
+				data-skeleton
+				aria-hidden="true"
+				className={`${TILE} animate-skl border-transparent bg-ink-100 text-transparent`}
+			>
+				{content}
+			</span>
+		);
+	return (
+		<Link href={href} className={`${TILE} ${TILE_PRESS} ${color}`}>
+			{content}
+		</Link>
+	);
+}
+
+function PhoneActions({
+	loading,
+	challengeDone,
+	countdown
+}: {
+	loading: boolean;
+	challengeDone: boolean;
+	countdown: string;
+}) {
+	const time = (
+		<span className="font-mono text-label leading-none font-semibold tabular-nums">
+			{countdown}
+		</span>
+	);
+	return (
+		<div className="flex flex-col gap-3 lg:hidden">
+			{loading ? (
+				<Skeleton className="block h-14 w-full rounded-sm" />
+			) : (
+				<Button size="lg" block icon="play" href="/sesi">
+					Mulai belajar
+				</Button>
+			)}
+			<div className="grid grid-cols-3 gap-2">
+				{challengeDone && !loading ? (
+					<button
+						type="button"
+						disabled
+						aria-disabled="true"
+						title="Sudah selesai untuk hari ini"
+						className={`${TILE} cursor-not-allowed border-ink-200 bg-stop-500 opacity-40`}
+					>
+						<Icon name="calendar-check" size={18} />
+						<span className="flex flex-col gap-1">
+							<span>Tantangan Harian</span>
+							{time}
+						</span>
+					</button>
+				) : (
+					<Tile
+						icon="calendar-check"
+						label="Tantangan Harian"
+						href="/sesi?mode=harian"
+						color="bg-stop-500"
+						loading={loading}
+					>
+						{loading && time}
+					</Tile>
+				)}
+				<Tile
+					icon="zap"
+					label="Mode Kilat"
+					href="/sesi?mode=kilat"
+					color="bg-go-500"
+					loading={loading}
+				/>
+				<Tile
+					icon="flag"
+					label="Kode diplomat"
+					href="/sesi?mode=diplomat"
+					color="bg-paper-0"
+					loading={loading}
+				/>
+			</div>
+		</div>
+	);
+}
+
 function ChallengeButton({ done, countdown }: { done: boolean; countdown: string }) {
 	if (done)
 		return (
@@ -116,11 +231,20 @@ export function Beranda({ data, challengeDone }: { data: Home | null; challengeD
 	const scopeRows = d?.scope.rows ?? SKELETON_ROWS;
 	return (
 		<>
-			<div className="flex items-center justify-between">
-				<span className="type-label text-ink-500">Minggu, 27 September 2026</span>
+			<div className="flex items-center justify-between gap-3">
+				<span className="type-label text-ink-500">
+					{d ? (
+						DATE
+					) : (
+						<>
+							<span className="max-lg:hidden">{DATE}</span>
+							<SkeletonText width="13.8em" className="lg:hidden" />
+						</>
+					)}
+				</span>
 				<SyncChip label={d ? d.syncLabel : null} />
 			</div>
-			<div className="grid grid-cols-[minmax(0,1fr)_300px] items-start gap-8">
+			<div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-8">
 				<div className="flex min-w-0 flex-col gap-5">
 					<div className="flex flex-col gap-3">
 						<span className="type-label text-ink-500">Perlu diulang hari ini</span>
@@ -148,7 +272,13 @@ export function Beranda({ data, challengeDone }: { data: Home | null; challengeD
 						</div>
 					</div>
 
-					<section className="grid grid-cols-3 overflow-hidden rounded-md border border-hairline bg-paper-0 shadow-lift">
+					<PhoneActions
+						loading={!d}
+						challengeDone={challengeDone}
+						countdown={d?.challengeCountdown ?? SKELETON_COUNTDOWN}
+					/>
+
+					<section className="grid grid-cols-1 overflow-hidden rounded-md border border-hairline bg-paper-0 shadow-lift lg:grid-cols-3">
 						<Stat
 							label="Pengulangan"
 							value={d ? d.summary.due : <SkeletonText width="1.2em" />}
@@ -234,16 +364,16 @@ export function Beranda({ data, challengeDone }: { data: Home | null; challengeD
 							{scopeRows.map((row, index) => (
 								<div
 									key={row.name}
-									className="grid min-h-12 grid-cols-[minmax(0,1fr)_auto_180px_44px] items-center gap-4 border-b border-hairline last:border-b-0"
+									className="grid min-h-12 grid-cols-[minmax(0,1fr)_64px_40px] items-center gap-x-3 gap-y-2 border-b border-hairline py-3 last:border-b-0 lg:grid-cols-[minmax(0,1fr)_auto_180px_44px] lg:gap-4 lg:py-0"
 								>
-									<span className="text-ink-900 type-body">
+									<span className="row-start-1 text-ink-900 type-body lg:row-auto">
 										{d ? (
 											row.name
 										) : (
 											<SkeletonText width={SKELETON_ROW_WIDTHS[index]} />
 										)}
 									</span>
-									<span className="flex gap-1">
+									<span className="col-span-full row-start-2 flex gap-1 lg:col-auto lg:row-auto">
 										{row.codes.map((code) =>
 											d ? (
 												<CodeChip
@@ -260,14 +390,15 @@ export function Beranda({ data, challengeDone }: { data: Home | null; challengeD
 										<ProgressBar
 											value={row.percent}
 											color={GROUP_BG[d.scope.group]}
+											className="row-start-1 h-1.5 min-w-0 flex-1 lg:row-auto"
 										/>
 									) : (
 										<div
 											data-skeleton
-											className="h-1.5 min-w-0 flex-1 animate-skl overflow-hidden rounded-xs bg-ink-100"
+											className="row-start-1 h-1.5 min-w-0 flex-1 animate-skl overflow-hidden rounded-xs bg-ink-100 lg:row-auto"
 										/>
 									)}
-									<span className="text-right">
+									<span className="row-start-1 text-right lg:row-auto">
 										<span className="font-mono text-body-sm leading-[1.2] font-medium text-ink-1000 tabular-nums">
 											{d ? `${row.percent}%` : <SkeletonText width="2.2em" />}
 										</span>
@@ -297,7 +428,8 @@ export function Beranda({ data, challengeDone }: { data: Home | null; challengeD
 						<header className="flex items-center gap-3">
 							<Icon
 								name="flame"
-								size={24}
+								size={null}
+								className="-mt-0.5 size-5.5 lg:mt-0 lg:size-6"
 								color={d ? "bg-tangerine-700" : "bg-ink-100"}
 							/>
 							<span className="font-display text-title leading-none font-bold tracking-title tabular-nums">
@@ -336,7 +468,7 @@ export function Beranda({ data, challengeDone }: { data: Home | null; challengeD
 					</Card>
 				</div>
 
-				<aside className="flex min-w-0 flex-col gap-3">
+				<aside className="hidden min-w-0 flex-col gap-3 lg:flex">
 					{d ? (
 						<>
 							<Button size="lg" block icon="play" kbd="S" href="/sesi">
@@ -379,6 +511,9 @@ export function Beranda({ data, challengeDone }: { data: Home | null; challengeD
 		</>
 	);
 }
+
+const DATE = "Minggu, 27 September 2026";
+const SKELETON_COUNTDOWN = "06:42:18";
 
 // Placeholder rows that keep the loaded layout: same rows, same chip counts.
 const SKELETON_ROWS = [

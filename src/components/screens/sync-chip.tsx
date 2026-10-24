@@ -1,12 +1,13 @@
 import { Icon } from "@/components/ui/icon";
 
+/** Desktop only: on a phone the sync status is an icon in the top bar. */
 export function SyncChip({ label }: { label: string | null }) {
 	if (label === null)
 		return (
 			<span
 				data-skeleton
 				aria-hidden="true"
-				className="inline-flex h-9 animate-skl items-center gap-2 rounded-sm border border-transparent bg-ink-100 px-3 text-transparent"
+				className="hidden h-9 animate-skl items-center gap-2 rounded-sm border border-transparent bg-ink-100 px-3 text-transparent lg:inline-flex"
 			>
 				<span className="size-4 flex-none" />
 				<span className="font-sans text-body-sm leading-none font-medium">
@@ -15,7 +16,7 @@ export function SyncChip({ label }: { label: string | null }) {
 			</span>
 		);
 	return (
-		<span className="inline-flex h-9 items-center gap-2 rounded-sm border border-ink-200 px-3 text-ink-700">
+		<span className="hidden h-9 items-center gap-2 rounded-sm border border-ink-200 px-3 text-ink-700 lg:inline-flex">
 			<Icon name="cloud-check" size={16} />
 			<span className="font-sans text-body-sm leading-none font-medium">{label}</span>
 		</span>
