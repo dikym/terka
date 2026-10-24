@@ -6,8 +6,8 @@ export const metadata: Metadata = { title: "Kebijakan privasi · Terka" };
 // Static and readable without JavaScript: the Google consent screen links here.
 export default function Page() {
 	return (
-		<main>
-			<h1>Kebijakan privasi</h1>
+		<article className="flex max-w-prose flex-col gap-4">
+			<h1 className="type-screen-title">Kebijakan privasi</h1>
 			<p>Versi {PRIVACY_POLICY_VERSION}</p>
 
 			<h2>Tanpa akun</h2>
@@ -69,6 +69,6 @@ export default function Page() {
 				Pertanyaan tentang data pribadi atau laporan data yang keliru:{" "}
 				<a href="mailto:contact@terka.my.id">contact@terka.my.id</a>.
 			</p>
-		</main>
+		</article>
 	);
 }
