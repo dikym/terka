@@ -165,7 +165,18 @@ export function Beranda({ data, challengeDone }: { data: Home | null; challengeD
 						<Stat
 							label="Materi baru"
 							value={d ? d.summary.newAvailable : <SkeletonText width="1.2em" />}
-							unit={d ? `dari ${d.newLimit}` : <SkeletonText width="3.9em" />}
+							unit={
+								d ? (
+									<>
+										dari{" "}
+										<span className="font-bold text-ink-1000">
+											{d.newLimit}
+										</span>
+									</>
+								) : (
+									<SkeletonText width="3.9em" />
+								)
+							}
 						>
 							<Note>
 								{d ? (
