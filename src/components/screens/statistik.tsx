@@ -46,23 +46,25 @@ const LEGEND = [
 
 export function MapLegend() {
 	return (
-		<div className="flex flex-wrap gap-x-5 gap-y-3">
+		<div className="grid grid-cols-3 gap-3 lg:flex lg:flex-wrap lg:gap-x-5 lg:gap-y-3">
 			{LEGEND.map(([swatch, label, range]) => (
 				<span key={label} className="inline-flex items-center gap-2">
-					<span className={`size-4.5 flex-none rounded-[3px] border ${swatch}`} />
-					<span className="flex h-4.5 flex-col justify-between">
-						<span className="font-sans text-[9px] leading-none font-medium text-ink-900">
+					<span
+						className={`size-3.5 flex-none rounded-[3px] border lg:size-4.5 ${swatch}`}
+					/>
+					<span className="flex flex-col gap-0.5 lg:h-4.5 lg:justify-between lg:gap-0">
+						<span className="font-sans text-label leading-[1.1] font-medium text-ink-900 lg:text-[9px] lg:leading-none">
 							{label}
 						</span>
-						<span className="font-mono text-[7px] leading-none text-ink-500">
+						<span className="font-mono text-micro leading-none text-ink-500 lg:text-[7px]">
 							{range}
 						</span>
 					</span>
 				</span>
 			))}
 			<span className="inline-flex items-center gap-2">
-				<span className="size-4.5 rounded-[3px] border border-ink-200 bg-paper-50" />
-				<span className="font-sans text-body-sm leading-none font-medium text-ink-900">
+				<span className="size-3.5 flex-none rounded-[3px] border border-ink-200 bg-paper-50 lg:size-4.5" />
+				<span className="font-sans text-label leading-[1.1] font-medium text-ink-900 lg:text-body-sm lg:leading-none">
 					Belum ada materi
 				</span>
 			</span>
@@ -70,19 +72,26 @@ export function MapLegend() {
 	);
 }
 
+// On a phone the hint wraps as running text, so its icons sit on the text line.
+const INLINE_ICON = "mr-1 align-[-2px] lg:mr-0";
+
 export function MapHint() {
 	return (
-		<span className="inline-flex items-center gap-2 font-sans text-body-sm leading-[1.3] text-ink-700">
-			<Icon name="info" size={14} />
-			Arahkan kursor ke provinsi untuk rinciannya. Gulir atau tombol{" "}
-			<Icon name="plus" size={12} /> <Icon name="minus" size={12} /> untuk memperbesar.
-		</span>
+		<p className="font-sans text-body-sm leading-[1.3] text-ink-700 lg:inline-flex lg:items-center lg:gap-2">
+			<Icon name="info" size={14} className={INLINE_ICON} />
+			<span className="lg:hidden">Ketuk provinsi untuk rinciannya. Cubit atau tombol </span>
+			<span className="hidden lg:inline">
+				Arahkan kursor ke provinsi untuk rinciannya. Gulir atau tombol{" "}
+			</span>
+			<Icon name="plus" size={12} className={INLINE_ICON} />{" "}
+			<Icon name="minus" size={12} className={INLINE_ICON} /> untuk memperbesar.
+		</p>
 	);
 }
 
 function NationalSummary({ s, loading }: { s: Stats; loading: boolean }) {
 	return (
-		<div className="grid grid-cols-[minmax(0,1fr)_360px] items-end gap-8">
+		<div className="grid grid-cols-1 items-end gap-5 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-8">
 			<div className="flex flex-col gap-3">
 				<span className="type-label text-ink-500">Penguasaan wilayah nasional</span>
 				<span className="type-metric">
@@ -97,7 +106,7 @@ function NationalSummary({ s, loading }: { s: Stats; loading: boolean }) {
 				{s.levels.map((level) => (
 					<div
 						key={level.level}
-						className="grid grid-cols-[96px_minmax(0,1fr)_44px] items-center gap-3"
+						className="grid grid-cols-[72px_minmax(0,1fr)_44px] items-center gap-3 lg:grid-cols-[96px_minmax(0,1fr)_44px]"
 					>
 						<div className="flex flex-col gap-[3px]">
 							<span className="font-display text-body-sm leading-none font-semibold">
@@ -130,12 +139,14 @@ function NationalSummary({ s, loading }: { s: Stats; loading: boolean }) {
 	);
 }
 
-function MapCard() {
+function MapCard({ loading }: { loading: boolean }) {
 	return (
 		<Card>
 			<CardHeader label="Peta Penguasaan" title="Penguasaan tiap provinsi" />
-			<MasteryMap provinces={provinces} />
-			<div className="flex items-end justify-between gap-6 border-t border-hairline pt-4">
+			<div className="-mx-4 border-y border-hairline lg:mx-0 lg:border-0">
+				<MasteryMap provinces={provinces} loading={loading} />
+			</div>
+			<div className="flex flex-col items-start gap-4 lg:flex-row lg:items-end lg:justify-between lg:gap-6 lg:border-t lg:border-hairline lg:pt-4">
 				<div className="flex flex-col gap-3">
 					<MapLegend />
 					<MapHint />
@@ -151,7 +162,15 @@ function MapCard() {
 	);
 }
 
-const CELL = "py-2.5 pr-4";
+// A phone fits the four columns into two lines per code: area on top, status and score below.
+const WEAK_ROW = "grid grid-cols-[56px_minmax(0,1fr)_auto] items-center";
+const WEAK_DESKTOP = "lg:col-span-4 lg:grid-cols-subgrid";
+const HEADINGS = [
+	["Kode", "row-span-2 pb-1 lg:row-span-1 lg:pb-2"],
+	["Daerah", "col-span-2 pb-0.5 lg:col-span-1 lg:pb-2"],
+	["Status", "col-start-2 row-start-2 pb-1 lg:col-auto lg:row-auto lg:pb-2"],
+	["Benar", "col-start-3 row-start-2 min-w-19 pb-1 lg:col-auto lg:row-auto lg:min-w-0 lg:pb-2"]
+];
 
 function Weakest({ s, loading }: { s: Stats; loading: boolean }) {
 	const rows = loading ? s.weakest.slice(0, 3) : s.weakest;
@@ -166,35 +185,37 @@ function Weakest({ s, loading }: { s: Stats; loading: boolean }) {
 					</span>
 				}
 			/>
-			<div className="grid grid-cols-[72px_minmax(0,1fr)_216px_120px] items-center">
-				{["Kode", "Daerah", "Status", "Benar"].map((heading) => (
-					<span key={heading} className="pr-4 pb-2">
-						<span className="type-label text-ink-500">{heading}</span>
-					</span>
-				))}
+			<div className="flex flex-col lg:grid lg:grid-cols-[72px_minmax(0,1fr)_216px_120px] lg:items-center">
+				<div className={`${WEAK_ROW} lg:contents`}>
+					{HEADINGS.map(([heading, place]) => (
+						<span key={heading} className={`pr-3 lg:pr-4 ${place}`}>
+							<span className="type-label text-ink-500">{heading}</span>
+						</span>
+					))}
+				</div>
 				{rows.map((row) => (
 					<div
 						key={row.code}
-						className="col-span-4 grid grid-cols-subgrid items-center border-t border-hairline"
+						className={`${WEAK_ROW} ${WEAK_DESKTOP} border-t border-hairline`}
 					>
-						<span className={CELL}>
+						<span className="row-span-2 py-2.5 pr-4 lg:row-span-1">
 							{loading ? (
 								<Skeleton className={CHIP_SKELETON} />
 							) : (
 								<CodeChip code={row.code} group={row.group} />
 							)}
 						</span>
-						<span className={`${CELL} truncate text-ink-900 type-body`}>
+						<span className="col-span-2 truncate pt-2.5 pb-0.5 text-ink-900 type-body lg:col-span-1 lg:py-2.5 lg:pr-4">
 							{text(loading, row.areas)}
 						</span>
-						<span className={CELL}>
+						<span className="col-start-2 row-start-2 pt-0.5 pr-3 pb-2.5 lg:col-auto lg:row-auto lg:py-2.5 lg:pr-4">
 							{loading ? (
 								<Skeleton className={PILL_SKELETON} />
 							) : (
 								<StatusPill status={row.status} />
 							)}
 						</span>
-						<span className={`${CELL} flex flex-col gap-1`}>
+						<span className="col-start-3 row-start-2 flex min-w-19 flex-col gap-1 pt-0.5 pb-2.5 lg:col-auto lg:row-auto lg:min-w-0 lg:py-2.5 lg:pr-4">
 							<span className="font-mono text-body-sm leading-[1.2] font-medium text-ink-1000 tabular-nums">
 								{text(loading, `${row.right} dari ${row.of}`)}
 							</span>
@@ -296,7 +317,7 @@ function ByGroup({ s, loading }: { s: Stats; loading: boolean }) {
 		<Card>
 			<CardHeader label="Tingkat penguasaan per kawasan" title="Lolos per level" />
 			<div className="flex flex-col">
-				<div className="grid grid-cols-[minmax(0,1fr)_repeat(3,76px)] items-end pb-2">
+				<div className="grid grid-cols-[minmax(0,1fr)_repeat(3,58px)] items-end pb-2 lg:grid-cols-[minmax(0,1fr)_repeat(3,76px)]">
 					<span className="type-label text-ink-500">Kawasan</span>
 					{s.levels.map((level) => (
 						<span key={level.level} className="flex flex-col items-end gap-0.5">
@@ -312,7 +333,7 @@ function ByGroup({ s, loading }: { s: Stats; loading: boolean }) {
 				{s.byGroup.map((row) => (
 					<div
 						key={row.group}
-						className="grid grid-cols-[minmax(0,1fr)_repeat(3,76px)] items-center border-t border-hairline"
+						className="grid grid-cols-[minmax(0,1fr)_repeat(3,58px)] items-center border-t border-hairline lg:grid-cols-[minmax(0,1fr)_repeat(3,76px)]"
 					>
 						<span className="flex items-center gap-2 py-[9px] font-sans text-body-sm leading-[1.2] text-ink-900">
 							<span
@@ -579,8 +600,8 @@ export function Statistik({ data }: { data: Stats | null }) {
 				<SyncChip label={loading ? null : s.syncLabel} />
 			</div>
 			<NationalSummary s={s} loading={loading} />
-			<MapCard />
-			<div className="grid grid-cols-[minmax(0,1fr)_340px] items-start gap-8">
+			<MapCard loading={loading} />
+			<div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-8">
 				<div className="flex min-w-0 flex-col gap-5">
 					<Weakest s={s} loading={loading} />
 					<Forecast s={s} loading={loading} />

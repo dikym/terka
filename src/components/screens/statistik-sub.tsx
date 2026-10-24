@@ -18,25 +18,37 @@ export function PetaPenguasaan() {
 	return (
 		<>
 			<PageTitle title="Peta Penguasaan" back="/statistik" />
-			<Card>
-				<CardHeader label="Peta Penguasaan" title="Penguasaan tiap provinsi" />
-				<MasteryMap provinces={provinces} />
-				<div className="flex flex-col gap-3 border-t border-hairline pt-4">
+			{/* A card on desktop; on a phone the map runs edge to edge right under the top bar. */}
+			<section className="flex flex-col gap-4 lg:overflow-hidden lg:rounded-md lg:border lg:border-hairline lg:bg-paper-0 lg:p-4 lg:shadow-lift">
+				<div className="hidden lg:block">
+					<CardHeader label="Peta Penguasaan" title="Penguasaan tiap provinsi" />
+				</div>
+				<div className="-mx-4 -mt-5 border-b border-hairline lg:m-0 lg:border-0">
+					<MasteryMap provinces={provinces} />
+				</div>
+				<div className="flex flex-col gap-3 lg:border-t lg:border-hairline lg:pt-4">
 					<MapLegend />
 					<MapHint />
 				</div>
-			</Card>
-			<div className="grid grid-cols-2 gap-x-8">
+			</section>
+			<div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-8">
 				{masteryByGroup.map((row) => (
 					<div
 						key={row.group}
-						className="grid grid-cols-[10px_minmax(0,1fr)_160px_48px] items-center gap-x-4 gap-y-3 border-b border-hairline py-4"
+						className="grid grid-cols-[10px_minmax(0,1fr)_44px] items-start gap-3 border-b border-hairline py-4 lg:grid-cols-[10px_minmax(0,1fr)_160px_48px] lg:items-center lg:gap-x-4"
 					>
-						<span className={`size-2.5 rounded-full ${GROUP_BG[row.group]}`} />
+						<span
+							className={`mt-1 size-2.5 rounded-full lg:mt-0 ${GROUP_BG[row.group]}`}
+						/>
 						<div className="flex min-w-0 flex-col gap-2">
 							<span className="font-display text-body-md leading-[1.2] font-semibold">
 								{row.name}
 							</span>
+							<ProgressBar
+								value={row.percent}
+								color={GROUP_BG[row.group]}
+								className="h-1.5 lg:hidden"
+							/>
 							<div className="flex flex-wrap gap-x-5 gap-y-2">
 								{row.figures.map(([value, label]) => (
 									<span key={label} className="inline-flex flex-col gap-[3px]">
@@ -60,7 +72,7 @@ export function PetaPenguasaan() {
 						<ProgressBar
 							value={row.percent}
 							color={GROUP_BG[row.group]}
-							className="h-2 flex-none"
+							className="hidden h-2 flex-none lg:block"
 						/>
 						<span className="text-right">
 							<span className="font-mono text-body-md leading-[1.2] font-medium text-ink-1000 tabular-nums">
@@ -107,10 +119,14 @@ export function KodeSulit() {
 				{items.map((item) => (
 					<div
 						key={item.code}
-						className={`grid grid-cols-[auto_minmax(0,1fr)_auto_auto] items-center gap-4 rounded-sm border px-4 py-3 ${item.code === selected ? "border-ink-1000 bg-paper-0 shadow-block" : "border-hairline"}`}
+						className={`grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 gap-y-2 rounded-sm border px-4 py-3 lg:grid-cols-[auto_minmax(0,1fr)_auto_auto] lg:gap-4 ${item.code === selected ? "border-ink-1000 bg-paper-0 shadow-block" : "border-hairline"}`}
 					>
-						<CodeChip code={item.code} group={item.group} />
-						<div className="flex min-w-0 flex-col gap-1">
+						<CodeChip
+							code={item.code}
+							group={item.group}
+							className="row-span-2 lg:row-auto"
+						/>
+						<div className="col-start-2 row-start-1 flex min-w-0 flex-col gap-1 lg:col-auto lg:row-auto">
 							<span className="font-display text-body-md leading-[1.2] font-semibold">
 								{item.form}
 							</span>
@@ -119,12 +135,15 @@ export function KodeSulit() {
 								<span className="font-mono">{item.misses} kali terlewat</span>
 							</span>
 						</div>
-						{statusPill(kind, "self-center")}
+						{statusPill(
+							kind,
+							"col-start-2 row-start-2 self-center justify-self-start lg:col-auto lg:row-auto"
+						)}
 						<button
 							type="button"
 							onClick={() => setSelected(item.code)}
 							aria-pressed={item.code === selected}
-							className="flex h-12 w-fit cursor-pointer items-center justify-center gap-2 rounded-sm border border-ink-200 bg-transparent px-5 font-display text-body-md leading-none font-semibold whitespace-nowrap text-ink-900"
+							className="col-start-3 row-span-2 row-start-1 flex h-9 w-fit cursor-pointer items-center justify-center gap-2 rounded-sm border border-ink-200 bg-transparent px-3 font-display text-body-sm leading-none font-semibold whitespace-nowrap text-ink-900 lg:col-auto lg:row-auto lg:h-12 lg:px-5 lg:text-body-md"
 						>
 							Tinjau kode
 						</button>
@@ -138,8 +157,8 @@ export function KodeSulit() {
 	return (
 		<>
 			<PageTitle title="Sulit Dikuasai" back="/statistik" />
-			<div className="grid grid-cols-[minmax(0,1fr)_320px] items-start gap-8">
-				<div className="flex min-w-0 flex-col gap-5">
+			<div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
+				<div className="flex min-w-0 flex-col gap-9 lg:gap-5">
 					{section("Sulit Dikuasai", "leech")}
 					{section("Dinonaktifkan", "suspended")}
 				</div>
@@ -212,14 +231,15 @@ function AccountRow({
 }) {
 	return (
 		<div
-			className={`flex items-center justify-between gap-4 py-3 ${last ? "" : "border-b border-hairline"}`}
+			className={`flex flex-wrap items-center justify-between gap-x-4 gap-y-1 py-3 lg:flex-nowrap ${last ? "" : "border-b border-hairline"}`}
 		>
 			<div className="flex min-w-0 items-center gap-3">
 				<Icon name={icon} size={18} />
 				{children}
 			</div>
 			{aside && (
-				<span className="flex-none font-mono text-body-sm leading-[1.2] font-medium text-ink-500 tabular-nums">
+				// When it wraps on a phone, it lines up with the text after the icon.
+				<span className="ml-7.5 flex-none font-mono text-body-sm leading-[1.2] font-medium text-ink-500 tabular-nums lg:ml-0">
 					{aside}
 				</span>
 			)}
@@ -234,7 +254,7 @@ export function Akun() {
 	return (
 		<>
 			<PageTitle title="Akun dan sinkronisasi" back="/statistik" />
-			<div className="grid grid-cols-[minmax(0,1fr)_380px] items-start gap-8">
+			<div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-8">
 				<div className="flex min-w-0 flex-col gap-5">
 					<Card>
 						<CardHeader label="Akun" />
@@ -311,7 +331,7 @@ export function Akun() {
 							action={
 								<button
 									type="button"
-									className="ml-2 inline-flex h-9 flex-none cursor-pointer items-center justify-center gap-2 self-center rounded-sm border border-ink-1000 bg-paper-0 px-3 font-display text-body-sm leading-none font-semibold whitespace-nowrap text-ink-1000"
+									className="inline-flex h-9 flex-none cursor-pointer items-center justify-center gap-2 rounded-sm border border-ink-1000 bg-paper-0 px-3 font-display text-body-sm leading-none font-semibold whitespace-nowrap text-ink-1000"
 								>
 									<Icon name="download" size={16} />
 									Ekspor data
