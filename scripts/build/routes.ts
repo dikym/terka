@@ -12,7 +12,8 @@ export const MAIN_ROUTES = [
 	"/statistik/akun",
 	"/tentang",
 	"/auth/callback",
-	"/privasi"
+	"/privasi",
+	"/mulai"
 ] as const;
 
 export const htmlPathOf = (route: string) => (route === "/" ? "index.html" : `${route.slice(1)}.html`);
