@@ -276,7 +276,7 @@ export function MasteryMap({
 					</g>
 				)}
 			</svg>
-			<div className="absolute top-3 right-3 flex flex-col overflow-hidden rounded-sm border border-ink-1000 bg-paper-0 shadow-block">
+			<div className="absolute top-3 right-3 flex flex-col overflow-hidden rounded-sm border border-ink-1000 bg-paper-0 shadow-block transition-[box-shadow,translate] duration-90 ease-out has-[button:active]:translate-0.5 has-[button:active]:shadow-none">
 				<ZoomButton icon="plus" label="Perbesar" onClick={() => zoomButton(ZOOM_STEP)} />
 				<ZoomButton
 					icon="minus"

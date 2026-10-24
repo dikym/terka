@@ -41,7 +41,8 @@ export function buttonClass(variant: Variant, size: keyof typeof SIZE, block: bo
 		"items-center justify-center gap-2 rounded-sm border font-display leading-none font-semibold whitespace-nowrap",
 		"transition-[background-color,color,box-shadow,translate] duration-90 ease-out",
 		"cursor-pointer disabled:cursor-not-allowed disabled:opacity-40",
-		pressable ? "enabled:active:translate-0.5 enabled:active:shadow-none" : "",
+		// `not-disabled`, not `enabled`: `:enabled` never matches the links this renders as.
+		pressable ? "not-disabled:active:translate-0.5 not-disabled:active:shadow-none" : "",
 		VARIANT[variant],
 		SIZE[size]
 	].join(" ");
