@@ -1,6 +1,7 @@
 import { DEFAULT_TIER, type Tier } from "@/rules";
 import type { Bundle } from "../content/schema";
 import type { AnswerSignals } from "../grading/signals";
+import type { CountedAnswer } from "../optimizer/counted";
 import type { FsrsParams, PracticeRun } from "../log/events";
 import type { EventKey } from "../log/order";
 import { type CardMemory, newCard } from "../scheduling/card-memory";
@@ -50,6 +51,8 @@ export type AppState = {
 	lastTz: string | null;
 	lastKey: EventKey | null;
 	diagnostics: Diagnostic[];
+	// Only filled when a caller asks replay to collect it; the cached state never carries it.
+	counted?: CountedAnswer[];
 };
 
 export const newEntry = (cardId: string, locked = false): CardEntry => ({

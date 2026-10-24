@@ -58,6 +58,15 @@ export function ruleBundle(): Bundle {
 		version: "2026.09.29",
 		contentRev: 1,
 		contentHistory: [{ contentRev: 1, version: "2026.09.29" }],
+		groups: [
+			{ id: "sumatera", name: "Sumatera" },
+			{ id: "jawa", name: "Jawa" },
+			{ id: "bali-nusa-tenggara", name: "Bali & Nusa Tenggara" },
+			{ id: "kalimantan", name: "Kalimantan" },
+			{ id: "sulawesi", name: "Sulawesi" },
+			{ id: "maluku", name: "Maluku" },
+			{ id: "papua", name: "Papua" }
+		],
 		regions: [
 			region("bk", "sumatera", "sumatera-utara", [
 				["kota-medan", H],

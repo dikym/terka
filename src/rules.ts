@@ -33,7 +33,7 @@ export function typoThreshold(length: number): number {
 }
 
 // Raise on any change to ts-fsrs, GRADE_RULES_VERSION or queue rules; clients then replay in full.
-export const ENGINE_VERSION = 1;
+export const ENGINE_VERSION = 2;
 
 export const TIERS = {
 	pemula: { newPerDay: 8, hold: 40 },
@@ -103,3 +103,15 @@ export const FORECAST_DAYS = 14;
 export const WEAKEST_LIMIT = 10;
 // Placement ties and the Pemula suggestion start here; other groups follow data order.
 export const SUGGESTED_GROUP_ORDER: readonly string[] = ["bali-nusa-tenggara", "jawa"];
+
+export const OPTIMIZE_FIRST_REVIEWS = 1_000;
+export const OPTIMIZE_FIRST_CARDS = 200;
+export const OPTIMIZE_AGAIN_REVIEWS = 500;
+export const OPTIMIZE_AGAIN_DAYS = 30;
+// Newest share of the counted answers held out to compare new and current weights.
+export const OPTIMIZE_TEST_SHARE = 0.2;
+export const OPTIMIZE_MIN_GAIN = 0.01;
+export const ROLLBACK_REVIEWS = 300;
+export const ROLLBACK_MARGIN = 0.05;
+// scripts/ops/db-size.sh repeats this number; keep both in step.
+export const DB_SIZE_ALARM_BYTES = 157_286_400;

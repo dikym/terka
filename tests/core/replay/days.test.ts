@@ -7,13 +7,29 @@ import { DAY, fresh, manyRegions, NOW, reviewCard, seedCard, WITA } from "./fixt
 const TODAY = "2026-09-21";
 
 function fillWindow(state: AppState, day: string, reviews: number, correct: number, heldDays = 0) {
-	for (let offset = 1; offset <= 30; offset++)
+	for (let offset = 1; offset <= 30; offset++) {
 		state.tier.days.set(addDays(day, -offset), {
 			tier: state.tier.current,
 			reviews,
 			reviewsCorrect: correct,
 			held: offset <= heldDays
 		});
+		state.activeDays.add(addDays(day, -offset));
+	}
+}
+
+// Fifteen held days with nothing practised, then fifteen practised days at 225 of 255 correct.
+function absence(state: AppState, day: string, practisedWhileHeld: boolean) {
+	for (let offset = 1; offset <= 30; offset++) {
+		const held = offset <= 15;
+		state.tier.days.set(addDays(day, -offset), {
+			tier: state.tier.current,
+			reviews: held ? 0 : 17,
+			reviewsCorrect: held ? 0 : 15,
+			held
+		});
+		if (!held || practisedWhileHeld) state.activeDays.add(addDays(day, -offset));
+	}
 }
 
 function ready(state: AppState, day: string, firstCounted = "2026-07-01") {
@@ -116,6 +132,20 @@ describe("tier adjustment", () => {
 		const state = fresh();
 		ready(state, TODAY);
 		fillWindow(state, TODAY, 10, 9, 11);
+		advanceDays(state, TODAY);
+		expect(state.tier.current).toBe("pemula");
+	});
+	test("held days during an absence do not move the tier down", () => {
+		const state = fresh();
+		ready(state, TODAY);
+		absence(state, TODAY, false);
+		advanceDays(state, TODAY);
+		expect(state.tier.current).toBe("menengah");
+	});
+	test("held days the user practised on still move the tier down", () => {
+		const state = fresh();
+		ready(state, TODAY);
+		absence(state, TODAY, true);
 		advanceDays(state, TODAY);
 		expect(state.tier.current).toBe("pemula");
 	});

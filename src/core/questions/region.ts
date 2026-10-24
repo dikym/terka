@@ -1,5 +1,6 @@
 import { PLACEMENT_LIMIT_MS, TIMED_LIMIT_MS, TRUE_FALSE_LIMIT_MS } from "@/rules";
-import { areaDisplayName, highMembers } from "../answers/dictionary";
+import { areaDisplayName, highMembers, provinceName } from "../answers/dictionary";
+import { groupName } from "../content/names";
 import { setThreshold } from "../answers/match-set";
 import type { Area, Bundle, Region } from "../content/schema";
 import { seeded, shuffle } from "../random";
@@ -7,6 +8,7 @@ import { isLeech } from "../scheduling/card";
 import type { CardMemory } from "../scheduling/card-memory";
 import { foreignAreas, NATIONAL, otherCodes } from "./distractors";
 import {
+	type CompareHint,
 	LABELS,
 	type Level,
 	type LevelSource,
@@ -25,6 +27,18 @@ function findRegion(bundle: Pick<Bundle, "regions">, id: string): Region {
 	const region = bundle.regions.find((item) => item.id === id);
 	if (!region) throw new Error(`unknown region ${id}`);
 	return region;
+}
+
+// The first difference that separates the two codes: group, then province, then an area of their own.
+function compareHint(bundle: Bundle, a: Region, b: Region): CompareHint {
+	const place = (region: Region, other: Region) => {
+		if (region.group !== other.group) return groupName(bundle, region.group);
+		if (region.province !== other.province) return provinceName(region.province);
+		const others = new Set(highMembers(bundle, other).map((area) => area.id));
+		const own = highMembers(bundle, region);
+		return areaDisplayName(own.find((area) => !others.has(area.id)) ?? own[0]);
+	};
+	return { a: { code: a.code, place: place(a, b) }, b: { code: b.code, place: place(b, a) } };
 }
 
 export function buildRegionQuestion(
@@ -73,7 +87,8 @@ export function buildRegionQuestion(
 			choices: shuffle([region.code, other.code], random("order")),
 			answer: { kind: "region-code", areaId: shown.id, codeIds },
 			promptAreaId: shown.id,
-			drillPairWith: other.id
+			drillPairWith: other.id,
+			hint: compareHint(bundle, region, other)
 		};
 	}
 

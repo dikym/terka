@@ -5,6 +5,7 @@ const bundle = () => ({
 	version: "2026.09.28",
 	contentRev: 1,
 	contentHistory: [{ contentRev: 1, version: "2026.09.28" }],
+	groups: [{ id: "sumatera", name: "Sumatera" }],
 	regions: [
 		{
 			id: "dk",

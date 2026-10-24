@@ -1,0 +1,36 @@
+# Weekly encrypted pg_dump until the Pro plan's daily backups take over.
+name: backup
+
+on:
+    schedule:
+        - cron: "0 19 * * 0" # Monday 02:00 WIB
+    workflow_dispatch:
+
+permissions:
+    contents: read
+
+jobs:
+    backup:
+        runs-on: ubuntu-latest
+        timeout-minutes: 30
+        steps:
+            - uses: actions/checkout@v4
+            - name: Install PostgreSQL 17 client and age
+              run: |
+                  sudo install -d /usr/share/postgresql-common/pgdg
+                  sudo curl -fsSL -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc https://www.postgresql.org/media/keys/ACCC4CF8.asc
+                  echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" | sudo tee /etc/apt/sources.list.d/pgdg.list
+                  sudo apt-get update
+                  sudo apt-get install -y postgresql-client-17 age
+                  echo "/usr/lib/postgresql/17/bin" >> "$GITHUB_PATH"
+            - name: Dump and encrypt
+              env:
+                  DATABASE_URL: ${{ secrets.BACKUP_DATABASE_URL }}
+                  BACKUP_AGE_RECIPIENT: ${{ vars.BACKUP_AGE_RECIPIENT }}
+              run: bash scripts/ops/backup.sh "terka-$(date -u +%Y-%m-%d).dump.age"
+            - uses: actions/upload-artifact@v4
+              with:
+                  name: terka-backup-${{ github.run_id }}
+                  path: terka-*.dump.age
+                  retention-days: 28
+                  if-no-files-found: error

@@ -1,0 +1,21 @@
+# SPF, DKIM and DMARC for the login email sender. Fails until the owner adds the records.
+name: dns
+
+on:
+    schedule:
+        - cron: "0 2 * * 1"
+    workflow_dispatch:
+
+permissions:
+    contents: read
+
+jobs:
+    email-records:
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+        steps:
+            - uses: actions/checkout@v4
+            - uses: oven-sh/setup-bun@v2
+              with:
+                  bun-version: 1.3.14
+            - run: bun scripts/ops/dns-check.ts

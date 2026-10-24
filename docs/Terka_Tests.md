@@ -51,9 +51,9 @@ ID berikut sudah tidak digunakan: SR-211, SR-223–SR-229, SR-298, TR-58, TR-80,
 
 Urutan di GitHub Actions untuk setiap push ke branch utama:
 
-1. Lint dan type check, termasuk pemeriksaan ID tes, rujukan dokumen, dan keselarasan kesesuaian skema.
+1. Lint dan type check, termasuk pemeriksaan bahwa nama tes dan komentar kode tidak memuat ID katalog atau rujukan dokumen. Karena itu katalog ini tidak dilacak lewat ID di kode tes; setiap tes menjelaskan perilakunya sendiri.
 2. Tes konten. Gagal → build dihentikan.
-3. Unit dan property-based. Cakupan baris mesin penjadwalan minimal 90%.
+3. Unit dan property-based. Cakupan baris mesin penjadwalan (`src/core`) minimal 90%.
 4. Integrasi lokal dan integrasi server terhadap stack Supabase lokal.
 5. pgTAP untuk RLS dan grant.
 6. Playwright E2E di Chromium dan WebKit. WebKit wajib, karena perangkat utama pengguna memakai Safari iOS.
@@ -577,7 +577,7 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | ------ | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | -------- |
 | TR-01  | Build dengan `plates.json` valid                                                       | Build lolos; versi bertanggal dan `contentRev` tertanam di bundle                                                                    | normal   |
 | TR-193 | `next build` dengan `output: 'export'`                                                 | Folder `out/` berisi semua halaman utama sebagai HTML; tidak ada Route Handler, Server Action, atau Middleware; build gagal jika ada | negatif  |
-| TR-194 | Service worker dibuat dari `out/` dengan `workbox-build`                               | Semua halaman utama, `plates.json`, dan berkas WebAssembly optimizer ada di precache manifest                                        | normal   |
+| TR-194 | Service worker dibuat dari `out/` dengan `workbox-build`                               | Semua halaman utama, `plates.json`, `map.svg`, manifest PWA, worker optimizer, dan berkas WebAssembly optimizer ada di precache manifest | normal   |
 | TR-195 | `plates.json` berubah tanpa `contentRev` naik, atau entri lama `contentHistory` diubah | Build gagal                                                                                                                          | negatif  |
 | TR-02  | Satu region tanpa properti `aliases`                                                   | Build gagal dengan pesan yang menyebut `id` region-nya                                                                               | negatif  |
 | TR-03  | `aliases` berisi array kosong                                                          | Build lolos                                                                                                                          | batas    |
@@ -585,7 +585,7 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | TR-05  | Region baru memakai `id` yang ada di daftar pensiun                                    | Build gagal                                                                                                                          | negatif  |
 | TR-06  | Dua region memakai `id` yang sama                                                      | Build gagal                                                                                                                          | negatif  |
 | TR-07  | Region dengan `group` yang tidak dikenal                                               | Build gagal; kode itu tidak boleh diam-diam hilang dari hierarki                                                                     | negatif  |
-| TR-08  | Cakupan tanpa elemen SVG dengan `id` yang sama                                         | Build gagal                                                                                                                          | negatif  |
+| TR-08  | Cakupan tanpa elemen peta: provinsi tanpa `id` yang sama, atau kawasan tanpa `data-group` yang sama | Build gagal                                                                                                                          | negatif  |
 | TR-09  | Kode lintas provinsi dengan `spans` berisi dua provinsi                                | Kode hanya muncul sekali di hierarki, di bawah `province` primer                                                                     | batas    |
 | TR-10  | Jumlah pilihan per tingkat cakupan                                                     | Sama dengan hitungan dari data, tidak ada angka tertulis manual                                                                      | normal   |
 
@@ -718,7 +718,7 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | TR-83 | Kode yang semua kab/kota provinsinya eksklusif memakai kode itu                | Ditandai mencakup seluruh provinsi oleh build          | normal   |
 | TR-84 | Tier `placementTier` berisi kurang dari 8 kode `common`                        | Build gagal                                            | negatif  |
 | TR-85 | Pencocokan satu jawaban terhadap kamus nasional lengkap                        | Di bawah 5 ms di ponsel kelas menengah                 | batas    |
-| TR-86 | Kamus hasil build dibandingkan dengan normalisasi runtime                      | Hasil pencocokan identik untuk seluruh nama dan varian | batas    |
+| TR-86 | Kamus yang dibangun saat konten dimuat dipakai untuk seluruh nama, alias, dan varian | Setiap nama, alias, dan varian kab/kota cocok dengan kab/kota-nya sendiri | batas    |
 
 ### 6.13 Pencatatan Sinyal Penilaian
 
@@ -751,7 +751,7 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | TR-99  | Versi kebijakan baru dengan `requires_reconsent = true` diterbitkan                               | Push berhenti sampai baris `privacy_consents` untuk versi baru tersimpan                                                                                           | batas    |
 | TR-100 | 1.000 pengguna dengan data sintetis di database lokal                                             | Query RLS milik satu pengguna tetap memakai index dan di bawah 50 ms                                                                                               | batas    |
 | TR-101 | Pemulihan cadangan `pg_dump` terenkripsi ke proyek kosong                                         | Data aplikasi, objek Auth yang dibutuhkan, RLS, grant, dan migration pulih; login dan sinkronisasi diuji sebelum layanan dibuka                                    | normal   |
-| TR-102 | Header respons situs statis                                                                       | Tidak ada cookie pelacak; CSP mengizinkan origin aplikasi untuk aset dan endpoint analitik serta domain Supabase/Turnstile yang diperlukan; tidak memblokir TR-137 | batas    |
+| TR-102 | Header respons situs statis dari `vercel.json`                                                    | Tidak ada cookie pelacak; CSP mengizinkan origin aplikasi untuk aset dan endpoint analitik serta domain Supabase/Turnstile yang diperlukan; tidak memblokir TR-137; tidak ada pelanggaran CSP di halaman mana pun | batas    |
 
 ### 6.15 Masuk dengan Google
 
@@ -775,7 +775,7 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | ------ | ------------------------------------------------------------------ | ------------------------------------------------------------------------- | -------- |
 | TR-114 | Callback OAuth dibuka di browser berbeda dari tempat login dimulai | Pertukaran code gagal karena `code_verifier` tidak ada; tidak ada session | batas    |
 | TR-115 | Request ke `terka.vercel.app` dengan path dan query                | Respons 308 ke `terka.my.id` dengan path dan query yang sama              | normal   |
-| TR-116 | Query DNS `terka.my.id` untuk SPF, DKIM, dan DMARC di CI           | Ketiganya ada dan sesuai konfigurasi Resend                               | batas    |
+| TR-116 | Query DNS untuk SPF di `send.terka.my.id`, DKIM di `resend._domainkey.terka.my.id`, dan DMARC di `_dmarc.terka.my.id`, lewat workflow terjadwal | Ketiganya ada dan sesuai konfigurasi Resend | batas    |
 | TR-117 | `redirectTo` ke `terka.vercel.app`                                 | Ditolak, karena hanya `terka.my.id` dan `localhost` yang diizinkan        | negatif  |
 | TR-118 | 81 permintaan email login dalam satu jam di stack lokal            | Permintaan ke-81 ditolak rate limit                                       | batas    |
 | TR-119 | Pemantau mengirim email uji ke `contact@terka.my.id`               | Diteruskan ke email pribadi pemilik proyek                                | normal   |
@@ -867,7 +867,7 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 
 | ID     | Skenario                                                                        | Hasil yang diharapkan                                                                                                   | Kategori |
 | ------ | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | -------- |
-| TR-166 | Build dengan dokumen Special Codes (`Terka_Special_Codes.md`)                       | Lolos; `specials[]` berisi 130 entri CD; `referencePlates[]` berisi tiga entri format (RI, CC, CH); CD 92 `needsReview` | normal   |
+| TR-166 | Build dengan `../data/special-codes.json`                                            | Lolos; `specials[]` berisi 130 entri CD; `referencePlates[]` berisi tiga entri format (RI, CC, CH); CD 92 `needsReview` | normal   |
 | TR-167 | Dua entri CD `high` memakai nomor yang sama                                     | Build gagal dengan pesan yang menyebut kedua `id`                                                                       | negatif  |
 | TR-168 | Alias satu entri CD sama dengan `holder` entri CD lain setelah normalisasi      | Build gagal                                                                                                             | negatif  |
 | TR-169 | `specials[].id` sama dengan salah satu `regions[].id`                           | Build gagal                                                                                                             | negatif  |
@@ -879,7 +879,7 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | TR-175 | `review_logs` dengan `content_id = 'dk'` dan `mode = 'special2holder'`          | Ditolak `CHECK`: mode kode khusus wajib memakai id `cd-`                                                                | negatif  |
 | TR-176 | `specials[]` memuat entri dengan `series` selain CD, atau `id` berawalan `ref-` | Build gagal                                                                                                             | negatif  |
 | TR-177 | Ekspor dengan kartu kode khusus lalu impor ke perangkat kosong                  | Keadaan identik, termasuk `special_enabled` dan kartu `holder2special` yang terbuka                                     | normal   |
-| TR-178 | Seed dibandingkan dengan `specials[]` di `../data/special-codes.json`           | Nomor, pemegang, dan ejaan sumber identik untuk 130 baris                                                               | normal   |
+| TR-178 | Tabel CD di `Terka_Special_Codes.md` dibandingkan dengan `specials[]` di `../data/special-codes.json` | Nomor, pemegang, dan ejaan sumber identik untuk 130 baris                                                               | normal   |
 | TR-179 | `referencePlates[]` memuat entri RI dengan `number` terisi                      | Build gagal                                                                                                             | negatif  |
 
 ## 7. Pengujian Alur Menyeluruh (E2E-)

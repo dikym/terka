@@ -1,13 +1,15 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { buildContent } from "../src/core/content/build";
+import { readMapIds } from "./build/map-ids";
 
 const root = new URL("../", import.meta.url);
 const read = (path: string) => readFile(new URL(path, root), "utf8");
-const [curationText, specialCodesText, funFactsText, previousText] = await Promise.all([
+const [curationText, specialCodesText, funFactsText, previousText, mapText] = await Promise.all([
 	read("data/plate-curation.json"),
 	read("data/special-codes.json"),
 	read("data/fun-facts.json"),
-	read("src/data/plates.json").catch(() => null)
+	read("src/data/plates.json").catch(() => null),
+	read("public/map.svg")
 ]);
 const result = buildContent({
 	curation: JSON.parse(curationText),
@@ -15,7 +17,8 @@ const result = buildContent({
 	funFacts: JSON.parse(funFactsText),
 	today: new Date().toISOString().slice(0, 10),
 	release: process.argv.includes("--release"),
-	previous: previousText === null ? null : JSON.parse(previousText)
+	previous: previousText === null ? null : JSON.parse(previousText),
+	mapIds: readMapIds(mapText)
 });
 for (const message of result.messages) {
 	const line = `${message.level}: ${message.message}`;

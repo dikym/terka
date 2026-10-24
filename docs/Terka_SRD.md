@@ -531,22 +531,22 @@ Optimasi berjalan otomatis begitu syarat datanya terpenuhi, dengan pengaman beri
 
 **Tempat berjalan.** Web Worker di perangkat mana pun, saat aplikasi tidak sedang menampilkan soal. Satu perangkat hanya menjalankan satu optimasi dalam satu waktu.
 
-**Evaluasi.** Data dibagi menurut waktu: parameter dilatih dengan data yang lebih lama, lalu diuji pada data yang lebih baru. Parameter yang sedang dipakai diuji pada potongan data yang sama. Parameter baru diterima jika keduanya terpenuhi:
+**Evaluasi.** Data dibagi menurut waktu: parameter dilatih dengan 80% data yang lebih lama, lalu diuji pada 20% data yang paling baru. Parameter yang sedang dipakai diuji pada potongan data yang sama. Parameter baru diterima jika keduanya terpenuhi:
 
 1. Log loss turun minimal 1% relatif dibanding parameter yang sedang dipakai.
 2. RMSE tidak lebih buruk.
 
-Ambang 1% mencegah parameter berganti-ganti karena selisih yang hanya noise. Angka ini titik awal, bukan hasil penelitian.
+Penurunan tepat 1% sudah diterima. Ambang 1% mencegah parameter berganti-ganti karena selisih yang hanya noise. Angka 80/20 dan 1% adalah titik awal, bukan hasil penelitian.
 
 **Aktivasi.** Parameter yang diterima disimpan sebagai baris active dengan activated_at (TRD 4.2) dan berlaku untuk jawaban pada atau setelah waktu aktivasi efektif menurut TRD 4.4. Jadwal yang sudah terbentuk tidak dihitung ulang: kartu yang sudah memiliki `due` tetap, dan perubahan baru terasa mulai jawaban berikutnya di tiap kartu. Hasil yang ditolak juga disimpan, sebagai baris `rejected`, supaya riwayat keputusan bisa diperiksa.
 
-**Rollback otomatis.** Setelah parameter baru aktif dan sudah ada minimal 300 jawaban yang dihitung sesudahnya, sistem membandingkan retensi aktual dengan target retensi 0,90. Jika selisihnya lebih dari 5 poin, sistem menyisipkan baris `active` baru yang menyalin parameter sebelumnya. Ambang 5 poin sengaja lebih longgar dari KPI ±3 poin di PRD bagian 9: KPI itu sinyal untuk diperiksa, sedangkan rollback otomatis hanya untuk parameter yang jelas meleset.
+**Rollback otomatis.** Setelah parameter baru aktif dan sudah ada minimal 300 jawaban yang dihitung sesudahnya, sistem membandingkan retensi aktual dengan target retensi 0,90. Retensi aktual adalah proporsi jawaban benar di antara 300 jawaban terhitung pertama sesudah aktivasi, hanya pada kartu yang sudah berstatus `review` atau `mature` sebelum dijawab. Jika selisihnya lebih dari 5 poin, sistem menyisipkan baris `active` baru yang menyalin parameter sebelumnya; selisih tepat 5 poin belum memicu rollback. Keputusan ini diambil sekali per aktivasi, dari 300 jawaban yang sama. Baris rollback mencatat metrik parameter yang dipulihkan sebagai metrik baru dan metrik parameter yang digantikan sebagai pembanding, sehingga baris itu sendiri tidak pernah dikembalikan lagi. Ambang 5 poin sengaja lebih longgar dari KPI ±3 poin di PRD bagian 9: KPI itu sinyal untuk diperiksa, sedangkan rollback otomatis hanya untuk parameter yang jelas meleset.
 
 **Identitas data optimasi.** `training_set_hash` — hash dari seluruh ID jawaban terhitung yang dipakai, termasuk jawaban lokal anonim — menjadi identitas dataset di semua perangkat. Daftar ID lengkapnya (`training_event_ids`) hanya disimpan di perangkat yang menjalankan optimasi dan ikut ekspor, karena ukurannya tumbuh bersama riwayat (TRD bagian 4.2). `trained_through_seq` hanya metadata server opsional; ketiadaannya tidak menghalangi optimasi. Aktivasi yang waktunya sama dipecahkan dengan `device_id`, lalu `id`, secara leksikografis. Rollback menyalin bobot baseline dan identitas data keputusan rollback, bukan menimpa riwayat.
 
 **Satu set global.** Seperti di PRD bagian 11, parameter dioptimalkan sebagai satu set untuk seluruh kartu. Parameter baru dipisah per jenis kartu jika datanya membuktikan perlu.
 
-**Tahap belajar.** Optimizer juga bisa menghitung usulan tahap belajar. Usulan itu tidak diterapkan otomatis, karena mengubah perhitungan durasi di bagian 4.7. Usulannya hanya ditampilkan di layar diagnostik untuk diputuskan manual.
+**Tahap belajar.** Setiap optimasi baru juga menghitung usulan tahap belajar dan belajar ulang dari riwayat yang sama, lalu menyimpannya di perangkat. Usulan itu tidak diterapkan otomatis, karena mengubah perhitungan durasi di bagian 4.7. Usulannya hanya ditampilkan di layar diagnostik untuk diputuskan manual; kegagalan menghitungnya tidak membatalkan keputusan optimasi.
 
 ### 4.13 Tes Penempatan
 
@@ -687,7 +687,7 @@ Tes penempatan hanya memberi tingkat awal. Setelah itu, tingkat naik atau turun 
 1. Akurasi pengulangan di bawah 80%.
 2. Materi baru ditahan lebih dari 10 hari dalam 30 hari itu.
 
-**Hari materi baru ditahan** dihitung dari keadaan aplikasi di awal `local_day`: jumlah kartu prioritas 1–3 yang waktunya diulang melebihi ambang penahanan tingkat hari itu. Karena dihitung dari keadaan aplikasi hasil replay, hasilnya sama di semua perangkat.
+**Hari materi baru ditahan** dihitung dari keadaan aplikasi di awal `local_day`: jumlah kartu prioritas 1–3 yang waktunya diulang melebihi ambang penahanan tingkat hari itu. Hari itu hanya dihitung jika pengguna juga aktif pada `local_day` tersebut, yaitu ada jawaban yang tercatat. Antrean yang menumpuk selama pengguna tidak berlatih tidak menunjukkan kemampuannya, jadi tidak boleh menurunkan tingkat. Karena dihitung dari keadaan aplikasi hasil replay, hasilnya sama di semua perangkat.
 
 **Jeda antar-perubahan.** Setelah tingkat berubah, evaluasi berikutnya baru berjalan 14 hari kemudian. Tanpa jeda, pengguna di sekitar ambang bisa naik-turun setiap hari.
 
@@ -797,7 +797,7 @@ Pasangan dicatat berarah, tetapi status "sering tertukar" berlaku untuk pasangan
 
 ### 6.3 Bentuk Latihan
 
-Kedua item tampil bersamaan dalam pertanyaan yang menuntut pengguna membedakan keduanya, misalnya: "Mana yang Bengkulu, BD atau BE?" Sistem juga menampilkan satu ciri pembeda yang konkret, seperti pengelompokan geografis atau urutan huruf.
+Kedua item tampil bersamaan dalam pertanyaan yang menuntut pengguna membedakan keduanya, misalnya: "Mana yang Bengkulu, BD atau BE?" Setelah menjawab, sistem menampilkan satu ciri pembeda yang konkret, dipilih dengan urutan berikut: kawasan masing-masing kode jika berbeda; provinsinya jika satu kawasan; atau satu kab/kota yang hanya dipakai masing-masing kode jika satu provinsi. Ciri pembeda tidak tampil sebelum menjawab, karena latihan ini Level 3 dan ciri itu akan membocorkan jawabannya.
 
 Pendekatan ini berbeda dari intuisi umum yang menyuruh memisahkan item serupa. Memisahkannya hanya menunda momen kedua item harus dibedakan. Menampilkannya berdampingan justru membantu pengguna membentuk ciri pembeda yang jelas.
 

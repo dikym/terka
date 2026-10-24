@@ -127,6 +127,17 @@ export function applyReview(state: AppState, row: ReviewLog, at: number): void {
 			answer(card, grade, answerContext(state, row, at, passesLevel3)),
 			row.tz
 		);
+		state.counted?.push({
+			id: row.id,
+			cardId,
+			at,
+			localDay: row.localDay,
+			grade,
+			settled: SETTLED.has(card.state),
+			correct: row.correct === true,
+			serverSeq: row.serverSeq,
+			msTotal: row.msTotal
+		});
 		if (!step) state.groupDay.set(row.contentId, row.localDay);
 		if (state.firstCountedDay === null) state.firstCountedDay = row.localDay;
 		if (SETTLED.has(card.state)) {

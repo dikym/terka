@@ -19,9 +19,15 @@ export function addParams(list: FsrsParams[], row: FsrsParams): FsrsParams[] {
 
 const schedulers = new Map<string, Scheduler>();
 
-export function schedulerAt(list: readonly FsrsParams[], at: number): Scheduler {
+// `list` is the activation-sorted list addParams builds.
+export function paramsAt(list: readonly FsrsParams[], at: number): FsrsParams | null {
 	let chosen: FsrsParams | null = null;
 	for (const row of list) if (activation(row) <= at) chosen = row;
+	return chosen;
+}
+
+export function schedulerAt(list: readonly FsrsParams[], at: number): Scheduler {
+	const chosen = paramsAt(list, at);
 	const key = chosen ? chosen.weights.join(",") : "default";
 	let scheduler = schedulers.get(key);
 	if (!scheduler) {

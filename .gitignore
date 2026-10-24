@@ -52,3 +52,5 @@ next-env.d.ts
 # planning docs
 docs/superpowers/
 .design-tmp/
+/test-results/
+/playwright-report/

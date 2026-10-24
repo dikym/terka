@@ -4,16 +4,18 @@ import { readMeta, wipesOf, type TerkaDb } from "@/lib/db/schema";
 export async function claimLocalData(
 	db: TerkaDb,
 	userId: string
-): Promise<{ status: "ok" } | { status: "otherAccount" }> {
-	return db.transaction("rw", [db.sync_meta, db.outbox], async () => {
+): Promise<{ status: "ok"; answers: number } | { status: "otherAccount" }> {
+	return db.transaction("rw", [db.sync_meta, db.outbox, db.review_logs], async () => {
 		const owner = await readMeta<string>(db, "ownerUserId");
 		if (owner && owner !== userId) return { status: "otherAccount" as const };
-		if (owner === userId) return { status: "ok" as const };
+		if (owner === userId) return { status: "ok" as const, answers: 0 };
 		await db.sync_meta.put({ key: "ownerUserId", value: userId });
+		const answers = await db.review_logs.count();
+		await db.sync_meta.put({ key: "claim", value: { total: answers } });
 		// The device row is per account on the server; resending it to a new owner is harmless.
 		const deviceId = await readMeta<string>(db, "deviceId");
 		if (deviceId) await db.outbox.add({ table: "devices", key: deviceId, op: "insert" });
-		return { status: "ok" as const };
+		return { status: "ok" as const, answers };
 	});
 }
 

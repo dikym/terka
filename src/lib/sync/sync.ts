@@ -17,6 +17,16 @@ export type SyncResult = { log: LogState; status: SyncStatus; nextAt: number | n
 
 const put = (db: TerkaDb, key: string, value: unknown) => db.sync_meta.put({ key, value });
 
+// A claimed local history is reported until its last answer has left the outbox.
+export async function claimFacts(db: TerkaDb): Promise<{ total: number; pending: number } | null> {
+	const claim = await readMeta<{ total: number }>(db, "claim");
+	if (!claim) return null;
+	const pending = await db.outbox.filter((item) => item.table === "review_logs").count();
+	if (pending > 0) return { total: claim.total, pending };
+	await db.sync_meta.delete("claim");
+	return null;
+}
+
 async function statusOf(db: TerkaDb, log: LogState, ctx: SyncContext, otherAccount = false) {
 	const meta = async <T>(key: string) => (await readMeta<T>(db, key)) ?? null;
 	return syncStatus(
@@ -28,7 +38,8 @@ async function statusOf(db: TerkaDb, log: LogState, ctx: SyncContext, otherAccou
 			blocks: (await meta<Block[]>("blocks")) ?? [],
 			lastSyncAt: await meta<number>("lastSyncAt"),
 			lastPushAt: await meta<number>("lastPushAt"),
-			failingSince: await meta<number>("failingSince")
+			failingSince: await meta<number>("failingSince"),
+			claim: await claimFacts(db)
 		},
 		await db.outbox.count(),
 		await db.outbox_quarantine.count(),

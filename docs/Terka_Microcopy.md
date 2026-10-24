@@ -239,6 +239,7 @@ Pratinjau memakai angka, bukan kalimat panjang (aturan 8 di bagian 2 dokumen ini
 | ------------------------- | ------------------------------------------------ |
 | Judul                     | **Bandingkan Kode**                              |
 | Pengantar pasangan        | **BE dan BD sering tertukar. Bedakan keduanya.** |
+| Ciri pembeda, setelah menjawab | **{kodeA}: {tempatA} · {kodeB}: {tempatB}**, misalnya **BE: Sumatera · DE: Maluku** |
 | Setelah benar             | **Benar**                                        |
 | Pasangan tidak lagi aktif | **Latihan khusus untuk pasangan ini selesai.**   |
 

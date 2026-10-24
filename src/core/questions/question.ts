@@ -34,6 +34,13 @@ export type Question = {
 	drillPairWith: string | null;
 	reveal: { lines: string[]; note: string | null } | null;
 	assisted: boolean;
+	// Bandingkan Kode only: shown with the result, since before answering it would give the answer away.
+	hint?: CompareHint;
+};
+
+export type CompareHint = {
+	a: { code: string; place: string };
+	b: { code: string; place: string };
 };
 
 export type QuestionOptions = {

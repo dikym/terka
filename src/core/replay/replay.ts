@@ -49,13 +49,18 @@ function effectivePlacement(
 	return chosen;
 }
 
-export function replay(events: readonly LearningEvent[], bundle: Bundle): ReplayResult {
+export function replay(
+	events: readonly LearningEvent[],
+	bundle: Bundle,
+	options: { collect?: boolean } = {}
+): ReplayResult {
 	if (isOutdated(events)) return { status: "outdated" };
 	const sorted = sortEvents(events);
 	const voided = new Set(
 		sorted.flatMap((event) => (event.table === "review_voids" ? [event.row.reviewId] : []))
 	);
 	const state = initialState(bundle, voided, effectivePlacement(sorted, voided));
+	if (options.collect) state.counted = [];
 	for (const event of sorted) applyEvent(state, event);
 	return { status: "ok", state };
 }
