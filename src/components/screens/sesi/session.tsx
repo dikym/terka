@@ -16,8 +16,8 @@ import {
 	type SessionState,
 	sessionReducer
 } from "@/dummy/session-reducer";
-import { SessionBar } from "./bar";
-import { SessionEnd } from "./ends";
+import { type BarProps, SessionBar, SessionMeta } from "./bar";
+import { EndFooter, SessionEnd } from "./ends";
 import { SessionLoading } from "./loading";
 import { SessionPreview } from "./preview";
 import { Question } from "./question";
@@ -161,22 +161,29 @@ export function Session({ mode }: { mode: Mode }) {
 	const total = QUEUES[mode].length;
 	const finished = state.phase === "done";
 	const answered = state.results.length;
+	const bar: BarProps = {
+		mode,
+		card,
+		level: card ? cardLevel(state, card) : null,
+		done: finished ? total : Math.min(total, state.index + 1),
+		total,
+		finished,
+		onExit: exit,
+		onUndo: () => act({ type: "undo" }),
+		clock: { seconds: clock, total: KILAT_SECONDS },
+		correct: state.results.filter((result) => result === "right").length
+	};
 	return (
 		<SessionFrame
-			bar={
-				<SessionBar
-					mode={mode}
-					card={card}
-					level={card ? cardLevel(state, card) : null}
-					done={finished ? total : Math.min(total, state.index + 1)}
-					total={total}
-					finished={finished}
-					onExit={exit}
-					onUndo={() => act({ type: "undo" })}
-					clock={{ seconds: Math.ceil(clock), total: KILAT_SECONDS }}
-					correct={state.results.filter((result) => result === "right").length}
-				/>
+			bar={<SessionBar {...bar} />}
+			// Mode Kilat and Latihan Terfokus keep their area row on the summary.
+			meta={
+				finished && mode !== "kilat" && mode !== "terfokus" ? undefined : (
+					<SessionMeta {...bar} />
+				)
 			}
+			footer={finished ? <EndFooter /> : undefined}
+			variant={finished ? "end" : "question"}
 		>
 			{finished ? (
 				<SessionEnd state={state} held={held} />

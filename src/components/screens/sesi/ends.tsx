@@ -7,7 +7,7 @@ import type { SessionState } from "@/dummy/session-reducer";
 
 function FactCard() {
 	return (
-		<article className="flex flex-col overflow-hidden rounded-md border border-hairline bg-paper-0 shadow-lift">
+		<article className="flex flex-col overflow-hidden rounded-md border border-hairline bg-paper-0 lg:shadow-lift">
 			<header className="flex items-center justify-between gap-3 border-b border-hairline px-4 py-3">
 				<span className="inline-flex items-center gap-2 type-label text-ink-500">
 					<Icon name="book-open" size={16} color="bg-current" />
@@ -18,15 +18,20 @@ function FactCard() {
 					Terverifikasi
 				</span>
 			</header>
-			<div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-4 px-4 pt-4 pb-5">
-				<CodeChip code="DA" group="kalimantan" size="md" />
-				<p className="max-w-prose text-pretty text-ink-900 type-prose">
+			<div className="flex flex-col items-start gap-3 p-4 lg:grid lg:grid-cols-[auto_minmax(0,1fr)] lg:gap-4 lg:pb-5">
+				<CodeChip
+					code="DA"
+					group="kalimantan"
+					size="md"
+					className="max-lg:h-7.5 max-lg:w-11 max-lg:text-body-md"
+				/>
+				<p className="max-w-prose text-pretty text-ink-900 type-prose max-lg:text-body-md max-lg:leading-[1.6]">
 					Wilayah Zuider en Ooster Afdeeling van Borneo memakai satu kode tunggal, DA.
 					Kalimantan Selatan adalah wilayah pertama di Kalimantan yang memakai pelat
 					nomor.
 				</p>
 			</div>
-			<footer className="flex items-baseline gap-3 border-t border-hairline bg-paper-50 px-4 py-3">
+			<footer className="flex flex-col gap-1 border-t border-hairline bg-paper-50 px-4 py-3 lg:flex-row lg:items-baseline lg:gap-3">
 				<span className="flex-none type-label text-ink-500">Sumber</span>
 				<cite className="font-sans text-body-sm leading-[1.4] text-ink-700 not-italic">
 					Handboek voor automobilisten, Java Motor Club, 1920
@@ -53,7 +58,7 @@ function Metric({
 		<div className="flex flex-col items-start gap-1">
 			<div className="flex items-baseline gap-2">
 				<span
-					className={`font-display leading-tight font-bold tracking-hero tabular-nums ${size === "display" ? "text-display" : "text-heading"} ${tone}`}
+					className={`font-display font-bold tracking-hero tabular-nums ${size === "display" ? "text-[32px] leading-none lg:text-display lg:leading-tight" : "text-heading leading-tight"} ${tone}`}
 				>
 					{value}
 				</span>
@@ -97,7 +102,7 @@ export function SessionEnd({ state, held }: { state: SessionState; held: boolean
 	let body: React.ReactNode;
 	if (state.mode === "harian")
 		body = (
-			<div className="grid grid-cols-2 gap-5">
+			<div className="grid grid-cols-2 items-end gap-4 lg:items-stretch lg:gap-5">
 				<Metric value="17" unit="hari" label="Hari Beruntun" tone="text-tangerine-700" />
 				<Metric
 					value={
@@ -130,7 +135,7 @@ export function SessionEnd({ state, held }: { state: SessionState; held: boolean
 		);
 	else if (state.mode === "terfokus")
 		body = (
-			<div className="grid grid-cols-2 gap-5">
+			<div className="grid grid-cols-2 items-end gap-4 lg:items-stretch lg:gap-5">
 				<Metric value={answered} label="Soal dijawab" />
 				<Metric
 					value={`${accuracy(state)}%`}
@@ -143,7 +148,7 @@ export function SessionEnd({ state, held }: { state: SessionState; held: boolean
 	else
 		body = (
 			<>
-				<div className="grid grid-cols-2 gap-5">
+				<div className="grid grid-cols-2 items-end gap-4 lg:items-stretch lg:gap-5">
 					<Metric value={`${accuracy(state)}%`} label="Akurasi" tone="text-go-500" />
 					<Metric
 						value={held ? "2,4" : "2,1"}
@@ -194,14 +199,23 @@ export function SessionEnd({ state, held }: { state: SessionState; held: boolean
 		);
 	return (
 		<>
-			<h1 className="flex items-center gap-3 font-display text-display leading-[1.05] font-bold tracking-hero">
+			<h1 className="flex items-center gap-3 font-display text-[28px] leading-[1.1] font-bold tracking-hero lg:text-display lg:leading-[1.05]">
 				<span>{TITLE[state.mode]}</span>
 			</h1>
 			{body}
 			<FactCard />
-			<Button block href="/">
+			<Button block href="/" className="max-lg:hidden">
 				Kembali ke beranda
 			</Button>
 		</>
+	);
+}
+
+/** The summary's action in the phone's bottom bar. */
+export function EndFooter() {
+	return (
+		<Button block href="/" className="max-lg:h-13">
+			Kembali ke beranda
+		</Button>
 	);
 }
