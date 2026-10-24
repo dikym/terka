@@ -1,6 +1,12 @@
 import { describe, expect, test } from "bun:test";
 import { applyEvent } from "../../../src/core/replay/apply";
-import { loginPromptDue, noteOffer, pendingNotices } from "../../../src/core/views/notices";
+import { localDay } from "../../../src/core/time/day";
+import {
+	exportReminderDue,
+	loginPromptDue,
+	noteOffer,
+	pendingNotices
+} from "../../../src/core/views/notices";
 import { fresh, NOW, review, reviewCard, seedCard } from "../replay/fixtures";
 
 describe("note offer", () => {
@@ -66,5 +72,29 @@ describe("login prompt", () => {
 		expect(loginPromptDue(state, false, false)).toBe(true);
 		expect(loginPromptDue(state, true, false)).toBe(false);
 		expect(loginPromptDue(state, false, true)).toBe(false);
+	});
+});
+
+describe("export reminder", () => {
+	const DAY = 86_400_000;
+	const tz = "Asia/Makassar";
+	const active = (days: number) => {
+		const state = fresh();
+		state.activeDays.add(localDay(NOW - days * DAY, tz));
+		return state;
+	};
+
+	test("stays quiet while nothing has been practised", () => {
+		expect(exportReminderDue(fresh(), null, NOW, tz)).toBe(false);
+	});
+
+	test("counts from the first active day when nothing was exported yet", () => {
+		expect(exportReminderDue(active(29), null, NOW, tz)).toBe(false);
+		expect(exportReminderDue(active(31), null, NOW, tz)).toBe(true);
+	});
+
+	test("counts from the last export", () => {
+		expect(exportReminderDue(active(90), NOW - 29 * DAY, NOW, tz)).toBe(false);
+		expect(exportReminderDue(active(90), NOW - 30 * DAY, NOW, tz)).toBe(true);
 	});
 });

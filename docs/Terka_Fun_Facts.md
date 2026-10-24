@@ -47,7 +47,7 @@ Setiap fakta punya dua penanda yang berbeda fungsi. **Label sejarah** (`historyL
 
 Build menolak fakta `ready` yang tidak memenuhi syarat 1 dan 2 (Tests TR-150). Status tidak berubah otomatis hanya karena sumber sudah tercatat. Jika tidak ada fakta `ready`, blok Fun Facts disembunyikan dan `fact_views` tidak ditulis.
 
-**Format baris di dokumen ini.** Fakta ditulis `N. **Siap · label: X** — teks`, diikuti baris sumber. Fakta yang turun kembali ke draf ditulis `N. **Draf · usulan label: X** — teks`. Build menolak baris bernomor bercetak tebal yang tidak mengikuti salah satu format ini.
+**Format baris di dokumen ini.** Fakta ditulis `N. **Siap · label: X** — teks`, diikuti baris sumber. Fakta yang turun kembali ke draf ditulis `N. **Draf · usulan label: X** — teks`. Format ini aturan penyuntingan dokumen; build hanya membaca `../data/fun-facts.json`, jadi penyunting yang menjaga Markdown dan JSON tetap sama.
 
 ---
 

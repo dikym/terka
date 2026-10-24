@@ -4,12 +4,12 @@ import { seeded } from "../../../src/core/random";
 import { claimLocalData, wipeLocalData } from "../../../src/lib/auth/account";
 import { acceptPolicy, recordConsent } from "../../../src/lib/auth/consent";
 import { ensureDevice } from "../../../src/lib/db/device";
-import { bumpLogVersion, loadState } from "../../../src/lib/db/log";
+import { bumpLogVersion, loadState, record } from "../../../src/lib/db/log";
 import { readMeta, wipesOf, type TerkaDb } from "../../../src/lib/db/schema";
 import { saveNote } from "../../../src/lib/db/settings";
 import { runPull } from "../../../src/lib/sync/pull";
-import { ruleBundle } from "../../core/replay/fixtures";
-import { freshDb } from "../db/fixtures";
+import { review, ruleBundle } from "../../core/replay/fixtures";
+import { freshDb, withUuids } from "../db/fixtures";
 
 const NOW = Date.parse("2026-10-04T08:00:00Z");
 const opened = async () => {
@@ -26,7 +26,7 @@ const opened = async () => {
 describe("claiming local data", () => {
 	test("data without an owner is claimed and the device is queued for the account", async () => {
 		const { db, deviceId } = await opened();
-		expect(await claimLocalData(db, "user-a")).toEqual({ status: "ok" });
+		expect(await claimLocalData(db, "user-a")).toEqual({ status: "ok", answers: 0 });
 		expect(await readMeta<string>(db, "ownerUserId")).toBe("user-a");
 		expect((await db.outbox.toArray()).filter((item) => item.key === deviceId)).toHaveLength(2);
 	});
@@ -34,8 +34,25 @@ describe("claiming local data", () => {
 		const { db } = await opened();
 		await claimLocalData(db, "user-a");
 		const before = await db.outbox.count();
-		expect(await claimLocalData(db, "user-a")).toEqual({ status: "ok" });
+		expect(await claimLocalData(db, "user-a")).toEqual({ status: "ok", answers: 0 });
 		expect(await db.outbox.count()).toBe(before);
+	});
+	test("claiming records how many local answers the account takes over", async () => {
+		const { db } = await opened();
+		const loaded = await loadState(db, ruleBundle());
+		if (loaded.status !== "ok") throw new Error("expected a usable state");
+		await record(
+			db,
+			loaded.log,
+			withUuids([
+				review("dk", "code2region", NOW),
+				review("bk", "code2region", NOW + 1),
+				review("dk", "code2region", NOW + 2)
+			]),
+			ruleBundle()
+		);
+		expect(await claimLocalData(db, "user-a")).toEqual({ status: "ok", answers: 3 });
+		expect(await readMeta<{ total: number }>(db, "claim")).toEqual({ total: 3 });
 	});
 	test("another account's data is never claimed", async () => {
 		const { db } = await opened();

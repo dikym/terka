@@ -7,7 +7,7 @@ Dokumen ini menjadi kamus untuk `Terka_ERD.puml`: fungsi tabel, arti kolom, nila
 
 **Acuan skema fisik.** Selama `supabase/migrations` belum berisi migration pertama, dokumen ini acuan untuk kunci, foreign key, indeks, grant, dan trigger. Begitu migration pertama masuk repositori, SQL migration jadi satu-satunya acuan skema fisik:
 
-- Diagram dihasilkan dari database hasil migration, bukan digambar tangan. `Terka_ERD.puml` hanya dipertahankan sampai generator diagram terpasang di CI.
+- `Terka_ERD.puml` ditulis tangan untuk tata letak dan entitas konten, lalu diperiksa terhadap database hasil migration di CI: setiap entitas database wajib berupa tabel, setiap tabel wajib punya entitas, setiap kolom yang digambar wajib ada, dan tanda `*` wajib sama dengan `NOT NULL`.
 - Dokumen ini menyimpan alasan desain dan aturan yang tidak terbaca dari SQL. Daftar kolom di sini dan di TRD bagian 4.2 menjelaskan arti, bukan definisi.
 - Jika dokumen dan migration berbeda, migration yang benar. Dokumen diperbaiki di commit yang sama, dan CI memeriksa bahwa setiap tabel dan kolom yang disebut dokumen ada di skema hasil migration (Tests TR-190).
 
@@ -229,7 +229,7 @@ Satu baris per sesi atau putaran latihan.
 
 **Aturan penutupan:** trigger `before update` hanya mengizinkan pengisian atomik `ended_at`, `answered`, `correct`, `score`, `placement_level`, dan `active_ms` saat `ended_at` masih kosong. Retry payload yang identik direkonsiliasi sebagai sukses oleh klien tanpa mengubah baris. Sesi baru wajib dimasukkan terbuka. Saat ditutup, ended_at, answered, correct, dan active_ms wajib terisi; score wajib untuk kilat dan null di jenis lain; placement_level wajib untuk placement dan null di jenis lain. Ended_at ≥ started_at dan 0 ≤ correct ≤ answered. Setelah `ended_at` terisi, baris tidak dapat diubah. Sesi yang tidak pernah ditutup tetap kosong dan diabaikan untuk rekor, Hari Beruntun, dan tes penempatan.
 
-**Mengapa `server_seq` diganti saat sesi ditutup.** Penutupan sesi adalah update, dan update tidak membuat baris baru. Jika `server_seq` tetap, perangkat lain yang cursor-nya sudah melewati sesi itu tidak pernah melihat penutupannya, sehingga `practice_runs` harus ditarik utuh setiap pull. Pengguna dengan 2.000 sesi akan menarik ratusan KB setiap 5 menit, padahal egress paket Free terbatas. Dengan nomor baru saat ditutup, penutupan ikut terambil pull berbasis cursor seperti event lain, dan klien menerapkannya sebagai upsert pada `(user_id, id)`. Kolom ini memakai sequence biasa (`default nextval(...)`), karena kolom identity `generated always` tidak dirancang untuk diganti nilainya setelah insert. Trigger boleh mengisinya walaupun klien tidak punya grant pada kolom itu.
+**Mengapa `server_seq` diganti saat sesi ditutup.** Penutupan sesi adalah update, dan update tidak membuat baris baru. Jika `server_seq` tetap, perangkat lain yang cursor-nya sudah melewati sesi itu tidak pernah melihat penutupannya, sehingga `practice_runs` harus ditarik utuh setiap pull. Pengguna dengan 2.000 sesi akan menarik ratusan KB setiap 5 menit, padahal egress paket Free terbatas. Dengan nomor baru saat ditutup, penutupan ikut terambil pull berbasis cursor seperti event lain, dan klien menerapkannya sebagai upsert pada `(user_id, id)`. Kolom ini memakai sequence biasa yang diisi trigger dengan `nextval(...)` saat insert dan saat sesi ditutup, karena kolom identity `generated always` tidak dirancang untuk diganti nilainya setelah insert. Trigger boleh mengisinya walaupun klien tidak punya grant pada kolom itu.
 
 ### review_logs
 
@@ -555,8 +555,7 @@ Riwayat belajar tidak dihapus dalam pembersihan rutin. Penghapusan akun mengikut
 
 ## 12. Yang Masih Terbuka
 
-- **Pustaka UUID versi 7 di klien.** Browser belum memiliki fungsi bawaan untuk versi 7. Pustakanya perlu dipilih dan dikunci versinya, karena id yang salah format akan ditolak domain `uuid_v7` dan masuk karantina.
 - **Versi Postgres proyek Supabase.** Minimal 15, karena `on delete set null (run_id)` memakai sintaks daftar kolom. Stack lokal memakai Postgres 17, dicatat di migration pertama; versi proyek Supabase dicek saat proyek dibuat.
 - **Batas byte `set_items`.** Angka 32 KB titik awal. Angka akhirnya ditetapkan dari payload sah terbesar di data uji (bagian 6).
 
-Keputusan yang sudah diambil dan tidak lagi terbuka: kolom `region_id` di `review_logs` dan `card_notes` diganti `content_id` sebelum rilis publik, dan `card_events` memakai pasangan `content_id` + `mode` yang sama (bagian 7), dan jumlah partisi awal tidak lagi relevan karena partisi belum direncanakan (bagian 10).
+Keputusan yang sudah diambil dan tidak lagi terbuka: UUID versi 7 dibuat fungsi kecil di klien (`uuidV7`) tanpa pustaka tambahan, dan diuji terhadap domain `uuid_v7`; kolom `region_id` di `review_logs` dan `card_notes` diganti `content_id` sebelum rilis publik, dan `card_events` memakai pasangan `content_id` + `mode` yang sama (bagian 7), dan jumlah partisi awal tidak lagi relevan karena partisi belum direncanakan (bagian 10).

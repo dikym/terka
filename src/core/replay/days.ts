@@ -70,11 +70,13 @@ function evaluateTier(state: AppState, day: string) {
 	let correct = 0;
 	let held = 0;
 	for (let offset = 1; offset <= TIER_WINDOW_DAYS; offset++) {
-		const stats = tier.days.get(addDays(day, -offset));
+		const past = addDays(day, -offset);
+		const stats = tier.days.get(past);
 		if (!stats) continue;
 		reviews += stats.reviews;
 		correct += stats.reviewsCorrect;
-		if (stats.held) held++;
+		// A backlog that piles up while the user is away says nothing about their level.
+		if (stats.held && state.activeDays.has(past)) held++;
 	}
 	if (reviews < TIER_MIN_REVIEWS) return;
 	const accuracy = correct / reviews;

@@ -70,4 +70,34 @@ describe("sync status", () => {
 			"otherAccount"
 		);
 	});
+	test("a claimed history held by the daily limit reports how much has gone", () => {
+		const daily = {
+			scope: "review_logs" as const,
+			until: NOW + DAY,
+			reason: "dailyLimit" as const
+		};
+		expect(
+			syncStatus(
+				{ ...calm, blocks: [daily], claim: { total: 2_500, pending: 1_500 } },
+				1_500,
+				0,
+				NOW
+			)
+		).toEqual({ quarantined: 0, state: "staged", sent: 1_000, total: 2_500 });
+	});
+	test("a claim without the daily limit reads as ordinary waiting", () => {
+		expect(
+			syncStatus({ ...calm, claim: { total: 2_500, pending: 1_500 } }, 1_500, 0, NOW).state
+		).toBe("pending");
+	});
+	test("the sent count never goes below zero", () => {
+		const daily = {
+			scope: "review_logs" as const,
+			until: NOW + DAY,
+			reason: "dailyLimit" as const
+		};
+		expect(
+			syncStatus({ ...calm, blocks: [daily], claim: { total: 10, pending: 12 } }, 12, 0, NOW)
+		).toMatchObject({ state: "staged", sent: 0, total: 10 });
+	});
 });

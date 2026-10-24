@@ -31,7 +31,7 @@ Antarmuka Next.js membaca keadaan aplikasi dari mesin penjadwalan. Mesin tersebu
 
 **Log event jadi data acuan.** Setiap tindakan yang memengaruhi jadwal disimpan sebagai event immutable dengan `id` UUID yang dibuat klien. Status kartu, pasangan tertukar, Hari Beruntun, rekor Mode Kilat, dan status leech semuanya turunan, dihitung ulang dari log. Dengan cara ini, sinkronisasi hampir bebas konflik: menggabungkan dua riwayat cukup dengan mengambil gabungan event dan membuang duplikat `id`. Data jawaban mentah (SRD bagian 4.5) adalah satu-satunya sumber.
 
-**Konten tetap di bundle, bukan di Supabase.** `plates.json` dibangun dari dokumen referensi, dikunci versinya di repositori, di-precache service worker, dan diuji saat build. Memindahkannya ke database hanya menambah satu hal yang bisa gagal saat offline. Supabase menyimpan data pengguna saja.
+**Konten tetap di bundle, bukan di Supabase.** `plates.json` dibangun dari data kurasi di `data/`, dikunci versinya di repositori, di-precache service worker, dan diuji saat build. Memindahkannya ke database hanya menambah satu hal yang bisa gagal saat offline. Supabase menyimpan data pengguna saja.
 
 **Tanpa server aplikasi terpisah.** Tidak ada Edge Function. Logika jadwal dan penilaian berjalan di klien. Postgres menyimpan data, menegakkan kepemilikan, persetujuan, validasi struktur, LWW, kuota, dan penghapusan akun lewat RLS, constraint, trigger, serta fungsi terbatas yang dijelaskan di bagian 9. Fungsi database ini tidak menghitung jadwal belajar.
 
@@ -49,9 +49,9 @@ Konsekuensinya, server tidak memeriksa apakah jawaban benar atau jadwal valid. T
 - **Auth dan sinkronisasi:** `@supabase/supabase-js` v2 dengan `flowType: 'pkce'`; Supabase Auth dengan provider Google dan email (magic link plus kode OTP); Postgres dengan RLS; Data API dengan grant eksplisit (bagian 9)
 - **Scheduler:** ts-fsrs dengan FSRS-6. Versinya dikunci persis, tanpa `^` atau `~`, karena hasil replay bergantung pada rumus library (bagian 4.4)
 - **Optimizer:** `@open-spaced-repetition/binding` (fsrs-rs yang dikompilasi ke WebAssembly), jalan di Web Worker tanpa threading supaya tidak memerlukan header COOP/COEP. Paketnya masih public beta, jadi versinya juga dikunci persis dan kegagalannya tidak pernah menghentikan aplikasi
-- **Data:** `plates.json` statis, dihasilkan dari dokumen referensi saat build; hierarki cakupan dibentuk dari properti `group` dan `province`
+- **Data:** `plates.json` statis, dihasilkan saat build dari `../data/plate-curation.json`, `../data/special-codes.json`, dan `../data/fun-facts.json`; hierarki cakupan dibentuk dari properti `group` dan `province`
 - **PWA:** service worker dibuat setelah `next build` dengan `workbox-build` (`injectManifest`) atas isi folder `out/`, memakai strategi precache penuh. Cara ini tidak bergantung pada bundler Next.js yang dipakai
-- **Peta:** SVG statis wilayah Indonesia, diwarnai lewat CSS variable, dengan `id` elemen sama persis dengan `id` cakupan
+- **Peta:** SVG statis wilayah Indonesia, diwarnai lewat CSS variable. Elemen provinsi memakai `id` yang sama persis dengan `id` cakupan provinsi, kawasan ditandai `data-group` dengan `id` kawasannya, dan elemen akar ber-`id` `indonesia`. Kawasan tidak memakai `id` karena `papua` dan `maluku` adalah `id` kawasan sekaligus provinsi, sedangkan `id` elemen wajib unik
 - **Deployment:** Vercel, situs statis tanpa server function. Environment variable `NEXT_PUBLIC_SUPABASE_URL` dan `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (publishable key `sb_publishable_…`, pengganti anon key lama) bersifat publik; keamanannya ada di RLS, bukan di kerahasiaan key. Paket Hobby hanya boleh untuk pemakaian pribadi non-komersial; Terka gratis tanpa iklan masih masuk batas itu, dan menambahkan iklan atau pembayaran berarti harus pindah ke Pro
 - **Region Supabase:** Singapura, wilayah terdekat untuk pengguna di Indonesia
 - **Domain:** `terka.my.id`, dipasang di Vercel sebagai domain produksi. `terka.vercel.app` tetap ada dan dialihkan permanen (308) ke `terka.my.id`. Preview deployment tetap memakai subdomain `vercel.app` dengan proyek Supabase staging. IndexedDB terikat ke origin, jadi progres tanpa akun di `terka.vercel.app` tidak terbaca di `terka.my.id`. Karena itu rilis publik langsung memakai `terka.my.id`, dan pengalihan dipasang sebelum ada pengguna di alamat lama
@@ -71,12 +71,13 @@ Konsekuensinya, server tidak memeriksa apakah jawaban benar atau jadwal valid. T
 
 ### 4.1 Konten: `plates.json`
 
-Seluruh konten berasal dari satu file JSON yang dihasilkan dari dokumen referensi, `../data/special-codes.json`, dan `../data/fun-facts.json`, lalu dikunci saat build. Contoh berikut adalah potongan skema, bukan dataset lengkap yang memenuhi jumlah tier atau cakupan nasional. Progres pengguna terhubung ke konten lewat `id` stabil, jadi pembaruan data tidak menghapus riwayat belajar.
+Seluruh konten berasal dari satu file JSON yang dihasilkan dari `../data/plate-curation.json` (kode, kab/kota, dan kawasan hasil kurasi dokumen referensi), `../data/special-codes.json`, dan `../data/fun-facts.json`, lalu dikunci saat build. Build hanya membaca JSON; dokumen Markdown tidak dibaca. Contoh berikut adalah potongan skema, bukan dataset lengkap yang memenuhi jumlah tier atau cakupan nasional. Progres pengguna terhubung ke konten lewat `id` stabil, jadi pembaruan data tidak menghapus riwayat belajar.
 
 ```json
 {
   "version": "2026.10.01",
   "contentRev": 12,
+  "groups": [{ "id": "bali-nusa-tenggara", "name": "Bali & Nusa Tenggara" }],
   "regions": [
     {
       "id": "dk",
@@ -149,7 +150,7 @@ Seluruh konten berasal dari satu file JSON yang dihasilkan dari dokumen referens
 
 **Versi konten.** `version` adalah tanggal rilis yang dibaca manusia. `contentRev` adalah bilangan bulat yang naik satu setiap kali `plates.json` berubah, termasuk perubahan `specials[]`; nilai inilah yang disimpan di `review_logs.content_version` karena dua byte cukup. `contentHistory` memetakan setiap `contentRev` lama ke `version`-nya. Build gagal jika `contentRev` tidak naik saat isi berubah, atau jika entri lama di `contentHistory` diubah.
 
-`regions[].province` adalah provinsi utama pengelompokan kartu; `spans` mencatat provinsi lain yang menggunakan kode tersebut. `placementTier` berisi `common`, `medium`, atau `rare`. ID kode dan daerah harus tetap stabil. `regions[].group` wajib terdaftar di daftar kawasan `groups` pada `data/plate-curation.json`; daftar itu hanya untuk build dan tidak masuk `plates.json`.
+`regions[].province` adalah provinsi utama pengelompokan kartu; `spans` mencatat provinsi lain yang menggunakan kode tersebut. `placementTier` berisi `common`, `medium`, atau `rare`. ID kode dan daerah harus tetap stabil. `regions[].group` wajib terdaftar di daftar kawasan `groups` pada `data/plate-curation.json`. Daftar itu ikut ke `plates.json` sebagai `groups[]` berisi `id` dan nama tampilan kawasan, misalnya "Bali & Nusa Tenggara", karena nama itu tidak bisa diturunkan dari `id`. Nama provinsi diturunkan dari `id` provinsi.
 
 **Satu mode, satu kartu.** Identitas kartu selalu berbentuk `contentId::mode`. Kode wilayah memakai `regions[].id` dengan tiga mode: `code2region`, `region2code`, dan `setrecall`. Bentuk Tebak berwaktu adalah soal Level 3 dari kartu `code2region` atau `region2code`, bukan mode kartu. Kode khusus memakai `specials[].id` dengan dua mode: `special2holder` dan `holder2special`. Kombinasi lain ditolak. Identitas ini tetap sama ketika bentuk soal atau tingkat kesulitan berubah. Kartu dibentuk dari `plates.json`; status dan jadwalnya dihitung dari riwayat. Tidak ada tabel tersendiri untuk menyimpan daftar kartu.
 
@@ -221,7 +222,7 @@ Tabel dibagi dua kelompok menurut cara mengubahnya.
 
 **Bisa diubah** — `user_settings` dan `card_notes` memakai last-write-wins; `devices.last_seen_at` memakai nilai terbesar; `practice_runs` hanya boleh ditutup sekali. Aturan tiap kelompok ada di bagian 5.2.
 
-Tabel event ber-ID (`review_logs`, `review_voids`, `card_events`, `sightings`, `fsrs_params`, `fact_views`) memiliki `received_at timestamptz default now()` dan `server_seq bigint generated always as identity`, keduanya diisi server. `practice_runs` juga memiliki keduanya, tetapi `server_seq`-nya memakai `default nextval()` dari sequence biasa dan diganti nomor baru saat sesi ditutup (lihat `practice_runs`). `server_seq` tidak diberi unique constraint; sequence sudah menjamin nilainya unik. `privacy_consents` adalah pengecualian insert-only: kuncinya `(user_id, policy_version)`, hanya memiliki `received_at`, tanpa `id` dan tanpa `server_seq`.
+Tabel event ber-ID (`review_logs`, `review_voids`, `card_events`, `sightings`, `fsrs_params`, `fact_views`) memiliki `received_at timestamptz default now()` dan `server_seq bigint generated always as identity`, keduanya diisi server. `practice_runs` juga memiliki keduanya, tetapi `server_seq`-nya diisi trigger dengan `nextval()` dari sequence biasa saat insert dan diganti nomor baru saat sesi ditutup (lihat `practice_runs`). `server_seq` tidak diberi unique constraint; sequence sudah menjamin nilainya unik. `privacy_consents` adalah pengecualian insert-only: kuncinya `(user_id, policy_version)`, hanya memiliki `received_at`, tanpa `id` dan tanpa `server_seq`.
 
 | Tabel tanpa kunci `(user_id, id)` | Kunci utama                           |
 | --------------------------------- | ------------------------------------- |
@@ -577,17 +578,19 @@ Dengan 500 byte per jawaban sebagai angka aman, ditambah 20% untuk tabel lain, p
 
 Yang dikerjakan saat build:
 
-- `plates.json` dihasilkan dari dokumen referensi kode pelat dan dikunci dengan nomor versi bertanggal.
+- `plates.json` dihasilkan dari `../data/plate-curation.json`, `../data/special-codes.json`, dan `../data/fun-facts.json`, lalu dikunci dengan nomor versi bertanggal.
 - Hierarki cakupan dibentuk dari properti `group` dan `province`, bukan ditulis sebagai struktur terpisah.
 - Jumlah pilihan di tiap tingkat cakupan dihitung dari data (SRD bagian 2.1).
 - Tes konten memastikan setiap kode memiliki minimal satu soal Level 3 yang sah (SRD AC-1), setiap region memiliki `aliases`, dan tidak ada `id` yang tidak digunakan lagi yang dipakai ulang. Build gagal jika ada yang tidak lolos.
-- `next build` menghasilkan static export di `out/`. Setiap layar utama (`/`, `/sesi`, `/cakupan`, `/statistik`, `/referensi`, `/tentang`, `/auth/callback`) menjadi halaman HTML sendiri dengan `trailingSlash: false`.
-- Service worker dibuat dari `out/` dengan `workbox-build` (`injectManifest`), lalu disalin ke `out/sw.js`. Build gagal jika ada halaman utama yang tidak masuk precache manifest.
-- SVG peta dipasang dengan `id` elemen yang sama persis dengan `id` cakupan; build gagal jika ada cakupan tanpa elemen peta.
+- `next build` menghasilkan static export di `out/`. Setiap layar utama (`/`, `/sesi`, `/cakupan`, `/statistik`, `/referensi`, `/tentang`, `/auth/callback`) dan halaman kebijakan privasi `/privasi` menjadi halaman HTML sendiri dengan `trailingSlash: false`. Manifest PWA (`manifest.webmanifest`) dibuat dari `src/app/manifest.ts`, termasuk pintasan ke Referensi.
+- Setelah `next build`, `scripts/postbuild.ts` menyalin `plates.json` dan berkas WebAssembly optimizer ke `out/`, memeriksa halaman utama dan fitur yang memerlukan server, membundel worker optimizer ke `out/optimizer/worker.js`, lalu membuat service worker dari `out/` dengan `workbox-build` (`injectManifest`) ke `out/sw.js`. Build gagal jika ada halaman utama, `plates.json`, `map.svg`, manifest, worker, atau berkas WebAssembly optimizer yang tidak masuk precache manifest.
+- SVG peta dipasang dengan `id` provinsi dan penanda `data-group` kawasan seperti di bagian 3; build gagal jika ada cakupan tanpa elemen peta.
 - Aturan data kab/kota di bagian 4.1 dicek. Build gagal jika ada varian yang bentrok atau relasi kode ↔ kab/kota yang tidak dua arah.
-- Kamus nasional untuk SRD bagian 5.1 dibangun sekali saat build dalam bentuk ternormalisasi dan bentuk tanpa spasi, supaya pencocokan di perangkat tidak perlu menormalisasi ratusan nama setiap kali menjawab.
+- Kamus nasional untuk SRD bagian 5.1 tidak disimpan di `plates.json`. Aplikasi membangunnya sekali saat konten dimuat, dalam bentuk ternormalisasi dan bentuk tanpa spasi, supaya pencocokan tidak perlu menormalisasi ratusan nama setiap kali menjawab. Membangunnya hanya sekitar 1 ms, jadi menyimpannya di bundle hanya menggandakan data.
 
-**Batasan static export Next.js.** Karena tidak ada server Next.js saat runtime, fitur berikut tidak dipakai: Route Handler, Server Action, Middleware, ISR, dan optimasi gambar `next/image` (dipasang `images.unoptimized: true`). Pengalihan `terka.vercel.app` ke `terka.my.id` diatur di pengaturan domain Vercel, bukan `redirects` di `next.config`, karena `redirects` tidak berlaku di static export. Semua komponen yang membaca Dexie, Supabase, atau mesin penjadwalan ditandai `'use client'` dan baru membaca data setelah mount; HTML hasil prerender hanya berisi kerangka layar. Web Worker optimizer dibuat dengan `new Worker(new URL('./optimizer.worker.ts', import.meta.url))`, dan berkas WebAssembly-nya ikut precache.
+**Batasan static export Next.js.** Karena tidak ada server Next.js saat runtime, fitur berikut tidak dipakai: Route Handler, Server Action, Middleware, ISR, dan optimasi gambar `next/image` (dipasang `images.unoptimized: true`). Pengalihan `terka.vercel.app` ke `terka.my.id` diatur di pengaturan domain Vercel, bukan `redirects` di `next.config`, karena `redirects` tidak berlaku di static export. Semua komponen yang membaca Dexie, Supabase, atau mesin penjadwalan ditandai `'use client'` dan baru membaca data setelah mount; HTML hasil prerender hanya berisi kerangka layar. Web Worker optimizer dibundel sendiri oleh `scripts/postbuild.ts` ke `/optimizer/worker.js` dan dibuat dengan `new Worker('/optimizer/worker.js', { type: 'module' })`; berkas WebAssembly-nya (`binding-wasm32-wasip1`, tanpa threading) dimuat dari `/optimizer/fsrs.wasm`. Keduanya ikut precache. Worker bawaan Turbopack tidak dipakai karena bootstrap-nya membaca daftar chunk dari fragmen URL, dan fragmen itu hilang saat skrip worker dilayani service worker.
+
+**Header situs statis.** `vercel.json` memasang Content-Security-Policy untuk semua path: aset dari origin sendiri, `'unsafe-inline'` untuk skrip dan gaya inline Next.js, `'wasm-unsafe-eval'` untuk optimizer, `https://*.supabase.co` untuk sinkronisasi, dan `https://challenges.cloudflare.com` untuk Turnstile, dengan `frame-ancestors 'none'` dan `object-src 'none'`. Header lain: `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy` yang mematikan kamera, mikrofon, dan lokasi, serta `Cache-Control: no-cache` untuk `/sw.js`. Server uji E2E memasang header yang sama, jadi seluruh tes Playwright berjalan di bawah CSP ini.
 
 **Migration database.** Disimpan di `supabase/migrations` dalam repositori yang sama. CI menjalankan seluruh tes (Tests bagian 3), termasuk tes RLS terhadap database lokal, sebelum menerapkan migration ke produksi lewat Supabase CLI.
 

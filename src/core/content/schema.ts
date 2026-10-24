@@ -85,6 +85,7 @@ export const bundleSchema = z
 		version: releaseVersionSchema,
 		contentRev: contentRevSchema,
 		contentHistory: contentHistorySchema.min(1),
+		groups: z.array(z.object({ id: contentIdSchema, name: z.string().min(1) })).min(1),
 		regions: z.array(regionSchema).min(1),
 		areas: z.array(areaSchema).min(1),
 		facts: z.array(factSchema),

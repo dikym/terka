@@ -1,0 +1,21 @@
+# Daily database size alarm: a failed run notifies the owner at 150 MB.
+name: db-size
+
+on:
+    schedule:
+        - cron: "0 1 * * *"
+    workflow_dispatch:
+
+permissions:
+    contents: read
+
+jobs:
+    size:
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+        steps:
+            - uses: actions/checkout@v4
+            - name: Check size through the read-only role
+              env:
+                  DATABASE_URL: ${{ secrets.DB_SIZE_DATABASE_URL }}
+              run: bash scripts/ops/db-size.sh

@@ -74,7 +74,10 @@ export async function loadState(
 		["sync_meta", ...EVENT_TABLES],
 		async () => ({ events: await readEvents(db), logVersion: await logVersionOf(db) })
 	);
+	const started = performance.now();
 	const result = replay(events, bundle);
+	// Read by the end-to-end replay budget check; costs nothing when nobody reads it.
+	performance.measure("terka:replay", { start: started, end: performance.now() });
 	if (result.status === "outdated")
 		return {
 			status: "outdated",

@@ -1,6 +1,6 @@
 {
-	"version": "2026.10.02",
-	"contentRev": 4,
+	"version": "2026.10.24",
+	"contentRev": 5,
 	"contentHistory": [
 		{
 			"contentRev": 1,
@@ -17,6 +17,40 @@
 		{
 			"contentRev": 4,
 			"version": "2026.10.02"
+		},
+		{
+			"contentRev": 5,
+			"version": "2026.10.24"
+		}
+	],
+	"groups": [
+		{
+			"id": "sumatera",
+			"name": "Sumatera"
+		},
+		{
+			"id": "jawa",
+			"name": "Jawa"
+		},
+		{
+			"id": "bali-nusa-tenggara",
+			"name": "Bali & Nusa Tenggara"
+		},
+		{
+			"id": "kalimantan",
+			"name": "Kalimantan"
+		},
+		{
+			"id": "sulawesi",
+			"name": "Sulawesi"
+		},
+		{
+			"id": "maluku",
+			"name": "Maluku"
+		},
+		{
+			"id": "papua",
+			"name": "Papua"
 		}
 	],
 	"regions": [

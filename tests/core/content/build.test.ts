@@ -13,6 +13,7 @@ describe("bundle build", () => {
 			"version",
 			"contentRev",
 			"contentHistory",
+			"groups",
 			"regions",
 			"areas",
 			"facts",
@@ -95,6 +96,14 @@ describe("bundle build", () => {
 		const failure = messages.find((message) => message.code === "bundle-schema");
 		expect(failure?.message).toContain("cd-12-amerika-serikat");
 		expect(failure?.message).not.toMatch(/^\[/);
+	});
+	test("a map missing a coverage fails the build", () => {
+		const { bundle, messages } = buildFromDraft(validDraft(), {
+			...options,
+			mapIds: ["indonesia"]
+		});
+		expect(bundle).toBeNull();
+		expect(errorCodes(messages)).toContain("map-missing");
 	});
 	test("exclusive provinces are reported", () => {
 		const { messages } = buildFromDraft(validDraft(), options);

@@ -1,7 +1,13 @@
-import { LEECH_LAPSES, LOGIN_PROMPT_ACTIVE_DAYS, NOTE_OFFER_LAPSES } from "@/rules";
+import {
+	EXPORT_REMINDER_DAYS,
+	LEECH_LAPSES,
+	LOGIN_PROMPT_ACTIVE_DAYS,
+	NOTE_OFFER_LAPSES
+} from "@/rules";
 import type { AppState } from "../replay/state";
 import { effectiveCard } from "../replay/universe";
 import { compareText, contentOf } from "../session/context";
+import { dayNumber, localDay } from "../time/day";
 
 // One note per code: offered at four lapses and once more at six, never over an existing note.
 export function noteOffer(
@@ -47,3 +53,18 @@ export function pendingNotices(state: AppState, notified: ReadonlySet<string>, c
 
 export const loginPromptDue = (state: AppState, signedIn: boolean, dismissed: boolean) =>
 	!signedIn && !dismissed && state.activeDays.size >= LOGIN_PROMPT_ACTIVE_DAYS;
+
+// Never exported: the reminder counts from the first day anything was practised.
+export function exportReminderDue(
+	state: AppState,
+	lastExportAt: number | null,
+	now: number,
+	tz: string
+): boolean {
+	const since =
+		lastExportAt !== null
+			? localDay(lastExportAt, tz)
+			: [...state.activeDays].sort(compareText)[0];
+	if (since === undefined) return false;
+	return dayNumber(localDay(now, tz)) - dayNumber(since) >= EXPORT_REMINDER_DAYS;
+}

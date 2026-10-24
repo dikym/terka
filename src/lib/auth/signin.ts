@@ -71,13 +71,15 @@ export async function afterSignIn(
 	db: TerkaDb,
 	client: SupabaseClient,
 	now: number
-): Promise<{ status: "ok"; userId: string } | Outcome<"otherAccount" | "signedOut">> {
+): Promise<
+	{ status: "ok"; userId: string; answers: number } | Outcome<"otherAccount" | "signedOut">
+> {
 	const user = (await client.auth.getSession()).data.session?.user;
 	if (!user) return { status: "signedOut" };
 	const claimed = await claimLocalData(db, user.id);
 	if (claimed.status === "otherAccount") return claimed;
 	await recordConsent(db, now);
-	return { status: "ok", userId: user.id };
+	return { status: "ok", userId: user.id, answers: claimed.answers };
 }
 
 // "Hapus data di perangkat ini": the previous account's data goes, the signed-in account claims the device.

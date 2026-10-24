@@ -1,6 +1,7 @@
 import { afterAll, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { openDatabase } from "./database";
+import { pumlEntities } from "./puml";
 
 const db = openDatabase();
 afterAll(() => db.close());
@@ -34,4 +35,28 @@ test("every table and column the docs describe exists in the migrated schema", a
 		[...columns].map((column) => `${table}.${column}`).filter((name) => !schema.has(name))
 	);
 	expect(missing).toEqual([]);
+});
+
+test("the entity diagram matches the migrated schema", async () => {
+	const columns: { table_name: string; column_name: string; is_nullable: string }[] = await db`
+		select c.table_name, c.column_name, c.is_nullable
+		from information_schema.columns c
+		join information_schema.tables t using (table_schema, table_name)
+		where c.table_schema = 'public' and t.table_type = 'BASE TABLE'`;
+	const schema = new Map(
+		columns.map((row) => [`${row.table_name}.${row.column_name}`, row.is_nullable === "NO"])
+	);
+	const tables = new Set(columns.map((row) => row.table_name));
+	const entities = pumlEntities(readFileSync("docs/Terka_ERD.puml", "utf8"));
+	entities.delete("auth.users");
+	expect([...entities.keys()].sort()).toEqual([...tables].sort());
+	const mismatched = [...entities].flatMap(([table, list]) =>
+		list
+			.filter(({ column, required }) => schema.get(`${table}.${column}`) !== required)
+			.map(
+				({ column, required }) =>
+					`${table}.${column} (diagram ${required ? "NOT NULL" : "nullable"}, schema ${schema.has(`${table}.${column}`) ? (schema.get(`${table}.${column}`) ? "NOT NULL" : "nullable") : "missing"})`
+			)
+	);
+	expect(mismatched).toEqual([]);
 });

@@ -10,6 +10,7 @@ import type { Bundle } from "../content/schema";
 import type { CardEvent, LearningEvent, PracticeRun, ReviewLog, RunKind } from "../log/events";
 import type { Scope } from "../questions/distractors";
 import { parseCardId, type Question } from "../questions/question";
+import { frontCode, SPECIAL_SERIES } from "../reference/front-code";
 import { nextLocalDay } from "../time/day";
 import type { Checked, Response } from "./check";
 import type { SessionContext } from "./context";
@@ -190,9 +191,6 @@ export function cardEvent(
 	};
 }
 
-const FRONT_CODE = /^\s*([A-Za-z]{1,2})(?=[\s\d]|$)/;
-const SPECIAL_SERIES = new Set(["RI", "CD", "CC", "CH"]);
-
 // Only the front code of a region is ever kept; the rest of a typed plate is dropped here.
 export function sightingEvent(
 	input: string,
@@ -201,7 +199,7 @@ export function sightingEvent(
 	lastSightingAt: number | null,
 	lastDay?: LastDay
 ): LearningEvent | null {
-	const code = input.match(FRONT_CODE)?.[1].toUpperCase();
+	const code = frontCode(input);
 	if (!code || SPECIAL_SERIES.has(code)) return null;
 	const region = bundle.regions.find((item) => item.code === code);
 	if (!region) return null;

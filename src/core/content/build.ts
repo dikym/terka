@@ -7,6 +7,7 @@ import { readSpecialCodes } from "./read-special-codes";
 import { coverageRules } from "./rules/coverage";
 import { factRules } from "./rules/facts";
 import { identityRules } from "./rules/identity";
+import { mapRules } from "./rules/map";
 import { placementRules } from "./rules/placement";
 import { exclusiveProvinces } from "./rules/provinces";
 import { regionRules } from "./rules/regions";
@@ -14,7 +15,12 @@ import { revisionRules } from "./rules/revision";
 import { specialRules } from "./rules/specials";
 import { bundleSchema, type Bundle } from "./schema";
 
-export type BuildOptions = { today: string; release: boolean; previous: unknown };
+export type BuildOptions = {
+	today: string;
+	release: boolean;
+	previous: unknown;
+	mapIds?: readonly string[];
+};
 export type BuildResult = { bundle: Bundle | null; messages: ContentMessage[] };
 
 export function assembleBundle(draft: ContentDraft): Bundle {
@@ -23,6 +29,7 @@ export function assembleBundle(draft: ContentDraft): Bundle {
 		version: curation.version,
 		contentRev: curation.contentRev,
 		contentHistory: curation.contentHistory,
+		groups: curation.groups,
 		regions: curation.regions.map(({ sources: _sources, issues: _issues, ...region }) => ({
 			...region,
 			facts: funFacts.facts
@@ -72,6 +79,7 @@ export function buildFromDraft(draft: ContentDraft, options: BuildOptions): Buil
 	const bundle = parsed.data;
 	messages.push(...revisionRules(bundle, options.previous, draft.curation.retiredIds));
 	messages.push(...coverageRules(bundle));
+	if (options.mapIds) messages.push(...mapRules(bundle, options.mapIds));
 	for (const [regionId, province] of exclusiveProvinces(bundle))
 		messages.push(report("exclusive-province", `${regionId} covers ${province} exclusively`));
 	return { bundle: messages.some(isError) ? null : bundle, messages };

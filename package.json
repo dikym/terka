@@ -4,21 +4,29 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
-		"build": "bun run content:check && next build",
+		"build": "bun run content:check && next build && bun scripts/postbuild.ts",
+		"build:local": "next build && bun scripts/postbuild.ts",
 		"content:build": "bun scripts/build-content.ts",
 		"content:check": "bun scripts/build-content.ts --release",
+		"map:build": "bun scripts/build-map.ts",
 		"test": "bun test tests",
+		"e2e": "bun run build:local && playwright test",
 		"start": "next start",
 		"lint": "eslint",
 		"lint:fix": "eslint --fix",
 		"format": "prettier --write .",
 		"check": "tsc --noEmit",
+		"ci:names": "bun scripts/ci/test-names.ts",
+		"ci:coverage": "bun scripts/ci/coverage.ts",
 		"db:start": "supabase start -x studio,realtime,storage-api,imgproxy,edge-runtime,logflare,vector,supavisor,postgres-meta",
 		"db:test": "supabase db reset && supabase test db && bun test supabase/checks"
 	},
 	"dependencies": {
+		"@open-spaced-repetition/binding": "0.6.0-beta.6",
+		"@open-spaced-repetition/binding-wasm32-wasip1": "0.6.0-beta.6",
 		"@supabase/supabase-js": "^2.108.2",
 		"@tailwindcss/postcss": "^4",
+		"@vercel/analytics": "2.0.1",
 		"dexie": "^4.4.6",
 		"next": "16.2.9",
 		"react": "19.2.4",
@@ -29,6 +37,7 @@
 		"zustand": "^5.0.15"
 	},
 	"devDependencies": {
+		"@playwright/test": "1.64.1",
 		"@types/bun": "^1.4.2",
 		"@types/node": "^20",
 		"@types/react": "^19",
@@ -36,10 +45,13 @@
 		"eslint": "^9",
 		"eslint-config-next": "16.2.9",
 		"fake-indexeddb": "^6.2.5",
+		"mapshaper": "0.7.97",
 		"prettier": "^3.9.1",
 		"prettier-plugin-tailwindcss": "^0.8.0",
 		"supabase": "^2",
-		"typescript": "^5"
+		"typescript": "^5",
+		"workbox-build": "7.4.1",
+		"workbox-precaching": "7.4.1"
 	},
 	"ignoreScripts": [
 		"sharp",
