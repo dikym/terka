@@ -23,28 +23,33 @@ function Row({
 	title,
 	children,
 	control,
-	href
+	href,
+	wide
 }: {
 	title: string;
 	children?: React.ReactNode;
 	control?: React.ReactNode;
 	href?: string;
+	/** Content under the title and the control, across the whole row. */
+	wide?: React.ReactNode;
 }) {
 	const body = (
 		<>
-			<div className="flex min-w-0 flex-col gap-1">
+			<div className="flex min-w-0 flex-1 flex-col gap-1">
 				<span className="font-sans text-body-md leading-[1.3] font-medium text-ink-1000">
 					{title}
 				</span>
 				{children}
 			</div>
-			<div className="flex flex-none items-center gap-2">
+			{/* At least the title's line height, so a short control sits level with the title. */}
+			<div className="flex min-h-[calc(var(--text-body-md)*1.3)] flex-none items-center gap-2">
 				{control ?? (href && <Icon name="chevron-right" size={16} />)}
 			</div>
+			{wide && <div className="w-full">{wide}</div>}
 		</>
 	);
 	const className =
-		"flex items-start justify-between gap-5 border-b border-hairline py-4 text-left";
+		"flex flex-wrap items-start justify-between gap-x-5 gap-y-2 border-b border-hairline py-4 text-left";
 	if (!href) return <div className={className}>{body}</div>;
 	if (href.startsWith("mailto:"))
 		return (
@@ -209,8 +214,7 @@ export function Setelan({ data }: { data: Settings | null }) {
 							title="Data pelat"
 							href="/?perubahan=1"
 							control={<DotLabel tone="go">Terbaru</DotLabel>}
-						>
-							<div className="pt-1">
+							wide={
 								<div className="grid grid-cols-3 gap-4">
 									{[
 										[s.data.version, "versi", "5.5em"],
@@ -234,8 +238,8 @@ export function Setelan({ data }: { data: Settings | null }) {
 										</span>
 									))}
 								</div>
-							</div>
-						</Row>
+							}
+						/>
 					</Section>
 					<Section title="Pengaturan lanjutan">
 						<Row
