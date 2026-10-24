@@ -7,7 +7,7 @@ import { Kbd } from "@/components/ui/kbd";
 import { Plate } from "@/components/ui/plate";
 import { type DummyCard, QUEUES } from "@/dummy/session";
 import { cardLevel, cardOptions, type SessionState } from "@/dummy/session-reducer";
-import { LevelMark, levelName, StatusPill } from "./parts";
+import { LevelMark, levelName, StatusPill, TimeBar } from "./parts";
 
 const KEYS = ["F", "G", "H", "J"];
 export const ANSWER_INPUT = "jawaban";
@@ -55,32 +55,26 @@ function Title({ children }: { children: React.ReactNode }) {
 function Countdown({
 	seconds,
 	total,
-	tone,
+	running,
 	className = "flex"
 }: {
 	seconds: number;
 	total: number;
-	tone: "caution" | "stop";
+	running: boolean;
 	className?: string;
 }) {
-	const fraction = Math.max(0, seconds / total);
 	const label =
 		total <= 5
 			? `${seconds.toFixed(1).replace(".", ",")} detik`
 			: `${Math.ceil(seconds)} detik`;
 	return (
-		<div className={`${className} w-full items-center gap-3`}>
-			<Icon name="clock" size={16} />
-			<div className="h-1.5 flex-1 overflow-hidden rounded-xs bg-ink-100">
-				<div
-					className={`h-full ${tone === "stop" ? "bg-stop-500" : "bg-caution-500"}`}
-					style={{ width: `${fraction * 100}%` }}
-				/>
-			</div>
-			<span className="flex-none font-mono text-body-lg leading-none font-bold text-ink-1000 tabular-nums">
-				{label}
-			</span>
-		</div>
+		<TimeBar
+			seconds={seconds}
+			total={total}
+			running={running}
+			label={label}
+			className={`${className} w-full`}
+		/>
 	);
 }
 
@@ -489,6 +483,9 @@ export function Question(props: Props) {
 	const graded = state.phase === "graded";
 	const lowered = state.lowered.includes(card.id);
 	const timed = card.timer && countdown !== null && !graded;
+	// The start timer waits while the answer is being typed; a lowered level starts it over.
+	const running = !(card.timer?.kind === "start" && state.input.trim() !== "");
+	const timerKey = `${card.id}-${lowered}`;
 	return (
 		<>
 			{lowered && <LoweredPanel card={card} onRestore={onRestore} />}
@@ -501,7 +498,12 @@ export function Question(props: Props) {
 				</div>
 			)}
 			{timed && card.timer!.kind === "answer" && (
-				<Countdown seconds={countdown} total={card.timer!.seconds} tone="stop" />
+				<Countdown
+					key={timerKey}
+					seconds={countdown}
+					total={card.timer!.seconds}
+					running={running}
+				/>
 			)}
 			<div className="flex flex-col items-start gap-4">
 				<QuestionPlate card={card} />
@@ -510,7 +512,8 @@ export function Question(props: Props) {
 					<Countdown
 						seconds={countdown}
 						total={card.timer!.seconds}
-						tone="caution"
+						running={running}
+						key={timerKey}
 						className="hidden lg:flex"
 					/>
 				)}
@@ -520,7 +523,8 @@ export function Question(props: Props) {
 				<Countdown
 					seconds={countdown}
 					total={card.timer!.seconds}
-					tone="caution"
+					running={running}
+					key={timerKey}
 					className="flex lg:hidden"
 				/>
 			)}

@@ -85,6 +85,7 @@
 	--container-prose: 62ch;
 
 	--animate-skl: skl 1.5s ease-in-out infinite;
+	--animate-timebar: timebar 1s linear both;
 
 	@keyframes skl {
 		0%,
@@ -93,6 +94,21 @@
 		}
 		50% {
 			background-color: var(--color-ink-200);
+		}
+	}
+
+	/* The midpoint is mixed in oklch, so green turns red through amber rather than brown. */
+	@keyframes timebar {
+		from {
+			transform: scaleX(1);
+			background-color: var(--color-go-500);
+		}
+		50% {
+			background-color: color-mix(in oklch, var(--color-stop-500), var(--color-go-500));
+		}
+		to {
+			transform: scaleX(0);
+			background-color: var(--color-stop-500);
 		}
 	}
 }
