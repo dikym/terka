@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { Icon, type IconName } from "@/components/ui/icon";
 import { Wordmark } from "@/components/ui/plate";
 
-const NAV: { href: string; label: string; icon: IconName }[] = [
+export const NAV: { href: string; label: string; icon: IconName }[] = [
 	{ href: "/", label: "Beranda", icon: "house" },
 	{ href: "/cakupan", label: "Cakupan", icon: "layers" },
 	{ href: "/statistik", label: "Statistik", icon: "trending-up" },
@@ -18,7 +18,7 @@ const ITEM =
 const ACTIVE = "border-r-ink-1000 bg-nav-active text-ink-1000";
 const IDLE = "border-r-transparent bg-transparent text-ink-500";
 
-const isActive = (pathname: string, href: string) =>
+export const isActive = (pathname: string, href: string) =>
 	href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
 
 export function Sidebar() {
@@ -38,8 +38,9 @@ export function Sidebar() {
 		);
 	};
 	return (
-		<div className="w-58 flex-none border-r border-hairline bg-paper-0">
-			<aside className="sticky top-0 flex h-dvh flex-col justify-between gap-8 px-4 py-5">
+		// Holds the sidebar's width in the layout; the sidebar itself, border included, is fixed.
+		<div className="hidden w-58 flex-none lg:block">
+			<aside className="fixed top-0 flex h-dvh w-58 flex-col justify-between gap-8 border-r border-hairline bg-paper-0 px-4 py-5">
 				<div className="flex flex-col gap-6">
 					<Wordmark />
 					<nav className="flex flex-col gap-0.5">
