@@ -106,7 +106,7 @@ export function Setelan({ data }: { data: Settings | null }) {
 	return (
 		<>
 			<PageTitle title="Setelan" back="/" />
-			<div className="grid grid-cols-2 items-start gap-10">
+			<div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-2">
 				<div className="flex flex-col gap-8">
 					<Section title="Materi baru">
 						<Row
@@ -175,8 +175,14 @@ export function Setelan({ data }: { data: Settings | null }) {
 							title="Batalkan jawaban terakhir"
 							control={<Locked value="Z" loading={false} />}
 						>
+							{/* Phones have no Z key. */}
 							<Note>
-								Tombol Z atau Batalkan jawaban. Tidak tersedia di Mode Kilat.
+								<span className="hidden lg:inline">
+									Tombol Z atau Batalkan jawaban. Tidak tersedia di Mode Kilat.
+								</span>
+								<span className="lg:hidden">
+									Lewat tombol Batalkan jawaban. Tidak tersedia di Mode Kilat.
+								</span>
 							</Note>
 						</Row>
 					</Section>
@@ -253,7 +259,7 @@ export function Setelan({ data }: { data: Settings | null }) {
 							label="Laporkan data yang keliru"
 							href={`mailto:${settings.contact}`}
 						/>
-						<div className="flex min-h-12 items-center justify-between">
+						<div className="pt-3 lg:flex lg:min-h-12 lg:items-center lg:justify-between lg:pt-0">
 							<span className="font-mono text-body-sm leading-[1.2] font-medium text-ink-500 tabular-nums">
 								{loading ? <SkeletonText width="11em" /> : s.contact}
 							</span>

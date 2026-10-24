@@ -2,9 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
-import { Icon } from "@/components/ui/icon";
 import { Kbd } from "@/components/ui/kbd";
-import { BACK_BUTTON } from "@/components/ui/page-title";
+import { PageTitle } from "@/components/ui/page-title";
 
 type Shortcut = { keys: string[]; title: string; hint?: string };
 
@@ -48,26 +47,32 @@ const OUTSIDE: Shortcut[] = [
 function Group({ title, count, items }: { title: string; count: number; items: Shortcut[] }) {
 	return (
 		<div className="flex flex-col">
-			<header className="flex items-baseline justify-between gap-3 pb-3">
+			<header className="flex items-baseline justify-between gap-3 border-b border-ink-1000 pb-2 lg:border-0 lg:pb-3">
 				<span className="type-label text-ink-1000">{title}</span>
 				<span className="font-mono text-micro leading-none font-medium text-ink-500">
 					{count} tombol
 				</span>
 			</header>
 			{items.map((item) => (
+				// A phone lists it like a Setelan row: text first, the keys on the right.
 				<div
 					key={item.title}
-					className={`grid grid-cols-[160px_minmax(0,1fr)] gap-4 border-t border-hairline py-3 ${item.hint ? "items-baseline" : "items-center"}`}
+					className={`flex items-start justify-between gap-5 border-b border-hairline py-4 lg:grid lg:grid-cols-[160px_minmax(0,1fr)] lg:gap-4 lg:border-t lg:border-b-0 lg:py-3 ${item.hint ? "lg:items-baseline" : "lg:items-center"}`}
 				>
-					<span className="flex flex-wrap gap-1">
+					<span className="order-last flex flex-none flex-wrap justify-end gap-1 lg:order-none lg:justify-start">
 						{item.keys.map((key) => (
-							<Kbd key={key} variant="cap">
+							<Kbd
+								key={key}
+								variant="cap"
+								// A smaller cap on a phone, same shape.
+								className="max-lg:h-7 max-lg:min-w-7 max-lg:px-1.5 max-lg:text-body-sm"
+							>
 								{key}
 							</Kbd>
 						))}
 					</span>
-					<span className="flex flex-col gap-[3px]">
-						<span className="font-display text-body-md leading-[1.3] font-semibold">
+					<span className="flex min-w-0 flex-col gap-1 lg:gap-[3px]">
+						<span className="font-sans text-body-md leading-[1.3] font-medium text-ink-1000 lg:font-display lg:font-semibold lg:text-ink-900">
 							{item.title}
 						</span>
 						{item.hint && (
@@ -100,28 +105,17 @@ export function PapanTombol() {
 
 	return (
 		<>
-			<div className="flex items-start justify-between gap-8 border-b border-ink-300 pb-5">
-				<div className="flex items-center gap-3">
-					<button
-						type="button"
-						onClick={back}
-						aria-label="Kembali"
-						title="Kembali"
-						className={BACK_BUTTON}
-					>
-						<Icon name="arrow-left" size={24} />
-					</button>
-					<h1 className="type-screen-title">Papan tombol</h1>
-				</div>
-				<div className="flex max-w-[46ch] flex-col gap-2">
-					<span className="type-label text-ink-1000">Tanpa mouse</span>
+			<div className="flex flex-col lg:flex-row lg:items-start lg:justify-between lg:gap-8 lg:border-b lg:border-ink-300 lg:pb-5">
+				<PageTitle title="Papan tombol" back={back} />
+				<div className="flex flex-col gap-1 rounded-sm border border-ink-200 bg-paper-50 px-4 py-3 lg:max-w-[46ch] lg:gap-2 lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0">
+					<span className="type-label text-ink-700 lg:text-ink-1000">Tanpa mouse</span>
 					<p className="text-ink-900 type-body">
 						Alur menjawab lalu lanjut dirancang agar bisa dijalankan penuh dari papan
 						tombol, termasuk saat berpindah Cakupan.
 					</p>
 				</div>
 			</div>
-			<div className="grid grid-cols-2 items-start gap-6">
+			<div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-2 lg:gap-6">
 				<Group title="Selama sesi" count={7} items={IN_SESSION} />
 				<Group title="Di luar sesi" count={6} items={OUTSIDE} />
 			</div>
