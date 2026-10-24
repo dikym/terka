@@ -19,7 +19,7 @@ test("first visit shows the welcome screen", async ({ page }) => {
 test("home shows a skeleton before data", async ({ page }) => {
 	await seen(page);
 	await page.goto("/", { waitUntil: "commit" });
-	await expect(page.locator("[data-skeleton]").first()).toBeVisible();
+	await expect(page.locator("[data-skeleton]").filter({ visible: true }).first()).toBeVisible();
 	await expect(page.getByText("soal perlu diulang")).toBeVisible();
 });
 
@@ -109,6 +109,16 @@ test("coverage selection changes the side panel", async ({ page }) => {
 	await expect(page.getByRole("heading", { name: "Kawasan Sumatera" })).toBeVisible();
 	await page.getByRole("button", { name: "Seluruh Indonesia" }).first().click();
 	await expect(page.getByText("34 materi baru tersedia")).toBeVisible();
+});
+
+test("enter on the highlighted row picks that region", async ({ page }) => {
+	await seen(page);
+	await page.goto("/cakupan");
+	await page.getByRole("button", { name: "Sumatera" }).first().click();
+	await expect(page.getByText("Wilayah disorot")).toBeVisible();
+	await page.keyboard.press("Enter");
+	await expect(page.getByText("Cakupan aktif")).toBeVisible();
+	await expect(page.getByRole("heading", { name: "Kawasan Sumatera" })).toBeVisible();
 });
 
 test("the keyboard page has its own address and Esc goes back", async ({ page }) => {
