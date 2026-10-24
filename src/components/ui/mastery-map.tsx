@@ -214,7 +214,8 @@ export function MasteryMap({
 	const svg = useRef<SVGSVGElement>(null);
 	const wrap = useRef<HTMLDivElement>(null);
 	const box = useRef<HTMLDivElement>(null);
-	const drag = useRef<{ x: number; y: number } | null>(null);
+	// Every finger or mouse button down on the map: one pans, two pinch.
+	const pointers = useRef(new Map<number, { x: number; y: number }>());
 
 	useEffect(() => {
 		let live = true;
@@ -268,7 +269,7 @@ export function MasteryMap({
 	const showTip = (event: React.PointerEvent) => {
 		const path = (event.target as Element).closest("path[id]");
 		const rect = wrap.current!.getBoundingClientRect();
-		if (!path || !provinces[path.id] || drag.current) return setTip(null);
+		if (!path || !provinces[path.id] || pointers.current.size) return setTip(null);
 		const width = box.current?.offsetWidth ?? 200;
 		const height = box.current?.offsetHeight ?? 120;
 		let left = event.clientX - rect.left + 16;
@@ -278,6 +279,41 @@ export function MasteryMap({
 			top = Math.max(8, event.clientY - rect.top - height - 16);
 		setTip({ id: path.id, left, top, outline: path.getAttribute("d") ?? "" });
 	};
+
+	const move = (event: React.PointerEvent) => {
+		const points = pointers.current;
+		const last = points.get(event.pointerId);
+		// Hover details are for a mouse; a phone shows the tapped province under the map.
+		if (!last) return event.pointerType === "mouse" && showTip(event);
+		const [a, b] = [...points.values()];
+		points.set(event.pointerId, { x: event.clientX, y: event.clientY });
+		const scale = unit();
+		if (!b) {
+			const dx = (event.clientX - last.x) * scale;
+			const dy = (event.clientY - last.y) * scale;
+			if (dx || dy) dragged.current = true;
+			return setView((current) =>
+				clamp({ ...current, x: current.x + dx, y: current.y + dy })
+			);
+		}
+		const [c, d] = [...points.values()];
+		const before = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+		const after = { x: (c.x + d.x) / 2, y: (c.y + d.y) / 2 };
+		const spread = Math.hypot(a.x - b.x, a.y - b.y);
+		const factor = spread ? Math.hypot(c.x - d.x, c.y - d.y) / spread : 1;
+		const center = pointerIn(svg.current!, before.x, before.y);
+		dragged.current = true;
+		setView((current) => {
+			const zoomed = zoomAt(current, factor, center.x, center.y);
+			return clamp({
+				...zoomed,
+				x: zoomed.x + (after.x - before.x) * scale,
+				y: zoomed.y + (after.y - before.y) * scale
+			});
+		});
+	};
+
+	const release = (event: React.PointerEvent) => pointers.current.delete(event.pointerId);
 
 	const layerStyle = {
 		transform: `translate(${view.x}px, ${view.y}px) scale(${view.k})`,
@@ -289,39 +325,34 @@ export function MasteryMap({
 		<div>
 			<div
 				ref={wrap}
-				// A phone's map box is wider than the map, so the map sits low, clear of the zoom row.
-				className={`relative flex w-full flex-col justify-end overflow-hidden bg-paper-0 lg:block lg:rounded-sm ${loading ? "max-lg:pointer-events-none" : ""} ${className}`}
+				// A phone's map box is taller than the map, so the map is centred in it.
+				className={`relative flex w-full flex-col justify-center overflow-hidden bg-paper-0 lg:block lg:rounded-sm ${loading ? "max-lg:pointer-events-none" : ""} ${className}`}
 			>
 				<svg
 					ref={svg}
 					role="img"
 					aria-label="Peta Penguasaan per provinsi"
 					viewBox={`${VIEW.x} ${VIEW.y} ${VIEW.w} ${VIEW.h}`}
-					className="block aspect-[1080/403] w-full cursor-grab touch-none active:cursor-grabbing lg:aspect-auto lg:size-full"
+					// Overflow shows the zoomed map in the room above it; the box still clips at its edges.
+					className="block aspect-[1080/403] w-full cursor-grab touch-none active:cursor-grabbing max-lg:overflow-visible lg:aspect-auto lg:size-full"
 					onPointerDown={(event) => {
-						drag.current = { x: event.clientX, y: event.clientY };
-						dragged.current = false;
+						if (!pointers.current.size) dragged.current = false;
+						pointers.current.set(event.pointerId, {
+							x: event.clientX,
+							y: event.clientY
+						});
 						setAnimate(false);
 						setTip(null);
 					}}
-					onPointerMove={(event) => {
-						if (!drag.current) return showTip(event);
-						const scale = unit();
-						const dx = (event.clientX - drag.current.x) * scale;
-						const dy = (event.clientY - drag.current.y) * scale;
-						if (dx || dy) dragged.current = true;
-						drag.current = { x: event.clientX, y: event.clientY };
-						setView((current) =>
-							clamp({ ...current, x: current.x + dx, y: current.y + dy })
-						);
-					}}
-					onPointerUp={() => (drag.current = null)}
+					onPointerMove={move}
+					onPointerUp={release}
+					onPointerCancel={release}
 					onClick={(event) => {
 						const path = (event.target as Element).closest("path[id]");
 						if (path && provinces[path.id] && !dragged.current) setSelected(path.id);
 					}}
-					onPointerLeave={() => {
-						drag.current = null;
+					onPointerLeave={(event) => {
+						release(event);
 						setTip(null);
 					}}
 				>
