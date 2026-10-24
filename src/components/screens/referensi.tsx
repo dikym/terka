@@ -139,13 +139,13 @@ function Suggest({
 								</span>
 								<Flag code={entry.flag} />
 								<span className="text-ink-900 type-body">{entry.name}</span>
-								{index === highlight ? (
-									<Kbd>Enter</Kbd>
-								) : (
-									<span className="font-mono text-body-sm leading-[1.2] font-medium text-ink-500 tabular-nums">
-										{entry.type}
-									</span>
-								)}
+								{index === highlight && <Kbd>Enter</Kbd>}
+								{/* A phone has no Enter hint, so the type stays on the highlighted row. */}
+								<span
+									className={`font-mono text-body-sm leading-[1.2] font-medium text-ink-500 tabular-nums ${index === highlight ? "lg:hidden" : ""}`}
+								>
+									{entry.type}
+								</span>
 							</button>
 						);
 					})}
@@ -177,12 +177,14 @@ function Suggest({
 						role="option"
 						aria-selected={position === highlight}
 						onClick={() => onPick(region.code)}
-						className={`grid min-h-12 w-full cursor-pointer grid-cols-[64px_minmax(0,1fr)_auto] items-center gap-3 px-4 text-left ${position === highlight ? "bg-paper-50" : ""}`}
+						className={`grid min-h-14 w-full cursor-pointer grid-cols-[52px_minmax(0,1fr)] items-center gap-3 px-4 py-2 text-left lg:min-h-12 lg:grid-cols-[64px_minmax(0,1fr)_auto] lg:py-0 ${position === highlight ? "bg-paper-50" : ""}`}
 					>
 						<CodeChip code={region.code} group={region.group} />
-						<span className="text-ink-900 type-body">{region.areas}</span>
-						<span className="font-mono text-body-sm leading-[1.2] font-medium text-ink-500 tabular-nums">
-							{region.province}
+						<span className="flex flex-col gap-0.5 lg:contents">
+							<span className="text-ink-900 type-body">{region.areas}</span>
+							<span className="font-mono text-body-sm leading-[1.2] font-medium text-ink-500 tabular-nums">
+								{region.province}
+							</span>
 						</span>
 					</button>
 				);
@@ -190,6 +192,14 @@ function Suggest({
 		</div>
 	);
 }
+
+// A phone sets a province's chips four to a row, right-aligned.
+const CHIP_COLUMNS = [
+	"grid-cols-[repeat(1,auto)]",
+	"grid-cols-[repeat(2,auto)]",
+	"grid-cols-[repeat(3,auto)]",
+	"grid-cols-[repeat(4,auto)]"
+];
 
 function RegionList({ loading }: { loading: boolean }) {
 	const [filter, setFilter] = useState<GroupId | "all">("all");
@@ -259,7 +269,7 @@ function RegionList({ loading }: { loading: boolean }) {
 							))}
 						</div>
 					</header>
-					<div className="grid grid-cols-2 gap-x-6">
+					<div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-6">
 						{group.provinces.map((province) => (
 							<div
 								key={province.id}
@@ -272,7 +282,9 @@ function RegionList({ loading }: { loading: boolean }) {
 										province.name
 									)}
 								</span>
-								<span className="flex max-w-34.5 flex-wrap justify-end gap-1.5">
+								<span
+									className={`grid justify-end gap-1 lg:flex lg:max-w-34.5 lg:flex-wrap lg:gap-1.5 ${CHIP_COLUMNS[Math.min(province.codes.length, 4) - 1]}`}
+								>
 									{province.codes.map((code) =>
 										loading ? (
 											<Skeleton
@@ -317,7 +329,7 @@ function SpecialCodesCard({ loading }: { loading: boolean }) {
 			{rows.map(([parts, title, tone, label], index) => (
 				<div
 					key={title}
-					className={`grid grid-cols-[96px_minmax(0,1fr)] items-center gap-3 py-3 ${index < rows.length - 1 ? "border-b border-hairline" : ""}`}
+					className={`grid grid-cols-[84px_minmax(0,1fr)] items-center gap-3 py-3 lg:grid-cols-[96px_minmax(0,1fr)] ${index < rows.length - 1 ? "border-b border-hairline" : ""}`}
 				>
 					{loading ? (
 						<Skeleton className="h-5.5 w-19 rounded-xs" />
@@ -603,7 +615,7 @@ export function Referensi({ loading }: { loading: boolean }) {
 					<h1 className="type-screen-title">Referensi</h1>
 				</div>
 			</div>
-			<div className="grid grid-cols-[minmax(0,1fr)_320px] items-start gap-8">
+			<div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
 				<div className="flex min-w-0 flex-col gap-5">
 					<div className="relative">
 						<SearchBox
@@ -619,7 +631,7 @@ export function Referensi({ loading }: { loading: boolean }) {
 					</div>
 					{main}
 				</div>
-				<aside className="flex min-w-0 flex-col gap-5">{aside}</aside>
+				<aside className="flex min-w-0 flex-col gap-5 lg:sticky lg:top-8">{aside}</aside>
 			</div>
 		</>
 	);
