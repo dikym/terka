@@ -12,25 +12,19 @@ const NAV: { href: string; label: string; icon: IconName }[] = [
 	{ href: "/referensi", label: "Referensi", icon: "book-open" }
 ];
 
+// The ring sits inside the item: items bleed to the sidebar edge, so an outer ring would be clipped.
 const ITEM =
-	"-mx-4 flex min-h-11 cursor-pointer items-center gap-3 border-r-3 px-4 font-display text-body-sm leading-none font-semibold";
+	"-mx-4 flex min-h-11 cursor-pointer items-center gap-3 border-r-3 px-4 font-display text-body-sm leading-none font-semibold focus-visible:-outline-offset-2";
 const ACTIVE = "border-r-ink-1000 bg-nav-active text-ink-1000";
 const IDLE = "border-r-transparent bg-transparent text-ink-500";
 
 const isActive = (pathname: string, href: string) =>
 	href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
 
-export function Sidebar({
-	shortcuts,
-	onShortcuts
-}: {
-	/** The keyboard panel is open: it takes the active mark from the page. */
-	shortcuts: boolean;
-	onShortcuts: () => void;
-}) {
+export function Sidebar() {
 	const pathname = usePathname();
 	const link = (href: string, label: string, icon: IconName) => {
-		const active = !shortcuts && isActive(pathname, href);
+		const active = isActive(pathname, href);
 		return (
 			<Link
 				key={href}
@@ -53,15 +47,7 @@ export function Sidebar({
 					</nav>
 				</div>
 				<div className="flex flex-col gap-0.5">
-					<button
-						type="button"
-						onClick={onShortcuts}
-						aria-pressed={shortcuts}
-						className={`${ITEM} ${shortcuts ? ACTIVE : IDLE}`}
-					>
-						<Icon name="keyboard" />
-						<span>Papan tombol</span>
-					</button>
+					{link("/papan-tombol", "Papan tombol", "keyboard")}
 					{link("/setelan", "Setelan", "settings")}
 				</div>
 			</aside>

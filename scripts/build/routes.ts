@@ -6,6 +6,7 @@ export const MAIN_ROUTES = [
 	"/statistik",
 	"/referensi",
 	"/setelan",
+	"/papan-tombol",
 	"/statistik/peta",
 	"/statistik/sulit",
 	"/statistik/akun",
