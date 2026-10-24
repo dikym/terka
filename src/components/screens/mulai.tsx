@@ -122,7 +122,7 @@ function Heading({ label, title }: { label?: string; title: string }) {
 
 function Header() {
 	return (
-		<header className="border-b border-hairline bg-paper-0">
+		<header className="fixed inset-x-0 top-0 z-30 border-b border-hairline bg-paper-0">
 			<div
 				className={`${WRAP} flex min-h-15 items-center justify-between gap-3 py-2 lg:gap-4 lg:py-4`}
 			>
@@ -227,7 +227,10 @@ function Hero() {
 
 function HowItWorks() {
 	return (
-		<section id="cara-kerja" className="border-b border-hairline bg-paper-50">
+		<section
+			id="cara-kerja"
+			className="scroll-mt-[61px] border-b border-hairline bg-paper-50 lg:scroll-mt-[69px]"
+		>
 			<div className={`${WRAP} flex flex-col gap-6 py-12 lg:gap-10 lg:py-16`}>
 				<div className="flex max-w-prose flex-col gap-3">
 					<Heading
@@ -272,7 +275,10 @@ function HowItWorks() {
 
 function QuestionKinds() {
 	return (
-		<section id="bentuk-soal" className="border-b border-hairline">
+		<section
+			id="bentuk-soal"
+			className="scroll-mt-[61px] border-b border-hairline lg:scroll-mt-[69px]"
+		>
 			<div
 				className={`${WRAP} grid gap-6 py-12 lg:grid-cols-2 lg:items-start lg:gap-10 lg:py-16`}
 			>
@@ -340,7 +346,10 @@ function Extras() {
 
 function Privacy() {
 	return (
-		<section id="data" className="border-b border-hairline">
+		<section
+			id="data"
+			className="scroll-mt-[61px] border-b border-hairline lg:scroll-mt-[69px]"
+		>
 			<div
 				className={`${WRAP} grid gap-6 py-12 lg:grid-cols-2 lg:items-start lg:gap-10 lg:py-16`}
 			>
@@ -446,7 +455,7 @@ export function Mulai() {
 	return (
 		<>
 			<Header />
-			<main>
+			<main className="pt-[61px] lg:pt-[69px]">
 				<Hero />
 				<HowItWorks />
 				<QuestionKinds />
