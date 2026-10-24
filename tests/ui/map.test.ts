@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { fillStep } from "../../src/components/ui/mastery-map";
+import { fillStep, wheelZoom } from "../../src/components/ui/mastery-map";
 import { provinces } from "../../src/dummy/map";
 
 test("fill step follows the legend bands", () => {
@@ -13,4 +13,22 @@ test("dummy provinces cover every province in the map file", async () => {
 	const ids = [...svg.matchAll(/<path[^>]*\bid="([^"]+)"/g)].map((match) => match[1]);
 	expect(ids.length).toBe(38);
 	for (const id of ids) expect(provinces[id]).toBeDefined();
+});
+
+test("a mouse wheel notch zooms one level, animated", () => {
+	expect(wheelZoom(-100, 0, false)).toEqual({ factor: 2, animate: true });
+	expect(wheelZoom(100, 0, false)).toEqual({ factor: 0.5, animate: true });
+	// Firefox counts a notch in lines.
+	expect(wheelZoom(-3, 1, false)).toEqual({ factor: 2, animate: true });
+});
+
+test("a trackpad zooms continuously with the gesture", () => {
+	const pinch = wheelZoom(-2, 0, true);
+	expect(pinch.animate).toBe(false);
+	expect(pinch.factor).toBeCloseTo(2 ** 0.02, 5);
+	const swipe = wheelZoom(-6, 0, false);
+	expect(swipe.animate).toBe(false);
+	expect(swipe.factor).toBeCloseTo(2 ** 0.06, 5);
+	// A full pinch of about 100 pixels doubles the scale, like one notch.
+	expect(wheelZoom(-100, 0, true).factor).toBeCloseTo(2, 5);
 });

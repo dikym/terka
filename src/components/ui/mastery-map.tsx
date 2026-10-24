@@ -69,7 +69,20 @@ function pointerIn(element: SVGSVGElement, clientX: number, clientY: number) {
 	};
 }
 
-type Tip = { id: string; left: number; top: number };
+/**
+ * Zoom for one wheel event, the way Google Maps behaves: a mouse notch steps one level
+ * (2×) with an animation, while a trackpad (pinch, or a two-finger swipe) follows the
+ * gesture continuously, doubling over about 100 pixels of travel.
+ */
+export function wheelZoom(deltaY: number, deltaMode: number, ctrlKey: boolean) {
+	// Mice scroll in lines or in large pixel steps; trackpads send small pixel deltas.
+	const notch = !ctrlKey && (deltaMode !== 0 || Math.abs(deltaY) >= 50);
+	if (notch) return { factor: deltaY < 0 ? 2 : 0.5, animate: true };
+	return { factor: 2 ** (-deltaY / 100), animate: false };
+}
+
+/** `outline` is the hovered province's shape, drawn again above every other province. */
+type Tip = { id: string; left: number; top: number; outline: string };
 
 function Tooltip({ province }: { province: MapProvince }) {
 	const percent = province.percent ?? 0;
@@ -177,11 +190,10 @@ export function MasteryMap({
 		const onWheel = (event: WheelEvent) => {
 			event.preventDefault();
 			const point = pointerIn(element, event.clientX, event.clientY);
-			setAnimate(false);
+			const zoom = wheelZoom(event.deltaY, event.deltaMode, event.ctrlKey);
+			setAnimate(zoom.animate);
 			setTip(null);
-			setView((current) =>
-				zoomAt(current, event.deltaY < 0 ? 1.15 : 1 / 1.15, point.x, point.y)
-			);
+			setView((current) => zoomAt(current, zoom.factor, point.x, point.y));
 		};
 		element.addEventListener("wheel", onWheel, { passive: false });
 		return () => element.removeEventListener("wheel", onWheel);
@@ -199,7 +211,6 @@ export function MasteryMap({
 		const path = (event.target as Element).closest("path[id]");
 		const rect = wrap.current!.getBoundingClientRect();
 		if (!path || !provinces[path.id] || drag.current) return setTip(null);
-		path.parentNode?.appendChild(path);
 		const width = box.current?.offsetWidth ?? 200;
 		const height = box.current?.offsetHeight ?? 120;
 		let left = event.clientX - rect.left + 16;
@@ -207,7 +218,13 @@ export function MasteryMap({
 		if (left + width > rect.width - 8) left = event.clientX - rect.left - width - 16;
 		if (top + height > rect.height - 8)
 			top = Math.max(8, event.clientY - rect.top - height - 16);
-		setTip({ id: path.id, left, top });
+		setTip({ id: path.id, left, top, outline: path.getAttribute("d") ?? "" });
+	};
+
+	const layerStyle = {
+		transform: `translate(${view.x}px, ${view.y}px) scale(${view.k})`,
+		transformOrigin: "0 0",
+		transition: animate ? "transform 260ms var(--ease-out)" : "none"
 	};
 
 	return (
@@ -243,15 +260,21 @@ export function MasteryMap({
 				}}
 			>
 				<g
-					className="[&_path]:stroke-paper-0 [&_path]:[stroke-width:0.75] [&_path]:[stroke-linejoin:round] [&_path]:[vector-effect:non-scaling-stroke] [&_path:hover]:stroke-ink-1000 [&_path:hover]:[stroke-width:1.5]"
-					style={{
-						transform: `translate(${view.x}px, ${view.y}px) scale(${view.k})`,
-						transformOrigin: "0 0",
-						transition: animate ? "transform 260ms var(--ease-out)" : "none"
-					}}
+					className="[&_path]:stroke-paper-0 [&_path]:[stroke-width:0.75] [&_path]:[stroke-linejoin:round] [&_path]:[vector-effect:non-scaling-stroke]"
+					style={layerStyle}
 					// map.svg is our own build output (scripts/build-map.ts), served from this origin.
 					dangerouslySetInnerHTML={{ __html: markup }}
 				/>
+				{/* A stroke on the province itself is half hidden under the neighbours painted after it. */}
+				{tip && (
+					<g style={layerStyle} className="pointer-events-none">
+						<path
+							d={tip.outline}
+							fill="none"
+							className="stroke-ink-1000 [stroke-width:1.5] [stroke-linejoin:round] [vector-effect:non-scaling-stroke]"
+						/>
+					</g>
+				)}
 			</svg>
 			<div className="absolute top-3 right-3 flex flex-col overflow-hidden rounded-sm border border-ink-1000 bg-paper-0 shadow-block">
 				<ZoomButton icon="plus" label="Perbesar" onClick={() => zoomButton(ZOOM_STEP)} />
