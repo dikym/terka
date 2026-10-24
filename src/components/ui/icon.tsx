@@ -55,7 +55,8 @@ export type FlagCode = (typeof FLAG_CODES)[number];
 
 type IconProps = {
 	name: IconName;
-	size?: number;
+	/** Pixels; `null` leaves the size to a `size-*` class, for sizes that change per breakpoint. */
+	size?: number | null;
 	/** A `bg-*` class; the glyph is a mask, so its fill is the background. */
 	color?: string;
 	className?: string;
@@ -67,8 +68,7 @@ export function Icon({ name, size = 20, color = "bg-black", className = "" }: Ic
 			aria-hidden="true"
 			className={`inline-block shrink-0 ${color} ${className}`}
 			style={{
-				width: size,
-				height: size,
+				...(size !== null && { width: size, height: size }),
 				mask: `url(/icons/${name}.svg) center / contain no-repeat`
 			}}
 		/>

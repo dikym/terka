@@ -104,22 +104,27 @@
 	--font-plate: var(--font-barlow-sc), "DIN 1451", "Helvetica Neue", sans-serif;
 }
 
-/* The page column: at most 1048 px, the main column of the 1280 px design. */
+/* The page column: at most 1048 px, the main column of the 1280 px design. Phones use a 16 px gutter. */
 @utility container {
 	width: 100%;
 	max-width: 65.5rem;
 	margin-inline: auto;
-	padding-inline: --spacing(8);
+	padding-inline: --spacing(4);
+
+	@variant lg {
+		padding-inline: --spacing(8);
+	}
 }
 
 @utility type-metric {
-	font: 700 var(--text-hero) / var(--leading-tight) var(--font-display);
+	font: 700 var(--text-metric) / var(--leading-tight) var(--font-display);
 	letter-spacing: var(--tracking-hero);
 	font-variant-numeric: tabular-nums;
 }
 
+/* 30 px is `--text-title`'s desktop value: phones shrink that token but keep screen titles full size. */
 @utility type-screen-title {
-	font: 700 var(--text-title) / var(--leading-snug) var(--font-display);
+	font: 700 30px / var(--leading-snug) var(--font-display);
 	letter-spacing: var(--tracking-title);
 }
 
@@ -151,6 +156,17 @@
 }
 
 @layer base {
+	/* The phone frames shrink title-size text and the big metric. */
+	:root {
+		--text-title: 26px;
+		--text-metric: 60px;
+
+		@variant lg {
+			--text-title: 30px;
+			--text-metric: var(--text-hero);
+		}
+	}
+
 	body {
 		@apply bg-paper-0 text-ink-900 antialiased type-body;
 		text-wrap: pretty;
