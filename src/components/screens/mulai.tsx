@@ -105,10 +105,10 @@ const NAV = [
 	["Data", "#data"]
 ];
 
-const FOOTER = [
-	["Tentang Terka", "/tentang"],
-	["Kebijakan privasi", "/privasi"],
-	["Laporkan data yang keliru", "mailto:contact@terka.my.id"]
+const FOOTER: { icon: IconName; label: string; href: string }[] = [
+	{ icon: "info", label: "Tentang Terka", href: "/tentang" },
+	{ icon: "shield-check", label: "Kebijakan privasi", href: "/privasi" },
+	{ icon: "circle-alert", label: "Laporkan data yang keliru", href: "mailto:contact@terka.my.id" }
 ];
 
 function Heading({ label, title }: { label?: string; title: string }) {
@@ -436,12 +436,18 @@ function Footer() {
 					</span>
 				</div>
 				<nav className="flex flex-col lg:flex-row lg:flex-wrap lg:gap-5">
-					{FOOTER.map(([label, href]) => (
+					{FOOTER.map(({ icon, label, href }) => (
 						<a
 							key={href}
 							href={href}
-							className="flex min-h-12 items-center border-t border-hairline text-body-md leading-none font-medium text-caution-700 last:border-b hover:text-ink-1000 lg:min-h-0 lg:border-0 lg:text-body-sm"
+							className="flex min-h-12 items-center gap-3 border-t border-hairline text-body-md leading-none font-medium text-caution-700 hover:text-ink-1000 max-lg:last:border-b lg:min-h-0 lg:gap-2 lg:border-0 lg:text-body-sm"
 						>
+							<Icon
+								name={icon}
+								size={null}
+								color="bg-current"
+								className="size-4.5 lg:size-4"
+							/>
 							{label}
 						</a>
 					))}
