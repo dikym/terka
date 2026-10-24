@@ -33,7 +33,7 @@ export function Sambutan({ onStart, onSkip }: { onStart: () => void; onSkip: () 
 			className="fixed inset-0 z-40 flex flex-col overflow-y-auto bg-paper-0"
 		>
 			<section className="border-b border-hairline bg-paper-50">
-				<div className="container flex flex-col items-start gap-8 py-10">
+				<div className="container flex flex-col items-start gap-6 pt-8 pb-6 lg:gap-8 lg:py-10">
 					<Wordmark />
 					<div className="flex min-w-0 flex-col gap-4">
 						<h1
@@ -49,15 +49,15 @@ export function Sambutan({ onStart, onSkip }: { onStart: () => void; onSkip: () 
 					</div>
 				</div>
 			</section>
-			<section className="container flex flex-1 flex-col gap-8 py-10">
+			<section className="container flex flex-1 flex-col gap-6 py-6 lg:gap-8 lg:py-10">
 				<div className="flex min-w-0 flex-col gap-4">
 					<span className="type-label text-ink-500">Tes penempatan</span>
-					<h2 className="font-display text-title leading-snug font-bold tracking-title text-pretty">
+					<h2 className="font-display text-heading leading-[1.2] font-bold tracking-title text-pretty lg:text-title lg:leading-snug">
 						Sudah tahu sebagian kode pelat? Tes singkat ini memindahkan kode yang sudah
 						dikenal langsung ke pengulangan.
 					</h2>
 				</div>
-				<div className="grid grid-cols-[minmax(0,1fr)_360px] items-start gap-10">
+				<div className="contents lg:grid lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start lg:gap-10">
 					<div className="flex min-w-0 flex-col gap-4">
 						<div className="flex flex-col border-t border-hairline">
 							{FACTS.map(([label, value]) => (
@@ -90,15 +90,15 @@ export function Sambutan({ onStart, onSkip }: { onStart: () => void; onSkip: () 
 				</div>
 			</section>
 			<footer className="border-t border-hairline">
-				<div className="container grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] items-start gap-10 py-5">
+				<div className="container grid grid-cols-1 items-start gap-4 pt-5 pb-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] lg:gap-10 lg:py-5">
 					<div className="flex min-w-0 items-start gap-3">
-						<Icon name="user" size={18} />
+						<Icon name="user" size={18} className="mt-0.5 lg:mt-0" />
 						<p className="font-sans text-body-sm leading-normal text-pretty text-ink-900">
 							Langsung belajar tanpa akun. Progres tersimpan di perangkat ini.
 						</p>
 					</div>
 					<div className="flex min-w-0 items-start gap-3">
-						<Icon name="info" size={18} />
+						<Icon name="info" size={18} className="mt-0.5 lg:mt-0" />
 						<p className="font-sans text-body-sm leading-normal text-pretty text-ink-900">
 							Terka membantu belajar kode pelat, bukan rujukan resmi. Data yang belum
 							cukup terverifikasi diberi penanda.

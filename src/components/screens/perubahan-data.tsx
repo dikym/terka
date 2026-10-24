@@ -17,7 +17,7 @@ export function PerubahanData({ onClose }: { onClose: () => void }) {
 	return (
 		<>
 			<PageTitle title="Perubahan data" back={onClose} />
-			<div className="grid grid-cols-[minmax(0,1fr)_320px] items-start gap-8">
+			<div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
 				<div className="flex min-w-0 flex-col gap-5">
 					<div className="flex min-w-0 flex-col gap-3">
 						<div className="flex items-center gap-3">
