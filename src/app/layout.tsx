@@ -14,7 +14,8 @@ export const viewport: Viewport = { themeColor: "#0f172a" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="id" className={fontVariables}>
+		// Chrome on iOS adds `__gcrremoteframetoken` to <html> before hydration.
+		<html lang="id" className={fontVariables} suppressHydrationWarning>
 			<body>
 				<InstallStatus />
 				{children}
