@@ -1,0 +1,418 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { CodeChip } from "@/components/ui/code-chip";
+import { Skeleton, SkeletonText, skeletonWidth } from "@/components/ui/feedback";
+import { GROUP_BG, GROUP_NAME, type GroupId } from "@/components/ui/groups";
+import { Icon } from "@/components/ui/icon";
+import { ACTIVE_SCOPE, COVERAGE, groupOf, NATIONAL, type Province } from "@/dummy/coverage";
+import { keyAction } from "@/dummy/keys";
+
+type Node = "national" | GroupId;
+
+const nodeTitle = (node: Node) =>
+	node === "national" ? "Seluruh Indonesia" : `Kawasan ${GROUP_NAME[node]}`;
+
+function Meter({
+	percent,
+	color,
+	loading,
+	label
+}: {
+	percent: number;
+	color: string;
+	loading: boolean;
+	label: string;
+}) {
+	return (
+		<span className="flex items-center gap-2">
+			<span className="h-1.5 min-w-0 flex-1 overflow-hidden rounded-xs bg-ink-100">
+				{!loading && (
+					<span className={`block h-full ${color}`} style={{ width: `${percent}%` }} />
+				)}
+			</span>
+			<span className="min-w-9 flex-none text-right font-mono text-body-sm leading-none font-medium text-ink-900">
+				{loading ? <SkeletonText width={skeletonWidth(label)} /> : label}
+			</span>
+		</span>
+	);
+}
+
+function Row({
+	indent,
+	state,
+	chevron,
+	dot,
+	onClick,
+	onToggle,
+	children
+}: {
+	indent: "ml-0" | "ml-5" | "ml-10";
+	state: "idle" | "highlight" | "active";
+	chevron?: "open" | "closed";
+	dot: string;
+	onClick?: () => void;
+	onToggle?: () => void;
+	children: React.ReactNode;
+}) {
+	const look = {
+		idle: "border border-hairline bg-paper-0",
+		highlight: "border-2 border-ink-1000 bg-paper-0 shadow-[2px_2px_0_var(--color-ink-1000)]",
+		active: "border border-ink-1000 bg-paper-50"
+	}[state];
+	const Tag = onClick ? "button" : "div";
+	return (
+		<div
+			className={`flex min-h-12 items-center gap-3 rounded-sm p-3 text-left ${indent} ${look}`}
+		>
+			{chevron && (
+				<button
+					type="button"
+					onClick={onToggle}
+					aria-expanded={chevron === "open"}
+					aria-label={chevron === "open" ? "Tutup" : "Buka"}
+					className="grid size-6 flex-none cursor-pointer place-items-center"
+				>
+					<Icon name={chevron === "open" ? "chevron-down" : "chevron-right"} size={22} />
+				</button>
+			)}
+			<Tag
+				{...(onClick ? { type: "button" as const, onClick } : {})}
+				className={`flex min-w-0 flex-1 items-center gap-3 text-left ${onClick ? "cursor-pointer" : ""}`}
+			>
+				<span className={`size-2.5 flex-none rounded-full ${dot}`} />
+				<span className="flex min-w-0 flex-1 flex-col gap-1">{children}</span>
+			</Tag>
+		</div>
+	);
+}
+
+function NodeHeading({
+	title,
+	codes,
+	loading
+}: {
+	title: string;
+	codes: string;
+	loading: boolean;
+}) {
+	return (
+		<span className="flex items-baseline justify-between gap-2">
+			<span className="min-w-0 font-display text-body-lg leading-[1.2] font-semibold tracking-title">
+				{loading ? <SkeletonText width={skeletonWidth(title)} /> : title}
+			</span>
+			<span className="flex-none font-mono text-body-sm leading-none text-ink-500">
+				{loading ? <SkeletonText width={skeletonWidth(codes)} /> : codes}
+			</span>
+		</span>
+	);
+}
+
+function ProvinceRow({ province, group }: { province: Province; group: GroupId }) {
+	return (
+		<Row indent="ml-10" state="idle" dot={GROUP_BG[group]}>
+			<span className="flex items-start justify-between gap-2">
+				<span className="min-w-0 font-sans text-body-md leading-[1.2] font-medium tracking-title">
+					{province.name}
+				</span>
+				<span className="flex flex-none justify-end gap-[3px]">
+					{province.codes.map((code) => (
+						<CodeChip key={code} code={code} group={group} size="xs" />
+					))}
+				</span>
+			</span>
+			<Meter
+				percent={province.percent}
+				color={GROUP_BG[group]}
+				loading={false}
+				label={`${province.percent}%`}
+			/>
+		</Row>
+	);
+}
+
+function Panel({
+	node,
+	active,
+	loading,
+	onPick
+}: {
+	node: Node;
+	active: boolean;
+	loading: boolean;
+	onPick: () => void;
+}) {
+	const group = node === "national" ? null : groupOf(node);
+	const stats = group
+		? { provinces: group.provinces.length, codes: group.codes, percent: group.percent }
+		: NATIONAL;
+	const newAvailable = group ? group.newAvailable : NATIONAL.newAvailable;
+	const codes = group?.provinces.flatMap((province) => province.codes) ?? [];
+	const bar = loading ? "animate-skl bg-ink-100" : group ? GROUP_BG[group.id] : "bg-ink-1000";
+	return (
+		<section className="min-w-0 overflow-hidden rounded-md border border-hairline bg-paper-0 shadow-lift">
+			<div className={`h-1 ${bar}`} />
+			<div className="flex flex-col gap-4 p-4">
+				<div className="flex flex-col gap-2">
+					<span className="type-label text-ink-500">
+						{active ? "Cakupan aktif" : "Wilayah disorot"}
+					</span>
+					<h2 className="font-display text-heading leading-snug font-bold">
+						{loading ? <SkeletonText width="12em" /> : nodeTitle(node)}
+					</h2>
+				</div>
+				<div className="grid grid-cols-3 gap-4">
+					{[
+						[stats.provinces, "provinsi", "1.2em"],
+						[stats.codes, "kode", "1.2em"],
+						[`${stats.percent}%`, "Dikuasai", "2.2em"]
+					].map(([value, label, width]) => (
+						<span key={label} className="flex min-w-0 flex-col gap-[3px]">
+							<span className="font-mono text-body-md leading-none font-semibold text-ink-1000">
+								{loading ? <SkeletonText width={width as string} /> : value}
+							</span>
+							<span className="font-sans text-micro leading-[1.2] text-ink-500">
+								{label}
+							</span>
+						</span>
+					))}
+				</div>
+				<div className="h-2 flex-none overflow-hidden rounded-xs bg-ink-100">
+					{!loading && (
+						<div className={`h-full ${bar}`} style={{ width: `${stats.percent}%` }} />
+					)}
+				</div>
+				<div className="font-display text-body-lg leading-[1.3] font-semibold">
+					{loading ? (
+						<SkeletonText width="10.5em" />
+					) : (
+						`${newAvailable} materi baru tersedia`
+					)}
+				</div>
+				{(loading || group) && (
+					<>
+						<div className="flex flex-wrap gap-2">
+							{loading
+								? [1, 2, 3, 4].map((key) => (
+										<Skeleton
+											key={key}
+											className="h-7 w-10 flex-none rounded-sm"
+										/>
+									))
+								: codes.map((code) => (
+										<CodeChip key={code} code={code} group={group!.id} />
+									))}
+						</div>
+						<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">
+							Rincian kab/kota setiap kode ada di Referensi.
+						</p>
+					</>
+				)}
+				<div className="flex flex-col gap-3">
+					{loading ? (
+						<Skeleton className="block h-12 w-full rounded-sm" />
+					) : (
+						<>
+							{!active && (
+								<Button
+									block
+									icon="check"
+									kbd="Enter"
+									className="px-4"
+									onClick={onPick}
+								>
+									Pilih wilayah ini
+								</Button>
+							)}
+							{group && (
+								<Button
+									variant="secondary"
+									block
+									icon="crosshair"
+									className="px-4"
+									href="/sesi?mode=terfokus"
+								>
+									Latih wilayah ini
+								</Button>
+							)}
+						</>
+					)}
+					{!loading && group && !active && (
+						<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">
+							Latih wilayah ini membuka Latihan Terfokus tanpa mengubah Cakupan.
+						</p>
+					)}
+				</div>
+			</div>
+		</section>
+	);
+}
+
+export function Cakupan({ loading }: { loading: boolean }) {
+	const [active, setActive] = useState<Node>(ACTIVE_SCOPE);
+	const [highlight, setHighlight] = useState<Node | null>(null);
+	const [open, setOpen] = useState<Set<GroupId>>(new Set());
+	const shown = highlight ?? active;
+
+	const toggle = (id: GroupId) =>
+		setOpen((current) => {
+			const next = new Set(current);
+			if (next.has(id)) next.delete(id);
+			else next.add(id);
+			return next;
+		});
+	const pick = () => {
+		if (highlight) setActive(highlight);
+		setHighlight(null);
+	};
+
+	useEffect(() => {
+		const onKey = (event: KeyboardEvent) => {
+			const action = keyAction(
+				{ key: event.key, target: event.target as HTMLElement },
+				"app"
+			);
+			if (
+				action === "confirm" &&
+				highlight &&
+				highlight !== active &&
+				event.target === document.body
+			)
+				pick();
+		};
+		window.addEventListener("keydown", onKey);
+		return () => window.removeEventListener("keydown", onKey);
+	});
+
+	const state = (node: Node) =>
+		node === highlight && node !== active ? "highlight" : node === active ? "active" : "idle";
+
+	return (
+		<>
+			<div className="flex items-center justify-between gap-4">
+				<div className="flex items-center gap-3">
+					<h1 className="type-screen-title">Cakupan</h1>
+				</div>
+			</div>
+			<div className="grid grid-cols-[minmax(0,1fr)_340px] items-start gap-8">
+				<div className="flex min-w-0 flex-col gap-5">
+					<div className="flex items-center gap-2 font-sans text-body-sm leading-none font-medium text-ink-700">
+						{shown === "national" ? (
+							<span className="font-semibold text-ink-1000" aria-current="location">
+								Seluruh Indonesia
+							</span>
+						) : (
+							<>
+								<button
+									type="button"
+									className="cursor-pointer text-ink-700"
+									onClick={() => setHighlight("national")}
+								>
+									Seluruh Indonesia
+								</button>
+								<span className="text-ink-300" aria-hidden="true">
+									/
+								</span>
+								<span
+									className="font-semibold text-ink-1000"
+									aria-current="location"
+								>
+									{loading ? <SkeletonText width="9em" /> : GROUP_NAME[shown]}
+								</span>
+							</>
+						)}
+					</div>
+					<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">
+						Menelusuri hanya menyorot. Cakupan berganti setelah Pilih wilayah ini
+						ditekan.
+					</p>
+					<div className="flex flex-col gap-2">
+						<Row
+							indent="ml-0"
+							state={loading ? "idle" : state("national")}
+							dot={loading ? "bg-ink-100" : "bg-ink-1000"}
+							onClick={loading ? undefined : () => setHighlight("national")}
+						>
+							{state("national") === "active" && !loading && (
+								<span className="type-label text-caution-700">Aktif sekarang</span>
+							)}
+							<NodeHeading
+								title="Seluruh Indonesia"
+								codes={`${NATIONAL.codes} kode`}
+								loading={loading}
+							/>
+							<Meter
+								percent={NATIONAL.percent}
+								color="bg-ink-1000"
+								loading={loading}
+								label={`${NATIONAL.percent}%`}
+							/>
+						</Row>
+						{COVERAGE.map((group) => {
+							const expanded = open.has(group.id) && !loading;
+							return (
+								<div key={group.id} className="contents">
+									<Row
+										indent="ml-5"
+										state={loading ? "idle" : state(group.id)}
+										chevron={expanded ? "open" : "closed"}
+										dot={loading ? "bg-ink-100" : GROUP_BG[group.id]}
+										onClick={
+											loading
+												? undefined
+												: () => {
+														setHighlight(group.id);
+														setOpen((current) =>
+															new Set(current).add(group.id)
+														);
+													}
+										}
+										onToggle={() => toggle(group.id)}
+									>
+										{state(group.id) === "active" && !loading && (
+											<span className="type-label text-caution-700">
+												Aktif sekarang
+											</span>
+										)}
+										<NodeHeading
+											title={GROUP_NAME[group.id]}
+											codes={`${group.codes} kode`}
+											loading={loading}
+										/>
+										<Meter
+											percent={group.percent}
+											color={GROUP_BG[group.id]}
+											loading={loading}
+											label={`${group.percent}%`}
+										/>
+									</Row>
+									{expanded &&
+										group.provinces.map((province) => (
+											<ProvinceRow
+												key={province.id}
+												province={province}
+												group={group.id}
+											/>
+										))}
+								</div>
+							);
+						})}
+					</div>
+					<div className="flex items-center justify-between gap-4 rounded-sm border border-ink-200 bg-paper-50 px-4 py-3">
+						<div className="flex min-w-0 flex-col gap-1">
+							<span className="type-label text-ink-700">Aturan</span>
+							<span className="text-ink-900 type-body">
+								Cakupan hanya menentukan materi baru. Soal yang perlu diulang tetap
+								muncul dari wilayah mana pun.
+							</span>
+						</div>
+					</div>
+				</div>
+				<aside className="flex min-w-0 flex-col gap-5">
+					<Panel node={shown} active={shown === active} loading={loading} onPick={pick} />
+				</aside>
+			</div>
+		</>
+	);
+}
