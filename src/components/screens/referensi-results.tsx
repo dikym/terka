@@ -36,15 +36,26 @@ function Figure({ value, label }: { value: React.ReactNode; label: React.ReactNo
 
 export function UnverifiedLegend({ note }: { note?: string }) {
 	return (
-		<div className="flex items-center gap-2">
+		// With a note, a phone stacks it under the label.
+		<div
+			className={`flex lg:items-center lg:gap-2 ${note ? "items-start gap-3" : "items-center gap-2"}`}
+		>
 			<span
 				aria-hidden="true"
-				className="inline-block h-3.5 w-5 flex-none rounded-xs border border-ink-200 bg-caution-100"
+				className={`inline-block h-3.5 w-5 flex-none rounded-xs border border-ink-200 bg-caution-100 ${note ? "mt-0.5 lg:mt-0" : ""}`}
 			/>
-			<span className="font-sans text-body-sm leading-[1.3] font-medium text-ink-900">
-				Belum terverifikasi penuh.
-			</span>
-			{note && <Hint>{note}</Hint>}
+			<div className="flex flex-col gap-0.5 lg:contents">
+				<span
+					className={`font-sans text-body-sm leading-[1.3] lg:font-medium lg:text-ink-900 ${note ? "font-semibold text-ink-1000" : "font-medium text-ink-900"}`}
+				>
+					Belum terverifikasi penuh.
+				</span>
+				{note && (
+					<p className="font-sans text-body-sm leading-[1.4] text-pretty text-ink-500 lg:leading-normal">
+						{note}
+					</p>
+				)}
+			</div>
 		</div>
 	);
 }
@@ -138,7 +149,7 @@ export function RegionCard({ detail, loading }: { detail: RegionDetail; loading:
 
 function DetailRow({ label, children }: { label: string; children: React.ReactNode }) {
 	return (
-		<div className="grid grid-cols-[120px_minmax(0,1fr)] items-center gap-4 border-b border-hairline py-2">
+		<div className="grid grid-cols-[96px_minmax(0,1fr)] items-center gap-4 border-b border-hairline py-2 lg:grid-cols-[120px_minmax(0,1fr)]">
 			<span className="type-label text-ink-500">{label}</span>
 			<span className="text-ink-900 type-body">{children}</span>
 		</div>
@@ -158,8 +169,8 @@ export function SpecialCard({ number }: { number: string }) {
 	const entry = DIPLOMATS.find((item) => item.number === number)!;
 	return (
 		<Card bar="bg-ink-1000">
-			<div className="flex items-center justify-between gap-4">
-				<div className="flex items-center gap-5">
+			<div className="flex flex-wrap items-center justify-between gap-4 lg:flex-nowrap">
+				<div className="flex flex-col items-start gap-3 lg:flex-row lg:items-center lg:gap-5">
 					<SpecialPlate parts={["CD", number, ""]} size="lg" />
 					<div className="flex flex-col gap-2">
 						<span className="flex items-center gap-3">
@@ -186,7 +197,7 @@ export function SpecialCard({ number }: { number: string }) {
 				<DetailRow label="Diperiksa">24 September 2026</DetailRow>
 				<DetailRow label="Alias">{entry.alias}</DetailRow>
 			</div>
-			<div className="flex items-center justify-between gap-4 rounded-sm border border-ink-200 bg-paper-50 px-4 py-3">
+			<div className="flex flex-col gap-3 rounded-sm border border-ink-200 bg-paper-50 px-4 py-3 lg:flex-row lg:items-center lg:justify-between lg:gap-4">
 				<div className="flex min-w-0 flex-col gap-1">
 					<span className="type-label text-ink-700">Latihan Kode diplomat</span>
 					<span className="text-ink-900 type-body">
@@ -195,7 +206,13 @@ export function SpecialCard({ number }: { number: string }) {
 					</span>
 				</div>
 				<div className="flex-none">
-					<Button variant="secondary" size="sm" icon="flag" href="/sesi?mode=diplomat">
+					<Button
+						variant="secondary"
+						size="sm"
+						icon="flag"
+						href="/sesi?mode=diplomat"
+						className="max-lg:flex max-lg:w-full"
+					>
 						Latih kode diplomat
 					</Button>
 				</div>
@@ -213,7 +230,7 @@ const RI_CAVEAT =
 
 export function FormatCards() {
 	return (
-		<div className="grid grid-cols-2 gap-4">
+		<div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
 			<Card className="gap-3">
 				<CardHeader label="CC dan CH" aside={<DotLabel>Referensi saja</DotLabel>} />
 				<SpecialPlate parts={["CC", "12", "10"]} size="md" />
@@ -237,8 +254,8 @@ export function FormatCard({ kind }: { kind: "cc" | "ri" }) {
 	const cc = kind === "cc";
 	return (
 		<Card bar="bg-ink-1000">
-			<div className="flex items-start justify-between gap-4">
-				<div className="flex items-center gap-5">
+			<div className="flex flex-wrap items-start justify-between gap-4 lg:flex-nowrap">
+				<div className="flex flex-col items-start gap-3 lg:flex-row lg:items-center lg:gap-5">
 					<SpecialPlate parts={cc ? ["CC", "12", "10"] : ["RI", "1", ""]} size="lg" />
 					<div className="flex flex-col gap-2">
 						<span className="type-label text-ink-500">Kode Khusus</span>
@@ -247,7 +264,7 @@ export function FormatCard({ kind }: { kind: "cc" | "ri" }) {
 						</span>
 					</div>
 				</div>
-				<span className="self-start">
+				<span className="self-start max-lg:flex">
 					<DotLabel>{cc ? "Referensi saja" : "Hanya format"}</DotLabel>
 				</span>
 			</div>
