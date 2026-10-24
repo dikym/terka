@@ -82,7 +82,7 @@ function SearchBox({
 					type="button"
 					aria-label="Hapus pencarian"
 					onClick={() => onChange("")}
-					className="cursor-pointer"
+					className="flex cursor-pointer"
 				>
 					<Icon name="x" size={18} />
 				</button>
