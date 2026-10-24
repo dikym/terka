@@ -11,7 +11,10 @@ const TONE = {
 
 export function Toasts({ children }: { children: React.ReactNode }) {
 	return (
-		<div className="fixed right-6 bottom-6 z-30 flex flex-col items-end gap-3">{children}</div>
+		// On a phone the stack spans the screen and sits 16 px above the tab bar.
+		<div className="fixed inset-x-4 bottom-[calc(--spacing(19)+env(safe-area-inset-bottom))] z-30 flex flex-col gap-3 lg:inset-x-auto lg:right-6 lg:bottom-6 lg:items-end">
+			{children}
+		</div>
 	);
 }
 
@@ -33,21 +36,31 @@ export function Toast({
 	return (
 		<div
 			role="status"
-			className={`inline-flex w-max max-w-120 items-start gap-3 rounded-md border py-3 pr-2 pl-4 shadow-overlay ${TONE[tone].box}`}
+			className={`grid grid-cols-[auto_minmax(0,1fr)_auto] items-start gap-x-3 gap-y-2 rounded-md border py-3 pr-2 pl-4 shadow-overlay lg:w-max lg:max-w-120 ${action ? "lg:grid-cols-[auto_minmax(0,1fr)_auto_auto]" : ""} ${TONE[tone].box}`}
 		>
-			<Icon name={icon} size={18} color={TONE[tone].icon} />
-			<div className="flex min-w-0 flex-col gap-0.5">
+			<Icon
+				name={icon}
+				size={18}
+				color={TONE[tone].icon}
+				className={`col-start-1 row-start-1 mt-px lg:mt-0 ${action ? "row-span-2 lg:row-span-1" : ""}`}
+			/>
+			<div className="col-start-2 row-start-1 flex min-w-0 flex-col gap-0.5">
 				<span className={`leading-[20px] type-label ${TONE[tone].text}`}>{label}</span>
 				<span className="font-sans text-body-md leading-[20px] font-medium text-pretty text-ink-900">
 					{children}
 				</span>
 			</div>
-			{action}
+			{/* Under the message on a phone, beside it on desktop. */}
+			{action && (
+				<div className="col-start-2 row-start-2 lg:col-start-3 lg:row-start-1 lg:ml-2 lg:self-center">
+					{action}
+				</div>
+			)}
 			<button
 				type="button"
 				onClick={onClose}
 				aria-label="Tutup"
-				className="-my-1 ml-1 inline-flex size-7 flex-none cursor-pointer items-center justify-center rounded-sm border border-transparent bg-transparent"
+				className={`col-start-3 row-start-1 -my-1 ml-1 inline-flex size-7 flex-none ${action ? "lg:col-start-4" : ""} cursor-pointer items-center justify-center rounded-sm border border-transparent bg-transparent`}
 			>
 				<Icon name="x" size={16} />
 			</button>

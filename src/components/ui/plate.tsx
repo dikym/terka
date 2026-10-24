@@ -1,7 +1,7 @@
 const SIZE = {
 	sm: "gap-[0.3em] px-[9px] py-1 text-[19px] tracking-[0.05em]",
 	md: "gap-[0.35em] px-4.5 py-2.5 text-display tracking-plate",
-	lg: "gap-[0.35em] px-6 py-3.5 text-hero tracking-plate"
+	lg: "gap-[0.35em] px-4 py-2.5 text-[56px] tracking-plate lg:px-6 lg:py-3.5 lg:text-hero"
 };
 
 /** A civilian plate: white ground, 2 px ink border, plate face. */

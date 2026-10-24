@@ -123,6 +123,49 @@ function Tooltip({ province }: { province: MapProvince }) {
 	);
 }
 
+/** The phone's answer to hover: the tapped province's details, under the map. */
+function Selection({ province }: { province: MapProvince }) {
+	const percent = province.percent ?? 0;
+	return (
+		<div
+			aria-live="polite"
+			className="flex flex-col gap-2.5 border-t border-hairline px-4 pt-3.5 pb-4 lg:hidden"
+		>
+			<div className="flex items-center gap-1.5 type-label text-ink-500">
+				<span className={`size-2 rounded-full ${GROUP_BG[province.group]}`} />
+				Kawasan {GROUP_NAME[province.group]}
+			</div>
+			<div className="font-display text-subhead leading-[1.2] font-semibold text-ink-1000">
+				{province.name}
+			</div>
+			{province.percent === null ? (
+				<div className="font-sans text-body-sm leading-[1.3] text-ink-500">
+					Belum ada materi.
+				</div>
+			) : (
+				<>
+					<div className="flex items-baseline gap-1.5">
+						<b className="font-display text-heading leading-none font-bold">
+							{percent}%
+						</b>
+						<span className="font-sans text-body-sm leading-[1.3] text-ink-700">
+							{province.mastered} dari {province.total} kartu Dikuasai
+						</span>
+					</div>
+					<div className="h-1 overflow-hidden rounded-xs bg-ink-100">
+						<i className="block h-full bg-go-500" style={{ width: `${percent}%` }} />
+					</div>
+				</>
+			)}
+			<div className="flex flex-wrap gap-1.5">
+				{province.codes.map((code) => (
+					<CodeChip key={code} code={code} group={province.group} size="touch" />
+				))}
+			</div>
+		</div>
+	);
+}
+
 function ZoomButton({
 	icon,
 	label,
@@ -137,18 +180,28 @@ function ZoomButton({
 			type="button"
 			aria-label={label}
 			onClick={onClick}
-			className="grid size-10 cursor-pointer place-items-center border-0 bg-paper-0 not-first:border-t not-first:border-ink-200 hover:bg-paper-50 focus-visible:outline-offset-[-3px]"
+			className="grid size-7.5 cursor-pointer place-items-center border-0 border-ink-200 bg-paper-0 not-first:border-l hover:bg-paper-50 focus-visible:outline-offset-[-3px] lg:size-10 lg:not-first:border-t lg:not-first:border-l-0"
 		>
-			<Icon name={icon} size={icon === "rotate-ccw" ? 16 : 18} />
+			<Icon
+				name={icon}
+				size={null}
+				className={icon === "rotate-ccw" ? "size-4" : "size-3.5 lg:size-4.5"}
+			/>
 		</button>
 	);
 }
 
+/** Selected on a phone before the first tap, so the panel under the map is never empty. */
+const FIRST_SELECTED = "nusa-tenggara-barat";
+
 export function MasteryMap({
 	provinces,
-	className = "h-105"
+	loading = false,
+	className = "h-52.5 lg:h-105"
 }: {
 	provinces: Record<string, MapProvince>;
+	/** On a phone: grey provinces, no selection and no input until the data is in. */
+	loading?: boolean;
 	/** Height of the map box. */
 	className?: string;
 }) {
@@ -156,6 +209,8 @@ export function MasteryMap({
 	const [view, setView] = useState<View>({ k: 1, x: 0, y: 0 });
 	const [animate, setAnimate] = useState(false);
 	const [tip, setTip] = useState<Tip | null>(null);
+	const [selected, setSelected] = useState(FIRST_SELECTED);
+	const dragged = useRef(false);
 	const svg = useRef<SVGSVGElement>(null);
 	const wrap = useRef<HTMLDivElement>(null);
 	const box = useRef<HTMLDivElement>(null);
@@ -172,12 +227,15 @@ export function MasteryMap({
 		};
 	}, []);
 
-	const markup = useMemo(() => {
-		if (!source) return "";
+	const { markup, outlines } = useMemo(() => {
+		if (!source) return { markup: "", outlines: new Map<string, string>() };
 		const doc = new DOMParser().parseFromString(source, "image/svg+xml");
-		for (const path of doc.querySelectorAll("path[id]"))
+		const outlines = new Map<string, string>();
+		for (const path of doc.querySelectorAll("path[id]")) {
 			path.setAttribute("fill", FILLS[fillStep(provinces[path.id]?.percent ?? null)]);
-		return doc.documentElement.innerHTML;
+			outlines.set(path.id, path.getAttribute("d") ?? "");
+		}
+		return { markup: doc.documentElement.innerHTML, outlines };
 	}, [source, provinces]);
 
 	// Pixel distances on screen, in view units.
@@ -228,80 +286,103 @@ export function MasteryMap({
 	};
 
 	return (
-		<div
-			ref={wrap}
-			className={`relative w-full overflow-hidden rounded-sm bg-paper-0 ${className}`}
-		>
-			<svg
-				ref={svg}
-				role="img"
-				aria-label="Peta Penguasaan per provinsi"
-				viewBox={`${VIEW.x} ${VIEW.y} ${VIEW.w} ${VIEW.h}`}
-				className="block size-full cursor-grab touch-none active:cursor-grabbing"
-				onPointerDown={(event) => {
-					drag.current = { x: event.clientX, y: event.clientY };
-					setAnimate(false);
-					setTip(null);
-				}}
-				onPointerMove={(event) => {
-					if (!drag.current) return showTip(event);
-					const scale = unit();
-					const dx = (event.clientX - drag.current.x) * scale;
-					const dy = (event.clientY - drag.current.y) * scale;
-					drag.current = { x: event.clientX, y: event.clientY };
-					setView((current) =>
-						clamp({ ...current, x: current.x + dx, y: current.y + dy })
-					);
-				}}
-				onPointerUp={() => (drag.current = null)}
-				onPointerLeave={() => {
-					drag.current = null;
-					setTip(null);
-				}}
+		<div>
+			<div
+				ref={wrap}
+				// A phone's map box is wider than the map, so the map sits low, clear of the zoom row.
+				className={`relative flex w-full flex-col justify-end overflow-hidden bg-paper-0 lg:block lg:rounded-sm ${loading ? "max-lg:pointer-events-none" : ""} ${className}`}
 			>
-				<g
-					className="[&_path]:stroke-paper-0 [&_path]:[stroke-width:0.75] [&_path]:[stroke-linejoin:round] [&_path]:[vector-effect:non-scaling-stroke]"
-					style={layerStyle}
-					// map.svg is our own build output (scripts/build-map.ts), served from this origin.
-					dangerouslySetInnerHTML={{ __html: markup }}
-				/>
-				{/* A stroke on the province itself is half hidden under the neighbours painted after it. */}
-				{tip && (
-					<g style={layerStyle} className="pointer-events-none">
-						<path
-							d={tip.outline}
-							fill="none"
-							className="stroke-ink-1000 [stroke-width:1.5] [stroke-linejoin:round] [vector-effect:non-scaling-stroke]"
-						/>
-					</g>
-				)}
-			</svg>
-			<div className="absolute top-3 right-3 flex flex-col overflow-hidden rounded-sm border border-ink-1000 bg-paper-0 shadow-block transition-[box-shadow,translate] duration-90 ease-out has-[button:active]:translate-0.5 has-[button:active]:shadow-none">
-				<ZoomButton icon="plus" label="Perbesar" onClick={() => zoomButton(ZOOM_STEP)} />
-				<ZoomButton
-					icon="minus"
-					label="Perkecil"
-					onClick={() => zoomButton(1 / ZOOM_STEP)}
-				/>
-				<ZoomButton
-					icon="rotate-ccw"
-					label="Kembalikan ukuran"
-					onClick={() => zoomButton(null)}
-				/>
-			</div>
-			<div className="absolute right-3 bottom-3 font-mono text-micro leading-none font-medium text-ink-500">
-				{Math.round(view.k * 100)}%
-			</div>
-			{tip && provinces[tip.id] && (
-				<div
-					ref={box}
-					role="tooltip"
-					className="pointer-events-none absolute flex max-w-60 min-w-45 flex-col gap-1.5 rounded-sm border border-ink-1000 bg-paper-0 px-3 py-2.5 shadow-block"
-					style={{ left: tip.left, top: tip.top }}
+				<svg
+					ref={svg}
+					role="img"
+					aria-label="Peta Penguasaan per provinsi"
+					viewBox={`${VIEW.x} ${VIEW.y} ${VIEW.w} ${VIEW.h}`}
+					className="block aspect-[1080/403] w-full cursor-grab touch-none active:cursor-grabbing lg:aspect-auto lg:size-full"
+					onPointerDown={(event) => {
+						drag.current = { x: event.clientX, y: event.clientY };
+						dragged.current = false;
+						setAnimate(false);
+						setTip(null);
+					}}
+					onPointerMove={(event) => {
+						if (!drag.current) return showTip(event);
+						const scale = unit();
+						const dx = (event.clientX - drag.current.x) * scale;
+						const dy = (event.clientY - drag.current.y) * scale;
+						if (dx || dy) dragged.current = true;
+						drag.current = { x: event.clientX, y: event.clientY };
+						setView((current) =>
+							clamp({ ...current, x: current.x + dx, y: current.y + dy })
+						);
+					}}
+					onPointerUp={() => (drag.current = null)}
+					onClick={(event) => {
+						const path = (event.target as Element).closest("path[id]");
+						if (path && provinces[path.id] && !dragged.current) setSelected(path.id);
+					}}
+					onPointerLeave={() => {
+						drag.current = null;
+						setTip(null);
+					}}
 				>
-					<Tooltip province={provinces[tip.id]} />
+					<g
+						className={`${loading ? "max-lg:[&_path]:fill-ink-100" : ""} [&_path]:stroke-paper-0 [&_path]:[stroke-width:0.75] [&_path]:[stroke-linejoin:round] [&_path]:[vector-effect:non-scaling-stroke]`}
+						style={layerStyle}
+						// map.svg is our own build output (scripts/build-map.ts), served from this origin.
+						dangerouslySetInnerHTML={{ __html: markup }}
+					/>
+					{/* A stroke on the province itself is half hidden under the neighbours painted after it. */}
+					{!loading && provinces[selected] && (
+						<g style={layerStyle} className="pointer-events-none lg:hidden">
+							<path
+								d={outlines.get(selected)}
+								fill="none"
+								className="stroke-ink-1000 [stroke-width:2] [stroke-linejoin:round] [vector-effect:non-scaling-stroke]"
+							/>
+						</g>
+					)}
+					{tip && (
+						<g style={layerStyle} className="pointer-events-none">
+							<path
+								d={tip.outline}
+								fill="none"
+								className="stroke-ink-1000 [stroke-width:1.5] [stroke-linejoin:round] [vector-effect:non-scaling-stroke]"
+							/>
+						</g>
+					)}
+				</svg>
+				<div className="absolute top-2.5 right-2.5 flex overflow-hidden rounded-sm border border-ink-1000 bg-paper-0 shadow-[2px_2px_0_var(--color-ink-1000)] transition-[box-shadow,translate] duration-90 ease-out has-[button:active]:translate-0.5 has-[button:active]:shadow-none lg:top-3 lg:right-3 lg:flex-col lg:shadow-block">
+					<ZoomButton
+						icon="plus"
+						label="Perbesar"
+						onClick={() => zoomButton(ZOOM_STEP)}
+					/>
+					<ZoomButton
+						icon="minus"
+						label="Perkecil"
+						onClick={() => zoomButton(1 / ZOOM_STEP)}
+					/>
+					<ZoomButton
+						icon="rotate-ccw"
+						label="Kembalikan ukuran"
+						onClick={() => zoomButton(null)}
+					/>
 				</div>
-			)}
+				<div className="absolute bottom-3 left-3 font-mono text-micro leading-none font-medium text-ink-500 lg:right-3 lg:left-auto">
+					{Math.round(view.k * 100)}%
+				</div>
+				{tip && provinces[tip.id] && (
+					<div
+						ref={box}
+						role="tooltip"
+						className="pointer-events-none absolute flex max-w-60 min-w-45 flex-col gap-1.5 rounded-sm border border-ink-1000 bg-paper-0 px-3 py-2.5 shadow-block"
+						style={{ left: tip.left, top: tip.top }}
+					>
+						<Tooltip province={provinces[tip.id]} />
+					</div>
+				)}
+			</div>
+			{!loading && provinces[selected] && <Selection province={provinces[selected]} />}
 		</div>
 	);
 }
