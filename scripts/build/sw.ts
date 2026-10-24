@@ -19,7 +19,7 @@ export const missingFromManifest = (urls: readonly string[]): string[] => {
 
 const options = (outDir: string) => ({
 	globDirectory: outDir,
-	globPatterns: ["**/*.{html,js,css,json,wasm,svg,png,ico,txt,webmanifest}"],
+	globPatterns: ["**/*.{html,js,css,json,wasm,svg,png,ico,txt,webmanifest,woff2}"],
 	globIgnores: ["sw.js"],
 	// Hashed file names already change with their content.
 	dontCacheBustURLsMatching: /^_next\/static\//,
