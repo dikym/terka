@@ -1,4 +1,5 @@
 import type { GroupId } from "@/components/ui/groups";
+import type { FlagCode } from "@/components/ui/icon";
 
 export type Mode = "hariIni" | "harian" | "kilat" | "terfokus" | "diplomat" | "sebutkan";
 
@@ -35,6 +36,8 @@ export type DummyCard = {
 	prompt: string;
 	answer: string;
 	aliases?: string[];
+	/** The answer's flag, for diplomat cards. */
+	flag?: FlagCode;
 	/** Choice forms only. */
 	options?: string[];
 	/** The level-1 choices a typed card turns into when its level is lowered. */
@@ -342,6 +345,7 @@ export const QUEUES: Record<Mode, DummyCard[]> = {
 			prompt: "CD 49 dipakai perwakilan mana?",
 			answer: "Jepang",
 			aliases: ["Japan"],
+			flag: "jp",
 			level: 2
 		},
 		{
@@ -350,6 +354,7 @@ export const QUEUES: Record<Mode, DummyCard[]> = {
 			plate: ["CD", "45"],
 			prompt: "CD 45 dipakai perwakilan mana?",
 			answer: "Iran",
+			flag: "ir",
 			level: 2
 		},
 		{
@@ -358,6 +363,7 @@ export const QUEUES: Record<Mode, DummyCard[]> = {
 			plate: ["CD", "58"],
 			prompt: "CD 58 dipakai perwakilan mana?",
 			answer: "UNDP",
+			flag: "un",
 			level: 2
 		}
 	],

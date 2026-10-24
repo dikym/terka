@@ -89,7 +89,7 @@ function Right({ right }: { right: Preview["right"] }) {
 
 export function PreviewBar({ onBack }: { onBack: () => void }) {
 	return (
-		<TopBar className="justify-between">
+		<TopBar variant="preview" className="justify-between">
 			<span className="inline-flex items-center gap-3">
 				<BarButton icon="arrow-left" label="Kembali" onClick={onBack} />
 				<span className="type-label text-ink-500">Pratinjau sesi</span>
@@ -146,16 +146,16 @@ export function SessionPreview({
 					</p>
 				)}
 			</div>
-			<div className="flex items-end justify-between gap-6 border-t border-b border-t-ink-1000 border-b-hairline py-5">
+			<div className="flex flex-col items-start gap-3 border-t border-b border-t-ink-1000 border-b-hairline py-5 lg:flex-row lg:items-end lg:justify-between lg:gap-6">
 				<div className="flex items-baseline gap-3">
 					<span className="type-metric">{p.count}</span>
 					<span className="font-display text-subhead leading-none font-semibold">
 						{p.unit}
 					</span>
 				</div>
-				<div className="flex flex-col items-end gap-1.5 pb-2">
+				<div className="flex flex-col items-start gap-1.5 lg:items-end lg:pb-2">
 					<span className="type-label text-ink-500">{p.aside.label}</span>
-					<span className="inline-flex items-center gap-2 text-right font-display text-body-lg leading-[1.2] font-semibold text-ink-1000">
+					<span className="inline-flex items-center gap-2 font-display text-body-lg leading-[1.2] font-semibold text-ink-1000 lg:text-right">
 						<Icon name={p.aside.icon} size={18} />
 						{p.aside.value}
 					</span>
@@ -186,7 +186,7 @@ export function SessionPreview({
 					</div>
 				</div>
 			)}
-			<div className="grid grid-cols-2 gap-4">
+			<div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
 				<Card className="gap-1">
 					<CardHeader label="Jenis soal" />
 					<div className="flex flex-col">
@@ -208,9 +208,14 @@ export function SessionPreview({
 						{p.notes.map(([icon, count, text], index) => (
 							<div
 								key={text}
-								className={`grid grid-cols-[20px_minmax(0,1fr)] items-center gap-3 px-4 py-3 ${index ? "border-t border-hairline" : ""}`}
+								className={`grid grid-cols-[20px_minmax(0,1fr)] items-start gap-3 px-4 py-3 lg:items-center ${index ? "border-t border-hairline" : ""}`}
 							>
-								<Icon name={icon} size={18} color="bg-ink-700" />
+								<Icon
+									name={icon}
+									size={18}
+									color="bg-ink-700"
+									className="mt-0.5 lg:mt-0"
+								/>
 								<span className="text-pretty text-ink-900 type-body">
 									{count && (
 										<span className="font-mono font-semibold text-ink-1000">
@@ -224,7 +229,7 @@ export function SessionPreview({
 					</div>
 				</div>
 			)}
-			<div className="grid grid-cols-[200px_minmax(0,1fr)] gap-3">
+			<div className="mt-auto grid grid-cols-[120px_minmax(0,1fr)] gap-3 lg:mt-0 lg:grid-cols-[200px_minmax(0,1fr)]">
 				<Button variant="secondary" block kbd="Esc" className="px-4" onClick={onBack}>
 					Kembali
 				</Button>

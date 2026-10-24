@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Callout } from "@/components/ui/feedback";
 import { GROUP_BG } from "@/components/ui/groups";
-import { Icon } from "@/components/ui/icon";
+import { Flag, Icon } from "@/components/ui/icon";
 import { Kbd } from "@/components/ui/kbd";
 import { Plate } from "@/components/ui/plate";
 import { type DummyCard, QUEUES } from "@/dummy/session";
@@ -55,11 +55,13 @@ function Title({ children }: { children: React.ReactNode }) {
 function Countdown({
 	seconds,
 	total,
-	tone
+	tone,
+	className = "flex"
 }: {
 	seconds: number;
 	total: number;
 	tone: "caution" | "stop";
+	className?: string;
 }) {
 	const fraction = Math.max(0, seconds / total);
 	const label =
@@ -67,7 +69,7 @@ function Countdown({
 			? `${seconds.toFixed(1).replace(".", ",")} detik`
 			: `${Math.ceil(seconds)} detik`;
 	return (
-		<div className="flex w-full items-center gap-3">
+		<div className={`${className} w-full items-center gap-3`}>
 			<Icon name="clock" size={16} />
 			<div className="h-1.5 flex-1 overflow-hidden rounded-xs bg-ink-100">
 				<div
@@ -137,9 +139,17 @@ function Verdict({ state, card }: { state: SessionState; card: DummyCard }) {
 	return (
 		<div className="flex items-center gap-3">
 			<StatusPill tone="stop">{state.timedOut ? "Waktu habis" : "Belum tepat"}</StatusPill>
-			<span className="font-display text-body-md leading-none font-semibold text-ink-1000">
-				Jawaban: {card.answer}
-			</span>
+			{card.flag ? (
+				<span className="inline-flex items-center gap-2 font-display text-body-md leading-none font-semibold text-ink-1000">
+					Jawaban:
+					<Flag code={card.flag} />
+					{card.answer}
+				</span>
+			) : (
+				<span className="font-display text-body-md leading-none font-semibold text-ink-1000">
+					Jawaban: {card.answer}
+				</span>
+			)}
 		</div>
 	);
 }
@@ -157,7 +167,10 @@ function ChoiceGrid({
 }) {
 	const graded = state.phase === "graded";
 	return (
-		<div className="grid grid-cols-2 gap-3">
+		// Four choices stack on a phone; a pair stays side by side.
+		<div
+			className={`grid gap-3 ${options.length === 2 ? "grid-cols-2" : "grid-cols-1 lg:grid-cols-2"}`}
+		>
 			{options.map((option, index) => {
 				const tone = !graded
 					? "border-ink-1000 bg-paper-0"
@@ -194,12 +207,12 @@ function LeechPanel({ leech }: { leech: NonNullable<DummyCard["leech"]> }) {
 		<>
 			<div className="flex flex-col gap-2">
 				<StatusPill tone="grape">Sulit Dikuasai</StatusPill>
-				<span className="text-ink-900 type-body">
+				<span className="text-ink-900 type-body max-lg:text-body-lg">
 					Kode ini beberapa kali terlewat. Jawabannya ditampilkan dulu untuk dipelajari
 					ulang.
 				</span>
 			</div>
-			<Card className="gap-3">
+			<Card className="gap-4 lg:gap-3">
 				<span className="type-label text-ink-500">Daerah kode {leech.code}</span>
 				<div className="flex flex-wrap gap-2">
 					{leech.areas.map((area) => (
@@ -226,7 +239,7 @@ function LoweredPanel({ card, onRestore }: { card: DummyCard; onRestore: () => v
 	return (
 		<Card>
 			<div className="flex min-w-0 flex-col gap-3">
-				<div className="flex items-center justify-between gap-3">
+				<div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 lg:flex-nowrap lg:gap-3">
 					<span className="flex min-w-0 flex-col gap-2">
 						<span className="type-card-title">Tebak daerah</span>
 						<span className="inline-flex items-center gap-2">
@@ -239,7 +252,7 @@ function LoweredPanel({ card, onRestore }: { card: DummyCard; onRestore: () => v
 					<StatusPill tone="muted">Tidak memengaruhi jadwal</StatusPill>
 				</div>
 				<div className="h-px bg-hairline" />
-				<div className="flex items-center justify-between gap-3">
+				<div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 lg:flex-nowrap lg:gap-3">
 					<Button variant="outline" className="w-fit" onClick={onRestore}>
 						Kembali ke Level {card.level} {levelName(card.level)}
 					</Button>
@@ -305,7 +318,7 @@ function Compare({
 							onClick={() => onChoose(option)}
 							className={`relative flex h-40 cursor-pointer items-center justify-center rounded-md border border-b-3 px-6 font-plate text-hero leading-none font-bold tracking-plate text-ink-1000 disabled:cursor-default ${tone}`}
 						>
-							<span className="absolute top-3 left-3 inline-flex h-6 min-w-6 items-center justify-center rounded-xs border border-ink-300 bg-paper-0 px-1.5 font-mono text-label leading-none font-medium tracking-normal text-ink-900">
+							<span className="absolute top-3 left-3 inline-flex h-6 min-w-6 items-center justify-center rounded-xs border border-ink-300 bg-paper-0 px-1.5 font-mono text-label leading-none font-medium tracking-normal text-ink-900 max-lg:hidden">
 								{index ? "J" : "F"}
 							</span>
 							{option}
@@ -494,9 +507,23 @@ export function Question(props: Props) {
 				<QuestionPlate card={card} />
 				<Title>{card.prompt}</Title>
 				{timed && card.timer!.kind === "start" && (
-					<Countdown seconds={countdown} total={card.timer!.seconds} tone="caution" />
+					<Countdown
+						seconds={countdown}
+						total={card.timer!.seconds}
+						tone="caution"
+						className="hidden lg:flex"
+					/>
 				)}
 			</div>
+			{/* A phone gives the countdown the column's wider gap. */}
+			{timed && card.timer!.kind === "start" && (
+				<Countdown
+					seconds={countdown}
+					total={card.timer!.seconds}
+					tone="caution"
+					className="flex lg:hidden"
+				/>
+			)}
 			{options ? (
 				<ChoiceGrid state={state} card={card} options={options} onChoose={onChoose} />
 			) : (

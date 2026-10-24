@@ -20,7 +20,7 @@ function Progress({ done, total }: { done: number; total: number }) {
 					/>
 				</div>
 			</div>
-			<span className="flex-none font-mono text-body-sm leading-none font-medium text-ink-500">
+			<span className="min-w-10 flex-none text-right font-mono text-body-sm leading-none font-medium text-ink-500 lg:min-w-0 lg:text-left">
 				{done}/{total}
 			</span>
 		</>
@@ -36,114 +36,159 @@ export type BarProps = {
 	finished: boolean;
 	onExit: () => void;
 	onUndo?: () => void;
+	/** Seconds left, fractional, so the bar can move every tick. */
 	clock?: { seconds: number; total: number };
 	correct?: number;
 };
 
-export function SessionBar({
+/** Keeps the phone bar's right edge when there is no undo button. */
+const SPACER = <span className="w-3 flex-none lg:hidden" />;
+
+/**
+ * The bar's second row: mode, streak or area on the left, level on the right. Desktop
+ * shows it inside the bar; a phone shows it at the top of the question column.
+ */
+export function SessionMeta({
 	mode,
 	card,
 	level,
-	done,
-	total,
 	finished,
-	onExit,
-	onUndo,
-	clock,
-	correct
-}: BarProps) {
+	correct,
+	className = "flex"
+}: BarProps & { className?: string }) {
+	const row = `${className} min-h-6 flex-wrap items-center justify-between gap-x-3 gap-y-2 lg:min-h-0 lg:flex-nowrap lg:gap-3`;
+	if (mode === "kilat")
+		return (
+			<div className={row}>
+				<span className="inline-flex flex-none items-center gap-2 font-sans text-body-sm leading-none font-medium text-ink-900">
+					<span
+						aria-hidden="true"
+						className="size-2.5 flex-none rounded-full bg-ink-1000"
+					/>
+					Seluruh Indonesia
+				</span>
+				<span className="ml-auto inline-flex flex-none items-center gap-3">
+					<Icon name="zap" size={16} color="bg-current" />
+					{!finished && (
+						<span className="font-mono text-body-md leading-none font-semibold text-ink-1000">
+							{correct ?? 0} benar
+						</span>
+					)}
+				</span>
+			</div>
+		);
+	const left =
+		(mode === "harian" && !finished) || mode === "terfokus" || (card?.pill && !finished);
+	return (
+		<div className={row}>
+			{/* Desktop keeps the empty span: its gap is part of the bar's spacing. */}
+			<span
+				className={`min-w-0 flex-wrap items-center gap-3 ${left ? "inline-flex" : "hidden lg:inline-flex"}`}
+			>
+				{mode === "harian" && !finished && (
+					<div className="flex items-center gap-2">
+						<Icon name="flame" size={16} color="bg-tangerine-700" />
+						<span className="type-label text-tangerine-700">17 Hari Beruntun</span>
+					</div>
+				)}
+				{mode === "terfokus" && (
+					<span className="inline-flex items-center gap-2 font-sans text-body-sm leading-none font-medium text-ink-900">
+						<span
+							aria-hidden="true"
+							className="size-2.5 flex-none rounded-full bg-group-maluku"
+						/>
+						Kawasan Maluku
+					</span>
+				)}
+				{card?.pill && !finished && (
+					<StatusPill tone={card.pill.tone === "go" ? "fresh" : card.pill.tone}>
+						{card.pill.label}
+					</StatusPill>
+				)}
+			</span>
+			{/* Alone on a phone, the level sits on the left. */}
+			<span
+				className={`inline-flex flex-none items-center gap-3 ${left ? "ml-auto" : "lg:ml-auto"}`}
+			>
+				{mode === "harian" && (
+					<span
+						role="img"
+						aria-label="Tantangan Harian"
+						title="Tantangan Harian"
+						className="inline-flex flex-none items-center text-ink-1000"
+					>
+						<Icon name="calendar-check" size={16} color="bg-current" />
+					</span>
+				)}
+				{mode === "terfokus" && <Icon name="crosshair" size={16} color="bg-ink-1000" />}
+				{mode === "diplomat" && <Icon name="flag" size={16} color="bg-ink-1000" />}
+				{level && !finished && <LevelMark level={level} />}
+			</span>
+		</div>
+	);
+}
+
+export function SessionBar(props: BarProps) {
+	const { mode, done, total, finished, onExit, onUndo, clock } = props;
+	const left = clock ? clock.seconds / clock.total : 0;
+	const exit = (
+		<BarButton icon="arrow-left" phoneIcon="x" large label="Keluar sesi" onClick={onExit} />
+	);
 	if (mode === "kilat")
 		return (
 			<TopBar>
 				<div className="min-w-0 flex-1">
-					<div className="flex items-center gap-3">
-						<BarButton icon="arrow-left" label="Keluar sesi" onClick={onExit} />
-						<div className="flex min-w-0 flex-1 items-center gap-3">
+					<div className="flex items-center gap-2 lg:gap-3">
+						{exit}
+						<div className="flex min-w-0 flex-1 items-center gap-3 px-1 lg:px-0">
 							<Icon name="timer" size={16} />
 							<div className="h-1.5 flex-1 overflow-hidden rounded-xs bg-ink-100">
+								{/* Linear over one tick, so the bar runs smoothly; green turns red as time runs out. */}
 								<div
-									className="h-full bg-caution-500"
+									className="h-full transition-[width,background-color] duration-100 ease-linear motion-reduce:transition-none"
 									style={{
-										width: `${clock ? (clock.seconds / clock.total) * 100 : 0}%`
+										width: `${left * 100}%`,
+										backgroundColor: `color-mix(in oklch, var(--color-stop-500) ${Math.round((1 - left) * 100)}%, var(--color-go-500))`
 									}}
 								/>
 							</div>
 							<span className="flex-none font-mono text-body-lg leading-none font-bold text-ink-1000 tabular-nums">
-								{finished ? "Selesai" : `${clock?.seconds ?? 0} detik`}
+								{finished ? "Selesai" : `${Math.ceil(clock?.seconds ?? 0)} detik`}
 							</span>
 						</div>
+						{SPACER}
 					</div>
 				</div>
-				<div className="flex items-center justify-between gap-3">
-					<span className="inline-flex flex-none items-center gap-2 font-sans text-body-sm leading-none font-medium text-ink-900">
-						<span
-							aria-hidden="true"
-							className="size-2.5 flex-none rounded-full bg-ink-1000"
-						/>
-						Seluruh Indonesia
-					</span>
-					<span className="ml-auto inline-flex flex-none items-center gap-3">
-						<Icon name="zap" size={16} color="bg-current" />
-						{!finished && (
-							<span className="font-mono text-body-md leading-none font-semibold text-ink-1000">
-								{correct ?? 0} benar
-							</span>
-						)}
-					</span>
-				</div>
+				<SessionMeta {...props} className="hidden lg:flex" />
 			</TopBar>
 		);
 
 	return (
 		<TopBar>
 			<div className="min-w-0 flex-1">
-				<div className="flex items-center gap-3">
-					<BarButton icon="arrow-left" label="Keluar sesi" onClick={onExit} />
+				<div className="flex items-center gap-2 lg:gap-3">
+					{exit}
 					<Progress done={done} total={total} />
-					{(!finished || mode === "harian" || mode === "terfokus") && (
-						<BarButton icon="undo-2" label="Batalkan jawaban" onClick={onUndo} />
+					{!finished ? (
+						<BarButton icon="undo-2" large label="Batalkan jawaban" onClick={onUndo} />
+					) : (
+						<>
+							{/* The finished screen keeps undo on desktop only. */}
+							{(mode === "harian" || mode === "terfokus") && (
+								<span className="contents max-lg:hidden">
+									<BarButton
+										icon="undo-2"
+										label="Batalkan jawaban"
+										onClick={onUndo}
+									/>
+								</span>
+							)}
+							{SPACER}
+						</>
 					)}
 				</div>
 			</div>
-			<div className="flex items-center justify-between gap-3">
-				<span className="inline-flex min-w-0 flex-wrap items-center gap-3">
-					{mode === "harian" && !finished && (
-						<div className="flex items-center gap-2">
-							<Icon name="flame" size={16} color="bg-tangerine-700" />
-							<span className="type-label text-tangerine-700">17 Hari Beruntun</span>
-						</div>
-					)}
-					{mode === "terfokus" && (
-						<span className="inline-flex items-center gap-2 font-sans text-body-sm leading-none font-medium text-ink-900">
-							<span
-								aria-hidden="true"
-								className="size-2.5 flex-none rounded-full bg-group-maluku"
-							/>
-							Kawasan Maluku
-						</span>
-					)}
-					{card?.pill && !finished && (
-						<StatusPill tone={card.pill.tone === "go" ? "fresh" : card.pill.tone}>
-							{card.pill.label}
-						</StatusPill>
-					)}
-				</span>
-				<span className="ml-auto inline-flex flex-none items-center gap-3">
-					{mode === "harian" && (
-						<span
-							role="img"
-							aria-label="Tantangan Harian"
-							title="Tantangan Harian"
-							className="inline-flex flex-none items-center text-ink-1000"
-						>
-							<Icon name="calendar-check" size={16} color="bg-current" />
-						</span>
-					)}
-					{mode === "terfokus" && <Icon name="crosshair" size={16} color="bg-ink-1000" />}
-					{mode === "diplomat" && <Icon name="flag" size={16} color="bg-ink-1000" />}
-					{level && !finished && <LevelMark level={level} />}
-				</span>
-			</div>
+			<SessionMeta {...props} className="hidden lg:flex" />
 		</TopBar>
 	);
 }
