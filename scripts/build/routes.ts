@@ -5,6 +5,10 @@ export const MAIN_ROUTES = [
 	"/cakupan",
 	"/statistik",
 	"/referensi",
+	"/setelan",
+	"/statistik/peta",
+	"/statistik/sulit",
+	"/statistik/akun",
 	"/tentang",
 	"/auth/callback",
 	"/privasi"
