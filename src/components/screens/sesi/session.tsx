@@ -25,15 +25,23 @@ import { Question } from "./question";
 const LOADING_MS = 600;
 const TICK_MS = 100;
 
-/** Runs `onTick` every TICK_MS while `active`, with the latest callback. */
-function useTicker(active: boolean, onTick: () => void) {
+/**
+ * Runs `onTick` about every TICK_MS while `active`, with the latest callback and the seconds
+ * really elapsed: intervals fire late, so counting TICK_MS per tick would run slow.
+ */
+function useTicker(active: boolean, onTick: (elapsed: number) => void) {
 	const latest = useRef(onTick);
 	useEffect(() => {
 		latest.current = onTick;
 	});
 	useEffect(() => {
 		if (!active) return;
-		const timer = setInterval(() => latest.current(), TICK_MS);
+		let last = performance.now();
+		const timer = setInterval(() => {
+			const now = performance.now();
+			latest.current((now - last) / 1000);
+			last = now;
+		}, TICK_MS);
 		return () => clearInterval(timer);
 	}, [active]);
 }
@@ -87,20 +95,23 @@ export function Session({ mode }: { mode: Mode }) {
 	const card = state.phase === "preview" ? null : currentCard(state);
 	const typingStarted = card?.timer?.kind === "start" && state.input.trim() !== "";
 
-	useTicker(countdown !== null && state.phase === "ask" && !typingStarted, () => {
+	useTicker(countdown !== null && state.phase === "ask" && !typingStarted, (elapsed) => {
 		if (countdown === null) return;
-		const left = Math.max(0, countdown - TICK_MS / 1000);
+		const left = Math.max(0, countdown - elapsed);
 		if (left === 0) {
 			setCountdown(null);
 			act({ type: "timeout" });
 		} else setCountdown(left);
 	});
 
-	useTicker(mode === "kilat" && (state.phase === "ask" || state.phase === "graded"), () => {
-		const left = Math.max(0, clock - TICK_MS / 1000);
-		setClock(left);
-		if (left === 0) act({ type: "timeout" });
-	});
+	useTicker(
+		mode === "kilat" && (state.phase === "ask" || state.phase === "graded"),
+		(elapsed) => {
+			const left = Math.max(0, clock - elapsed);
+			setClock(left);
+			if (left === 0) act({ type: "timeout" });
+		}
+	);
 
 	const latestAct = useRef(act);
 	useEffect(() => {

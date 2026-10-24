@@ -1,7 +1,7 @@
 import { BarButton, TopBar } from "@/components/shell/session-frame";
 import { Icon } from "@/components/ui/icon";
 import type { DummyCard, Level, Mode } from "@/dummy/session";
-import { LevelMark, StatusPill } from "./parts";
+import { LevelMark, StatusPill, TimeBar } from "./parts";
 
 function Progress({ done, total }: { done: number; total: number }) {
 	return (
@@ -130,7 +130,6 @@ export function SessionMeta({
 
 export function SessionBar(props: BarProps) {
 	const { mode, done, total, finished, onExit, onUndo, clock } = props;
-	const left = clock ? clock.seconds / clock.total : 0;
 	const exit = (
 		<BarButton icon="arrow-left" phoneIcon="x" large label="Keluar sesi" onClick={onExit} />
 	);
@@ -140,22 +139,13 @@ export function SessionBar(props: BarProps) {
 				<div className="min-w-0 flex-1">
 					<div className="flex items-center gap-2 lg:gap-3">
 						{exit}
-						<div className="flex min-w-0 flex-1 items-center gap-3 px-1 lg:px-0">
-							<Icon name="timer" size={16} />
-							<div className="h-1.5 flex-1 overflow-hidden rounded-xs bg-ink-100">
-								{/* Linear over one tick, so the bar runs smoothly; green turns red as time runs out. */}
-								<div
-									className="h-full transition-[width,background-color] duration-100 ease-linear motion-reduce:transition-none"
-									style={{
-										width: `${left * 100}%`,
-										backgroundColor: `color-mix(in oklch, var(--color-stop-500) ${Math.round((1 - left) * 100)}%, var(--color-go-500))`
-									}}
-								/>
-							</div>
-							<span className="flex-none font-mono text-body-lg leading-none font-bold text-ink-1000 tabular-nums">
-								{finished ? "Selesai" : `${Math.ceil(clock?.seconds ?? 0)} detik`}
-							</span>
-						</div>
+						<TimeBar
+							seconds={clock?.seconds ?? 0}
+							total={clock?.total ?? 1}
+							running={!finished}
+							label={finished ? "Selesai" : `${Math.ceil(clock?.seconds ?? 0)} detik`}
+							className="flex min-w-0 flex-1 px-1 lg:px-0"
+						/>
 						{SPACER}
 					</div>
 				</div>
