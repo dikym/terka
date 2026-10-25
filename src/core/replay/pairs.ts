@@ -22,7 +22,8 @@ export function recordConfusion(state: AppState, from: string, to: string, local
 		occurrences: [],
 		flagged: false,
 		cleared: false,
-		drillStreak: 0
+		drillStreak: 0,
+		drillDay: null
 	};
 	const today = dayNumber(localDay);
 	const occurrences = [...pair.occurrences, localDay].filter(
@@ -37,16 +38,22 @@ export function recordConfusion(state: AppState, from: string, to: string, local
 }
 
 // Clearing forgets old occurrences, so only confusions after the clear count toward the lower threshold.
-export function recordDrill(state: AppState, from: string, to: string, correct: boolean): void {
+export function recordDrill(
+	state: AppState,
+	from: string,
+	to: string,
+	correct: boolean,
+	localDay: string
+): void {
 	const key = pairKey(from, to);
 	const pair = state.pairs.get(key);
-	if (!pair?.flagged) return;
-	if (!correct) return void state.pairs.set(key, { ...pair, drillStreak: 0 });
+	if (!pair?.flagged || pair.drillDay === localDay) return;
+	if (!correct) return void state.pairs.set(key, { ...pair, drillStreak: 0, drillDay: localDay });
 	const drillStreak = pair.drillStreak + 1;
 	state.pairs.set(
 		key,
 		drillStreak >= DRILL_CLEAR_STREAK
-			? { occurrences: [], flagged: false, cleared: true, drillStreak: 0 }
-			: { ...pair, drillStreak }
+			? { occurrences: [], flagged: false, cleared: true, drillStreak: 0, drillDay: null }
+			: { ...pair, drillStreak, drillDay: localDay }
 	);
 }

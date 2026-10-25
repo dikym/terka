@@ -75,10 +75,10 @@ export function dueReviews(
 		.map(({ card }) => item(card, context, "review"));
 }
 
-function drills(state: AppState): QueueItem[] {
+function drills(state: AppState, today: string): QueueItem[] {
 	const items: QueueItem[] = [];
 	for (const [key, pair] of [...state.pairs].sort(([a], [b]) => compareText(a, b))) {
-		if (!pair.flagged) continue;
+		if (!pair.flagged || pair.drillDay === today) continue;
 		const [from, to] = key.split(">");
 		const own = effectiveCard(state, `${from}::code2region`);
 		const other = effectiveCard(state, `${to}::code2region`);
@@ -118,7 +118,7 @@ export function dailyQueue(
 	const cards = cardsWhere(state, isGroupA);
 	const due = uniqueItems([
 		...dueSteps(cards, ctx.now, "daily"),
-		...drills(state),
+		...drills(state, today),
 		...dueReviews(state, cards, today, ctx.now, "daily")
 	]);
 	const held = priorityLoad(state, today, ctx.tz) > TIERS[tierOn(state, today)].hold;

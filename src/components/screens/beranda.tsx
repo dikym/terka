@@ -8,6 +8,7 @@ import { Icon } from "@/components/ui/icon";
 import { Kbd } from "@/components/ui/kbd";
 import { Tooltip } from "@/components/ui/tooltip";
 import { type ReactNode, useEffect, useState } from "react";
+import { DRILL_CLEAR_STREAK } from "@/rules";
 import { countdownTo } from "@/lib/view/format";
 import type { DayMark, Home } from "@/lib/view/home";
 import { SyncChip } from "./sync-chip";
@@ -355,6 +356,13 @@ export function Beranda({ data }: { data: Home | null }) {
 										) : (
 											<Skeleton className={CHIP_SKELETON} />
 										)}
+										{d ? (
+											<span className="font-mono text-xs text-ink-500">
+												{pair.streak}/{DRILL_CLEAR_STREAK}
+											</span>
+										) : (
+											<SkeletonText width="1.6em" />
+										)}
 									</span>
 								))}
 							</div>
@@ -551,7 +559,7 @@ const SKELETON_HOME = {
 		{ day: "Min", state: "today" }
 	] satisfies DayMark[],
 	pairs: [
-		{ a: "a", b: "b", group: "sumatera" as const },
-		{ a: "c", b: "d", group: "jawa" as const }
+		{ a: "a", b: "b", group: "sumatera" as const, streak: 0 },
+		{ a: "c", b: "d", group: "jawa" as const, streak: 0 }
 	]
 };

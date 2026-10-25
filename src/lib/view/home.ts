@@ -31,7 +31,7 @@ export type Home = {
 	note: string | null;
 	reviewsOutsideScope: number;
 	newLimit: number;
-	pairs: { a: string; b: string; group: GroupId }[];
+	pairs: { a: string; b: string; group: GroupId; streak: number }[];
 	scope: {
 		group: GroupId | null;
 		title: string;
@@ -108,7 +108,7 @@ function flaggedPairs(state: AppState, bundle: Bundle) {
 		const b = codes.get(to);
 		if (seen.has(id) || !a || !b) continue;
 		seen.add(id);
-		pairs.push({ a: a.code, b: b.code, group: uiGroup(a.group) });
+		pairs.push({ a: a.code, b: b.code, group: uiGroup(a.group), streak: pair.drillStreak });
 	}
 	return pairs;
 }

@@ -12,7 +12,7 @@ const bundle = ruleBundle();
 const BALI = { level: "province", id: "bali" } as const;
 const SUMATERA = { level: "group", id: "sumatera" } as const;
 const mature = reviewCard({ state: "mature", intervalDays: 40, passedLevel3: true });
-const flag = { occurrences: [], flagged: true, cleared: false, drillStreak: 0 };
+const flag = { occurrences: [], flagged: true, cleared: false, drillStreak: 0, drillDay: null };
 
 function masteredBali() {
 	const state = fresh();

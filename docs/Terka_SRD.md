@@ -785,15 +785,15 @@ Setiap jawaban salah dicatat sebagai pasangan berarah `(kartu_benar, jawaban_dib
 | Kondisi                                            | Tindakan                                                 |
 | -------------------------------------------------- | -------------------------------------------------------- |
 | Pasangan muncul 3 kali dalam 30 hari               | Tandai sebagai pasangan yang sering tertukar             |
-| Pasangan sudah ditandai                            | Tambahkan latihan Bandingkan Kode ke prioritas 2 antrean |
-| Benar 5 kali berturut pada latihan Bandingkan Kode | Hapus tanda dan kembalikan ke jadwal normal              |
+| Pasangan sudah ditandai                            | Tambahkan latihan Bandingkan Kode ke prioritas 2 antrean, paling banyak sekali sehari |
+| Benar di 5 hari berbeda berturut-turut pada latihan Bandingkan Kode | Hapus tanda dan kembalikan ke jadwal normal |
 | Tertukar lagi setelah tanda dihapus                | Ambang turun jadi 2 kali                                 |
 
 Pasangan yang sering tertukar tidak dibatasi Cakupan. Jika BE tertukar dengan DE, latihan Bandingkan Kode tetap bisa muncul meski cakupan aktifnya hanya Sumatera. Kesalahan lintas kawasan justru penting dicatat karena lebih mudah lolos jika latihan selalu dikurung per wilayah.
 
 Hitungan ini memakai gabungan jawaban dari semua perangkat. Pencarian Referensi dan Pelat Terlihat tidak ikut dihitung karena tidak menghasilkan jawaban. Tebakan Perkenalan tidak dihitung, karena kartunya belum pernah dipelajari. Jawaban yang dibatalkan lewat undo juga tidak dihitung.
 
-Pasangan dicatat berarah, tetapi status "sering tertukar" berlaku untuk pasangan itu ke dua arah saat menentukan status dikuasai (bagian 2.5). Latihan Bandingkan Kode untuk pasangan yang salah satu kodenya `suspended` tidak ditampilkan sampai kodenya aktif lagi. Hitungan 5 benar berturut-turut kembali ke nol begitu ada satu jawaban salah di drill pasangan itu.
+Pasangan dicatat berarah, tetapi status "sering tertukar" berlaku untuk pasangan itu ke dua arah saat menentukan status dikuasai (bagian 2.5). Latihan Bandingkan Kode untuk pasangan yang salah satu kodenya `suspended` tidak ditampilkan sampai kodenya aktif lagi. Hanya drill pertama tiap hari yang dihitung. Hitungan 5 hari benar kembali ke nol begitu drill pertama hari itu salah; hari tanpa drill tidak mengubah hitungan.
 
 ### 6.3 Bentuk Latihan
 

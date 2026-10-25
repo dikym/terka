@@ -63,7 +63,7 @@ function afterAnswer(state: AppState, row: ReviewLog, cardId: string, valid: boo
 	for (const other of confusionsOf(row))
 		recordConfusion(state, row.contentId, other, row.localDay);
 	if (row.context === "drill" && row.drillPairWith)
-		recordDrill(state, row.contentId, row.drillPairWith, row.correct === true);
+		recordDrill(state, row.contentId, row.drillPairWith, row.correct === true, row.localDay);
 }
 
 export function applyReview(state: AppState, row: ReviewLog, at: number): void {
