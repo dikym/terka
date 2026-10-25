@@ -27,7 +27,8 @@ export const CONTEXTS: Record<QuestionContext, true> = {
 	kilat: true,
 	placement: true,
 	setrecall: true,
-	special: true
+	special: true,
+	recheck: true
 };
 export const LEVEL_SOURCES: Record<LevelSource, true> = {
 	auto: true,
@@ -60,6 +61,7 @@ export const RUN_KINDS: Record<RunKind, true> = {
 	kilat: true,
 	placement: true,
 	setrecall: true,
-	special: true
+	special: true,
+	recheck: true
 };
 export const TIERS: Record<Tier, true> = { pemula: true, menengah: true, mahir: true, ahli: true };

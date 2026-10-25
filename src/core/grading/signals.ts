@@ -10,7 +10,8 @@ export type AnswerSignals = {
 		| "kilat"
 		| "placement"
 		| "setrecall"
-		| "special";
+		| "special"
+		| "recheck";
 	level: 1 | 2 | 3;
 	levelSource: "auto" | "manual_up" | "manual_down";
 	questionType: "intro_read" | "choice" | "truefalse" | "oddoneout" | "typed" | "setrecall";

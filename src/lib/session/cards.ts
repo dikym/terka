@@ -58,7 +58,7 @@ export type CardDeps = {
 	scope?: Scope;
 };
 
-const LOWERABLE = new Set(["daily", "focused", "special", "challenge"]);
+const LOWERABLE = new Set(["daily", "focused", "special", "challenge", "recheck"]);
 const NO_PILL = new Set<Mode>(["kilat", "harian", "penempatan"]);
 const LEECH_SHOWN = 5;
 

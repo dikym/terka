@@ -50,6 +50,8 @@ export type AppState = {
 	// Closed daily runs still short of their plan; a run's answers replay after the run itself.
 	dailyRuns: Map<string, { localDay: string; plannedCount: number; cards: Set<string> }>;
 	doneDays: Set<string>;
+	// First answer per code on the latest Cek Ingatan day; orders the backlog that follows it.
+	recheck: { day: string; results: Map<string, boolean> } | null;
 	activeDays: Set<string>;
 	kilatRecords: Map<string, number>;
 	factViews: { factId: string; localDay: string; runId: string | null }[];
@@ -102,6 +104,7 @@ export function initialState(
 		challengeDays: new Set(),
 		dailyRuns: new Map(),
 		doneDays: new Set(),
+		recheck: null,
 		activeDays: new Set(),
 		kilatRecords: new Map(),
 		factViews: [],
