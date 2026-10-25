@@ -24,7 +24,14 @@ export type ReferenceResult =
 	| { kind: "special"; special: Special; sources: ContentSource[] }
 	| { kind: "reference"; plate: ReferencePlate }
 	| { kind: "specialList" }
-	| { kind: "names"; regions: { region: Region; areas: Area[] }[]; specials: Special[] };
+	| {
+			kind: "names";
+			regions: { region: Region; areas: Area[]; via: NameMatch | null }[];
+			specials: Special[];
+	  };
+
+/** Which of a region's own names the query matched; null when only its areas did. */
+export type NameMatch = { kind: "province" | "group" | "region"; name: string };
 
 const CD_NUMBER = /^\s*cd[\s.-]*0*(\d{1,3})/i;
 
@@ -64,11 +71,16 @@ function byName(bundle: Bundle, query: string): ReferenceResult {
 			.filter((area): area is Area => area !== undefined && areaMatches(area));
 		// A province name ("Jawa Timur") finds every code inside it. A group opens only when its
 		// whole name is typed ("Jawa"), so "bali" does not list all of Bali & Nusa Tenggara.
-		const named =
-			[region.region, provinceName(region.province)].some((form) =>
-				startsWord(normalizeName(form), name)
-			) || normalizeName(groupName(bundle, region.group)) === name;
-		return areas.length > 0 || named ? [{ region, areas }] : [];
+		const province = provinceName(region.province);
+		const group = groupName(bundle, region.group);
+		const via: NameMatch | null = startsWord(normalizeName(province), name)
+			? { kind: "province", name: province }
+			: normalizeName(group) === name
+				? { kind: "group", name: group }
+				: startsWord(normalizeName(region.region), name)
+					? { kind: "region", name: region.region }
+					: null;
+		return areas.length > 0 || via ? [{ region, areas, via }] : [];
 	});
 	const specials = bundle.specials.filter((special) =>
 		[special.holder, ...special.aliases].some((form) => holderKey(form).startsWith(holder))

@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useMemo, useState } from "react";
 import { AppFailed } from "@/components/screens/app-status";
 import { Referensi } from "@/components/screens/referensi";
 import { sightingEvent } from "@/core/session/commands";
@@ -10,7 +11,15 @@ import { useAppState, usePrefs, useReady } from "@/lib/app/use-runtime";
 import { lastSightingAt } from "@/lib/db/log";
 import { sightingCode } from "@/lib/view/reference";
 
-export default function Page() {
+function ReferenceRoute() {
+	const search = useSearchParams();
+	// Read once: the box and the view take over once the page is open.
+	const [initial] = useState(() => ({
+		kode: search.get("kode"),
+		cari: search.get("cari"),
+		provinsi: search.get("provinsi"),
+		kawasan: search.get("kawasan")
+	}));
 	const { status, runtime } = useReady();
 	const app = useAppState(runtime);
 	const prefs = usePrefs(runtime);
@@ -45,5 +54,16 @@ export default function Page() {
 		);
 		if (event) await runtime.store.record([event]);
 	};
-	return <Referensi data={data} onQuery={(query) => void record(query)} />;
+	return <Referensi data={data} initial={initial} onQuery={(query) => void record(query)} />;
+}
+
+const NO_ENTRY = { kode: null, cari: null, provinsi: null, kawasan: null };
+
+export default function Page() {
+	// The static page has no address to read; it still ships the skeleton.
+	return (
+		<Suspense fallback={<Referensi data={null} initial={NO_ENTRY} onQuery={() => {}} />}>
+			<ReferenceRoute />
+		</Suspense>
+	);
 }

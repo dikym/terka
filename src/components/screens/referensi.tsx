@@ -17,6 +17,7 @@ import { Kbd } from "@/components/ui/kbd";
 import { Tooltip } from "@/components/ui/tooltip";
 import { SpecialPlate } from "@/components/ui/plate";
 import { DotLabel, TagButton } from "@/components/ui/tag";
+import { provinceName } from "@/core/answers/dictionary";
 import type { Bundle } from "@/core/content/schema";
 import type { AppState } from "@/core/replay/state";
 import { sightingCounts } from "@/core/views/stats";
@@ -26,17 +27,23 @@ import {
 	diplomatEntry,
 	diplomatList,
 	otherCodes,
+	provinceResults,
 	type RefGroup,
 	type RegionDetail,
 	refGroups,
+	referenceHref,
 	refView,
 	regionDetail,
+	type SearchResults as SearchResultsData,
+	searchResults,
 	suggestions,
 	unverifiedCodes
 } from "@/lib/view/reference";
 import {
 	DiplomatList,
+	DiplomatPractice,
 	Divider,
+	FADE_RAMP,
 	FormatCard,
 	FormatCards,
 	Hint,
@@ -113,15 +120,15 @@ function Suggest({
 }: {
 	bundle: Bundle;
 	query: string;
-	highlight: number;
+	highlight: number | null;
 	onPick: (value: string) => void;
 }) {
 	const result = suggestions(bundle, query);
 	// A long list scrolls; the highlighted row stays in view while moving with the arrows.
 	useEffect(() => {
-		document.getElementById(optionId(highlight))?.scrollIntoView({ block: "nearest" });
+		if (highlight !== null)
+			document.getElementById(optionId(highlight))?.scrollIntoView({ block: "nearest" });
 	}, [highlight]);
-	const prefix = query.trim().toUpperCase().replace(/\s+/g, " ");
 	return (
 		<div
 			id={LISTBOX_ID}
@@ -149,10 +156,7 @@ function Suggest({
 								className={`grid min-h-12 w-full cursor-pointer grid-cols-[64px_20px_minmax(0,1fr)_auto] items-center gap-3 px-4 text-left ${index === highlight ? "bg-paper-50" : ""}`}
 							>
 								<span className="font-mono text-body-md leading-none font-semibold text-ink-1000">
-									<span className="bg-caution-100">
-										{code.slice(0, prefix.length)}
-									</span>
-									{code.slice(prefix.length)}
+									{code}
 								</span>
 								{entry.flag && <Flag code={entry.flag} />}
 								<span
@@ -194,8 +198,10 @@ function Suggest({
 								className={`grid min-h-14 w-full cursor-pointer grid-cols-[52px_minmax(0,1fr)] items-center gap-3 px-4 py-2 text-left lg:min-h-12 lg:grid-cols-[64px_minmax(0,1fr)_auto] lg:py-0 ${position === highlight ? "bg-paper-50" : ""}`}
 							>
 								<CodeChip code={region.code} group={region.group} />
-								<span className="flex flex-col gap-0.5 lg:contents">
-									<span className="text-ink-900 type-body">{region.areas}</span>
+								<span className="flex min-w-0 flex-col gap-0.5 lg:contents">
+									<span className="truncate text-ink-900 type-body">
+										{region.areas}
+									</span>
 									<span className="font-mono text-body-sm leading-[1.2] font-medium text-ink-500 tabular-nums">
 										{region.province}
 									</span>
@@ -228,8 +234,38 @@ const SKELETON_GROUPS: RefGroup[] = (["sumatera", "jawa", "kalimantan"] as const
 	}))
 }));
 
-function RegionList({ bundle }: { bundle: Bundle | null }) {
-	const [filter, setFilter] = useState<GroupId | "all">("all");
+function ChipButton({
+	code,
+	onPick,
+	children
+}: {
+	code: string;
+	onPick: (code: string) => void;
+	children: React.ReactNode;
+}) {
+	return (
+		<button
+			type="button"
+			aria-label={`Buka ${code}`}
+			onClick={() => onPick(code)}
+			className="flex cursor-pointer"
+		>
+			{children}
+		</button>
+	);
+}
+
+function RegionList({
+	bundle,
+	filter,
+	setFilter,
+	onPick
+}: {
+	bundle: Bundle | null;
+	filter: GroupId | "all";
+	setFilter: (value: GroupId | "all") => void;
+	onPick: (code: string) => void;
+}) {
 	const loading = bundle === null;
 	const all = useMemo(() => (bundle ? refGroups(bundle) : SKELETON_GROUPS), [bundle]);
 	const unverified = useMemo(() => (bundle ? unverifiedCodes(bundle) : new Set()), [bundle]);
@@ -313,13 +349,14 @@ function RegionList({ bundle }: { bundle: Bundle | null }) {
 												className="h-5.5 w-7.5 rounded-sm"
 											/>
 										) : (
-											<CodeChip
-												key={code}
-												code={code}
-												group={group.id}
-												size="xs"
-												unverified={unverified.has(code)}
-											/>
+											<ChipButton key={code} code={code} onPick={onPick}>
+												<CodeChip
+													code={code}
+													group={group.id}
+													size="xs"
+													unverified={unverified.has(code)}
+												/>
+											</ChipButton>
 										)
 									)}
 								</span>
@@ -328,6 +365,27 @@ function RegionList({ bundle }: { bundle: Bundle | null }) {
 					</div>
 				</section>
 			))}
+		</>
+	);
+}
+
+function SearchResults({ result, data }: { result: SearchResultsData; data: ReferenceData }) {
+	return (
+		<>
+			<Hint>{result.diplomats.length + result.regions.length} kode ditemukan.</Hint>
+			{result.diplomats.map((entry) => (
+				<SpecialCard key={entry.number} entry={entry} practice={false} />
+			))}
+			{result.regions.map(({ code, areaIds, note }) => {
+				const detail = regionDetail(data.bundle, data.state, code, data.today, areaIds);
+				return (
+					<RegionCard
+						key={code}
+						detail={note ? { ...detail, note } : detail}
+						loading={false}
+					/>
+				);
+			})}
 		</>
 	);
 }
@@ -383,9 +441,17 @@ function SpecialCodesCard({ loading }: { loading: boolean }) {
 
 type SeenRow = { code: string; group: GroupId; count: number };
 
-function SeenCard({ rows: all }: { rows: SeenRow[] | null }) {
+const SEEN_SHOWN = 3;
+
+function SeenCard({
+	rows: all,
+	onPick
+}: {
+	rows: SeenRow[] | null;
+	onPick: (code: string) => void;
+}) {
 	const loading = all === null;
-	const rows = (all ?? SKELETON_SEEN).slice(0, 3);
+	const rows = (all ?? SKELETON_SEEN).slice(0, SEEN_SHOWN);
 	return (
 		<Card className="gap-2">
 			<CardHeader
@@ -409,7 +475,9 @@ function SeenCard({ rows: all }: { rows: SeenRow[] | null }) {
 						{loading ? (
 							<Skeleton className="h-7 w-10 rounded-sm" />
 						) : (
-							<CodeChip code={row.code} group={row.group} />
+							<ChipButton code={row.code} onPick={onPick}>
+								<CodeChip code={row.code} group={row.group} />
+							</ChipButton>
 						)}
 						<span className="font-mono text-body-sm leading-[1.2] font-medium text-ink-1000 tabular-nums">
 							{loading ? <SkeletonText width="2.5em" /> : `${row.count} kali`}
@@ -417,7 +485,10 @@ function SeenCard({ rows: all }: { rows: SeenRow[] | null }) {
 					</div>
 				))}
 			</div>
-			<Hint>Hanya kode depan yang disimpan. Nomor dan huruf belakang dibuang.</Hint>
+			<Hint>
+				{SEEN_SHOWN} kode yang paling sering terlihat. Hanya kode depan yang disimpan; nomor
+				dan huruf belakang dibuang.
+			</Hint>
 		</Card>
 	);
 }
@@ -497,6 +568,12 @@ function RegionAside({ detail, note }: { detail: RegionDetail; note: string | nu
 
 const SEARCH_DEBOUNCE_MS = 250;
 
+// The diplomat list's smoothstep ramp, from the paper band down to clear.
+const BAND_FADE = `linear-gradient(to bottom, ${FADE_RAMP.map(
+	([alpha, t]) =>
+		`color-mix(in srgb, var(--color-paper-0) ${Math.round((1 - alpha) * 100)}%, transparent) ${Math.round(t * 100)}%`
+).join(", ")})`;
+
 export type ReferenceData = {
 	bundle: Bundle;
 	state: AppState;
@@ -510,19 +587,51 @@ const SKELETON_SEEN: SeenRow[] = ["a", "b", "c"].map((code) => ({
 	count: 1
 }));
 
+type Results = { kind: "query" } | { kind: "province"; id: string };
+
+/** What the address asks Referensi to open; each is read once, on arrival. */
+export type ReferenceEntry = {
+	kode: string | null;
+	cari: string | null;
+	provinsi: string | null;
+	kawasan: string | null;
+};
+
+const entryQuery = (initial: ReferenceEntry) =>
+	initial.kode ?? initial.cari ?? (initial.provinsi && provinceName(initial.provinsi)) ?? "";
+
 export function Referensi({
 	data,
+	initial,
 	onQuery
 }: {
 	data: ReferenceData | null;
+	initial: ReferenceEntry;
 	/** Called with every settled query; the page decides what counts as a sighting. */
 	onQuery: (query: string) => void;
 }) {
 	// `query` is the text in the box; `searched` follows it once typing pauses.
-	const [query, setQuery] = useState("");
-	const [searched, setSearched] = useState("");
-	const [highlight, setHighlight] = useState(0);
+	const [query, setQuery] = useState(() => entryQuery(initial));
+	const [searched, setSearched] = useState(() => entryQuery(initial));
+	const [highlight, setHighlight] = useState<number | null>(null);
+	const [results, setResults] = useState<Results | null>(() =>
+		initial.kode
+			? null
+			: initial.cari
+				? { kind: "query" }
+				: initial.provinsi
+					? { kind: "province", id: initial.provinsi }
+					: null
+	);
 	const bundle = data?.bundle ?? null;
+	const province =
+		bundle && results?.kind === "province" ? provinceResults(bundle, results.id) : null;
+	// An unknown province in the address falls back to the plain list.
+	if (bundle && results?.kind === "province" && !province) {
+		setResults(null);
+		setQuery("");
+		setSearched("");
+	}
 	const view = useMemo(
 		() => (bundle ? refView(bundle, searched) : { kind: "list" as const }),
 		[bundle, searched]
@@ -539,12 +648,14 @@ export function Referensi({
 	}, [data]);
 
 	// A search counts as a sighting once the query rests for a moment, not on every keystroke.
+	// One that came from the address was opened, not seen on a plate.
+	const fromAddress = useRef<string | null>(entryQuery(initial) || null);
 	const latestQuery = useRef(onQuery);
 	useEffect(() => {
 		latestQuery.current = onQuery;
 	});
 	useEffect(() => {
-		if (!searched.trim()) return;
+		if (!searched.trim() || searched === fromAddress.current) return;
 		const timer = setTimeout(() => latestQuery.current(searched), 1500);
 		return () => clearTimeout(timer);
 	}, [searched]);
@@ -553,19 +664,53 @@ export function Referensi({
 		if (query === searched) return;
 		const timer = setTimeout(() => {
 			setSearched(query);
-			setHighlight(0);
+			setHighlight(null);
 		}, SEARCH_DEBOUNCE_MS);
 		return () => clearTimeout(timer);
 	}, [query, searched]);
 
-	const type = (value: string) => setQuery(value);
+	const [kawasan, setKawasan] = useState<GroupId | "all">(
+		() => GROUP_IDS.find((id) => id === initial.kawasan) ?? "all"
+	);
+	const type = (value: string) => {
+		fromAddress.current = null;
+		setQuery(value);
+		setHighlight(null);
+		setResults(null);
+	};
 	// Clearing, Escape and picking a suggestion are deliberate: they apply at once.
 	const update = (value: string) => {
+		fromAddress.current = null;
 		setQuery(value);
 		setSearched(value);
-		setHighlight(0);
+		setHighlight(null);
+		setResults(null);
 	};
-	const options = view.kind === "suggest" && bundle ? suggestions(bundle, searched) : null;
+	const suggesting = view.kind === "suggest" && !results;
+
+	// The address names what is shown, so a reload brings it back. Replaced, not pushed:
+	// Back still leaves Referensi.
+	const shown = searched.trim();
+	const address = !bundle
+		? null
+		: results?.kind === "province"
+			? referenceHref("provinsi", results.id)
+			: shown
+				? referenceHref(
+						results || view.kind === "suggest" || view.kind === "none"
+							? "cari"
+							: "kode",
+						shown
+					)
+				: kawasan !== "all"
+					? referenceHref("kawasan", kawasan)
+					: "/referensi";
+	useEffect(() => {
+		const { pathname, search } = window.location;
+		if (address && address !== pathname + search)
+			window.history.replaceState(null, "", address);
+	}, [address]);
+	const options = suggesting && bundle ? suggestions(bundle, searched) : null;
 	const optionCodes = options
 		? [
 				...options.diplomats.map((entry) => `CD ${entry.number}`),
@@ -575,19 +720,32 @@ export function Referensi({
 
 	const onKeyDown = (event: React.KeyboardEvent) => {
 		if (event.key === "Escape") return update("");
+		// Enter with nothing highlighted shows every match, even before the debounce settles.
+		if (event.key === "Enter" && (highlight === null || !optionCodes.length)) {
+			if (!query.trim()) return;
+			setSearched(query);
+			setResults({ kind: "query" });
+			return;
+		}
 		if (!optionCodes.length) return;
 		if (event.key === "ArrowDown") {
 			event.preventDefault();
-			setHighlight((index) => Math.min(optionCodes.length - 1, index + 1));
+			setHighlight((index) =>
+				index === null ? 0 : Math.min(optionCodes.length - 1, index + 1)
+			);
 		} else if (event.key === "ArrowUp") {
 			event.preventDefault();
-			setHighlight((index) => Math.max(0, index - 1));
-		} else if (event.key === "Enter") update(optionCodes[highlight]);
+			setHighlight((index) => (index === null ? null : Math.max(0, index - 1)));
+		} else if (event.key === "Enter" && highlight !== null) update(optionCodes[highlight]);
 	};
 
 	let main: React.ReactNode;
 	let aside: React.ReactNode;
-	if (view.kind === "region" && data) {
+	if (results && data && (province || view.kind === "suggest")) {
+		const result = province ?? searchResults(data.bundle, searched);
+		main = <SearchResults result={result} data={data} />;
+		aside = result.diplomats.length > 0 ? <DiplomatPractice /> : <SearchHelp />;
+	} else if (view.kind === "region" && data) {
 		const detail = regionDetail(data.bundle, data.state, view.code, data.today);
 		const others = otherCodes(data.bundle, view.code);
 		const regionId = data.bundle.regions.find((region) => region.code === view.code)?.id;
@@ -651,14 +809,16 @@ export function Referensi({
 		main = <NoResult query={searched.trim()} />;
 		aside = <SearchHelp />;
 	} else {
-		main = <RegionList bundle={bundle} />;
+		main = (
+			<RegionList bundle={bundle} filter={kawasan} setFilter={setKawasan} onPick={update} />
+		);
 		aside =
 			view.kind === "suggest" ? (
 				<SearchHelp />
 			) : (
 				<>
 					<SpecialCodesCard loading={!data} />
-					{(seen === null || seen.length > 0) && <SeenCard rows={seen} />}
+					{(seen === null || seen.length > 0) && <SeenCard rows={seen} onPick={update} />}
 					<DisclaimerCard />
 				</>
 			);
@@ -673,22 +833,32 @@ export function Referensi({
 			</div>
 			<div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
 				<div className="flex min-w-0 flex-col gap-5">
-					<div className="relative">
-						<SearchBox
-							value={query}
-							onChange={(value) => (value ? type(value) : update(value))}
-							onKeyDown={onKeyDown}
-							expanded={view.kind === "suggest"}
-							active={optionCodes.length ? highlight : null}
+					{/* Sticks under the phone header (min-h-15) and level with the side panel (lg:top-8);
+					    the paper band hides what scrolls past. */}
+					<div className="sticky top-15 z-20 -my-2 bg-paper-0 py-2 lg:top-0 lg:-mt-8 lg:pt-8">
+						{/* Fits the gap below the box, so it only shows over content scrolling under it. */}
+						<div
+							aria-hidden
+							style={{ backgroundImage: BAND_FADE }}
+							className="pointer-events-none absolute inset-x-0 top-full h-3"
 						/>
-						{view.kind === "suggest" && bundle && (
-							<Suggest
-								bundle={bundle}
-								query={searched}
-								highlight={highlight}
-								onPick={update}
+						<div className="relative">
+							<SearchBox
+								value={query}
+								onChange={(value) => (value ? type(value) : update(value))}
+								onKeyDown={onKeyDown}
+								expanded={suggesting}
+								active={optionCodes.length ? highlight : null}
 							/>
-						)}
+							{suggesting && bundle && (
+								<Suggest
+									bundle={bundle}
+									query={searched}
+									highlight={highlight}
+									onPick={update}
+								/>
+							)}
+						</div>
 					</div>
 					{main}
 				</div>

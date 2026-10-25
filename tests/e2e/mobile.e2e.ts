@@ -102,3 +102,14 @@ test("a finished session keeps its way home in the bottom bar", async ({ page })
 	const bottom = await home.evaluate((link) => link.getBoundingClientRect().bottom);
 	expect(bottom).toBeGreaterThan(page.viewportSize()!.height - 40);
 });
+
+
+test("the search box stays under the header while the results scroll", async ({ page }) => {
+	await seen(page);
+	await page.goto("/referensi?cari=timur");
+	await page.getByText(/^\d+ kode ditemukan\.$/).waitFor();
+	await page.evaluate(() => window.scrollTo(0, 3000));
+	const box = (await page.locator("#referensi-search").boundingBox())!;
+	expect(box.y).toBeGreaterThanOrEqual(60);
+	expect(box.y).toBeLessThan(140);
+});

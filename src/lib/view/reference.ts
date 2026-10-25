@@ -1,17 +1,18 @@
 import type { GroupId } from "@/components/ui/groups";
 import type { FlagCode } from "@/components/ui/icon";
 import { areaDisplayName, provinceName } from "@/core/answers/dictionary";
-import type { Bundle, Region, Special } from "@/core/content/schema";
+import type { Area as CoreArea, Bundle, Region, Special } from "@/core/content/schema";
 import { frontCode } from "@/core/reference/front-code";
-import { searchReference } from "@/core/reference/search";
+import { type NameMatch, searchReference } from "@/core/reference/search";
 import { specialCodeList } from "@/core/reference/specials";
 import type { AppState } from "@/core/replay/state";
 import { sightingCounts } from "@/core/views/stats";
+import { normalizeName } from "@/core/text";
 import { SIGHTING_WINDOW_DAYS } from "@/rules";
 import { holderFlag } from "./flags";
 import { shortDate } from "./format";
 import { provincesOf, uiGroup } from "./groups";
-import { areaSummary } from "./stats";
+import { areaSummary, listSummary } from "./stats";
 
 export type RefView =
 	| { kind: "list" }
@@ -99,7 +100,7 @@ export function diplomatEntry(bundle: Bundle, special: Special): DiplomatEntry {
 const regionRow = (bundle: Bundle, region: Region) => ({
 	code: region.code,
 	group: uiGroup(region.group),
-	areas: areaSummary(bundle, region, 3),
+	areas: areaSummary(bundle, region),
 	province: provinceName(region.province)
 });
 
@@ -122,7 +123,10 @@ export function suggestions(bundle: Bundle, raw: string): Suggestions {
 		regions: result.regions.map(({ region, areas }) =>
 			// Found through its areas: name those, so the row says why it is listed.
 			areas.length
-				? { ...regionRow(bundle, region), areas: areas.map(areaDisplayName).join(", ") }
+				? {
+						...regionRow(bundle, region),
+						areas: listSummary(areas.map(areaDisplayName), 2)
+					}
 				: regionRow(bundle, region)
 		)
 	};
@@ -132,15 +136,20 @@ export function regionDetail(
 	bundle: Bundle,
 	state: AppState,
 	code: string,
-	today: string
+	today: string,
+	/** Show only these areas, the ones a search found; empty shows them all. */
+	only: readonly string[] = []
 ): RegionDetail {
 	const region = bundle.regions.find((item) => item.code === code);
 	if (!region) throw new Error(`unknown code ${code}`);
 	const kota: Area[] = [];
 	const kabupaten: Area[] = [];
+	let total = 0;
 	for (const membership of region.areas) {
 		const area = bundle.areas.find((item) => item.id === membership.areaId);
 		if (!area) continue;
+		total++;
+		if (only.length && !only.includes(area.id)) continue;
 		const entry =
 			membership.confidence === "high"
 				? { name: area.name }
@@ -155,7 +164,12 @@ export function regionDetail(
 		kota,
 		kabupaten,
 		verified: region.confidence === "high",
-		...(seen ? { seen: `${seen} kali dalam ${SIGHTING_WINDOW_DAYS} hari` } : {})
+		...(seen ? { seen: `${seen} kali dalam ${SIGHTING_WINDOW_DAYS} hari` } : {}),
+		...(only.length
+			? {
+					note: `${kota.length + kabupaten.length} dari ${total} kab/kota kode ${region.code} cocok dengan pencarian.`
+				}
+			: {})
 	};
 }
 
@@ -191,6 +205,70 @@ export function refGroups(bundle: Bundle): RefGroup[] {
 		}))
 	}));
 }
+
+/**
+ * A matched code: `areaIds` are the areas the search found it through, empty for all of them;
+ * `note` says which of its own names matched.
+ */
+export type SearchResults = {
+	diplomats: DiplomatEntry[];
+	regions: { code: string; areaIds: string[]; note: string | null }[];
+};
+
+// A match on the code's own name covers all its areas, unless that name merely lists the
+// matched area ("Malang, Pasuruan, …" for "malang"): then the area is the better answer.
+function wholeRegion(via: NameMatch | null, areas: CoreArea[]): via is NameMatch {
+	if (!via) return false;
+	const name = normalizeName(via.name);
+	return !areas.some((area) => name.includes(normalizeName(area.name)));
+}
+
+// The card's title is the province, so a region name gets its own sentence.
+function viaNote(code: string, via: NameMatch): string {
+	if (via.kind === "region") return `Kode ${code} diperuntukkan untuk ${via.name}.`;
+	const label = via.kind === "province" ? "provinsi" : "kawasan";
+	return `Cocok dengan ${label} ${via.name}, jadi semua kab/kota ditampilkan.`;
+}
+
+/** Every match of a name search, in the order the suggestions list them. */
+export function searchResults(bundle: Bundle, query: string): SearchResults {
+	const result = searchReference(bundle, query);
+	return {
+		diplomats: suggestions(bundle, query).diplomats,
+		regions:
+			result.kind === "names"
+				? result.regions.map(({ region, areas, via }) =>
+						wholeRegion(via, areas)
+							? { code: region.code, areaIds: [], note: viaNote(region.code, via) }
+							: {
+									code: region.code,
+									areaIds: areas.map((area) => area.id),
+									note: null
+								}
+					)
+				: []
+	};
+}
+
+/** One province's codes, exactly: a name search for it also finds neighbours ("Riau" finds BP). */
+export function provinceResults(
+	bundle: Bundle,
+	provinceId: string
+): (SearchResults & { name: string }) | null {
+	const province = refGroups(bundle)
+		.flatMap((group) => group.provinces)
+		.find((entry) => entry.id === provinceId);
+	return province
+		? {
+				name: province.name,
+				diplomats: [],
+				regions: province.codes.map((code) => ({ code, areaIds: [], note: null }))
+			}
+		: null;
+}
+
+export const referenceHref = (param: "kode" | "cari" | "provinsi" | "kawasan", value: string) =>
+	`/referensi?${param}=${encodeURIComponent(value)}`;
 
 /** Codes not verified enough to be practised; drawn on a yellow wash. */
 export const unverifiedCodes = (bundle: Bundle) =>
