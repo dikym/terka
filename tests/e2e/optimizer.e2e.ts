@@ -23,7 +23,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("an eligible log gets optimized in a worker without blocking the page", async ({ page }) => {
-	await page.goto("/");
+	await page.goto("/beranda");
 	await seed(page, eligibleLog(bundle), device);
 	await page.reload();
 	await expect
@@ -42,7 +42,7 @@ test("an eligible log gets optimized in a worker without blocking the page", asy
 });
 
 test("the session screen never starts an optimization", async ({ page }) => {
-	await page.goto("/");
+	await page.goto("/beranda");
 	await seed(page, eligibleLog(bundle), device);
 	await page.goto("/sesi");
 	await page.waitForTimeout(10_000);
@@ -56,7 +56,7 @@ test("a full replay of 20,000 events stays under 2 seconds at 4x CPU slowdown", 
 	test.skip(browserName !== "chromium", "CPU throttling needs the Chrome DevTools Protocol");
 	const events = [...eligibleLog(bundle), ...replayLog()].slice(0, 20_000);
 	expect(events.length).toBe(20_000);
-	await page.goto("/");
+	await page.goto("/beranda");
 	// The first visit caches its empty state; a newer log version makes the reload replay.
 	await seed(page, events, { ...device, logVersion: 1000 });
 	const cdp = await page.context().newCDPSession(page);

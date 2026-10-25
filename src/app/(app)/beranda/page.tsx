@@ -95,7 +95,7 @@ function Home() {
 				onClose={() => {
 					if (runtime)
 						writeFlag("local", SEEN_CONTENT_REV, String(runtime.bundle.contentRev));
-					router.push("/");
+					router.push("/beranda");
 				}}
 			/>
 		);

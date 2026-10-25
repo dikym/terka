@@ -2,7 +2,7 @@ import type { Page } from "@playwright/test";
 
 // The first visit installs the worker; the next load is the first one it controls.
 export async function installed(page: Page) {
-	await page.goto("/");
+	await page.goto("/beranda");
 	await page.evaluate(async () => {
 		await navigator.serviceWorker.ready;
 	});

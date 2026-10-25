@@ -250,7 +250,7 @@ export function SessionEnd({
 			{body}
 			{view.fact && <FactCard fact={view.fact} />}
 			{view.loginPrompt && <LoginPrompt onLogin={onLogin} onDismiss={onDismissLogin} />}
-			<Button block href="/" className="max-lg:hidden">
+			<Button block href="/beranda" className="max-lg:hidden">
 				Kembali ke beranda
 			</Button>
 		</>
@@ -310,7 +310,7 @@ export function PlacementEnd({
 /** The summary's action in the phone's bottom bar. */
 export function EndFooter() {
 	return (
-		<Button block href="/" className="max-lg:h-13">
+		<Button block href="/beranda" className="max-lg:h-13">
 			Kembali ke beranda
 		</Button>
 	);

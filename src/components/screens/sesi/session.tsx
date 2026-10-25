@@ -158,7 +158,7 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 			]);
 		}
 		if (window.history.length > 1) router.back();
-		else router.push("/");
+		else router.push("/beranda");
 	};
 
 	// The plan is made once, from the log as it was when the screen opened.
@@ -644,7 +644,7 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 								...prefs.settings,
 								scope: suggestion.current
 							});
-						router.push("/");
+						router.push("/beranda");
 					}}
 					onChoose={() => router.push("/cakupan")}
 				/>

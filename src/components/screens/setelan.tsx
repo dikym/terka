@@ -130,7 +130,7 @@ export function Setelan({
 	const line = (text: string) => (loading ? <SkeletonText width="22em" /> : text);
 	return (
 		<>
-			<PageTitle title="Setelan" back="/" />
+			<PageTitle title="Setelan" back="/beranda" />
 			<div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-2">
 				<div className="flex flex-col gap-8">
 					<Section title="Materi baru">
@@ -237,7 +237,7 @@ export function Setelan({
 						</Row>
 						<Row
 							title="Data pelat"
-							href="/?perubahan=1"
+							href="/beranda?perubahan=1"
 							control={<DotLabel tone="go">Terbaru</DotLabel>}
 							wide={
 								<div className="grid grid-cols-3 gap-4">

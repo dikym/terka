@@ -14,7 +14,7 @@ const search = (page: Page, query: string) => page.locator("#referensi-search").
 // Ten Sumatera codes learned over the past two months; BK also has its Sebutkan card open.
 const LEARNED = ["bl", "bk", "bb", "ba", "bm", "bp", "bh", "bg", "bn", "be"];
 async function withLearned(page: Page) {
-	await page.goto("/");
+	await page.goto("/beranda");
 	await seed(page, learnedLog(LEARNED, ["bk"]), { logVersion: 1000 });
 }
 
@@ -29,7 +29,7 @@ async function answerOne(page: Page) {
 }
 
 test("first visit shows the welcome screen", async ({ page }) => {
-	await page.goto("/");
+	await page.goto("/beranda");
 	await expect(page.getByRole("dialog", { name: "Terka" })).toBeVisible();
 	await page.getByRole("button", { name: "Lewati, mulai dari awal" }).click();
 	await expect(page.getByText("soal perlu diulang")).toBeVisible();
@@ -37,7 +37,7 @@ test("first visit shows the welcome screen", async ({ page }) => {
 
 test("home shows a skeleton before data", async ({ page }) => {
 	await seen(page);
-	await page.goto("/", { waitUntil: "commit" });
+	await page.goto("/beranda", { waitUntil: "commit" });
 	await expect(page.locator("[data-skeleton]").filter({ visible: true }).first()).toBeVisible();
 	await expect(page.getByText("soal perlu diulang")).toBeVisible();
 });
@@ -95,7 +95,7 @@ test("a session runs to its summary from the keyboard", async ({ page }) => {
 		await page.keyboard.press("Enter");
 	}
 	await expect(page.getByRole("heading", { name: "Tantangan hari ini selesai" })).toBeVisible();
-	await page.goto("/");
+	await page.goto("/beranda");
 	await expect(page.getByRole("button", { name: "Tantangan Harian" })).toBeDisabled();
 });
 
@@ -120,7 +120,7 @@ test("the daily session introduces new codes and moves them out of new material"
 	await page.keyboard.press("Enter");
 	// The answer is written in the background; leave only once it is stored.
 	await expect.poll(async () => (await rows(page, "review_logs")).length).toBe(1);
-	await page.goto("/");
+	await page.goto("/beranda");
 	await expect(page.getByText(/^9 materi baru tersedia$/)).toBeVisible();
 });
 
@@ -188,17 +188,17 @@ test("enter on the highlighted row picks that region", async ({ page }) => {
 
 test("the keyboard page has its own address and Esc goes back", async ({ page }) => {
 	await seen(page);
-	await page.goto("/");
+	await page.goto("/beranda");
 	await page.getByRole("link", { name: "Papan tombol" }).click();
 	await expect(page).toHaveURL(/\/papan-tombol$/);
 	await expect(page.getByRole("heading", { level: 1, name: "Papan tombol" })).toBeVisible();
 	await page.keyboard.press("Escape");
-	await expect(page).toHaveURL(/\/$/);
+	await expect(page).toHaveURL(/\/beranda$/);
 });
 
 test("every text uses a design font", async ({ page }) => {
 	await seen(page);
-	await page.goto("/");
+	await page.goto("/beranda");
 	await page.getByText("soal perlu diulang").waitFor();
 	const loaded = await page.evaluate(async () => {
 		await document.fonts.ready;
@@ -236,13 +236,13 @@ test("slash from another page opens Referensi with the search focused", async ({
 });
 
 test("keyboard focus stays inside the welcome screen", async ({ page }) => {
-	await page.goto("/");
+	await page.goto("/beranda");
 	const dialog = page.getByRole("dialog", { name: "Terka" });
 	await dialog.waitFor();
 	for (let i = 0; i < 6; i++) await page.keyboard.press("Tab");
 	expect(await dialog.evaluate((root) => root.contains(document.activeElement))).toBe(true);
 	await page.keyboard.press("s");
-	await expect(page).toHaveURL(/\/$/);
+	await expect(page).toHaveURL(/\/beranda$/);
 });
 
 test("the wheel zooms the map without scrolling the page", async ({ page }) => {
@@ -271,7 +271,7 @@ test("shadowed buttons sink while pressed, links included", async ({ page }) => 
 	const shadow = (locator: Locator) =>
 		locator.evaluate((element) => getComputedStyle(element).boxShadow);
 	await seen(page);
-	await page.goto("/");
+	await page.goto("/beranda");
 	const start = page.getByRole("link", { name: "Mulai belajar" });
 	await start.hover();
 	await page.mouse.down();

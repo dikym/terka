@@ -12,12 +12,12 @@ const tabBar = (page: Page) => page.getByRole("navigation").last();
 
 test("the tab bar reaches every main tab", async ({ page }) => {
 	await seen(page);
-	await page.goto("/");
+	await page.goto("/beranda");
 	for (const [tab, path] of [
 		["Cakupan", /\/cakupan$/],
 		["Statistik", /\/statistik$/],
 		["Referensi", /\/referensi$/],
-		["Beranda", /\/$/]
+		["Beranda", /\/beranda$/]
 	] as const) {
 		await tabBar(page).getByRole("link", { name: tab }).click();
 		await expect(page).toHaveURL(path);
@@ -42,7 +42,7 @@ test("no screen scrolls sideways at phone width", async ({ page }) => {
 
 test("the top bar and tab bar stay in place while scrolling", async ({ page }) => {
 	await seen(page);
-	for (const route of ["/", "/setelan"]) {
+	for (const route of ["/beranda", "/setelan"]) {
 		await page.goto(route);
 		await page.getByRole("link", { name: "Statistik" }).last().waitFor();
 		await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
@@ -62,7 +62,7 @@ test("the top bar and tab bar stay in place while scrolling", async ({ page }) =
 
 test("keyboard hints stay hidden on a phone", async ({ page }) => {
 	await seen(page);
-	await page.goto("/");
+	await page.goto("/beranda");
 	await page.getByText("soal perlu diulang").waitFor();
 	for (const hint of await page.locator("kbd").all()) await expect(hint).toBeHidden();
 });
@@ -83,7 +83,7 @@ test("tapping a province shows its details under the map", async ({ page }) => {
 
 test("a finished session keeps its way home in the bottom bar", async ({ page }) => {
 	await seen(page);
-	await page.goto("/");
+	await page.goto("/beranda");
 	await seed(page, learnedLog(["bl", "bk", "bb", "ba", "bm", "bp"]), { logVersion: 1000 });
 	await page.goto("/sesi?mode=harian");
 	await page.getByRole("button", { name: "Mulai tantangan" }).click();
