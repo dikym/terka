@@ -440,7 +440,7 @@ function Intro({
 						label={<span className="text-sky-700">Belum dinilai</span>}
 					>
 						Tebakan pertama tidak mengubah jadwal dan tidak dicatat sebagai kode
-						tertukar. Pengulangan pertama tersedia setelah satu menit.
+						tertukar. Kode ini akan ditanyakan sekali lagi di sesi ini.
 					</Callout>
 				</>
 			)}
