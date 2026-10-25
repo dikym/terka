@@ -1,7 +1,9 @@
 import { describe, expect, test } from "bun:test";
 import { schedulerAt } from "../../../src/core/replay/params";
 import { retrievability } from "../../../src/core/scheduling/fsrs";
-import { dailyQueue, specialQueue } from "../../../src/core/session/queue";
+import { dailyQueue, dueReviewCount, specialQueue } from "../../../src/core/session/queue";
+import { dayStats } from "../../../src/core/replay/days";
+import { REVIEW_CAP_PER_DAY } from "../../../src/rules";
 import { addDays } from "../../../src/core/time/day";
 import {
 	DAY,
@@ -254,5 +256,56 @@ describe("Kode Khusus queue", () => {
 		expect(ids(specialQueue(state, bundleOf(), SETTINGS, at).items)).toEqual([
 			"cd-49-jepang::special2holder"
 		]);
+	});
+});
+
+describe("daily review cap", () => {
+	const backlog = (count: number) => {
+		const bundle = manyRegions(count);
+		const state = settle(fresh(bundle));
+		for (let index = 0; index < count; index++)
+			seedCard(state, `x${index}::code2region`, reviewCard({ stability: 5 + index }));
+		return { bundle, state };
+	};
+	const reviews = (items: { slot: string; cardId: string }[]) =>
+		items.filter((item) => item.slot === "review");
+
+	test("no more than 30 reviews are queued, weakest first", () => {
+		const { bundle, state } = backlog(45);
+		const queued = reviews(dailyQueue(state, bundle, SETTINGS, at).items);
+		expect(REVIEW_CAP_PER_DAY).toBe(30);
+		expect(queued).toHaveLength(30);
+		expect(ids(queued)).toEqual(
+			Array.from({ length: 30 }, (_, index) => `x${index}::code2region`)
+		);
+	});
+	test("answered reviews use up the day's cap", () => {
+		const { bundle, state } = backlog(45);
+		dayStats(state, TODAY).capped = 25;
+		expect(reviews(dailyQueue(state, bundle, SETTINGS, at).items)).toHaveLength(5);
+	});
+	test("steps and drills are queued beyond the cap", () => {
+		const { bundle, state } = backlog(45);
+		dayStats(state, TODAY).capped = 30;
+		seedCard(state, "dk::code2region", { state: "learning", step: 1, due: NOW - MINUTE });
+		seedCard(state, "be::code2region", reviewCard({ due: NOW + 5 * DAY }));
+		state.pairs.set("be>bd", {
+			occurrences: [],
+			flagged: true,
+			cleared: false,
+			drillStreak: 0,
+			drillDay: null
+		});
+		const items = dailyQueue(state, bundle, SETTINGS, at).items;
+		expect(items.map((item) => item.slot)).toEqual(["step", "drill"]);
+	});
+	test("the uncapped count still sees the whole backlog", () => {
+		const { bundle, state } = backlog(45);
+		expect(dueReviewCount(state, at)).toBe(45);
+		expect(bundle.regions.length).toBeGreaterThan(45);
+	});
+	test("new material stays held while the whole backlog is over the hold", () => {
+		const { bundle, state } = backlog(45);
+		expect(dailyQueue(state, bundle, SETTINGS, at).held).toBe(true);
 	});
 });

@@ -22,7 +22,7 @@ const modeOf = (cardId: string) => cardId.slice(cardId.indexOf("::") + 2);
 export function dayStats(state: AppState, day: string): DayStats {
 	let stats = state.tier.days.get(day);
 	if (!stats) {
-		stats = { tier: state.tier.current, reviews: 0, reviewsCorrect: 0, held: false };
+		stats = { tier: state.tier.current, reviews: 0, reviewsCorrect: 0, held: false, capped: 0 };
 		state.tier.days.set(day, stats);
 	}
 	return stats;

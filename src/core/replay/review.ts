@@ -17,6 +17,7 @@ import { type AppState, type CardEntry, newEntry, putCard } from "./state";
 import { trackOf } from "./universe";
 
 const STEPS = new Set<string>(["learning", "relearning"]);
+const REGION_MODES = new Set<string>(["code2region", "region2code"]);
 const LEARNED = new Set<string>(["learning", "relearning", "review", "mature"]);
 const SETTLED = new Set<string>(["review", "mature"]);
 
@@ -156,6 +157,7 @@ export function applyReview(state: AppState, row: ReviewLog, at: number): void {
 			const stats = dayStats(state, row.localDay);
 			stats.reviews++;
 			if (row.correct === true) stats.reviewsCorrect++;
+			if (REGION_MODES.has(row.mode) && row.context !== "drill") stats.capped++;
 		}
 		unlockRelated(state, next, row.tz);
 	} else if (active && passesLevel3 && !card.passedLevel3) {

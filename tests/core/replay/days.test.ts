@@ -12,7 +12,8 @@ function fillWindow(state: AppState, day: string, reviews: number, correct: numb
 			tier: state.tier.current,
 			reviews,
 			reviewsCorrect: correct,
-			held: offset <= heldDays
+			held: offset <= heldDays,
+			capped: 0
 		});
 		state.activeDays.add(addDays(day, -offset));
 	}
@@ -26,7 +27,8 @@ function absence(state: AppState, day: string, practisedWhileHeld: boolean) {
 			tier: state.tier.current,
 			reviews: held ? 0 : 17,
 			reviewsCorrect: held ? 0 : 15,
-			held
+			held,
+			capped: 0
 		});
 		if (!held || practisedWhileHeld) state.activeDays.add(addDays(day, -offset));
 	}

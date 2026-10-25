@@ -25,3 +25,34 @@ describe("the in-session learning step", () => {
 		);
 	});
 });
+
+describe("the daily review cap count", () => {
+	const learned = (code: string) => [
+		intro(code, NOW),
+		review(code, "code2region", NOW + 30_000, { context: "daily" })
+	];
+	const later = NOW + 10 * 86_400_000;
+	const laterDay = localDay(later, WITA);
+
+	test("a scheduled review of a region card uses the day's cap", () => {
+		const state = stateOf([
+			...learned("dk"),
+			review("dk", "code2region", later, { context: "daily" })
+		]);
+		expect(state.tier.days.get(laterDay)?.capped).toBe(1);
+	});
+	test("drill, setrecall and special answers leave the cap alone", () => {
+		const state = stateOf([
+			...learned("dk"),
+			review("dk", "code2region", later, { context: "drill", drillPairWith: "bk" }),
+			intro("cd-49-jepang", NOW, { mode: "special2holder" }),
+			review("cd-49-jepang", "special2holder", NOW + 30_000, { context: "special" }),
+			review("cd-49-jepang", "special2holder", later, { context: "special" })
+		]);
+		expect(state.tier.days.get(laterDay)?.capped ?? 0).toBe(0);
+	});
+	test("learning steps leave the cap alone", () => {
+		const state = stateOf(learned("dk"));
+		expect(state.tier.days.get(localDay(NOW, WITA))?.capped ?? 0).toBe(0);
+	});
+});

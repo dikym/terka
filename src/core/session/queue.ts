@@ -1,4 +1,4 @@
-import { RELATED_SKIP_LIMIT, SPECIAL_HOLD, TIERS } from "@/rules";
+import { RELATED_SKIP_LIMIT, REVIEW_CAP_PER_DAY, SPECIAL_HOLD, TIERS } from "@/rules";
 import type { Bundle, Region } from "../content/schema";
 import { inScope } from "../questions/distractors";
 import type { QuestionContext } from "../questions/question";
@@ -75,6 +75,15 @@ export function dueReviews(
 		.map(({ card }) => item(card, context, "review"));
 }
 
+export const reviewsLeft = (state: AppState, today: string) =>
+	Math.max(0, REVIEW_CAP_PER_DAY - (state.tier.days.get(today)?.capped ?? 0));
+
+// Every Golongan A review due now, before the daily cap trims it.
+export function dueReviewCount(input: AppState, ctx: SessionContext): number {
+	const state = prepare(input, ctx);
+	return dueReviews(state, cardsWhere(state, isGroupA), todayOf(ctx), ctx.now, "daily").length;
+}
+
 function drills(state: AppState, today: string): QueueItem[] {
 	const items: QueueItem[] = [];
 	for (const [key, pair] of [...state.pairs].sort(([a], [b]) => compareText(a, b))) {
@@ -119,7 +128,7 @@ export function dailyQueue(
 	const due = uniqueItems([
 		...dueSteps(cards, ctx.now, "daily"),
 		...drills(state, today),
-		...dueReviews(state, cards, today, ctx.now, "daily")
+		...dueReviews(state, cards, today, ctx.now, "daily").slice(0, reviewsLeft(state, today))
 	]);
 	const held = priorityLoad(state, today, ctx.tz) > TIERS[tierOn(state, today)].hold;
 	const regions = new Map<string, { region: Region; order: number }>(
