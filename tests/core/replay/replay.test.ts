@@ -173,8 +173,8 @@ describe("append", () => {
 		]);
 		expect(result).not.toBe("full");
 		if (result === "full" || result.status !== "ok") throw new Error("expected ok");
-		expect(result.state.cards.get("dk::code2region")!.step).toBe(2);
-		expect(state.cards.get("dk::code2region")!.step).toBe(1);
+		expect(result.state.cards.get("dk::code2region")!.state).toBe("review");
+		expect(state.cards.get("dk::code2region")!.state).toBe("learning");
 	});
 	test("a batch that reaches into the past asks for a full replay", () => {
 		const state = stateOf([intro("dk", NOW)]);

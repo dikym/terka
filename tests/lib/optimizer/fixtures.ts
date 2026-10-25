@@ -3,10 +3,10 @@ import { seeded } from "../../../src/core/random";
 import { DAY, intro, manyRegions, MINUTE, NOW, review } from "../../core/replay/fixtures";
 import { withUuids } from "../db/fixtures";
 
-export const CARDS = 260;
+export const CARDS = 300;
 export const bundle = manyRegions(CARDS);
 
-// Each card: introduction, two learning steps, then reviews 30 and 120 days later (4 counted answers).
+// Each card: introduction, one learning step, then reviews every 40 days; enough counted answers to pass the first-run threshold.
 export function eligibleLog(seed = "eligible"): LearningEvent[] {
 	const random = seeded(seed);
 	const events: LearningEvent[] = [];
@@ -14,12 +14,8 @@ export function eligibleLog(seed = "eligible"): LearningEvent[] {
 		const id = `x${index}`;
 		const start = NOW + index * 10 * MINUTE;
 		const choice = { level: 1, questionType: "choice" } as const;
-		events.push(
-			intro(id, start),
-			review(id, "code2region", start + MINUTE, choice),
-			review(id, "code2region", start + 11 * MINUTE, choice)
-		);
-		for (const days of [30, 120]) {
+		events.push(intro(id, start), review(id, "code2region", start + MINUTE, choice));
+		for (const days of [30, 70, 110, 150, 190]) {
 			const correct = random() < 0.85;
 			events.push(
 				review(id, "code2region", start + days * DAY, {

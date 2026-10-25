@@ -42,44 +42,51 @@ const strong = (overrides: Partial<CardMemory> = {}): CardMemory => ({
 });
 
 describe("card transitions", () => {
-	test("Perkenalan moves new → learning step 1 without FSRS", () => {
+	test("an introduced card is due at once without FSRS", () => {
 		const card = introduce(newCard("dk::code2region"), NOW);
 		expect(card).toMatchObject({
 			state: "learning",
 			step: 1,
-			due: NOW + MINUTE,
+			due: NOW,
 			stability: 0,
 			scheduledDay: null
 		});
 		expect(() => introduce(card, NOW)).toThrow();
 	});
-	test("learning steps 1 and 10 minutes, then FSRS review", () => {
-		let card = introduce(newCard("dk::code2region"), NOW);
-		card = answer(card, 3, ctx(card.due));
-		expect(card).toMatchObject({ state: "learning", step: 2, due: NOW + MINUTE + 10 * MINUTE });
-		expect(card.stability).toBeGreaterThan(0);
-		const firstStability = card.stability;
-		card = answer(card, 3, ctx(card.due));
-		expect(card.state).toBe("review");
-		expect(card.stability).toBe(firstStability);
-		expect(card.due).toBe(dayStart(addDays("2026-09-21", card.intervalDays), WITA));
+	test("a learning card settles after one answer, right or wrong", () => {
+		for (const grade of [1, 3] as const) {
+			const card = answer(
+				introduce(newCard("dk::code2region"), NOW),
+				grade,
+				ctx(NOW + 30_000)
+			);
+			expect(card.state).toBe("review");
+			expect(card.stability).toBeGreaterThan(0);
+		}
 	});
-	test("a failed learning step restarts at 1 minute", () => {
-		let card = answer(introduce(newCard("x::code2region"), NOW), 3, ctx(NOW + MINUTE));
-		card = answer(card, 1, ctx(card.due));
-		expect(card).toMatchObject({ state: "learning", step: 1 });
+	test("a settled card is never due again on the same local day", () => {
+		for (const grade of [1, 3] as const) {
+			const c = ctx(NOW + 30_000);
+			const card = answer(introduce(newCard("dk::code2region"), NOW), grade, c);
+			expect(card.due).toBeGreaterThanOrEqual(dayStart(addDays(c.localDay, 1), c.tz));
+		}
 	});
-	test("a late learning step is still a learning step", () => {
+	test("a late first answer still settles", () => {
 		const card = answer(introduce(newCard("x::code2region"), NOW), 3, ctx(NOW + DAY));
-		expect(card).toMatchObject({ state: "learning", step: 2 });
+		expect(card.state).toBe("review");
 	});
-	test("a lapse goes to relearning in 10 minutes and counts once", () => {
+	test("a lapse is due again at once and counts once", () => {
 		for (const state of ["review", "mature"] as const) {
 			const card = answer(strong({ state, passedLevel3: true }), 1, ctx(NOW));
-			expect(card).toMatchObject({ state: "relearning", lapses: 1, due: NOW + 10 * MINUTE });
-			const again = answer(card, 1, ctx(card.due));
-			expect(again).toMatchObject({ lapses: 1, due: card.due + 10 * MINUTE });
+			expect(card).toMatchObject({ state: "relearning", lapses: 1, due: NOW });
 		}
+	});
+	test("a relearning card settles after one answer", () => {
+		const lapsed = answer(strong(), 1, ctx(NOW));
+		const c = ctx(NOW + 30_000);
+		const card = answer(lapsed, 1, c);
+		expect(card).toMatchObject({ state: "review", lapses: 1 });
+		expect(card.due).toBeGreaterThanOrEqual(dayStart(addDays(c.localDay, 1), c.tz));
 	});
 	test("finishing relearning keeps the FSRS interval without an extra cut", () => {
 		const lapsed = answer(strong(), 1, ctx(NOW));

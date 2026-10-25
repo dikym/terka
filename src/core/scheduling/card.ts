@@ -1,14 +1,9 @@
-import {
-	FIRST_STEP_MS,
-	LEECH_LAPSES,
-	MATURE_INTERVAL_DAYS,
-	SECOND_STEP_MS,
-	SUSPEND_LAPSES
-} from "@/rules";
+import { LEECH_LAPSES, MATURE_INTERVAL_DAYS, SUSPEND_LAPSES } from "@/rules";
 import type { Grade } from "../grading/signals";
 import type { CardMemory, SuspensionReason } from "./card-memory";
 import { nextMemory, type Scheduler } from "./fsrs";
 import { fuzzDays } from "./fuzz";
+import { addDays, dayStart } from "../time/day";
 
 export type AnswerContext = {
 	at: number;
@@ -30,7 +25,7 @@ export function unlock(card: CardMemory): CardMemory {
 
 export function introduce(card: CardMemory, at: number): CardMemory {
 	if (card.state !== "new") throw new Error(`${card.cardId} is not new`);
-	return { ...card, state: "learning", step: 1, due: at + FIRST_STEP_MS };
+	return { ...card, state: "learning", step: 1, due: at };
 }
 
 function updateMemory(
@@ -109,21 +104,17 @@ export function answer(input: CardMemory, grade: Grade, ctx: AnswerContext): Car
 		...card,
 		state: "review",
 		step: 0,
-		due: Math.max(ctx.at + 1, card.pendingDue ?? ctx.at + 1),
+		due: Math.max(dayStart(addDays(ctx.localDay, 1), ctx.tz), card.pendingDue ?? 0),
 		pendingDue: null
 	});
-	if (input.state === "learning") {
-		if (grade === 1) card = { ...card, step: 1, due: ctx.at + FIRST_STEP_MS };
-		else if (input.step < 2) card = { ...card, step: 2, due: ctx.at + SECOND_STEP_MS };
-		else card = settle();
-	} else if (input.state === "relearning") {
-		card = grade === 1 ? { ...card, due: ctx.at + SECOND_STEP_MS } : settle();
+	if (input.state === "learning" || input.state === "relearning") {
+		card = settle();
 	} else if (grade === 1) {
 		card = {
 			...card,
 			state: "relearning",
 			lapses: input.lapses + 1,
-			due: ctx.at + SECOND_STEP_MS
+			due: ctx.at
 		};
 	} else {
 		// A mature card leaves that state only on a wrong answer.

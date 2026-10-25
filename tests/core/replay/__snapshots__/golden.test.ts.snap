@@ -1118,7 +1118,7 @@ exports[`the golden log replays to the recorded state 1`] = `
         ],
         "pendingDue": null,
         "relatedSkips": 0,
-        "reps": 3,
+        "reps": 2,
         "scheduledDay": "2026-09-24",
         "stability": 13.82690327,
         "state": "review",
