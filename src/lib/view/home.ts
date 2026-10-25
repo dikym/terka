@@ -18,7 +18,7 @@ import { addDays, dayStart } from "@/core/time/day";
 import { homeSummary, type HomeSummary } from "@/core/views/home";
 import { scopeMastery } from "@/core/views/mastery";
 import { STREAK_WINDOW_DAYS, TIERS } from "@/rules";
-import { countdownTo, dateLabel, durationLabel, weekdayShort } from "./format";
+import { dateLabel, durationLabel, weekdayShort } from "./format";
 import { provincesOf, scopeGroup, scopeTitle, uiGroup } from "./groups";
 
 export type DayMark = { day: string; state: "done" | "tolerance" | "missed" | "today" };
@@ -43,7 +43,7 @@ export type Home = {
 	week: DayMark[];
 	tolerance: string;
 	challengeDone: boolean;
-	challengeCountdown: string;
+	challengeResetAt: number;
 };
 
 // A missed day is forgiven when the count would carry on had the next day been played.
@@ -172,6 +172,6 @@ export function homeView(
 		week: weekMarks(state.challengeDays, today),
 		tolerance: `Toleransi terpakai ${Math.min(used, 1)} dari 1 dalam ${STREAK_WINDOW_DAYS} hari.`,
 		challengeDone: summary.challenge === "done",
-		challengeCountdown: countdownTo(ctx.now, dayStart(addDays(today, 1), ctx.tz))
+		challengeResetAt: dayStart(addDays(today, 1), ctx.tz)
 	};
 }
