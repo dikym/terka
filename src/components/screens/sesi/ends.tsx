@@ -283,11 +283,12 @@ export function PlacementEnd({
 			</h1>
 			<div className="flex flex-col gap-2">
 				<span className="font-display text-heading leading-tight font-bold">
-					Tingkat: {view.tier} · sekitar {view.knownPercent}% kode sudah dikenal
+					Tingkat: {view.tier}
 				</span>
 				<span className="text-ink-900 type-body">
-					{view.seeded} kode langsung masuk pengulangan. Materi lainnya dibuka bertahap,
-					hingga {view.newPerDay} per hari.
+					Sekitar {view.knownPercent}% kode sudah dikenal. {view.seeded} kode langsung
+					masuk pengulangan. Materi lainnya dibuka bertahap, hingga {view.newPerDay} per
+					hari.
 				</span>
 			</div>
 			<Callout tone="info" label={<span className="text-sky-700">Cakupan</span>}>
