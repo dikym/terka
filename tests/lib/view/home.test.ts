@@ -49,6 +49,6 @@ describe("home view", () => {
 	});
 
 	test("the countdown runs to the start of the next learning day", () => {
-		expect(view([]).challengeCountdown).toBe("24:00:00");
+		expect(view([]).challengeResetAt - NOW).toBe(DAY);
 	});
 });

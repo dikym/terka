@@ -7,6 +7,8 @@ import { GROUP_BG } from "@/components/ui/groups";
 import { Icon } from "@/components/ui/icon";
 import { Kbd } from "@/components/ui/kbd";
 import { Tooltip } from "@/components/ui/tooltip";
+import { type ReactNode, useEffect, useState } from "react";
+import { countdownTo } from "@/lib/view/format";
 import type { DayMark, Home } from "@/lib/view/home";
 import { SyncChip } from "./sync-chip";
 
@@ -136,6 +138,15 @@ function Tile({
 	);
 }
 
+function Countdown({ to }: { to: number }) {
+	const [now, setNow] = useState(Date.now);
+	useEffect(() => {
+		const timer = setInterval(() => setNow(Date.now()), 1000);
+		return () => clearInterval(timer);
+	}, []);
+	return countdownTo(now, to);
+}
+
 function PhoneActions({
 	loading,
 	challengeDone,
@@ -143,7 +154,7 @@ function PhoneActions({
 }: {
 	loading: boolean;
 	challengeDone: boolean;
-	countdown: string;
+	countdown: ReactNode;
 }) {
 	const time = (
 		<span className="font-mono text-label leading-none font-semibold tabular-nums">
@@ -205,7 +216,7 @@ function PhoneActions({
 	);
 }
 
-function ChallengeButton({ done, countdown }: { done: boolean; countdown: string }) {
+function ChallengeButton({ done, countdown }: { done: boolean; countdown: ReactNode }) {
 	if (done)
 		return (
 			<Tooltip content={DONE_TODAY} focusable className="flex">
@@ -280,7 +291,7 @@ export function Beranda({ data }: { data: Home | null }) {
 					<PhoneActions
 						loading={!d}
 						challengeDone={challengeDone}
-						countdown={d?.challengeCountdown ?? SKELETON_COUNTDOWN}
+						countdown={d ? <Countdown to={d.challengeResetAt} /> : SKELETON_COUNTDOWN}
 					/>
 
 					<section className="grid grid-cols-1 overflow-hidden rounded-md border border-hairline bg-paper-0 shadow-lift lg:grid-cols-3">
@@ -481,7 +492,7 @@ export function Beranda({ data }: { data: Home | null }) {
 							</Button>
 							<ChallengeButton
 								done={challengeDone}
-								countdown={d.challengeCountdown}
+								countdown={<Countdown to={d.challengeResetAt} />}
 							/>
 							<Button
 								variant="confirm"

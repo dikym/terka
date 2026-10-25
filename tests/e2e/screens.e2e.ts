@@ -96,7 +96,10 @@ test("a session runs to its summary from the keyboard", async ({ page }) => {
 	}
 	await expect(page.getByRole("heading", { name: "Tantangan hari ini selesai" })).toBeVisible();
 	await page.goto("/beranda");
-	await expect(page.getByRole("button", { name: "Tantangan Harian" })).toBeDisabled();
+	const challenge = page.getByRole("button", { name: "Tantangan Harian" });
+	await expect(challenge).toBeDisabled();
+	const shown = await challenge.textContent();
+	await expect(challenge).not.toHaveText(shown ?? "");
 });
 
 test("a new learner's practice modes explain that nothing is learned yet", async ({ page }) => {
