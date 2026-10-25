@@ -1,6 +1,6 @@
 {
-	"version": "2026.10.24",
-	"contentRev": 5,
+	"version": "2026.10.25",
+	"contentRev": 6,
 	"contentHistory": [
 		{
 			"contentRev": 1,
@@ -21,6 +21,10 @@
 		{
 			"contentRev": 5,
 			"version": "2026.10.24"
+		},
+		{
+			"contentRev": 6,
+			"version": "2026.10.25"
 		}
 	],
 	"groups": [
