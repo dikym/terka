@@ -239,8 +239,8 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | ------ | --------------------------------------------------------- | -------------------------------------------------- | -------- | ----------------- |
 | SR-106 | Pasangan (BE, BD) muncul 3 kali dalam 30 hari             | Ditandai; drill masuk prioritas 2                  | normal   | SRD 6.2           |
 | SR-107 | Pasangan yang sama muncul 3 kali dalam rentang 31 hari    | Belum ditandai                                     | batas    | SRD 6.2           |
-| SR-108 | Pasangan ditandai, lalu drill benar 5 kali berturut-turut | Tanda dihapus                                      | normal   | SRD 6.2           |
-| SR-109 | Drill benar 4 kali, lalu salah                            | Hitungan kembali ke 0                              | batas    | SRD 6.2           |
+| SR-108 | Pasangan ditandai, lalu drill pertama benar di 5 hari berbeda berturut-turut | Tanda dihapus                                      | normal   | SRD 6.2           |
+| SR-109 | Drill pertama benar di 4 hari, lalu salah di hari berikutnya                         | Hitungan kembali ke 0                              | batas    | SRD 6.2           |
 | SR-110 | Pasangan yang tandanya sudah dihapus tertukar lagi 2 kali | Ditandai lagi                                      | batas    | SRD 6.2           |
 | SR-111 | Pasangan BE ↔ DE aktif, Cakupan hanya Sumatera            | Drill tetap muncul                                 | normal   | SRD 6.2           |
 | SR-112 | Drill pada kartu yang belum waktunya diulang              | Dicatat untuk hitungan drill; jadwal tidak berubah | batas    | SRD 4.11, AC-8    |
@@ -249,6 +249,10 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | SR-115 | Referensi dibuka untuk kode yang sudah dipelajari         | Tidak menghasilkan jawaban atau pasangan tertukar  | batas    | SRD 4.11, SRD 6.2 |
 | SR-116 | Jawaban salah yang kemudian dibatalkan                    | Tidak dihitung dalam pasangan                      | batas    | SRD 6.2           |
 | SR-117 | Salah satu kode dalam pasangan `suspended`                | Drill tidak muncul sampai kode itu aktif lagi      | batas    | SRD 6.2           |
+| SR-341 | Dua drill benar pada hari yang sama untuk satu pasangan   | Hanya drill pertama hari itu yang dihitung         | batas    | SRD 6.2           |
+| SR-342 | Drill benar pada hari 0, 1, dan 5                         | Hitungan 3; hari tanpa drill tidak memutus hitungan | batas    | SRD 6.2           |
+| SR-343 | Pasangan sudah dilatih hari ini, antrean harian disusun   | Drill pasangan itu tidak masuk antrean lagi hari ini | batas    | SRD 6.2           |
+| SR-344 | Pasangan ditandai dengan 3 hari drill benar, buka Beranda | Pasangan tampil dengan penghitung **3/5**          | normal   | SRD 6.2, Microcopy 3.7 |
 
 ### 5.11 Kartu Sulit Dikuasai dan Catatan Pengingat
 
