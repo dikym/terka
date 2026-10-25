@@ -120,6 +120,7 @@ Bilah bawah tidak memakai lencana jumlah soal. Jumlah pengulangan cukup ditampil
 | Semua materi baru di Cakupan sudah diperkenalkan             | **Semua materi di wilayah ini sudah diperkenalkan.**                    |
 | Materi baru ditahan karena antrean pengulangan terlalu besar | **Materi baru dijeda hari ini agar sesi tetap ringan.**                 |
 | Label wilayah aktif                                          | **Cakupan**                                                             |
+| Label persentase di bawah daftar Cakupan                     | **kemajuan**                                                            |
 | Tombol sesi utama                                            | **Mulai belajar**                                                       |
 | Tombol tantangan                                             | **Tantangan Harian**                                                    |
 | Tombol latihan cepat                                         | **Mode Kilat**                                                          |

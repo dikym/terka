@@ -22,7 +22,46 @@ function masteredBali() {
 }
 
 describe("mastery per scope", () => {
-	test("percent is mature over counted cards", () => {
+	test("a card in review adds part of its interval", () => {
+		const state = fresh();
+		seedCard(state, "dk::code2region", reviewCard({ intervalDays: 7 }));
+		seedCard(state, "dk::region2code", { state: "new" });
+		seedCard(state, "dk::setrecall", { state: "new" });
+		expect(scopeMastery(state, bundle, BALI)).toEqual({
+			counted: 3,
+			mature: 0,
+			percent: Math.round((7 / 21 / 3) * 100),
+			mastered: false
+		});
+	});
+	test("a long interval without a Level 3 pass stays below full", () => {
+		const state = fresh();
+		seedCard(state, "dk::code2region", reviewCard({ intervalDays: 40 }));
+		expect(scopeMastery(state, bundle, BALI).percent).toBe(95);
+	});
+	test("percent reaches 100 only when every card is mature", () => {
+		const state = fresh();
+		const sumatera = new Set(
+			bundle.regions
+				.filter((region) => region.group === "sumatera")
+				.map((region) => region.id)
+		);
+		const cardIds = [...state.cards.keys()].filter(
+			(cardId) =>
+				sumatera.has(cardId.slice(0, cardId.indexOf("::"))) && !cardId.includes("special")
+		);
+		for (const cardId of cardIds) seedCard(state, cardId, mature);
+		seedCard(state, cardIds[0], reviewCard({ intervalDays: 20 }));
+		expect(cardIds.length).toBeGreaterThanOrEqual(10);
+		expect(scopeMastery(state, bundle, SUMATERA).percent).toBe(99);
+	});
+	test("new and learning cards add nothing", () => {
+		const state = fresh();
+		seedCard(state, "dk::code2region", { state: "learning", intervalDays: 0 });
+		seedCard(state, "dk::region2code", { state: "new" });
+		expect(scopeMastery(state, bundle, BALI).percent).toBe(0);
+	});
+	test("percent mixes mature cards with partial ones", () => {
 		const state = fresh();
 		seedCard(state, "dk::code2region", mature);
 		seedCard(state, "dk::region2code", reviewCard());
@@ -30,7 +69,7 @@ describe("mastery per scope", () => {
 		expect(scopeMastery(state, bundle, BALI)).toEqual({
 			counted: 3,
 			mature: 2,
-			percent: 67,
+			percent: Math.round(((2 + 20 / 21) / 3) * 100),
 			mastered: false
 		});
 	});

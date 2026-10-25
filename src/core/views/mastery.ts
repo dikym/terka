@@ -1,6 +1,7 @@
 import type { Bundle } from "../content/schema";
 import { inScope, type Scope } from "../questions/distractors";
-import type { AppState } from "../replay/state";
+import { MATURE_INTERVAL_DAYS } from "@/rules";
+import type { AppState, CardEntry } from "../replay/state";
 import { effectiveCard } from "../replay/universe";
 import { contentOf, modeOf } from "../session/context";
 
@@ -15,13 +16,25 @@ const REGION_MODES = new Set(["code2region", "region2code", "setrecall"]);
 const SPECIAL_MODES = new Set(["special2holder", "holder2special"]);
 const LEFT_OUT = new Set(["locked", "suspended"]);
 
+// A card grows toward full as its interval nears maturity; only a mature card is worth all of it.
+function weight(card: CardEntry): number {
+	if (card.state === "mature") return 1;
+	if (card.state !== "review" && card.state !== "relearning") return 0;
+	return Math.min(card.intervalDays, MATURE_INTERVAL_DAYS - 1) / MATURE_INTERVAL_DAYS;
+}
+
+const percentOf = (progress: number, mature: number, counted: number) =>
+	mature === counted ? 100 : Math.min(99, Math.round((progress / counted) * 100));
+
 function measure(state: AppState, cardIds: string[], codes: ReadonlySet<string> | null): Mastery {
 	let counted = 0;
 	let mature = 0;
+	let progress = 0;
 	for (const cardId of cardIds) {
 		const card = effectiveCard(state, cardId)!;
 		if (LEFT_OUT.has(card.state)) continue;
 		counted++;
+		progress += weight(card);
 		if (card.state === "mature") mature++;
 	}
 	// A pair counts against every scope holding either of its codes.
@@ -33,7 +46,7 @@ function measure(state: AppState, cardIds: string[], codes: ReadonlySet<string> 
 	return {
 		counted,
 		mature,
-		percent: counted ? Math.round((mature / counted) * 100) : null,
+		percent: counted ? percentOf(progress, mature, counted) : null,
 		mastered: counted > 0 && mature === counted && !confused
 	};
 }
