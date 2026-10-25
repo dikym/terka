@@ -93,7 +93,8 @@ Dengan beberapa perangkat, batas harian dihitung dari gabungan log semua perangk
 
 ### 2.5 Penguasaan per Cakupan
 
-- Persentase penguasaan satu cakupan = jumlah kartu `mature` di dalamnya dibagi total kartu di cakupan itu.
+- Persentase penguasaan satu cakupan = rata-rata nilai setiap kartu yang dihitung. Kartu `mature` bernilai 1. Kartu `review` dan `relearning` bernilai `min(interval, 20) / 21`, jadi tumbuh bersama intervalnya tetapi tidak pernah penuh. Kartu `new` dan `learning` bernilai 0. Persentase 100% hanya tampil jika semua kartu `mature`; selain itu paling tinggi 99%.
+- Persentase ini menunjukkan kemajuan sejak hari pertama belajar. Status **dikuasai** di bawah tetap memakai syarat `mature` penuh, jadi keduanya tidak tertukar.
 - Kartu `suspended` dan `locked` tidak dihitung, baik di pembilang maupun penyebut. Jika dihitung, satu entri yang `confidence`-nya turun membuat 100% mustahil dicapai tanpa kesalahan pengguna, dan kartu arah sebaliknya yang belum boleh dibuka menurunkan persentase kawasan yang sebenarnya sudah dikuasai.
 - Cakupan dinyatakan **dikuasai** jika seluruh kartu yang dihitung berstatus `mature` dan tidak ada pasangan sering tertukar aktif yang melibatkan kode di dalamnya, ke arah mana pun.
 - Cakupan tanpa kartu yang dihitung — misalnya provinsi yang semua entrinya belum `high` — tidak memiliki persentase dan tidak bisa dinyatakan dikuasai.

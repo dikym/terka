@@ -432,7 +432,7 @@ export function Beranda({ data }: { data: Home | null }) {
 						</div>
 						<div className="grid grid-cols-3 gap-4">
 							{[
-								[d?.scope.mastered, "materi Dikuasai", "1.7em", "6em"],
+								[d?.scope.mastered, "kemajuan", "1.7em", "6em"],
 								[d?.scope.newInScope, "materi baru tersedia", "1.2em", "7.5em"],
 								[d?.scope.newOutside, "materi baru di luar Cakupan", "1.7em", "9em"]
 							].map(([value, label, valueWidth, labelWidth]) => (
