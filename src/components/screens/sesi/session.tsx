@@ -3,27 +3,64 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { SessionFrame } from "@/components/shell/session-frame";
-import { CHALLENGE_DONE, DAILY_RUNS, readFlag, writeFlag } from "@/dummy/flags";
-import { keyAction } from "@/dummy/keys";
-import { PREVIEWS } from "@/dummy/previews";
-import { KILAT_SECONDS, type Mode, QUEUES } from "@/dummy/session";
+import type { PracticeRun, ReviewLog } from "@/core/log/events";
+import type { Scope } from "@/core/questions/distractors";
+import type { AppState } from "@/core/replay/state";
+import { effectiveCard } from "@/core/replay/universe";
+import { alsoCorrect } from "@/core/session/feedback";
+import { canUndo, closeRun, answerEvent, startRun, voidEvent } from "@/core/session/commands";
+import { checkAnswer, type Response } from "@/core/session/check";
+import { contentOf, prepare, todayOf } from "@/core/session/context";
+import { placementNext, type Stage } from "@/core/session/placement";
+import { dailyQueue } from "@/core/session/queue";
+import { factViewEvent, pickFact } from "@/core/views/facts";
+import { loginPromptDue, noteOffer } from "@/core/views/notices";
+import { placementResult } from "@/core/views/placement-result";
+import { KILAT_ROUND_MS, TIERS, type Tier } from "@/rules";
+import type { LearningEvent } from "@/core/log/events";
+import { failedMessage, QUOTA_MESSAGE } from "@/components/screens/app-status";
+import { ErrorState } from "@/components/ui/states";
+import { showToast } from "@/lib/toasts";
+import { lastDayOf, type Runtime, sessionCtx } from "@/lib/app/runtime";
+import { useAccount, useAppState, usePrefs, useReady } from "@/lib/app/use-runtime";
+import { markNoteOffer, readFlags } from "@/lib/db/flags";
+import { LOGIN_PROMPT_DISMISSED, readFlag, writeFlag } from "@/lib/flags";
+import { keyAction } from "@/lib/keys";
+import type { SessionCard } from "@/lib/session/cards";
+import { endView, type EndView, factCard } from "@/lib/session/end";
+import { createMeasure, type Measure } from "@/lib/session/measure";
 import {
+	kilatCards,
+	type Mode,
+	type Plan,
+	type PlanInput,
+	type PlanParams,
+	placementCards,
+	planSession
+} from "@/lib/session/modes";
+import {
+	activeQuestion,
 	cardLevel,
 	cardOptions,
 	currentCard,
 	initialSession,
 	type SessionAction,
 	type SessionState,
-	sessionReducer
-} from "@/dummy/session-reducer";
+	sessionReducer,
+	submittable,
+	type Verdict
+} from "@/lib/session/state";
+import { dueIn, TIER_NAME } from "@/lib/view/format";
+import { scopeGroup, scopeTitle } from "@/lib/view/groups";
 import { type BarProps, SessionBar, SessionMeta } from "./bar";
-import { EndFooter, SessionEnd } from "./ends";
+import { EndFooter, PlacementEnd, type PlacementEndView, SessionEnd } from "./ends";
 import { SessionLoading } from "./loading";
-import { SessionPreview } from "./preview";
+import { SessionEmpty, SessionPreview } from "./preview";
 import { Question } from "./question";
 
-const LOADING_MS = 600;
 const TICK_MS = 100;
+// Mode Kilat draws questions in batches; a round of 60 seconds rarely needs more than a few.
+const KILAT_BATCH = 20;
 
 /**
  * Runs `onTick` about every TICK_MS while `active`, with the latest callback and the seconds
@@ -46,61 +83,407 @@ function useTicker(active: boolean, onTick: (elapsed: number) => void) {
 	}, [active]);
 }
 
-export function Session({ mode }: { mode: Mode }) {
-	const router = useRouter();
-	const [state, setState] = useState<SessionState>(() => initialSession(mode));
-	const [loading, setLoading] = useState(false);
-	const [held, setHeld] = useState(false);
-	const [countdown, setCountdown] = useState<number | null>(null);
-	const [clock, setClock] = useState(KILAT_SECONDS);
+const verdictOf = (correct: boolean | null): Verdict =>
+	correct === null ? "unverified" : correct ? "right" : "wrong";
 
-	const exit = () => (window.history.length > 1 ? router.back() : router.push("/"));
+type Engine = {
+	run: PracticeRun | null;
+	before: AppState | null;
+	answers: ReviewLog[];
+	last: ReviewLog | null;
+	placement: { codeId: string; stage: Stage; correct: boolean; seeded: boolean }[];
+	stage: Stage;
+	sizes: Record<Stage, number>;
+	noteOffers: Map<string, number[]>;
+	writes: Promise<unknown>;
+	measure: Measure;
+	closed: boolean;
+};
+
+function planInput(
+	runtime: Runtime,
+	state: AppState,
+	prefs: NonNullable<ReturnType<typeof usePrefs>>
+): PlanInput {
+	return {
+		state,
+		bundle: runtime.bundle,
+		dictionary: runtime.dictionary,
+		settings: prefs.settings,
+		notes: prefs.notes,
+		ctx: sessionCtx(runtime)
+	};
+}
+
+export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
+	const router = useRouter();
+	const { status, runtime } = useReady();
+	const app = useAppState(runtime);
+	const prefs = usePrefs(runtime);
+	const account = useAccount();
+	const [plan, setPlan] = useState<Plan | null>(null);
+	const [state, setState] = useState<SessionState>(() => initialSession(mode, []));
+	const [loading, setLoading] = useState(false);
+	const [countdown, setCountdown] = useState<number | null>(null);
+	const [clock, setClock] = useState(KILAT_ROUND_MS / 1000);
+	const [end, setEnd] = useState<EndView | null>(null);
+	const [placementEnd, setPlacementEnd] = useState<PlacementEndView | null>(null);
+	const engine = useRef<Engine>({
+		run: null,
+		before: null,
+		answers: [],
+		last: null,
+		placement: [],
+		stage: 1,
+		sizes: { 1: 0, 2: 0, 3: 0 },
+		noteOffers: new Map(),
+		writes: Promise.resolve(),
+		measure: createMeasure(),
+		closed: false
+	});
+
+	const exit = () => {
+		// A run left halfway is closed with what was answered; an unfinished Kilat round or
+		// placement test has no score or tier to close with, so it stays open and never counts.
+		const run = engine.current.run;
+		if (runtime && run && !engine.current.closed && mode !== "kilat" && mode !== "penempatan") {
+			engine.current.closed = true;
+			const answers = engine.current.answers;
+			void write([
+				closeRun(run, sessionCtx(runtime), {
+					answered: answers.length,
+					correct: answers.filter((row) => row.correct === true).length,
+					activeMs: answers.reduce((sum, row) => sum + row.msTotal, 0)
+				})
+			]);
+		}
+		if (window.history.length > 1) router.back();
+		else router.push("/");
+	};
+
+	// The plan is made once, from the log as it was when the screen opened.
+	if (!plan && runtime && app && prefs) {
+		const made = planSession(mode, planInput(runtime, app.log.state, prefs), params);
+		setPlan(made);
+		if (made.kind === "ready") setState(initialSession(mode, made.cards));
+	}
+	useEffect(() => {
+		if (runtime)
+			void readFlags(runtime.db).then(
+				(flags) => (engine.current.noteOffers = flags.noteOffers)
+			);
+	}, [runtime]);
+
+	// Writes go out one at a time, so each one builds on the log the previous one left.
+	const write = (events: LearningEvent[]) => {
+		const next = engine.current.writes.then(async () => {
+			const outcome = await runtime!.store.record(events);
+			if (outcome === "quota")
+				showToast({
+					tone: "danger",
+					label: "Penyimpanan",
+					icon: "triangle-alert",
+					text: QUOTA_MESSAGE,
+					key: "quota"
+				});
+			return outcome;
+		});
+		engine.current.writes = next.catch(() => {});
+		return next;
+	};
 
 	// A clock tick and a keypress can land in one frame; both must build on the latest state.
 	const latest = useRef(state);
+	useEffect(() => {
+		latest.current = state;
+	}, [state]);
 	const act = (action: SessionAction) => {
-		const state = latest.current;
-		const next = sessionReducer(state, action);
-		if (next === state) return;
+		const previous = latest.current;
+		const next = sessionReducer(previous, action);
+		if (next === previous) return;
 		latest.current = next;
-		if (next.phase === "done" && state.phase !== "done") {
-			if (mode === "harian") writeFlag("session", CHALLENGE_DONE, "1");
-			if (mode === "hariIni") {
-				const runs = Number(readFlag("session", DAILY_RUNS, "0") ?? "0");
-				// A second daily session in one tab finds the queue already empty.
-				setHeld(runs >= 1);
-				writeFlag("session", DAILY_RUNS, String(runs + 1));
-			}
-		}
-		if (
-			next.index !== state.index ||
-			next.phase !== state.phase ||
-			action.type === "lowerLevel"
-		) {
-			const card = QUEUES[mode][next.index];
-			setCountdown(next.phase === "ask" && card.timer ? card.timer.seconds : null);
+		const moved = next.index !== previous.index || next.phase !== previous.phase;
+		if (moved || action.type === "lowerLevel" || action.type === "restoreLevel") {
+			const card = next.cards[next.index];
+			const timer = next.phase === "ask" ? activeTimer(next, card) : null;
+			setCountdown(timer);
+			if (next.phase === "ask") engine.current.measure = createMeasure();
 		}
 		setState(next);
 	};
 
-	const start = () => {
-		setLoading(true);
-		setTimeout(() => {
-			setLoading(false);
-			setClock(KILAT_SECONDS);
-			act({ type: "start" });
-		}, LOADING_MS);
+	const activeTimer = (state: SessionState, card: SessionCard | undefined) => {
+		if (!card) return null;
+		const limit = activeQuestion(state, card).limit;
+		return limit ? limit.ms / 1000 : null;
 	};
 
-	const card = state.phase === "preview" ? null : currentCard(state);
-	const typingStarted = card?.timer?.kind === "start" && state.input.trim() !== "";
+	const start = async () => {
+		if (!runtime || !app || !prefs || plan?.kind !== "ready" || engine.current.run) return;
+		setLoading(true);
+		const ctx = sessionCtx(runtime);
+		const log = runtime.store.getState().log.state;
+		const event = startRun(
+			plan.run.kind,
+			plan.run.scope,
+			ctx,
+			{ estimatedMs: plan.estimatedMs, plannedCount: plan.cards.length || null },
+			lastDayOf(log)
+		);
+		engine.current.run = event.row as PracticeRun;
+		engine.current.before = log;
+		void write([event]);
+		const input = planInput(runtime, log, prefs);
+		if (mode === "kilat")
+			act({
+				type: "append",
+				cards: kilatCards(input, plan.run.scope, event.row.id, 0, KILAT_BATCH)
+			});
+		if (mode === "penempatan") {
+			const first = placementCards(input, event.row.id, 1);
+			engine.current.sizes = {
+				1: first.length,
+				2: placementCards(input, event.row.id, 2).length,
+				3: placementCards(input, event.row.id, 3).length
+			};
+			act({ type: "append", cards: first });
+		}
+		setLoading(false);
+		setClock(KILAT_ROUND_MS / 1000);
+		act({ type: "start" });
+	};
+
+	// The placement test has no preview: the welcome screen already described it.
+	useEffect(() => {
+		if (plan?.kind === "ready" && !plan.preview && state.phase === "preview") void start();
+	});
+
+	const answer = (response: Response, chosen: string | null, timedOut = false) => {
+		const current = latest.current;
+		if (!runtime || current.phase !== "ask") return;
+		const card = currentCard(current);
+		const question = activeQuestion(current, card);
+		const { bundle, dictionary } = runtime;
+		const ctx = sessionCtx(runtime);
+		const checked = checkAnswer(question, response, bundle, dictionary);
+		const measurements = engine.current.measure.finish({
+			timedOut,
+			optionCount: question.choices.length || null
+		});
+		const log = runtime.store.getState().log.state;
+		const event = answerEvent(question, response, checked, measurements, ctx, {
+			runId: engine.current.run?.id ?? null,
+			contentVersion: bundle.contentRev,
+			lastDay: lastDayOf(log)
+		});
+		const row = event.row as ReviewLog;
+		engine.current.answers.push(row);
+		engine.current.last = row;
+		const verdict = verdictOf(checked.correct);
+		const also = alsoCorrect(bundle, question, checked);
+		const aliasNote =
+			checked.correct && checked.correction
+				? checked.matchType === "typo"
+					? `Benar · ejaan diperbaiki: ${checked.correction}`
+					: `Penulisan baku: ${checked.correction}`
+				: also.length
+					? `Juga benar: ${also.join(", ")}`
+					: undefined;
+		act({ type: "grade", verdict, timedOut, chosen, noteOffered: false, aliasNote });
+		void write([event]).then((outcome) => {
+			if (outcome !== "ok" && outcome !== "outdated") return;
+			const after = runtime.store.getState().log.state;
+			const beforeCard = effectiveCard(log, card.question.cardId);
+			const afterCard = effectiveCard(after, card.question.cardId);
+			if (
+				afterCard &&
+				beforeCard &&
+				afterCard.due !== beforeCard.due &&
+				afterCard.due > ctx.now
+			)
+				act({ type: "review", text: dueIn(afterCard.due - ctx.now) });
+			if (verdict !== "wrong") return;
+			const codeId = contentOf(card.question.cardId);
+			const offeredAt = engine.current.noteOffers.get(codeId) ?? [];
+			const offer = noteOffer(after, codeId, prefs?.notes.has(codeId) ?? false, offeredAt);
+			if (
+				offer &&
+				latest.current.phase === "graded" &&
+				latest.current.index === current.index
+			) {
+				engine.current.noteOffers.set(codeId, [...offeredAt, offer]);
+				void markNoteOffer(runtime.db, codeId, offer);
+				setState((value) => {
+					const next = { ...value, noteOffered: true };
+					latest.current = next;
+					return next;
+				});
+			}
+		});
+		if (mode === "penempatan") {
+			const placement = engine.current.placement;
+			placement.push({
+				codeId: contentOf(card.question.cardId),
+				stage: engine.current.stage,
+				correct: checked.correct === true,
+				seeded: checked.correct === true && !timedOut && !measurements.interrupted
+			});
+			const next = placementNext(placement, engine.current.sizes);
+			if ("stage" in next && next.stage !== engine.current.stage) {
+				engine.current.stage = next.stage;
+				act({
+					type: "append",
+					cards: placementCards(
+						planInput(runtime, log, prefs!),
+						engine.current.run!.id,
+						next.stage
+					)
+				});
+			}
+			if ("done" in next) void finishPlacement(next.done);
+			else act({ type: "next" });
+		}
+		// Reading an introduction without choices is the answer; it moves on by itself.
+		if (question.questionType === "intro_read") act({ type: "next" });
+	};
+
+	const submit = () => {
+		const current = latest.current;
+		if (current.phase !== "ask") return;
+		const card = currentCard(current);
+		if (card.form === "perkenalan" && !card.options) return answer({ unknown: true }, null);
+		if (!submittable(current)) return;
+		if (card.form === "sebutkan") {
+			const typed = current.input.trim();
+			const items =
+				typed && !current.named.includes(typed) ? [...current.named, typed] : current.named;
+			return answer({ items }, null);
+		}
+		answer({ text: current.input }, null);
+	};
+
+	const choose = (option: string) => {
+		engine.current.measure.choose();
+		answer({ choice: option }, option);
+	};
+
+	const undo = () => {
+		const current = latest.current;
+		const last = engine.current.last;
+		if (!runtime || mode === "kilat") return;
+		const ctx = sessionCtx(runtime);
+		if (!canUndo(last, ctx, { voided: false, open: current.phase === "graded" })) return;
+		engine.current.answers = engine.current.answers.filter((row) => row !== last);
+		engine.current.last = null;
+		if (mode === "penempatan") engine.current.placement.pop();
+		void write([voidEvent(last!, ctx)]);
+		act({ type: "undo" });
+	};
+
+	const close = async (extra: { score?: number; placementLevel?: Tier }) => {
+		if (!runtime || !engine.current.run || engine.current.closed) return null;
+		engine.current.closed = true;
+		const ctx = sessionCtx(runtime);
+		const answers = engine.current.answers;
+		const events: LearningEvent[] = [
+			closeRun(engine.current.run, ctx, {
+				answered: answers.length,
+				correct: answers.filter((row) => row.correct === true).length,
+				activeMs: answers.reduce((sum, row) => sum + row.msTotal, 0),
+				score: extra.score ?? null,
+				placementLevel: extra.placementLevel ?? null
+			})
+		];
+		await engine.current.writes;
+		const log = runtime.store.getState().log.state;
+		const fact = pickFact(
+			log,
+			runtime.bundle,
+			answers.map((row) => row.contentId),
+			engine.current.run.id
+		);
+		if (fact) events.push(factViewEvent(fact.id, engine.current.run.id, ctx, lastDayOf(log)));
+		await write(events);
+		return fact;
+	};
+
+	const finishPlacement = async (tier: Tier) => {
+		act({ type: "finish" });
+		const fact = await close({ placementLevel: tier });
+		const result = placementResult(runtime!.bundle, engine.current.placement, tier);
+		setPlacementEnd({
+			tier: TIER_NAME[tier],
+			knownPercent: result.knownPercent,
+			seeded: result.seededCount,
+			newPerDay: TIERS[tier].newPerDay,
+			suggestion: scopeTitle(runtime!.bundle, result.suggestedScope),
+			fact: fact ? factCard(runtime!.bundle, fact) : null
+		});
+		suggestion.current = result.suggestedScope;
+	};
+	const suggestion = useRef<Scope | null>(null);
+
+	// Every other mode closes its run once the last answer moved on, or Mode Kilat's clock ran out.
+	useEffect(() => {
+		if (state.phase !== "done" || mode === "penempatan" || !runtime || engine.current.closed)
+			return;
+		const score =
+			mode === "kilat"
+				? engine.current.answers.filter((row) => row.correct === true).length
+				: undefined;
+		const before = engine.current.before ?? runtime.store.getState().log.state;
+		const scope = plan?.kind === "ready" ? plan.run.scope : null;
+		const record =
+			mode === "kilat" && scope
+				? (before.kilatRecords.get(
+						`${scope.level}|${scope.level === "national" ? "" : scope.id}`
+					) ?? null)
+				: null;
+		void close({ score }).then((fact) => {
+			const after = runtime.store.getState().log.state;
+			const ctx = sessionCtx(runtime);
+			const remaining =
+				mode === "hariIni" && prefs
+					? dailyQueue(after, runtime.bundle, prefs.settings, ctx).items.filter(
+							(item) => item.slot !== "new"
+						).length
+					: 0;
+			setEnd(
+				endView({
+					mode,
+					before,
+					after,
+					answers: engine.current.answers,
+					bundle: runtime.bundle,
+					held: plan?.kind === "ready" && plan.held,
+					fact,
+					kilat: mode === "kilat" && scope ? { score: score ?? 0, record, scope } : null,
+					loginPrompt: loginPromptDue(
+						prepare(after, ctx),
+						account.email !== null,
+						readFlag("local", LOGIN_PROMPT_DISMISSED) === "1"
+					),
+					today: todayOf(ctx),
+					remainingDue: remaining
+				})
+			);
+		});
+	});
+
+	const card = state.phase === "preview" || state.phase === "done" ? null : currentCard(state);
+	const typingStarted =
+		!!card &&
+		activeQuestion(state, card).limit?.until === "first-input" &&
+		state.input.trim() !== "";
 
 	useTicker(countdown !== null && state.phase === "ask" && !typingStarted, (elapsed) => {
 		if (countdown === null) return;
 		const left = Math.max(0, countdown - elapsed);
 		if (left === 0) {
 			setCountdown(null);
-			act({ type: "timeout" });
+			const current = latest.current;
+			const typed = current.input.trim();
+			answer(typed ? { text: current.input } : { unknown: true }, null, true);
 		} else setCountdown(left);
 	});
 
@@ -109,22 +492,50 @@ export function Session({ mode }: { mode: Mode }) {
 		(elapsed) => {
 			const left = Math.max(0, clock - elapsed);
 			setClock(left);
-			if (left === 0) act({ type: "timeout" });
+			if (left === 0) act({ type: "finish" });
 		}
 	);
 
-	const latestAct = useRef(act);
+	// Mode Kilat answers move straight on: there is no time to read a verdict.
+	const kilatNext = () => {
+		const current = latest.current;
+		if (runtime && prefs && engine.current.run && current.index >= current.cards.length - 2)
+			act({
+				type: "append",
+				cards: kilatCards(
+					planInput(runtime, runtime.store.getState().log.state, prefs),
+					plan?.kind === "ready" ? plan.run.scope : prefs.settings.scope,
+					engine.current.run.id,
+					current.cards.length,
+					KILAT_BATCH
+				)
+			});
+		act({ type: "next" });
+	};
+	const latestKilatNext = useRef(kilatNext);
 	useEffect(() => {
-		latestAct.current = act;
+		latestKilatNext.current = kilatNext;
 	});
 
-	// Mode Kilat answers move straight on: there is no time to read a verdict.
 	const kilatGraded = mode === "kilat" && state.phase === "graded";
 	useEffect(() => {
 		if (!kilatGraded) return;
-		const timer = setTimeout(() => latestAct.current({ type: "next" }), 350);
+		const timer = setTimeout(() => latestKilatNext.current(), 350);
 		return () => clearTimeout(timer);
 	}, [kilatGraded, state.results.length]);
+
+	useEffect(() => {
+		const pointer = (event: PointerEvent) => engine.current.measure.pointer(event.pointerType);
+		const hidden = () => {
+			if (document.visibilityState === "hidden") engine.current.measure.hidden();
+		};
+		window.addEventListener("pointerdown", pointer);
+		document.addEventListener("visibilitychange", hidden);
+		return () => {
+			window.removeEventListener("pointerdown", pointer);
+			document.removeEventListener("visibilitychange", hidden);
+		};
+	}, []);
 
 	useEffect(() => {
 		const onKey = (event: KeyboardEvent) => {
@@ -135,8 +546,8 @@ export function Session({ mode }: { mode: Mode }) {
 			);
 			if (!action) return;
 			if (state.phase === "preview") {
-				if (loading) return;
-				if (action === "confirm") start();
+				if (loading || plan?.kind !== "ready") return;
+				if (action === "confirm") void start();
 				if (action === "exit") exit();
 				return;
 			}
@@ -148,30 +559,53 @@ export function Session({ mode }: { mode: Mode }) {
 				event.preventDefault();
 				if (state.phase === "graded") act({ type: "next" });
 				else if (current.form === "sebutkan") act({ type: "add" });
-				else if (!options) act({ type: "submit" });
+				else if (!options) submit();
 			} else if (action === "undo") {
 				// The question remounts with its field focused; keep the Z out of it.
 				event.preventDefault();
-				act({ type: "undo" });
+				undo();
 			} else if (action.startsWith("choose-") && options && state.phase === "ask") {
 				const index = Number(action.slice(-1));
 				// Two-option screens map F and J to left and right.
 				const pick =
 					options.length === 2 ? (index === 0 ? 0 : index === 3 ? 1 : -1) : index;
-				if (options[pick]) act({ type: "choose", option: options[pick] });
+				if (options[pick]) choose(options[pick]);
 			}
 		};
 		window.addEventListener("keydown", onKey);
 		return () => window.removeEventListener("keydown", onKey);
 	});
 
-	if (loading) return <SessionLoading onExit={exit} />;
+	const failed = failedMessage(status);
+	if (failed)
+		return (
+			<main className="flex min-h-dvh">
+				<ErrorState>{failed}</ErrorState>
+			</main>
+		);
+	if (!plan || loading) return <SessionLoading onExit={exit} />;
+	if (plan.kind === "empty")
+		return (
+			<SessionEmpty
+				title={plan.title}
+				message={plan.message}
+				detail={plan.detail}
+				onBack={exit}
+			/>
+		);
 	if (state.phase === "preview")
-		return <SessionPreview preview={PREVIEWS[mode]} onBack={exit} onStart={start} />;
+		return plan.preview ? (
+			<SessionPreview preview={plan.preview} onBack={exit} onStart={() => void start()} />
+		) : (
+			<SessionLoading onExit={exit} />
+		);
 
-	const total = QUEUES[mode].length;
 	const finished = state.phase === "done";
-	const answered = state.results.length;
+	if (finished && mode !== "penempatan" ? !end : finished && !placementEnd)
+		return <SessionLoading onExit={exit} />;
+
+	const total = mode === "penempatan" ? Math.max(state.cards.length, 1) : state.cards.length;
+	const scope = plan.run.scope;
 	const bar: BarProps = {
 		mode,
 		card,
@@ -180,9 +614,14 @@ export function Session({ mode }: { mode: Mode }) {
 		total,
 		finished,
 		onExit: exit,
-		onUndo: () => act({ type: "undo" }),
-		clock: { seconds: clock, total: KILAT_SECONDS },
-		correct: state.results.filter((result) => result === "right").length
+		onUndo: undo,
+		clock: { seconds: clock, total: KILAT_ROUND_MS / 1000 },
+		correct: state.results.filter((result) => result === "right").length,
+		scope: {
+			label: scopeTitle(runtime!.bundle, scope),
+			group: scopeGroup(runtime!.bundle, scope)
+		},
+		streak: plan.preview?.right.kind === "streak" ? plan.preview.right.days : 0
 	};
 	return (
 		<SessionFrame
@@ -193,26 +632,50 @@ export function Session({ mode }: { mode: Mode }) {
 					<SessionMeta {...bar} />
 				)
 			}
-			footer={finished ? <EndFooter /> : undefined}
+			footer={finished && mode !== "penempatan" ? <EndFooter /> : undefined}
 			variant={finished ? "end" : "question"}
 		>
-			{finished ? (
-				<SessionEnd state={state} held={held} />
+			{finished && placementEnd ? (
+				<PlacementEnd
+					view={placementEnd}
+					onAccept={() => {
+						if (suggestion.current && prefs)
+							void runtime!.saveSettings({
+								...prefs.settings,
+								scope: suggestion.current
+							});
+						router.push("/");
+					}}
+					onChoose={() => router.push("/cakupan")}
+				/>
+			) : finished && end ? (
+				<SessionEnd
+					view={end}
+					onLogin={() => router.push("/statistik/akun")}
+					onDismissLogin={() => {
+						writeFlag("local", LOGIN_PROMPT_DISMISSED, "1");
+						setEnd({ ...end, loginPrompt: false });
+					}}
+				/>
 			) : (
 				<Question
-					key={`${state.index}-${answered}`}
+					key={`${state.index}-${state.results.length}`}
 					state={state}
 					card={card!}
 					countdown={countdown}
-					onInput={(value) => act({ type: "input", value })}
-					onSubmit={() => act({ type: "submit" })}
-					onChoose={(option) => act({ type: "choose", option })}
+					onInput={(value) => {
+						engine.current.measure.input(value);
+						act({ type: "input", value });
+					}}
+					onSubmit={submit}
+					onChoose={choose}
 					onNext={() => act({ type: "next" })}
 					onLower={() => act({ type: "lowerLevel" })}
 					onRestore={() => act({ type: "restoreLevel" })}
 					onAdd={() => act({ type: "add" })}
 					onRemove={(value) => act({ type: "remove", value })}
 					onDismissNote={() => act({ type: "dismissNote" })}
+					onUnknown={() => answer({ unknown: true }, null)}
 				/>
 			)}
 		</SessionFrame>

@@ -42,3 +42,13 @@ export const GROUP_BORDER: Record<GroupId, string> = {
 };
 
 export const groupColor = (id: GroupId) => `var(--color-group-${id})`;
+
+export const GROUP_TEXT: Record<GroupId, string> = {
+	sumatera: "text-group-sumatera",
+	jawa: "text-group-jawa",
+	kalimantan: "text-group-kalimantan",
+	sulawesi: "text-group-sulawesi",
+	balinusra: "text-group-balinusra",
+	maluku: "text-group-maluku",
+	papua: "text-group-papua"
+};

@@ -2,9 +2,10 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { keyAction } from "@/dummy/keys";
+import { keyAction } from "@/lib/keys";
 import { MobileHeader } from "./mobile-header";
 import { Sidebar } from "./sidebar";
+import { SyncNotices } from "./sync-notices";
 import { TabBar } from "./tab-bar";
 
 export const SEARCH_ID = "referensi-search";
@@ -48,6 +49,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 				</main>
 			</div>
 			<TabBar />
+			<SyncNotices />
 		</div>
 	);
 }

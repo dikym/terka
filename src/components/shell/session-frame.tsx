@@ -1,4 +1,5 @@
 import { Icon } from "@/components/ui/icon";
+import { Tooltip } from "@/components/ui/tooltip";
 
 const COLUMN = {
 	preview: "max-w-preview gap-6",
@@ -78,6 +79,7 @@ export function BarButton({
 	large = false,
 	label,
 	onClick,
+	kbd,
 	disabled = false
 }: {
 	icon: "arrow-left" | "undo-2" | "x";
@@ -87,24 +89,30 @@ export function BarButton({
 	large?: boolean;
 	label: string;
 	onClick?: () => void;
+	/** The shortcut the tooltip names. */
+	kbd?: string;
 	disabled?: boolean;
 }) {
 	const glyph = large ? "size-5 lg:size-4.5" : "size-4.5";
 	return (
-		<button
-			type="button"
-			aria-label={label}
-			title={label}
-			onClick={onClick}
-			disabled={disabled}
-			className={`inline-flex flex-none cursor-pointer items-center justify-center rounded-sm border border-transparent bg-transparent text-ink-700 disabled:cursor-not-allowed disabled:opacity-40 ${large ? "size-11 lg:size-9" : "size-9"}`}
-		>
-			<Icon
-				name={icon}
-				size={null}
-				className={`${glyph} ${phoneIcon ? "max-lg:hidden" : ""}`}
-			/>
-			{phoneIcon && <Icon name={phoneIcon} size={null} className={`${glyph} lg:hidden`} />}
-		</button>
+		<Tooltip content={label} kbd={kbd}>
+			<button
+				type="button"
+				aria-label={label}
+				aria-keyshortcuts={kbd}
+				onClick={onClick}
+				disabled={disabled}
+				className={`inline-flex flex-none cursor-pointer items-center justify-center rounded-sm border border-transparent bg-transparent text-ink-700 disabled:cursor-not-allowed disabled:opacity-40 ${large ? "size-11 lg:size-9" : "size-9"}`}
+			>
+				<Icon
+					name={icon}
+					size={null}
+					className={`${glyph} ${phoneIcon ? "max-lg:hidden" : ""}`}
+				/>
+				{phoneIcon && (
+					<Icon name={phoneIcon} size={null} className={`${glyph} lg:hidden`} />
+				)}
+			</button>
+		</Tooltip>
 	);
 }

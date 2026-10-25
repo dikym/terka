@@ -1,3 +1,5 @@
+import { Tooltip } from "./tooltip";
+
 const TONE = {
 	default: "border-ink-200 bg-paper-0 text-ink-900",
 	active: "border-ink-1000 bg-ink-1000 text-paper-25",
@@ -16,10 +18,13 @@ export function Tag({
 	children: React.ReactNode;
 	title?: string;
 }) {
-	return (
-		<span className={`${BASE} ${TONE[tone]}`} title={title}>
-			{children}
-		</span>
+	const tag = <span className={`${BASE} ${TONE[tone]}`}>{children}</span>;
+	return title ? (
+		<Tooltip content={title} align="start" focusable>
+			{tag}
+		</Tooltip>
+	) : (
+		tag
 	);
 }
 
@@ -47,18 +52,28 @@ export function TagButton({
 /** Small dotted label: "Latihan dan Referensi", "Referensi saja", "Hanya format". */
 export function DotLabel({
 	tone = "muted",
+	hint,
 	children
 }: {
 	tone?: "go" | "muted";
+	/** A short explanation of the term, shown as a tooltip. */
+	hint?: string;
 	children: React.ReactNode;
 }) {
 	const color = tone === "go" ? "text-go-700" : "text-ink-500";
-	return (
+	const label = (
 		<span
 			className={`inline-flex flex-none items-center gap-1.5 font-display text-label leading-none font-semibold tracking-[0.02em] whitespace-nowrap ${color}`}
 		>
 			<span className="size-[7px] flex-none rounded-full bg-current" />
 			{children}
 		</span>
+	);
+	return hint ? (
+		<Tooltip content={hint} align="start" focusable>
+			{label}
+		</Tooltip>
+	) : (
+		label
 	);
 }

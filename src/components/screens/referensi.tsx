@@ -14,17 +14,26 @@ import {
 } from "@/components/ui/groups";
 import { Flag, Icon } from "@/components/ui/icon";
 import { Kbd } from "@/components/ui/kbd";
+import { Tooltip } from "@/components/ui/tooltip";
 import { SpecialPlate } from "@/components/ui/plate";
 import { DotLabel, TagButton } from "@/components/ui/tag";
+import type { Bundle } from "@/core/content/schema";
+import type { AppState } from "@/core/replay/state";
+import { sightingCounts } from "@/core/views/stats";
+import { SIGHTING_WINDOW_DAYS } from "@/rules";
+import { uiGroup } from "@/lib/view/groups";
 import {
+	diplomatEntry,
+	diplomatList,
 	otherCodes,
-	REF_GROUPS,
+	type RefGroup,
+	type RegionDetail,
+	refGroups,
+	refView,
 	regionDetail,
-	searchDummy,
 	suggestions,
-	UNVERIFIED
-} from "@/dummy/reference";
-import { stats } from "@/dummy/stats";
+	unverifiedCodes
+} from "@/lib/view/reference";
 import {
 	DiplomatList,
 	Divider,
@@ -32,6 +41,7 @@ import {
 	FormatCards,
 	Hint,
 	NoResult,
+	REFERENCE_ONLY,
 	RegionCard,
 	SpecialCard,
 	UnverifiedLegend
@@ -78,14 +88,16 @@ function SearchBox({
 				className="min-w-0 flex-1 bg-transparent font-mono text-body-lg leading-none font-medium text-ink-1000 outline-none placeholder:font-sans placeholder:font-normal placeholder:text-ink-500"
 			/>
 			{value ? (
-				<button
-					type="button"
-					aria-label="Hapus pencarian"
-					onClick={() => onChange("")}
-					className="flex cursor-pointer"
-				>
-					<Icon name="x" size={18} />
-				</button>
+				<Tooltip content="Hapus pencarian" kbd="Esc">
+					<button
+						type="button"
+						aria-label="Hapus pencarian"
+						onClick={() => onChange("")}
+						className="flex cursor-pointer"
+					>
+						<Icon name="x" size={18} />
+					</button>
+				</Tooltip>
 			) : (
 				<Kbd>/</Kbd>
 			)}
@@ -94,22 +106,27 @@ function SearchBox({
 }
 
 function Suggest({
+	bundle,
 	query,
 	highlight,
 	onPick
 }: {
+	bundle: Bundle;
 	query: string;
 	highlight: number;
 	onPick: (value: string) => void;
 }) {
-	const result = suggestions(query);
+	const result = suggestions(bundle, query);
+	// A long list scrolls; the highlighted row stays in view while moving with the arrows.
+	useEffect(() => {
+		document.getElementById(optionId(highlight))?.scrollIntoView({ block: "nearest" });
+	}, [highlight]);
 	const prefix = query.trim().toUpperCase().replace(/\s+/g, " ");
-	const hidden = result.diplomatTotal - result.diplomats.length;
 	return (
 		<div
 			id={LISTBOX_ID}
 			role="listbox"
-			className="absolute top-[calc(100%+6px)] right-0 left-0 z-20 overflow-hidden rounded-sm border border-ink-1000 bg-paper-0 shadow-block"
+			className="absolute top-[calc(100%+6px)] right-0 left-0 z-20 max-h-80 overflow-y-auto rounded-sm border border-ink-1000 bg-paper-0 shadow-block"
 		>
 			{result.diplomats.length > 0 && (
 				<>
@@ -137,8 +154,12 @@ function Suggest({
 									</span>
 									{code.slice(prefix.length)}
 								</span>
-								<Flag code={entry.flag} />
-								<span className="text-ink-900 type-body">{entry.name}</span>
+								{entry.flag && <Flag code={entry.flag} />}
+								<span
+									className={`text-ink-900 type-body ${entry.flag ? "" : "col-span-2"}`}
+								>
+									{entry.name}
+								</span>
 								{index === highlight && <Kbd>Enter</Kbd>}
 								{/* A phone has no Enter hint, so the type stays on the highlighted row. */}
 								<span
@@ -149,46 +170,41 @@ function Suggest({
 							</button>
 						);
 					})}
-					{hidden > 0 && (
-						<button
-							type="button"
-							onClick={() => onPick(`CD ${result.diplomats[0].number}`)}
-							className="flex min-h-10 w-full cursor-pointer items-center px-4 text-left font-display text-body-sm leading-none font-semibold text-ink-1000 underline underline-offset-[3px]"
-						>
-							Lihat {hidden} hasil lainnya
-						</button>
-					)}
-					<div className="h-px bg-hairline" />
+					{result.regions.length > 0 && <div className="h-px bg-hairline" />}
 				</>
 			)}
-			<div className="flex items-center justify-between px-4 pt-3 pb-2">
-				<span className="type-label text-ink-500">Kode wilayah</span>
-				<span className="font-mono text-body-sm leading-[1.2] font-medium text-ink-500 tabular-nums">
-					{result.regions.length} hasil
-				</span>
-			</div>
-			{result.regions.map((region, index) => {
-				const position = result.diplomats.length + index;
-				return (
-					<button
-						key={region.code}
-						id={optionId(position)}
-						type="button"
-						role="option"
-						aria-selected={position === highlight}
-						onClick={() => onPick(region.code)}
-						className={`grid min-h-14 w-full cursor-pointer grid-cols-[52px_minmax(0,1fr)] items-center gap-3 px-4 py-2 text-left lg:min-h-12 lg:grid-cols-[64px_minmax(0,1fr)_auto] lg:py-0 ${position === highlight ? "bg-paper-50" : ""}`}
-					>
-						<CodeChip code={region.code} group={region.group} />
-						<span className="flex flex-col gap-0.5 lg:contents">
-							<span className="text-ink-900 type-body">{region.areas}</span>
-							<span className="font-mono text-body-sm leading-[1.2] font-medium text-ink-500 tabular-nums">
-								{region.province}
-							</span>
+			{result.regions.length > 0 && (
+				<>
+					<div className="flex items-center justify-between px-4 pt-3 pb-2">
+						<span className="type-label text-ink-500">Kode wilayah</span>
+						<span className="font-mono text-body-sm leading-[1.2] font-medium text-ink-500 tabular-nums">
+							{result.regions.length} hasil
 						</span>
-					</button>
-				);
-			})}
+					</div>
+					{result.regions.map((region, index) => {
+						const position = result.diplomats.length + index;
+						return (
+							<button
+								key={region.code}
+								id={optionId(position)}
+								type="button"
+								role="option"
+								aria-selected={position === highlight}
+								onClick={() => onPick(region.code)}
+								className={`grid min-h-14 w-full cursor-pointer grid-cols-[52px_minmax(0,1fr)] items-center gap-3 px-4 py-2 text-left lg:min-h-12 lg:grid-cols-[64px_minmax(0,1fr)_auto] lg:py-0 ${position === highlight ? "bg-paper-50" : ""}`}
+							>
+								<CodeChip code={region.code} group={region.group} />
+								<span className="flex flex-col gap-0.5 lg:contents">
+									<span className="text-ink-900 type-body">{region.areas}</span>
+									<span className="font-mono text-body-sm leading-[1.2] font-medium text-ink-500 tabular-nums">
+										{region.province}
+									</span>
+								</span>
+							</button>
+						);
+					})}
+				</>
+			)}
 		</div>
 	);
 }
@@ -201,14 +217,23 @@ const CHIP_COLUMNS = [
 	"grid-cols-[repeat(4,auto)]"
 ];
 
-function RegionList({ loading }: { loading: boolean }) {
+// Holds the list's shape while the data loads.
+const SKELETON_GROUPS: RefGroup[] = (["sumatera", "jawa", "kalimantan"] as const).map((id) => ({
+	id,
+	codes: 0,
+	provinces: ["Sumatera Utara", "Jawa Barat", "Bali"].map((name, index) => ({
+		id: `${id}-${index}`,
+		name,
+		codes: ["a", "b"].slice(0, index + 1)
+	}))
+}));
+
+function RegionList({ bundle }: { bundle: Bundle | null }) {
 	const [filter, setFilter] = useState<GroupId | "all">("all");
-	const groups = loading
-		? REF_GROUPS.slice(0, 3).map((group) => ({
-				...group,
-				provinces: group.provinces.slice(0, 3)
-			}))
-		: REF_GROUPS.filter((group) => filter === "all" || group.id === filter);
+	const loading = bundle === null;
+	const all = useMemo(() => (bundle ? refGroups(bundle) : SKELETON_GROUPS), [bundle]);
+	const unverified = useMemo(() => (bundle ? unverifiedCodes(bundle) : new Set()), [bundle]);
+	const groups = loading ? all : all.filter((group) => filter === "all" || group.id === filter);
 	return (
 		<>
 			<div className="flex flex-wrap gap-2">
@@ -251,11 +276,7 @@ function RegionList({ loading }: { loading: boolean }) {
 						</h3>
 						<div className="grid grid-cols-2 gap-4">
 							{[
-								[
-									REF_GROUPS.find((item) => item.id === group.id)!.provinces
-										.length,
-									"provinsi"
-								],
+								[group.provinces.length, "provinsi"],
 								[group.codes, "kode"]
 							].map(([value, label]) => (
 								<span key={label} className="flex min-w-0 flex-col gap-[3px]">
@@ -297,7 +318,7 @@ function RegionList({ loading }: { loading: boolean }) {
 												code={code}
 												group={group.id}
 												size="xs"
-												unverified={UNVERIFIED.has(code)}
+												unverified={unverified.has(code)}
 											/>
 										)
 									)}
@@ -346,7 +367,12 @@ function SpecialCodesCard({ loading }: { loading: boolean }) {
 								<SkeletonText width={skeletonWidth(label)} />
 							</span>
 						) : (
-							<DotLabel tone={tone}>{label}</DotLabel>
+							<DotLabel
+								tone={tone}
+								hint={label === "Referensi saja" ? REFERENCE_ONLY : undefined}
+							>
+								{label}
+							</DotLabel>
 						)}
 					</div>
 				</div>
@@ -355,15 +381,22 @@ function SpecialCodesCard({ loading }: { loading: boolean }) {
 	);
 }
 
-function SeenCard({ loading }: { loading: boolean }) {
-	const rows = stats.seen.slice(0, 3);
+type SeenRow = { code: string; group: GroupId; count: number };
+
+function SeenCard({ rows: all }: { rows: SeenRow[] | null }) {
+	const loading = all === null;
+	const rows = (all ?? SKELETON_SEEN).slice(0, 3);
 	return (
 		<Card className="gap-2">
 			<CardHeader
 				label="Pelat Terlihat"
 				aside={
 					<span className="flex-none font-mono text-body-sm leading-[1.2] font-medium text-ink-500 tabular-nums">
-						{loading ? <SkeletonText width="9em" /> : "30 hari terakhir"}
+						{loading ? (
+							<SkeletonText width="9em" />
+						) : (
+							`${SIGHTING_WINDOW_DAYS} hari terakhir`
+						)}
 					</span>
 				}
 			/>
@@ -413,66 +446,47 @@ function SearchHelp() {
 	);
 }
 
-function RegionAside({ code, loading }: { code: string; loading: boolean }) {
-	const detail = regionDetail(code);
-	const rows: [string, React.ReactNode, string][] = [
+function RegionAside({ detail, note }: { detail: RegionDetail; note: string | null }) {
+	const rows: [string, React.ReactNode][] = [
 		[
 			"Label data",
-			<span
-				key="v"
-				className="inline-flex items-center gap-2 type-label whitespace-nowrap text-go-700"
-			>
-				<Icon name="shield-check" size={16} color="bg-current" />
-				Terverifikasi
-			</span>,
-			"6em"
+			detail.verified ? (
+				<span
+					key="v"
+					className="inline-flex items-center gap-2 type-label whitespace-nowrap text-go-700"
+				>
+					<Icon name="shield-check" size={16} color="bg-current" />
+					Terverifikasi
+				</span>
+			) : (
+				<span key="u" className="type-label whitespace-nowrap text-caution-700">
+					Belum terverifikasi penuh
+				</span>
+			)
 		],
-		["Pelat Terlihat", detail.seen ?? "belum ada", "9em"],
-		["Catatan pengingat", "belum ada", "4em"]
+		["Pelat Terlihat", detail.seen ?? "belum ada"],
+		["Catatan pengingat", note ?? "belum ada"]
 	];
-	const nearby = detail.nearby;
 	return (
 		<>
 			<Card className="gap-1">
-				<CardHeader label={loading ? <SkeletonText width="4.4em" /> : `Rincian ${code}`} />
+				<CardHeader label={`Rincian ${detail.code}`} />
 				<div className="flex flex-col">
-					{rows.map(([label, value, width], index) => (
+					{rows.map(([label, value], index) => (
 						<div
 							key={label}
 							className={`flex items-center justify-between gap-4 py-3 ${index < rows.length - 1 ? "border-b border-hairline" : ""}`}
 						>
 							<span className="type-label text-ink-500">{label}</span>
-							<span className="flex flex-none items-center gap-2 font-mono text-body-sm leading-[1.2] font-medium text-ink-1000 tabular-nums">
-								{loading ? (
-									<>
-										{index === 0 && <Skeleton className="size-4 rounded-xs" />}
-										<SkeletonText width={width} />
-									</>
-								) : (
-									<span className={value === "belum ada" ? "text-ink-500" : ""}>
-										{value}
-									</span>
-								)}
+							<span className="flex min-w-0 items-center gap-2 text-right font-mono text-body-sm leading-[1.2] font-medium text-ink-1000 tabular-nums">
+								<span className={value === "belum ada" ? "text-ink-500" : ""}>
+									{value}
+								</span>
 							</span>
 						</div>
 					))}
 				</div>
 			</Card>
-			{(nearby || loading) && (
-				<Card className="gap-3">
-					<CardHeader label="Di sekitarnya" />
-					<div className="flex flex-wrap gap-2">
-						{(nearby?.codes ?? ["a", "b", "c"]).map((item) =>
-							loading ? (
-								<Skeleton key={item} className="h-7 w-10 rounded-sm" />
-							) : (
-								<CodeChip key={item} code={item} group={detail.group} />
-							)
-						)}
-					</div>
-					<Hint>{loading ? <SkeletonText width="26em" /> : nearby?.note}</Hint>
-				</Card>
-			)}
 			<Hint>
 				Referensi hanya menampilkan data. Tidak ada soal, penilaian, atau perubahan jadwal
 				di sini.
@@ -481,29 +495,77 @@ function RegionAside({ code, loading }: { code: string; loading: boolean }) {
 	);
 }
 
-/** Opening a code shows the detail skeleton for a moment, as loading real data will. */
-function useDetailLoading(code: string | null) {
-	const [shown, setShown] = useState<string | null>(null);
-	useEffect(() => {
-		if (!code) return;
-		const timer = setTimeout(() => setShown(code), 600);
-		return () => clearTimeout(timer);
-	}, [code]);
-	return code !== null && shown !== code;
-}
+const SEARCH_DEBOUNCE_MS = 250;
 
-export function Referensi({ loading }: { loading: boolean }) {
+export type ReferenceData = {
+	bundle: Bundle;
+	state: AppState;
+	today: string;
+	notes: ReadonlyMap<string, string>;
+};
+
+const SKELETON_SEEN: SeenRow[] = ["a", "b", "c"].map((code) => ({
+	code,
+	group: "jawa",
+	count: 1
+}));
+
+export function Referensi({
+	data,
+	onQuery
+}: {
+	data: ReferenceData | null;
+	/** Called with every settled query; the page decides what counts as a sighting. */
+	onQuery: (query: string) => void;
+}) {
+	// `query` is the text in the box; `searched` follows it once typing pauses.
 	const [query, setQuery] = useState("");
+	const [searched, setSearched] = useState("");
 	const [highlight, setHighlight] = useState(0);
-	const view = useMemo(() => searchDummy(query), [query]);
-	const regionCode = view.kind === "region" ? view.code : null;
-	const detailLoading = useDetailLoading(regionCode);
+	const bundle = data?.bundle ?? null;
+	const view = useMemo(
+		() => (bundle ? refView(bundle, searched) : { kind: "list" as const }),
+		[bundle, searched]
+	);
+	const seen = useMemo(() => {
+		if (!data) return null;
+		const regions = new Map(data.bundle.regions.map((region) => [region.id, region]));
+		return [...sightingCounts(data.state, data.today)]
+			.flatMap(([id, count]) => {
+				const region = regions.get(id);
+				return region ? [{ code: region.code, group: uiGroup(region.group), count }] : [];
+			})
+			.sort((a, b) => b.count - a.count);
+	}, [data]);
 
+	// A search counts as a sighting once the query rests for a moment, not on every keystroke.
+	const latestQuery = useRef(onQuery);
+	useEffect(() => {
+		latestQuery.current = onQuery;
+	});
+	useEffect(() => {
+		if (!searched.trim()) return;
+		const timer = setTimeout(() => latestQuery.current(searched), 1500);
+		return () => clearTimeout(timer);
+	}, [searched]);
+
+	useEffect(() => {
+		if (query === searched) return;
+		const timer = setTimeout(() => {
+			setSearched(query);
+			setHighlight(0);
+		}, SEARCH_DEBOUNCE_MS);
+		return () => clearTimeout(timer);
+	}, [query, searched]);
+
+	const type = (value: string) => setQuery(value);
+	// Clearing, Escape and picking a suggestion are deliberate: they apply at once.
 	const update = (value: string) => {
 		setQuery(value);
+		setSearched(value);
 		setHighlight(0);
 	};
-	const options = view.kind === "suggest" ? suggestions(query) : null;
+	const options = view.kind === "suggest" && bundle ? suggestions(bundle, searched) : null;
 	const optionCodes = options
 		? [
 				...options.diplomats.map((entry) => `CD ${entry.number}`),
@@ -525,45 +587,35 @@ export function Referensi({ loading }: { loading: boolean }) {
 
 	let main: React.ReactNode;
 	let aside: React.ReactNode;
-	if (view.kind === "region") {
-		const detail = regionDetail(view.code);
-		const others = otherCodes(detail);
+	if (view.kind === "region" && data) {
+		const detail = regionDetail(data.bundle, data.state, view.code, data.today);
+		const others = otherCodes(data.bundle, view.code);
+		const regionId = data.bundle.regions.find((region) => region.code === view.code)?.id;
 		main = (
 			<>
-				<Hint>
-					{detailLoading ? (
-						<SkeletonText width="22em" />
-					) : (
-						"1 kode ditemukan, diurutkan dari kota lalu kabupaten."
-					)}
-				</Hint>
-				<RegionCard detail={detail} loading={detailLoading} />
+				<Hint>1 kode ditemukan, diurutkan dari kota lalu kabupaten.</Hint>
+				<RegionCard detail={detail} loading={false} />
 				{others.length > 0 && (
 					<>
-						<Divider
-							label={
-								detailLoading ? (
-									<SkeletonText width="11em" />
-								) : (
-									`Kode lain di ${detail.province}`
-								)
-							}
-						/>
+						<Divider label={`Kode lain di ${detail.province}`} />
 						{others.map((code) => (
 							<RegionCard
 								key={code}
-								detail={regionDetail(code)}
-								loading={detailLoading}
+								detail={regionDetail(data.bundle, data.state, code, data.today)}
+								loading={false}
 							/>
 						))}
 					</>
 				)}
 			</>
 		);
-		aside = <RegionAside code={view.code} loading={detailLoading} />;
-	} else if (view.kind === "special") {
+		aside = (
+			<RegionAside detail={detail} note={(regionId && data.notes.get(regionId)) || null} />
+		);
+	} else if (view.kind === "special" && data) {
+		const special = data.bundle.specials.find((entry) => entry.number === view.number)!;
 		const registration =
-			query.trim().toUpperCase().replace(/\s+/g, " ") !== `CD ${view.number}`;
+			searched.trim().toUpperCase().replace(/\s+/g, " ") !== `CD ${view.number}`;
 		main = (
 			<>
 				{registration && (
@@ -572,14 +624,18 @@ export function Referensi({ loading }: { loading: boolean }) {
 						dipakai, jadi tidak ditampilkan.
 					</Hint>
 				)}
-				<SpecialCard number={view.number} />
+				<SpecialCard entry={diplomatEntry(data.bundle, special)} />
 				<Divider label="Format pelat khusus" />
 				<FormatCards />
 			</>
 		);
 		aside = (
 			<>
-				<DiplomatList current={view.number} />
+				<DiplomatList
+					list={diplomatList(data.bundle)}
+					current={view.number}
+					onPick={update}
+				/>
 				<Hint>Pencarian kode khusus tidak dicatat di Pelat Terlihat.</Hint>
 			</>
 		);
@@ -592,17 +648,17 @@ export function Referensi({ loading }: { loading: boolean }) {
 			</>
 		);
 	} else if (view.kind === "none") {
-		main = <NoResult query={query.trim()} />;
+		main = <NoResult query={searched.trim()} />;
 		aside = <SearchHelp />;
 	} else {
-		main = <RegionList loading={loading} />;
+		main = <RegionList bundle={bundle} />;
 		aside =
 			view.kind === "suggest" ? (
 				<SearchHelp />
 			) : (
 				<>
-					<SpecialCodesCard loading={loading} />
-					<SeenCard loading={loading} />
+					<SpecialCodesCard loading={!data} />
+					{(seen === null || seen.length > 0) && <SeenCard rows={seen} />}
 					<DisclaimerCard />
 				</>
 			);
@@ -620,13 +676,18 @@ export function Referensi({ loading }: { loading: boolean }) {
 					<div className="relative">
 						<SearchBox
 							value={query}
-							onChange={update}
+							onChange={(value) => (value ? type(value) : update(value))}
 							onKeyDown={onKeyDown}
 							expanded={view.kind === "suggest"}
 							active={optionCodes.length ? highlight : null}
 						/>
-						{view.kind === "suggest" && (
-							<Suggest query={query} highlight={highlight} onPick={update} />
+						{view.kind === "suggest" && bundle && (
+							<Suggest
+								bundle={bundle}
+								query={searched}
+								highlight={highlight}
+								onPick={update}
+							/>
 						)}
 					</div>
 					{main}

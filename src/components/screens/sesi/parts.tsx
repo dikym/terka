@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Icon } from "@/components/ui/icon";
-import type { Level } from "@/dummy/session";
+import { Tooltip } from "@/components/ui/tooltip";
+import type { Level } from "@/lib/session/cards";
 
 const LEVEL = {
 	1: { icon: "eye", name: "Kenali" },
@@ -14,22 +15,23 @@ export const levelName = (level: Level) => LEVEL[level].name;
 export function LevelMark({ level, className = "" }: { level: Level; className?: string }) {
 	const label = `Level ${level} ${LEVEL[level].name}`;
 	return (
-		<span
-			role="img"
-			aria-label={label}
-			title={label}
-			className={`inline-flex flex-none items-center gap-2 ${className}`}
-		>
-			<span className="inline-flex gap-[3px]">
-				{[1, 2, 3].map((step) => (
-					<span
-						key={step}
-						className={`size-1.5 flex-none rounded-[1px] ${step <= level ? "bg-ink-1000" : "bg-ink-200"}`}
-					/>
-				))}
+		<Tooltip content={label} className={`inline-flex flex-none ${className}`}>
+			<span
+				role="img"
+				aria-label={label}
+				className="inline-flex flex-none items-center gap-2"
+			>
+				<span className="inline-flex gap-[3px]">
+					{[1, 2, 3].map((step) => (
+						<span
+							key={step}
+							className={`size-1.5 flex-none rounded-[1px] ${step <= level ? "bg-ink-1000" : "bg-ink-200"}`}
+						/>
+					))}
+				</span>
+				<Icon name={LEVEL[level].icon} size={16} color="bg-ink-700" />
 			</span>
-			<Icon name={LEVEL[level].icon} size={16} color="bg-ink-700" />
-		</span>
+		</Tooltip>
 	);
 }
 

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { registerServiceWorker } from "@/lib/pwa/register";
+import { showToast } from "@/lib/toasts";
 
 export function InstallStatus() {
 	const [failed, setFailed] = useState(false);
@@ -20,8 +21,14 @@ export function InstallStatus() {
 		};
 	}, []);
 
-	if (!failed || !offline) return null;
-	return (
-		<p role="status">Pemasangan pertama memerlukan koneksi internet. Coba lagi saat online.</p>
-	);
+	useEffect(() => {
+		if (failed && offline)
+			showToast({
+				tone: "warn",
+				icon: "globe",
+				text: "Pemasangan pertama memerlukan koneksi internet. Coba lagi saat online.",
+				key: "install"
+			});
+	}, [failed, offline]);
+	return null;
 }

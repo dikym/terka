@@ -7,6 +7,8 @@ import type {
 	Region,
 	Special
 } from "../content/schema";
+import { provinceName } from "../answers/dictionary";
+import { groupName } from "../content/names";
 import { compactName, holderKey, normalizeName } from "../text";
 import { frontCode } from "./front-code";
 
@@ -60,7 +62,12 @@ function byName(bundle: Bundle, query: string): ReferenceResult {
 		const areas = region.areas
 			.map((membership) => bundle.areas.find((item) => item.id === membership.areaId))
 			.filter((area): area is Area => area !== undefined && areaMatches(area));
-		const named = startsWord(normalizeName(region.region), name);
+		// A province name ("Jawa Timur") finds every code inside it. A group opens only when its
+		// whole name is typed ("Jawa"), so "bali" does not list all of Bali & Nusa Tenggara.
+		const named =
+			[region.region, provinceName(region.province)].some((form) =>
+				startsWord(normalizeName(form), name)
+			) || normalizeName(groupName(bundle, region.group)) === name;
 		return areas.length > 0 || named ? [{ region, areas }] : [];
 	});
 	const specials = bundle.specials.filter((special) =>

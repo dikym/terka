@@ -1,12 +1,11 @@
 "use client";
 
 import { Link } from "@/components/ui/app-link";
-import { useState } from "react";
 import { SkeletonText, skeletonWidth, Switch } from "@/components/ui/feedback";
 import { Icon, type IconName } from "@/components/ui/icon";
 import { PageTitle } from "@/components/ui/page-title";
 import { DotLabel } from "@/components/ui/tag";
-import { type Settings, settings } from "@/dummy/settings";
+import type { Settings } from "@/lib/view/settings";
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
 	return (
@@ -103,10 +102,31 @@ function LinkRow({ icon, label, href }: { icon: IconName; label: string; href: s
 	);
 }
 
-export function Setelan({ data }: { data: Settings | null }) {
+// Sizes the skeleton lines while the settings load.
+const PLACEHOLDER: Settings = {
+	newPerDay: "10",
+	newPerDayNote: "",
+	holdAt: "40 soal",
+	scope: "",
+	diplomatEnabled: false,
+	diplomatPerDay: "5",
+	timeLimit: "8 detik",
+	data: { version: "2026.09.24", regions: "61", diplomats: "130" },
+	params: "",
+	retention: "0,90",
+	persisted: false,
+	contact: "contact@terka.my.id"
+};
+
+export function Setelan({
+	data,
+	onDiplomatChange
+}: {
+	data: Settings | null;
+	onDiplomatChange: (enabled: boolean) => void;
+}) {
 	const loading = data === null;
-	const s = data ?? settings;
-	const [diplomat, setDiplomat] = useState(true);
+	const s = data ?? PLACEHOLDER;
 	const line = (text: string) => (loading ? <SkeletonText width="22em" /> : text);
 	return (
 		<>
@@ -135,8 +155,9 @@ export function Setelan({ data }: { data: Settings | null }) {
 							title="Latihan Kode diplomat"
 							control={
 								<Switch
-									checked={diplomat}
-									onChange={setDiplomat}
+									checked={s.diplomatEnabled}
+									onChange={onDiplomatChange}
+									disabled={loading}
 									label="Latihan Kode diplomat"
 								/>
 							}
@@ -198,14 +219,18 @@ export function Setelan({ data }: { data: Settings | null }) {
 							title="Penyimpanan permanen"
 							control={
 								<Switch
-									checked
+									checked={s.persisted}
 									onChange={() => {}}
 									label="Penyimpanan permanen"
 									disabled
 								/>
 							}
 						>
-							<Note>Mencegah browser menghapus data belajar secara otomatis.</Note>
+							<Note>
+								{loading || s.persisted
+									? "Mencegah browser menghapus data belajar secara otomatis."
+									: "Penyimpanan permanen tidak tersedia. Masuk untuk menyinkronkan progres, atau ekspor data secara rutin."}
+							</Note>
 						</Row>
 						<Row title="Akun, sinkronisasi, ekspor, dan impor" href="/statistik/akun">
 							<Note>Dikelola dari Statistik.</Note>
@@ -261,7 +286,7 @@ export function Setelan({ data }: { data: Settings | null }) {
 						<LinkRow
 							icon="circle-alert"
 							label="Laporkan data yang keliru"
-							href={`mailto:${settings.contact}`}
+							href={`mailto:${s.contact}`}
 						/>
 						<div className="pt-3 lg:flex lg:min-h-12 lg:items-center lg:justify-between lg:pt-0">
 							<span className="font-mono text-body-sm leading-[1.2] font-medium text-ink-500 tabular-nums">

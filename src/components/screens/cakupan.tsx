@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CodeChip } from "@/components/ui/code-chip";
 import { Skeleton, SkeletonText, skeletonWidth } from "@/components/ui/feedback";
-import { GROUP_BG, GROUP_NAME, type GroupId } from "@/components/ui/groups";
+import { GROUP_BG, GROUP_IDS, GROUP_NAME, type GroupId } from "@/components/ui/groups";
 import { Icon } from "@/components/ui/icon";
-import { ACTIVE_SCOPE, COVERAGE, groupOf, NATIONAL, type Province } from "@/dummy/coverage";
-import { keyAction } from "@/dummy/keys";
+import type { Coverage, Province } from "@/lib/view/coverage";
+import { keyAction } from "@/lib/keys";
 
-type Node = "national" | GroupId;
+export type Node = "national" | GroupId;
 
 const nodeTitle = (node: Node) =>
 	node === "national" ? "Seluruh Indonesia" : `Kawasan ${GROUP_NAME[node]}`;
@@ -141,21 +141,28 @@ function ProvinceRow({ province, group }: { province: Province; group: GroupId }
 function Panel({
 	node,
 	active,
-	loading,
+	data,
 	onPick
 }: {
 	node: Node;
 	active: boolean;
-	loading: boolean;
+	data: Coverage | null;
 	onPick: () => void;
 }) {
-	const group = node === "national" ? null : groupOf(node);
+	const loading = data === null;
+	const group =
+		node === "national" ? null : (data?.groups.find((item) => item.id === node) ?? null);
+	const national = data?.national ?? EMPTY.national;
 	const stats = group
 		? { provinces: group.provinces.length, codes: group.codes, percent: group.percent }
-		: NATIONAL;
-	const newAvailable = group ? group.newAvailable : NATIONAL.newAvailable;
+		: national;
+	const newAvailable = group ? group.newAvailable : national.newAvailable;
 	const codes = group?.provinces.flatMap((province) => province.codes) ?? [];
-	const bar = loading ? "animate-skl bg-ink-100" : group ? GROUP_BG[group.id] : "bg-ink-1000";
+	const bar = loading
+		? "animate-skl bg-ink-100"
+		: node !== "national"
+			? GROUP_BG[node]
+			: "bg-ink-1000";
 	return (
 		<section className="min-w-0 overflow-hidden rounded-md border border-hairline bg-paper-0 shadow-lift">
 			<div className={`h-1 ${bar}`} />
@@ -192,11 +199,13 @@ function Panel({
 				<div className="font-display text-body-lg leading-[1.3] font-semibold">
 					{loading ? (
 						<SkeletonText width="10.5em" />
-					) : (
+					) : newAvailable ? (
 						`${newAvailable} materi baru tersedia`
+					) : (
+						"Tidak ada materi baru di wilayah ini."
 					)}
 				</div>
-				{(loading || group) && (
+				{(loading || node !== "national") && (
 					<>
 						<div className="flex flex-wrap gap-2">
 							{loading
@@ -207,7 +216,7 @@ function Panel({
 										/>
 									))
 								: codes.map((code) => (
-										<CodeChip key={code} code={code} group={group!.id} />
+										<CodeChip key={code} code={code} group={node as GroupId} />
 									))}
 						</div>
 						<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">
@@ -237,7 +246,7 @@ function Panel({
 									block
 									icon="crosshair"
 									className="px-4"
-									href="/sesi?mode=terfokus"
+									href={`/sesi?mode=terfokus&scope=group:${group.bundleId}`}
 								>
 									Latih wilayah ini
 								</Button>
@@ -255,8 +264,30 @@ function Panel({
 	);
 }
 
-export function Cakupan({ loading }: { loading: boolean }) {
-	const [active, setActive] = useState<Node>(ACTIVE_SCOPE);
+// Stands in while loading: the tree keeps its seven groups.
+const EMPTY: Coverage = {
+	national: { provinces: 0, codes: 0, percent: 0, newAvailable: 0 },
+	groups: GROUP_IDS.map((id) => ({
+		id,
+		bundleId: id,
+		codes: 0,
+		percent: 0,
+		newAvailable: 0,
+		provinces: []
+	}))
+};
+
+export function Cakupan({
+	data,
+	active,
+	onPick
+}: {
+	data: Coverage | null;
+	active: Node;
+	onPick: (node: Node) => void;
+}) {
+	const loading = data === null;
+	const coverage = data ?? EMPTY;
 	const [highlight, setHighlight] = useState<Node | null>(null);
 	const [open, setOpen] = useState<Set<GroupId>>(new Set());
 	const shown = highlight ?? active;
@@ -269,7 +300,7 @@ export function Cakupan({ loading }: { loading: boolean }) {
 			return next;
 		});
 	const pick = () => {
-		if (highlight) setActive(highlight);
+		if (highlight) onPick(highlight);
 		setHighlight(null);
 	};
 
@@ -348,17 +379,17 @@ export function Cakupan({ loading }: { loading: boolean }) {
 							)}
 							<NodeHeading
 								title="Seluruh Indonesia"
-								codes={`${NATIONAL.codes} kode`}
+								codes={`${coverage.national.codes} kode`}
 								loading={loading}
 							/>
 							<Meter
-								percent={NATIONAL.percent}
+								percent={coverage.national.percent}
 								color="bg-ink-1000"
 								loading={loading}
-								label={`${NATIONAL.percent}%`}
+								label={`${coverage.national.percent}%`}
 							/>
 						</Row>
-						{COVERAGE.map((group) => {
+						{coverage.groups.map((group) => {
 							const expanded = open.has(group.id) && !loading;
 							return (
 								<div key={group.id} className="contents">
@@ -420,7 +451,7 @@ export function Cakupan({ loading }: { loading: boolean }) {
 					</div>
 				</div>
 				<aside className="flex min-w-0 flex-col gap-5 lg:sticky lg:top-8">
-					<Panel node={shown} active={shown === active} loading={loading} onPick={pick} />
+					<Panel node={shown} active={shown === active} data={data} onPick={pick} />
 				</aside>
 			</div>
 		</>

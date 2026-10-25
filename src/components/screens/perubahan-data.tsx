@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Callout } from "@/components/ui/feedback";
 import { Icon } from "@/components/ui/icon";
 import { PageTitle } from "@/components/ui/page-title";
-import { dataChange } from "@/dummy/home";
+import type { DataChanges } from "@/lib/view/changes";
 
 function Item({ title, children }: { title: string; children: React.ReactNode }) {
 	return (
@@ -13,7 +13,14 @@ function Item({ title, children }: { title: string; children: React.ReactNode })
 	);
 }
 
-export function PerubahanData({ onClose }: { onClose: () => void }) {
+export function PerubahanData({
+	data,
+	onClose
+}: {
+	data: DataChanges | null;
+	onClose: () => void;
+}) {
+	if (!data) return <PageTitle title="Perubahan data" back={onClose} />;
 	return (
 		<>
 			<PageTitle title="Perubahan data" back={onClose} />
@@ -26,25 +33,18 @@ export function PerubahanData({ onClose }: { onClose: () => void }) {
 								Data diperbarui
 							</span>
 							<span className="font-mono text-body-sm leading-none font-medium text-ink-700">
-								{dataChange.from}
+								{data.from}
 							</span>
 							<Icon name="chevron-right" size={16} />
 							<span className="font-mono text-body-sm leading-none font-medium text-ink-1000">
-								{dataChange.to}
+								{data.to}
 							</span>
 						</div>
-						{dataChange.items.map((item) => (
+						{data.items.map((item) => (
 							<Item key={item.title} title={item.title}>
 								{item.note}
 							</Item>
 						))}
-						<Item title="1 fakta berubah status">
-							Terverifikasi
-							<span className="mx-1.5 inline-block align-[-3px]">
-								<Icon name="arrow-right" size={14} />
-							</span>
-							Diperdebatkan
-						</Item>
 					</div>
 				</div>
 				<aside className="flex min-w-0 flex-col gap-5">

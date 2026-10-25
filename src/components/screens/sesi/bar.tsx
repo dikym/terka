@@ -1,6 +1,9 @@
 import { BarButton, TopBar } from "@/components/shell/session-frame";
 import { Icon } from "@/components/ui/icon";
-import type { DummyCard, Level, Mode } from "@/dummy/session";
+import { Tooltip } from "@/components/ui/tooltip";
+import { GROUP_BG, type GroupId } from "@/components/ui/groups";
+import type { Level, SessionCard } from "@/lib/session/cards";
+import type { Mode } from "@/lib/session/modes";
 import { LevelMark, StatusPill, TimeBar } from "./parts";
 
 function Progress({ done, total }: { done: number; total: number }) {
@@ -29,7 +32,7 @@ function Progress({ done, total }: { done: number; total: number }) {
 
 export type BarProps = {
 	mode: Mode;
-	card: DummyCard | null;
+	card: SessionCard | null;
 	level: Level | null;
 	done: number;
 	total: number;
@@ -39,6 +42,9 @@ export type BarProps = {
 	/** Seconds left, fractional, so the bar can move every tick. */
 	clock?: { seconds: number; total: number };
 	correct?: number;
+	/** The region practised, for Mode Kilat and Latihan Terfokus. */
+	scope?: { label: string; group: GroupId | null };
+	streak?: number;
 };
 
 /** Keeps the phone bar's right edge when there is no undo button. */
@@ -54,18 +60,18 @@ export function SessionMeta({
 	level,
 	finished,
 	correct,
+	scope,
+	streak,
 	className = "flex"
 }: BarProps & { className?: string }) {
+	const dot = scope?.group ? GROUP_BG[scope.group] : "bg-ink-1000";
 	const row = `${className} min-h-6 flex-wrap items-center justify-between gap-x-3 gap-y-2 lg:min-h-0 lg:flex-nowrap lg:gap-3`;
 	if (mode === "kilat")
 		return (
 			<div className={row}>
 				<span className="inline-flex flex-none items-center gap-2 font-sans text-body-sm leading-none font-medium text-ink-900">
-					<span
-						aria-hidden="true"
-						className="size-2.5 flex-none rounded-full bg-ink-1000"
-					/>
-					Seluruh Indonesia
+					<span aria-hidden="true" className={`size-2.5 flex-none rounded-full ${dot}`} />
+					{scope?.label ?? "Seluruh Indonesia"}
 				</span>
 				<span className="ml-auto inline-flex flex-none items-center gap-3">
 					<Icon name="zap" size={16} color="bg-current" />
@@ -88,16 +94,18 @@ export function SessionMeta({
 				{mode === "harian" && !finished && (
 					<div className="flex items-center gap-2">
 						<Icon name="flame" size={16} color="bg-tangerine-700" />
-						<span className="type-label text-tangerine-700">17 Hari Beruntun</span>
+						<span className="type-label text-tangerine-700">
+							{streak ?? 0} Hari Beruntun
+						</span>
 					</div>
 				)}
 				{mode === "terfokus" && (
 					<span className="inline-flex items-center gap-2 font-sans text-body-sm leading-none font-medium text-ink-900">
 						<span
 							aria-hidden="true"
-							className="size-2.5 flex-none rounded-full bg-group-maluku"
+							className={`size-2.5 flex-none rounded-full ${dot}`}
 						/>
-						Kawasan Maluku
+						{scope?.label}
 					</span>
 				)}
 				{card?.pill && !finished && (
@@ -111,14 +119,15 @@ export function SessionMeta({
 				className={`inline-flex flex-none items-center gap-3 ${left ? "ml-auto" : "lg:ml-auto"}`}
 			>
 				{mode === "harian" && (
-					<span
-						role="img"
-						aria-label="Tantangan Harian"
-						title="Tantangan Harian"
-						className="inline-flex flex-none items-center text-ink-1000"
-					>
-						<Icon name="calendar-check" size={16} color="bg-current" />
-					</span>
+					<Tooltip content="Tantangan Harian">
+						<span
+							role="img"
+							aria-label="Tantangan Harian"
+							className="inline-flex flex-none items-center text-ink-1000"
+						>
+							<Icon name="calendar-check" size={16} color="bg-current" />
+						</span>
+					</Tooltip>
 				)}
 				{mode === "terfokus" && <Icon name="crosshair" size={16} color="bg-ink-1000" />}
 				{mode === "diplomat" && <Icon name="flag" size={16} color="bg-ink-1000" />}
@@ -131,7 +140,14 @@ export function SessionMeta({
 export function SessionBar(props: BarProps) {
 	const { mode, done, total, finished, onExit, onUndo, clock } = props;
 	const exit = (
-		<BarButton icon="arrow-left" phoneIcon="x" large label="Keluar sesi" onClick={onExit} />
+		<BarButton
+			icon="arrow-left"
+			phoneIcon="x"
+			large
+			label="Keluar sesi"
+			kbd="Esc"
+			onClick={onExit}
+		/>
 	);
 	if (mode === "kilat")
 		return (
@@ -160,7 +176,13 @@ export function SessionBar(props: BarProps) {
 					{exit}
 					<Progress done={done} total={total} />
 					{!finished ? (
-						<BarButton icon="undo-2" large label="Batalkan jawaban" onClick={onUndo} />
+						<BarButton
+							icon="undo-2"
+							large
+							label="Batalkan jawaban"
+							kbd="Z"
+							onClick={onUndo}
+						/>
 					) : (
 						<>
 							{/* The finished screen keeps undo on desktop only. */}
@@ -169,6 +191,7 @@ export function SessionBar(props: BarProps) {
 									<BarButton
 										icon="undo-2"
 										label="Batalkan jawaban"
+										kbd="Z"
 										onClick={onUndo}
 									/>
 								</span>

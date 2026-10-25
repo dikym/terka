@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { CodeChip } from "@/components/ui/code-chip";
@@ -5,8 +6,11 @@ import { Skeleton, SkeletonText, skeletonWidth } from "@/components/ui/feedback"
 import { GROUP_BG, GROUP_NAME } from "@/components/ui/groups";
 import { Flag, Icon } from "@/components/ui/icon";
 import { SpecialPlate } from "@/components/ui/plate";
+import { Tooltip } from "@/components/ui/tooltip";
 import { DotLabel, Tag } from "@/components/ui/tag";
-import { type Area, DIPLOMAT_SUMMARY, DIPLOMATS, type RegionDetail } from "@/dummy/reference";
+import type { Area, DiplomatEntry, diplomatList, RegionDetail } from "@/lib/view/reference";
+
+export const REFERENCE_ONLY = "Tersedia di Referensi, belum masuk latihan.";
 
 export function Hint({ children }: { children: React.ReactNode }) {
 	return (
@@ -165,8 +169,8 @@ function Verified() {
 	);
 }
 
-export function SpecialCard({ number }: { number: string }) {
-	const entry = DIPLOMATS.find((item) => item.number === number)!;
+export function SpecialCard({ entry }: { entry: DiplomatEntry }) {
+	const { number } = entry;
 	return (
 		<Card bar="bg-ink-1000">
 			<div className="flex flex-wrap items-center justify-between gap-4 lg:flex-nowrap">
@@ -174,7 +178,7 @@ export function SpecialCard({ number }: { number: string }) {
 					<SpecialPlate parts={["CD", number, ""]} size="lg" />
 					<div className="flex flex-col gap-2">
 						<span className="flex items-center gap-3">
-							<Flag code={entry.flag} large />
+							{entry.flag && <Flag code={entry.flag} large />}
 							<span className="font-display text-title leading-[1.1] font-bold">
 								{entry.name}
 							</span>
@@ -193,8 +197,8 @@ export function SpecialCard({ number }: { number: string }) {
 						? "Kode negara korps diplomatik"
 						: "Kode organisasi internasional"}
 				</DetailRow>
-				<DetailRow label="Sumber">Lampiran Perpol 7/2021</DetailRow>
-				<DetailRow label="Diperiksa">24 September 2026</DetailRow>
+				<DetailRow label="Sumber">{entry.source}</DetailRow>
+				{entry.checked && <DetailRow label="Diperiksa">{entry.checked}</DetailRow>}
 				<DetailRow label="Alias">{entry.alias}</DetailRow>
 			</div>
 			<div className="flex flex-col gap-3 rounded-sm border border-ink-200 bg-paper-50 px-4 py-3 lg:flex-row lg:items-center lg:justify-between lg:gap-4">
@@ -232,7 +236,10 @@ export function FormatCards() {
 	return (
 		<div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
 			<Card className="gap-3">
-				<CardHeader label="CC dan CH" aside={<DotLabel>Referensi saja</DotLabel>} />
+				<CardHeader
+					label="CC dan CH"
+					aside={<DotLabel hint={REFERENCE_ONLY}>Referensi saja</DotLabel>}
+				/>
 				<SpecialPlate parts={["CC", "12", "10"]} size="md" />
 				<p className="font-sans text-body-sm leading-normal text-pretty text-ink-900">
 					{CC_TEXT}
@@ -265,7 +272,9 @@ export function FormatCard({ kind }: { kind: "cc" | "ri" }) {
 					</div>
 				</div>
 				<span className="self-start max-lg:flex">
-					<DotLabel>{cc ? "Referensi saja" : "Hanya format"}</DotLabel>
+					<DotLabel hint={cc ? REFERENCE_ONLY : undefined}>
+						{cc ? "Referensi saja" : "Hanya format"}
+					</DotLabel>
 				</span>
 			</div>
 			<p className="max-w-prose text-pretty text-ink-900 type-body">
@@ -295,35 +304,98 @@ export function NoResult({ query }: { query: string }) {
 	);
 }
 
-export function DiplomatList({ current }: { current: string }) {
+const FADE_PX = 4;
+// Smoothstep alpha at each stop: a short linear fade shows a hard line where it ends.
+const FADE_RAMP = [0, 1, 2, 3, 4, 5, 6].map((step) => {
+	const t = step / 6;
+	return [Math.round(t * t * (3 - 2 * t) * 1000) / 1000, t] as const;
+});
+
+export function DiplomatList({
+	list,
+	current,
+	onPick
+}: {
+	list: ReturnType<typeof diplomatList>;
+	current: string;
+	onPick: (query: string) => void;
+}) {
+	const scroller = useRef<HTMLDivElement>(null);
+	const [more, setMore] = useState({ above: false, below: false });
+	const measure = () => {
+		const box = scroller.current;
+		if (!box) return;
+		setMore({
+			above: box.scrollTop > 0,
+			// One pixel of slack: scrollTop is fractional at some zoom levels.
+			below: box.scrollTop + box.clientHeight < box.scrollHeight - 1
+		});
+	};
+	// The open code sits in the middle of the list, without moving the page around it.
+	useEffect(() => {
+		const box = scroller.current;
+		const row = box?.querySelector<HTMLElement>(`[data-number="${current}"]`);
+		if (box && row) box.scrollTop = row.offsetTop - (box.clientHeight - row.offsetHeight) / 2;
+		measure();
+	}, [current]);
+	// Only an edge with more rows behind it fades.
+	const edge = (on: boolean, at: (px: number) => string) =>
+		on
+			? FADE_RAMP.map(([alpha, t]) => `rgb(0 0 0 / ${alpha}) ${at(t * FADE_PX)}`)
+			: [`black ${at(0)}`];
+	const stops = [
+		...edge(more.above, (px) => `${px}px`),
+		...edge(more.below, (px) => `calc(100% - ${px}px)`).reverse()
+	];
 	return (
 		<Card className="gap-3">
 			<CardHeader label="Kode diplomat" />
 			<div className="grid grid-cols-3 gap-4">
-				<Figure value={DIPLOMAT_SUMMARY.entries} label="entri" />
-				<Figure value={DIPLOMAT_SUMMARY.first} label="kode pertama" />
-				<Figure value={DIPLOMAT_SUMMARY.last} label="kode terakhir" />
+				<Figure value={list.summary.entries} label="entri" />
+				<Figure value={list.summary.first} label="kode pertama" />
+				<Figure value={list.summary.last} label="kode terakhir" />
 			</div>
-			<div>
-				{DIPLOMATS.map((entry, index) => (
-					<div
+			<div
+				ref={scroller}
+				onScroll={measure}
+				style={{
+					maskImage: `linear-gradient(to bottom, ${stops.join(", ")})`
+				}}
+				className="relative -mx-2 max-h-96 overflow-y-auto px-2"
+			>
+				{list.entries.map((entry) => (
+					<button
 						key={entry.number}
-						className={`-mx-2 flex min-h-11 items-center justify-between gap-3 rounded-xs px-2 ${index < DIPLOMATS.length - 1 ? "border-b border-hairline" : ""} ${entry.number === current ? "bg-paper-50 font-semibold" : ""}`}
+						type="button"
+						data-number={entry.number}
+						aria-current={entry.number === current ? "true" : undefined}
+						onClick={() => onPick(`CD ${entry.number}`)}
+						// Fixed columns keep every code, flag and name on the same line down the list.
+						className={`-mx-2 grid min-h-11 w-[calc(100%+1rem)] cursor-pointer grid-cols-[64px_20px_minmax(0,1fr)_auto] items-center gap-3 border-b border-hairline px-2 text-left ${entry.number === current ? "bg-paper-50 font-semibold" : ""}`}
 					>
-						<span className="flex items-center gap-3">
-							<span className="font-mono text-body-md leading-[1.2] font-medium text-ink-1000 tabular-nums">
-								CD {entry.number}
-							</span>
-							<Flag code={entry.flag} />
-							<span className="text-ink-900 type-body">{entry.name}</span>
+						<span className="font-mono text-body-md leading-[1.2] font-medium text-ink-1000 tabular-nums">
+							CD {entry.number}
 						</span>
+						{entry.flag && (
+							<span className="flex">
+								<Flag code={entry.flag} />
+							</span>
+						)}
+						{/* Without a flag the name starts where the flag would be. */}
+						<Tooltip
+							content={entry.name}
+							align="start"
+							truncatedOnly
+							className={`flex min-w-0 ${entry.flag ? "" : "col-span-2"}`}
+						>
+							<span className="truncate text-ink-900 type-body">{entry.name}</span>
+						</Tooltip>
 						<span className="font-mono text-body-sm leading-[1.2] font-medium text-ink-500 tabular-nums">
 							{entry.type}
 						</span>
-					</div>
+					</button>
 				))}
 			</div>
-			<Hint>Nomor 46 tidak tercantum di lampiran.</Hint>
 		</Card>
 	);
 }

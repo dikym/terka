@@ -7,14 +7,22 @@ import { CodeChip } from "@/components/ui/code-chip";
 import { Pill, ProgressBar } from "@/components/ui/feedback";
 import { GROUP_BG } from "@/components/ui/groups";
 import { Icon } from "@/components/ui/icon";
-import { MasteryMap } from "@/components/ui/mastery-map";
+import { type MapProvince, MasteryMap } from "@/components/ui/mastery-map";
 import { PageTitle } from "@/components/ui/page-title";
-import { Toast, Toasts } from "@/components/ui/toast";
-import { provinces } from "@/dummy/map";
-import { accountPage, hardCards, masteryByGroup } from "@/dummy/stats";
+import { EmptyState } from "@/components/ui/states";
+import { showToast } from "@/lib/toasts";
+import type { HardCard, MasteryRow } from "@/lib/view/stats";
+import { NOTE_MAX_CHARS } from "@/rules";
+import { AkunMasuk, type SignIn } from "./akun-masuk";
 import { MapHint, MapLegend } from "./statistik";
 
-export function PetaPenguasaan() {
+export function PetaPenguasaan({
+	provinces,
+	rows
+}: {
+	provinces: Record<string, MapProvince>;
+	rows: MasteryRow[] | null;
+}) {
 	return (
 		<>
 			<PageTitle title="Peta Penguasaan" back="/statistik" />
@@ -24,7 +32,7 @@ export function PetaPenguasaan() {
 					<CardHeader label="Peta Penguasaan" title="Penguasaan tiap provinsi" />
 				</div>
 				<div className="-mx-4 -mt-5 border-b border-hairline lg:m-0 lg:border-0">
-					<MasteryMap provinces={provinces} />
+					<MasteryMap provinces={provinces} loading={rows === null} />
 				</div>
 				<div className="flex flex-col gap-3 lg:border-t lg:border-hairline lg:pt-4">
 					<MapLegend />
@@ -32,7 +40,7 @@ export function PetaPenguasaan() {
 				</div>
 			</section>
 			<div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-8">
-				{masteryByGroup.map((row) => (
+				{(rows ?? []).map((row) => (
 					<div
 						key={row.group}
 						className="grid grid-cols-[10px_minmax(0,1fr)_44px] items-start gap-3 border-b border-hairline py-4 lg:grid-cols-[10px_minmax(0,1fr)_160px_48px] lg:items-center lg:gap-x-4"
@@ -61,7 +69,7 @@ export function PetaPenguasaan() {
 									</span>
 								))}
 							</div>
-							{"note" in row && row.note && (
+							{row.note && (
 								<span
 									className={`font-sans text-micro leading-[1.3] font-medium ${row.note.tone}`}
 								>
@@ -97,19 +105,43 @@ const statusPill = (status: "leech" | "suspended", className = "") =>
 		</Pill>
 	);
 
-const NOTE_LIMIT = 280;
+const NOT_SAVED = "Perubahan belum tersimpan. Coba lagi.";
 
-export function KodeSulit() {
-	const [selected, setSelected] = useState("DN");
-	const [notes, setNotes] = useState<Record<string, string>>({});
-	const [active, setActive] = useState<Set<string>>(new Set());
-	const card = hardCards.find((item) => item.code === selected)!;
-	const status = (code: string, base: "leech" | "suspended") =>
-		active.has(code) ? "leech" : base;
-	const note = notes[card.code] ?? "";
+export function KodeSulit({
+	cards,
+	notes,
+	initial,
+	onSaveNote,
+	onReactivate
+}: {
+	cards: HardCard[] | null;
+	notes: ReadonlyMap<string, string>;
+	/** The front code to open first, from a note offer in a session. */
+	initial: string | null;
+	onSaveNote: (card: HardCard, body: string) => Promise<boolean>;
+	onReactivate: (card: HardCard) => Promise<boolean>;
+}) {
+	const hardCards = cards ?? [];
+	const [chosen, setChosen] = useState<string | null>(null);
+	const [drafts, setDrafts] = useState<Record<string, string>>({});
+	const card =
+		hardCards.find((item) => item.cardId === chosen) ??
+		hardCards.find((item) => item.code === initial) ??
+		hardCards[0];
+	const selected = card?.cardId ?? null;
+	if (!card)
+		return (
+			<>
+				<PageTitle title="Sulit Dikuasai" back="/statistik" />
+				{cards !== null && (
+					<EmptyState label="Sulit Dikuasai">Belum ada kode Sulit Dikuasai.</EmptyState>
+				)}
+			</>
+		);
+	const note = drafts[card.cardId] ?? notes.get(card.contentId) ?? "";
 
 	const section = (label: string, kind: "leech" | "suspended") => {
-		const items = hardCards.filter((item) => status(item.code, item.status) === kind);
+		const items = hardCards.filter((item) => item.status === kind);
 		if (!items.length) return null;
 		return (
 			<div className="flex min-w-0 flex-col gap-3">
@@ -118,8 +150,8 @@ export function KodeSulit() {
 				</span>
 				{items.map((item) => (
 					<div
-						key={item.code}
-						className={`grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 gap-y-2 rounded-sm border px-4 py-3 lg:grid-cols-[auto_minmax(0,1fr)_auto_auto] lg:gap-4 ${item.code === selected ? "border-ink-1000 bg-paper-0 shadow-block" : "border-hairline"}`}
+						key={item.cardId}
+						className={`grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 gap-y-2 rounded-sm border px-4 py-3 lg:grid-cols-[auto_minmax(0,1fr)_auto_auto] lg:gap-4 ${item.cardId === selected ? "border-ink-1000 bg-paper-0 shadow-block" : "border-hairline"}`}
 					>
 						<CodeChip
 							code={item.code}
@@ -141,8 +173,8 @@ export function KodeSulit() {
 						)}
 						<button
 							type="button"
-							onClick={() => setSelected(item.code)}
-							aria-pressed={item.code === selected}
+							onClick={() => setChosen(item.cardId)}
+							aria-pressed={item.cardId === selected}
 							className="col-start-3 row-span-2 row-start-1 flex h-9 w-fit cursor-pointer items-center justify-center gap-2 rounded-sm border border-ink-200 bg-transparent px-3 font-display text-body-sm leading-none font-semibold whitespace-nowrap text-ink-900 lg:col-auto lg:row-auto lg:h-12 lg:px-5 lg:text-body-md"
 						>
 							Tinjau kode
@@ -153,7 +185,7 @@ export function KodeSulit() {
 		);
 	};
 
-	const current = status(card.code, card.status);
+	const current = card.status;
 	return (
 		<>
 			<PageTitle title="Sulit Dikuasai" back="/statistik" />
@@ -182,31 +214,55 @@ export function KodeSulit() {
 								</span>
 							))}
 						</div>
-						<span className="font-sans text-body-sm leading-normal text-pretty text-ink-500">
-							+{card.more} lainnya
-						</span>
+						{card.more > 0 && (
+							<span className="font-sans text-body-sm leading-normal text-pretty text-ink-500">
+								+{card.more} lainnya
+							</span>
+						)}
 						<label className="flex flex-col gap-2">
 							<span className="type-label text-ink-500">Catatan pengingat</span>
 							<textarea
 								value={note}
-								maxLength={NOTE_LIMIT}
+								maxLength={NOTE_MAX_CHARS}
 								onChange={(event) =>
-									setNotes((current) => ({
+									setDrafts((current) => ({
 										...current,
-										[card.code]: event.target.value
+										[card.cardId]: event.target.value
 									}))
 								}
+								onBlur={() => {
+									if (note === (notes.get(card.contentId) ?? "")) return;
+									void onSaveNote(card, note).then((saved) =>
+										showToast(
+											saved
+												? { tone: "success", text: "Catatan disimpan" }
+												: { tone: "danger", text: NOT_SAVED }
+										)
+									);
+								}}
 								placeholder="Misalnya: DR — Dari Rinjani"
 								className="min-h-22 resize-none rounded-sm border border-ink-1000 bg-paper-0 px-4 py-3 font-sans text-body-md leading-normal text-ink-1000 placeholder:text-ink-500"
 							/>
 							<span className="self-end font-mono text-body-sm leading-none font-medium text-ink-500">
-								{note.length}/{NOTE_LIMIT}
+								{note.length}/{NOTE_MAX_CHARS}
 							</span>
 						</label>
 						{current === "suspended" && (
 							<Button
 								block
-								onClick={() => setActive((codes) => new Set(codes).add(card.code))}
+								onClick={() =>
+									void onReactivate(card).then((done) =>
+										showToast(
+											done
+												? {
+														tone: "success",
+														label: "Sulit Dikuasai",
+														text: "Kode ini diaktifkan kembali dan dimulai dari awal."
+													}
+												: { tone: "danger", text: NOT_SAVED }
+										)
+									)
+								}
 							>
 								Aktifkan kembali
 							</Button>
@@ -247,112 +303,124 @@ function AccountRow({
 	);
 }
 
-export function Akun() {
-	const [backup, setBackup] = useState(true);
-	const [imported, setImported] = useState(false);
-	const a = accountPage;
+export type AccountPage = {
+	email: string;
+	provider: string;
+	pending: string;
+	pendingNote: string | null;
+	synced: string;
+	devices: string;
+};
+
+export type AccountActions = {
+	exportData: () => void;
+	importData: () => void;
+	signOut: () => void;
+	deleteAccount: () => void;
+};
+
+export function Akun({
+	page,
+	lastExport,
+	signIn,
+	actions
+}: {
+	/** Null while signed out. */
+	page: AccountPage | null;
+	lastExport: string | null;
+	signIn: SignIn | null;
+	actions: AccountActions;
+}) {
 	return (
 		<>
 			<PageTitle title="Akun dan sinkronisasi" back="/statistik" />
 			<div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-8">
 				<div className="flex min-w-0 flex-col gap-5">
+					{page ? (
+						<Card>
+							<CardHeader label="Akun" />
+							<div className="flex flex-col">
+								<AccountRow icon="user">
+									<div className="flex flex-col gap-[3px]">
+										<span className="font-display text-body-md leading-[1.2] font-semibold">
+											{page.email}
+										</span>
+										<span className="font-sans text-body-sm leading-[1.2] text-ink-500">
+											{page.provider}
+										</span>
+									</div>
+								</AccountRow>
+								<AccountRow
+									icon="cloud-upload"
+									aside={page.pendingNote ?? undefined}
+								>
+									<span className="text-ink-900 type-body">{page.pending}</span>
+								</AccountRow>
+								<AccountRow icon="cloud-check" aside={page.devices} last>
+									<span className="text-ink-900 type-body">{page.synced}</span>
+								</AccountRow>
+							</div>
+						</Card>
+					) : (
+						signIn && <AkunMasuk signIn={signIn} />
+					)}
 					<Card>
-						<CardHeader label="Akun" />
-						<div className="flex flex-col">
-							<AccountRow icon="user">
-								<div className="flex flex-col gap-[3px]">
-									<span className="font-display text-body-md leading-[1.2] font-semibold">
-										{a.email}
-									</span>
-									<span className="font-sans text-body-sm leading-[1.2] text-ink-500">
-										{a.provider}
-									</span>
-								</div>
-							</AccountRow>
-							<AccountRow icon="cloud-upload" aside={a.pendingNote}>
-								<span className="text-ink-900 type-body">{a.pending}</span>
-							</AccountRow>
-							<AccountRow icon="cloud-check" aside={a.devices} last>
-								<span className="text-ink-900 type-body">{a.synced}</span>
-							</AccountRow>
-						</div>
-					</Card>
-					<Card>
-						<CardHeader label="Ekspor dan impor" title={a.lastExport} />
+						<CardHeader label="Ekspor dan impor" title={lastExport ?? "…"} />
 						<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">
 							Ekspor menyimpan riwayat latihan, pengaturan, dan catatan pengingat
 							dalam satu berkas JSON. Sinkronisasi menyimpan salinan di server; ekspor
 							tetap berguna sebagai salinan yang kamu pegang sendiri.
 						</p>
 						<div className="flex items-center gap-3">
-							<Button size="sm" icon="download">
+							<Button size="sm" icon="download" onClick={actions.exportData}>
 								Ekspor data
 							</Button>
 							<Button
 								variant="secondary"
 								size="sm"
 								icon="upload"
-								onClick={() => setImported(true)}
+								onClick={actions.importData}
 							>
 								Impor data
 							</Button>
 						</div>
 					</Card>
 				</div>
-				<aside className="flex min-w-0 flex-col gap-5">
-					<Card>
-						<CardHeader label="Keluar dan hapus akun" />
-						<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">
-							Keluar menyelesaikan sinkronisasi lebih dulu, lalu menghapus data dari
-							perangkat ini.
-						</p>
-						<Button variant="secondary" size="sm" block icon="log-out">
-							Keluar
-						</Button>
-						<div className="h-px bg-hairline" />
-						<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">
-							Menghapus akun menghapus data di server. Data di perangkat ini tetap
-							ada.
-						</p>
-						<Button variant="quiet" size="sm" block className="text-ink-1000">
-							Hapus akun
-						</Button>
-					</Card>
-				</aside>
+				{page && (
+					<aside className="flex min-w-0 flex-col gap-5">
+						<Card>
+							<CardHeader label="Keluar dan hapus akun" />
+							<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">
+								Keluar menyelesaikan sinkronisasi lebih dulu, lalu menghapus data
+								dari perangkat ini.
+							</p>
+							<Button
+								variant="secondary"
+								size="sm"
+								block
+								icon="log-out"
+								onClick={actions.signOut}
+							>
+								Keluar
+							</Button>
+							<div className="h-px bg-hairline" />
+							<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">
+								Menghapus akun menghapus data di server. Data di perangkat ini tetap
+								ada.
+							</p>
+							<Button
+								variant="quiet"
+								size="sm"
+								block
+								className="text-ink-1000"
+								onClick={actions.deleteAccount}
+							>
+								Hapus akun
+							</Button>
+						</Card>
+					</aside>
+				)}
 			</div>
-			{(backup || imported) && (
-				<Toasts>
-					{backup && (
-						<Toast
-							tone="warn"
-							icon="hard-drive"
-							label="Perbarui cadangan"
-							onClose={() => setBackup(false)}
-							action={
-								<button
-									type="button"
-									className="inline-flex h-9 flex-none cursor-pointer items-center justify-center gap-2 rounded-sm border border-ink-1000 bg-paper-0 px-3 font-display text-body-sm leading-none font-semibold whitespace-nowrap text-ink-1000"
-								>
-									<Icon name="download" size={16} />
-									Ekspor data
-								</button>
-							}
-						>
-							Ekspor terakhir sudah lebih dari 30 hari.
-						</Toast>
-					)}
-					{imported && (
-						<Toast
-							tone="success"
-							icon="upload"
-							label="Impor berhasil"
-							onClose={() => setImported(false)}
-						>
-							{a.imported}
-						</Toast>
-					)}
-				</Toasts>
-			)}
 		</>
 	);
 }

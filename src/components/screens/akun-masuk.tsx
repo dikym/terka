@@ -1,0 +1,203 @@
+"use client";
+
+import { useState } from "react";
+import { Link } from "@/components/ui/app-link";
+import { Button } from "@/components/ui/button";
+import { Card, CardHeader } from "@/components/ui/card";
+import { Modal } from "@/components/ui/dialog";
+import { Callout } from "@/components/ui/feedback";
+
+export type SignIn = {
+	/** Why sign-in cannot start now, or null when it can. */
+	blocked: string | null;
+	/** Google refuses OAuth inside some apps' browsers. */
+	inApp: boolean;
+	accept: () => Promise<void>;
+	google: () => Promise<string | null>;
+	sendCode: (email: string) => Promise<string | null>;
+	verify: (email: string, code: string) => Promise<string | null>;
+};
+
+const FIELD =
+	"h-12 w-full rounded-sm border border-ink-1000 bg-paper-0 px-4 text-body-lg leading-none text-ink-1000 outline-none placeholder:text-ink-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink-1000";
+
+function Hint({ children }: { children: React.ReactNode }) {
+	return (
+		<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">{children}</p>
+	);
+}
+
+/**
+ * Sign-in for Statistik › Akun: consent first on every attempt, then Google or an emailed
+ * code. Each handler returns the message to show, or null when nothing needs saying.
+ */
+export function AkunMasuk({ signIn }: { signIn: SignIn }) {
+	const [step, setStep] = useState<"consent" | "choose" | "code">("consent");
+	const [email, setEmail] = useState("");
+	const [code, setCode] = useState("");
+	const [busy, setBusy] = useState(false);
+	const [message, setMessage] = useState<string | null>(null);
+
+	const run = async (work: () => Promise<string | null>) => {
+		setBusy(true);
+		setMessage(null);
+		try {
+			setMessage(await work());
+		} finally {
+			setBusy(false);
+		}
+	};
+
+	return (
+		<Card>
+			<CardHeader label="Akun" title="Masuk untuk menyinkronkan progres antarperangkat" />
+			{signIn.blocked && <Hint>{signIn.blocked}</Hint>}
+			{step === "consent" && (
+				<>
+					<p className="text-ink-900 type-body">
+						Dengan masuk, email dan riwayat latihan disimpan untuk sinkronisasi.{" "}
+						<Link href="/privasi" className="underline underline-offset-[3px]">
+							Baca kebijakan privasi.
+						</Link>
+					</p>
+					<Button
+						block
+						disabled={!!signIn.blocked || busy}
+						onClick={() =>
+							void run(async () => {
+								await signIn.accept();
+								setStep("choose");
+								return null;
+							})
+						}
+					>
+						Setuju dan lanjutkan
+					</Button>
+				</>
+			)}
+			{step === "choose" && (
+				<>
+					{signIn.inApp ? (
+						<Callout tone="warn">
+							Masuk dengan Google tidak bisa dari browser aplikasi ini. Buka Terka di
+							Chrome atau Safari, atau masuk dengan email.
+							<div className="mt-3">
+								<Button
+									variant="outline"
+									size="sm"
+									className="w-fit"
+									onClick={() =>
+										void navigator.clipboard?.writeText(location.href)
+									}
+								>
+									Salin tautan
+								</Button>
+							</div>
+						</Callout>
+					) : (
+						<Button
+							block
+							disabled={!!signIn.blocked || busy}
+							onClick={() => void run(signIn.google)}
+						>
+							Masuk dengan Google
+						</Button>
+					)}
+					<div className="flex items-center gap-3">
+						<span className="h-px flex-1 bg-hairline" />
+						<span className="type-label text-ink-500">atau</span>
+						<span className="h-px flex-1 bg-hairline" />
+					</div>
+					<label className="flex flex-col gap-2">
+						<span className="type-label text-ink-500">Email</span>
+						<input
+							type="email"
+							value={email}
+							onChange={(event) => setEmail(event.target.value)}
+							autoComplete="email"
+							placeholder="nama@email.com"
+							className={`${FIELD} font-sans`}
+						/>
+					</label>
+					<Button
+						variant="secondary"
+						block
+						disabled={!!signIn.blocked || busy || !email.includes("@")}
+						onClick={() =>
+							void run(async () => {
+								const problem = await signIn.sendCode(email.trim());
+								if (!problem) setStep("code");
+								return problem;
+							})
+						}
+					>
+						Kirim tautan dan kode masuk
+					</Button>
+				</>
+			)}
+			{step === "code" && (
+				<>
+					<p className="text-ink-900 type-body">
+						Tautan dan kode masuk dikirim ke {email.trim()}.
+					</p>
+					<label className="flex flex-col gap-2">
+						<span className="type-label text-ink-500">Kode 6 digit dari email</span>
+						<input
+							inputMode="numeric"
+							autoComplete="one-time-code"
+							value={code}
+							onChange={(event) => setCode(event.target.value.replace(/\D/g, ""))}
+							maxLength={6}
+							className={`${FIELD} font-mono tracking-[0.3em]`}
+						/>
+					</label>
+					<Button
+						block
+						disabled={!!signIn.blocked || busy || code.length !== 6}
+						onClick={() => void run(() => signIn.verify(email.trim(), code))}
+					>
+						Masuk
+					</Button>
+					<Hint>Belum menerima email? Cek folder spam, atau kirim ulang.</Hint>
+					<Button
+						variant="quiet"
+						size="sm"
+						className="w-fit bg-transparent"
+						disabled={busy}
+						onClick={() =>
+							void run(async () => {
+								setCode("");
+								return signIn.sendCode(email.trim());
+							})
+						}
+					>
+						Kirim kode baru
+					</Button>
+				</>
+			)}
+			{message && <Hint>{message}</Hint>}
+		</Card>
+	);
+}
+
+/** Local data belongs to another account: go back to it, or wipe this device for the new one. */
+export function OtherAccount({ onBack, onWipe }: { onBack: () => void; onWipe: () => void }) {
+	return (
+		<Modal
+			title="Akun berbeda"
+			onClose={onBack}
+			actions={
+				<>
+					<Button block data-autofocus onClick={onBack}>
+						Kembali ke akun sebelumnya
+					</Button>
+					<Button variant="secondary" block onClick={onWipe}>
+						Hapus data di perangkat ini
+					</Button>
+				</>
+			}
+		>
+			Data di perangkat ini milik akun lain.
+		</Modal>
+	);
+}
