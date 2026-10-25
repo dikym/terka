@@ -4,7 +4,8 @@ import { Card, CardHeader } from "@/components/ui/card";
 import { GROUP_BG } from "@/components/ui/groups";
 import { Icon } from "@/components/ui/icon";
 import { Kbd } from "@/components/ui/kbd";
-import type { Preview } from "@/dummy/previews";
+import { EmptyState } from "@/components/ui/states";
+import type { Preview } from "@/lib/session/preview";
 import { LevelMark, levelName } from "./parts";
 
 function Row({
@@ -235,6 +236,37 @@ export function SessionPreview({
 				</Button>
 				<Button block icon="play" kbd="Enter" className="px-4" onClick={onStart}>
 					{p.start}
+				</Button>
+			</div>
+		</SessionFrame>
+	);
+}
+
+/** A mode with nothing to ask today: says why, with the way back. */
+export function SessionEmpty({
+	title,
+	message,
+	detail,
+	onBack
+}: {
+	title: string;
+	message: string;
+	detail?: string;
+	onBack: () => void;
+}) {
+	return (
+		<SessionFrame variant="preview" bar={<PreviewBar onBack={onBack} />}>
+			<div className="flex flex-col gap-2">
+				<span className="type-label text-ink-500">Pratinjau</span>
+				<h1 className="type-screen-title">{title}</h1>
+			</div>
+			<EmptyState label={title}>
+				{message}
+				{detail && ` ${detail}`}
+			</EmptyState>
+			<div className="mt-auto lg:mt-0">
+				<Button variant="secondary" block kbd="Esc" className="px-4" onClick={onBack}>
+					Kembali
 				</Button>
 			</div>
 		</SessionFrame>

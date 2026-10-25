@@ -5,9 +5,9 @@ import { CodeChip } from "@/components/ui/code-chip";
 import { Pill, ProgressBar, Skeleton, SkeletonText, skeletonWidth } from "@/components/ui/feedback";
 import { GROUP_BG } from "@/components/ui/groups";
 import { Icon } from "@/components/ui/icon";
-import { MasteryMap } from "@/components/ui/mastery-map";
-import { provinces } from "@/dummy/map";
-import { type CodeStatus, STATUS_LABEL, type Stats, stats as STATS } from "@/dummy/stats";
+import { type MapProvince, MasteryMap } from "@/components/ui/mastery-map";
+import { type CodeStatus, STATUS_LABEL, type Stats } from "@/lib/view/stats";
+import { SIGHTING_WINDOW_DAYS } from "@/rules";
 import { SyncChip } from "./sync-chip";
 
 const PILL_TONE = { learning: "learning", leech: "leech", suspended: "off" } as const;
@@ -139,7 +139,13 @@ function NationalSummary({ s, loading }: { s: Stats; loading: boolean }) {
 	);
 }
 
-function MapCard({ loading }: { loading: boolean }) {
+function MapCard({
+	loading,
+	provinces
+}: {
+	loading: boolean;
+	provinces: Record<string, MapProvince>;
+}) {
 	return (
 		<Card>
 			<CardHeader label="Peta Penguasaan" title="Penguasaan tiap provinsi" />
@@ -181,7 +187,7 @@ function Weakest({ s, loading }: { s: Stats; loading: boolean }) {
 				title="Paling sering belum tepat"
 				aside={
 					<span className="flex-none font-mono text-body-sm leading-[1.2] font-medium text-ink-500 tabular-nums">
-						{text(loading, "30 hari terakhir")}
+						{text(loading, "sejak mulai belajar")}
 					</span>
 				}
 			/>
@@ -235,6 +241,8 @@ function Weakest({ s, loading }: { s: Stats; loading: boolean }) {
 }
 
 function Forecast({ s, loading }: { s: Stats; loading: boolean }) {
+	// The hold line sits at the top; a busier day than the hold fills the column.
+	const scale = Math.max(s.forecast.threshold, 1);
 	return (
 		<Card>
 			{loading ? (
@@ -284,7 +292,7 @@ function Forecast({ s, loading }: { s: Stats; loading: boolean }) {
 								</span>
 								<div
 									className={`w-full rounded-[2px_2px_0_0] ${loading ? "animate-skl bg-ink-100" : index === 0 ? "bg-ink-1000" : "bg-ink-300"}`}
-									style={{ height: Math.round(count * 3.55) }}
+									style={{ height: Math.round(Math.min(1, count / scale) * 142) }}
 								/>
 							</div>
 						))}
@@ -501,7 +509,7 @@ function Diplomat({ s, loading }: { s: Stats; loading: boolean }) {
 }
 
 function Seen({ s, loading }: { s: Stats; loading: boolean }) {
-	const max = Math.max(...s.seen.map((row) => row.count));
+	const max = Math.max(1, ...s.seen.map((row) => row.count));
 	const rows = loading ? s.seen.slice(0, 3) : s.seen;
 	return (
 		<Card className="gap-3">
@@ -509,7 +517,7 @@ function Seen({ s, loading }: { s: Stats; loading: boolean }) {
 				label="Pelat Terlihat"
 				aside={
 					<span className="flex-none font-mono text-body-sm leading-[1.2] font-medium text-ink-500 tabular-nums">
-						{text(loading, "30 hari terakhir")}
+						{text(loading, `${SIGHTING_WINDOW_DAYS} hari terakhir`)}
 					</span>
 				}
 			/>
@@ -542,9 +550,9 @@ function Seen({ s, loading }: { s: Stats; loading: boolean }) {
 	);
 }
 
-function Account({ s, loading }: { s: Stats; loading: boolean }) {
+function Account({ s, loading, onExport }: { s: Stats; loading: boolean; onExport: () => void }) {
 	const rows = [
-		["user", s.account.email],
+		["user", s.account.email ?? "Belum masuk. Progres tersimpan di perangkat ini."],
 		["cloud-check", s.account.sync],
 		["download", s.account.export]
 	] as const;
@@ -569,7 +577,13 @@ function Account({ s, loading }: { s: Stats; loading: boolean }) {
 					</>
 				) : (
 					<>
-						<Button variant="secondary" size="sm" block icon="download">
+						<Button
+							variant="secondary"
+							size="sm"
+							block
+							icon="download"
+							onClick={onExport}
+						>
 							Ekspor data
 						</Button>
 						<Button
@@ -579,7 +593,7 @@ function Account({ s, loading }: { s: Stats; loading: boolean }) {
 							href="/statistik/akun"
 							className="text-ink-1000"
 						>
-							Kelola akun
+							{s.account.email ? "Kelola akun" : "Masuk"}
 						</Button>
 					</>
 				)}
@@ -588,33 +602,95 @@ function Account({ s, loading }: { s: Stats; loading: boolean }) {
 	);
 }
 
-export function Statistik({ data }: { data: Stats | null }) {
+export function Statistik({
+	data,
+	provinces,
+	syncLabel,
+	menu,
+	onExport
+}: {
+	data: Stats | null;
+	provinces: Record<string, MapProvince>;
+	syncLabel: string | null;
+	/** The account menu beside the sync chip. */
+	menu?: React.ReactNode;
+	onExport: () => void;
+}) {
 	const loading = data === null;
-	const s = data ?? STATS;
+	const s = data ?? SKELETON;
 	return (
 		<>
 			<div className="flex items-center justify-between gap-4">
 				<div className="flex items-center gap-3">
 					<h1 className="type-screen-title">Statistik</h1>
 				</div>
-				<SyncChip label={loading ? null : s.syncLabel} />
+				<div className="flex items-center gap-3">
+					<SyncChip label={loading ? null : syncLabel} />
+					{menu}
+				</div>
 			</div>
 			<NationalSummary s={s} loading={loading} />
-			<MapCard loading={loading} />
+			<MapCard loading={loading} provinces={provinces} />
 			<div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-8">
 				<div className="flex min-w-0 flex-col gap-5">
-					<Weakest s={s} loading={loading} />
+					{(loading || s.weakest.length > 0) && <Weakest s={s} loading={loading} />}
 					<Forecast s={s} loading={loading} />
 					<ByGroup s={s} loading={loading} />
 				</div>
 				<aside className="flex min-w-0 flex-col gap-5">
-					<Hard s={s} loading={loading} />
-					<NameAll s={s} loading={loading} />
-					<Diplomat s={s} loading={loading} />
-					<Seen s={s} loading={loading} />
-					<Account s={s} loading={loading} />
+					{/* An empty list says nothing; its card shows once there is something in it. */}
+					{(loading || s.hard.length > 0) && <Hard s={s} loading={loading} />}
+					{(loading || s.nameAll.length > 0) && <NameAll s={s} loading={loading} />}
+					{(loading || s.diplomat.started) && <Diplomat s={s} loading={loading} />}
+					{(loading || s.seen.length > 0) && <Seen s={s} loading={loading} />}
+					<Account s={s} loading={loading} onExport={onExport} />
 				</aside>
 			</div>
 		</>
 	);
 }
+
+// Rows that hold the loaded layout while the statistics load.
+const SKELETON: Stats = {
+	national: { percent: "26%", codes: "55 dari 61", groups: "1 dari 7" },
+	levels: [
+		{ level: "Level 1", name: "Kenali", passed: "153 soal lolos", percent: 0 },
+		{ level: "Level 2", name: "Ingat", passed: "102 soal lolos", percent: 0 },
+		{ level: "Level 3", name: "Kuasai", passed: "55 soal lolos", percent: 0 }
+	],
+	weakest: ["a", "b", "c"].map((code) => ({
+		code,
+		group: "jawa",
+		areas: "Kota Bengkulu, Rejang Lebong, dan 8 lainnya",
+		status: "learning",
+		right: 5,
+		of: 12
+	})),
+	forecast: {
+		title: "",
+		threshold: 40,
+		days: Array.from({ length: 14 }, (_, index): [string, string, number] => [
+			index ? "Sen" : "Hari",
+			index ? String(index) : "ini",
+			10
+		])
+	},
+	byGroup: (
+		["sumatera", "jawa", "kalimantan", "sulawesi", "balinusra", "maluku", "papua"] as const
+	).map((group) => ({ group, name: "Bali & Nusa Tenggara", levels: ["30%", "12%", "4%"] })),
+	hard: ["a", "b", "c"].map((code) => ({ code, group: "jawa", status: "leech" })),
+	nameAll: ["a", "b"].map((code) => ({
+		code,
+		group: "jawa",
+		title: "Sebutkan daerah BK",
+		areas: "15 kab/kota",
+		wait: null
+	})),
+	diplomat: { mastered: 42, total: 130, started: true },
+	seen: ["a", "b", "c"].map((code) => ({ code, group: "jawa", count: 1 })),
+	account: {
+		email: "nama@email.com",
+		sync: "Tersinkron 3 menit lalu",
+		export: "Ekspor terakhir 12 hari lalu"
+	}
+};

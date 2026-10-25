@@ -4,6 +4,7 @@ import "./globals.css";
 import { InstallStatus } from "./install-status";
 import { OptimizerOnIdle } from "./optimizer-on-idle";
 import { PageViews } from "./page-views";
+import { ToastHost } from "@/components/ui/toast";
 
 export const metadata: Metadata = {
 	title: "Terka",
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 			<body>
 				<InstallStatus />
 				{children}
+				<ToastHost />
 				<OptimizerOnIdle />
 				<PageViews />
 			</body>

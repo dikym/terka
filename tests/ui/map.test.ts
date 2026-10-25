@@ -1,6 +1,9 @@
 import { expect, test } from "bun:test";
 import { fillStep, wheelZoom } from "../../src/components/ui/mastery-map";
-import { provinces } from "../../src/dummy/map";
+import { mapProvinces } from "../../src/lib/view/map";
+import { stateOf } from "../core/replay/fixtures";
+import plates from "../../src/data/plates.json";
+import type { Bundle } from "../../src/core/content/schema";
 
 test("fill step follows the legend bands", () => {
 	expect([null, 0, 1, 33, 34, 66, 67, 99, 100].map(fillStep)).toEqual([
@@ -8,7 +11,9 @@ test("fill step follows the legend bands", () => {
 	]);
 });
 
-test("dummy provinces cover every province in the map file", async () => {
+test("the shipped data covers every province in the map file", async () => {
+	const bundle = plates as Bundle;
+	const provinces = mapProvinces(stateOf([], bundle), bundle);
 	const svg = await Bun.file("public/map.svg").text();
 	const ids = [...svg.matchAll(/<path[^>]*\bid="([^"]+)"/g)].map((match) => match[1]);
 	expect(ids.length).toBe(38);

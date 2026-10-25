@@ -1,12 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Callout } from "@/components/ui/feedback";
-import { GROUP_BG } from "@/components/ui/groups";
 import { Flag, Icon } from "@/components/ui/icon";
 import { Kbd } from "@/components/ui/kbd";
 import { Plate } from "@/components/ui/plate";
-import { type DummyCard, QUEUES } from "@/dummy/session";
-import { cardLevel, cardOptions, type SessionState } from "@/dummy/session-reducer";
+import type { SessionCard } from "@/lib/session/cards";
+import { cardAnswer, cardLevel, cardOptions, type SessionState } from "@/lib/session/state";
 import { LevelMark, levelName, StatusPill, TimeBar } from "./parts";
 
 const KEYS = ["F", "G", "H", "J"];
@@ -14,7 +13,7 @@ export const ANSWER_INPUT = "jawaban";
 
 type Props = {
 	state: SessionState;
-	card: DummyCard;
+	card: SessionCard;
 	onInput: (value: string) => void;
 	onSubmit: () => void;
 	onChoose: (option: string) => void;
@@ -24,10 +23,12 @@ type Props = {
 	onAdd: () => void;
 	onRemove: (value: string) => void;
 	onDismissNote: () => void;
+	/** The placement test's Tidak tahu: skips the question without guessing. */
+	onUnknown: () => void;
 	countdown: number | null;
 };
 
-function QuestionPlate({ card }: { card: DummyCard }) {
+function QuestionPlate({ card }: { card: SessionCard }) {
 	if (!card.plate) return null;
 	const [code, number, suffix] = card.plate;
 	// A diplomat plate is read as one code: both parts carry the highlight.
@@ -80,12 +81,10 @@ function Countdown({
 
 function AnswerBox({
 	state,
-	card,
 	onInput,
 	mono
 }: {
 	state: SessionState;
-	card: DummyCard;
 	onInput: (value: string) => void;
 	mono: boolean;
 }) {
@@ -109,23 +108,33 @@ function AnswerBox({
 				placeholder="Ketik jawaban…"
 				className={`h-12 w-full rounded-sm px-4 text-body-lg leading-none text-ink-1000 outline-none placeholder:text-ink-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink-1000 ${mono ? "font-mono" : "font-sans"} ${tone}`}
 			/>
-			{graded && state.verdict === "right" && card.graded?.aliasNote && (
+			{graded && state.verdict === "right" && state.feedback.aliasNote && (
 				<span className="font-sans text-body-sm leading-[1.4] text-ink-500">
-					{card.graded.aliasNote}
+					{state.feedback.aliasNote}
 				</span>
 			)}
 		</label>
 	);
 }
 
-function Verdict({ state, card }: { state: SessionState; card: DummyCard }) {
+function Verdict({ state, card }: { state: SessionState; card: SessionCard }) {
+	const answer = cardAnswer(state, card);
+	if (state.verdict === "unverified")
+		return (
+			<div className="flex flex-col gap-2">
+				<StatusPill tone="muted">Tidak dihitung</StatusPill>
+				<span className="text-ink-900 type-body">
+					Data daerah ini belum terverifikasi penuh. Soal ini tidak dihitung.
+				</span>
+			</div>
+		);
 	if (state.verdict === "right")
 		return (
 			<div className="flex items-center justify-between gap-3">
 				<StatusPill tone="go">Benar</StatusPill>
-				{card.graded?.review && (
+				{state.feedback.review && (
 					<span className="font-mono text-body-sm leading-none font-medium text-ink-500">
-						{card.graded.review}
+						{state.feedback.review}
 					</span>
 				)}
 			</div>
@@ -137,11 +146,11 @@ function Verdict({ state, card }: { state: SessionState; card: DummyCard }) {
 				<span className="inline-flex items-center gap-2 font-display text-body-md leading-none font-semibold text-ink-1000">
 					Jawaban:
 					<Flag code={card.flag} />
-					{card.answer}
+					{answer}
 				</span>
 			) : (
 				<span className="font-display text-body-md leading-none font-semibold text-ink-1000">
-					Jawaban: {card.answer}
+					Jawaban: {answer}
 				</span>
 			)}
 		</div>
@@ -155,11 +164,12 @@ function ChoiceGrid({
 	onChoose
 }: {
 	state: SessionState;
-	card: DummyCard;
+	card: SessionCard;
 	options: string[];
 	onChoose: (option: string) => void;
 }) {
 	const graded = state.phase === "graded";
+	const answer = cardAnswer(state, card);
 	return (
 		// Four choices stack on a phone; a pair stays side by side.
 		<div
@@ -168,7 +178,7 @@ function ChoiceGrid({
 			{options.map((option, index) => {
 				const tone = !graded
 					? "border-ink-1000 bg-paper-0"
-					: option === card.answer
+					: option === answer
 						? "border-go-500 bg-go-100"
 						: option === state.chosen
 							? "border-stop-500 bg-stop-100"
@@ -183,11 +193,6 @@ function ChoiceGrid({
 						className={`flex min-h-12 cursor-pointer items-center gap-3 rounded-sm border px-4 text-left font-sans text-body-lg leading-[1.2] font-medium text-ink-1000 disabled:cursor-default ${tone}`}
 					>
 						<Kbd>{options.length === 2 ? (index ? "J" : "F") : KEYS[index]}</Kbd>
-						{card.choiceGroups && (
-							<span
-								className={`size-2.5 flex-none rounded-full ${GROUP_BG[card.choiceGroups[index]]}`}
-							/>
-						)}
 						<span>{option}</span>
 					</button>
 				);
@@ -196,7 +201,7 @@ function ChoiceGrid({
 	);
 }
 
-function LeechPanel({ leech }: { leech: NonNullable<DummyCard["leech"]> }) {
+function LeechPanel({ leech }: { leech: NonNullable<SessionCard["leech"]> }) {
 	return (
 		<>
 			<div className="flex flex-col gap-2">
@@ -218,24 +223,32 @@ function LeechPanel({ leech }: { leech: NonNullable<DummyCard["leech"]> }) {
 						</span>
 					))}
 				</div>
-				<span className="font-sans text-body-sm leading-normal text-ink-500">
-					+{leech.more} lainnya
-				</span>
-				<div className="h-px bg-hairline" />
-				<span className="type-label text-ink-500">Catatan pengingat</span>
-				<span className="text-ink-900 type-body">{leech.note}</span>
+				{leech.more > 0 && (
+					<span className="font-sans text-body-sm leading-normal text-ink-500">
+						+{leech.more} lainnya
+					</span>
+				)}
+				{leech.note && (
+					<>
+						<div className="h-px bg-hairline" />
+						<span className="type-label text-ink-500">Catatan pengingat</span>
+						<span className="text-ink-900 type-body">{leech.note}</span>
+					</>
+				)}
 			</Card>
 		</>
 	);
 }
 
-function LoweredPanel({ card, onRestore }: { card: DummyCard; onRestore: () => void }) {
+function LoweredPanel({ card, onRestore }: { card: SessionCard; onRestore: () => void }) {
 	return (
 		<Card>
 			<div className="flex min-w-0 flex-col gap-3">
 				<div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 lg:flex-nowrap lg:gap-3">
 					<span className="flex min-w-0 flex-col gap-2">
-						<span className="type-card-title">Tebak daerah</span>
+						<span className="type-card-title">
+							{card.lowered?.label ?? "Tebak daerah"}
+						</span>
 						<span className="inline-flex items-center gap-2">
 							<LevelMark level={1} />
 							<span className="font-sans text-body-sm leading-none text-ink-500">
@@ -257,14 +270,14 @@ function LoweredPanel({ card, onRestore }: { card: DummyCard; onRestore: () => v
 	);
 }
 
-function NoteOffer({ onDismiss }: { onDismiss: () => void }) {
+function NoteOffer({ code, onDismiss }: { code: string; onDismiss: () => void }) {
 	return (
 		<div className="flex flex-col gap-3 rounded-md border border-hairline bg-paper-0 p-4">
 			<span className="text-ink-900 type-body">
 				Kode ini beberapa kali terlewat. Tulis catatan pengingat?
 			</span>
 			<div className="flex items-center gap-3">
-				<Button variant="outline" className="w-fit" href="/statistik/sulit">
+				<Button variant="outline" className="w-fit" href={`/statistik/sulit?kode=${code}`}>
 					Tulis catatan
 				</Button>
 				<Button variant="quiet" className="w-fit bg-transparent" onClick={onDismiss}>
@@ -336,9 +349,12 @@ function Intro({
 	state,
 	card,
 	onChoose,
-	onNext
-}: Pick<Props, "state" | "card" | "onChoose" | "onNext">) {
+	onNext,
+	onSubmit
+}: Pick<Props, "state" | "card" | "onChoose" | "onNext" | "onSubmit">) {
 	const graded = state.phase === "graded";
+	// Without enough choices Perkenalan only shows the code; reading it is the answer.
+	const reading = !card.options?.length;
 	return (
 		<>
 			<div className="flex flex-col items-start gap-4">
@@ -346,7 +362,7 @@ function Intro({
 				<Title>{card.prompt}</Title>
 			</div>
 			<div className="flex flex-col gap-2">
-				{card.options!.map((option) => {
+				{card.options?.map((option) => {
 					const tone = !graded
 						? "border-hairline bg-paper-0 cursor-pointer"
 						: option === card.answer
@@ -374,7 +390,7 @@ function Intro({
 					);
 				})}
 			</div>
-			{graded && card.intro && (
+			{(graded || reading) && card.intro && (
 				<>
 					<div className="flex flex-col gap-3 rounded-md border border-hairline bg-paper-0 p-4">
 						<div className="flex items-baseline justify-between gap-3">
@@ -386,7 +402,9 @@ function Intro({
 							</span>
 						</div>
 						<span className="type-label text-ink-500">
-							Daerah kode {card.intro.code}
+							{card.form === "perkenalan" && card.intro.code.startsWith("CD ")
+								? `Pemegang ${card.intro.code}`
+								: `Daerah kode ${card.intro.code}`}
 						</span>
 						<div className="flex flex-wrap gap-2">
 							{card.intro.areas.map((area) => (
@@ -399,7 +417,7 @@ function Intro({
 							))}
 						</div>
 					</div>
-					<NextButton onNext={onNext} />
+					<NextButton onNext={graded ? onNext : onSubmit} />
 					<Callout
 						tone="info"
 						label={<span className="text-sky-700">Belum dinilai</span>}
@@ -445,7 +463,7 @@ function NameAll({ state, card, onInput, onAdd, onRemove, onSubmit, onNext }: Pr
 					</div>
 				</div>
 			)}
-			<AnswerBox state={state} card={card} onInput={onInput} mono={false} />
+			<AnswerBox state={state} onInput={onInput} mono={false} />
 			{state.phase === "graded" ? (
 				<NextButton onNext={onNext} />
 			) : (
@@ -473,6 +491,7 @@ export function Question(props: Props) {
 		onLower,
 		onRestore,
 		onDismissNote,
+		onUnknown,
 		countdown
 	} = props;
 	if (card.form === "bandingkan") return <Compare {...props} />;
@@ -531,12 +550,7 @@ export function Question(props: Props) {
 			{options ? (
 				<ChoiceGrid state={state} card={card} options={options} onChoose={onChoose} />
 			) : (
-				<AnswerBox
-					state={state}
-					card={card}
-					onInput={onInput}
-					mono={card.form === "tebakKode"}
-				/>
+				<AnswerBox state={state} onInput={onInput} mono={card.form === "tebakKode"} />
 			)}
 			{graded && <Verdict state={state} card={card} />}
 			{graded ? (
@@ -547,6 +561,11 @@ export function Question(props: Props) {
 						Periksa
 					</Button>
 				)
+			)}
+			{!graded && state.mode === "penempatan" && (
+				<Button variant="quiet" block className="bg-transparent" onClick={onUnknown}>
+					Tidak tahu
+				</Button>
 			)}
 			{!graded && card.lowerable && !lowered && cardLevel(state, card) > 1 && (
 				<button
@@ -562,9 +581,9 @@ export function Question(props: Props) {
 					</span>
 				</button>
 			)}
-			{graded && state.noteOffered && <NoteOffer onDismiss={onDismissNote} />}
+			{graded && state.noteOffered && (
+				<NoteOffer code={card.plate?.[0] ?? ""} onDismiss={onDismissNote} />
+			)}
 		</>
 	);
 }
-
-export const queueLength = (state: SessionState) => QUEUES[state.mode].length;

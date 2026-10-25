@@ -57,7 +57,8 @@ test("a full replay of 20,000 events stays under 2 seconds at 4x CPU slowdown", 
 	const events = [...eligibleLog(bundle), ...replayLog()].slice(0, 20_000);
 	expect(events.length).toBe(20_000);
 	await page.goto("/");
-	await seed(page, events, device);
+	// The first visit caches its empty state; a newer log version makes the reload replay.
+	await seed(page, events, { ...device, logVersion: 1000 });
 	const cdp = await page.context().newCDPSession(page);
 	await cdp.send("Emulation.setCPUThrottlingRate", { rate: 4 });
 	await page.reload();

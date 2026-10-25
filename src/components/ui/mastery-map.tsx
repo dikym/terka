@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { CodeChip } from "./code-chip";
 import { GROUP_BG, GROUP_NAME, type GroupId } from "./groups";
 import { Icon, type IconName } from "./icon";
+import { Tooltip as LabelTip } from "./tooltip";
 
 export type MapProvince = {
 	name: string;
@@ -176,18 +177,24 @@ function ZoomButton({
 	onClick: () => void;
 }) {
 	return (
-		<button
-			type="button"
-			aria-label={label}
-			onClick={onClick}
-			className="grid size-7.5 cursor-pointer place-items-center border-0 border-ink-200 bg-paper-0 not-first:border-l hover:bg-paper-50 focus-visible:outline-offset-[-3px] lg:size-10 lg:not-first:border-t lg:not-first:border-l-0"
+		// The wrapper is the button group's child, so the dividing borders sit on it.
+		<LabelTip
+			content={label}
+			className="flex border-0 border-ink-200 not-first:border-l lg:not-first:border-t lg:not-first:border-l-0"
 		>
-			<Icon
-				name={icon}
-				size={null}
-				className={icon === "rotate-ccw" ? "size-4" : "size-3.5 lg:size-4.5"}
-			/>
-		</button>
+			<button
+				type="button"
+				aria-label={label}
+				onClick={onClick}
+				className="grid size-7.5 cursor-pointer place-items-center bg-paper-0 hover:bg-paper-50 focus-visible:outline-offset-[-3px] lg:size-10"
+			>
+				<Icon
+					name={icon}
+					size={null}
+					className={icon === "rotate-ccw" ? "size-4" : "size-3.5 lg:size-4.5"}
+				/>
+			</button>
+		</LabelTip>
 	);
 }
 

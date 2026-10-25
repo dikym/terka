@@ -44,3 +44,27 @@ export function eligibleLog(bundle: Bundle): LearningEvent[] {
 }
 
 export const replayLog = () => withUuids(randomLog("e2e-replay", 20_000, { voids: true }));
+
+// Codes learned over the past two months, so practice modes have material today. Codes in
+// `naming` also get their Sebutkan card opened and introduced.
+export function learnedLog(
+	regionIds: string[],
+	naming: string[] = [],
+	now = Date.now()
+): LearningEvent[] {
+	const start = now - 60 * DAY;
+	const offsets = [0, MINUTE, 11 * MINUTE, 3 * DAY, 10 * DAY, 30 * DAY];
+	const events = regionIds.flatMap((id, index) =>
+		offsets.map((offset, step) =>
+			review(id, "code2region", start + index * 30 * MINUTE + offset, {
+				...choice,
+				...(step === 0 ? { context: "intro" as const } : {})
+			})
+		)
+	);
+	const sets = naming.flatMap((id) => [
+		review(id, "setrecall", start + 31 * DAY, { ...choice, context: "intro" }),
+		review(id, "setrecall", start + 31 * DAY + MINUTE, choice)
+	]);
+	return withUuids([...events, ...sets]);
+}

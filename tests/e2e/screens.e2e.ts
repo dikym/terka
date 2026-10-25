@@ -1,5 +1,7 @@
 import { expect, type Locator, type Page, test } from "@playwright/test";
+import { learnedLog } from "./support/logs";
 import { pageErrors } from "./support/pwa";
+import { rows, seed } from "./support/seed";
 
 test.skip(({ browserName }) => browserName !== "chromium", "desktop screens");
 test.use({ viewport: { width: 1280, height: 900 } });
@@ -8,6 +10,23 @@ const seen = async (page: Page) =>
 	page.addInitScript(() => localStorage.setItem("terka.welcomeSeen", "1"));
 
 const search = (page: Page, query: string) => page.locator("#referensi-search").fill(query);
+
+// Ten Sumatera codes learned over the past two months; BK also has its Sebutkan card open.
+const LEARNED = ["bl", "bk", "bb", "ba", "bm", "bp", "bh", "bg", "bn", "be"];
+async function withLearned(page: Page) {
+	await page.goto("/");
+	await seed(page, learnedLog(LEARNED, ["bk"]), { logVersion: 1000 });
+}
+
+// Answers whatever is asked: a typed question gets a guess, a choice the first option.
+async function answerOne(page: Page) {
+	await page.getByRole("heading", { level: 2 }).waitFor();
+	const input = page.locator("#jawaban");
+	if (await input.count()) {
+		await input.fill("x");
+		await page.keyboard.press("Enter");
+	} else await page.keyboard.press("f");
+}
 
 test("first visit shows the welcome screen", async ({ page }) => {
 	await page.goto("/");
@@ -42,7 +61,10 @@ test("reference search reaches every result kind", async ({ page }) => {
 	await search(page, "qwrty");
 	await expect(page.getByText("Tidak ada hasil untuk “qwrty”.")).toBeVisible();
 	await search(page, "CD 4");
-	await expect(page.getByText("Lihat 6 hasil lainnya")).toBeVisible();
+	await expect(page.getByRole("option", { name: /CD 49/ })).toBeVisible();
+	await page.getByRole("option", { name: /CD 49/ }).click();
+	await page.getByRole("button", { name: /CD 50/ }).click();
+	await expect(page.getByText("Bulgaria").first()).toBeVisible();
 	expect(errors).toEqual([]);
 });
 
@@ -63,41 +85,84 @@ test("mode param picks the preview", async ({ page }) => {
 
 test("a session runs to its summary from the keyboard", async ({ page }) => {
 	await seen(page);
+	await withLearned(page);
 	await page.goto("/sesi?mode=harian");
 	await page.getByRole("heading", { name: "Tantangan Harian" }).waitFor();
 	await page.keyboard.press("Enter");
-	for (const answer of ["Kalsel", "Jogja", "B", null, "Bali"]) {
-		await page.getByRole("heading", { level: 2 }).waitFor();
-		if (answer) await page.keyboard.type(answer);
-		await page.keyboard.press(answer ? "Enter" : "j");
+	for (let i = 0; i < 5; i++) {
+		await answerOne(page);
+		await page.getByRole("button", { name: "Lanjut" }).waitFor();
 		await page.keyboard.press("Enter");
 	}
 	await expect(page.getByRole("heading", { name: "Tantangan hari ini selesai" })).toBeVisible();
+	await page.goto("/");
+	await expect(page.getByRole("button", { name: "Tantangan Harian" })).toBeDisabled();
+});
+
+test("a new learner's practice modes explain that nothing is learned yet", async ({ page }) => {
+	await seen(page);
+	await page.goto("/sesi?mode=kilat");
+	await expect(
+		page.getByText("Belum ada materi yang bisa dilatih di wilayah ini.")
+	).toBeVisible();
+});
+
+test("the daily session introduces new codes and moves them out of new material", async ({
+	page
+}) => {
+	await seen(page);
+	await page.goto("/sesi");
+	await page.getByRole("heading", { name: "Sesi hari ini" }).waitFor();
+	await page.keyboard.press("Enter");
+	await page.getByRole("heading", { level: 2 }).waitFor();
+	await page.keyboard.press("f");
+	await expect(page.getByText("Tebakan tidak dinilai.")).toBeVisible();
+	await page.keyboard.press("Enter");
+	// The answer is written in the background; leave only once it is stored.
+	await expect.poll(async () => (await rows(page, "review_logs")).length).toBe(1);
+	await page.goto("/");
+	await expect(page.getByText(/^9 materi baru tersedia$/)).toBeVisible();
 });
 
 test("undo restores the question", async ({ page }) => {
 	await seen(page);
+	await withLearned(page);
 	await page.goto("/sesi?mode=terfokus");
 	await page.getByRole("heading", { name: "Latihan Terfokus" }).waitFor();
 	await page.keyboard.press("Enter");
-	await page.getByRole("heading", { name: "DE dipakai daerah mana?" }).waitFor();
-	await page.keyboard.type("Jambi");
-	await page.keyboard.press("Enter");
-	await expect(page.getByText("Belum tepat")).toBeVisible();
+	await answerOne(page);
+	await page.getByRole("button", { name: "Lanjut" }).waitFor();
 	await page.keyboard.press("z");
 	await expect(page.getByText("Jawaban dibatalkan")).toBeVisible();
-	await expect(page.locator("#jawaban")).toHaveValue("");
+	if (await page.locator("#jawaban").count())
+		await expect(page.locator("#jawaban")).toHaveValue("");
+});
+
+test("statistics leave out cards that have nothing to show yet", async ({ page }) => {
+	await seen(page);
+	await page.goto("/statistik");
+	await page.getByText("Perkiraan beban 14 hari").waitFor();
+	for (const label of [
+		"Kode terlemah",
+		"Sulit Dikuasai",
+		"Sebutkan sebanyak mungkin",
+		"Kode Khusus",
+		"Pelat Terlihat"
+	])
+		await expect(page.getByText(label, { exact: true })).toHaveCount(0);
+	await page.goto("/referensi");
+	await page.getByText("Semua kawasan").waitFor();
+	await expect(page.getByText("Pelat Terlihat", { exact: true })).toHaveCount(0);
 });
 
 test("statistics links reach their screens", async ({ page }) => {
 	await seen(page);
 	for (const [link, title] of [
 		["Buka Peta Penguasaan", "Peta Penguasaan"],
-		["Tinjau kode", "Sulit Dikuasai"],
-		["Kelola akun", "Akun dan sinkronisasi"]
+		["Masuk", "Akun dan sinkronisasi"]
 	]) {
 		await page.goto("/statistik");
-		await page.getByText(link).click();
+		await page.getByRole("link", { name: link, exact: true }).click();
 		await expect(page.getByRole("heading", { level: 1, name: title })).toBeVisible();
 	}
 });
@@ -108,7 +173,7 @@ test("coverage selection changes the side panel", async ({ page }) => {
 	await page.getByRole("button", { name: "Sumatera" }).first().click();
 	await expect(page.getByRole("heading", { name: "Kawasan Sumatera" })).toBeVisible();
 	await page.getByRole("button", { name: "Seluruh Indonesia" }).first().click();
-	await expect(page.getByText("34 materi baru tersedia")).toBeVisible();
+	await expect(page.getByText(/^\d+ materi baru tersedia$/)).toBeVisible();
 });
 
 test("enter on the highlighted row picks that region", async ({ page }) => {
@@ -152,6 +217,7 @@ test("every text uses a design font", async ({ page }) => {
 
 test("a naming round can be finished with the mouse", async ({ page }) => {
 	await seen(page);
+	await withLearned(page);
 	await page.goto("/sesi?mode=sebutkan&code=BK");
 	await page.getByRole("button", { name: "Mulai" }).click();
 	await page.locator("#jawaban").fill("Medan");
@@ -217,4 +283,17 @@ test("shadowed buttons sink while pressed, links included", async ({ page }) => 
 	await page.mouse.down();
 	await expect.poll(() => shadow(zoomIn.locator("xpath=.."))).not.toContain("3px 3px");
 	await page.mouse.up();
+});
+
+test("the account menu moves with the arrows and Esc gives focus back", async ({ page }) => {
+	await seen(page);
+	await page.goto("/statistik");
+	const trigger = page.getByRole("button", { name: "Akun" });
+	await trigger.click();
+	await expect(page.getByRole("menuitem", { name: "Ekspor data" })).toBeFocused();
+	await page.keyboard.press("ArrowDown");
+	await expect(page.getByRole("menuitem", { name: "Impor data" })).toBeFocused();
+	await page.keyboard.press("Escape");
+	await expect(page.getByRole("menu")).toHaveCount(0);
+	await expect(trigger).toBeFocused();
 });

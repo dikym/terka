@@ -114,6 +114,48 @@ describe("names", () => {
 			});
 	});
 
+	test("finds every code of a group from its name", () => {
+		const result = search("jawa");
+		const codes = result.kind === "names" ? result.regions.map((hit) => hit.region.id) : [];
+		const jawa = plates.regions.filter((region) => region.group === "jawa").map((r) => r.id);
+		expect(codes).toEqual(expect.arrayContaining(jawa));
+	});
+
+	test("a word that only starts a group name does not open the whole group", () => {
+		const result = search("bali");
+		const codes = result.kind === "names" ? result.regions.map((hit) => hit.region.id) : [];
+		expect(codes).toEqual(["dk", "kt"]);
+	});
+
+	test("a group's full name opens every code in it", () => {
+		const result = search("Bali & Nusa Tenggara");
+		const codes = result.kind === "names" ? result.regions.map((hit) => hit.region.id) : [];
+		const group = plates.regions
+			.filter((region) => region.group === "bali-nusa-tenggara")
+			.map((region) => region.id);
+		expect(codes).toEqual(group);
+	});
+
+	test("finds every code of a province from its full name", () => {
+		const result = search("Jawa Timur");
+		const codes = result.kind === "names" ? result.regions.map((hit) => hit.region.id) : [];
+		const timur = plates.regions
+			.filter((region) => region.province === "jawa-timur")
+			.map((region) => region.id);
+		expect(timur.length).toBeGreaterThan(0);
+		expect(codes).toEqual(timur);
+	});
+
+	test("a compass word finds provinces, regions and areas named with it", () => {
+		const result = search("timur");
+		const codes = result.kind === "names" ? result.regions.map((hit) => hit.region.id) : [];
+		for (const province of ["jawa-timur", "kalimantan-timur", "nusa-tenggara-timur"])
+			for (const region of plates.regions.filter((item) => item.province === province))
+				expect(codes).toContain(region.id);
+		// Lombok Timur is a regency of DR, in Nusa Tenggara Barat.
+		expect(codes).toContain("dr");
+	});
+
 	test("reports a name that matches nothing", () => {
 		expect(search("Atlantis")).toEqual({ kind: "none", query: "Atlantis" });
 	});

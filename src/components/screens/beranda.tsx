@@ -6,7 +6,7 @@ import { ProgressBar, Skeleton, SkeletonText } from "@/components/ui/feedback";
 import { GROUP_BG } from "@/components/ui/groups";
 import { Icon } from "@/components/ui/icon";
 import { Kbd } from "@/components/ui/kbd";
-import type { DayMark, Home } from "@/dummy/home";
+import type { DayMark, Home } from "@/lib/view/home";
 import { SyncChip } from "./sync-chip";
 
 const CHIP_SKELETON = "h-7 w-10 flex-none rounded-sm";
@@ -48,6 +48,7 @@ function Day({ mark, loading }: { mark: DayMark; loading: boolean }) {
 	const label = {
 		done: "selesai",
 		tolerance: "toleransi dipakai",
+		missed: "terlewat",
 		today: "hari ini, belum selesai"
 	};
 	const circle = loading
@@ -55,6 +56,7 @@ function Day({ mark, loading }: { mark: DayMark; loading: boolean }) {
 		: {
 				done: "border border-tangerine-700 bg-tangerine-100",
 				tolerance: "border border-dashed border-ink-500 bg-paper-0",
+				missed: "border border-ink-200 bg-paper-0",
 				today: "border-2 border-ink-1000 bg-paper-0"
 			}[mark.state];
 	const icon =
@@ -225,22 +227,17 @@ function ChallengeButton({ done, countdown }: { done: boolean; countdown: string
 	);
 }
 
-export function Beranda({ data, challengeDone }: { data: Home | null; challengeDone: boolean }) {
+export function Beranda({ data }: { data: Home | null }) {
 	const d = data;
+	const challengeDone = d?.challengeDone ?? false;
+	const scopeBar = d?.scope.group ? GROUP_BG[d.scope.group] : "bg-ink-1000";
 	const week = (d ?? SKELETON_HOME).week;
 	const scopeRows = d?.scope.rows ?? SKELETON_ROWS;
 	return (
 		<>
 			<div className="flex items-center justify-between gap-3">
 				<span className="type-label text-ink-500">
-					{d ? (
-						DATE
-					) : (
-						<>
-							<span className="max-lg:hidden">{DATE}</span>
-							<SkeletonText width="13.8em" className="lg:hidden" />
-						</>
-					)}
+					{d ? d.dateLabel : <SkeletonText width="13.8em" />}
 				</span>
 				<SyncChip label={d ? d.syncLabel : null} />
 			</div>
@@ -265,11 +262,14 @@ export function Beranda({ data, challengeDone }: { data: Home | null; challengeD
 									<SkeletonText width="12.1em" />
 								)}
 							</span>
-							<span className="inline-flex items-center gap-1.5 font-sans text-body-sm leading-[1.3] text-ink-700">
-								<Icon name="clock" size={14} />
-								{d ? d.duration : <SkeletonText width="16.0em" />}
-							</span>
+							{(!d || d.duration) && (
+								<span className="inline-flex items-center gap-1.5 font-sans text-body-sm leading-[1.3] text-ink-700">
+									<Icon name="clock" size={14} />
+									{d ? d.duration : <SkeletonText width="16.0em" />}
+								</span>
+							)}
 						</div>
+						{d?.note && <Note>{d.note}</Note>}
 					</div>
 
 					<PhoneActions
@@ -345,7 +345,7 @@ export function Beranda({ data, challengeDone }: { data: Home | null; challengeD
 						</Stat>
 					</section>
 
-					<Card bar={d ? GROUP_BG[d.scope.group] : "animate-skl bg-ink-100"}>
+					<Card bar={d ? scopeBar : "animate-skl bg-ink-100"}>
 						<CardHeader
 							label="Cakupan"
 							title={d ? d.scope.title : <SkeletonText width="15.4em" />}
@@ -379,7 +379,7 @@ export function Beranda({ data, challengeDone }: { data: Home | null; challengeD
 												<CodeChip
 													key={code}
 													code={code}
-													group={d.scope.group}
+													group={d.scope.group ?? "jawa"}
 												/>
 											) : (
 												<Skeleton key={code} className={CHIP_SKELETON} />
@@ -389,7 +389,7 @@ export function Beranda({ data, challengeDone }: { data: Home | null; challengeD
 									{d ? (
 										<ProgressBar
 											value={row.percent}
-											color={GROUP_BG[d.scope.group]}
+											color={scopeBar}
 											className="row-start-1 h-1.5 min-w-0 flex-1 lg:row-auto"
 										/>
 									) : (
@@ -495,6 +495,9 @@ export function Beranda({ data, challengeDone }: { data: Home | null; challengeD
 								href="/sesi?mode=diplomat"
 							>
 								Kode diplomat
+								{d.summary.specialDue
+									? ` · ${d.summary.specialDue} perlu diulang`
+									: ""}
 							</Button>
 						</>
 					) : (
@@ -512,7 +515,6 @@ export function Beranda({ data, challengeDone }: { data: Home | null; challengeD
 	);
 }
 
-const DATE = "Minggu, 27 September 2026";
 const SKELETON_COUNTDOWN = "06:42:18";
 
 // Placeholder rows that keep the loaded layout: same rows, same chip counts.

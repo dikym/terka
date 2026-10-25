@@ -54,3 +54,6 @@ docs/superpowers/
 .design-tmp/
 /test-results/
 /playwright-report/
+
+# Copied by `bun run dev`; the build copies it into out/ itself.
+/public/plates.json

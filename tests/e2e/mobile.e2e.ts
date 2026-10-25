@@ -1,5 +1,7 @@
 import { expect, type Page, test } from "@playwright/test";
 import { MAIN_ROUTES } from "../../scripts/build/routes";
+import { learnedLog } from "./support/logs";
+import { seed } from "./support/seed";
 
 test.use({ viewport: { width: 390, height: 844 }, hasTouch: true });
 
@@ -70,7 +72,10 @@ test("tapping a province shows its details under the map", async ({ page }) => {
 	await page.goto("/statistik/peta");
 	const map = page.getByRole("img", { name: "Peta Penguasaan per provinsi" });
 	await expect(map.locator("path#bali")).toBeAttached();
-	await map.locator("path#bali").dispatchEvent("click");
+	// Taps count once the learning data is in; the rows under the map show that it is.
+	await page.getByText("Bali & Nusa Tenggara").first().waitFor();
+	// Selection follows the pointer, so the test taps instead of dispatching a click.
+	await map.locator("path#bali").tap({ force: true });
 	await expect(
 		page.locator("[aria-live=polite]").getByText("Bali", { exact: true })
 	).toBeVisible();
@@ -78,6 +83,8 @@ test("tapping a province shows its details under the map", async ({ page }) => {
 
 test("a finished session keeps its way home in the bottom bar", async ({ page }) => {
 	await seen(page);
+	await page.goto("/");
+	await seed(page, learnedLog(["bl", "bk", "bb", "ba", "bm", "bp"]), { logVersion: 1000 });
 	await page.goto("/sesi?mode=harian");
 	await page.getByRole("button", { name: "Mulai tantangan" }).click();
 	for (let i = 0; i < 5; i++) {
