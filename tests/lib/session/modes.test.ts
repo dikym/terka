@@ -2,7 +2,16 @@ import { describe, expect, test } from "bun:test";
 import { buildDictionary } from "../../../src/core/answers/dictionary";
 import type { LearningEvent } from "../../../src/core/log/events";
 import { kilatCards, type PlanInput, planSession, reaskCard } from "../../../src/lib/session/modes";
-import { DAY, intro, NOW, review, ruleBundle, run, stateOf } from "../../core/replay/fixtures";
+import {
+	DAY,
+	intro,
+	manyRegions,
+	NOW,
+	review,
+	ruleBundle,
+	run,
+	stateOf
+} from "../../core/replay/fixtures";
 import { ctxAt, SETTINGS } from "../../core/session/fixtures";
 
 const bundle = ruleBundle();
@@ -106,5 +115,47 @@ describe("re-asking inside a session", () => {
 			expect(
 				reaskCard(input(justIntroduced), mode, "bk::code2region", SETTINGS.scope, 1)
 			).toBeNull();
+	});
+});
+
+describe("planning cek ingatan", () => {
+	// Every region code learned a month ago and due now (56 codes), last practised eight days ago.
+	const away = (): PlanInput => {
+		const many = manyRegions(40);
+		const state = stateOf([], many);
+		for (const cardId of [...state.cards.keys()].filter((id) => id.endsWith("::code2region")))
+			state.cards.set(cardId, {
+				...state.cards.get(cardId)!,
+				state: "review",
+				stability: 20,
+				difficulty: 5,
+				intervalDays: 20,
+				reps: 3,
+				lastReviewAt: NOW - 30 * DAY,
+				due: NOW - DAY,
+				scheduledDay: "2026-08-22"
+			});
+		state.activeDays.add("2026-09-13");
+		return { ...input(), state, bundle: many, dictionary: buildDictionary(many) };
+	};
+
+	test("cek plans the recheck items with a skip link", () => {
+		const plan = planSession("cek", away(), NO_PARAMS);
+		expect(plan.kind).toBe("ready");
+		if (plan.kind !== "ready") return;
+		expect(plan.run.kind).toBe("recheck");
+		expect(plan.cards.every((card) => card.question.context === "recheck")).toBe(true);
+		expect(plan.preview?.title).toBe("Cek ingatan");
+		expect(plan.preview?.skip).toEqual({ label: "Lewati, mulai sesi biasa", href: "/sesi" });
+		expect(plan.preview?.description).toBe(
+			`Sudah 8 hari sejak latihan terakhir. Jawab ${plan.cards.length} soal untuk melihat seberapa banyak yang masih kamu ingat.`
+		);
+		expect(plan.predicted?.size).toBeGreaterThan(0);
+	});
+	test("cek with no offer falls back to an empty plan", () => {
+		const plan = planSession("cek", input(), NO_PARAMS);
+		expect(plan.kind).toBe("empty");
+		if (plan.kind === "empty")
+			expect(plan.message).toBe("Tidak ada soal yang perlu diulang hari ini.");
 	});
 });

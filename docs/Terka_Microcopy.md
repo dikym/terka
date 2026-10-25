@@ -351,6 +351,20 @@ Layar ini tidak menampilkan Tombol untuk mengulang sesi atau menambah materi bar
 
 Jika satu hari terlewat, aplikasi tidak memakai pesan seperti "Streak-mu rusak". Cukup sampaikan keadaan catatan Hari Beruntun saat ini.
 
+### 3.13a Cek Ingatan
+
+| Situasi                                  | Teks UI                                                                                                   |
+| ---------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| Judul pratinjau                          | **Cek ingatan**                                                                                           |
+| Keterangan pratinjau                     | **Sudah 8 hari sejak latihan terakhir. Jawab 20 soal untuk melihat seberapa banyak yang masih kamu ingat.** |
+| Tautan melewati                          | **Lewati, mulai sesi biasa**                                                                              |
+| Judul ringkasan                          | **Cek ingatan selesai**                                                                                   |
+| Label hasil per kawasan                  | **Ingatanmu per kawasan**                                                                                 |
+| Baris hasil                              | **Jawa · 75% benar · perkiraan 82%**                                                                      |
+| Penutup hasil                            | **Sisa pengulangan dibagi ke hari-hari berikutnya, mulai dari kawasan yang paling banyak terlupa.**        |
+
+Tombol **Mulai belajar** di Beranda membuka Cek ingatan selama tawarannya berlaku; teksnya tidak berubah.
+
 ### 3.14 Mode Kilat
 
 | Situasi                        | Teks UI                                    |

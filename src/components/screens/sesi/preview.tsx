@@ -1,5 +1,5 @@
 import { SessionFrame, TopBar } from "@/components/shell/session-frame";
-import { Button } from "@/components/ui/button";
+import { Button, buttonClass } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { GROUP_BG } from "@/components/ui/groups";
 import { Icon, type IconName } from "@/components/ui/icon";
@@ -249,6 +249,15 @@ export function SessionPreview({
 				<Button block icon="play" kbd="Enter" className="px-4" onClick={onStart}>
 					{p.start}
 				</Button>
+				{p.skip && (
+					// A client link to the same route with fewer params does not navigate here; load the page.
+					<a
+						href={p.skip.href}
+						className={`${buttonClass("secondary", "md", true)} col-span-2 px-4`}
+					>
+						{p.skip.label}
+					</a>
+				)}
 			</div>
 		</SessionFrame>
 	);

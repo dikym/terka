@@ -101,7 +101,8 @@ const TITLE: Record<Mode, string> = {
 	terfokus: "Latihan selesai",
 	diplomat: "Sesi selesai",
 	sebutkan: "Sesi selesai",
-	penempatan: "Tes selesai"
+	penempatan: "Tes selesai",
+	cek: "Cek ingatan selesai"
 };
 
 const percent = (value: number | null) => (value === null ? "–" : `${value}%`);
@@ -228,6 +229,24 @@ export function SessionEnd({
 						</span>
 					)}
 				</Note>
+				{view.recheck && (
+					<Note label="Ingatanmu per kawasan">
+						<ul className="flex flex-col gap-1 type-body">
+							{view.recheck.map((row) => (
+								<li key={row.group}>
+									<span className={GROUP_TEXT[row.group]}>{row.name}</span>
+									<span className="text-ink-500">
+										{` · ${row.correct}% benar · perkiraan ${row.predicted}%`}
+									</span>
+								</li>
+							))}
+						</ul>
+						<span className="type-body-sm text-ink-500">
+							Sisa pengulangan dibagi ke hari-hari berikutnya, mulai dari kawasan yang
+							paling banyak terlupa.
+						</span>
+					</Note>
+				)}
 				{view.mode === "hariIni" && (
 					<Callout tone="success" label="Jadwal hari ini">
 						{view.remainingDue

@@ -1,4 +1,7 @@
 import { expect, type Locator, type Page, test } from "@playwright/test";
+import type { Bundle } from "../../src/core/content/schema";
+import plates from "../../src/data/plates.json";
+import { DAY } from "../core/replay/fixtures";
 import { learnedLog, missedLog } from "./support/logs";
 import { pageErrors } from "./support/pwa";
 import { rows, seed } from "./support/seed";
@@ -162,6 +165,26 @@ test("a new code is asked once more before the session ends and nothing is due a
 	expect(logs.length).toBe(asked.size * 2);
 	await page.goto("/beranda");
 	await expect(page.getByText("Tidak ada soal yang perlu diulang hari ini.")).toBeVisible();
+});
+
+test("after a long break Mulai belajar opens Cek ingatan and Lewati opens the daily session", async ({
+	page
+}) => {
+	await seen(page);
+	await page.goto("/beranda");
+	const ids = (plates as unknown as Bundle).regions
+		.filter((region) => region.areas.every((area) => area.confidence === "high"))
+		.slice(0, 40)
+		.map((region) => region.id);
+	// Learned long ago, last practised 270 days back: everything is due and the user has been away.
+	await seed(page, learnedLog(ids, [], Date.now() - 300 * DAY), { logVersion: 1000 });
+	await page.goto("/beranda");
+	await page.getByRole("link", { name: "Mulai belajar" }).first().click();
+	await expect(page.getByRole("heading", { name: "Cek ingatan" })).toBeVisible();
+	await expect(page.getByText(/seberapa banyak yang masih kamu ingat/)).toBeVisible();
+	await page.getByRole("link", { name: "Lewati, mulai sesi biasa" }).click();
+	await expect(page).toHaveURL(/\/sesi$/);
+	await expect(page.getByRole("heading", { name: "Sesi hari ini" })).toBeVisible();
 });
 
 test("undo restores the question", async ({ page }) => {

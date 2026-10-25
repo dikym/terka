@@ -987,6 +987,7 @@ Tes E2E dijalankan dengan Playwright di Chromium dan WebKit (bagian 2). Setiap t
 | E2E-44  | Perangkat baru login                                                        | **Menyiapkan data belajar…**, lalu beranda menampilkan angka yang sama dengan perangkat lama                                                                                                                               | normal   |
 | E2E-45  | Hapus akun tanpa mengetik HAPUS                                             | Tombol konfirmasi tidak aktif                                                                                                                                                                                              | negatif  |
 | E2E-133 | Login di perangkat baru saat akun sudah aktif di 20 perangkat dalam 90 hari | **Akun ini sudah dipakai di 20 perangkat dalam 90 hari terakhir. Latihan tetap berjalan, dan data tersimpan di perangkat ini. Sinkronisasi dicoba lagi besok.**; sesi tetap bisa dimulai; tidak ada perubahan di karantina | negatif  |
+| E2E-134 | Profil yang terakhir berlatih 270 hari lalu dengan 40 kode jatuh tempo membuka Beranda | **Mulai belajar** membuka **Cek ingatan**; **Lewati, mulai sesi biasa** membuka **Sesi hari ini** | normal |
 
 ### 7.7 Ekspor dan Impor
 

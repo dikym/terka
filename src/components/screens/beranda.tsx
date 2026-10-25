@@ -151,11 +151,13 @@ function Countdown({ to }: { to: number }) {
 function PhoneActions({
 	loading,
 	challengeDone,
-	countdown
+	countdown,
+	start
 }: {
 	loading: boolean;
 	challengeDone: boolean;
 	countdown: ReactNode;
+	start: string;
 }) {
 	const time = (
 		<span className="font-mono text-label leading-none font-semibold tabular-nums">
@@ -167,7 +169,7 @@ function PhoneActions({
 			{loading ? (
 				<Skeleton className="block h-14 w-full rounded-sm" />
 			) : (
-				<Button size="lg" block icon="play" href="/sesi">
+				<Button size="lg" block icon="play" href={start}>
 					Mulai belajar
 				</Button>
 			)}
@@ -246,6 +248,8 @@ function ChallengeButton({ done, countdown }: { done: boolean; countdown: ReactN
 
 export function Beranda({ data }: { data: Home | null }) {
 	const d = data;
+	// After a long break, the main button opens Cek ingatan; its preview links on to the usual session.
+	const start = d?.summary.recheck ? "/sesi?mode=cek" : "/sesi";
 	const challengeDone = d?.challengeDone ?? false;
 	const scopeBar = d?.scope.group ? GROUP_BG[d.scope.group] : "bg-ink-1000";
 	const week = (d ?? SKELETON_HOME).week;
@@ -293,6 +297,7 @@ export function Beranda({ data }: { data: Home | null }) {
 						loading={!d}
 						challengeDone={challengeDone}
 						countdown={d ? <Countdown to={d.challengeResetAt} /> : SKELETON_COUNTDOWN}
+						start={start}
 					/>
 
 					<section className="grid grid-cols-1 overflow-hidden rounded-md border border-hairline bg-paper-0 shadow-lift lg:grid-cols-3">
@@ -495,7 +500,7 @@ export function Beranda({ data }: { data: Home | null }) {
 				<aside className="hidden min-w-0 flex-col gap-3 lg:flex">
 					{d ? (
 						<>
-							<Button size="lg" block icon="play" kbd="S" href="/sesi">
+							<Button size="lg" block icon="play" kbd="S" href={start}>
 								Mulai belajar
 							</Button>
 							<ChallengeButton

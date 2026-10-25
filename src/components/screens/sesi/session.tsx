@@ -493,6 +493,7 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 						readFlag("local", LOGIN_PROMPT_DISMISSED) === "1"
 					),
 					today: todayOf(ctx),
+					predicted: plan?.kind === "ready" ? plan.predicted : undefined,
 					remainingDue: remaining
 				})
 			);
