@@ -45,10 +45,22 @@ function QuestionPlate({ card }: { card: SessionCard }) {
 	);
 }
 
-function Title({ children }: { children: React.ReactNode }) {
+// A negative prompt is easy to misread as a positive one.
+function Title({ children }: { children: string }) {
 	return (
 		<h2 className="font-display text-title leading-[1.15] font-bold tracking-title text-pretty">
-			{children}
+			{children.split(/\b(tidak)\b/).map((part, index) =>
+				index % 2 ? (
+					<mark
+						key={index}
+						className="rounded-xs bg-caution-100 px-1 text-inherit uppercase"
+					>
+						{part}
+					</mark>
+				) : (
+					part
+				)
+			)}
 		</h2>
 	);
 }
