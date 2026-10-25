@@ -9,6 +9,9 @@ import { cardAnswer, cardLevel, cardOptions, type SessionState } from "@/lib/ses
 import { LevelMark, levelName, StatusPill, TimeBar } from "./parts";
 
 const KEYS = ["F", "G", "H", "J"];
+// Two options sit under the index fingers, F and J.
+const choiceKey = (count: number, index: number) =>
+	count === 2 ? (index ? "J" : "F") : KEYS[index];
 export const ANSWER_INPUT = "jawaban";
 
 type Props = {
@@ -200,11 +203,11 @@ function ChoiceGrid({
 						key={option}
 						type="button"
 						disabled={graded}
-						aria-keyshortcuts={KEYS[index]}
+						aria-keyshortcuts={choiceKey(options.length, index)}
 						onClick={() => onChoose(option)}
 						className={`flex min-h-12 cursor-pointer items-center gap-3 rounded-sm border px-4 text-left font-sans text-body-lg leading-[1.2] font-medium text-ink-1000 disabled:cursor-default ${tone}`}
 					>
-						<Kbd>{options.length === 2 ? (index ? "J" : "F") : KEYS[index]}</Kbd>
+						<Kbd>{choiceKey(options.length, index)}</Kbd>
 						<span>{option}</span>
 					</button>
 				);
@@ -374,7 +377,7 @@ function Intro({
 				<Title>{card.prompt}</Title>
 			</div>
 			<div className="flex flex-col gap-2">
-				{card.options?.map((option) => {
+				{card.options?.map((option, index, options) => {
 					const tone = !graded
 						? "border-hairline bg-paper-0 cursor-pointer"
 						: option === card.answer
@@ -387,9 +390,11 @@ function Intro({
 							key={option}
 							type="button"
 							disabled={graded}
+							aria-keyshortcuts={choiceKey(options.length, index)}
 							onClick={() => onChoose(option)}
 							className={`flex min-h-12 items-center gap-3 rounded-sm border px-4 py-3 text-left disabled:cursor-default ${tone}`}
 						>
+							<Kbd>{choiceKey(options.length, index)}</Kbd>
 							<span className="flex-1 font-sans text-body-lg leading-[1.3] text-ink-1000">
 								{option}
 							</span>
