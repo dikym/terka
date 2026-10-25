@@ -68,3 +68,14 @@ export function learnedLog(
 	]);
 	return withUuids([...events, ...sets]);
 }
+
+/** BK learned, then missed once: enough to put it in the weakest codes table. */
+export function missedLog(now = Date.now()): LearningEvent[] {
+	const learned = learnedLog(["bk"], [], now - DAY);
+	const miss = review("bk", "code2region", now - MINUTE, {
+		...choice,
+		correct: false,
+		matchType: "none"
+	});
+	return [...learned, ...withUuids([miss])];
+}

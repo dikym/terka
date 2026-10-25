@@ -103,6 +103,29 @@ test("a finished session keeps its way home in the bottom bar", async ({ page })
 	expect(bottom).toBeGreaterThan(page.viewportSize()!.height - 40);
 });
 
+test("a tapped map province stays on the map and links to Referensi", async ({ page }) => {
+	await seen(page);
+	await page.goto("/statistik/peta");
+	const path = page.locator("path#jawa-timur");
+	// The phone map ignores taps until the data is in.
+	await page.getByText("Sumatera", { exact: true }).first().waitFor();
+	// A point inside the province's own shape, not just inside its bounding box.
+	const point = await path.evaluate((element) => {
+		const box = element.getBoundingClientRect();
+		for (let y = 0.1; y < 1; y += 0.1)
+			for (let x = 0.1; x < 1; x += 0.1) {
+				const [px, py] = [box.left + box.width * x, box.top + box.height * y];
+				if (document.elementFromPoint(px, py) === element) return { x: px, y: py };
+			}
+		return null;
+	});
+	await page.touchscreen.tap(point!.x, point!.y);
+	await expect(page).toHaveURL(/\/statistik\/peta$/);
+	await expect(page.getByRole("link", { name: "Lihat di Referensi" })).toHaveAttribute(
+		"href",
+		"/referensi?provinsi=jawa-timur"
+	);
+});
 
 test("the search box stays under the header while the results scroll", async ({ page }) => {
 	await seen(page);

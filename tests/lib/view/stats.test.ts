@@ -34,6 +34,8 @@ describe("statistics view", () => {
 		expect(stats.weakest).toHaveLength(1);
 		expect(stats.weakest[0]).toMatchObject({ code: "BK", group: "sumatera", right: 0, of: 1 });
 		expect(stats.weakest[0].areas).toBe("Kota Medan, Kota Binjai, dan 3 lainnya");
+		expect(stats.weakest[0].allAreas.split(", ")).toHaveLength(5);
+		expect(stats.weakest[0].allAreas).toStartWith("Kota Medan, Kota Binjai, ");
 	});
 
 	test("the hard list starts empty", () => {

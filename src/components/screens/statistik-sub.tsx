@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { Link } from "@/components/ui/app-link";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
-import { CodeChip } from "@/components/ui/code-chip";
+import { CodeLink } from "@/components/ui/code-chip";
 import { Pill, ProgressBar } from "@/components/ui/feedback";
 import { GROUP_BG } from "@/components/ui/groups";
 import { Icon } from "@/components/ui/icon";
@@ -11,6 +12,7 @@ import { type MapProvince, MasteryMap } from "@/components/ui/mastery-map";
 import { PageTitle } from "@/components/ui/page-title";
 import { EmptyState } from "@/components/ui/states";
 import { showToast } from "@/lib/toasts";
+import { referenceHref } from "@/lib/view/reference";
 import type { HardCard, MasteryRow } from "@/lib/view/stats";
 import { NOTE_MAX_CHARS } from "@/rules";
 import { AkunMasuk, type SignIn } from "./akun-masuk";
@@ -49,9 +51,12 @@ export function PetaPenguasaan({
 							className={`mt-1 size-2.5 rounded-full lg:mt-0 ${GROUP_BG[row.group]}`}
 						/>
 						<div className="flex min-w-0 flex-col gap-2">
-							<span className="font-display text-body-md leading-[1.2] font-semibold">
+							<Link
+								href={referenceHref("kawasan", row.group)}
+								className="w-fit font-display text-body-md leading-[1.2] font-semibold underline-offset-[3px] hover:underline"
+							>
 								{row.name}
-							</span>
+							</Link>
 							<ProgressBar
 								value={row.percent}
 								color={GROUP_BG[row.group]}
@@ -153,7 +158,7 @@ export function KodeSulit({
 						key={item.cardId}
 						className={`grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 gap-y-2 rounded-sm border px-4 py-3 lg:grid-cols-[auto_minmax(0,1fr)_auto_auto] lg:gap-4 ${item.cardId === selected ? "border-ink-1000 bg-paper-0 shadow-block" : "border-hairline"}`}
 					>
-						<CodeChip
+						<CodeLink
 							code={item.code}
 							group={item.group}
 							className="row-span-2 lg:row-auto"
@@ -198,7 +203,7 @@ export function KodeSulit({
 					<Card>
 						<div className="flex min-w-0 flex-col gap-3">
 							<div className="flex items-center gap-3">
-								<CodeChip code={card.code} group={card.group} />
+								<CodeLink code={card.code} group={card.group} />
 								<span className="type-card-title">{card.form}</span>
 							</div>
 							{statusPill(current)}

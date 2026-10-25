@@ -1,3 +1,5 @@
+import { Link } from "@/components/ui/app-link";
+import { referenceHref } from "@/lib/view/reference";
 import { GROUP_BORDER, type GroupId } from "./groups";
 
 const SIZE = {
@@ -39,5 +41,19 @@ export function CodeChip({
 		>
 			{code}
 		</span>
+	);
+}
+
+/** A chip that opens its code in Referensi. */
+export function CodeLink({ className = "", ...props }: React.ComponentProps<typeof CodeChip>) {
+	return (
+		<Link
+			href={referenceHref("kode", props.code)}
+			aria-label={`Lihat ${props.code} di Referensi`}
+			// w-fit: a grid cell would otherwise stretch the link past the chip, and its focus ring.
+			className={`inline-flex w-fit flex-none ${className}`}
+		>
+			<CodeChip {...props} />
+		</Link>
 	);
 }
