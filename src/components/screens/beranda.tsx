@@ -10,6 +10,7 @@ import { Tooltip } from "@/components/ui/tooltip";
 import { type ReactNode, useEffect, useState } from "react";
 import { DRILL_CLEAR_STREAK } from "@/rules";
 import { countdownTo } from "@/lib/view/format";
+import type { Scope } from "@/core/questions/distractors";
 import type { DayMark, Home } from "@/lib/view/home";
 import { SyncChip } from "./sync-chip";
 
@@ -246,7 +247,13 @@ function ChallengeButton({ done, countdown }: { done: boolean; countdown: ReactN
 	);
 }
 
-export function Beranda({ data }: { data: Home | null }) {
+export function Beranda({
+	data,
+	onScope
+}: {
+	data: Home | null;
+	onScope?: (scope: Scope) => void;
+}) {
 	const d = data;
 	// After a long break, the main button opens Cek ingatan; its preview links on to the usual session.
 	const start = d?.summary.recheck ? "/sesi?mode=cek" : "/sesi";
@@ -451,6 +458,20 @@ export function Beranda({ data }: { data: Home | null }) {
 								</span>
 							))}
 						</div>
+						{d?.nextScope && (
+							<div className="flex flex-col gap-3 border-t border-hairline pt-4 lg:flex-row lg:items-center lg:justify-between">
+								<span className="type-body-sm text-ink-700">
+									Materi di {d.scope.title} sudah dikenalkan semua.
+								</span>
+								<Button
+									variant="secondary"
+									icon="chevron-right"
+									onClick={() => onScope?.(d.nextScope!.scope)}
+								>
+									Lanjut ke {d.nextScope.label}
+								</Button>
+							</div>
+						)}
 					</Card>
 
 					<Card className="gap-5">

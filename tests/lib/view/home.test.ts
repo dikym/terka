@@ -60,6 +60,16 @@ describe("home view", () => {
 		expect(view([]).summary.recheck).toBe(false);
 	});
 
+	test("a scope with everything introduced offers the next one", () => {
+		const scope = { level: "province", id: "bali" } as const;
+		const done = view([intro("dk", NOW - DAY)], { ...SETTINGS, scope });
+		expect(done.nextScope).toEqual({
+			scope: { level: "province", id: "nusa-tenggara-barat" },
+			label: "Nusa Tenggara Barat"
+		});
+		expect(view([], { ...SETTINGS, scope }).nextScope).toBeNull();
+	});
+
 	test("a single missed day inside a streak shows as tolerance", () => {
 		const today = localDay(NOW, WITA);
 		const events = [3, 2, 0].map((back) => run("challenge", NOW - back * DAY));

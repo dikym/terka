@@ -102,7 +102,12 @@ function Home() {
 	}
 	return (
 		<>
-			<Beranda data={data} />
+			<Beranda
+				data={data}
+				onScope={(scope) => {
+					if (runtime && prefs) void runtime.saveSettings({ ...prefs.settings, scope });
+				}}
+			/>
 			{welcome && (
 				<Sambutan
 					onStart={() => {
