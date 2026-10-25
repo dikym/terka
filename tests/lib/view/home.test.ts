@@ -25,6 +25,14 @@ describe("home view", () => {
 		expect(home.summary.streak).toBe(1);
 	});
 
+	test("a completed daily session marks the day and counts for the streak", () => {
+		const daily = run("daily", NOW, { plannedCount: 1 });
+		const home = view([intro("bk", NOW + 1, { runId: daily.row.id }), daily]);
+		expect(home.week.at(-1)!.state).toBe("done");
+		expect(home.summary.streak).toBe(1);
+		expect(home.challengeDone).toBe(false);
+	});
+
 	test("a single missed day inside a streak shows as tolerance", () => {
 		const today = localDay(NOW, WITA);
 		const events = [3, 2, 0].map((back) => run("challenge", NOW - back * DAY));

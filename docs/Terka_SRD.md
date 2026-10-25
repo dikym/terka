@@ -889,7 +889,8 @@ Cakupan disimpan dengan aturan last-write-wins. Karena Cakupan tidak memengaruhi
 
 ### 8.8 Hari Beruntun dan Rekor
 
-- Tantangan Harian yang diselesaikan di dua perangkat pada `local_day` yang sama dihitung satu hari untuk Hari Beruntun.
+- Satu `local_day` masuk Hari Beruntun jika Tantangan Harian diselesaikan hari itu, atau jika sesi harian ditutup setelah semua kartu yang direncanakannya terjawab (jumlah kartu berbeda yang dijawab ≥ `planned_count`). Soal ulang di dalam sesi mengulang kartu yang sama, jadi tidak menambah hitungan itu. Jawaban yang dibatalkan lewat undo tidak dihitung.
+- Tantangan Harian atau sesi harian yang diselesaikan di dua perangkat pada `local_day` yang sama dihitung satu hari untuk Hari Beruntun.
 - Rekor Terbaik Mode Kilat per wilayah = skor tertinggi dari semua perangkat. Putaran yang tidak ditutup — aplikasi ditutup paksa di tengah 60 detik — tidak dihitung.
 - Jatah toleransi Hari Beruntun dihitung dari gabungan `local_day` semua perangkat.
 

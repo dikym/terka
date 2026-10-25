@@ -3,7 +3,7 @@ import { groupName } from "@/core/content/names";
 import type { Bundle, Fact } from "@/core/content/schema";
 import type { ReviewLog } from "@/core/log/events";
 import type { Scope } from "@/core/questions/distractors";
-import { streak } from "@/core/replay/streak";
+import { streak, streakDays } from "@/core/replay/streak";
 import type { AppState } from "@/core/replay/state";
 import { sessionSummary } from "@/core/views/summary";
 import { decimal } from "../view/format";
@@ -97,7 +97,7 @@ export function endView(input: EndInput): EndView {
 		pair: pairA && pairB ? { a: pairA.code, b: pairB.code, group: uiGroup(pairA.group) } : null,
 		held: input.held,
 		remainingDue: input.remainingDue ?? 0,
-		streak: streak(input.after.challengeDays, input.today),
+		streak: streak(streakDays(input.after), input.today),
 		kilatLine: kilat?.line ?? null,
 		kilatNew: kilat?.isNew ?? false,
 		fact: input.fact ? factCard(bundle, input.fact) : null,

@@ -486,7 +486,7 @@ export function Beranda({ data }: { data: Home | null }) {
 								{d ? d.tolerance : <SkeletonText width="22.0em" />}
 							</span>
 							<span className="font-sans text-body-sm leading-[1.4] text-ink-500">
-								Dihitung dari Tantangan Harian.
+								Dihitung dari sesi harian yang tuntas atau Tantangan Harian.
 							</span>
 						</footer>
 					</Card>

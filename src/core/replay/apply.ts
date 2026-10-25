@@ -24,6 +24,12 @@ function applyCardEvent(state: AppState, row: CardEvent) {
 function applyRun(state: AppState, run: PracticeRun) {
 	if (run.endedAt === null) return;
 	if (run.kind === "challenge") state.challengeDays.add(run.localDay);
+	if (run.kind === "daily" && run.plannedCount)
+		state.dailyRuns.set(run.id, {
+			localDay: run.localDay,
+			plannedCount: run.plannedCount,
+			cards: new Set()
+		});
 	if (run.kind === "kilat" && run.score !== null) {
 		const key = `${run.scopeLevel}|${run.scopeId ?? ""}`;
 		state.kilatRecords.set(key, Math.max(state.kilatRecords.get(key) ?? 0, run.score));

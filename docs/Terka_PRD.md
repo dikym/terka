@@ -161,7 +161,7 @@ Halaman ini juga memuat kartu Sulit Dikuasai, Pelat Terlihat, status sinkronisas
 
 ### 6.7 Tantangan Harian dan Mode Kilat
 
-**Tantangan Harian** tersedia sekali sehari dan berisi paling banyak lima kartu Golongan A yang sudah dipelajari. Jika hanya tiga kartu tersedia, tampilkan tiga; jika tidak ada, mode belum tersedia. Tantangan mengambil kartu lintas Cakupan dan mencatat Hari Beruntun.
+**Tantangan Harian** tersedia sekali sehari dan berisi paling banyak lima kartu Golongan A yang sudah dipelajari. Jika hanya tiga kartu tersedia, tampilkan tiga; jika tidak ada, mode belum tersedia. Tantangan mengambil kartu lintas Cakupan dan mencatat Hari Beruntun, sama seperti sesi harian yang tuntas.
 
 **Mode Kilat** berlangsung dalam satu putaran berdurasi tetap (SRD 4.4). Skor dihitung dari jawaban benar, dan Rekor Terbaik disimpan per wilayah. Kedua mode tidak memperbarui jadwal belajar.
 
@@ -278,7 +278,7 @@ Pencarian kode yang memenuhi aturan pencatatan menambah Pelat Terlihat. Pengguna
 
 ## 8. Kebiasaan Belajar dan Penanda Kemajuan
 
-- **Hari Beruntun:** dihitung dari Tantangan Harian, dengan satu hari toleransi dalam periode 30 hari bergerak. Dua hari yang terlewat di sisi pergantian bulan tetap masuk periode yang sama.
+- **Hari Beruntun:** dihitung dari sesi harian yang tuntas atau Tantangan Harian, dengan satu hari toleransi dalam periode 30 hari bergerak. Dua hari yang terlewat di sisi pergantian bulan tetap masuk periode yang sama.
 - **Rekor Terbaik:** skor Mode Kilat tertinggi per wilayah. Rekor nasional dan kawasan dipisahkan.
 - **Uji Penguasaan Kawasan:** kawasan dinyatakan dikuasai jika seluruh kartu yang dihitung berstatus `mature` dan tidak ada pasangan tertukar aktif yang melibatkan kodenya. Kartu `locked` dan `suspended` tidak dihitung.
 - **Indikator Level:** tiga lingkaran menunjukkan persentase kartu yang pernah berhasil di Level 1, 2, dan 3. Keberhasilan dihitung per kartu dari jawaban sah yang tidak dibatalkan dan tidak memakai bantuan yang membocorkan jawaban. Lulus satu level tidak otomatis meluluskan level lain.

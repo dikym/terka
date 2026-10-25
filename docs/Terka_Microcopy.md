@@ -346,6 +346,7 @@ Layar ini tidak menampilkan Tombol untuk mengulang sesi atau menambah materi bar
 | Sudah dikerjakan         | **Sudah selesai untuk hari ini**                        |
 | Hari toleransi digunakan | **Jatah toleransi digunakan hari ini.**                 |
 | Label rangkaian hari     | **Hari Beruntun**                                       |
+| Sumber hitungan (Beranda) | **Dihitung dari sesi harian yang tuntas atau Tantangan Harian.** |
 
 Jika satu hari terlewat, aplikasi tidak memakai pesan seperti "Streak-mu rusak". Cukup sampaikan keadaan catatan Hari Beruntun saat ini.
 
