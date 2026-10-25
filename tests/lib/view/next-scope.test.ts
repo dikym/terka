@@ -53,3 +53,20 @@ describe("next scope", () => {
 		expect(nextScope(state, bundle, NATIONAL)).toBeNull();
 	});
 });
+
+describe("next scope at the edges", () => {
+	test("an unknown province gets no offer", () => {
+		expect(nextScope(fresh(), bundle, province("atlantis"))).toBeNull();
+	});
+	test("an unknown group gets no offer", () => {
+		expect(nextScope(fresh(), bundle, group("atlantis"))).toBeNull();
+	});
+	test("a suspended new-looking card does not hold the scope open", () => {
+		const state = introduced(fresh(), (region) => region.province === "bali");
+		seedCard(state, "dk::code2region", {
+			state: "suspended",
+			suspension: { reason: "manual", resume: "review" }
+		});
+		expect(nextScope(state, bundle, province("bali"))).toEqual(province("nusa-tenggara-barat"));
+	});
+});

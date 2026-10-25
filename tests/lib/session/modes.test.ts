@@ -159,3 +159,57 @@ describe("planning cek ingatan", () => {
 			expect(plan.message).toBe("Tidak ada soal yang perlu diulang hari ini.");
 	});
 });
+
+describe("re-asking at the edges", () => {
+	const justIntroduced = [intro("bk", NOW - 60_000)];
+
+	test("each scheduling mode re-asks in its own context", () => {
+		const contexts = {
+			hariIni: "daily",
+			terfokus: "focused",
+			diplomat: "special",
+			sebutkan: "setrecall",
+			cek: "recheck"
+		} as const;
+		for (const [mode, context] of Object.entries(contexts))
+			expect(
+				reaskCard(
+					input(justIntroduced),
+					mode as keyof typeof contexts,
+					"bk::code2region",
+					SETTINGS.scope,
+					1
+				)?.question.context
+			).toBe(context);
+	});
+	test("a card not due yet, suspended, or unknown gets no re-ask", () => {
+		const future = input([intro("bk", NOW + 60_000)]);
+		expect(reaskCard(future, "hariIni", "bk::code2region", SETTINGS.scope, 1)).toBeNull();
+		const suspended = input(justIntroduced);
+		const card = suspended.state.cards.get("bk::code2region")!;
+		suspended.state.cards.set("bk::code2region", {
+			...card,
+			state: "suspended",
+			suspension: { reason: "manual", resume: "learning" }
+		});
+		expect(reaskCard(suspended, "hariIni", "bk::code2region", SETTINGS.scope, 1)).toBeNull();
+		expect(reaskCard(input(), "hariIni", "zz::code2region", SETTINGS.scope, 1)).toBeNull();
+	});
+	test("serials keep two re-asks of one card apart", () => {
+		const first = reaskCard(
+			input(justIntroduced),
+			"hariIni",
+			"bk::code2region",
+			SETTINGS.scope,
+			1
+		);
+		const second = reaskCard(
+			input(justIntroduced),
+			"hariIni",
+			"bk::code2region",
+			SETTINGS.scope,
+			2
+		);
+		expect(first!.id).not.toBe(second!.id);
+	});
+});

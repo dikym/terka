@@ -70,6 +70,20 @@ describe("home view", () => {
 		expect(view([], { ...SETTINGS, scope }).nextScope).toBeNull();
 	});
 
+	test("a finished group offers the next group by its full title", () => {
+		const done = view(
+			["bk", "bb", "ba", "bm", "bp", "be", "bd"].map((code) => intro(code, NOW - DAY)),
+			{ ...SETTINGS, scope: { level: "group", id: "sumatera" } }
+		);
+		expect(done.nextScope).toEqual({
+			scope: { level: "group", id: "jawa" },
+			label: "Kawasan Jawa"
+		});
+	});
+	test("the whole country never gets a next-scope offer", () => {
+		expect(view([intro("bk", NOW - DAY)]).nextScope).toBeNull();
+	});
+
 	test("a single missed day inside a streak shows as tolerance", () => {
 		const today = localDay(NOW, WITA);
 		const events = [3, 2, 0].map((back) => run("challenge", NOW - back * DAY));

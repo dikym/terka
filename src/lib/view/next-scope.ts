@@ -23,6 +23,7 @@ export function nextScope(state: AppState, bundle: Bundle, scope: Scope): Scope 
 			? scope.id
 			: bundle.regions.find((region) => region.province === scope.id)?.group;
 	const start = groups.indexOf(current ?? "");
+	if (start === -1) return null;
 	const order = [...groups.slice(start), ...groups.slice(0, start)];
 
 	if (scope.level === "group") {

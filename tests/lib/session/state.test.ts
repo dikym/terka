@@ -142,3 +142,41 @@ describe("re-asks inside a session", () => {
 		expect(sessionReducer(moved, { type: "drop", id: onScreen })).toBe(moved);
 	});
 });
+
+describe("re-asks at the edges", () => {
+	const two = ["bk::code2region", "ba::code2region"];
+	const extra = () => cardsFor("hariIni", ["be::code2region"])[0];
+
+	test("a re-ask added after the last answer keeps the session going", () => {
+		const onLast = sessionReducer(graded(started(), "right"), { type: "next" });
+		const last = sessionReducer(graded(onLast, "right"), {
+			type: "insert",
+			card: extra(),
+			at: 99
+		});
+		expect(last.index).toBe(1);
+		const moved = sessionReducer(last, { type: "next" });
+		expect(moved.phase).toBe("ask");
+		expect(moved.cards[moved.index].id).toBe(extra().id);
+	});
+	test("without a re-ask the last answer ends the session", () => {
+		const onLast = sessionReducer(graded(started(), "right"), { type: "next" });
+		expect(sessionReducer(graded(onLast, "right"), { type: "next" }).phase).toBe("done");
+	});
+	test("dropping an unknown card changes nothing", () => {
+		const state = sessionReducer(initialSession("hariIni", cardsFor("hariIni", two)), {
+			type: "start"
+		});
+		expect(sessionReducer(state, { type: "drop", id: "nope" })).toBe(state);
+	});
+	test("two re-asks keep the order they were added in", () => {
+		const first = cardsFor("hariIni", ["be::code2region"])[0];
+		const second = cardsFor("hariIni", ["bd::code2region"])[0];
+		let state = sessionReducer(initialSession("hariIni", cardsFor("hariIni", two)), {
+			type: "start"
+		});
+		state = sessionReducer(state, { type: "insert", card: first, at: 99 });
+		state = sessionReducer(state, { type: "insert", card: second, at: 99 });
+		expect(state.cards.slice(-2).map((card) => card.id)).toEqual([first.id, second.id]);
+	});
+});

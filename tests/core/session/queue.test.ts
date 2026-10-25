@@ -345,3 +345,32 @@ describe("backlog order after a recheck", () => {
 		expect(queued.at(-1)).toBe("dk::code2region");
 	});
 });
+
+describe("backlog order after a recheck, at the edges", () => {
+	test("groups the recheck did not reach come after scored ones, in recall order", () => {
+		const bundle = manyRegions(40);
+		const state = settle(fresh(bundle));
+		for (let index = 0; index < 40; index++)
+			seedCard(state, `x${index}::code2region`, reviewCard({ stability: 5 + index }));
+		seedCard(state, "dk::code2region", reviewCard({ stability: 1 }));
+		seedCard(state, "a::code2region", reviewCard({ stability: 2 }));
+		state.recheck = { day: TODAY, results: new Map([["x3", false]]) };
+		const queued = ids(dailyQueue(state, bundle, SETTINGS, at).items);
+		expect(queued.slice(0, 3)).toEqual([
+			"x0::code2region",
+			"x1::code2region",
+			"x2::code2region"
+		]);
+		expect(queued).not.toContain("dk::code2region");
+		expect(queued).toHaveLength(30);
+	});
+	test("a recheck whose codes are no longer in the bundle changes nothing", () => {
+		const bundle = manyRegions(40);
+		const state = settle(fresh(bundle));
+		for (let index = 0; index < 40; index++)
+			seedCard(state, `x${index}::code2region`, reviewCard({ stability: 5 + index }));
+		const before = ids(dailyQueue(state, bundle, SETTINGS, at).items);
+		state.recheck = { day: TODAY, results: new Map([["gone", false]]) };
+		expect(ids(dailyQueue(state, bundle, SETTINGS, at).items)).toEqual(before);
+	});
+});

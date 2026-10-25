@@ -150,3 +150,49 @@ describe("map, special codes and level indicator", () => {
 		expect(levelIndicator(fresh())).toEqual({ 1: 0, 2: 0, 3: 0 });
 	});
 });
+
+describe("progress weighting at the edges", () => {
+	test("a relearning card keeps the part of its interval", () => {
+		const state = fresh();
+		seedCard(state, "dk::code2region", reviewCard({ state: "relearning", intervalDays: 14 }));
+		expect(scopeMastery(state, bundle, BALI).percent).toBe(Math.round((14 / 21) * 100));
+	});
+	test("suspended and locked cards stay out of both sides", () => {
+		const state = fresh();
+		seedCard(state, "dk::code2region", mature);
+		seedCard(state, "dk::region2code", { state: "locked" });
+		seedCard(state, "dk::setrecall", {
+			state: "suspended",
+			suspension: { reason: "manual", resume: "review" }
+		});
+		expect(scopeMastery(state, bundle, BALI)).toMatchObject({ counted: 1, percent: 100 });
+	});
+	test("a scope with nothing counted has no percent", () => {
+		const state = fresh();
+		for (const mode of ["code2region", "region2code", "setrecall"])
+			seedCard(state, `dk::${mode}`, { state: "locked" });
+		expect(scopeMastery(state, bundle, BALI).percent).toBeNull();
+	});
+	test("an interval of exactly 21 days without Level 3 is still capped", () => {
+		const state = fresh();
+		seedCard(state, "dk::code2region", reviewCard({ intervalDays: 21 }));
+		expect(scopeMastery(state, bundle, BALI).percent).toBe(95);
+	});
+	test("a fresh review card with a one-day interval shows a small start", () => {
+		const state = fresh();
+		seedCard(state, "dk::code2region", reviewCard({ intervalDays: 1 }));
+		expect(scopeMastery(state, bundle, BALI).percent).toBe(5);
+	});
+	test("special codes grow the same way", () => {
+		const state = fresh();
+		seedCard(state, "cd-49-jepang::special2holder", reviewCard({ intervalDays: 7 }));
+		const { counted, percent } = specialMastery(state);
+		expect(percent).toBe(Math.round((7 / 21 / counted) * 100));
+		expect(percent).toBeGreaterThan(0);
+	});
+	test("the active pair rule still blocks mastery at 100 percent", () => {
+		const state = masteredBali();
+		state.pairs.set("dk>dr", flag);
+		expect(scopeMastery(state, bundle, BALI)).toMatchObject({ percent: 100, mastered: false });
+	});
+});
