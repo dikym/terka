@@ -14,12 +14,12 @@ describe("formatting", () => {
 		expect(countdownTo(5_000, 0)).toBe("00:00:00");
 	});
 
-	test("the date label follows the learning day, which starts at 04:00", () => {
-		expect(dateLabel(Date.parse("2026-10-25T10:00:00+07:00"), "Asia/Jakarta")).toBe(
+	test("the date label follows the calendar date", () => {
+		expect(dateLabel(Date.parse("2026-10-25T23:59:00+07:00"), "Asia/Jakarta")).toBe(
 			"Minggu, 25 Oktober 2026"
 		);
 		expect(dateLabel(Date.parse("2026-10-26T02:00:00+07:00"), "Asia/Jakarta")).toBe(
-			"Minggu, 25 Oktober 2026"
+			"Senin, 26 Oktober 2026"
 		);
 	});
 

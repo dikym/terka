@@ -1105,11 +1105,11 @@ exports[`the golden log replays to the recorded state 1`] = `
         "answered": 3,
         "cardId": "dk::code2region",
         "difficulty": 2.11121424,
-        "due": 1791489600000,
+        "due": 1791475200000,
         "dueDay": "2026-10-09",
         "intervalDays": 15,
         "lapses": 0,
-        "lastReviewAt": 1790193600000,
+        "lastReviewAt": 1790179200000,
         "passedLevel3": false,
         "passedLevels": [
           true,
@@ -1487,7 +1487,7 @@ exports[`the golden log replays to the recorded state 1`] = `
   "lastKey": {
     "deviceId": "device-a",
     "id": "g-07",
-    "ts": 1790280000000,
+    "ts": 1790265600000,
   },
   "lastTz": "Asia/Makassar",
   "narrow": [

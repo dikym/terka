@@ -1,6 +1,5 @@
 // Every behavior number lives here once; the app, the content build and the tests read it from this module.
 export const TARGET_RETENTION = 0.9;
-export const DAY_BOUNDARY_HOUR = 4;
 
 export const FIRST_STEP_MS = 60_000;
 export const SECOND_STEP_MS = 600_000;

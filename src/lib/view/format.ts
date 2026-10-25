@@ -14,7 +14,7 @@ const WEEKDAY = format({ weekday: "long" });
 const WEEKDAY_SHORT = format({ weekday: "short" });
 const DAY_MONTH = format({ day: "numeric", month: "long" });
 
-/** The learning day, which starts at DAY_BOUNDARY_HOUR, as "Minggu, 25 Oktober 2026". */
+/** The local calendar day, as "Minggu, 25 Oktober 2026". */
 export const dateLabel = (now: number, tz: string) => LONG.format(noon(localDay(now, tz)));
 
 export const shortDate = (day: string) => SHORT.format(noon(day));

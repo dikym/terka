@@ -62,7 +62,7 @@ describe("load-balanced fuzz", () => {
 		expect(fuzzDays(2, { today, tz: WITA, loadOn: () => 9, seed: "a" }).days).toBe(2);
 		expect(fuzzDays(0.4, { today, tz: WITA, loadOn: () => 9, seed: "a" }).days).toBe(1);
 	});
-	test("the due time is 04:00 on the chosen learning day", () => {
+	test("the due time is midnight on the chosen day", () => {
 		const result = fuzzDays(10, { today, tz: WITA, loadOn: () => 0, seed: "a" });
 		expect(result.due).toBe(dayStart(addDays(today, result.days), WITA));
 	});

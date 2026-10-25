@@ -472,13 +472,13 @@ Kartu terkait dari kode yang pernah diperkenalkan boleh diperkenalkan walaupun C
 
 Tiga hal bergantung pada batas hari — kuota kartu baru, jadwal pengulangan, dan hitungan hari aktif berturut-turut — jadi batas itu harus ditetapkan eksplisit.
 
-- Pergantian hari jatuh pada **pukul 04.00 waktu lokal perangkat**, bukan tengah malam dan bukan UTC. Latihan pukul 01.00 masih dihitung sebagai hari sebelumnya, jadi sesi larut malam tidak memakai kuota kartu baru hari berikutnya dan tidak memutus Hari Beruntun.
-- Zona waktu diambil dari perangkat. Untuk pengguna di WITA, batas harinya 04.00 WITA.
+- Pergantian hari jatuh pada **pukul 00.00 waktu lokal perangkat**, bukan UTC. Hari belajar sama dengan tanggal kalender perangkat: latihan pukul 01.00 dihitung sebagai hari baru dan memakai kuota kartu baru hari itu.
+- Zona waktu diambil dari perangkat. Untuk pengguna di WITA, batas harinya 00.00 WITA.
 - Pindah zona waktu tidak pernah memajukan jadwal pengulangan. Jika zona berubah dan batas hari jadi terlewat lebih cepat, sistem memakai yang lebih lambat di antara keduanya, supaya bepergian tidak menghasilkan dua kuota kartu baru dalam satu hari nyata.
 
 - `local_day` dan `tz` dicatat di setiap event saat kejadian dan tidak pernah dihitung ulang (TRD bagian 4.2). Jika dua perangkat berada di zona waktu berbeda, tiap event memakai hari lokal perangkatnya sendiri.
 - Aturan "pakai yang lebih lambat" saat pindah zona waktu dijalankan per perangkat, dengan membandingkan batas hari baru terhadap `local_day` terakhir yang tercatat dari perangkat itu.
-- Zona waktu yang memakai daylight saving tetap memiliki satu batas 04.00 per hari. Perpindahan jam terjadi pukul 02.00 atau 03.00, sebelum batas itu, jadi tidak menghasilkan hari ganda.
+- Zona waktu yang memakai daylight saving tetap memiliki satu batas per hari. Jika perpindahan jam melompati pukul 00.00, hari dimulai pada saat pertama yang ada di tanggal itu, yaitu tepat setelah lompatan.
 
 ### 4.10 Pembatalan Jawaban
 
@@ -931,7 +931,7 @@ Kriteria berikut mengikat dan diperiksa lewat tes otomatis sebelum rilis. Tiap b
 | AC-7  | Jawaban berupa kode dinilai kecocokan persis, tanpa toleransi salah ketik                                                                                                                                                                          | 5.1            |
 | AC-8  | Dalam satu `local_day`, jadwal satu kartu hanya diperbarui satu jawaban, di luar langkah belajar awal dan belajar ulang; Tantangan Harian dan Mode Kilat tidak pernah mengubah jadwal                                                              | 4.11           |
 | AC-9  | Undo memulihkan `stability`, `difficulty`, `interval`, `due`, `reps`, `lapses`, kuota, persentil, dan pasangan tertukar ke keadaan sebelum jawaban terakhir                                                                                        | 4.10           |
-| AC-10 | Pergantian hari terjadi pukul 04.00 waktu lokal perangkat, dan pindah zona waktu tidak pernah memajukan jadwal pengulangan                                                                                                                         | 4.9            |
+| AC-10 | Pergantian hari terjadi pukul 00.00 waktu lokal perangkat, dan pindah zona waktu tidak pernah memajukan jadwal pengulangan                                                                                                                         | 4.9            |
 | AC-11 | Nilai penjadwalan dihitung ulang dari data jawaban mentah; nilai penjadwalan tidak disimpan di perangkat maupun server                                                                                                                             | 4.5            |
 | AC-12 | Kartu dengan `lapses` 6 menampilkan konteks sebelum pertanyaan, dan `lapses` 8 membuat kartunya `suspended` otomatis                                                                                                                               | 6.4            |
 | AC-13 | Perkenalan tidak menghasilkan nilai penjadwalan, tidak masuk persentil, tidak dicatat sebagai pasangan tertukar, dan memakai kuota materi baru                                                                                                     | 4.7            |

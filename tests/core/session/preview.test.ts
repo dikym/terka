@@ -121,7 +121,7 @@ describe("staleness", () => {
 		expect(previewStale(preview, ctxAt(NOW + 2 * 3_600_000 + MINUTE), "r2")).toBe(true);
 		expect(previewStale(preview, ctxAt(NOW + DAY), "r1")).toBe(true);
 	});
-	test("opened at 03:55 and started at 04:02 is a new day", () => {
+	test("opened at 23:55 and started at 00:02 is a new day", () => {
 		const early = buildPreview(state, bundle, [], SETTINGS, ctxAt(NOW - 5 * MINUTE), extras());
 		expect(previewStale(early, ctxAt(NOW + 2 * MINUTE), "r1")).toBe(true);
 	});
