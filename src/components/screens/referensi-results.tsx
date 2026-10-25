@@ -65,6 +65,7 @@ export function UnverifiedLegend({ note }: { note?: string }) {
 }
 
 function AreaGroup({ label, areas, loading }: { label: string; areas: Area[]; loading: boolean }) {
+	if (!loading && !areas.length) return null;
 	return (
 		<div className="flex flex-col gap-2">
 			<div className="flex items-baseline gap-2">
@@ -141,8 +142,9 @@ export function RegionCard({ detail, loading }: { detail: RegionDetail; loading:
 				</>
 			)}
 			{detail.note && (
-				<div className="flex items-center gap-2 border-t border-hairline pt-3">
-					<Icon name="info" size={14} />
+				<div className="flex items-start gap-2 border-t border-hairline pt-3">
+					{/* Level with the first line when the note wraps. */}
+					<Icon name="info" size={14} className="mt-[3px]" />
 					<Hint>{loading ? <SkeletonText width="22em" /> : detail.note}</Hint>
 				</div>
 			)}
@@ -169,7 +171,42 @@ function Verified() {
 	);
 }
 
-export function SpecialCard({ entry }: { entry: DiplomatEntry }) {
+const PRACTICE_NOTE =
+	"Latih kode negara pada pelat CD. Jadwal dan materi barunya terpisah dari latihan wilayah.";
+
+function PracticeButton({ className = "" }: { className?: string }) {
+	return (
+		<Button
+			variant="secondary"
+			size="sm"
+			icon="flag"
+			href="/sesi?mode=diplomat"
+			className={className}
+		>
+			Latih kode diplomat
+		</Button>
+	);
+}
+
+/** The practice offer for a list of diplomat cards: once, in the side panel. */
+export function DiplomatPractice() {
+	return (
+		<Card className="gap-3">
+			<CardHeader label="Latihan Kode diplomat" />
+			<Hint>{PRACTICE_NOTE}</Hint>
+			<PracticeButton className="flex w-full" />
+		</Card>
+	);
+}
+
+export function SpecialCard({
+	entry,
+	practice = true
+}: {
+	entry: DiplomatEntry;
+	/** Off in a list of cards, where the side panel offers it once. */
+	practice?: boolean;
+}) {
 	const { number } = entry;
 	return (
 		<Card bar="bg-ink-1000">
@@ -201,26 +238,17 @@ export function SpecialCard({ entry }: { entry: DiplomatEntry }) {
 				{entry.checked && <DetailRow label="Diperiksa">{entry.checked}</DetailRow>}
 				<DetailRow label="Alias">{entry.alias}</DetailRow>
 			</div>
-			<div className="flex flex-col gap-3 rounded-sm border border-ink-200 bg-paper-50 px-4 py-3 lg:flex-row lg:items-center lg:justify-between lg:gap-4">
-				<div className="flex min-w-0 flex-col gap-1">
-					<span className="type-label text-ink-700">Latihan Kode diplomat</span>
-					<span className="text-ink-900 type-body">
-						Latih kode negara pada pelat CD. Jadwal dan materi barunya terpisah dari
-						latihan wilayah.
-					</span>
+			{practice && (
+				<div className="flex flex-col gap-3 rounded-sm border border-ink-200 bg-paper-50 px-4 py-3 lg:flex-row lg:items-center lg:justify-between lg:gap-4">
+					<div className="flex min-w-0 flex-col gap-1">
+						<span className="type-label text-ink-700">Latihan Kode diplomat</span>
+						<span className="text-ink-900 type-body">{PRACTICE_NOTE}</span>
+					</div>
+					<div className="flex-none">
+						<PracticeButton className="max-lg:flex max-lg:w-full" />
+					</div>
 				</div>
-				<div className="flex-none">
-					<Button
-						variant="secondary"
-						size="sm"
-						icon="flag"
-						href="/sesi?mode=diplomat"
-						className="max-lg:flex max-lg:w-full"
-					>
-						Latih kode diplomat
-					</Button>
-				</div>
-			</div>
+			)}
 		</Card>
 	);
 }
@@ -306,7 +334,7 @@ export function NoResult({ query }: { query: string }) {
 
 const FADE_PX = 4;
 // Smoothstep alpha at each stop: a short linear fade shows a hard line where it ends.
-const FADE_RAMP = [0, 1, 2, 3, 4, 5, 6].map((step) => {
+export const FADE_RAMP = [0, 1, 2, 3, 4, 5, 6].map((step) => {
 	const t = step / 6;
 	return [Math.round(t * t * (3 - 2 * t) * 1000) / 1000, t] as const;
 });

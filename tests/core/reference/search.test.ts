@@ -156,6 +156,22 @@ describe("names", () => {
 		expect(codes).toContain("dr");
 	});
 
+	test("says which name a code was found through", () => {
+		const result = search("timur");
+		const via = (id: string) =>
+			result.kind === "names"
+				? result.regions.find((hit) => hit.region.id === id)?.via
+				: undefined;
+		expect(via("bk")).toEqual({ kind: "region", name: "Sumatera Utara bagian Timur" });
+		expect(via("l")).toEqual({ kind: "province", name: "Jawa Timur" });
+		// Aceh Timur is one of BL's regencies; BL's own names do not say "timur".
+		expect(via("bl")).toBeNull();
+		const jawa = search("jawa");
+		expect(
+			jawa.kind === "names" && jawa.regions.find((hit) => hit.region.id === "b")?.via
+		).toEqual({ kind: "group", name: "Jawa" });
+	});
+
 	test("reports a name that matches nothing", () => {
 		expect(search("Atlantis")).toEqual({ kind: "none", query: "Atlantis" });
 	});

@@ -54,12 +54,19 @@ const regionsById = (bundle: Bundle) =>
 	new Map(bundle.regions.map((region) => [region.id, region]));
 
 /** "Kota Medan, Kota Binjai, dan 3 lainnya". */
-export function areaSummary(bundle: Bundle, region: Region, shown = 2): string {
-	const names = highMembers(bundle, region).map((area) =>
-		area.type === "kota" ? `Kota ${area.name}` : area.name
-	);
+/** The first names and a count of the rest; "dan 1 lainnya" would be no shorter than the name. */
+export function listSummary(names: string[], shown: number): string {
 	if (names.length <= shown + 1) return names.join(", ");
 	return `${names.slice(0, shown).join(", ")}, dan ${names.length - shown} lainnya`;
+}
+
+const areaNames = (bundle: Bundle, region: Region) =>
+	highMembers(bundle, region).map((area) =>
+		area.type === "kota" ? `Kota ${area.name}` : area.name
+	);
+
+export function areaSummary(bundle: Bundle, region: Region, shown = 2): string {
+	return listSummary(areaNames(bundle, region), shown);
 }
 
 const statusOf = (card: CardEntry): CodeStatus =>

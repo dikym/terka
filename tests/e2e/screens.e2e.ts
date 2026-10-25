@@ -312,3 +312,188 @@ test("the account menu moves with the arrows and Esc gives focus back", async ({
 	await expect(page.getByRole("menu")).toHaveCount(0);
 	await expect(trigger).toBeFocused();
 });
+
+
+test("enter without a highlighted suggestion shows every result", async ({ page }) => {
+	await seen(page);
+	await page.goto("/referensi");
+	await search(page, "jawa timur");
+	await expect(page.getByRole("listbox")).toBeVisible();
+	await expect(page.locator('[role="option"][aria-selected="true"]')).toHaveCount(0);
+	await page.locator("#referensi-search").press("Enter");
+	await expect(page.getByRole("listbox")).toHaveCount(0);
+	await expect(page.getByText(/^\d+ kode ditemukan\.$/)).toBeVisible();
+	// Every match is a code detail card, each naming its province.
+	await expect(page.getByText("Jawa Timur", { exact: true }).first()).toBeVisible();
+	await search(page, "malang");
+	await page.locator("#referensi-search").press("Enter");
+	await expect(page.getByText("1 kode ditemukan.", { exact: true })).toBeVisible();
+	await expect(page.getByText("kab/kota", { exact: true })).toHaveCount(1);
+	await expect(page.getByText("provinsi", { exact: true })).toHaveCount(0);
+	await search(page, "jawa timur");
+	await page.locator("#referensi-search").press("Enter");
+	await page.locator("#referensi-search").press("Escape");
+	await expect(page.getByText("Semua kawasan")).toBeVisible();
+});
+
+test("arrow down then enter opens the first suggestion", async ({ page }) => {
+	await seen(page);
+	await page.goto("/referensi");
+	await search(page, "jawa timur");
+	await expect(page.getByRole("listbox")).toBeVisible();
+	await page.locator("#referensi-search").press("ArrowDown");
+	await expect(page.getByRole("option").first()).toHaveAttribute("aria-selected", "true");
+	await page.locator("#referensi-search").press("Enter");
+	await expect(
+		page.getByText("1 kode ditemukan, diurutkan dari kota lalu kabupaten.")
+	).toBeVisible();
+});
+
+test("referensi opens what its address names", async ({ page }) => {
+	await seen(page);
+	await page.goto("/referensi?kode=bk");
+	await expect(
+		page.getByText("1 kode ditemukan, diurutkan dari kota lalu kabupaten.")
+	).toBeVisible();
+	await page.goto("/referensi?kode=CD%2049");
+	await expect(page.getByText("Bulgaria").first()).toBeVisible();
+	await page.goto("/referensi?cari=sulawesi");
+	await expect(page.getByText(/^\d+ kode ditemukan\.$/)).toBeVisible();
+	await page.goto("/referensi?provinsi=riau");
+	await expect(page.locator("#referensi-search")).toHaveValue("Riau");
+	await expect(page.getByText("kab/kota", { exact: true }).first()).toBeVisible();
+	await expect(page.getByText("Kepulauan Riau", { exact: true })).toHaveCount(0);
+	await page.goto("/referensi?kawasan=sulawesi");
+	await expect(page.getByRole("button", { name: "Sulawesi", exact: true })).toHaveAttribute(
+		"aria-pressed",
+		"true"
+	);
+	await page.goto("/referensi?provinsi=xyz&kawasan=foo");
+	await expect(page.getByRole("button", { name: "Semua kawasan" })).toHaveAttribute(
+		"aria-pressed",
+		"true"
+	);
+});
+
+test("a code opened from the address is not a sighting", async ({ page }) => {
+	await seen(page);
+	await page.goto("/referensi?kode=BK");
+	await page.getByText("1 kode ditemukan, diurutkan dari kota lalu kabupaten.").waitFor();
+	await page.waitForTimeout(2000);
+	await page.goto("/referensi");
+	await page.getByText("Semua kawasan").waitFor();
+	await expect(page.getByText("Pelat Terlihat", { exact: true })).toHaveCount(0);
+});
+
+test("enter right after typing ignores the highlight from the previous query", async ({ page }) => {
+	await seen(page);
+	await page.goto("/referensi");
+	await search(page, "jawa");
+	await expect(page.getByRole("listbox")).toBeVisible();
+	await page.locator("#referensi-search").press("ArrowDown");
+	await page.locator("#referensi-search").press("ArrowDown");
+	await search(page, "jawa timur");
+	await page.locator("#referensi-search").press("Enter");
+	await expect(page.getByText(/^\d+ kode ditemukan\.$/)).toBeVisible();
+});
+
+test("referensi's static page carries the search box before scripts run", async ({ request }) => {
+	const html = await (await request.get("/referensi")).text();
+	expect(html).toContain('id="referensi-search"');
+});
+
+test("a code card leaves out an empty kota or kabupaten group", async ({ page }) => {
+	await seen(page);
+	await page.goto("/referensi?cari=aceh%20timur");
+	await expect(page.getByText("1 kode ditemukan.", { exact: true })).toBeVisible();
+	await expect(page.getByText("Kabupaten", { exact: true })).toBeVisible();
+	await expect(page.getByText("Kota", { exact: true })).toHaveCount(0);
+});
+
+test("the address follows what Referensi shows, without history steps", async ({ page }) => {
+	await seen(page);
+	await page.goto("/statistik");
+	await page.goto("/referensi");
+	await search(page, "medan");
+	await expect(page).toHaveURL(/\/referensi\?cari=medan$/);
+	await page.getByRole("option").first().click();
+	await expect(page).toHaveURL(/\/referensi\?kode=BK$/);
+	await page.reload();
+	await expect(
+		page.getByText("1 kode ditemukan, diurutkan dari kota lalu kabupaten.")
+	).toBeVisible();
+	await search(page, "timur");
+	await page.locator("#referensi-search").press("Enter");
+	await expect(page).toHaveURL(/\/referensi\?cari=timur$/);
+	await page.reload();
+	await expect(page.getByText(/^\d+ kode ditemukan\.$/)).toBeVisible();
+	await page.getByRole("button", { name: "Hapus pencarian" }).click();
+	await expect(page).toHaveURL(/\/referensi$/);
+	await page.getByRole("button", { name: "Sulawesi", exact: true }).click();
+	await expect(page).toHaveURL(/\/referensi\?kawasan=sulawesi$/);
+	await page.reload();
+	await expect(page.getByRole("button", { name: "Sulawesi", exact: true })).toHaveAttribute(
+		"aria-pressed",
+		"true"
+	);
+	await page.getByRole("button", { name: "Semua kawasan" }).click();
+	await expect(page).toHaveURL(/\/referensi$/);
+	await page.goBack();
+	await expect(page).toHaveURL(/\/statistik$/);
+});
+
+test("the search box stays in view while the results scroll", async ({ page }) => {
+	await seen(page);
+	await page.goto("/referensi?cari=timur");
+	await page.getByText(/^\d+ kode ditemukan\.$/).waitFor();
+	await page.mouse.wheel(0, 3000);
+	await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(1000);
+	await expect(page.locator("#referensi-search")).toBeInViewport();
+	// The stuck box lines up with the stuck side panel.
+	const box = (await page.locator("#referensi-search").locator("..").boundingBox())!;
+	const aside = (await page.locator("main aside").boundingBox())!;
+	expect(Math.abs(box.y - aside.y)).toBeLessThanOrEqual(1);
+});
+
+test("diplomat results offer their practice once, in the side panel", async ({ page }) => {
+	await seen(page);
+	await page.goto("/referensi?cari=cd");
+	await page.getByText(/^\d+ kode ditemukan\.$/).waitFor();
+	const practice = page.getByRole("link", { name: "Latih kode diplomat" });
+	await expect(practice).toHaveCount(1);
+	await expect(
+		page.locator("main aside").getByRole("link", { name: "Latih kode diplomat" })
+	).toBeVisible();
+	await expect(page.locator("main aside").getByText("Pencarian", { exact: true })).toHaveCount(0);
+});
+
+test("every suggestion row keeps its areas on one line", async ({ page }) => {
+	await seen(page);
+	await page.goto("/referensi");
+	await search(page, "bengkulu");
+	const option = page.getByRole("option").first();
+	await expect(option).toBeVisible();
+	const heights = await option
+		.locator("span")
+		.evaluateAll((spans) => spans.map((span) => span.getBoundingClientRect().height));
+	expect(Math.max(...heights)).toBeLessThan(30);
+});
+
+test("a chip in the region list or Pelat Terlihat opens its code", async ({ page }) => {
+	await seen(page);
+	await page.goto("/referensi");
+	await page.getByRole("button", { name: "Buka BK", exact: true }).first().click();
+	await expect(page).toHaveURL(/\/referensi\?kode=BK$/);
+	await expect(
+		page.getByText("1 kode ditemukan, diurutkan dari kota lalu kabupaten.")
+	).toBeVisible();
+	// Settled long enough to count as a sighting.
+	await page.waitForTimeout(2000);
+	await page.getByRole("button", { name: "Hapus pencarian" }).click();
+	const card = page.locator("main aside");
+	await expect(
+		card.getByText("3 kode yang paling sering terlihat", { exact: false })
+	).toBeVisible();
+	await card.getByRole("button", { name: "Buka BK", exact: true }).click();
+	await expect(page).toHaveURL(/\/referensi\?kode=BK$/);
+});
