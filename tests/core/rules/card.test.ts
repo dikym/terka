@@ -204,3 +204,45 @@ describe("card transitions", () => {
 		expect(isDue(strong({ due: NOW + 1 }), NOW)).toBe(false);
 	});
 });
+
+describe("closing the day at the edges", () => {
+	const NEW_YORK = "America/New_York";
+	const learning = (at: number) => introduce(newCard("dk::code2region"), at);
+
+	test("an answer a minute before local midnight is not due again until after it", () => {
+		const at = Date.parse("2026-11-01T03:59:00Z"); // 23:59 in New York, the day DST ends
+		const settled = answer(
+			learning(at - MINUTE),
+			1,
+			ctx(at, { tz: NEW_YORK, localDay: localDay(at, NEW_YORK) })
+		);
+		expect(settled.state).toBe("review");
+		expect(settled.due).toBeGreaterThanOrEqual(
+			dayStart(addDays(localDay(at, NEW_YORK), 1), NEW_YORK)
+		);
+		expect(localDay(settled.due, NEW_YORK) > localDay(at, NEW_YORK)).toBe(true);
+	});
+	test("a relearning step answered on a later day still settles past that day", () => {
+		const lapsed = answer(strong(), 1, ctx(NOW));
+		const later = NOW + 3 * DAY;
+		const settled = answer(lapsed, 3, ctx(later));
+		expect(settled.state).toBe("review");
+		expect(settled.due).toBeGreaterThanOrEqual(
+			dayStart(addDays(localDay(later, WITA), 1), WITA)
+		);
+	});
+	test("a lapse on a mature card drops it to relearning, due at once", () => {
+		const lapsed = answer(strong({ state: "mature", passedLevel3: true }), 1, ctx(NOW));
+		expect(lapsed.state).toBe("relearning");
+		expect(lapsed.due).toBe(NOW);
+	});
+	test("a wrong in-session step does not count as a lapse", () => {
+		const lapsed = answer(strong(), 1, ctx(NOW));
+		const settled = answer(lapsed, 1, ctx(NOW + MINUTE));
+		expect(settled.lapses).toBe(lapsed.lapses);
+	});
+	test("an intro answered wrong in its step is due no sooner than tomorrow", () => {
+		const settled = answer(learning(NOW), 1, ctx(NOW + MINUTE));
+		expect(settled.due).toBeGreaterThanOrEqual(dayStart(addDays(localDay(NOW, WITA), 1), WITA));
+	});
+});

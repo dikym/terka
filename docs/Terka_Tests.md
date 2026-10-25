@@ -97,6 +97,7 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | SR-368 | Provinsi terakhir sebuah kawasan sudah habis | Tawaran ke provinsi pertama yang masih punya materi baru di kawasan berikutnya | batas | SRD 2.6 |
 | SR-369 | Cakupan kawasan habis, kawasan berikutnya juga habis | Tawaran melompat ke kawasan berikutnya yang masih punya materi baru, berputar ke awal | batas | SRD 2.6 |
 | SR-370 | Cakupan nasional, atau tidak ada materi baru di mana pun, atau Cakupan masih punya materi baru | Tidak ada tawaran | batas | SRD 2.6 |
+| SR-371 | Cakupan menunjuk provinsi atau kawasan yang tidak ada di data | Tidak ada tawaran | batas | SRD 2.6 |
 | SR-008 | Semua kartu satu kawasan `mature`, masih ada pasangan tertukar aktif di dalamnya     | Kawasan belum dikuasai                                                                                | batas    | SRD 2.5 |
 | SR-009 | Pasangan BE ↔ DE aktif, kartu Sumatera dan Maluku semua `mature`                     | Sumatera dan Maluku sama-sama belum dikuasai                                                          | batas    | SRD 2.5 |
 | SR-010 | Satu dari 10 kartu cakupan `suspended` karena `confidence` turun, 9 lainnya `mature` | Persentase 100%; cakupan bisa dikuasai                                                                | batas    | AC-24   |
@@ -199,6 +200,8 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | SR-364 | Jawaban Cek Ingatan pada kartu jatuh tempo | Jadwal FSRS berubah sama seperti jawaban sesi harian | normal | SRD 4.7 |
 | SR-365 | Setelah Cek Ingatan, tunggakan masih di atas 30 | Pengulangan kawasan dengan skor terendah didahulukan | normal | SRD 4.7 |
 | SR-366 | Setelah Cek Ingatan, tunggakan tidak lagi melebihi 30 | Urutan kembali mengikuti peluang ingat | batas | SRD 4.7 |
+| SR-372 | Semua jawaban Cek Ingatan di satu kawasan dibatalkan lewat undo | Kawasan itu tidak tampil di hasil | batas | SRD 4.7 |
+| SR-373 | Kode di Cek Ingatan dijawab salah lalu benar pada soal ulang | Hasil memakai jawaban pertama | batas | SRD 4.7 |
 
 ### 5.6 Perkenalan
 

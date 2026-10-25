@@ -145,3 +145,29 @@ describe("recheck answers", () => {
 		expect(state.recheck?.results.get("dk")).toBe(false);
 	});
 });
+
+describe("recheck at the edges", () => {
+	const bundle = ruleBundle();
+
+	test("fewer due cards than slots asks every one of them", () => {
+		const { state, ids } = backlog(bundle, ["bali-nusa-tenggara"]);
+		expect(recheckQueue(state, bundle, at).items).toHaveLength(ids.length);
+	});
+	test("nothing due gives an empty test with no predictions", () => {
+		const { items, predicted } = recheckQueue(fresh(bundle), bundle, at);
+		expect(items).toEqual([]);
+		expect(predicted.size).toBe(0);
+	});
+	test("a code with both directions due is asked once", () => {
+		const state = fresh(bundle);
+		seedCard(state, "dk::code2region", reviewCard({ stability: 5 }));
+		seedCard(state, "dk::region2code", reviewCard({ stability: 6 }));
+		const { items } = recheckQueue(state, bundle, at);
+		expect(items.map((item) => contentOf(item.cardId))).toEqual(["dk"]);
+	});
+	test("a learning card is not part of the test", () => {
+		const state = fresh(bundle);
+		seedCard(state, "dk::code2region", { state: "learning", step: 1, due: NOW - DAY });
+		expect(recheckQueue(state, bundle, at).items).toEqual([]);
+	});
+});

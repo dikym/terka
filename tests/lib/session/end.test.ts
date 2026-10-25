@@ -128,3 +128,43 @@ describe("recheck end", () => {
 		expect(view.recheck).toBeNull();
 	});
 });
+
+describe("recheck end at the edges", () => {
+	const state = stateOf([]);
+	const recheck = (code: string, correct: boolean) =>
+		review(code, "code2region", NOW, { correct, context: "recheck" }).row as ReviewLog;
+	const end = (answers: ReviewLog[], predicted: Map<string, number>) =>
+		endView({
+			mode: "cek",
+			before: state,
+			after: state,
+			answers,
+			bundle,
+			held: false,
+			fact: null,
+			kilat: null,
+			loginPrompt: false,
+			today: "2026-09-21",
+			predicted
+		});
+
+	test("a group whose answers were all taken back is left out", () => {
+		const view = end(
+			[recheck("bk", true)],
+			new Map([
+				["sumatera", 0.8],
+				["jawa", 0.6]
+			])
+		);
+		expect(view.recheck?.map((row) => row.group)).toEqual(["sumatera"]);
+	});
+	test("a re-asked code counts only its first answer", () => {
+		const view = end([recheck("bk", false), recheck("bk", true)], new Map([["sumatera", 0.5]]));
+		expect(view.recheck?.[0].correct).toBe(0);
+	});
+	test("an unverified answer counts as not recalled", () => {
+		const unverified = review("bk", "code2region", NOW, { correct: null, context: "recheck" })
+			.row as ReviewLog;
+		expect(end([unverified], new Map([["sumatera", 0.5]])).recheck?.[0].correct).toBe(0);
+	});
+});

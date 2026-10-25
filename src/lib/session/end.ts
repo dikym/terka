@@ -81,15 +81,19 @@ function recheckRows(input: EndInput): EndView["recheck"] {
 	for (const row of input.answers)
 		if (row.context === "recheck" && !first.has(row.contentId))
 			first.set(row.contentId, row.correct === true);
-	return [...input.predicted].map(([group, predicted]) => {
+	// A group whose every answer was taken back has nothing to report.
+	return [...input.predicted].flatMap(([group, predicted]) => {
 		const results = [...first].filter(([code]) => groupOf.get(code) === group);
+		if (!results.length) return [];
 		const right = results.filter(([, correct]) => correct).length;
-		return {
-			name: groupName(input.bundle, group),
-			group: uiGroup(group),
-			correct: results.length ? Math.round((right / results.length) * 100) : 0,
-			predicted: Math.round(predicted * 100)
-		};
+		return [
+			{
+				name: groupName(input.bundle, group),
+				group: uiGroup(group),
+				correct: Math.round((right / results.length) * 100),
+				predicted: Math.round(predicted * 100)
+			}
+		];
 	});
 }
 
