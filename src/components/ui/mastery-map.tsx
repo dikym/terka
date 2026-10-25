@@ -1,7 +1,10 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { CodeChip } from "./code-chip";
+import { referenceHref } from "@/lib/view/reference";
+import { Button } from "./button";
+import { CodeChip, CodeLink } from "./code-chip";
 import { GROUP_BG, GROUP_NAME, type GroupId } from "./groups";
 import { Icon, type IconName } from "./icon";
 import { Tooltip as LabelTip } from "./tooltip";
@@ -125,7 +128,7 @@ function Tooltip({ province }: { province: MapProvince }) {
 }
 
 /** The phone's answer to hover: the tapped province's details, under the map. */
-function Selection({ province }: { province: MapProvince }) {
+function Selection({ id, province }: { id: string; province: MapProvince }) {
 	const percent = province.percent ?? 0;
 	return (
 		<div
@@ -160,9 +163,12 @@ function Selection({ province }: { province: MapProvince }) {
 			)}
 			<div className="flex flex-wrap gap-1.5">
 				{province.codes.map((code) => (
-					<CodeChip key={code} code={code} group={province.group} size="touch" />
+					<CodeLink key={code} code={code} group={province.group} size="touch" />
 				))}
 			</div>
+			<Button variant="secondary" size="sm" href={referenceHref("provinsi", id)}>
+				Lihat di Referensi
+			</Button>
 		</div>
 	);
 }
@@ -214,6 +220,7 @@ export function MasteryMap({
 	const [animate, setAnimate] = useState(false);
 	const [tip, setTip] = useState<Tip | null>(null);
 	const [selected, setSelected] = useState<string | null>(null);
+	const router = useRouter();
 	const dragged = useRef(false);
 	// The province under the first finger: the capture below sends the click to the map, not the path.
 	const pressed = useRef<string | null>(null);
@@ -362,8 +369,14 @@ export function MasteryMap({
 					onPointerUp={(event) => {
 						release(event);
 						const id = pressed.current;
-						if (!pointers.current.size && !dragged.current && id && provinces[id])
-							setSelected(id);
+						if (!pointers.current.size && !dragged.current && id && provinces[id]) {
+							// From lg up there is no selection panel: a click opens the province instead.
+							const href = referenceHref("provinsi", id);
+							if (!window.matchMedia("(min-width: 64rem)").matches) setSelected(id);
+							else if (event.button !== 0) return;
+							else if (event.metaKey || event.ctrlKey) window.open(href, "_blank");
+							else router.push(href);
+						}
 					}}
 					onPointerCancel={release}
 					onPointerLeave={(event) => {
@@ -429,7 +442,7 @@ export function MasteryMap({
 				)}
 			</div>
 			{!loading && selected && provinces[selected] && (
-				<Selection province={provinces[selected]} />
+				<Selection id={selected} province={provinces[selected]} />
 			)}
 		</div>
 	);

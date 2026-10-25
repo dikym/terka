@@ -27,6 +27,8 @@ export type Stats = {
 		code: string;
 		group: GroupId;
 		areas: string;
+		/** Every area, for the tooltip on the shortened `areas`. */
+		allAreas: string;
 		status: CodeStatus;
 		right: number;
 		of: number;
@@ -145,6 +147,7 @@ export function statsView(
 			code: region.code,
 			group: uiGroup(region.group),
 			areas: areaSummary(bundle, region),
+			allAreas: areaNames(bundle, region).join(", "),
 			status: statusOf(effectiveCard(state, row.cardId)!),
 			right: row.answered - row.wrong,
 			of: row.answered

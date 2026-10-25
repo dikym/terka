@@ -1,5 +1,5 @@
 import { expect, type Locator, type Page, test } from "@playwright/test";
-import { learnedLog } from "./support/logs";
+import { learnedLog, missedLog } from "./support/logs";
 import { pageErrors } from "./support/pwa";
 import { rows, seed } from "./support/seed";
 
@@ -313,6 +313,24 @@ test("the account menu moves with the arrows and Esc gives focus back", async ({
 	await expect(trigger).toBeFocused();
 });
 
+// A point inside the province's own shape, not just inside its bounding box.
+async function insideProvince(page: Page, id: string) {
+	const path = page.locator(`path#${id}`);
+	await path.waitFor();
+	const find = () =>
+		path.evaluate((element) => {
+			const box = element.getBoundingClientRect();
+			for (let y = 0.05; y < 1; y += 0.1)
+				for (let x = 0.05; x < 1; x += 0.1) {
+					const [px, py] = [box.left + box.width * x, box.top + box.height * y];
+					if (document.elementFromPoint(px, py) === element) return { x: px, y: py };
+				}
+			return null;
+		});
+	// The map settles its layout after the SVG arrives.
+	await expect.poll(find).not.toBeNull();
+	return (await find())!;
+}
 
 test("enter without a highlighted suggestion shows every result", async ({ page }) => {
 	await seen(page);
@@ -385,6 +403,40 @@ test("a code opened from the address is not a sighting", async ({ page }) => {
 	await expect(page.getByText("Pelat Terlihat", { exact: true })).toHaveCount(0);
 });
 
+test("statistics chips and kawasan names open Referensi", async ({ page }) => {
+	await seen(page);
+	await withLearned(page);
+	await page.goto("/statistik");
+	await page
+		.getByRole("link", { name: /^Lihat .+ di Referensi$/ })
+		.first()
+		.click();
+	await expect(page).toHaveURL(/\/referensi\?kode=/);
+	await expect(
+		page.getByText("1 kode ditemukan, diurutkan dari kota lalu kabupaten.")
+	).toBeVisible();
+	await page.goto("/statistik/peta");
+	await page.getByRole("link", { name: "Sumatera", exact: true }).click();
+	await expect(page).toHaveURL(/\/referensi\?kawasan=sumatera/);
+});
+
+test("a map province opens in Referensi, a drag does not", async ({ page }) => {
+	await seen(page);
+	await page.goto("/statistik/peta");
+	const point = await insideProvince(page, "jawa-timur");
+	await page.mouse.move(point.x, point.y);
+	await page.mouse.down();
+	await page.mouse.move(point.x + 80, point.y, { steps: 5 });
+	await page.mouse.up();
+	await expect(page).toHaveURL(/\/statistik\/peta$/);
+	// Off the map, so the hover tooltip does not cover the province.
+	await page.mouse.move(0, 0);
+	const again = await insideProvince(page, "jawa-timur");
+	await page.mouse.click(again.x, again.y);
+	await expect(page).toHaveURL(/\/referensi\?provinsi=jawa-timur/);
+	await expect(page.locator("#referensi-search")).toHaveValue("Jawa Timur");
+});
+
 test("enter right after typing ignores the highlight from the previous query", async ({ page }) => {
 	await seen(page);
 	await page.goto("/referensi");
@@ -395,6 +447,15 @@ test("enter right after typing ignores the highlight from the previous query", a
 	await search(page, "jawa timur");
 	await page.locator("#referensi-search").press("Enter");
 	await expect(page.getByText(/^\d+ kode ditemukan\.$/)).toBeVisible();
+});
+
+test("a right click on a map province stays on the map", async ({ page }) => {
+	await seen(page);
+	await page.goto("/statistik/peta");
+	const point = await insideProvince(page, "jawa-timur");
+	await page.mouse.click(point.x, point.y, { button: "right" });
+	await page.waitForTimeout(500);
+	await expect(page).toHaveURL(/\/statistik\/peta$/);
 });
 
 test("referensi's static page carries the search box before scripts run", async ({ request }) => {
@@ -496,4 +557,34 @@ test("a chip in the region list or Pelat Terlihat opens its code", async ({ page
 	).toBeVisible();
 	await card.getByRole("button", { name: "Buka BK", exact: true }).click();
 	await expect(page).toHaveURL(/\/referensi\?kode=BK$/);
+});
+
+test("a shortened area list in the weakest codes table shows in full on hover", async ({
+	page
+}) => {
+	await seen(page);
+	await page.goto("/beranda");
+	await seed(page, missedLog(), { logVersion: 1000 });
+	await page.goto("/statistik");
+	const cell = page.getByText(/^Kota Medan, Kota Binjai, dan \d+ lainnya$/);
+	await cell.hover();
+	await expect(page.getByRole("tooltip")).toHaveText(/^Kota Medan, Kota Binjai, .+, .+, .+$/);
+});
+
+test("a code link is exactly as wide as its chip", async ({ page }) => {
+	await seen(page);
+	await page.goto("/beranda");
+	await seed(page, missedLog(), { logVersion: 1000 });
+	await page.goto("/referensi");
+	// N becomes a sighting, so Statistik shows it in Pelat Terlihat, a fixed-width grid column.
+	await search(page, "N");
+	await page.waitForTimeout(2000);
+	await page.goto("/statistik");
+	const links = page.getByRole("link", { name: /^Lihat .+ di Referensi$/ });
+	await expect(page.getByRole("link", { name: "Lihat N di Referensi" })).toBeVisible();
+	for (const link of await links.all()) {
+		const outer = (await link.boundingBox())!;
+		const chip = (await link.locator("span").first().boundingBox())!;
+		expect(outer.width).toBeCloseTo(chip.width, 0);
+	}
 });

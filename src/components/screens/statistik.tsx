@@ -1,11 +1,12 @@
 import { Link } from "@/components/ui/app-link";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
-import { CodeChip } from "@/components/ui/code-chip";
+import { CodeLink } from "@/components/ui/code-chip";
 import { Pill, ProgressBar, Skeleton, SkeletonText, skeletonWidth } from "@/components/ui/feedback";
 import { GROUP_BG } from "@/components/ui/groups";
 import { Icon } from "@/components/ui/icon";
 import { type MapProvince, MasteryMap } from "@/components/ui/mastery-map";
+import { Tooltip } from "@/components/ui/tooltip";
 import { type CodeStatus, STATUS_LABEL, type Stats } from "@/lib/view/stats";
 import { SIGHTING_WINDOW_DAYS } from "@/rules";
 import { SyncChip } from "./sync-chip";
@@ -208,11 +209,24 @@ function Weakest({ s, loading }: { s: Stats; loading: boolean }) {
 							{loading ? (
 								<Skeleton className={CHIP_SKELETON} />
 							) : (
-								<CodeChip code={row.code} group={row.group} />
+								<CodeLink code={row.code} group={row.group} />
 							)}
 						</span>
-						<span className="col-span-2 truncate pt-2.5 pb-0.5 text-ink-900 type-body lg:col-span-1 lg:py-2.5 lg:pr-4">
-							{text(loading, row.areas)}
+						<span className="col-span-2 flex min-w-0 pt-2.5 pb-0.5 text-ink-900 type-body lg:col-span-1 lg:py-2.5 lg:pr-4">
+							{loading ? (
+								text(loading, row.areas)
+							) : (
+								// A summary always has more to show; a full list only once it is cut off.
+								<Tooltip
+									content={row.allAreas}
+									align="start"
+									focusable
+									truncatedOnly={row.allAreas === row.areas}
+									className="flex min-w-0"
+								>
+									<span className="truncate">{row.areas}</span>
+								</Tooltip>
+							)}
 						</span>
 						<span className="col-start-2 row-start-2 pt-0.5 pr-3 pb-2.5 lg:col-auto lg:row-auto lg:py-2.5 lg:pr-4">
 							{loading ? (
@@ -395,7 +409,7 @@ function Hard({ s, loading }: { s: Stats; loading: boolean }) {
 						{loading ? (
 							<Skeleton className={CHIP_SKELETON} />
 						) : (
-							<CodeChip code={row.code} group={row.group} />
+							<CodeLink code={row.code} group={row.group} />
 						)}
 						{loading ? (
 							<Skeleton className={PILL_SKELETON} />
@@ -433,7 +447,7 @@ function NameAll({ s, loading }: { s: Stats; loading: boolean }) {
 							{loading ? (
 								<Skeleton className={CHIP_SKELETON} />
 							) : (
-								<CodeChip code={row.code} group={row.group} />
+								<CodeLink code={row.code} group={row.group} />
 							)}
 							<span className="flex min-w-0 flex-col gap-0.5">
 								<span className="font-display text-body-md leading-[1.2] font-semibold text-ink-1000">
@@ -529,7 +543,7 @@ function Seen({ s, loading }: { s: Stats; loading: boolean }) {
 					{loading ? (
 						<Skeleton className={CHIP_SKELETON} />
 					) : (
-						<CodeChip code={row.code} group={row.group} />
+						<CodeLink code={row.code} group={row.group} />
 					)}
 					<ProgressBar
 						value={loading ? 0 : (row.count / max) * 100}
@@ -562,8 +576,9 @@ function Account({ s, loading, onExport }: { s: Stats; loading: boolean; onExpor
 			<div className="flex flex-col">
 				{rows.map(([icon, label], index) => (
 					<Row key={icon} last={index === rows.length - 1}>
-						<div className="flex min-w-0 items-center gap-3">
-							<Icon name={icon} size={16} />
+						<div className="flex min-w-0 items-start gap-3">
+							{/* Level with the first line when the text wraps. */}
+							<Icon name={icon} size={16} className="mt-[3px]" />
 							<span className="text-ink-900 type-body">{text(loading, label)}</span>
 						</div>
 					</Row>
@@ -662,6 +677,7 @@ const SKELETON: Stats = {
 		code,
 		group: "jawa",
 		areas: "Kota Bengkulu, Rejang Lebong, dan 8 lainnya",
+		allAreas: "",
 		status: "learning",
 		right: 5,
 		of: 12
