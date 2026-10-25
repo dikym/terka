@@ -271,7 +271,7 @@ Satu baris per sesi atau putaran latihan. Dipakai untuk Hari Beruntun, Rekor Ter
 | ------------------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------- |
 | `id`                      | uuid, PK              | —                                                                                                                |
 | `user_id`, `device_id`    | uuid, FK              | —                                                                                                                |
-| `kind`                    | text                  | `daily`, `focused`, `challenge`, `kilat`, `placement`, `setrecall`, `special`                                    |
+| `kind`                    | text                  | `daily`, `focused`, `challenge`, `kilat`, `placement`, `setrecall`, `special`, `recheck`                         |
 | `scope_level`, `scope_id` | text; `scope_id` null | Wilayah sesi; `scope_id` null hanya untuk `national`                                                             |
 | `started_at`              | timestamptz           | Waktu klien                                                                                                      |
 | `local_day`               | date                  | Hari lokal menurut batas 00.00 (SRD bagian 4.9)                                                                  |
@@ -299,7 +299,7 @@ Satu baris per jawaban. Ini tabel terpenting di seluruh sistem.
 | `run_id`                       | uuid, FK `practice_runs`, null | FK `(user_id, run_id)` dengan `on delete set null (run_id)`                                                                                                             |
 | `content_id`                   | text                           | `regions[].id` atau `specials[].id`; domain `content_ref`. Mode wajib cocok dengan jenis konten (bagian 4.1)                                                            |
 | `mode`                         | text                           | Salah satu mode kartu di bagian 4.1; domain `card_mode`                                                                                                                 |
-| `context`                      | text                           | `intro`, `daily`, `drill`, `focused`, `challenge`, `kilat`, `placement`, `setrecall`, `special`                                                                         |
+| `context`                      | text                           | `intro`, `daily`, `drill`, `focused`, `challenge`, `kilat`, `placement`, `setrecall`, `special`, `recheck`                                                              |
 | `level`                        | smallint                       | 1–3                                                                                                                                                                     |
 | `level_source`                 | text                           | `auto`, `manual_up`, `manual_down`                                                                                                                                      |
 | `correct`                      | boolean, null                  | Hasil jawaban. Null jika tidak dinilai: `match_type = 'unverified'` atau `question_type = 'intro_read'`; dijaga `CHECK`. Tidak ada nilai penanda                        |

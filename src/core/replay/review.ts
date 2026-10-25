@@ -78,11 +78,19 @@ function recordRunCard(state: AppState, runId: string | null, cardId: string) {
 	state.dailyRuns.delete(runId);
 }
 
+function recordRecheck(state: AppState, row: ReviewLog) {
+	if (state.recheck?.day !== row.localDay)
+		state.recheck = { day: row.localDay, results: new Map() };
+	if (!state.recheck.results.has(row.contentId))
+		state.recheck.results.set(row.contentId, row.correct === true);
+}
+
 export function applyReview(state: AppState, row: ReviewLog, at: number): void {
 	if (state.voided.has(row.id)) return;
 	if (row.context === "placement" && row.runId !== state.placementRunId) return;
 	const cardId = `${row.contentId}::${row.mode}`;
 	recordRunCard(state, row.runId, cardId);
+	if (row.context === "recheck") recordRecheck(state, row);
 	const card = state.cards.get(cardId) ?? newEntry(cardId);
 	state.cards.set(cardId, card);
 	const contentOk = state.content.get(row.contentId) === "ok";

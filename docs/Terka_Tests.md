@@ -189,6 +189,12 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | SR-354 | Batas harian habis; ada langkah belajar dan pasangan aktif | Langkah belajar dan Bandingkan Kode tetap masuk antrean | batas | SRD 4.7 |
 | SR-355 | Jawaban Bandingkan Kode, `setrecall`, dan kode khusus | Tidak mengurangi batas pengulangan harian | batas | SRD 4.7 |
 | SR-356 | Tunggakan 45 pengulangan, ambang penahanan 40 | Materi baru tetap dijeda walau antrean hanya memuat 30 pengulangan | batas | SRD 4.7 |
+| SR-361 | Hari aktif terakhir 7 hari lalu, 45 pengulangan jatuh tempo | Cek Ingatan ditawarkan | normal | SRD 4.7 |
+| SR-362 | Hari aktif terakhir 6 hari lalu, atau tepat 30 jatuh tempo, atau sudah menjawab hari ini | Cek Ingatan tidak ditawarkan | batas | SRD 4.7 |
+| SR-363 | Cek Ingatan dengan 20, 20, dan 3 kartu jatuh tempo di tiga kawasan | Soal dibagi 9, 8, dan 3 | batas | SRD 4.7 |
+| SR-364 | Jawaban Cek Ingatan pada kartu jatuh tempo | Jadwal FSRS berubah sama seperti jawaban sesi harian | normal | SRD 4.7 |
+| SR-365 | Setelah Cek Ingatan, tunggakan masih di atas 30 | Pengulangan kawasan dengan skor terendah didahulukan | normal | SRD 4.7 |
+| SR-366 | Setelah Cek Ingatan, tunggakan tidak lagi melebihi 30 | Urutan kembali mengikuti peluang ingat | batas | SRD 4.7 |
 
 ### 5.6 Perkenalan
 

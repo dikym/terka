@@ -84,6 +84,30 @@ export function dueReviewCount(input: AppState, ctx: SessionContext): number {
 	return dueReviews(state, cardsWhere(state, isGroupA), todayOf(ctx), ctx.now, "daily").length;
 }
 
+// Share answered right per group on the latest Cek Ingatan; groups it did not reach have no score.
+export function recheckScores(state: AppState, bundle: Bundle): Map<string, number> | null {
+	if (!state.recheck) return null;
+	const groupOf = new Map(bundle.regions.map((region) => [region.id, region.group]));
+	const tally = new Map<string, { right: number; asked: number }>();
+	for (const [contentId, right] of state.recheck.results) {
+		const group = groupOf.get(contentId);
+		if (!group) continue;
+		const entry = tally.get(group) ?? { right: 0, asked: 0 };
+		tally.set(group, { right: entry.right + (right ? 1 : 0), asked: entry.asked + 1 });
+	}
+	return new Map([...tally].map(([group, { right, asked }]) => [group, right / asked]));
+}
+
+// While a backlog is over the cap, the groups the recheck found weakest are worked off first.
+function byRecheck(state: AppState, bundle: Bundle, reviews: QueueItem[]): QueueItem[] {
+	const scores = reviews.length > REVIEW_CAP_PER_DAY ? recheckScores(state, bundle) : null;
+	if (!scores) return reviews;
+	const groupOf = new Map(bundle.regions.map((region) => [region.id, region.group]));
+	// Scores run 0–1; an unscored group sorts after every scored one.
+	const score = (item: QueueItem) => scores.get(groupOf.get(contentOf(item.cardId)) ?? "") ?? 2;
+	return [...reviews].sort((a, b) => score(a) - score(b));
+}
+
 function drills(state: AppState, today: string): QueueItem[] {
 	const items: QueueItem[] = [];
 	for (const [key, pair] of [...state.pairs].sort(([a], [b]) => compareText(a, b))) {
@@ -128,7 +152,10 @@ export function dailyQueue(
 	const due = uniqueItems([
 		...dueSteps(cards, ctx.now, "daily"),
 		...drills(state, today),
-		...dueReviews(state, cards, today, ctx.now, "daily").slice(0, reviewsLeft(state, today))
+		...byRecheck(state, bundle, dueReviews(state, cards, today, ctx.now, "daily")).slice(
+			0,
+			reviewsLeft(state, today)
+		)
 	]);
 	const held = priorityLoad(state, today, ctx.tz) > TIERS[tierOn(state, today)].hold;
 	const regions = new Map<string, { region: Region; order: number }>(

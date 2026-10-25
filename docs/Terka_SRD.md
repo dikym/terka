@@ -446,6 +446,8 @@ Tingkat awal diambil dari sesi tes penempatan terbaru yang selesai. Setelah itu 
 
 Aturan penahanan menjaga beban tetap terkendali dalam jangka panjang. Tanpanya, materi baru terus bertambah sementara pengulangan yang tertunda menumpuk, sesi harian naik dari sekitar 10 menit jadi puluhan menit, dan aplikasinya berhenti jadi kebiasaan. Ambang dihitung tepat: antrean sebanyak ambang masih mengizinkan materi baru, satu kartu lebih banyak menahannya.
 
+**Cek Ingatan setelah libur.** Jika hari aktif terakhir paling lambat 7 hari sebelum hari ini dan pengulangan Golongan A yang jatuh tempo (sebelum dibatasi) lebih dari 30, Beranda menawarkan Cek Ingatan sekali untuk periode libur itu; tawaran hilang begitu ada jawaban hari ini. Isinya 20 soal dari kartu Golongan A yang sudah jatuh tempo, dibagi bergiliran ke setiap kawasan yang punya kartu jatuh tempo, mulai dari peluang ingat terendah dan mengikuti aturan kartu terkait; kawasan yang kartunya habis memberikan sisa jatahnya ke kawasan lain. Jawabannya memakai `practice_runs.kind = 'recheck'` dan `context = recheck`, dinilai sebagai pengulangan biasa, dan ikut dihitung dalam batas pengulangan harian. Layar hasil menampilkan, per kawasan, persentase jawaban benar di samping perkiraan peluang ingat sebelum tes (rata-rata R kartu yang diuji saat tes dimulai). Kartu yang tidak diuji tetap memakai jadwal FSRS-nya. Hasil tes hanya mengubah urutan: selama pengulangan jatuh tempo melebihi batas harian, kawasan dengan skor terendah didahulukan, lalu peluang ingat terendah; kawasan tanpa skor menyusul.
+
 ### 4.8 Kartu yang Saling Berkaitan
 
 **Kartu terkait** adalah kartu yang menguji fakta yang sama dari arah atau bentuk berbeda, sehingga menjawab satu kartu bisa membocorkan jawaban kartu lain. Kelompoknya:

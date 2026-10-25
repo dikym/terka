@@ -87,7 +87,7 @@ export type FsrsParams = EventRow & {
 };
 
 export type RunKind =
-	"daily" | "focused" | "challenge" | "kilat" | "placement" | "setrecall" | "special";
+	"daily" | "focused" | "challenge" | "kilat" | "placement" | "setrecall" | "special" | "recheck";
 
 export type PracticeRun = EventRow & {
 	kind: RunKind;

@@ -309,3 +309,39 @@ describe("daily review cap", () => {
 		expect(dailyQueue(state, bundle, SETTINGS, at).held).toBe(true);
 	});
 });
+
+describe("backlog order after a recheck", () => {
+	const mixed = (count: number) => {
+		const bundle = manyRegions(count);
+		const state = settle(fresh(bundle));
+		for (let index = 0; index < count; index++)
+			seedCard(state, `x${index}::code2region`, reviewCard({ stability: 5 + index }));
+		seedCard(state, "dk::code2region", reviewCard({ stability: 500 }));
+		return { bundle, state };
+	};
+
+	test("the weakest group's reviews go first while the backlog is over the cap", () => {
+		const { bundle, state } = mixed(40);
+		state.recheck = {
+			day: TODAY,
+			results: new Map([
+				["dk", false],
+				["x0", true]
+			])
+		};
+		const queued = ids(dailyQueue(state, bundle, SETTINGS, at).items);
+		expect(queued[0]).toBe("dk::code2region");
+	});
+	test("the recheck order lapses once the backlog fits the cap", () => {
+		const { bundle, state } = mixed(20);
+		state.recheck = {
+			day: TODAY,
+			results: new Map([
+				["dk", false],
+				["x0", true]
+			])
+		};
+		const queued = ids(dailyQueue(state, bundle, SETTINGS, at).items);
+		expect(queued.at(-1)).toBe("dk::code2region");
+	});
+});
