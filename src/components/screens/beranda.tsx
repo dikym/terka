@@ -94,7 +94,7 @@ const DONE_TODAY = "Sudah selesai untuk hari ini";
 const TILE =
 	"flex aspect-square flex-col items-start justify-between gap-2 rounded-sm border p-3 text-left font-display text-body-sm leading-[1.2] font-semibold text-balance text-ink-1000";
 const TILE_PRESS =
-	"border-ink-1000 shadow-block transition-[box-shadow,translate] duration-90 ease-out active:translate-0.5 active:shadow-none";
+	"border-ink-1000 shadow-block transition-[box-shadow,translate] duration-90 ease-out focus-visible:shadow-none active:translate-0.5 active:shadow-none";
 
 /** The phone's square shortcut under Mulai belajar; a skeleton keeps its size while loading. */
 function Tile({
