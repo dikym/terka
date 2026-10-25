@@ -205,7 +205,7 @@ Tawaran menulis catatan muncul setelah empat kegagalan pengulangan dan tetap ops
 
 Materi baru dimulai dengan soal pilihan ganda berlabel **Tebak dulu**, lalu jawaban dan daftar daerah yang sesuai ditampilkan. Tebakan dicatat tanpa nilai penjadwalan atau pasangan tertukar. Jika pilihan yang sah tidak cukup, tampilkan informasi tanpa tebakan.
 
-Perkenalan menggunakan kuota materi baru. Pengulangan pertama tersedia setelah satu menit, kemudian dijalankan melalui sesi berikutnya. Label **Tebak dulu** hanya digunakan pada Perkenalan.
+Perkenalan menggunakan kuota materi baru. Kode itu ditanyakan sekali lagi di sesi yang sama; setelah itu tidak jatuh tempo lagi hari itu. Label **Tebak dulu** hanya digunakan pada Perkenalan.
 
 ### 6.13 Tes Penempatan
 
