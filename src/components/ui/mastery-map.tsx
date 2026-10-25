@@ -198,9 +198,6 @@ function ZoomButton({
 	);
 }
 
-/** Selected on a phone before the first tap, so the panel under the map is never empty. */
-const FIRST_SELECTED = "nusa-tenggara-barat";
-
 export function MasteryMap({
 	provinces,
 	loading = false,
@@ -216,7 +213,7 @@ export function MasteryMap({
 	const [view, setView] = useState<View>({ k: 1, x: 0, y: 0 });
 	const [animate, setAnimate] = useState(false);
 	const [tip, setTip] = useState<Tip | null>(null);
-	const [selected, setSelected] = useState(FIRST_SELECTED);
+	const [selected, setSelected] = useState<string | null>(null);
 	const dragged = useRef(false);
 	// The province under the first finger: the capture below sends the click to the map, not the path.
 	const pressed = useRef<string | null>(null);
@@ -381,7 +378,7 @@ export function MasteryMap({
 						dangerouslySetInnerHTML={{ __html: markup }}
 					/>
 					{/* A stroke on the province itself is half hidden under the neighbours painted after it. */}
-					{!loading && provinces[selected] && (
+					{!loading && selected && provinces[selected] && (
 						<g style={layerStyle} className="pointer-events-none lg:hidden">
 							<path
 								d={outlines.get(selected)}
@@ -431,7 +428,9 @@ export function MasteryMap({
 					</div>
 				)}
 			</div>
-			{!loading && provinces[selected] && <Selection province={provinces[selected]} />}
+			{!loading && selected && provinces[selected] && (
+				<Selection province={provinces[selected]} />
+			)}
 		</div>
 	);
 }
