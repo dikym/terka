@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { Link } from "@/components/ui/app-link";
 import { Icon } from "@/components/ui/icon";
 import { Wordmark } from "@/components/ui/plate";
+import { Tooltip } from "@/components/ui/tooltip";
 import { useReady, useSyncLabel } from "@/lib/app/use-runtime";
 
 const ICON_BUTTON =
@@ -24,13 +25,17 @@ export function MobileHeader() {
 			<Wordmark />
 			<span className="-mr-2.5 inline-flex items-center">
 				{SYNC_SCREENS.includes(pathname) && (
-					<button type="button" aria-label={label} title={label} className={ICON_BUTTON}>
-						<Icon name="cloud-check" />
-					</button>
+					<Tooltip content={label}>
+						<button type="button" aria-label={label} className={ICON_BUTTON}>
+							<Icon name="cloud-check" />
+						</button>
+					</Tooltip>
 				)}
-				<Link href="/setelan" aria-label="Setelan" title="Setelan" className={ICON_BUTTON}>
-					<Icon name="settings" />
-				</Link>
+				<Tooltip content="Setelan">
+					<Link href="/setelan" aria-label="Setelan" className={ICON_BUTTON}>
+						<Icon name="settings" />
+					</Link>
+				</Tooltip>
 			</span>
 		</header>
 	);
