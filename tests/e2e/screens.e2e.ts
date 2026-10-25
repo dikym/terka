@@ -102,6 +102,18 @@ test("a session runs to its summary from the keyboard", async ({ page }) => {
 	await expect(challenge).not.toHaveText(shown ?? "");
 });
 
+test("a Mode Kilat answer moves on without a next button", async ({ page }) => {
+	await seen(page);
+	await withLearned(page);
+	await page.goto("/sesi?mode=kilat");
+	await page.getByRole("heading", { name: "Mode Kilat" }).waitFor();
+	await page.keyboard.press("Enter");
+	const first = await page.getByRole("heading", { level: 2 }).textContent();
+	await answerOne(page);
+	expect(await page.getByRole("button", { name: "Lanjut" }).count()).toBe(0);
+	await expect(page.getByRole("heading", { level: 2 })).not.toHaveText(first ?? "");
+});
+
 test("a new learner's practice modes explain that nothing is learned yet", async ({ page }) => {
 	await seen(page);
 	await page.goto("/sesi?mode=kilat");
