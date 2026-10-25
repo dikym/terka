@@ -31,7 +31,7 @@ describe("introduction and learning steps", () => {
 		expect(state.cards.get("dk::code2region")).toMatchObject({
 			state: "learning",
 			step: 1,
-			due: NOW + MINUTE,
+			due: NOW,
 			stability: 0,
 			reps: 0
 		});
@@ -40,22 +40,21 @@ describe("introduction and learning steps", () => {
 		expect(state.narrow.size).toBe(0);
 		expect(state.introDay.get("dk")).toBe("2026-09-21");
 	});
-	test("two steps then FSRS", () => {
+	test("one step then FSRS", () => {
 		const state = stateOf([
 			intro("dk", NOW),
-			review("dk", "code2region", NOW + MINUTE, { level: 1, questionType: "choice" }),
-			review("dk", "code2region", NOW + 11 * MINUTE, { level: 1, questionType: "choice" })
+			review("dk", "code2region", NOW + MINUTE, { level: 1, questionType: "choice" })
 		]);
 		const card = state.cards.get("dk::code2region")!;
 		expect(card.state).toBe("review");
 		expect(card.due).toBeGreaterThan(NOW + DAY / 2);
 	});
-	test("a step answered the next day is still a learning step", () => {
+	test("a step answered the next day settles to review", () => {
 		const state = stateOf([
 			intro("dk", NOW),
 			review("dk", "code2region", NOW + DAY, { level: 1, questionType: "choice" })
 		]);
-		expect(state.cards.get("dk::code2region")).toMatchObject({ state: "learning", step: 2 });
+		expect(state.cards.get("dk::code2region")).toMatchObject({ state: "review", step: 0 });
 	});
 	test("a second introduction of the same card from another device is only recorded", () => {
 		const state = stateOf([
@@ -82,7 +81,7 @@ describe("which answers change the schedule", () => {
 		expect(state.cards.get("dk::code2region")).toMatchObject({
 			state: "relearning",
 			lapses: 1,
-			due: NOW + HOUR + 10 * MINUTE
+			due: NOW + HOUR
 		});
 	});
 	test("one scheduled answer per related group per day", () => {
@@ -104,7 +103,7 @@ describe("which answers change the schedule", () => {
 			state,
 			review("dk", "code2region", NOW + 2 * HOUR, { level: 1, questionType: "choice" })
 		);
-		expect(state.cards.get("dk::code2region")).toMatchObject({ state: "learning", step: 2 });
+		expect(state.cards.get("dk::code2region")).toMatchObject({ state: "review", step: 0 });
 		expect(state.cards.get("dk::region2code")!.due).toBeGreaterThan(NOW + DAY);
 	});
 	test("challenge and Kilat never change the schedule but still record confused pairs", () => {
@@ -351,8 +350,8 @@ describe("content overlay during replay", () => {
 		expect(state.cards.get("dk::code2region")).toMatchObject({ state: "learning", step: 1 });
 		expect(effectiveCard(state, "dk::code2region")?.suspension?.reason).toBe("missing-data");
 		expect(stateOf(events).cards.get("dk::code2region")).toMatchObject({
-			state: "learning",
-			step: 2
+			state: "review",
+			step: 0
 		});
 	});
 });

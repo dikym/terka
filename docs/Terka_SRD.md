@@ -398,7 +398,7 @@ Konsekuensinya untuk optimasi parameter (bagian 4.12): parameter default FSRS di
 
 ### 4.6 Jarak Pengulangan dan Tahap Belajar
 
-**Tahap belajar.** Setelah Perkenalan, pengulangan pertama tersedia satu menit kemudian. Sesudah langkah pertama selesai, langkah berikutnya dijadwalkan sepuluh menit kemudian. Setelah kedua langkah selesai, jadwal mengikuti FSRS. Langkah yang baru dijadwalkan dikerjakan pada sesi berikutnya; sesi berjalan tidak menunggu atau menambah soal. Jika kartu `review` atau `mature` dijawab salah, kartu masuk `relearning` dengan pengulangan sepuluh menit kemudian. Langkah yang terlambat dikerjakan tetap dinilai sebagai langkah belajar, bukan pengulangan biasa.
+**Tahap belajar.** Satu langkah di dalam sesi, lalu FSRS; kartu tidak pernah jatuh tempo lagi pada hari yang sama. Setelah Perkenalan, kartu langsung waktunya dikerjakan (`due` = saat Perkenalan), sehingga langkah itu dikerjakan di sesi berikutnya jika sesi berjalan sudah selesai. Satu jawaban bernilai pada kartu `learning` atau `relearning`, benar atau salah, menyelesaikan langkah: kartu menjadi `review` dengan `due` tidak lebih awal dari awal hari lokal berikutnya, lalu jadwal mengikuti FSRS. Jika kartu `review` atau `mature` dijawab salah, kartu masuk `relearning` dan langsung waktunya dikerjakan. Langkah yang terlambat dikerjakan tetap dinilai sebagai langkah belajar, bukan pengulangan biasa.
 
 **Fuzz dengan pemerataan jadwal.** Untuk interval hasil hitungan minimal 3 hari, sistem menyusun rentang kandidat ±5% dari interval itu, dibulatkan ke hari. Dari rentang itu dipilih hari dengan jumlah kartu yang dijadwalkan untuk diulang paling sedikit. Jika beberapa hari seri, pemilihnya PRNG yang di-seed dari `id` jawaban. Interval di bawah 3 hari tidak digeser.
 
@@ -417,7 +417,7 @@ Hanya Golongan A masuk antrean harian. Sesi `setrecall` berjalan terpisah. Jika 
 
 **Mengapa peluang ingat, bukan interval.** Interval terpendek adalah proksi yang lemah. Kartu berinterval 3 hari yang terlambat sehari dan kartu berinterval 30 hari yang terlambat 20 hari sama-sama waktunya diulang. Tetapi peluang ingat kartu kedua jauh lebih kecil. R menggabungkan interval dan keterlambatan jadi satu angka. Jika tidak ada pengulangan tertunda, urutan ini hampir tidak berpengaruh. Bedanya terasa setelah beberapa hari tidak berlatih: jika sesi dihentikan sebelum antrean habis, kartu yang tertinggal adalah kartu yang masih paling kuat.
 
-**Perkenalan.** Materi baru tidak langsung dinilai. Jika empat pilihan sah tidak dapat dibentuk, gunakan intro_read sesuai 2.8; menutup soal informasi itu memulai belajar awal tanpa tebakan. Tayangan pertamanya berupa soal Level 1 berlabel **Tebak dulu**. Apa pun jawabannya, sistem langsung menampilkan jawaban yang benar beserta daftar kab/kota kode itu. Tebakan ini dicatat dengan `context: intro`, tetapi tidak menghasilkan nilai penjadwalan, tidak masuk persentil, dan tidak dicatat sebagai pasangan tertukar. Kartu lalu jadi `learning`, dan nilai penjadwalan FSRS pertama datang dari langkah 1 menit.
+**Perkenalan.** Materi baru tidak langsung dinilai. Jika empat pilihan sah tidak dapat dibentuk, gunakan intro_read sesuai 2.8; menutup soal informasi itu memulai belajar awal tanpa tebakan. Tayangan pertamanya berupa soal Level 1 berlabel **Tebak dulu**. Apa pun jawabannya, sistem langsung menampilkan jawaban yang benar beserta daftar kab/kota kode itu. Tebakan ini dicatat dengan `context: intro`, tetapi tidak menghasilkan nilai penjadwalan, tidak masuk persentil, dan tidak dicatat sebagai pasangan tertukar. Kartu lalu jadi `learning`, dan nilai penjadwalan FSRS pertama datang dari langkah belajar di dalam sesi.
 
 Dua alasan di balik aturan ini:
 
@@ -428,14 +428,14 @@ Perkenalan memakai kuota materi baru. Undo pada Perkenalan mengembalikan kartu k
 
 **Batas per tingkat.** Batas materi baru harian dan ambang penahanan mengikuti tingkat hasil tes penempatan (bagian 4.13). Pengguna yang melewati tes memakai batas Menengah.
 
-Satu materi baru Golongan A diperkirakan memerlukan tiga interaksi: Perkenalan sekitar 15 detik, lalu dua langkah belajar masing-masing sekitar 10 detik. Total waktu aktifnya sekitar 35 detik, tersebar dalam satu atau beberapa sesi. Waktu menunggu pengulangan tidak dihitung. Untuk perhitungan beban harian, satu pengulangan biasa diperkirakan 5 detik. Pratinjau sesi memakai perhitungan yang lebih rinci dalam bagian 4.14.
+Satu materi baru Golongan A diperkirakan memerlukan tiga interaksi: Perkenalan sekitar 15 detik, lalu satu langkah belajar sekitar 10 detik. Total waktu aktifnya sekitar 25 detik, tersebar dalam satu atau beberapa sesi. Waktu menunggu pengulangan tidak dihitung. Untuk perhitungan beban harian, satu pengulangan biasa diperkirakan 5 detik. Pratinjau sesi memakai perhitungan yang lebih rinci dalam bagian 4.14.
 
 | Tingkat  | Materi baru per hari | Ambang penahanan | Perkiraan waktu aktif                    |
 | -------- | -------------------- | ---------------- | ---------------------------------------- |
-| Pemula   | 8                    | 40               | 8 × 35 + 40 × 5 = 480 detik ≈ 8,0 menit  |
-| Menengah | 10                   | 40               | 10 × 35 + 40 × 5 = 550 detik ≈ 9,2 menit |
-| Mahir    | 12                   | 32               | 12 × 35 + 32 × 5 = 580 detik ≈ 9,7 menit |
-| Ahli     | 13                   | 28               | 13 × 35 + 28 × 5 = 595 detik ≈ 9,9 menit |
+| Pemula   | 8                    | 40               | 8 × 25 + 40 × 5 = 400 detik ≈ 6,7 menit  |
+| Menengah | 10                   | 40               | 10 × 25 + 40 × 5 = 450 detik ≈ 7,5 menit |
+| Mahir    | 12                   | 32               | 12 × 25 + 32 × 5 = 460 detik ≈ 7,7 menit |
+| Ahli     | 13                   | 28               | 13 × 25 + 28 × 5 = 465 detik ≈ 7,8 menit |
 
 Tabel tersebut menempatkan perkiraan waktu aktif setiap tingkat di bawah 10 menit per hari. Angka ini merupakan target untuk pola belajar yang stabil, bukan batas yang menghentikan sesi. Jawaban yang lebih lambat, belajar ulang, dan pengulangan tertunda dapat menambah durasi. Sesi Sebutkan sebanyak mungkin dihitung terpisah. Tingkat yang lebih tinggi memperoleh kuota materi baru lebih besar dengan ambang penahanan lebih rendah, sehingga materi baru lebih cepat dijeda saat pengulangan menumpuk.
 

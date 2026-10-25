@@ -7,8 +7,7 @@ import { DAY, intro, MINUTE, NOW, review, ruleBundle, run, voidOf } from "../rep
 const choice = { level: 1, questionType: "choice" } as const;
 const learned = (): LearningEvent[] => [
 	intro("dk", NOW),
-	review("dk", "code2region", NOW + MINUTE, choice),
-	review("dk", "code2region", NOW + 11 * MINUTE, choice)
+	review("dk", "code2region", NOW + MINUTE, choice)
 ];
 const counted = (events: LearningEvent[]) => countedAnswers(events, ruleBundle())!;
 
@@ -16,7 +15,7 @@ describe("countedAnswers", () => {
 	test("collects the answers that updated a schedule, not the introduction", () => {
 		const events = learned();
 		const result = counted(events);
-		expect(result.map((answer) => answer.id)).toEqual([events[1].row.id, events[2].row.id]);
+		expect(result.map((answer) => answer.id)).toEqual([events[1].row.id]);
 		expect(result[0]).toMatchObject({
 			cardId: "dk::code2region",
 			at: NOW + MINUTE,
@@ -30,7 +29,7 @@ describe("countedAnswers", () => {
 
 	test("marks an answer on a card that was already in review as settled", () => {
 		const result = counted([...learned(), review("dk", "code2region", NOW + 30 * DAY, choice)]);
-		expect(result.map((answer) => answer.settled)).toEqual([false, false, true]);
+		expect(result.map((answer) => answer.settled)).toEqual([false, true]);
 	});
 
 	test("skips challenge and kilat answers", () => {
@@ -39,12 +38,12 @@ describe("countedAnswers", () => {
 			review("dk", "code2region", NOW + 30 * DAY, { ...choice, context: "challenge" }),
 			review("dk", "code2region", NOW + 30 * DAY + MINUTE, { ...choice, context: "kilat" })
 		]);
-		expect(result).toHaveLength(2);
+		expect(result).toHaveLength(1);
 	});
 
 	test("skips a voided answer", () => {
 		const events = learned();
-		expect(counted([...events, voidOf(events[2], NOW + 12 * MINUTE)])).toHaveLength(1);
+		expect(counted([...events, voidOf(events[1], NOW + 12 * MINUTE)])).toHaveLength(0);
 	});
 
 	test("skips a focused answer on a card that is not due yet", () => {
@@ -52,7 +51,7 @@ describe("countedAnswers", () => {
 			...learned(),
 			review("dk", "code2region", NOW + 12 * MINUTE, { ...choice, context: "focused" })
 		]);
-		expect(result).toHaveLength(2);
+		expect(result).toHaveLength(1);
 	});
 
 	test("skips placement answers", () => {

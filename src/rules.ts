@@ -1,8 +1,6 @@
 // Every behavior number lives here once; the app, the content build and the tests read it from this module.
 export const TARGET_RETENTION = 0.9;
 
-export const FIRST_STEP_MS = 60_000;
-export const SECOND_STEP_MS = 600_000;
 export const MATURE_INTERVAL_DAYS = 21;
 export const LEECH_LAPSES = 6;
 export const SUSPEND_LAPSES = 8;
@@ -32,7 +30,7 @@ export function typoThreshold(length: number): number {
 }
 
 // Raise on any change to ts-fsrs, GRADE_RULES_VERSION or queue rules; clients then replay in full.
-export const ENGINE_VERSION = 2;
+export const ENGINE_VERSION = 3;
 
 export const TIERS = {
 	pemula: { newPerDay: 8, hold: 40 },
