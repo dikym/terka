@@ -129,7 +129,7 @@ Soal kode → daerah menerima salah satu kabupaten/kota yang sah. Nama provinsi 
 | ---------------- | --------------------------------------------------------------------------------------------------------------------- | ----- |
 | Tebak daerah     | Menyebut satu kab/kota yang memakai kode; pilihan ganda saat tahap awal                                               | 1–3   |
 | Tebak kode       | Menyebut kode dari nama kab/kota lengkap; pilihan ganda saat tahap awal                                               | 1–3   |
-| Benar atau salah | Memeriksa pasangan kode dan daerah dalam 2 detik                                                                      | 1     |
+| Benar atau salah | Memeriksa pasangan kode dan daerah dalam 5 detik                                                                      | 1     |
 | Mana yang bukan  | Memilih daerah yang tidak memakai kode soal                                                                           | 1     |
 | Tebak berwaktu   | Bentuk Level 3 Tebak daerah dan Tebak kode: menjawab dengan batas waktu input pertama (SRD 4.4); bukan kartu terpisah | 3     |
 

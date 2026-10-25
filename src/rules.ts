@@ -11,7 +11,7 @@ export const FUZZ_MIN_DAYS = 3;
 export const FUZZ_RATIO = 0.05;
 
 export const TIMED_LIMIT_MS = 8_000;
-export const TRUE_FALSE_LIMIT_MS = 2_000;
+export const TRUE_FALSE_LIMIT_MS = 5_000;
 export const PLACEMENT_LIMIT_MS = 15_000;
 export const PLACEMENT_FAST_MS = 3_000;
 export const PLACEMENT_STAGE_SIZES = { common: 8, medium: 10, rare: 10 } as const;

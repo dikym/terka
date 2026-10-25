@@ -45,13 +45,13 @@ describe("session cards", () => {
 		expect(result.timer).toEqual({ seconds: 8, kind: "start" });
 	});
 
-	test("true or false gives two seconds to answer and marks its right choice", () => {
+	test("true or false gives five seconds to answer and marks its right choice", () => {
 		const result = card(newEntry("bk::code2region") as CardEntry, "daily", {
 			format: "truefalse",
 			level: 1
 		});
 		expect(result.form).toBe("benarSalah");
-		expect(result.timer).toEqual({ seconds: 2, kind: "answer" });
+		expect(result.timer).toEqual({ seconds: 5, kind: "answer" });
 		expect(["Benar", "Salah"]).toContain(result.answer);
 	});
 
