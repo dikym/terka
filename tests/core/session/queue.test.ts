@@ -34,7 +34,8 @@ describe("daily queue order", () => {
 			occurrences: [],
 			flagged: true,
 			cleared: false,
-			drillStreak: 0
+			drillStreak: 0,
+			drillDay: null
 		});
 		seedCard(state, "bk::code2region", reviewCard());
 		const { items } = dailyQueue(state, bundleOf(), SETTINGS, at);
@@ -96,6 +97,19 @@ describe("daily queue order", () => {
 		state.content.set("bk", "confidence");
 		expect(dailyQueue(state, bundleOf(), SETTINGS, at).items).toEqual([]);
 	});
+	test("a pair drilled today is not drilled again today", () => {
+		const state = fresh();
+		seedCard(state, "be::code2region", reviewCard({ due: NOW + 5 * DAY }));
+		state.pairs.set("be>bd", {
+			occurrences: [],
+			flagged: true,
+			cleared: false,
+			drillStreak: 1,
+			drillDay: TODAY
+		});
+		const { items } = dailyQueue(state, bundleOf(), SETTINGS, at);
+		expect(items.some((item) => item.slot === "drill")).toBe(false);
+	});
 	test("a flagged pair with a special or unknown target is skipped", () => {
 		const state = settle(fresh());
 		seedCard(state, "bk::code2region", reviewCard({ due: NOW + 5 * DAY }));
@@ -103,13 +117,15 @@ describe("daily queue order", () => {
 			occurrences: [],
 			flagged: true,
 			cleared: false,
-			drillStreak: 0
+			drillStreak: 0,
+			drillDay: null
 		});
 		state.pairs.set("bk>zz", {
 			occurrences: [],
 			flagged: true,
 			cleared: false,
-			drillStreak: 0
+			drillStreak: 0,
+			drillDay: null
 		});
 		expect(dailyQueue(state, bundleOf(), SETTINGS, at).items).toEqual([]);
 	});

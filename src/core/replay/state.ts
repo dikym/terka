@@ -21,6 +21,7 @@ export type PairState = {
 	flagged: boolean;
 	cleared: boolean;
 	drillStreak: number;
+	drillDay: string | null;
 };
 export type DayStats = { tier: Tier; reviews: number; reviewsCorrect: number; held: boolean };
 export type Diagnostic = { eventId: string; reason: string };

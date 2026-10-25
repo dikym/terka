@@ -48,6 +48,25 @@ describe("home view", () => {
 		expect(home.scope.rows[1].codes).toEqual(["DR", "EA"]);
 	});
 
+	test("flagged pairs carry their drill count", () => {
+		const state = stateOf([]);
+		state.pairs.set("be>bd", {
+			occurrences: [],
+			flagged: true,
+			cleared: false,
+			drillStreak: 3,
+			drillDay: null
+		});
+		const home = homeView(
+			state,
+			ruleBundle(),
+			SETTINGS,
+			ctxAt(NOW),
+			"Tersimpan di perangkat ini"
+		);
+		expect(home.pairs).toMatchObject([{ streak: 3 }]);
+	});
+
 	test("the countdown runs to the next midnight", () => {
 		expect(view([]).challengeResetAt - NOW).toBe(DAY);
 	});

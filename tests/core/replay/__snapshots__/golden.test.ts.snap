@@ -1583,6 +1583,7 @@ exports[`the golden log replays to the recorded state 1`] = `
       "bk>bb",
       {
         "cleared": false,
+        "drillDay": null,
         "drillStreak": 0,
         "flagged": false,
         "occurrences": [

@@ -243,6 +243,8 @@ Pratinjau memakai angka, bukan kalimat panjang (aturan 8 di bagian 2 dokumen ini
 | Setelah benar             | **Benar**                                        |
 | Pasangan tidak lagi aktif | **Latihan khusus untuk pasangan ini selesai.**   |
 
+Di Beranda, setiap pasangan memakai penghitung kecil **{hariBenar}/5**, misalnya **3/5**: jumlah hari berbeda drill pertamanya benar.
+
 Kalimat pengantar wajib menyebut kedua kode secara eksplisit. Jangan memakai label abstrak seperti "pasangan kebingungan" atau istilah teknis dari model data.
 
 ### 3.8 Latihan Terfokus

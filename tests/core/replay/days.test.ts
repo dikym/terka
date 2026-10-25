@@ -95,7 +95,8 @@ describe("priority load and hold", () => {
 			occurrences: [],
 			flagged: true,
 			cleared: false,
-			drillStreak: 0
+			drillStreak: 0,
+			drillDay: null
 		});
 		expect(priorityLoad(state, TODAY, WITA)).toBe(1);
 		seedCard(state, "bd::code2region", { ...reviewCard(), state: "suspended" });

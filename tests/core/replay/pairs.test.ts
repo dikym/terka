@@ -17,22 +17,37 @@ describe("confused pairs", () => {
 		for (const offset of [0, 15, 30]) recordConfusion(state, "be", "bd", day(offset));
 		expect(state.pairs.get("be>bd")?.flagged).toBe(false);
 	});
-	test("five correct drills in a row clear the flag, and two new occurrences flag it again", () => {
+	test("five right drills on five days clear the pair, and two new occurrences flag it again", () => {
 		const state = fresh();
 		for (const offset of [0, 1, 2]) recordConfusion(state, "be", "bd", day(offset));
-		for (let index = 0; index < 5; index++) recordDrill(state, "be", "bd", true);
+		for (let index = 0; index < 5; index++)
+			recordDrill(state, "be", "bd", true, day(3 + index));
 		expect(state.pairs.get("be>bd")).toMatchObject({ flagged: false, cleared: true });
-		recordConfusion(state, "be", "bd", day(3));
+		recordConfusion(state, "be", "bd", day(9));
 		expect(state.pairs.get("be>bd")?.flagged).toBe(false);
-		recordConfusion(state, "be", "bd", day(4));
+		recordConfusion(state, "be", "bd", day(10));
 		expect(state.pairs.get("be>bd")?.flagged).toBe(true);
 	});
 	test("a wrong drill resets the correct-drill count", () => {
 		const state = fresh();
 		for (const offset of [0, 1, 2]) recordConfusion(state, "be", "bd", day(offset));
-		for (let index = 0; index < 4; index++) recordDrill(state, "be", "bd", true);
-		recordDrill(state, "be", "bd", false);
+		for (let index = 0; index < 4; index++)
+			recordDrill(state, "be", "bd", true, day(3 + index));
+		recordDrill(state, "be", "bd", false, day(7));
 		expect(state.pairs.get("be>bd")).toMatchObject({ flagged: true, drillStreak: 0 });
+	});
+	test("only the first drill of a day counts", () => {
+		const state = fresh();
+		for (const offset of [0, 1, 2]) recordConfusion(state, "be", "bd", day(offset));
+		recordDrill(state, "be", "bd", true, day(3));
+		recordDrill(state, "be", "bd", true, day(3));
+		expect(state.pairs.get("be>bd")?.drillStreak).toBe(1);
+	});
+	test("a day without a drill keeps the count", () => {
+		const state = fresh();
+		for (const offset of [0, 1, 2]) recordConfusion(state, "be", "bd", day(offset));
+		for (const offset of [3, 4, 8]) recordDrill(state, "be", "bd", true, day(offset));
+		expect(state.pairs.get("be>bd")?.drillStreak).toBe(3);
 	});
 	test("pairs are directed", () => {
 		const state = fresh();
