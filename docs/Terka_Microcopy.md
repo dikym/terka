@@ -198,8 +198,8 @@ Tampilkan dampak perubahan level pada kedua arah. **Dihitung penuh** berarti has
 | Keterangan                   | **Sekitar {menit} menit · maksimal {batas} soal · tanpa penilaian per soal**                                             |
 | Tombol                       | **Mulai tes** · **Lewati, mulai dari awal**                                                                              |
 | Tombol lewati soal           | **Tidak tahu**                                                                                                           |
-| Hasil                        | **Tingkat: Menengah · sekitar {persentase}% kode sudah dikenal**                                                         |
-| Rincian                      | **{jumlahBenarTanpaGangguan} kode langsung masuk pengulangan. Materi lainnya dibuka bertahap, hingga {batas} per hari.** |
+| Hasil                        | **Tingkat: Menengah** |
+| Rincian                      | **Sekitar {persentase}% kode sudah dikenal. {jumlahBenarTanpaGangguan} kode langsung masuk pengulangan. Materi lainnya dibuka bertahap, hingga {batas} per hari.** |
 | Saran Cakupan                | **Cakupan yang disarankan: Kawasan Sulawesi**                                                                            |
 | Tombol saran                 | **Pakai saran ini** · **Pilih sendiri**                                                                                  |
 | Ulangi dari Statistik        | **Ulangi tes penempatan** — hanya tampil selama belum ada jawaban terhitung di luar tes, dari mode mana pun              |
