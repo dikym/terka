@@ -4,6 +4,7 @@ import type { Bundle } from "@/core/content/schema";
 import type { RunKind } from "@/core/log/events";
 import { inScope, NATIONAL, type Scope } from "@/core/questions/distractors";
 import { streak, streakDays } from "@/core/replay/streak";
+import type { QuestionContext } from "@/core/questions/question";
 import type { AppState } from "@/core/replay/state";
 import { effectiveCard } from "@/core/replay/universe";
 import {
@@ -11,6 +12,7 @@ import {
 	contentOf,
 	isGroupA,
 	prepare,
+	STEPS,
 	type QueueItem,
 	type SessionContext,
 	type SessionSettings,
@@ -204,6 +206,30 @@ function ready(
 		held,
 		estimatedMs: core.estimatedMs
 	};
+}
+
+// Modes whose answers schedule cards ask a fresh or lapsed card once more before they end.
+const REASK_CONTEXT: Partial<Record<Mode, QuestionContext>> = {
+	hariIni: "daily",
+	terfokus: "focused",
+	diplomat: "special",
+	sebutkan: "setrecall"
+};
+
+export function reaskCard(
+	input: PlanInput,
+	mode: Mode,
+	cardId: string,
+	scope: Scope,
+	serial: number
+): SessionCard | null {
+	const context = REASK_CONTEXT[mode];
+	if (!context) return null;
+	const state = prepare(input.state, input.ctx);
+	const entry = effectiveCard(state, cardId);
+	if (!entry || !STEPS.has(entry.state) || entry.due > input.ctx.now) return null;
+	const [card] = cardsOf(input, state, [{ cardId, context, slot: "step" }], mode, scope);
+	return { ...card, id: `${cardId}#r${serial}` };
 }
 
 export function planSession(mode: Mode, input: PlanInput, params: PlanParams): Plan {
