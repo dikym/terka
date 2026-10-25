@@ -1,7 +1,7 @@
 import { Link } from "@/components/ui/app-link";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
-import { CodeChip } from "@/components/ui/code-chip";
+import { CodeLink } from "@/components/ui/code-chip";
 import { ProgressBar, Skeleton, SkeletonText } from "@/components/ui/feedback";
 import { GROUP_BG } from "@/components/ui/groups";
 import { Icon } from "@/components/ui/icon";
@@ -172,7 +172,7 @@ function PhoneActions({
 			)}
 			<div className="grid grid-cols-3 gap-2">
 				{challengeDone && !loading ? (
-					<Tooltip content={DONE_TODAY} focusable className="flex">
+					<Tooltip content={DONE_TODAY} className="flex">
 						<button
 							type="button"
 							disabled
@@ -219,7 +219,7 @@ function PhoneActions({
 function ChallengeButton({ done, countdown }: { done: boolean; countdown: ReactNode }) {
 	if (done)
 		return (
-			<Tooltip content={DONE_TODAY} focusable className="flex">
+			<Tooltip content={DONE_TODAY} className="flex">
 				<button
 					type="button"
 					disabled
@@ -341,7 +341,7 @@ export function Beranda({ data }: { data: Home | null }) {
 								{(d?.pairs ?? SKELETON_HOME.pairs).map((pair) => (
 									<span key={pair.a} className="inline-flex items-center gap-1.5">
 										{d ? (
-											<CodeChip code={pair.a} group={pair.group} />
+											<CodeLink code={pair.a} group={pair.group} />
 										) : (
 											<Skeleton className={CHIP_SKELETON} />
 										)}
@@ -351,7 +351,7 @@ export function Beranda({ data }: { data: Home | null }) {
 											color={d ? "bg-ink-500" : "bg-ink-100"}
 										/>
 										{d ? (
-											<CodeChip code={pair.b} group={pair.group} />
+											<CodeLink code={pair.b} group={pair.group} />
 										) : (
 											<Skeleton className={CHIP_SKELETON} />
 										)}
@@ -392,7 +392,7 @@ export function Beranda({ data }: { data: Home | null }) {
 									<span className="col-span-full row-start-2 flex gap-1 lg:col-auto lg:row-auto">
 										{row.codes.map((code) =>
 											d ? (
-												<CodeChip
+												<CodeLink
 													key={code}
 													code={code}
 													group={d.scope.group ?? "jawa"}
