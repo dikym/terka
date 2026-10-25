@@ -52,6 +52,7 @@ export const PAIR_THRESHOLD = 3;
 export const PAIR_RETHRESHOLD = 2;
 export const DRILL_CLEAR_STREAK = 5;
 export const REVIEW_CAP_PER_DAY = 30;
+export const REASK_GAP = 4;
 
 export const TIER_WINDOW_DAYS = 30;
 export const TIER_MIN_REVIEWS = 200;

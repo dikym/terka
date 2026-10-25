@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { buildDictionary } from "../../../src/core/answers/dictionary";
 import type { LearningEvent } from "../../../src/core/log/events";
-import { kilatCards, type PlanInput, planSession } from "../../../src/lib/session/modes";
+import { kilatCards, type PlanInput, planSession, reaskCard } from "../../../src/lib/session/modes";
 import { DAY, intro, NOW, review, ruleBundle, run, stateOf } from "../../core/replay/fixtures";
 import { ctxAt, SETTINGS } from "../../core/session/fixtures";
 
@@ -68,5 +68,43 @@ describe("planning a session", () => {
 	test("the placement test starts without a preview", () => {
 		const plan = planSession("penempatan", input(), NO_PARAMS);
 		expect(plan).toMatchObject({ kind: "ready", preview: null });
+	});
+});
+
+describe("re-asking inside a session", () => {
+	const justIntroduced = [intro("bk", NOW - 60_000)];
+
+	test("a just-introduced card gets a step re-ask in a daily session", () => {
+		const card = reaskCard(
+			input(justIntroduced),
+			"hariIni",
+			"bk::code2region",
+			SETTINGS.scope,
+			1
+		);
+		expect(card).not.toBeNull();
+		expect(card!.id).toBe("bk::code2region#r1");
+		expect(card!.question.context).toBe("daily");
+		expect(card!.form).not.toBe("perkenalan");
+	});
+	test("a lapsed card gets a re-ask in its own session's context", () => {
+		const lapsed = [
+			intro("bk", NOW - 30 * DAY),
+			review("bk", "code2region", NOW - 30 * DAY + 60_000),
+			review("bk", "code2region", NOW - 60_000, { correct: false, context: "focused" })
+		];
+		const card = reaskCard(input(lapsed), "terfokus", "bk::code2region", SETTINGS.scope, 2);
+		expect(card?.question.context).toBe("focused");
+	});
+	test("a settled card gets no re-ask", () => {
+		expect(
+			reaskCard(input(learned), "hariIni", "bk::code2region", SETTINGS.scope, 1)
+		).toBeNull();
+	});
+	test("Kilat, the challenge and the placement test never re-ask", () => {
+		for (const mode of ["kilat", "harian", "penempatan"] as const)
+			expect(
+				reaskCard(input(justIntroduced), mode, "bk::code2region", SETTINGS.scope, 1)
+			).toBeNull();
 	});
 });

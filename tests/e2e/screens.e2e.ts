@@ -139,6 +139,31 @@ test("the daily session introduces new codes and moves them out of new material"
 	await expect(page.getByText(/^9 materi baru tersedia$/)).toBeVisible();
 });
 
+test("a new code is asked once more before the session ends and nothing is due afterwards", async ({
+	page
+}) => {
+	await seen(page);
+	await page.goto("/sesi");
+	await page.getByRole("heading", { name: "Sesi hari ini" }).waitFor();
+	await page.keyboard.press("Enter");
+	const done = page.getByRole("heading", { name: "Sesi selesai" });
+	let answered = 0;
+	while (!(await done.isVisible()) && answered < 40) {
+		await answerOne(page);
+		answered++;
+		const next = page.getByRole("button", { name: "Lanjut" });
+		await next.waitFor();
+		await page.keyboard.press("Enter");
+		await page.waitForTimeout(50);
+	}
+	await expect(done).toBeVisible();
+	const logs = await rows(page, "review_logs");
+	const asked = new Set(logs.map((row) => (row as { contentId: string }).contentId));
+	expect(logs.length).toBe(asked.size * 2);
+	await page.goto("/beranda");
+	await expect(page.getByText("Tidak ada soal yang perlu diulang hari ini.")).toBeVisible();
+});
+
 test("undo restores the question", async ({ page }) => {
 	await seen(page);
 	await withLearned(page);

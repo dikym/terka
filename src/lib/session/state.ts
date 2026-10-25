@@ -46,6 +46,8 @@ export type SessionAction =
 	| { type: "add" }
 	| { type: "remove"; value: string }
 	| { type: "append"; cards: SessionCard[] }
+	| { type: "insert"; card: SessionCard; at: number }
+	| { type: "drop"; id: string }
 	| { type: "finish" };
 
 export const initialSession = (mode: Mode, cards: SessionCard[]): SessionState => ({
@@ -175,6 +177,19 @@ export function sessionReducer(state: SessionState, action: SessionAction): Sess
 			return { ...state, named: state.named.filter((name) => name !== action.value) };
 		case "append":
 			return { ...state, cards: [...state.cards, ...action.cards] };
+		case "insert": {
+			const at = Math.min(Math.max(action.at, state.index + 1), state.cards.length);
+			return {
+				...state,
+				cards: [...state.cards.slice(0, at), action.card, ...state.cards.slice(at)]
+			};
+		}
+		case "drop": {
+			const at = state.cards.findIndex((card) => card.id === action.id);
+			return at > state.index
+				? { ...state, cards: state.cards.filter((_, index) => index !== at) }
+				: state;
+		}
 		case "finish":
 			return state.phase === "done" ? state : { ...state, phase: "done" };
 	}

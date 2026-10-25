@@ -103,3 +103,42 @@ describe("session state", () => {
 		expect(state.input).toBe("");
 	});
 });
+
+describe("re-asks inside a session", () => {
+	const five = ["bk", "ba", "bb", "bm", "bp"].map((code) => `${code}::code2region`);
+	const extra = () => cardsFor("hariIni", ["be::code2region"])[0];
+	const begun = () =>
+		sessionReducer(initialSession("hariIni", cardsFor("hariIni", five)), { type: "start" });
+
+	test("insert places a card after the given number of later cards", () => {
+		const card = extra();
+		const state = sessionReducer(begun(), { type: "insert", card, at: 3 });
+		expect(state.cards.map((item) => item.id).indexOf(card.id)).toBe(3);
+		expect(state.cards).toHaveLength(6);
+	});
+	test("insert past the end appends", () => {
+		const card = extra();
+		const state = sessionReducer(begun(), { type: "insert", card, at: 99 });
+		expect(state.cards.at(-1)).toBe(card);
+	});
+	test("insert never lands on or before the card on screen", () => {
+		const card = extra();
+		const state = sessionReducer(begun(), { type: "insert", card, at: 0 });
+		expect(state.cards[1]).toBe(card);
+		expect(state.index).toBe(0);
+	});
+	test("drop removes a card that is still ahead", () => {
+		const card = extra();
+		const inserted = sessionReducer(begun(), { type: "insert", card, at: 3 });
+		const dropped = sessionReducer(inserted, { type: "drop", id: card.id });
+		expect(dropped.cards).toHaveLength(5);
+		expect(dropped.cards.some((item) => item.id === card.id)).toBe(false);
+	});
+	test("drop never removes the card on screen or one already answered", () => {
+		const state = begun();
+		const onScreen = state.cards[0].id;
+		expect(sessionReducer(state, { type: "drop", id: onScreen })).toBe(state);
+		const moved = sessionReducer(graded(state, "right"), { type: "next" });
+		expect(sessionReducer(moved, { type: "drop", id: onScreen })).toBe(moved);
+	});
+});

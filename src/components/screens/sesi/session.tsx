@@ -16,7 +16,7 @@ import { dailyQueue } from "@/core/session/queue";
 import { factViewEvent, pickFact } from "@/core/views/facts";
 import { loginPromptDue, noteOffer } from "@/core/views/notices";
 import { placementResult } from "@/core/views/placement-result";
-import { KILAT_ROUND_MS, TIERS, type Tier } from "@/rules";
+import { KILAT_ROUND_MS, REASK_GAP, TIERS, type Tier } from "@/rules";
 import type { LearningEvent } from "@/core/log/events";
 import { failedMessage, QUOTA_MESSAGE } from "@/components/screens/app-status";
 import { ErrorState } from "@/components/ui/states";
@@ -36,7 +36,8 @@ import {
 	type PlanInput,
 	type PlanParams,
 	placementCards,
-	planSession
+	planSession,
+	reaskCard
 } from "@/lib/session/modes";
 import {
 	activeQuestion,
@@ -98,6 +99,9 @@ type Engine = {
 	writes: Promise<unknown>;
 	measure: Measure;
 	closed: boolean;
+	/** The re-ask card each answer added, so undoing the answer takes it back out. */
+	reasks: Map<string, string>;
+	reaskSerial: number;
 };
 
 function planInput(
@@ -139,7 +143,9 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 		noteOffers: new Map(),
 		writes: Promise.resolve(),
 		measure: createMeasure(),
-		closed: false
+		closed: false,
+		reasks: new Map(),
+		reaskSerial: 0
 	});
 
 	const exit = () => {
@@ -293,6 +299,7 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 		void write([event]).then((outcome) => {
 			if (outcome !== "ok" && outcome !== "outdated") return;
 			const after = runtime.store.getState().log.state;
+			if (engine.current.answers.includes(row)) reask(row, card, current.index, after);
 			const beforeCard = effectiveCard(log, card.question.cardId);
 			const afterCard = effectiveCard(after, card.question.cardId);
 			if (
@@ -344,8 +351,28 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 			else act({ type: "next" });
 		}
 		// Reading an introduction without choices is the answer; it moves on by itself.
-		if (question.questionType === "intro_read") act({ type: "next" });
+		if (question.questionType === "intro_read") proceed();
 	};
+
+	// A fresh code comes back a few cards later; a lapsed one at the end, after the rest has settled.
+	const reask = (row: ReviewLog, card: SessionCard, index: number, after: AppState) => {
+		if (!runtime || !prefs || plan?.kind !== "ready") return;
+		const added = reaskCard(
+			planInput(runtime, after, prefs),
+			mode,
+			card.question.cardId,
+			plan.run.scope,
+			++engine.current.reaskSerial
+		);
+		if (!added) return;
+		engine.current.reasks.set(row.id, added.id);
+		const at =
+			card.question.context === "intro" ? index + 1 + REASK_GAP : latest.current.cards.length;
+		act({ type: "insert", card: added, at });
+	};
+
+	// Waits for the answer's write, so the re-ask it adds is in place before the session moves on.
+	const proceed = () => void engine.current.writes.then(() => act({ type: "next" }));
 
 	const submit = () => {
 		const current = latest.current;
@@ -375,6 +402,8 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 		if (!canUndo(last, ctx, { voided: false, open: current.phase === "graded" })) return;
 		engine.current.answers = engine.current.answers.filter((row) => row !== last);
 		engine.current.last = null;
+		const added = engine.current.reasks.get(last!.id);
+		if (added) act({ type: "drop", id: added });
 		if (mode === "penempatan") engine.current.placement.pop();
 		void write([voidEvent(last!, ctx)]);
 		act({ type: "undo" });
@@ -557,7 +586,7 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 			const options = cardOptions(state, current);
 			if (action === "confirm") {
 				event.preventDefault();
-				if (state.phase === "graded") act({ type: "next" });
+				if (state.phase === "graded") proceed();
 				else if (current.form === "sebutkan") act({ type: "add" });
 				else if (!options) submit();
 			} else if (action === "undo") {
@@ -670,7 +699,7 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 					}}
 					onSubmit={submit}
 					onChoose={choose}
-					onNext={() => act({ type: "next" })}
+					onNext={proceed}
 					onLower={() => act({ type: "lowerLevel" })}
 					onRestore={() => act({ type: "restoreLevel" })}
 					onAdd={() => act({ type: "add" })}

@@ -219,7 +219,7 @@ Tes dapat diambil atau diulang selama belum ada jawaban yang dihitung untuk jadw
 
 Pratinjau menampilkan jumlah soal, rincian jenis dan level, perkiraan durasi, serta paling banyak tiga informasi yang relevan. **Mulai** atau Enter membuka sesi; **Kembali** atau Esc menutup pratinjau tanpa mengubah data belajar.
 
-Sesi dengan antrean tetap memakai daftar yang sudah ditampilkan. Pengulangan yang baru dijadwalkan setelah jawaban disimpan menunggu sesi berikutnya. Pratinjau diperbarui sebelum mulai jika sudah terbuka lebih dari 10 menit, hari berganti, atau data yang memengaruhi antrean berubah.
+Sesi dengan antrean tetap memakai daftar yang sudah ditampilkan. Kode yang baru diperkenalkan ditanyakan sekali lagi beberapa soal kemudian, dan kode yang dijawab salah ditanyakan sekali lagi di akhir sesi. Setelah sesi harian selesai, tidak ada soal yang perlu diulang sampai besok. Pratinjau diperbarui sebelum mulai jika sudah terbuka lebih dari 10 menit, hari berganti, atau data yang memengaruhi antrean berubah.
 
 Mode Kilat menampilkan durasi tetapnya. Tes penempatan menampilkan batas atas jumlah soal karena jumlah akhirnya bergantung pada hasil tiap tahap. Rumus durasi ada di SRD 4.14.
 
