@@ -47,7 +47,7 @@ export function Tooltip({
 
 	const open = () => {
 		const trigger = anchor.current;
-		if (!trigger) return;
+		if (!trigger || !content) return;
 		const text = trigger.firstElementChild ?? trigger;
 		if (truncatedOnly && text.scrollWidth <= text.clientWidth) return;
 		const rect = trigger.getBoundingClientRect();

@@ -6,6 +6,7 @@ import { ProgressBar, Skeleton, SkeletonText } from "@/components/ui/feedback";
 import { GROUP_BG } from "@/components/ui/groups";
 import { Icon } from "@/components/ui/icon";
 import { Kbd } from "@/components/ui/kbd";
+import { Tooltip } from "@/components/ui/tooltip";
 import type { DayMark, Home } from "@/lib/view/home";
 import { SyncChip } from "./sync-chip";
 
@@ -86,6 +87,8 @@ function Day({ mark, loading }: { mark: DayMark; loading: boolean }) {
 	);
 }
 
+const DONE_TODAY = "Sudah selesai untuk hari ini";
+
 const TILE =
 	"flex aspect-square flex-col items-start justify-between gap-2 rounded-sm border p-3 text-left font-display text-body-sm leading-[1.2] font-semibold text-balance text-ink-1000";
 const TILE_PRESS =
@@ -158,19 +161,20 @@ function PhoneActions({
 			)}
 			<div className="grid grid-cols-3 gap-2">
 				{challengeDone && !loading ? (
-					<button
-						type="button"
-						disabled
-						aria-disabled="true"
-						title="Sudah selesai untuk hari ini"
-						className={`${TILE} cursor-not-allowed border-ink-200 bg-stop-500 opacity-40`}
-					>
-						<Icon name="calendar-check" size={18} />
-						<span className="flex flex-col gap-1">
-							<span>Tantangan Harian</span>
-							{time}
-						</span>
-					</button>
+					<Tooltip content={DONE_TODAY} focusable className="flex">
+						<button
+							type="button"
+							disabled
+							aria-disabled="true"
+							className={`${TILE} flex-1 cursor-not-allowed border-ink-200 bg-stop-500 opacity-40`}
+						>
+							<Icon name="calendar-check" size={18} />
+							<span className="flex flex-col gap-1">
+								<span>Tantangan Harian</span>
+								{time}
+							</span>
+						</button>
+					</Tooltip>
 				) : (
 					<Tile
 						icon="calendar-check"
@@ -204,21 +208,22 @@ function PhoneActions({
 function ChallengeButton({ done, countdown }: { done: boolean; countdown: string }) {
 	if (done)
 		return (
-			<button
-				type="button"
-				disabled
-				aria-disabled="true"
-				title="Sudah selesai untuk hari ini"
-				className="flex h-12 w-full cursor-not-allowed items-center justify-between gap-3 rounded-sm border border-ink-200 bg-stop-500 px-4 text-ink-1000 opacity-40"
-			>
-				<span className="inline-flex items-center gap-2 font-display text-body-md leading-none font-semibold text-ink-1000">
-					<Icon name="calendar-check" size={16} />
-					Tantangan Harian
-				</span>
-				<span className="font-mono text-body-md leading-none font-semibold text-ink-1000 tabular-nums">
-					{countdown}
-				</span>
-			</button>
+			<Tooltip content={DONE_TODAY} focusable className="flex">
+				<button
+					type="button"
+					disabled
+					aria-disabled="true"
+					className="flex h-12 w-full cursor-not-allowed items-center justify-between gap-3 rounded-sm border border-ink-200 bg-stop-500 px-4 text-ink-1000 opacity-40"
+				>
+					<span className="inline-flex items-center gap-2 font-display text-body-md leading-none font-semibold text-ink-1000">
+						<Icon name="calendar-check" size={16} />
+						Tantangan Harian
+					</span>
+					<span className="font-mono text-body-md leading-none font-semibold text-ink-1000 tabular-nums">
+						{countdown}
+					</span>
+				</button>
+			</Tooltip>
 		);
 	return (
 		<Button variant="stop" block icon="calendar-check" href="/sesi?mode=harian">
