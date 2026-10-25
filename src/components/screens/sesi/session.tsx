@@ -588,6 +588,7 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 		return (
 			<SessionEmpty
 				title={plan.title}
+				icon={plan.icon}
 				message={plan.message}
 				detail={plan.detail}
 				onBack={exit}

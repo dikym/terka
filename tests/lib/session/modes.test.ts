@@ -38,6 +38,13 @@ describe("planning a session", () => {
 		expect(plan.preview?.title).toBe("Sesi hari ini");
 	});
 
+	test("an empty plan carries the mode's icon", () => {
+		expect(planSession("diplomat", input(), NO_PARAMS)).toMatchObject({
+			kind: "empty",
+			icon: "flag"
+		});
+	});
+
 	test("a finished challenge cannot be played again today", () => {
 		const plan = planSession("harian", input([...learned, run("challenge", NOW)]), NO_PARAMS);
 		expect(plan).toMatchObject({ kind: "empty", message: "Sudah selesai untuk hari ini" });

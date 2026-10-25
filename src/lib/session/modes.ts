@@ -1,4 +1,5 @@
 import { highMembers, type NameDictionary } from "@/core/answers/dictionary";
+import type { IconName } from "@/components/ui/icon";
 import type { Bundle } from "@/core/content/schema";
 import type { RunKind } from "@/core/log/events";
 import { inScope, NATIONAL, type Scope } from "@/core/questions/distractors";
@@ -63,7 +64,14 @@ export type Plan =
 			held: boolean;
 			estimatedMs: number | null;
 	  }
-	| { kind: "empty"; mode: Mode; title: string; message: string; detail?: string };
+	| {
+			kind: "empty";
+			mode: Mode;
+			title: string;
+			icon: IconName;
+			message: string;
+			detail?: string;
+	  };
 
 const RUN_KIND: Record<Mode, RunKind> = {
 	hariIni: "daily",
@@ -85,6 +93,16 @@ const TITLE: Record<Mode, string> = {
 	penempatan: "Tes penempatan"
 };
 
+const ICON: Record<Mode, IconName> = {
+	hariIni: "play",
+	harian: "calendar-check",
+	kilat: "zap",
+	terfokus: "crosshair",
+	diplomat: "flag",
+	sebutkan: "play",
+	penempatan: "play"
+};
+
 const NOTHING_LEARNED = "Belum ada materi yang bisa dilatih di wilayah ini.";
 const NOTHING_DUE = "Tidak ada soal yang perlu diulang hari ini.";
 const HELD = "Materi baru dijeda hari ini agar sesi tetap ringan.";
@@ -93,6 +111,7 @@ const empty = (mode: Mode, message: string, detail?: string): Plan => ({
 	kind: "empty",
 	mode,
 	title: TITLE[mode],
+	icon: ICON[mode],
 	message,
 	detail
 });
@@ -202,7 +221,7 @@ export function planSession(mode: Mode, input: PlanInput, params: PlanParams): P
 				return empty(mode, daily.held ? HELD : NOTHING_DUE, detail);
 			}
 			return ready(mode, input, state, daily.items, settings.scope, daily.held, (core) => ({
-				icon: "play",
+				icon: ICON[mode],
 				title: TITLE[mode],
 				scope: scopeRow(bundle, settings.scope),
 				count: String(core.questions.length),
@@ -223,7 +242,7 @@ export function planSession(mode: Mode, input: PlanInput, params: PlanParams): P
 					queue.unavailable === "done" ? "Sudah selesai untuk hari ini" : NOTHING_LEARNED
 				);
 			return ready(mode, input, state, queue, NATIONAL, false, (core) => ({
-				icon: "calendar-check",
+				icon: ICON[mode],
 				title: TITLE[mode],
 				facts: [
 					["calendar-days", "Sekali sehari"],
@@ -255,7 +274,7 @@ export function planSession(mode: Mode, input: PlanInput, params: PlanParams): P
 				held: false,
 				estimatedMs: KILAT_ROUND_MS,
 				preview: {
-					icon: "zap",
+					icon: ICON[mode],
 					title: TITLE[mode],
 					scope: scopeRow(bundle, scope),
 					count: String(KILAT_ROUND_MS / 1000),
@@ -292,7 +311,7 @@ export function planSession(mode: Mode, input: PlanInput, params: PlanParams): P
 			return ready(mode, input, state, items, scope, false, (core, cards) => {
 				const counted = cards.filter((card) => card.notice).length;
 				return {
-					icon: "crosshair",
+					icon: ICON[mode],
 					title: TITLE[mode],
 					scope: scopeRow(bundle, scope),
 					description:
@@ -325,7 +344,7 @@ export function planSession(mode: Mode, input: PlanInput, params: PlanParams): P
 							: "Latihan Kode diplomat belum aktif. Aktifkan di Setelan untuk mulai."
 				);
 			return ready(mode, input, state, queue.items, NATIONAL, queue.held, (core) => ({
-				icon: "flag",
+				icon: ICON[mode],
 				title: TITLE[mode],
 				facts: [["calendar-days", "Jadwal terpisah dari latihan wilayah"]],
 				count: String(core.questions.length),
@@ -345,7 +364,7 @@ export function planSession(mode: Mode, input: PlanInput, params: PlanParams): P
 			if (!Array.isArray(queue)) return empty(mode, SETRECALL_UNAVAILABLE[queue.unavailable]);
 			const areas = highMembers(bundle, region).length;
 			return ready(mode, input, state, queue, NATIONAL, false, (core) => ({
-				icon: "play",
+				icon: ICON[mode],
 				title: TITLE[mode],
 				facts: [["layers", "Satu kode per sesi, di luar sesi harian"]],
 				count: "1",

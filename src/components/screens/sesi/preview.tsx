@@ -2,7 +2,7 @@ import { SessionFrame, TopBar } from "@/components/shell/session-frame";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { GROUP_BG } from "@/components/ui/groups";
-import { Icon } from "@/components/ui/icon";
+import { Icon, type IconName } from "@/components/ui/icon";
 import { Kbd } from "@/components/ui/kbd";
 import { BACK_BUTTON } from "@/components/ui/page-title";
 import { EmptyState } from "@/components/ui/states";
@@ -104,7 +104,7 @@ export function PreviewBar({ onBack }: { onBack: () => void }) {
 						<Icon name="arrow-left" size={null} className="size-5.5 lg:size-4.5" />
 					</button>
 				</Tooltip>
-				<span className="max-lg:font-display max-lg:text-subhead max-lg:leading-[1.2] max-lg:font-semibold max-lg:tracking-title lg:type-label lg:text-ink-500">
+				<span className="font-display text-subhead leading-[1.2] font-semibold tracking-title lg:text-body-md">
 					Pratinjau sesi
 				</span>
 			</span>
@@ -126,7 +126,6 @@ export function SessionPreview({
 	return (
 		<SessionFrame variant="preview" bar={<PreviewBar onBack={onBack} />}>
 			<div className="flex flex-col gap-2">
-				<span className="type-label text-ink-500">Pratinjau</span>
 				<h1 className="flex items-center gap-3 type-screen-title">
 					<Icon name={p.icon} size={28} color="bg-current" />
 					<span>{p.title}</span>
@@ -258,21 +257,23 @@ export function SessionPreview({
 /** A mode with nothing to ask today: says why, with the way back. */
 export function SessionEmpty({
 	title,
+	icon,
 	message,
 	detail,
 	onBack
 }: {
 	title: string;
+	icon: IconName;
 	message: string;
 	detail?: string;
 	onBack: () => void;
 }) {
 	return (
 		<SessionFrame variant="preview" bar={<PreviewBar onBack={onBack} />}>
-			<div className="flex flex-col gap-2">
-				<span className="type-label text-ink-500">Pratinjau</span>
-				<h1 className="type-screen-title">{title}</h1>
-			</div>
+			<h1 className="flex items-center gap-3 type-screen-title">
+				<Icon name={icon} size={28} color="bg-current" />
+				<span>{title}</span>
+			</h1>
 			<EmptyState label={title}>
 				{message}
 				{detail && ` ${detail}`}
