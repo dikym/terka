@@ -118,7 +118,7 @@ describe("region questions", () => {
 			questionType: "truefalse",
 			label: "Benar atau salah",
 			choices: ["Benar", "Salah"],
-			limit: { ms: 2000, until: "answer" }
+			limit: { ms: 5000, until: "answer" }
 		});
 		expect(tf.prompt).toMatch(/^BK dipakai (Kota|Kabupaten) .+\.$/);
 		const odd = buildQuestion(review("bk::code2region"), bundle, {
