@@ -151,7 +151,7 @@ Tidak ada tombol **Latihan lagi** pada keadaan kosong setelah sesi harian selesa
 | Tombol batal di bawah hasil jawaban       | **Batalkan jawaban**                                                              |
 | Jawaban terakhir dibatalkan               | **Jawaban dibatalkan**                                                            |
 | Lanjut dengan keyboard                    | **Enter untuk lanjut**                                                            |
-| Label soal Perkenalan                     | **Materi baru · tebak dulu**                                                      |
+| Label soal Perkenalan                     | **Materi baru**                                                      |
 | Setelah tebakan Perkenalan                | **Jawaban: Bali** diikuti **Tebakan tidak dinilai.**                              |
 | Undo tidak tersedia di Mode Kilat         | Tombol **Batalkan jawaban** tidak tampil; Z tidak berpengaruh                     |
 

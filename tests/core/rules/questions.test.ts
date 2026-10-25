@@ -140,7 +140,7 @@ describe("region questions", () => {
 		const intro = buildQuestion(newCard("bk::code2region"), bundle, { context: "intro" });
 		expect(intro).toMatchObject({
 			level: 1,
-			label: "Materi baru · tebak dulu",
+			label: "Materi baru",
 			questionType: "choice"
 		});
 		const tiny = {
@@ -152,7 +152,7 @@ describe("region questions", () => {
 		expect(read).toMatchObject({
 			questionType: "intro_read",
 			choices: [],
-			label: "Materi baru · tebak dulu"
+			label: "Materi baru"
 		});
 		expect(read.reveal?.lines).toEqual(members("bk"));
 		const typed = buildQuestion(review("bk::code2region"), tiny, {
@@ -167,7 +167,7 @@ describe("region questions", () => {
 		const intro = buildQuestion(newCard("bk::setrecall"), bundle, { context: "intro" });
 		expect(intro).toMatchObject({
 			level: 1,
-			label: "Materi baru · tebak dulu",
+			label: "Materi baru",
 			questionType: "choice",
 			answer: { kind: "area", codeId: "bk" },
 			setThreshold: null
