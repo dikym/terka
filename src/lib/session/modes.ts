@@ -22,8 +22,9 @@ import { challengeQueue, focusedQueue, kilatQuestion, setrecallQueue } from "@/c
 import { placementItems, type Stage } from "@/core/session/placement";
 import { buildPreview, kilatPreview, type Preview as CorePreview } from "@/core/session/preview";
 import { dailyQueue, specialQueue } from "@/core/session/queue";
+import { recheckOffer, recheckQueue } from "@/core/session/recheck";
 import { buildQuestion } from "@/core/questions/build";
-import { addDays } from "@/core/time/day";
+import { addDays, dayNumber } from "@/core/time/day";
 import { CHALLENGE_SIZE, KILAT_ROUND_MS, TIER_ORDER } from "@/rules";
 import { clock, durationLabel } from "../view/format";
 import { scopeGroup, scopeTitle } from "../view/groups";
@@ -31,7 +32,7 @@ import { type SessionCard, toCard } from "./cards";
 import { composition, infoNotes, type Preview, typeRows } from "./preview";
 
 export type Mode =
-	"hariIni" | "harian" | "kilat" | "terfokus" | "diplomat" | "sebutkan" | "penempatan";
+	"hariIni" | "harian" | "kilat" | "terfokus" | "diplomat" | "sebutkan" | "penempatan" | "cek";
 
 const PARAMS: Record<string, Mode> = {
 	harian: "harian",
@@ -39,7 +40,8 @@ const PARAMS: Record<string, Mode> = {
 	terfokus: "terfokus",
 	diplomat: "diplomat",
 	sebutkan: "sebutkan",
-	penempatan: "penempatan"
+	penempatan: "penempatan",
+	cek: "cek"
 };
 
 export const modeFromParam = (value: string | null): Mode =>
@@ -65,6 +67,8 @@ export type Plan =
 			preview: Preview | null;
 			held: boolean;
 			estimatedMs: number | null;
+			/** Cek ingatan only: mean recall per group before the test, for the end screen. */
+			predicted?: Map<string, number>;
 	  }
 	| {
 			kind: "empty";
@@ -82,7 +86,8 @@ const RUN_KIND: Record<Mode, RunKind> = {
 	terfokus: "focused",
 	diplomat: "special",
 	sebutkan: "setrecall",
-	penempatan: "placement"
+	penempatan: "placement",
+	cek: "recheck"
 };
 
 const TITLE: Record<Mode, string> = {
@@ -92,7 +97,8 @@ const TITLE: Record<Mode, string> = {
 	terfokus: "Latihan Terfokus",
 	diplomat: "Kode diplomat",
 	sebutkan: "Sebutkan sebanyak mungkin",
-	penempatan: "Tes penempatan"
+	penempatan: "Tes penempatan",
+	cek: "Cek ingatan"
 };
 
 const ICON: Record<Mode, IconName> = {
@@ -102,7 +108,8 @@ const ICON: Record<Mode, IconName> = {
 	terfokus: "crosshair",
 	diplomat: "flag",
 	sebutkan: "play",
-	penempatan: "play"
+	penempatan: "play",
+	cek: "play"
 };
 
 const NOTHING_LEARNED = "Belum ada materi yang bisa dilatih di wilayah ini.";
@@ -213,7 +220,8 @@ const REASK_CONTEXT: Partial<Record<Mode, QuestionContext>> = {
 	hariIni: "daily",
 	terfokus: "focused",
 	diplomat: "special",
-	sebutkan: "setrecall"
+	sebutkan: "setrecall",
+	cek: "recheck"
 };
 
 export function reaskCard(
@@ -259,6 +267,25 @@ export function planSession(mode: Mode, input: PlanInput, params: PlanParams): P
 				notes: notesOf(input, state, core, daily.items),
 				start: "Mulai"
 			}));
+		}
+		case "cek": {
+			if (!recheckOffer(state, ctx)) return empty(mode, NOTHING_DUE);
+			const { items, predicted } = recheckQueue(state, bundle, ctx);
+			const away = dayNumber(today) - dayNumber([...state.activeDays].sort().at(-1)!);
+			const plan = ready(mode, input, state, items, settings.scope, false, (core) => ({
+				icon: ICON[mode],
+				title: TITLE[mode],
+				scope: scopeRow(bundle, settings.scope),
+				description: `Sudah ${away} hari sejak latihan terakhir. Jawab ${core.questions.length} soal untuk melihat seberapa banyak yang masih kamu ingat.`,
+				count: String(core.questions.length),
+				unit: "soal",
+				aside: duration(core),
+				types: typeRows(core.questions.map((question) => question.label)),
+				right: levels(core),
+				skip: { label: "Lewati, mulai sesi biasa", href: "/sesi" },
+				start: "Mulai"
+			}));
+			return plan.kind === "ready" ? { ...plan, predicted } : plan;
 		}
 		case "harian": {
 			const queue = challengeQueue(state, ctx);

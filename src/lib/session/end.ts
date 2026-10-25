@@ -32,6 +32,8 @@ export type EndView = {
 	kilatNew: boolean;
 	fact: FactCardView | null;
 	loginPrompt: boolean;
+	/** Cek ingatan only: share answered right per group beside the recall expected before it. */
+	recheck: { name: string; group: GroupId; correct: number; predicted: number }[] | null;
 };
 
 export type EndInput = {
@@ -47,6 +49,7 @@ export type EndInput = {
 	loginPrompt: boolean;
 	today: string;
 	remainingDue?: number;
+	predicted?: Map<string, number>;
 };
 
 const LABEL = { terverifikasi: "Terverifikasi", diperdebatkan: "Diperdebatkan", mitos: "Mitos" };
@@ -69,6 +72,25 @@ function kilatLine(bundle: Bundle, kilat: NonNullable<EndInput["kilat"]>) {
 	if (kilat.record === null || kilat.score > kilat.record)
 		return { line: `Rekor baru di ${label}: ${kilat.score}`, isNew: true };
 	return { line: `Rekor terbaik di ${label}: ${kilat.record}`, isNew: false };
+}
+
+function recheckRows(input: EndInput): EndView["recheck"] {
+	if (!input.predicted) return null;
+	const groupOf = new Map(input.bundle.regions.map((region) => [region.id, region.group]));
+	const first = new Map<string, boolean>();
+	for (const row of input.answers)
+		if (row.context === "recheck" && !first.has(row.contentId))
+			first.set(row.contentId, row.correct === true);
+	return [...input.predicted].map(([group, predicted]) => {
+		const results = [...first].filter(([code]) => groupOf.get(code) === group);
+		const right = results.filter(([, correct]) => correct).length;
+		return {
+			name: groupName(input.bundle, group),
+			group: uiGroup(group),
+			correct: results.length ? Math.round((right / results.length) * 100) : 0,
+			predicted: Math.round(predicted * 100)
+		};
+	});
 }
 
 export function endView(input: EndInput): EndView {
@@ -101,6 +123,7 @@ export function endView(input: EndInput): EndView {
 		kilatLine: kilat?.line ?? null,
 		kilatNew: kilat?.isNew ?? false,
 		fact: input.fact ? factCard(bundle, input.fact) : null,
-		loginPrompt: input.loginPrompt
+		loginPrompt: input.loginPrompt,
+		recheck: recheckRows(input)
 	};
 }

@@ -21,6 +21,8 @@ export type Preview = {
 		| { kind: "streak"; days: number; note: string }
 		| { kind: "rules"; rows: [string, string][] };
 	notes?: [IconName, string | null, string][];
+	/** A way past this session to the ordinary one. */
+	skip?: { label: string; href: string };
 	start: string;
 };
 

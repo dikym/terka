@@ -16,6 +16,7 @@ import {
 import { challengeQueue } from "../session/modes";
 import { placementAvailable } from "../session/placement";
 import { dailyQueue, specialQueue } from "../session/queue";
+import { recheckOffer } from "../session/recheck";
 
 export type HomeSummary = {
 	due: number;
@@ -26,6 +27,7 @@ export type HomeSummary = {
 	specialDue: number | null;
 	challenge: "available" | "done" | "empty";
 	placementOffer: boolean;
+	recheck: boolean;
 	streak: number;
 };
 
@@ -63,6 +65,7 @@ export function homeSummary(
 				: null,
 		challenge: Array.isArray(challenge) ? "available" : challenge.unavailable,
 		placementOffer: placementAvailable(state),
+		recheck: recheckOffer(state, ctx),
 		streak: streak(streakDays(state), todayOf(ctx))
 	};
 }

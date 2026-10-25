@@ -1,7 +1,16 @@
 import { describe, expect, test } from "bun:test";
 import { addDays, localDay } from "../../../src/core/time/day";
 import { homeView } from "../../../src/lib/view/home";
-import { DAY, intro, NOW, ruleBundle, run, stateOf, WITA } from "../../core/replay/fixtures";
+import {
+	DAY,
+	intro,
+	manyRegions,
+	NOW,
+	ruleBundle,
+	run,
+	stateOf,
+	WITA
+} from "../../core/replay/fixtures";
 import { ctxAt, SETTINGS } from "../../core/session/fixtures";
 
 const view = (events: Parameters<typeof stateOf>[0], settings = SETTINGS) =>
@@ -31,6 +40,24 @@ describe("home view", () => {
 		expect(home.week.at(-1)!.state).toBe("done");
 		expect(home.summary.streak).toBe(1);
 		expect(home.challengeDone).toBe(false);
+	});
+
+	test("a long break with a backlog over the cap offers cek ingatan", () => {
+		const many = manyRegions(40);
+		const state = stateOf([], many);
+		for (const cardId of [...state.cards.keys()].filter((id) => id.endsWith("::code2region")))
+			state.cards.set(cardId, {
+				...state.cards.get(cardId)!,
+				state: "review",
+				stability: 20,
+				intervalDays: 20,
+				lastReviewAt: NOW - 30 * DAY,
+				due: NOW - DAY
+			});
+		state.activeDays.add(addDays(localDay(NOW, WITA), -8));
+		const home = homeView(state, many, SETTINGS, ctxAt(NOW), "Tersimpan di perangkat ini");
+		expect(home.summary.recheck).toBe(true);
+		expect(view([]).summary.recheck).toBe(false);
 	});
 
 	test("a single missed day inside a streak shows as tolerance", () => {

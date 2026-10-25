@@ -84,3 +84,47 @@ describe("answer measurements", () => {
 		});
 	});
 });
+
+describe("recheck end", () => {
+	test("the recheck end shows correct and predicted percent per group", () => {
+		const state = stateOf([]);
+		const recheck = (code: string, correct: boolean) =>
+			review(code, "code2region", NOW, { correct, context: "recheck" }).row as ReviewLog;
+		const view = endView({
+			mode: "cek",
+			before: state,
+			after: state,
+			answers: [recheck("bk", true), recheck("ba", false), recheck("dk", true)],
+			bundle,
+			held: false,
+			fact: null,
+			kilat: null,
+			loginPrompt: false,
+			today: "2026-09-21",
+			predicted: new Map([
+				["sumatera", 0.8],
+				["bali-nusa-tenggara", 0.555]
+			])
+		});
+		expect(view.recheck).toEqual([
+			{ name: "Sumatera", group: "sumatera", correct: 50, predicted: 80 },
+			{ name: "Bali & Nusa Tenggara", group: "balinusra", correct: 100, predicted: 56 }
+		]);
+	});
+	test("other sessions have no recheck section", () => {
+		const state = stateOf([]);
+		const view = endView({
+			mode: "hariIni",
+			before: state,
+			after: state,
+			answers: [answer(true, 900)],
+			bundle,
+			held: false,
+			fact: null,
+			kilat: null,
+			loginPrompt: false,
+			today: "2026-09-21"
+		});
+		expect(view.recheck).toBeNull();
+	});
+});
