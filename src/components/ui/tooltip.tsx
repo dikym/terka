@@ -9,12 +9,13 @@ const EDGE = 8;
 // Where the arrow points on a start-aligned tooltip, from the trigger's left edge.
 const START_ARROW = 21;
 
-/** Where the arrow should point and how high the tooltip sits, in viewport pixels. */
-type Place = { x: number; top: number; align: "center" | "start" };
+/** Where the arrow should point and the room above and below the trigger, in viewport pixels. */
+type Place = { x: number; above: number; below: number; align: "center" | "start" };
 
 /**
- * A one-line label above its trigger: after a 400 ms hover or on keyboard focus, gone on Esc
- * or leave. Fixed to the viewport, so a scrolling list cannot clip it. Touch never opens it.
+ * A one-line label above its trigger, or below it when the viewport has no room: after a
+ * 400 ms hover or on keyboard focus, gone on Esc or leave. Fixed to the viewport, so a
+ * scrolling list cannot clip it. Touch never opens it.
  * Portaled to the body: an ancestor's mask or filter would otherwise still clip it.
  */
 export function Tooltip({
@@ -54,15 +55,21 @@ export function Tooltip({
 		setPlace({
 			x: align === "center" ? rect.left + rect.width / 2 : rect.left + START_ARROW,
 			// Whole pixels keep the border and the arrow sharp.
-			top: Math.round(rect.top - GAP),
+			above: Math.round(rect.top - GAP),
+			below: Math.round(rect.bottom + GAP),
 			align
 		});
 	};
 
-	// Kept inside the viewport once its width is known; the arrow still points at the trigger.
+	// Kept inside the viewport once its size is known; the arrow still points at the trigger.
 	useLayoutEffect(() => {
 		const tip = box.current;
 		if (!place || !tip || !arrow.current) return;
+		const flip = place.above - tip.offsetHeight < EDGE;
+		tip.style.top = `${flip ? place.below : place.above - tip.offsetHeight}px`;
+		arrow.current.style.top = flip ? "auto" : "100%";
+		arrow.current.style.bottom = flip ? "100%" : "auto";
+		arrow.current.style.rotate = flip ? "180deg" : "";
 		const width = tip.offsetWidth;
 		const wanted = place.align === "center" ? place.x - width / 2 : place.x - START_ARROW;
 		const left = Math.round(Math.max(EDGE, Math.min(wanted, window.innerWidth - width - EDGE)));
@@ -114,8 +121,8 @@ export function Tooltip({
 						ref={box}
 						id={id}
 						role="tooltip"
-						style={{ top: place.top, visibility: "hidden" }}
-						className="pointer-events-none fixed z-60 inline-flex -translate-y-full items-center gap-2 rounded-sm border border-ink-1000 bg-paper-0 px-2.5 py-1.5 font-sans text-body-sm leading-4 font-medium whitespace-nowrap text-ink-900 shadow-overlay"
+						style={{ visibility: "hidden" }}
+						className="pointer-events-none fixed z-60 inline-flex items-center gap-2 rounded-sm border border-ink-1000 bg-paper-0 px-2.5 py-1.5 font-sans text-body-sm leading-4 font-medium whitespace-nowrap text-ink-900 shadow-overlay"
 					>
 						{content}
 						{kbd && (
@@ -131,7 +138,7 @@ export function Tooltip({
 							width="12"
 							height="7"
 							viewBox="0 0 12 7"
-							className="absolute top-full block overflow-visible"
+							className="absolute block overflow-visible"
 						>
 							{/* Reaches half a pixel into the box, so no sliver of border survives at a
 						    fractional zoom; its sides run along the inner edges of the legs. */}
