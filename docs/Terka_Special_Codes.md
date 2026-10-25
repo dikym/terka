@@ -173,7 +173,7 @@ Sumber seluruh baris: `perpol-7-2021-lampiran`, Lampiran huruf D angka 4, hlm. 9
 | CD 138 | San Marino | negara | San Marino | — | `high` | — |
 | CD 139 | Irlandia | negara | Irlandia | Ireland | `high` | — |
 | CD 140 | UNORCID | organisasi | United Nations Office for REDD+ Coordination in Indonesia (UNORCID) | — | `high` | — |
-| CD 141 | IsDB | organisasi | Islamic Development Bank (IDB) | IDB, Islamic Development Bank, Bank Pembangunan Islam | `high` | — |
+| CD 141 | Islamic Development Bank | organisasi | Islamic Development Bank (IDB) | IsDB, IDB, Bank Pembangunan Islam | `high` | — |
 | CD 142 | Guinea-Bissau | negara | Guinea Bissau | Guinea Bissau | `high` | — |
 | CD 143 | Etiopia | negara | Ethiopia | Ethiopia | `high` | — |
 | CD 144 | Kepulauan Solomon | negara | Kep Solomon | Kep Solomon, Solomon Islands, Solomon | `high` | — |

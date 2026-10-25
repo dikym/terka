@@ -1,6 +1,6 @@
 {
-	"version": "2026.10.24",
-	"contentRev": 5,
+	"version": "2026.10.25",
+	"contentRev": 6,
 	"contentHistory": [
 		{
 			"contentRev": 1,
@@ -21,6 +21,10 @@
 		{
 			"contentRev": 5,
 			"version": "2026.10.24"
+		},
+		{
+			"contentRev": 6,
+			"version": "2026.10.25"
 		}
 	],
 	"groups": [
@@ -9573,9 +9577,9 @@
 			"id": "cd-141-isdb",
 			"series": "CD",
 			"number": "141",
-			"holder": "IsDB",
+			"holder": "Islamic Development Bank",
 			"holderType": "organization",
-			"aliases": ["IDB", "Islamic Development Bank", "Bank Pembangunan Islam"],
+			"aliases": ["IsDB", "IDB", "Bank Pembangunan Islam"],
 			"sourceName": "Islamic Development Bank (IDB)",
 			"confidence": "high",
 			"needsReview": false,

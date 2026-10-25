@@ -26,7 +26,7 @@ describe("build from the real sources", () => {
 		expect(bundle!.referencePlates.map((plate) => plate.series)).toEqual(["RI", "CC", "CH"]);
 		expect(bundle!.facts).toHaveLength(41);
 		expect(bundle!.facts.every((fact) => fact.publicationStatus === "ready")).toBe(true);
-		expect(bundle!.contentRev).toBe(5);
+		expect(bundle!.contentRev).toBe(6);
 		expect(bundle!.regions.find((region) => region.code === "DK")!.facts).toContain(
 			"fact-bali-lombok-dk"
 		);
