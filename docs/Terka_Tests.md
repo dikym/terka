@@ -93,6 +93,10 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | SR-349 | Satu kartu `review` berinterval 7 hari, dua kartu `new`                              | Persentase penguasaan 11%                                                                             | normal   | SRD 2.5 |
 | SR-350 | Satu kartu `review` berinterval 40 hari tanpa lulus Level 3                          | Persentase penguasaan 95%, belum dikuasai                                                             | batas    | SRD 2.5 |
 | SR-351 | Semua kartu `mature` kecuali satu `review` berinterval 20 hari                       | Persentase penguasaan 99%, bukan 100%                                                                 | batas    | SRD 2.5 |
+| SR-367 | Semua kode provinsi Sumatera Utara sudah diperkenalkan | Beranda menawarkan **Lanjut ke Sumatera Barat** | normal | SRD 2.6 |
+| SR-368 | Provinsi terakhir sebuah kawasan sudah habis | Tawaran ke provinsi pertama yang masih punya materi baru di kawasan berikutnya | batas | SRD 2.6 |
+| SR-369 | Cakupan kawasan habis, kawasan berikutnya juga habis | Tawaran melompat ke kawasan berikutnya yang masih punya materi baru, berputar ke awal | batas | SRD 2.6 |
+| SR-370 | Cakupan nasional, atau tidak ada materi baru di mana pun, atau Cakupan masih punya materi baru | Tidak ada tawaran | batas | SRD 2.6 |
 | SR-008 | Semua kartu satu kawasan `mature`, masih ada pasangan tertukar aktif di dalamnya     | Kawasan belum dikuasai                                                                                | batas    | SRD 2.5 |
 | SR-009 | Pasangan BE ↔ DE aktif, kartu Sumatera dan Maluku semua `mature`                     | Sumatera dan Maluku sama-sama belum dikuasai                                                          | batas    | SRD 2.5 |
 | SR-010 | Satu dari 10 kartu cakupan `suspended` karena `confidence` turun, 9 lainnya `mature` | Persentase 100%; cakupan bisa dikuasai                                                                | batas    | AC-24   |

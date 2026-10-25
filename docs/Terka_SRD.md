@@ -108,6 +108,8 @@ Cakupan awal yang disarankan: **Bali & Nusa Tenggara**, lalu **Jawa**, kemudian 
 
 Ini hanya saran urutan. Pengguna tetap bebas memilih Cakupan mana pun kapan pun.
 
+**Tawaran Cakupan berikutnya.** Jika tidak ada lagi kartu `code2region` berstatus `new` di Cakupan aktif tetapi masih ada di luar Cakupan, Beranda menawarkan satu ketukan untuk pindah. Cakupan provinsi pindah ke provinsi berikutnya di kawasan yang sama yang masih punya materi baru, lalu ke provinsi pertama yang masih punya materi baru di kawasan berikutnya; tingkat Cakupan tetap provinsi. Cakupan kawasan pindah ke kawasan berikutnya yang masih punya materi baru. Urutannya mengikuti urutan data dan berputar ke awal. Cakupan nasional tidak mendapat tawaran. Mengetuk tawaran sama dengan mengubah Cakupan lewat Setelan.
+
 ### 2.7 Urutan Materi Baru
 
 Dalam Cakupan aktif, materi baru diperkenalkan dengan urutan berikut:

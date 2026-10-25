@@ -121,6 +121,8 @@ Bilah bawah tidak memakai lencana jumlah soal. Jumlah pengulangan cukup ditampil
 | Materi baru ditahan karena antrean pengulangan terlalu besar | **Materi baru dijeda hari ini agar sesi tetap ringan.**                 |
 | Label wilayah aktif                                          | **Cakupan**                                                             |
 | Label persentase di bawah daftar Cakupan                     | **kemajuan**                                                            |
+| Materi baru di Cakupan habis, ada Cakupan berikutnya         | **Materi di Kawasan Sumatera sudah dikenalkan semua.**                  |
+| Tombol pindah ke Cakupan berikutnya                          | **Lanjut ke Kawasan Jawa**                                              |
 | Tombol sesi utama                                            | **Mulai belajar**                                                       |
 | Tombol tantangan                                             | **Tantangan Harian**                                                    |
 | Tombol latihan cepat                                         | **Mode Kilat**                                                          |

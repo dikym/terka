@@ -1,6 +1,6 @@
 import type { GroupId } from "@/components/ui/groups";
 import type { Bundle } from "@/core/content/schema";
-import { inScope } from "@/core/questions/distractors";
+import { inScope, type Scope } from "@/core/questions/distractors";
 import { streak, streakDays } from "@/core/replay/streak";
 import type { AppState } from "@/core/replay/state";
 import {
@@ -20,6 +20,7 @@ import { scopeMastery } from "@/core/views/mastery";
 import { STREAK_WINDOW_DAYS, TIERS } from "@/rules";
 import { dateLabel, durationLabel, weekdayShort } from "./format";
 import { provincesOf, scopeGroup, scopeTitle, uiGroup } from "./groups";
+import { nextScope } from "./next-scope";
 
 export type DayMark = { day: string; state: "done" | "tolerance" | "missed" | "today" };
 
@@ -44,6 +45,7 @@ export type Home = {
 	tolerance: string;
 	challengeDone: boolean;
 	challengeResetAt: number;
+	nextScope: { scope: Scope; label: string } | null;
 };
 
 // A missed day is forgiven when the count would carry on had the next day been played.
@@ -113,6 +115,11 @@ function flaggedPairs(state: AppState, bundle: Bundle) {
 	return pairs;
 }
 
+function offer(state: AppState, bundle: Bundle, scope: Scope): Home["nextScope"] {
+	const next = nextScope(state, bundle, scope);
+	return next ? { scope: next, label: scopeTitle(bundle, next) } : null;
+}
+
 function note(summary: HomeSummary): string | null {
 	if (summary.held) return "Materi baru dijeda hari ini agar sesi tetap ringan.";
 	if (summary.due === 0 && summary.allIntroduced)
@@ -172,6 +179,7 @@ export function homeView(
 		week: weekMarks(streakDays(state), today),
 		tolerance: `Toleransi terpakai ${Math.min(used, 1)} dari 1 dalam ${STREAK_WINDOW_DAYS} hari.`,
 		challengeDone: summary.challenge === "done",
-		challengeResetAt: dayStart(addDays(today, 1), ctx.tz)
+		challengeResetAt: dayStart(addDays(today, 1), ctx.tz),
+		nextScope: offer(state, bundle, settings.scope)
 	};
 }
