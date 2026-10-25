@@ -40,6 +40,9 @@ export type AppState = {
 	openDue: string[];
 	tier: { current: Tier; changedOn: string | null; days: Map<string, DayStats> };
 	challengeDays: Set<string>;
+	// Closed daily runs still short of their plan; a run's answers replay after the run itself.
+	dailyRuns: Map<string, { localDay: string; plannedCount: number; cards: Set<string> }>;
+	doneDays: Set<string>;
 	activeDays: Set<string>;
 	kilatRecords: Map<string, number>;
 	factViews: { factId: string; localDay: string; runId: string | null }[];
@@ -90,6 +93,8 @@ export function initialState(
 			days: new Map()
 		},
 		challengeDays: new Set(),
+		dailyRuns: new Map(),
+		doneDays: new Set(),
 		activeDays: new Set(),
 		kilatRecords: new Map(),
 		factViews: [],

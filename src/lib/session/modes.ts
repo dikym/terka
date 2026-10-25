@@ -3,7 +3,7 @@ import type { IconName } from "@/components/ui/icon";
 import type { Bundle } from "@/core/content/schema";
 import type { RunKind } from "@/core/log/events";
 import { inScope, NATIONAL, type Scope } from "@/core/questions/distractors";
-import { streak } from "@/core/replay/streak";
+import { streak, streakDays } from "@/core/replay/streak";
 import type { AppState } from "@/core/replay/state";
 import { effectiveCard } from "@/core/replay/universe";
 import {
@@ -254,7 +254,7 @@ export function planSession(mode: Mode, input: PlanInput, params: PlanParams): P
 				types: typeRows(core.questions.map((question) => question.label)),
 				right: {
 					kind: "streak",
-					days: streak(state.challengeDays, today),
+					days: streak(streakDays(state), today),
 					note: "Selesaikan hari ini untuk mencatat Hari Beruntun. Jawaban tidak mengubah jadwal belajar."
 				},
 				start: "Mulai tantangan"

@@ -1,6 +1,6 @@
 import type { Bundle } from "../content/schema";
 import { inScope } from "../questions/distractors";
-import { streak } from "../replay/streak";
+import { streak, streakDays } from "../replay/streak";
 import type { AppState } from "../replay/state";
 import {
 	ACTIVE,
@@ -63,6 +63,6 @@ export function homeSummary(
 				: null,
 		challenge: Array.isArray(challenge) ? "available" : challenge.unavailable,
 		placementOffer: placementAvailable(state),
-		streak: streak(state.challengeDays, todayOf(ctx))
+		streak: streak(streakDays(state), todayOf(ctx))
 	};
 }

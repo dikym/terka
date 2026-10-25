@@ -66,10 +66,22 @@ function afterAnswer(state: AppState, row: ReviewLog, cardId: string, valid: boo
 		recordDrill(state, row.contentId, row.drillPairWith, row.correct === true, row.localDay);
 }
 
+// Re-asks repeat a planned card, so a run is done only once every distinct planned card is answered.
+function recordRunCard(state: AppState, runId: string | null, cardId: string) {
+	if (runId === null) return;
+	const run = state.dailyRuns.get(runId);
+	if (!run) return;
+	run.cards.add(cardId);
+	if (run.cards.size < run.plannedCount) return;
+	state.doneDays.add(run.localDay);
+	state.dailyRuns.delete(runId);
+}
+
 export function applyReview(state: AppState, row: ReviewLog, at: number): void {
 	if (state.voided.has(row.id)) return;
 	if (row.context === "placement" && row.runId !== state.placementRunId) return;
 	const cardId = `${row.contentId}::${row.mode}`;
+	recordRunCard(state, row.runId, cardId);
 	const card = state.cards.get(cardId) ?? newEntry(cardId);
 	state.cards.set(cardId, card);
 	const contentOk = state.content.get(row.contentId) === "ok";

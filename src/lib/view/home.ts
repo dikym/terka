@@ -1,7 +1,7 @@
 import type { GroupId } from "@/components/ui/groups";
 import type { Bundle } from "@/core/content/schema";
 import { inScope } from "@/core/questions/distractors";
-import { streak } from "@/core/replay/streak";
+import { streak, streakDays } from "@/core/replay/streak";
 import type { AppState } from "@/core/replay/state";
 import {
 	cardsWhere,
@@ -151,7 +151,7 @@ export function homeView(
 		const region = regions.get(contentOf(card.cardId));
 		return region && inScope(region, settings.scope);
 	}).length;
-	const used = toleranceUsed(state.challengeDays, today);
+	const used = toleranceUsed(streakDays(state), today);
 	return {
 		summary,
 		dateLabel: dateLabel(ctx.now, ctx.tz),
@@ -169,7 +169,7 @@ export function homeView(
 			newInScope: String(inside),
 			newOutside: String(waiting.length - inside)
 		},
-		week: weekMarks(state.challengeDays, today),
+		week: weekMarks(streakDays(state), today),
 		tolerance: `Toleransi terpakai ${Math.min(used, 1)} dari 1 dalam ${STREAK_WINDOW_DAYS} hari.`,
 		challengeDone: summary.challenge === "done",
 		challengeResetAt: dayStart(addDays(today, 1), ctx.tz)
