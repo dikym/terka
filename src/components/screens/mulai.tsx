@@ -126,7 +126,7 @@ function Header() {
 			<div
 				className={`${WRAP} flex min-h-15 items-center justify-between gap-3 py-2 lg:gap-4 lg:py-4`}
 			>
-				<Link href="/mulai" aria-label="Terka">
+				<Link href="/" aria-label="Terka">
 					<Wordmark />
 				</Link>
 				<nav className="flex items-center gap-5">
@@ -139,7 +139,7 @@ function Header() {
 							{label}
 						</a>
 					))}
-					<Button href="/" variant="secondary" size="sm" className="max-lg:h-11">
+					<Button href="/beranda" variant="secondary" size="sm" className="max-lg:h-11">
 						Buka aplikasi
 					</Button>
 				</nav>
@@ -208,7 +208,7 @@ function Hero() {
 								Mulai belajar
 							</Button>
 							<Link
-								href="/"
+								href="/beranda"
 								className="inline-flex h-12 items-center justify-center rounded-sm border border-transparent px-4 font-display text-body-md leading-none font-semibold whitespace-nowrap text-ink-1000 transition-colors duration-90 hover:bg-paper-50 lg:h-14 lg:px-5"
 							>
 								Ikut tes penempatan

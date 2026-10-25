@@ -6,7 +6,7 @@ import { Icon, type IconName } from "@/components/ui/icon";
 import { Wordmark } from "@/components/ui/plate";
 
 export const NAV: { href: string; label: string; icon: IconName }[] = [
-	{ href: "/", label: "Beranda", icon: "house" },
+	{ href: "/beranda", label: "Beranda", icon: "house" },
 	{ href: "/cakupan", label: "Cakupan", icon: "layers" },
 	{ href: "/statistik", label: "Statistik", icon: "trending-up" },
 	{ href: "/referensi", label: "Referensi", icon: "book-open" }
@@ -19,7 +19,7 @@ const ACTIVE = "border-r-ink-1000 bg-nav-active text-ink-1000";
 const IDLE = "border-r-transparent bg-transparent text-ink-500";
 
 export const isActive = (pathname: string, href: string) =>
-	href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
+	pathname === href || pathname.startsWith(`${href}/`);
 
 export function Sidebar() {
 	const pathname = usePathname();

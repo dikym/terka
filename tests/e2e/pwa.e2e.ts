@@ -9,7 +9,8 @@ test("the web app manifest offers a Referensi shortcut", async ({ request }) => 
 	expect(manifest).toMatchObject({
 		name: "Terka",
 		lang: "id",
-		start_url: "/",
+		id: "/",
+		start_url: "/beranda",
 		display: "standalone"
 	});
 	expect(manifest.shortcuts).toContainEqual(

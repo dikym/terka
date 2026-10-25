@@ -11,7 +11,7 @@ const ICON_BUTTON =
 	"inline-flex size-11 flex-none cursor-pointer items-center justify-center rounded-sm border border-transparent bg-transparent text-ink-700 focus-visible:-outline-offset-2";
 
 /** Screens whose desktop version shows the sync chip beside the date or title. */
-const SYNC_SCREENS = ["/", "/statistik"];
+const SYNC_SCREENS = ["/beranda", "/statistik"];
 
 /**
  * The phone's top bar on the main tabs. A sub-screen draws its own back-arrow

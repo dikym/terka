@@ -21,7 +21,7 @@ test("every main route opens offline on the second visit", async ({ page, contex
 
 test("a failed first install explains that it needs a connection", async ({ page, context }) => {
 	await context.route("**/optimizer/fsrs.wasm", (route) => route.abort());
-	await page.goto("/");
+	await page.goto("/beranda");
 	await page.waitForFunction(async () => {
 		const registration = await navigator.serviceWorker.getRegistration();
 		return registration !== undefined && !registration.installing && !registration.active;
@@ -34,7 +34,7 @@ test("a failed first install explains that it needs a connection", async ({ page
 
 test("the install message stays hidden while online", async ({ page, context }) => {
 	await context.route("**/optimizer/fsrs.wasm", (route) => route.abort());
-	await page.goto("/");
+	await page.goto("/beranda");
 	await page.waitForTimeout(2_000);
 	await expect(page.getByRole("status")).toHaveCount(0);
 });

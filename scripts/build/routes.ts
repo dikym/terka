@@ -13,7 +13,7 @@ export const MAIN_ROUTES = [
 	"/tentang",
 	"/auth/callback",
 	"/privasi",
-	"/mulai"
+	"/beranda"
 ] as const;
 
 export const htmlPathOf = (route: string) => (route === "/" ? "index.html" : `${route.slice(1)}.html`);
