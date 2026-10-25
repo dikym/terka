@@ -274,7 +274,7 @@ Satu baris per sesi atau putaran latihan. Dipakai untuk Hari Beruntun, Rekor Ter
 | `kind`                    | text                  | `daily`, `focused`, `challenge`, `kilat`, `placement`, `setrecall`, `special`                                    |
 | `scope_level`, `scope_id` | text; `scope_id` null | Wilayah sesi; `scope_id` null hanya untuk `national`                                                             |
 | `started_at`              | timestamptz           | Waktu klien                                                                                                      |
-| `local_day`               | date                  | Hari lokal menurut batas 04.00 (SRD bagian 4.9)                                                                  |
+| `local_day`               | date                  | Hari lokal menurut batas 00.00 (SRD bagian 4.9)                                                                  |
 | `ended_at`                | timestamptz, null     | Diisi sekali saat selesai                                                                                        |
 | `answered`, `correct`     | int, null             | Diisi sekali saat selesai                                                                                        |
 | `active_ms`               | int, null             | Durasi sesi saat terlihat dan tidak dijeda, termasuk umpan balik dan upaya yang di-undo; diisi saat sesi ditutup |

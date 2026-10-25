@@ -1,5 +1,3 @@
-import { DAY_BOUNDARY_HOUR } from "@/rules";
-
 const DAY_MS = 86_400_000;
 
 const formatters = new Map<string, Intl.DateTimeFormat>();
@@ -36,7 +34,6 @@ function wallClock(at: number, tz: string) {
 	const get = (type: string) => parts.find((part) => part.type === type)!.value;
 	return {
 		date: `${get("year")}-${get("month")}-${get("day")}`,
-		hour: Number(get("hour")),
 		asUtc: Date.parse(
 			`${get("year")}-${get("month")}-${get("day")}T${get("hour")}:${get("minute")}:${get("second")}Z`
 		)
@@ -52,23 +49,23 @@ export function dayNumber(localDay: string): number {
 }
 
 export function localDay(at: number, tz: string): string {
-	const clock = wallClock(at, tz);
-	return clock.hour < DAY_BOUNDARY_HOUR ? addDays(clock.date, -1) : clock.date;
+	return wallClock(at, tz).date;
 }
 
-// The instant whose local wall clock reads `localDay` 04:00 (DST shifts happen before 04:00).
+// The instant whose local wall clock reads `localDay` 00:00.
 export function dayStart(localDay: string, tz: string): number {
-	const desired = Date.parse(`${localDay}T0${DAY_BOUNDARY_HOUR}:00:00Z`);
+	const desired = Date.parse(`${localDay}T00:00:00Z`);
 	let guess = desired;
 	for (let attempt = 0; attempt < 4; attempt++) {
 		const correction = desired - wallClock(guess, tz).asUtc;
-		if (!correction) break;
+		if (!correction) return guess;
 		guess += correction;
 	}
-	return guess;
+	// A DST jump skipped midnight, so the guesses swing across the gap; the later one is where the day starts.
+	return Math.max(guess, guess + desired - wallClock(guess, tz).asUtc);
 }
 
-// Never go back, and never start a new day before the previous zone's 04:00.
+// Never go back, and never start a new day before the previous zone's midnight.
 export function nextLocalDay(
 	at: number,
 	tz: string,

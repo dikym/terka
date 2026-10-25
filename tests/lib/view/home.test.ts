@@ -48,7 +48,7 @@ describe("home view", () => {
 		expect(home.scope.rows[1].codes).toEqual(["DR", "EA"]);
 	});
 
-	test("the countdown runs to the start of the next learning day", () => {
+	test("the countdown runs to the next midnight", () => {
 		expect(view([]).challengeResetAt - NOW).toBe(DAY);
 	});
 });

@@ -28,7 +28,7 @@ ID berikut sudah tidak digunakan: SR-211, SR-223–SR-229, SR-298, TR-58, TR-80,
 
 **ID stabil.** Satu ID untuk satu skenario. ID yang ditandai Tidak aktif disimpan sebagai catatan tetapi dikecualikan dari eksekusi dan hitungan cakupan; ID itu tidak boleh digunakan ulang. Jika aturannya berubah, isi tes diperbarui dengan ID yang sama. ID yang pernah dipakai tidak dipakai ulang untuk skenario lain.
 
-**Waktu dan acak dikendalikan.** Tes tidak pernah membaca jam sistem atau `Math.random()` langsung. Mesin penjadwalan menerima `clock` dan `seed` sebagai dependensi, sehingga skenario seperti batas 04.00 atau pindah zona waktu bisa diuji tanpa menunggu.
+**Waktu dan acak dikendalikan.** Tes tidak pernah membaca jam sistem atau `Math.random()` langsung. Mesin penjadwalan menerima `clock` dan `seed` sebagai dependensi, sehingga skenario seperti batas 00.00 atau pindah zona waktu bisa diuji tanpa menunggu.
 
 ---
 
@@ -158,7 +158,7 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | SR-054 | Interval hasil hitungan 2 hari                                                                  | Tidak digeser                                                                                                                       | batas    | SRD 4.6           |
 | SR-055 | Property: jawaban benar pada R rendah vs R tinggi, kartu lain identik                           | Kenaikan S pada R rendah lebih besar                                                                                                | normal   | SRD 4.2           |
 | SR-056 | Target retensi                                                                                  | Selalu 0,90; tidak ada jalur untuk mengubahnya dari UI                                                                              | batas    | SRD 4.3           |
-| SR-057 | Kartu dengan `due` tepat di `local_day` hari ini, dibuka pukul 04.00                            | Kartu masuk antrean hari ini                                                                                                        | batas    | SRD 4.9           |
+| SR-057 | Kartu dengan `due` tepat di `local_day` hari ini, dibuka pukul 00.00                            | Kartu masuk antrean hari ini                                                                                                        | batas    | SRD 4.9           |
 
 ### 5.5 Antrean Harian
 
@@ -279,7 +279,7 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 
 | ID     | Skenario                                                   | Hasil yang diharapkan                                                | Kategori | Aturan  |
 | ------ | ---------------------------------------------------------- | -------------------------------------------------------------------- | -------- | ------- |
-| SR-133 | Jawaban pukul 03.59 dan pukul 04.00 WITA                   | `local_day` hari sebelumnya dan hari berikutnya                      | batas    | AC-10   |
+| SR-133 | Jawaban pukul 23.59 dan pukul 00.00 WITA                   | `local_day` hari sebelumnya dan hari berikutnya                      | batas    | AC-10   |
 | SR-134 | 10 Perkenalan pukul 23.00, lalu sesi pukul 01.00           | Tidak ada materi baru; masih hari yang sama                          | batas    | SRD 4.9 |
 | SR-135 | Pindah dari WITA ke WIB pukul 20.00 WITA                   | Tidak ada kuota materi baru kedua di hari nyata yang sama            | batas    | SRD 4.9 |
 | SR-136 | Pindah dari WIB ke WIT                                     | Tidak ada kartu yang jadi waktunya diulang lebih awal dari jadwalnya | batas    | AC-10   |
@@ -982,7 +982,7 @@ Tes E2E dijalankan dengan Playwright di Chromium dan WebKit (bagian 2). Setiap t
 | E2E-54 | Penyimpanan dipaksa penuh saat menjawab                                      | **Penyimpanan perangkat penuh. Ekspor data, lalu kosongkan ruang penyimpanan.**                                                                                           | negatif  |
 | E2E-55 | Pindai seluruh teks UI di alur belajar                                       | Tidak ada istilah terlarang: `mature`, `relearning`, `lapses`, `node`, `activeScope`, FSRS, peluang ingat, antrean kirim, replay, "Terjadi kesalahan", "Hebat!", "Salah!" | negatif  |
 | E2E-56 | Pindai label bilah bawah di viewport 360 px                                  | Keempat label tampil utuh tanpa terpotong                                                                                                                                 | batas    |
-| E2E-57 | Jawab soal dengan zona waktu browser `Asia/Makassar` pukul 03.59, lalu 04.00 | Jumlah materi baru yang tersedia berganti hanya setelah pukul 04.00                                                                                                       | batas    |
+| E2E-57 | Jawab soal dengan zona waktu browser `Asia/Makassar` pukul 23.59, lalu 00.00 | Jumlah materi baru yang tersedia berganti hanya setelah pukul 00.00                                                                                                       | batas    |
 
 ### 7.9 Tes Penempatan
 
