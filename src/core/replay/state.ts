@@ -23,7 +23,14 @@ export type PairState = {
 	drillStreak: number;
 	drillDay: string | null;
 };
-export type DayStats = { tier: Tier; reviews: number; reviewsCorrect: number; held: boolean };
+export type DayStats = {
+	tier: Tier;
+	reviews: number;
+	reviewsCorrect: number;
+	held: boolean;
+	// Scheduled Golongan A reviews answered that day, counted against the daily cap.
+	capped: number;
+};
 export type Diagnostic = { eventId: string; reason: string };
 
 export type AppState = {

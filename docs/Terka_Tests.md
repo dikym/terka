@@ -180,6 +180,11 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | SR-068 | Urutan materi baru dalam satu kode                                                         | Hanya `code2region` masuk sebagai materi baru; `region2code` dan `setrecall` mengikuti prasyarat pembukaan        | normal   | SRD 2.7 |
 | SR-069 | Tidak ada kartu yang perlu diulang dan tidak ada materi baru                               | Antrean kosong; beranda menyatakan tidak ada soal yang perlu diulang                                              | batas    | SRD 4.7 |
 | SR-070 | Konstanta perhitungan durasi tiap tingkat                                                  | Perkiraan waktu aktif tiga tayangan Golongan A dan pengulangan ≤ 600 detik; bukan estimasi sesi atau waktu tunggu | normal   | SRD 4.7 |
+| SR-352 | 45 pengulangan jatuh tempo | Antrean berisi 30 pengulangan dengan peluang ingat terendah | batas | SRD 4.7 |
+| SR-353 | 25 pengulangan terjadwal sudah dijawab hari ini, 45 jatuh tempo | Antrean berisi 5 pengulangan | batas | SRD 4.7 |
+| SR-354 | Batas harian habis; ada langkah belajar dan pasangan aktif | Langkah belajar dan Bandingkan Kode tetap masuk antrean | batas | SRD 4.7 |
+| SR-355 | Jawaban Bandingkan Kode, `setrecall`, dan kode khusus | Tidak mengurangi batas pengulangan harian | batas | SRD 4.7 |
+| SR-356 | Tunggakan 45 pengulangan, ambang penahanan 40 | Materi baru tetap dijeda walau antrean hanya memuat 30 pengulangan | batas | SRD 4.7 |
 
 ### 5.6 Perkenalan
 
