@@ -122,7 +122,7 @@ export function Tooltip({
 						id={id}
 						role="tooltip"
 						style={{ visibility: "hidden" }}
-						className="pointer-events-none fixed z-60 inline-flex items-center gap-2 rounded-sm border border-ink-1000 bg-paper-0 px-2.5 py-1.5 font-sans text-body-sm leading-4 font-medium whitespace-nowrap text-ink-900 shadow-overlay"
+						className="pointer-events-none fixed z-60 inline-flex max-w-72 items-center gap-2 rounded-sm border border-ink-1000 bg-paper-0 px-2.5 py-1.5 font-sans text-body-sm leading-4 font-medium text-pretty text-ink-900 shadow-overlay"
 					>
 						{content}
 						{kbd && (
@@ -130,8 +130,10 @@ export function Tooltip({
 								{kbd}
 							</kbd>
 						)}
-						{/* A 45° line of width 1/√2 covers one pixel per row, as wide as the 1 px border. It
-					    starts at the border's middle; the paper wedge clears the whole border between. */}
+						{/* A 45° line of width 1/√2 covers one pixel per row, as wide as the 1 px border.
+					    Width 1 matches the border across the line but reads heavier: an antialiased
+					    diagonal looks bolder than a crisp horizontal. It starts at the border's middle;
+					    the paper wedge clears the whole border between. */}
 						<svg
 							ref={arrow}
 							aria-hidden="true"

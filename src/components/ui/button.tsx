@@ -43,6 +43,8 @@ export function buttonClass(variant: Variant, size: keyof typeof SIZE, block: bo
 		"cursor-pointer disabled:cursor-not-allowed disabled:opacity-40",
 		// `not-disabled`, not `enabled`: `:enabled` never matches the links this renders as.
 		pressable ? "not-disabled:active:translate-0.5 not-disabled:active:shadow-none" : "",
+		// The focus outline would run into the offset shadow, so the shadow steps aside for it.
+		pressable ? "focus-visible:shadow-none" : "",
 		VARIANT[variant],
 		SIZE[size]
 	].join(" ");

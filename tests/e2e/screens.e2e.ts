@@ -569,6 +569,24 @@ test("a shortened area list in the weakest codes table shows in full on hover", 
 	const cell = page.getByText(/^Kota Medan, Kota Binjai, dan \d+ lainnya$/);
 	await cell.hover();
 	await expect(page.getByRole("tooltip")).toHaveText(/^Kota Medan, Kota Binjai, .+, .+, .+$/);
+	// A long list wraps inside the tooltip's max width instead of running across the page.
+	const box = (await page.getByRole("tooltip").boundingBox())!;
+	expect(box.width).toBeLessThanOrEqual(288);
+});
+
+test("a menu opened with the mouse highlights nothing until hovered", async ({ page }) => {
+	await seen(page);
+	await page.goto("/statistik");
+	await page.getByRole("button", { name: "Akun" }).click();
+	const first = page.getByRole("menuitem", { name: "Ekspor data" });
+	await expect(first).toBeFocused();
+	const background = (item: Locator) =>
+		item.evaluate((element) => getComputedStyle(element).backgroundColor);
+	expect(await background(first)).toBe("rgba(0, 0, 0, 0)");
+	await page.keyboard.press("ArrowDown");
+	const second = page.getByRole("menuitem", { name: "Impor data" });
+	await expect(second).toBeFocused();
+	expect(await background(second)).not.toBe("rgba(0, 0, 0, 0)");
 });
 
 test("a code link is exactly as wide as its chip", async ({ page }) => {
@@ -601,4 +619,23 @@ test("the home page's code chips open Referensi", async ({ page }) => {
 	await expect(chip).toBeVisible();
 	await chip.click();
 	await expect(page).toHaveURL(/\/referensi\?kode=/);
+});
+
+test("a shadowed button drops its shadow under the keyboard focus outline", async ({ page }) => {
+	await seen(page);
+	await page.goto("/beranda");
+	const start = page.getByRole("link", { name: /Mulai belajar/ });
+	await start.waitFor();
+	await page.keyboard.press("Tab");
+	await start.focus();
+	const look = () =>
+		start.evaluate((element) => {
+			const style = getComputedStyle(element);
+			return { outline: style.outlineStyle, shadow: style.boxShadow };
+		});
+	await expect.poll(async () => (await look()).outline).toBe("solid");
+	// The shadow eases over 90 ms.
+	await expect
+		.poll(async () => (await look()).shadow)
+		.toMatch(/^(none|(rgba\(0, 0, 0, 0\) 0px 0px 0px 0px(, )?)+)$/);
 });

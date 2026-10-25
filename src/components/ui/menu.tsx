@@ -101,10 +101,10 @@ export function Menu({
 								/>
 							);
 						const at = ++index;
-						const current = at === active;
+						// Keyboard focus shows like hover; the focus a mouse open puts on the first item does not.
 						const tone = entry.danger
-							? `text-stop-700 hover:bg-stop-100 ${current ? "bg-stop-100" : ""}`
-							: `text-ink-1000 hover:bg-paper-50 ${current ? "bg-caution-100" : ""}`;
+							? "text-stop-700 hover:bg-stop-100 focus-visible:bg-stop-100"
+							: "text-ink-1000 hover:bg-paper-50 focus-visible:bg-paper-50";
 						return (
 							<button
 								key={entry.label}
