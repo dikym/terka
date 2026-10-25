@@ -588,3 +588,17 @@ test("a code link is exactly as wide as its chip", async ({ page }) => {
 		expect(outer.width).toBeCloseTo(chip.width, 0);
 	}
 });
+
+test("the home page's code chips open Referensi", async ({ page }) => {
+	await seen(page);
+	// A kawasan scope lists its provinces with their code chips.
+	await page.goto("/cakupan");
+	await page.getByRole("button", { name: "Sumatera" }).first().click();
+	await page.keyboard.press("Enter");
+	await expect(page.getByText("Cakupan aktif")).toBeVisible();
+	await page.goto("/beranda");
+	const chip = page.getByRole("link", { name: /^Lihat .+ di Referensi$/ }).first();
+	await expect(chip).toBeVisible();
+	await chip.click();
+	await expect(page).toHaveURL(/\/referensi\?kode=/);
+});
