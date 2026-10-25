@@ -686,6 +686,11 @@ export function Referensi({
 		setHighlight(null);
 		setResults(null);
 	};
+	// Chips swap the page in place, so the scroll would otherwise stay where the chip was.
+	const open = (code: string) => {
+		update(code);
+		window.scrollTo({ top: 0 });
+	};
 	const suggesting = view.kind === "suggest" && !results;
 
 	// The address names what is shown, so a reload brings it back. Replaced, not pushed:
@@ -792,7 +797,7 @@ export function Referensi({
 				<DiplomatList
 					list={diplomatList(data.bundle)}
 					current={view.number}
-					onPick={update}
+					onPick={open}
 				/>
 				<Hint>Pencarian kode khusus tidak dicatat di Pelat Terlihat.</Hint>
 			</>
@@ -809,16 +814,14 @@ export function Referensi({
 		main = <NoResult query={searched.trim()} />;
 		aside = <SearchHelp />;
 	} else {
-		main = (
-			<RegionList bundle={bundle} filter={kawasan} setFilter={setKawasan} onPick={update} />
-		);
+		main = <RegionList bundle={bundle} filter={kawasan} setFilter={setKawasan} onPick={open} />;
 		aside =
 			view.kind === "suggest" ? (
 				<SearchHelp />
 			) : (
 				<>
 					<SpecialCodesCard loading={!data} />
-					{(seen === null || seen.length > 0) && <SeenCard rows={seen} onPick={update} />}
+					{(seen === null || seen.length > 0) && <SeenCard rows={seen} onPick={open} />}
 					<DisclaimerCard />
 				</>
 			);
