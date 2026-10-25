@@ -570,15 +570,13 @@ export function Question(props: Props) {
 				<AnswerBox state={state} onInput={onInput} mono={card.form === "tebakKode"} />
 			)}
 			{graded && <Verdict state={state} card={card} />}
-			{graded ? (
-				<NextButton onNext={onNext} />
-			) : (
-				!options && (
-					<Button block kbd="Enter" onClick={onSubmit}>
-						Periksa
-					</Button>
-				)
-			)}
+			{graded
+				? state.mode !== "kilat" && <NextButton onNext={onNext} />
+				: !options && (
+						<Button block kbd="Enter" onClick={onSubmit}>
+							Periksa
+						</Button>
+					)}
 			{!graded && state.mode === "penempatan" && (
 				<Button variant="quiet" block className="bg-transparent" onClick={onUnknown}>
 					Tidak tahu
