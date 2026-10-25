@@ -540,6 +540,21 @@ test("every suggestion row keeps its areas on one line", async ({ page }) => {
 	expect(Math.max(...heights)).toBeLessThan(30);
 });
 
+test("the about page credits its maker and says how to report data", async ({ page }) => {
+	await seen(page);
+	await page.goto("/tentang");
+	await expect(page.getByRole("heading", { level: 1, name: "Tentang Terka" })).toBeVisible();
+	await expect(page.getByRole("link", { name: "Diky" })).toHaveAttribute(
+		"href",
+		"https://dikym.me"
+	);
+	await expect(page.getByRole("link", { name: "contact@terka.my.id" })).toHaveAttribute(
+		"href",
+		"mailto:contact@terka.my.id"
+	);
+	await expect(page.getByText("bukan rujukan resmi", { exact: false }).first()).toBeVisible();
+});
+
 test("a chip in the region list or Pelat Terlihat opens its code", async ({ page }) => {
 	await seen(page);
 	await page.goto("/referensi");
