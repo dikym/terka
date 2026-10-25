@@ -136,3 +136,14 @@ test("the search box stays under the header while the results scroll", async ({ 
 	expect(box.y).toBeGreaterThanOrEqual(60);
 	expect(box.y).toBeLessThan(140);
 });
+
+test("opening a code chip in Referensi returns to the top", async ({ page }) => {
+	await seen(page);
+	await page.goto("/referensi");
+	const chip = page.getByRole("button", { name: "Buka PA" });
+	await chip.scrollIntoViewIfNeeded();
+	expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
+	await chip.click();
+	await expect(page).toHaveURL(/kode=PA/);
+	expect(await page.evaluate(() => window.scrollY)).toBe(0);
+});
