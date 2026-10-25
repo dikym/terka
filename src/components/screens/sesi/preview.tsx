@@ -1,10 +1,12 @@
-import { BarButton, SessionFrame, TopBar } from "@/components/shell/session-frame";
+import { SessionFrame, TopBar } from "@/components/shell/session-frame";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { GROUP_BG } from "@/components/ui/groups";
 import { Icon } from "@/components/ui/icon";
 import { Kbd } from "@/components/ui/kbd";
+import { BACK_BUTTON } from "@/components/ui/page-title";
 import { EmptyState } from "@/components/ui/states";
+import { Tooltip } from "@/components/ui/tooltip";
 import type { Preview } from "@/lib/session/preview";
 import { LevelMark, levelName } from "./parts";
 
@@ -92,8 +94,19 @@ export function PreviewBar({ onBack }: { onBack: () => void }) {
 	return (
 		<TopBar variant="preview" className="justify-between">
 			<span className="inline-flex items-center gap-3">
-				<BarButton icon="arrow-left" label="Kembali" onClick={onBack} />
-				<span className="type-label text-ink-500">Pratinjau sesi</span>
+				<Tooltip content="Kembali">
+					<button
+						type="button"
+						aria-label="Kembali"
+						onClick={onBack}
+						className={`${BACK_BUTTON} max-lg:-ml-2.5 lg:size-9`}
+					>
+						<Icon name="arrow-left" size={null} className="size-5.5 lg:size-4.5" />
+					</button>
+				</Tooltip>
+				<span className="max-lg:font-display max-lg:text-subhead max-lg:leading-[1.2] max-lg:font-semibold max-lg:tracking-title lg:type-label lg:text-ink-500">
+					Pratinjau sesi
+				</span>
 			</span>
 			<Kbd>Esc</Kbd>
 		</TopBar>
