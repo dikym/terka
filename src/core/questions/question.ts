@@ -1,4 +1,5 @@
 import type { AnswerSignals } from "../grading/signals";
+import { seeded } from "../random";
 import type { Scope } from "./distractors";
 
 export type CardMode =
@@ -51,7 +52,20 @@ export type QuestionOptions = {
 	drillPair?: string;
 	note?: string | null;
 	previousPromptAreaId?: string | null;
+	// A re-ask of a card keeps its prompt but draws its own options and their order.
+	variant?: number;
 };
+
+const VARIED_PURPOSES = new Set(["distractors", "order"]);
+
+export function questionRandom(
+	card: { cardId: string; reps: number },
+	options: Pick<QuestionOptions, "variant">,
+	purpose: string
+) {
+	const variant = options.variant && VARIED_PURPOSES.has(purpose) ? `:${options.variant}` : "";
+	return seeded(`${card.cardId}:${card.reps}:${purpose}${variant}`);
+}
 
 export const LABELS = {
 	guessArea: "Tebak daerah",
