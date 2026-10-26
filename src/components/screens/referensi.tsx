@@ -28,11 +28,11 @@ import {
 	diplomatList,
 	otherCodes,
 	provinceResults,
-	type RefGroup,
-	type RegionDetail,
-	refGroups,
 	referenceHref,
+	type RefGroup,
+	refGroups,
 	refView,
+	type RegionDetail,
 	regionDetail,
 	type SearchResults as SearchResultsData,
 	searchResults,
@@ -315,7 +315,7 @@ function RegionList({
 								[group.provinces.length, "provinsi"],
 								[group.codes, "kode"]
 							].map(([value, label]) => (
-								<span key={label} className="flex min-w-0 flex-col gap-[3px]">
+								<span key={label} className="flex min-w-0 flex-col gap-0.75">
 									<span className="font-mono text-body-md leading-none font-semibold text-ink-1000">
 										{loading ? <SkeletonText width="1.2em" /> : value}
 									</span>
@@ -421,7 +421,7 @@ function SpecialCodesCard({ loading }: { loading: boolean }) {
 						</span>
 						{loading ? (
 							<span className="flex items-center gap-1.5">
-								<Skeleton className="size-[7px] rounded-full" />
+								<Skeleton className="size-1.75 rounded-full" />
 								<SkeletonText width={skeletonWidth(label)} />
 							</span>
 						) : (

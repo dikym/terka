@@ -410,7 +410,7 @@ export function Beranda({
 										)}
 									</span>
 									{/* Beside the name, four 2.5rem chips and their gaps: at most four codes per line. */}
-									<span className="col-span-full row-start-2 flex flex-wrap gap-1 @xl:col-auto @xl:row-auto @xl:max-w-[10.75rem] @xl:justify-end @xl:justify-self-end">
+									<span className="col-span-full row-start-2 flex flex-wrap gap-1 @xl:col-auto @xl:row-auto @xl:max-w-43 @xl:justify-end @xl:justify-self-end">
 										{row.codes.map((code) =>
 											d ? (
 												<CodeLink
@@ -449,7 +449,7 @@ export function Beranda({
 								[d?.scope.newInScope, "materi baru tersedia", "1.2em", "7.5em"],
 								[d?.scope.newOutside, "materi baru di luar Cakupan", "1.7em", "9em"]
 							].map(([value, label, valueWidth, labelWidth]) => (
-								<span key={label} className="flex min-w-0 flex-col gap-[3px]">
+								<span key={label} className="flex min-w-0 flex-col gap-0.75">
 									<span className="font-mono text-body-md leading-none font-semibold text-ink-1000">
 										{d ? value : <SkeletonText width={valueWidth as string} />}
 									</span>
@@ -488,14 +488,14 @@ export function Beranda({
 								{d ? (
 									d.summary.streak
 								) : (
-									<SkeletonText width="1.2em" className="-translate-y-[3px]" />
+									<SkeletonText width="1.2em" className="-translate-y-0.75" />
 								)}
 							</span>
 							<span className="type-label text-tangerine-700">
 								{d ? (
 									"Hari Beruntun"
 								) : (
-									<SkeletonText width="8em" className="-translate-y-[2px]" />
+									<SkeletonText width="8em" className="-translate-y-0.5" />
 								)}
 							</span>
 						</header>

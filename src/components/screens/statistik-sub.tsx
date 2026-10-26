@@ -64,7 +64,7 @@ export function PetaPenguasaan({
 							/>
 							<div className="flex flex-wrap gap-x-5 gap-y-2">
 								{row.figures.map(([value, label]) => (
-									<span key={label} className="inline-flex flex-col gap-[3px]">
+									<span key={label} className="inline-flex flex-col gap-0.75">
 										<span className="font-mono text-body-md leading-none font-semibold text-ink-1000">
 											{value}
 										</span>
@@ -346,7 +346,7 @@ export function Akun({
 							<CardHeader label="Akun" />
 							<div className="flex flex-col">
 								<AccountRow icon="user">
-									<div className="flex flex-col gap-[3px]">
+									<div className="flex flex-col gap-0.75">
 										<span className="font-display text-body-md leading-[1.2] font-semibold">
 											{page.email}
 										</span>

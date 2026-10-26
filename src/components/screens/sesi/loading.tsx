@@ -42,7 +42,7 @@ export function SessionLoading({ onExit }: { onExit: () => void }) {
 		>
 			{/* On a phone the line stands in for a title-size question. */}
 			<div className="flex h-7.5 items-center lg:contents">
-				<Skeleton className="block h-4.5 w-4/5 rounded-[3px] lg:h-5 lg:w-[462px] lg:max-w-full lg:rounded-xs" />
+				<Skeleton className="block h-4.5 w-4/5 rounded-[3px] lg:h-5 lg:w-115.5 lg:max-w-full lg:rounded-xs" />
 			</div>
 			<div className="flex h-12 items-center rounded-sm border border-ink-1000 bg-paper-0 px-4 font-mono text-body-lg leading-none text-ink-500">
 				Ketik jawaban…
