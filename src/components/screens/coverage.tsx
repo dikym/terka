@@ -277,7 +277,7 @@ const EMPTY: Coverage = {
 	}))
 };
 
-export function Cakupan({
+export function CoverageScreen({
 	data,
 	active,
 	onPick

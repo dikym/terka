@@ -118,7 +118,7 @@ const PLACEHOLDER: Settings = {
 	contact: "contact@terka.my.id"
 };
 
-export function Setelan({
+export function SettingsScreen({
 	data,
 	onDiplomatChange
 }: {

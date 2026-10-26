@@ -31,7 +31,7 @@ function Hint({ children }: { children: React.ReactNode }) {
  * Sign-in for Statistik › Akun: consent first on every attempt, then Google or an emailed
  * code. Each handler returns the message to show, or null when nothing needs saying.
  */
-export function AkunMasuk({ signIn }: { signIn: SignIn }) {
+export function SignInForm({ signIn }: { signIn: SignIn }) {
 	const [step, setStep] = useState<"consent" | "choose" | "code">("consent");
 	const [email, setEmail] = useState("");
 	const [code, setCode] = useState("");

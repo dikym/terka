@@ -247,7 +247,7 @@ function ChallengeButton({ done, countdown }: { done: boolean; countdown: ReactN
 	);
 }
 
-export function Beranda({
+export function HomeScreen({
 	data,
 	onScope
 }: {

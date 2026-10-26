@@ -87,7 +87,7 @@ function Group({ title, count, items }: { title: string; count: number; items: S
 	);
 }
 
-export function PapanTombol() {
+export function KeyboardShortcutsScreen() {
 	const router = useRouter();
 	const back = () => (window.history.length > 1 ? router.back() : router.push("/beranda"));
 	const latestBack = useRef(back);

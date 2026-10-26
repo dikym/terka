@@ -1,5 +1,5 @@
-import { Mulai } from "@/components/screens/mulai";
+import { Landing } from "@/components/screens/landing";
 
 export default function Page() {
-	return <Mulai />;
+	return <Landing />;
 }

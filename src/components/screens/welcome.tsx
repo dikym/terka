@@ -183,7 +183,7 @@ function WelcomeBody({
 	);
 }
 
-export function Sambutan({ onStart, onSkip }: { onStart: () => void; onSkip: () => void }) {
+export function Welcome({ onStart, onSkip }: { onStart: () => void; onSkip: () => void }) {
 	const dialog = useRef<HTMLDivElement>(null);
 	useFocusTrap(dialog);
 	useEffect(() => {
@@ -211,7 +211,7 @@ export function Sambutan({ onStart, onSkip }: { onStart: () => void; onSkip: () 
  * The welcome's shape before React has decided whether to show it. It sits in the static page and
  * shows only while the first-visit script marks the page, covering the home skeleton underneath.
  */
-export function SambutanSkeleton() {
+export function WelcomeSkeleton() {
 	return (
 		<div
 			data-welcome-skeleton

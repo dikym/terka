@@ -55,10 +55,10 @@ import {
 } from "@/lib/session/state";
 import { dueIn, TIER_NAME } from "@/lib/view/format";
 import { scopeGroup, scopeTitle } from "@/lib/view/groups";
-import { type BarProps, SessionBar, SessionMeta } from "./bar";
-import { EndFooter, PlacementEnd, type PlacementEndView, SessionEnd } from "./ends";
+import { type BarProps, SessionBar, SessionMeta } from "./session-bar";
+import { EndFooter, PlacementEnd, type PlacementEndView, SessionEnd } from "./session-end";
 import { SessionLoading } from "./loading";
-import { SessionEmpty, SessionPreview } from "./preview";
+import { SessionEmpty, SessionPreview } from "./session-preview";
 import { Question } from "./question";
 
 const TICK_MS = 100;

@@ -3,9 +3,9 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { AppFailed } from "@/components/screens/app-status";
-import { Beranda } from "@/components/screens/beranda";
-import { PerubahanData } from "@/components/screens/perubahan-data";
-import { Sambutan, SambutanSkeleton } from "@/components/screens/sambutan";
+import { HomeScreen } from "@/components/screens/home";
+import { DataChanges } from "@/components/screens/data-changes";
+import { Welcome, WelcomeSkeleton } from "@/components/screens/welcome";
 import { showToast } from "@/lib/toasts";
 import { placementAvailable } from "@/core/session/placement";
 import { pendingNotices } from "@/core/views/notices";
@@ -109,7 +109,7 @@ function Home() {
 	if (params.get("perubahan") === "1") {
 		const seen = Number(readFlag("local", SEEN_CONTENT_REV)) || null;
 		return (
-			<PerubahanData
+			<DataChanges
 				data={runtime && app ? dataChanges(app.log.state, runtime.bundle, seen) : null}
 				onClose={() => {
 					if (runtime)
@@ -121,14 +121,14 @@ function Home() {
 	}
 	return (
 		<>
-			<Beranda
+			<HomeScreen
 				data={data}
 				onScope={(scope) => {
 					if (runtime && prefs) void runtime.saveSettings({ ...prefs.settings, scope });
 				}}
 			/>
 			{welcome && (
-				<Sambutan
+				<Welcome
 					// The welcome stays on screen until the test opens, so the home screen never flashes.
 					onStart={() => {
 						setStarting(true);
@@ -145,7 +145,7 @@ function Home() {
 export default function Page() {
 	return (
 		<>
-			<SambutanSkeleton />
+			<WelcomeSkeleton />
 			<Suspense>
 				<Home />
 			</Suspense>

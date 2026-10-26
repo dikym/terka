@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { AppFailed } from "@/components/screens/app-status";
-import { Setelan } from "@/components/screens/setelan";
+import { SettingsScreen } from "@/components/screens/settings";
 import { sessionCtx } from "@/lib/app/runtime";
 import { useAppState, useNow, usePrefs, useReady } from "@/lib/app/use-runtime";
 import { settingsView } from "@/lib/view/settings";
@@ -27,7 +27,7 @@ export default function Page() {
 	if (status.status === "contentFailed" || status.status === "storageFailed")
 		return <AppFailed status={status} />;
 	return (
-		<Setelan
+		<SettingsScreen
 			data={data}
 			onDiplomatChange={(specialEnabled) => {
 				if (runtime && prefs)

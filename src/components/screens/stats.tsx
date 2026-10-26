@@ -617,7 +617,7 @@ function Account({ s, loading, onExport }: { s: Stats; loading: boolean; onExpor
 	);
 }
 
-export function Statistik({
+export function StatsScreen({
 	data,
 	provinces,
 	syncLabel,

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { PetaPenguasaan } from "@/components/screens/statistik-sub";
+import { MasteryMapScreen } from "@/components/screens/stats-detail";
 import { useAppState, useReady } from "@/lib/app/use-runtime";
 import { mapProvinces } from "@/lib/view/map";
 import { masteryByGroup } from "@/lib/view/stats";
@@ -19,5 +19,5 @@ export default function Page() {
 				: { provinces: {}, rows: null },
 		[runtime, app]
 	);
-	return <PetaPenguasaan provinces={view.provinces} rows={view.rows} />;
+	return <MasteryMapScreen provinces={view.provinces} rows={view.rows} />;
 }

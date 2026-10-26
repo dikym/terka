@@ -2,7 +2,14 @@ import { Link } from "@/components/ui/app-link";
 import { Button, buttonClass } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Icon, type IconName } from "@/components/ui/icon";
-import { Plate, Wordmark } from "@/components/ui/plate";
+import { Wordmark } from "@/components/ui/plate";
+import type { Bundle } from "@/core/content/schema";
+import plates from "@/data/plates.json";
+import { demoQuestions } from "@/lib/view/demo";
+import { DemoCard } from "./landing-demo";
+
+// Worked out while the static page is built, so the browser gets a few lines, not the plate data.
+const DEMO = demoQuestions(plates as unknown as Bundle);
 
 // The landing column is wider than the app's: 1120 px with a 20 px gutter on desktop.
 const WRAP = "container max-w-280 lg:px-5";
@@ -148,41 +155,6 @@ function Header() {
 	);
 }
 
-function DemoCard() {
-	return (
-		<div className="flex w-full flex-col gap-4 rounded-md border border-ink-1000 bg-paper-0 p-5 shadow-block lg:max-w-110 lg:gap-5 lg:justify-self-center lg:p-6">
-			<div className="flex items-center justify-between gap-3">
-				<span className={LABEL}>Tebak daerah</span>
-				<span className="font-mono text-body-sm leading-none font-medium text-ink-500">
-					7/24
-				</span>
-			</div>
-			<div className="flex flex-col items-start gap-3 lg:gap-4">
-				<Plate
-					code="DK"
-					number="1234"
-					suffix="AB"
-					size="md"
-					highlight="code"
-					className="lg:px-5 lg:py-3 lg:text-[56px]"
-				/>
-				<p className="font-display text-heading leading-snug font-bold tracking-title text-ink-1000">
-					DK dipakai daerah mana?
-				</p>
-			</div>
-			<div className="flex h-12 items-center rounded-sm border border-ink-1000 bg-paper-0 px-4 text-body-lg leading-none text-ink-500">
-				Ketik jawaban…
-			</div>
-			<span className="inline-flex items-center gap-2 text-body-sm leading-none text-ink-500 max-lg:hidden">
-				<kbd className="rounded-xs border border-ink-300 px-1.25 py-0.75 font-mono text-micro leading-none font-medium text-ink-900">
-					Enter
-				</kbd>
-				untuk lanjut
-			</span>
-		</div>
-	);
-}
-
 function Hero() {
 	return (
 		<section className="border-b border-hairline">
@@ -214,7 +186,7 @@ function Hero() {
 						</span>
 					</div>
 				</div>
-				<DemoCard />
+				<DemoCard questions={DEMO} />
 			</div>
 		</section>
 	);
@@ -423,7 +395,7 @@ function Footer() {
 				className={`${WRAP} flex flex-col gap-5 pt-8 pb-10 lg:flex-row lg:flex-wrap lg:items-center lg:justify-between lg:py-8`}
 			>
 				<div className="flex flex-col items-start gap-3 lg:flex-row lg:flex-wrap lg:items-center lg:gap-4">
-					<span className="inline-flex items-center gap-[0.3em] rounded-sm border-2 border-ink-1000 px-2 py-[3px] font-plate text-[16px] leading-none font-bold tracking-[0.05em] text-ink-1000">
+					<span className="inline-flex items-center gap-[0.3em] rounded-sm border-2 border-ink-1000 px-2 py-0.75 font-plate text-body-lg leading-none font-bold tracking-wider text-ink-1000">
 						T<span>3</span>
 						<span>RKA</span>
 					</span>
@@ -453,7 +425,7 @@ function Footer() {
 	);
 }
 
-export function Mulai() {
+export function Landing() {
 	return (
 		<>
 			<Header />

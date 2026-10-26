@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { Suspense, useMemo, useState } from "react";
 import { AppFailed } from "@/components/screens/app-status";
-import { Referensi } from "@/components/screens/referensi";
+import { ReferenceScreen } from "@/components/screens/reference";
 import { sightingEvent } from "@/core/session/commands";
 import { todayOf } from "@/core/session/context";
 import { lastDayOf, sessionCtx } from "@/lib/app/runtime";
@@ -54,7 +54,9 @@ function ReferenceRoute() {
 		);
 		if (event) await runtime.store.record([event]);
 	};
-	return <Referensi data={data} initial={initial} onQuery={(query) => void record(query)} />;
+	return (
+		<ReferenceScreen data={data} initial={initial} onQuery={(query) => void record(query)} />
+	);
 }
 
 const NO_ENTRY = { kode: null, cari: null, provinsi: null, kawasan: null };
@@ -62,7 +64,7 @@ const NO_ENTRY = { kode: null, cari: null, provinsi: null, kawasan: null };
 export default function Page() {
 	// The static page has no address to read; it still ships the skeleton.
 	return (
-		<Suspense fallback={<Referensi data={null} initial={NO_ENTRY} onQuery={() => {}} />}>
+		<Suspense fallback={<ReferenceScreen data={null} initial={NO_ENTRY} onQuery={() => {}} />}>
 			<ReferenceRoute />
 		</Suspense>
 	);

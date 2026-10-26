@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { AppFailed } from "@/components/screens/app-status";
 import { useAccountActions } from "@/components/screens/account-actions";
-import { Statistik } from "@/components/screens/statistik";
+import { StatsScreen } from "@/components/screens/stats";
 import { Menu } from "@/components/ui/menu";
 import { sessionCtx } from "@/lib/app/runtime";
 import { lastExportAt } from "@/lib/app/transfer";
@@ -44,7 +44,7 @@ export default function Page() {
 		return <AppFailed status={status} />;
 	return (
 		<>
-			<Statistik
+			<StatsScreen
 				data={data}
 				provinces={provinces}
 				syncLabel={syncLabel}

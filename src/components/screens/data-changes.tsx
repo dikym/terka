@@ -13,13 +13,7 @@ function Item({ title, children }: { title: string; children: React.ReactNode })
 	);
 }
 
-export function PerubahanData({
-	data,
-	onClose
-}: {
-	data: DataChanges | null;
-	onClose: () => void;
-}) {
+export function DataChanges({ data, onClose }: { data: DataChanges | null; onClose: () => void }) {
 	if (!data) return <PageTitle title="Perubahan data" back={onClose} />;
 	return (
 		<>
