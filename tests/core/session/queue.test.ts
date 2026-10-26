@@ -323,6 +323,7 @@ describe("backlog order after a recheck", () => {
 	test("the weakest group's reviews go first while the backlog is over the cap", () => {
 		const { bundle, state } = mixed(40);
 		state.recheck = {
+			key: TODAY,
 			day: TODAY,
 			results: new Map([
 				["dk", false],
@@ -335,6 +336,7 @@ describe("backlog order after a recheck", () => {
 	test("the recheck order lapses once the backlog fits the cap", () => {
 		const { bundle, state } = mixed(20);
 		state.recheck = {
+			key: TODAY,
 			day: TODAY,
 			results: new Map([
 				["dk", false],
@@ -354,7 +356,7 @@ describe("backlog order after a recheck, at the edges", () => {
 			seedCard(state, `x${index}::code2region`, reviewCard({ stability: 5 + index }));
 		seedCard(state, "dk::code2region", reviewCard({ stability: 1 }));
 		seedCard(state, "a::code2region", reviewCard({ stability: 2 }));
-		state.recheck = { day: TODAY, results: new Map([["x3", false]]) };
+		state.recheck = { key: TODAY, day: TODAY, results: new Map([["x3", false]]) };
 		const queued = ids(dailyQueue(state, bundle, SETTINGS, at).items);
 		expect(queued.slice(0, 3)).toEqual([
 			"x0::code2region",
@@ -370,7 +372,23 @@ describe("backlog order after a recheck, at the edges", () => {
 		for (let index = 0; index < 40; index++)
 			seedCard(state, `x${index}::code2region`, reviewCard({ stability: 5 + index }));
 		const before = ids(dailyQueue(state, bundle, SETTINGS, at).items);
-		state.recheck = { day: TODAY, results: new Map([["gone", false]]) };
+		state.recheck = { key: TODAY, day: TODAY, results: new Map([["gone", false]]) };
 		expect(ids(dailyQueue(state, bundle, SETTINGS, at).items)).toEqual(before);
+	});
+});
+
+describe("stale recheck results", () => {
+	test("a recheck from before a later long break no longer orders the backlog", () => {
+		const bundle = manyRegions(40);
+		const state = settle(fresh(bundle));
+		for (let index = 0; index < 40; index++)
+			seedCard(state, `x${index}::code2region`, reviewCard({ stability: 5 + index }));
+		seedCard(state, "dk::code2region", reviewCard({ stability: 500 }));
+		const old = addDays(TODAY, -60);
+		state.recheck = { key: "old-run", day: old, results: new Map([["dk", false]]) };
+		state.activeDays.add(old);
+		state.activeDays.add(addDays(TODAY, -40));
+		const queued = ids(dailyQueue(state, bundle, SETTINGS, at).items);
+		expect(queued[0]).toBe("x0::code2region");
 	});
 });

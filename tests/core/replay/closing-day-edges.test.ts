@@ -171,3 +171,44 @@ describe("recheck results at the edges", () => {
 		expect(state.recheck).toBeNull();
 	});
 });
+
+describe("recheck results across midnight and runs", () => {
+	test("a recheck run that crosses midnight keeps the answers from both days", () => {
+		const midnight = Date.parse("2026-10-01T16:00:00Z"); // 00:00 WITA
+		const runId = "recheck-run";
+		const state = stateOf([
+			...learnedLongAgo("dk"),
+			...learnedLongAgo("bk"),
+			review("dk", "code2region", midnight - MINUTE, {
+				context: "recheck",
+				runId,
+				correct: false
+			}),
+			review("bk", "code2region", midnight + MINUTE, { context: "recheck", runId })
+		]);
+		expect([...state.recheck!.results].sort()).toEqual([
+			["bk", true],
+			["dk", false]
+		]);
+	});
+	test("a new recheck run replaces the results of the previous one", () => {
+		const later = NOW + 10 * DAY;
+		const state = stateOf([
+			...learnedLongAgo("dk"),
+			...learnedLongAgo("bk"),
+			review("dk", "code2region", later, { context: "recheck", runId: "first" }),
+			review("bk", "code2region", later + 2 * HOUR, { context: "recheck", runId: "second" })
+		]);
+		expect([...state.recheck!.results.keys()]).toEqual(["bk"]);
+	});
+});
+
+describe("placement after a recheck", () => {
+	test("a recheck answer counts as practice, so a later placement cannot change the level", () => {
+		const recheckOnly = stateOf([
+			review("dk", "code2region", NOW, { context: "recheck" }),
+			run("placement", NOW + HOUR, { placementLevel: "ahli" })
+		]);
+		expect(recheckOnly.tier.current).not.toBe("ahli");
+	});
+});
