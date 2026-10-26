@@ -159,7 +159,7 @@ Seluruh konten berasal dari satu file JSON yang dihasilkan dari `../data/plate-c
 **Kode khusus: `specials[]`, `referencePlates[]`, dan `sources[]`.** Data lengkap dan alasan label setiap entri ada di `Terka_Special_Codes.md`. Data yang dibaca build ada di `../data/special-codes.json`, yang menjadi sumber `specials[]`, `referencePlates[]`, dan `sources[]`. Build hanya membaca JSON; Markdown tidak dibaca build. `riPairs[]` di JSON itu hanya bahan Fun Facts dan tidak disalin ke `plates.json`. `specials[]` hanya berisi kode negara CD dan menjadi satu-satunya sumber kartu kode khusus. Properti per entri:
 
 | Properti                | Isi                                                                             |
-| ----------------------- | ------------------------------------------------------------------------------- |
+|-------------------------|---------------------------------------------------------------------------------|
 | `id`                    | `cd-{nomor}-{slug}`; slug diambil dari pemegang, maksimal 32 karakter total     |
 | `series`                | Selalu `CD`; nilai lain ditolak build                                           |
 | `number`                | Kode negara sebagai teks angka tanpa nol di depan                               |
@@ -167,7 +167,7 @@ Seluruh konten berasal dari satu file JSON yang dihasilkan dari `../data/plate-c
 | `holderType`            | `country` atau `organization`; UI menampilkannya sebagai negara atau organisasi |
 | `aliases`               | Nama lain yang diterima; wajib ada walau kosong                                 |
 | `sourceName`            | Ejaan persis di sumber, termasuk salah ketik, untuk penelusuran                 |
-| `confidence`            | `high`, `medium`, atau `low` menurut `Terka_Special_Codes.md` bagian 3            |
+| `confidence`            | `high`, `medium`, atau `low` menurut `Terka_Special_Codes.md` bagian 3          |
 | `needsReview`           | `true` jika makna entri perlu dikonfirmasi; entri ini tidak membentuk kartu     |
 | `sources`               | Daftar `id` dari `sources[]`, minimal satu                                      |
 | `validFrom`, `reviewBy` | Tanggal mulai berlaku menurut sumber dan batas pemeriksaan ulang                |

@@ -1,6 +1,6 @@
 {
-	"version": "2026.10.25",
-	"contentRev": 6,
+	"version": "2026.10.26",
+	"contentRev": 7,
 	"contentHistory": [
 		{
 			"contentRev": 1,
@@ -25,6 +25,10 @@
 		{
 			"contentRev": 6,
 			"version": "2026.10.25"
+		},
+		{
+			"contentRev": 7,
+			"version": "2026.10.26"
 		}
 	],
 	"groups": [
@@ -7448,7 +7452,7 @@
 			"id": "korlantas-cnn-2025-ri36",
 			"title": "Ada Angka Kecil di Pelat RI 36 Mobil Utusan Presiden, Apa Itu? (pernyataan Kasubdit STNK Dit Regident Korlantas Polri)",
 			"publisher": "CNN Indonesia",
-			"type": "media-mengutip-instansi",
+			"type": "media",
 			"date": "2025-01-16",
 			"url": "https://www.cnnindonesia.com/otomotif/20250116110327-579-1187800/ada-angka-kecil-di-pelat-ri-36-mobil-utusan-presiden-apa-itu",
 			"locator": "RI 36 nomor kecil 1–7 untuk utusan khusus presiden; penomoran RI dikoordinasikan dengan Kemensetneg",
@@ -7464,7 +7468,7 @@
 			"url": "https://oto.detik.com/berita/d-8450080/daftar-pelat-nomor-mobil-dinas-pejabat-ri-dari-presiden-hingga-menteri",
 			"locator": "Daftar RI 1–RI 13; unggahan Instagram asli Korlantas belum diarsipkan",
 			"checkedAt": "2026-09-24",
-			"originalUrl": null
+			"originalUrl": "https://www.instagram.com/p/DXQddp6iJNb/"
 		},
 		{
 			"id": "kumparan-2025-ri",
@@ -7536,7 +7540,7 @@
 			"id": "bisnis-2012-sulsel",
 			"title": "Sulsel Berlakukan Tiga Kode Pelat Kendaraan",
 			"publisher": "Kabar24 Bisnis.com",
-			"type": "media-mengutip-instansi",
+			"type": "media",
 			"date": "2012-06-07",
 			"url": "https://kabar24.bisnis.com/read/20120607/78/80327/sulsel-berlakukan-tiga-kode-pelat-kendaraan",
 			"locator": "Wawancara Regident Ditlantas Polda Sulsel",
@@ -7563,13 +7567,13 @@
 			"url": "https://news.ddtc.co.id/berita/daerah/1804029/dorong-kendaraan-mutasi-ke-pelat-ps-papua-selatan-bebaskan-bbnkb",
 			"locator": "Peluncuran pelat PS berdasarkan Peraturan Kapolda Papua 1/2024 tentang Penomoran Kendaraan Bermotor Daerah Papua dan DOB",
 			"checkedAt": "2026-10-01",
-			"originalUrl": null
+			"originalUrl": "https://suara.merauke.go.id/post/3617/pemprov-papua-selatan-launching-nomor-registrasi-kendaraan-bermotor-dari-pa-ke-ps.html"
 		},
 		{
 			"id": "detik-2012-polda-metro",
 			"title": "Polda Metro: Selama Tersedia, Silakan Pesan Nopol Kendaraan Cantik",
 			"publisher": "detikNews",
-			"type": "media-mengutip-instansi",
+			"type": "media",
 			"date": "2012-02-20",
 			"url": "https://news.detik.com/berita/d-1846949/polda-metro-selama-tersedia-silakan-pesan-nopol-kendaraan-cantik",
 			"locator": "Pernyataan Kabag Regident Ditlantas Polda Metro Jaya: seri huruf belakang mengikuti wilayah alamat pemohon, misalnya T untuk Jakarta Timur",
@@ -7591,7 +7595,7 @@
 			"id": "detikoto-2012-sulsel",
 			"title": "Kode Huruf Nomor Polisi Kendaraan Bermotor di Sulsel Bertambah Jadi Tiga",
 			"publisher": "detikOto",
-			"type": "media-mengutip-instansi",
+			"type": "media",
 			"date": "2012-06-06",
 			"url": "https://oto.detik.com/mobil/d-1934705/kode-huruf-nomor-polisi-kendaraan-bermotor-di-sulsel-bertambah-jadi-tiga",
 			"locator": "Keterangan pers Kasubdit Regident Ditlantas Polda Sulsel, 6 Juni 2012: DP dan DW, alasan biaya mesin cetak",
@@ -7607,7 +7611,7 @@
 			"url": "https://oto.detik.com/tips-and-tricks/d-5789056/ini-arti-kode-angka-dan-huruf-di-pelat-nomor-kendaraan",
 			"locator": "Penjelasan NTMC Polri tentang seri huruf wilayah Polda Metro Jaya: B, P, S, T, U",
 			"checkedAt": "2026-10-01",
-			"originalUrl": null
+			"originalUrl": "https://www.youtube.com/watch?v=NRKPoQq5w6E"
 		},
 		{
 			"id": "detikoto-2022-pelat-putih",
@@ -7618,7 +7622,7 @@
 			"url": "https://oto.detik.com/berita/d-6102996/ini-alasan-polisi-ubah-pelat-hitam-jadi-putih",
 			"locator": "Pernyataan Kasubdit STNK Ditregident Korlantas Polri: pelat putih berlaku mulai Juni 2022 untuk mendukung kamera ETLE",
 			"checkedAt": "2026-10-01",
-			"originalUrl": null
+			"originalUrl": "https://korlantas.polri.go.id/korlantas-polri-targetkan-pelat-nomor-putih-berlaku-pertengahan-juni-2022/"
 		},
 		{
 			"id": "detikoto-2022-stnk-mati",
@@ -7651,7 +7655,7 @@
 			"url": "https://oto.detik.com/berita/d-7501604/kode-pelat-nomor-di-3-provinsi-papua-diubah",
 			"locator": "Papua Barat Daya PY, Papua Selatan PS, Papua Tengah PT pada 2024",
 			"checkedAt": "2026-10-01",
-			"originalUrl": null
+			"originalUrl": "https://korlantas.polri.go.id/kode-pelat-nomor-kendaraan-3-provinsi-di-papua-berubah/"
 		},
 		{
 			"id": "detikoto-2024-stnk-korlantas",
@@ -7662,7 +7666,7 @@
 			"url": "https://oto.detik.com/berita/d-7211704/stnk-mati-2-tahun-bakal-dihapus-bagaimana-aturannya",
 			"locator": "Pernyataan Korlantas tentang implementasi Pasal 74 UU 22/2009; surat peringatan mengacu Perpol 7/2021; kendaraan yang dihapus tidak dapat didaftarkan kembali",
 			"checkedAt": "2026-10-01",
-			"originalUrl": null
+			"originalUrl": "https://mediahub.polri.go.id/in/image/detail/43644-dalam-rakor-pembina-samsat-nasional-kakorlantas-instruksikan-untuk-sinergikan-peningkatan-pelayanan-masyarakat"
 		},
 		{
 			"id": "fibis-java-expedition",
@@ -7701,7 +7705,7 @@
 			"id": "jpnn-2016-papua",
 			"title": "Nomor Polisi di Papua Bukan DS Lagi",
 			"publisher": "JPNN.com (mengutip Cenderawasih Pos)",
-			"type": "media-mengutip-instansi",
+			"type": "media",
 			"date": "2016-07-02",
 			"url": "https://www.jpnn.com/news/resmi-nomor-polisi-di-papua-bukan-ds-lagi",
 			"locator": "Peluncuran PA 1 oleh Kapolda Papua, 1 Juli 2016; Keputusan Korlantas 168/VI/2016",
@@ -7772,7 +7776,7 @@
 			"url": "https://otomotifnet.gridoto.com/read/233532243/berbau-kolonial-pelat-nomor-kalsel-emang-beda-da-singkatan-dari-ini",
 			"locator": "Pernyataan Kasubdit Regident Ditlantas Polda Kalsel: DA = Distrik Amandit; DA dipakai untuk Zuider en Ooster Afdeeling van Borneo",
 			"checkedAt": "2026-10-01",
-			"originalUrl": null
+			"originalUrl": "https://www.kompas.com/tren/read/2022/10/18/125100565/ramai-soal-kode-pelat-nomor-kalsel-da-mengapa-tak-berawalan-k-seperti-di"
 		},
 		{
 			"id": "perkap-5-2012",
