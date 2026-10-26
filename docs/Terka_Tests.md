@@ -230,7 +230,7 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | SR-078 | `region2code` sudah terbuka, lalu `code2region` lapse dan intervalnya turun ke 1 hari | `region2code` tetap terbuka                                  | batas    | SRD 4.8 |
 | SR-079 | Interval `code2region` mencapai 14 hari pada kode dengan 12 wilayah                   | `setrecall` terbuka                                          | normal   | SRD 4.8 |
 | SR-080 | Interval `code2region` mencapai 14 hari pada kode dengan 2 wilayah                    | `setrecall` tidak pernah dibuat                              | batas    | SRD 5.2 |
-| SR-081 | `region2code` DK terbuka saat Cakupan sudah pindah ke Sumatera                        | `region2code` DK tetap boleh diperkenalkan dan memakai kuota | batas    | SRD 4.8 |
+| SR-081 | `region2code` DK terbuka saat Cakupan sudah pindah ke Sumatera                        | `region2code` DK tidak diperkenalkan sampai Cakupan kembali ke Bali | batas    | SRD 4.8 |
 
 ### 5.8 Pemeriksaan Jawaban Tunggal
 

@@ -194,17 +194,15 @@ export function dailyQueue(
 		const found = regions.get(contentOf(card.cardId));
 		return found !== undefined && inScope(found.region, settings.scope);
 	};
-	const candidates = waiting
-		.filter((card) => modeOf(card.cardId) === "region2code" || scoped(card))
-		.sort((a, b) => {
-			const codeA = contentOf(a.cardId);
-			const codeB = contentOf(b.cardId);
-			return (
-				(seen.get(codeB) ?? 0) - (seen.get(codeA) ?? 0) ||
-				(regions.get(codeA)?.order ?? Infinity) - (regions.get(codeB)?.order ?? Infinity) ||
-				compareText(modeOf(a.cardId), modeOf(b.cardId))
-			);
-		});
+	const candidates = waiting.filter(scoped).sort((a, b) => {
+		const codeA = contentOf(a.cardId);
+		const codeB = contentOf(b.cardId);
+		return (
+			(seen.get(codeB) ?? 0) - (seen.get(codeA) ?? 0) ||
+			(regions.get(codeA)?.order ?? Infinity) - (regions.get(codeB)?.order ?? Infinity) ||
+			compareText(modeOf(a.cardId), modeOf(b.cardId))
+		);
+	});
 	const quota = held ? 0 : quotaLeft(state, "region", today);
 	return {
 		items: uniqueItems([...due, ...introductions(state, candidates, quota, today)]),
