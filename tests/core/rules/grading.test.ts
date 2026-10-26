@@ -141,6 +141,10 @@ describe("grading", () => {
 		expect(gradePlacement(placement({ msToFirstKey: 2400 }))).toBe(4);
 		expect(gradePlacement(placement({ msToFirstKey: 4000 }))).toBe(3);
 		expect(gradePlacement(placement({ msToFirstKey: 2000, matchType: "typo" }))).toBe(3);
+		expect(gradePlacement(placement({ msToFirstKey: 500, keyGapsMs: [100, 3500, 100] }))).toBe(
+			3
+		);
+		expect(gradePlacement(placement({ msToFirstKey: 500, keyGapsMs: [100, 2900] }))).toBe(4);
 		expect(gradePlacement(placement({ correct: false }))).toBeNull();
 		expect(gradePlacement(placement({ interrupted: true }))).toBeNull();
 	});
