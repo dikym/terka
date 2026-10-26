@@ -600,9 +600,10 @@ Karena paling banyak 28 kartu yang bisa masuk `review` lewat tes, dan tanggal ja
 | Tingkat               | Cakupan yang disarankan                                                               |
 | --------------------- | ------------------------------------------------------------------------------------- |
 | Pemula                | Bali & Nusa Tenggara (bagian 2.6)                                                     |
-| Menengah, Mahir, Ahli | Kawasan dengan proporsi benar terendah di tahap 2 dan 3. Jika seri, urutan bagian 2.6 |
+| Menengah, Mahir       | Kawasan dengan materi baru tersisa terbanyak setelah tes (kode yang tidak lolos tes). Jika seri, urutan kawasan di data |
+| Ahli                  | Seluruh Indonesia: sebagian besar kode sudah dikenal, jadi materi baru boleh dibuka dari mana saja |
 
-Rekomendasi hanya saran. Tingkat juga menentukan batas materi baru harian dan ambang penahanan (bagian 4.7).
+Rekomendasi hanya saran. Proporsi benar per kawasan tidak dipakai: tahap 2 dan 3 hanya 20 soal untuk tujuh kawasan, terlalu sedikit untuk menilai kawasan mana yang paling lemah. Tingkat juga menentukan batas materi baru harian dan ambang penahanan (bagian 4.7).
 
 **Sesi yang berlaku.** Jika tes diulang, hanya sesi selesai terbaru menurut kunci pengurutan berbasis started_at yang dipakai replay. Waktu ended_at menentukan selesai/tidak, bukan pemecah urutan sesi. Kartu dan pasangan tertukar dari sesi lama diabaikan. Sesi yang tidak selesai — aplikasi ditutup di tengah tes — diabaikan seluruhnya.
 

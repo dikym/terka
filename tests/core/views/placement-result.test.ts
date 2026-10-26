@@ -1,5 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import type { Bundle } from "../../../src/core/content/schema";
+import { NATIONAL } from "../../../src/core/questions/distractors";
 import { placementResult } from "../../../src/core/views/placement-result";
 import { ruleBundle } from "../replay/fixtures";
 
@@ -34,23 +35,35 @@ describe("placement result", () => {
 			id: "bali-nusa-tenggara"
 		});
 	});
-	test("other levels get the weakest group of stages 2 and 3, ties in the suggested order", () => {
+	test("ahli is pointed to the whole country", () => {
+		expect(placementResult(tiered(), [], "ahli").suggestedScope).toEqual(NATIONAL);
+	});
+	test("menengah and mahir get the group with the most new codes left", () => {
 		const bundle = tiered();
-		const answers = [
-			answer("bb", 2, true),
-			answer("a", 2, false),
-			answer("p", 2, false),
-			answer("dr", 2, true),
-			answer("bk", 1, false)
-		];
-		expect(placementResult(bundle, answers, "mahir").suggestedScope).toEqual({
+		expect(placementResult(bundle, [], "menengah").suggestedScope).toEqual({
+			level: "group",
+			id: "sumatera"
+		});
+		const knownSumatera = ["bk", "bb", "ba"].map((id) => answer(id, 2, true));
+		expect(placementResult(bundle, knownSumatera, "mahir").suggestedScope).toEqual({
 			level: "group",
 			id: "jawa"
 		});
-		const tie = [answer("dr", 2, false), answer("a", 2, false)];
+	});
+	test("a tie goes to the group that comes first in the data", () => {
+		const bundle = tiered();
+		const tie = ["bk", "bb"].map((id) => answer(id, 2, true));
 		expect(placementResult(bundle, tie, "menengah").suggestedScope).toEqual({
 			level: "group",
-			id: "bali-nusa-tenggara"
+			id: "sumatera"
+		});
+	});
+	test("a wrong answer leaves its code new", () => {
+		const bundle = tiered();
+		const wrong = ["bk", "bb", "ba"].map((id) => answer(id, 2, false));
+		expect(placementResult(bundle, wrong, "mahir").suggestedScope).toEqual({
+			level: "group",
+			id: "sumatera"
 		});
 	});
 });
