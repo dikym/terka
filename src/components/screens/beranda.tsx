@@ -1,5 +1,5 @@
 import { Link } from "@/components/ui/app-link";
-import { Button } from "@/components/ui/button";
+import { Button, buttonClass } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { CodeLink } from "@/components/ui/code-chip";
 import { ProgressBar, Skeleton, SkeletonText } from "@/components/ui/feedback";
@@ -463,13 +463,14 @@ export function Beranda({
 								<span className="type-body-sm text-ink-700">
 									Materi di {d.scope.title} sudah dikenalkan semua.
 								</span>
-								<Button
-									variant="secondary"
-									icon="chevron-right"
+								<button
+									type="button"
+									className={buttonClass("secondary", "md", false)}
 									onClick={() => onScope?.(d.nextScope!.scope)}
 								>
-									Lanjut ke {d.nextScope.label}
-								</Button>
+									<span>Lanjut ke {d.nextScope.label}</span>
+									<Icon name="arrow-right" size={16} />
+								</button>
 							</div>
 						)}
 					</Card>
