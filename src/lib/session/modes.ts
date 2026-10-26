@@ -36,7 +36,8 @@ export type Mode =
 	"hariIni" | "harian" | "kilat" | "terfokus" | "diplomat" | "sebutkan" | "penempatan" | "cek";
 
 const PARAMS: Record<string, Mode> = {
-	harian: "harian",
+	harian: "hariIni",
+	tantangan: "harian",
 	kilat: "kilat",
 	terfokus: "terfokus",
 	diplomat: "diplomat",
@@ -44,6 +45,9 @@ const PARAMS: Record<string, Mode> = {
 	penempatan: "penempatan",
 	cek: "cek"
 };
+
+// A bare /sesi reuses the canonical URL of the last /sesi visit in the static export, so every link carries its mode.
+export const DAILY_SESSION = "/sesi?mode=harian";
 
 export const modeFromParam = (value: string | null): Mode =>
 	value && Object.hasOwn(PARAMS, value) ? PARAMS[value] : "hariIni";
@@ -308,7 +312,7 @@ export function planSession(mode: Mode, input: PlanInput, params: PlanParams): P
 				aside: duration(core),
 				types: typeRows(core.questions.map((question) => question.label)),
 				right: levels(core),
-				skip: { label: "Lewati, mulai sesi biasa", href: "/sesi" },
+				skip: { label: "Lewati, mulai sesi biasa", href: DAILY_SESSION },
 				start: "Mulai"
 			}));
 			return plan.kind === "ready" ? { ...plan, predicted } : plan;

@@ -60,28 +60,11 @@ describe("home view", () => {
 		expect(view([]).summary.recheck).toBe(false);
 	});
 
-	test("a scope with everything introduced offers the next one", () => {
+	test("a scope with everything introduced and nothing due counts as finished", () => {
 		const scope = { level: "province", id: "bali" } as const;
-		const done = view([intro("dk", NOW - DAY)], { ...SETTINGS, scope });
-		expect(done.nextScope).toEqual({
-			scope: { level: "province", id: "nusa-tenggara-barat" },
-			label: "Nusa Tenggara Barat"
-		});
-		expect(view([], { ...SETTINGS, scope }).nextScope).toBeNull();
-	});
-
-	test("a finished group offers the next group by its full title", () => {
-		const done = view(
-			["bk", "bb", "ba", "bm", "bp", "be", "bd"].map((code) => intro(code, NOW - DAY)),
-			{ ...SETTINGS, scope: { level: "group", id: "sumatera" } }
-		);
-		expect(done.nextScope).toEqual({
-			scope: { level: "group", id: "jawa" },
-			label: "Kawasan Jawa"
-		});
-	});
-	test("the whole country never gets a next-scope offer", () => {
-		expect(view([intro("bk", NOW - DAY)]).nextScope).toBeNull();
+		const done = view([intro("dk", NOW + 1)], { ...SETTINGS, scope });
+		expect(done.summary.allIntroduced).toBe(true);
+		expect(done.finished).toBe(true);
 	});
 
 	test("a pair flagged both ways shows the direction still furthest from clearing", () => {

@@ -1,5 +1,5 @@
 import { Link } from "@/components/ui/app-link";
-import { Button, buttonClass } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { CodeLink } from "@/components/ui/code-chip";
 import { ProgressBar, Skeleton, SkeletonText } from "@/components/ui/feedback";
@@ -10,7 +10,7 @@ import { Tooltip } from "@/components/ui/tooltip";
 import { type ReactNode, useEffect, useState } from "react";
 import { DRILL_CLEAR_STREAK } from "@/rules";
 import { countdownTo } from "@/lib/view/format";
-import type { Scope } from "@/core/questions/distractors";
+import { DAILY_SESSION } from "@/lib/session/modes";
 import type { DayMark, Home } from "@/lib/view/home";
 import { SyncChip } from "./sync-chip";
 
@@ -192,7 +192,7 @@ function PhoneActions({
 					<Tile
 						icon="calendar-check"
 						label="Tantangan Harian"
-						href="/sesi?mode=harian"
+						href="/sesi?mode=tantangan"
 						color="bg-stop-500"
 						loading={loading}
 					>
@@ -239,22 +239,16 @@ function ChallengeButton({ done, countdown }: { done: boolean; countdown: ReactN
 			</Tooltip>
 		);
 	return (
-		<Button variant="stop" block icon="calendar-check" href="/sesi?mode=harian">
+		<Button variant="stop" block icon="calendar-check" href="/sesi?mode=tantangan">
 			Tantangan Harian
 		</Button>
 	);
 }
 
-export function HomeScreen({
-	data,
-	onScope
-}: {
-	data: Home | null;
-	onScope?: (scope: Scope) => void;
-}) {
+export function HomeScreen({ data }: { data: Home | null }) {
 	const d = data;
 	// After a long break, the main button opens Cek ingatan; its preview links on to the usual session.
-	const start = d?.summary.recheck ? "/sesi?mode=cek" : "/sesi";
+	const start = d?.summary.recheck ? "/sesi?mode=cek" : DAILY_SESSION;
 	const challengeDone = d?.challengeDone ?? false;
 	const scopeBar = d?.scope.group ? GROUP_BG[d.scope.group] : "bg-ink-1000";
 	const week = (d ?? SKELETON_HOME).week;
@@ -502,21 +496,6 @@ export function HomeScreen({
 								</span>
 							))}
 						</div>
-						{d?.nextScope && (
-							<div className="flex flex-col gap-3 border-t border-hairline pt-4 lg:flex-row lg:items-center lg:justify-between">
-								<span className="type-body-sm text-ink-700">
-									Materi di {d.scope.title} sudah dikenalkan semua.
-								</span>
-								<button
-									type="button"
-									className={buttonClass("secondary", "md", false)}
-									onClick={() => onScope?.(d.nextScope!.scope)}
-								>
-									<span>Lanjut ke {d.nextScope.label}</span>
-									<Icon name="arrow-right" size={16} />
-								</button>
-							</div>
-						)}
 					</Card>
 
 					<Card className="gap-5">

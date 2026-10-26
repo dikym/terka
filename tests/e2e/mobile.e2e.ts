@@ -85,7 +85,7 @@ test("a finished session keeps its way home in the bottom bar", async ({ page })
 	await seen(page);
 	await page.goto("/beranda");
 	await seed(page, learnedLog(["bl", "bk", "bb", "ba", "bm", "bp"]), { logVersion: 1000 });
-	await page.goto("/sesi?mode=harian");
+	await page.goto("/sesi?mode=tantangan");
 	await page.getByRole("button", { name: "Mulai tantangan" }).click();
 	for (let i = 0; i < 5; i++) {
 		await page.getByRole("heading", { level: 2 }).waitFor();
