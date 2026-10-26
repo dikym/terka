@@ -34,6 +34,10 @@ export function gradeWithGroup(signals: AnswerSignals, group: AnswerSignals[]): 
 
 export function gradePlacement(signals: AnswerSignals): Grade | null {
 	if (signals.correct !== true || signals.timedOut || isInterrupted(signals)) return null;
-	const fast = signals.msToFirstKey !== null && signals.msToFirstKey < PLACEMENT_FAST_MS;
+	// The countdown stops at the first key, so a pause mid-answer must not count as a fast recall.
+	const fast =
+		signals.msToFirstKey !== null &&
+		signals.msToFirstKey < PLACEMENT_FAST_MS &&
+		(signals.keyGapsMs ?? []).every((gap) => gap < PLACEMENT_FAST_MS);
 	return fast && (signals.matchType === "exact" || signals.matchType === "variant") ? 4 : 3;
 }
