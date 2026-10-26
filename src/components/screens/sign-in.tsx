@@ -22,9 +22,7 @@ const FIELD =
 	"h-12 w-full rounded-sm border border-ink-1000 bg-paper-0 px-4 text-body-lg leading-none text-ink-1000 outline-none placeholder:text-ink-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink-1000";
 
 function Hint({ children }: { children: React.ReactNode }) {
-	return (
-		<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">{children}</p>
-	);
+	return <p className="font-sans text-body-sm leading-normal text-ink-500">{children}</p>;
 }
 
 /**

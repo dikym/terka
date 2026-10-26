@@ -220,7 +220,7 @@ export function HardCodesScreen({
 							))}
 						</div>
 						{card.more > 0 && (
-							<span className="font-sans text-body-sm leading-normal text-pretty text-ink-500">
+							<span className="font-sans text-body-sm leading-normal text-ink-500">
 								+{card.more} lainnya
 							</span>
 						)}
@@ -371,7 +371,7 @@ export function AccountScreen({
 					)}
 					<Card>
 						<CardHeader label="Ekspor dan impor" title={lastExport ?? "…"} />
-						<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">
+						<p className="font-sans text-body-sm leading-normal text-ink-500">
 							Ekspor menyimpan riwayat latihan, pengaturan, dan catatan pengingat
 							dalam satu berkas JSON. Sinkronisasi menyimpan salinan di server; ekspor
 							tetap berguna sebagai salinan yang kamu pegang sendiri.
@@ -395,7 +395,7 @@ export function AccountScreen({
 					<aside className="flex min-w-0 flex-col gap-5">
 						<Card>
 							<CardHeader label="Keluar dan hapus akun" />
-							<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">
+							<p className="font-sans text-body-sm leading-normal text-ink-500">
 								Keluar menyelesaikan sinkronisasi lebih dulu, lalu menghapus data
 								dari perangkat ini.
 							</p>
@@ -409,7 +409,7 @@ export function AccountScreen({
 								Keluar
 							</Button>
 							<div className="h-px bg-hairline" />
-							<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">
+							<p className="font-sans text-body-sm leading-normal text-ink-500">
 								Menghapus akun menghapus data di server. Data di perangkat ini tetap
 								ada.
 							</p>

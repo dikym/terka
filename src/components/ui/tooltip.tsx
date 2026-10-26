@@ -122,7 +122,7 @@ export function Tooltip({
 						id={id}
 						role="tooltip"
 						style={{ visibility: "hidden" }}
-						className="pointer-events-none fixed z-60 inline-flex max-w-72 items-center gap-2 rounded-sm border border-ink-1000 bg-paper-0 px-2.5 py-1.5 font-sans text-body-sm leading-4 font-medium text-pretty text-ink-900 shadow-overlay"
+						className="pointer-events-none fixed z-60 inline-flex max-w-72 items-center gap-2 rounded-sm border border-ink-1000 bg-paper-0 px-2.5 py-1.5 font-sans text-body-sm leading-4 font-medium text-ink-900 shadow-overlay"
 					>
 						{content}
 						{kbd && (

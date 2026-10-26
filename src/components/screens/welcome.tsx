@@ -71,7 +71,7 @@ function WelcomeBody({
 						>
 							<Text ghost={ghost}>Terka</Text>
 						</h1>
-						<p className="max-w-[24ch] font-display text-heading leading-[1.3] font-semibold text-pretty text-ink-900">
+						<p className="max-w-[24ch] font-display text-heading leading-[1.3] font-semibold text-ink-900">
 							<Text ghost={ghost}>
 								Lihat pelatnya, terka asalnya. Latihan hafalan kode pelat nomor
 								Indonesia.
@@ -85,7 +85,7 @@ function WelcomeBody({
 					<span className="type-label text-ink-500">
 						<Text ghost={ghost}>Tes penempatan</Text>
 					</span>
-					<h2 className="font-display text-heading leading-[1.2] font-bold tracking-title text-pretty lg:text-title lg:leading-snug">
+					<h2 className="font-display text-heading leading-[1.2] font-bold tracking-title lg:text-title lg:leading-snug">
 						<Text ghost={ghost}>
 							Mulai dengan tes singkat untuk menentukan titik awalmu. Belum tahu satu
 							kode pun juga tidak apa-apa.
@@ -109,7 +109,7 @@ function WelcomeBody({
 								</div>
 							))}
 						</div>
-						<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">
+						<p className="font-sans text-body-sm leading-normal text-ink-500">
 							<Text ghost={ghost}>
 								Jawab <b className="font-semibold text-ink-900">Tidak tahu</b> kalau
 								belum kenal kodenya; tes berhenti sendiri saat sudah cukup. Kode
@@ -154,7 +154,7 @@ function WelcomeBody({
 									size={18}
 									className="mt-0.5 h-4.5"
 								/>
-								<p className="font-sans text-body-sm leading-normal text-pretty text-ink-700">
+								<p className="font-sans text-body-sm leading-normal text-ink-700">
 									<Text ghost={ghost}>{text}</Text>
 								</p>
 							</li>

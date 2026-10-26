@@ -130,7 +130,7 @@ export function Callout({
 					{label}
 				</span>
 			)}
-			<div className="text-pretty type-body">{children}</div>
+			<div className="type-body">{children}</div>
 		</div>
 	);
 }

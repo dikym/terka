@@ -497,7 +497,7 @@ function DisclaimerCard() {
 	return (
 		<div className="grid grid-cols-[20px_minmax(0,1fr)] items-start gap-3 rounded-md border border-hairline bg-paper-0 px-4 py-3">
 			<Icon name="info" size={18} color="bg-ink-700" />
-			<p className="font-sans text-body-sm leading-normal text-pretty text-ink-900">
+			<p className="font-sans text-body-sm leading-normal text-ink-900">
 				Terka membantu belajar kode pelat, bukan rujukan resmi. Data yang belum cukup
 				terverifikasi diberi penanda.
 			</p>

@@ -64,9 +64,7 @@ function Row({
 }
 
 function Note({ children }: { children: React.ReactNode }) {
-	return (
-		<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">{children}</p>
-	);
+	return <p className="font-sans text-body-sm leading-normal text-ink-500">{children}</p>;
 }
 
 function Locked({ value, loading, width }: { value: string; loading: boolean; width?: string }) {
