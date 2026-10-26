@@ -44,9 +44,7 @@ function Stat({
 }
 
 function Note({ children }: { children: React.ReactNode }) {
-	return (
-		<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">{children}</p>
-	);
+	return <p className="font-sans text-body-sm leading-normal text-ink-500">{children}</p>;
 }
 
 function Day({ mark, loading }: { mark: DayMark; loading: boolean }) {
@@ -264,7 +262,7 @@ export function HomeScreen({
 	return (
 		<>
 			<div className="flex items-center justify-between gap-3">
-				<span className="type-label text-ink-500">
+				<span className="type-label text-ink-1000">
 					{d ? d.dateLabel : <SkeletonText width="13.8em" />}
 				</span>
 				<SyncChip label={d ? d.syncLabel : null} />
@@ -272,24 +270,36 @@ export function HomeScreen({
 			<div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-8">
 				<div className="flex min-w-0 flex-col gap-5">
 					<div className="flex flex-col gap-3">
-						<span className="type-label text-ink-500">Perlu diulang hari ini</span>
+						{!d?.finished && (
+							<span className="type-label text-ink-500">Perlu diulang hari ini</span>
+						)}
 						<div className="flex items-baseline gap-3">
-							<span className="type-metric">
-								{d ? d.summary.due : <SkeletonText width="1.2em" />}
-							</span>
-							<span className="font-display text-subhead leading-none font-semibold text-ink-900">
-								{d ? "soal perlu diulang" : <SkeletonText width="7.5em" />}
-							</span>
+							{d?.finished ? (
+								<span className="font-display text-title leading-tight font-bold text-ink-1000">
+									Sesi hari ini selesai
+								</span>
+							) : (
+								<>
+									<span className="type-metric">
+										{d ? d.summary.due : <SkeletonText width="1.2em" />}
+									</span>
+									<span className="font-display text-subhead leading-none font-semibold text-ink-900">
+										{d ? "soal perlu diulang" : <SkeletonText width="7.5em" />}
+									</span>
+								</>
+							)}
 						</div>
 						<div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-							<span className="inline-flex items-center gap-1.5 font-sans text-body-sm leading-[1.3] text-ink-700">
-								<Icon name="circle-plus" size={14} />
-								{d ? (
-									`${d.summary.newAvailable} materi baru tersedia`
-								) : (
-									<SkeletonText width="12.1em" />
-								)}
-							</span>
+							{(!d || d.summary.newAvailable > 0) && (
+								<span className="inline-flex items-center gap-1.5 font-sans text-body-sm leading-[1.3] text-ink-700">
+									<Icon name="circle-plus" size={14} />
+									{d ? (
+										`${d.summary.newAvailable} materi baru hari ini`
+									) : (
+										<SkeletonText width="12.1em" />
+									)}
+								</span>
+							)}
 							{(!d || d.duration) && (
 								<span className="inline-flex items-center gap-1.5 font-sans text-body-sm leading-[1.3] text-ink-700">
 									<Icon name="clock" size={14} />
@@ -307,79 +317,101 @@ export function HomeScreen({
 						start={start}
 					/>
 
-					<section className="grid grid-cols-1 overflow-hidden rounded-md border border-hairline bg-paper-0 shadow-lift lg:grid-cols-3">
-						<Stat
-							label="Pengulangan"
-							value={d ? d.summary.due : <SkeletonText width="1.2em" />}
-							unit={d ? "soal" : <SkeletonText width="2.5em" />}
+					{(!d || !d.finished || d.pairs.length > 0) && (
+						<section
+							className={`grid grid-cols-1 overflow-hidden rounded-md border border-hairline bg-paper-0 shadow-lift ${d?.finished ? "" : "lg:grid-cols-3"}`}
 						>
-							<Note>
-								{d ? (
-									`${d.reviewsOutsideScope} soal dari luar Cakupan karena sudah waktunya diulang.`
-								) : (
-									<SkeletonText width="22.0em" />
-								)}
-							</Note>
-						</Stat>
-						<Stat
-							label="Materi baru"
-							value={d ? d.summary.newAvailable : <SkeletonText width="1.2em" />}
-							unit={
-								d ? (
-									<>
-										dari{" "}
-										<span className="font-bold text-ink-1000">
-											{d.newLimit}
+							{!d?.finished && (
+								<>
+									<Stat
+										label="Pengulangan"
+										value={d ? d.summary.due : <SkeletonText width="1.2em" />}
+										unit={d ? "soal" : <SkeletonText width="2.5em" />}
+									>
+										<Note>
+											{d ? (
+												!d.scope.national &&
+												`${d.reviewsOutsideScope} soal dari luar Cakupan karena sudah waktunya diulang.`
+											) : (
+												<SkeletonText width="22.0em" />
+											)}
+										</Note>
+									</Stat>
+									<Stat
+										label="Materi baru"
+										value={
+											d ? (
+												d.summary.newAvailable
+											) : (
+												<SkeletonText width="1.2em" />
+											)
+										}
+										unit={
+											d ? (
+												<>
+													dari{" "}
+													<span className="font-bold text-ink-1000">
+														{d.newLimit}
+													</span>
+												</>
+											) : (
+												<SkeletonText width="3.9em" />
+											)
+										}
+									>
+										<Note>
+											{d ? (
+												d.scope.national ? (
+													"Batas harian untuk seluruh Indonesia."
+												) : (
+													"Batas harian, berlaku untuk semua Cakupan."
+												)
+											) : (
+												<SkeletonText width="17em" />
+											)}
+										</Note>
+									</Stat>
+								</>
+							)}
+							<Stat
+								label="Bandingkan Kode"
+								value={d ? d.pairs.length : <SkeletonText width="1.2em" />}
+								unit={d ? "pasangan" : <SkeletonText width="4.5em" />}
+							>
+								<div className="flex flex-wrap gap-2">
+									{(d?.pairs ?? SKELETON_HOME.pairs).map((pair) => (
+										<span
+											key={pair.a}
+											className="inline-flex items-center gap-1.5"
+										>
+											{d ? (
+												<CodeLink code={pair.a} group={pair.group} />
+											) : (
+												<Skeleton className={CHIP_SKELETON} />
+											)}
+											<Icon
+												name="git-compare-arrows"
+												size={14}
+												color={d ? "bg-ink-500" : "bg-ink-100"}
+											/>
+											{d ? (
+												<CodeLink code={pair.b} group={pair.group} />
+											) : (
+												<Skeleton className={CHIP_SKELETON} />
+											)}
+											{d ? (
+												<span className="font-mono text-xs text-ink-500">
+													{pair.streak}/{DRILL_CLEAR_STREAK}
+												</span>
+											) : (
+												<SkeletonText width="1.6em" />
+											)}
 										</span>
-									</>
-								) : (
-									<SkeletonText width="3.9em" />
-								)
-							}
-						>
-							<Note>
-								{d ? (
-									"Batas harian, berlaku untuk semua Cakupan."
-								) : (
-									<SkeletonText width="17em" />
-								)}
-							</Note>
-						</Stat>
-						<Stat
-							label="Bandingkan Kode"
-							value={d ? d.pairs.length : <SkeletonText width="1.2em" />}
-							unit={d ? "pasangan" : <SkeletonText width="4.5em" />}
-						>
-							<div className="flex flex-wrap gap-2">
-								{(d?.pairs ?? SKELETON_HOME.pairs).map((pair) => (
-									<span key={pair.a} className="inline-flex items-center gap-1.5">
-										{d ? (
-											<CodeLink code={pair.a} group={pair.group} />
-										) : (
-											<Skeleton className={CHIP_SKELETON} />
-										)}
-										<Icon
-											name="git-compare-arrows"
-											size={14}
-											color={d ? "bg-ink-500" : "bg-ink-100"}
-										/>
-										{d ? (
-											<CodeLink code={pair.b} group={pair.group} />
-										) : (
-											<Skeleton className={CHIP_SKELETON} />
-										)}
-										{d ? (
-											<span className="font-mono text-xs text-ink-500">
-												{pair.streak}/{DRILL_CLEAR_STREAK}
-											</span>
-										) : (
-											<SkeletonText width="1.6em" />
-										)}
-									</span>
-								))}
-							</div>
-						</Stat>
-					</section>
+									))}
+								</div>
+							</Stat>
+						</section>
+					)}
 
 					<Card bar={d ? scopeBar : "animate-skl bg-ink-100"}>
 						<CardHeader
@@ -443,11 +475,22 @@ export function HomeScreen({
 								</div>
 							))}
 						</div>
-						<div className="grid grid-cols-3 gap-4">
+						<div
+							className={`grid gap-4 ${d?.scope.national ? "grid-cols-2" : "grid-cols-3"}`}
+						>
 							{[
 								[d?.scope.mastered, "kemajuan", "1.7em", "6em"],
-								[d?.scope.newInScope, "materi baru tersedia", "1.2em", "7.5em"],
-								[d?.scope.newOutside, "materi baru di luar Cakupan", "1.7em", "9em"]
+								[d?.scope.newInScope, "belum dipelajari", "1.2em", "7.5em"],
+								...(d?.scope.national
+									? []
+									: [
+											[
+												d?.scope.newOutside,
+												"belum dipelajari di luar Cakupan",
+												"1.7em",
+												"9em"
+											]
+										])
 							].map(([value, label, valueWidth, labelWidth]) => (
 								<span key={label} className="flex min-w-0 flex-col gap-0.75">
 									<span className="font-mono text-body-md leading-none font-semibold text-ink-1000">

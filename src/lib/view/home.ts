@@ -30,10 +30,12 @@ export type Home = {
 	syncLabel: string;
 	duration: string;
 	note: string | null;
+	finished: boolean;
 	reviewsOutsideScope: number;
 	newLimit: number;
 	pairs: { a: string; b: string; group: GroupId; streak: number }[];
 	scope: {
+		national: boolean;
 		group: GroupId | null;
 		title: string;
 		rows: { name: string; codes: string[]; percent: number }[];
@@ -131,7 +133,6 @@ function note(summary: HomeSummary): string | null {
 	if (summary.held) return "Materi baru dijeda hari ini agar sesi tetap ringan.";
 	if (summary.due === 0 && summary.allIntroduced)
 		return "Semua materi di wilayah ini sudah diperkenalkan.";
-	if (summary.due === 0) return "Tidak ada soal yang perlu diulang hari ini.";
 	return null;
 }
 
@@ -172,10 +173,16 @@ export function homeView(
 		syncLabel,
 		duration: daily.items.length ? durationLabel(preview.range) : "",
 		note: note(summary),
+		finished:
+			summary.due === 0 &&
+			summary.newAvailable === 0 &&
+			!summary.held &&
+			!summary.allIntroduced,
 		reviewsOutsideScope: outside,
 		newLimit: TIERS[state.tier.current].newPerDay,
 		pairs: flaggedPairs(state, bundle),
 		scope: {
+			national: settings.scope.level === "national",
 			group: scopeGroup(bundle, settings.scope),
 			title: scopeTitle(bundle, settings.scope),
 			rows: scopeRows(state, bundle, settings),

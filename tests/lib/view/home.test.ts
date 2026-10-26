@@ -21,7 +21,7 @@ describe("home view", () => {
 		const home = view([]);
 		expect(home.summary.due).toBe(0);
 		expect(home.summary.newAvailable).toBeGreaterThan(0);
-		expect(home.note).toBe("Tidak ada soal yang perlu diulang hari ini.");
+		expect(home.note).toBeNull();
 		expect(home.week).toHaveLength(7);
 		expect(home.week.at(-1)!.state).toBe("today");
 		expect(home.challengeDone).toBe(false);

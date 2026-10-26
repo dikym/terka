@@ -229,7 +229,7 @@ test("the daily session introduces new codes and moves them out of new material"
 	// The answer is written in the background; leave only once it is stored.
 	await expect.poll(async () => (await rows(page, "review_logs")).length).toBe(1);
 	await page.goto("/beranda");
-	await expect(page.getByText(/^9 materi baru tersedia$/)).toBeVisible();
+	await expect(page.getByText(/^9 materi baru hari ini$/)).toBeVisible();
 });
 
 test("a new code is asked once more before the session ends and nothing is due afterwards", async ({
@@ -254,7 +254,7 @@ test("a new code is asked once more before the session ends and nothing is due a
 	const asked = new Set(logs.map((row) => (row as { contentId: string }).contentId));
 	expect(logs.length).toBe(asked.size * 2);
 	await page.goto("/beranda");
-	await expect(page.getByText("Tidak ada soal yang perlu diulang hari ini.")).toBeVisible();
+	await expect(page.getByText("Sesi hari ini selesai")).toBeVisible();
 });
 
 test("after a long break Mulai belajar opens Cek ingatan and Lewati opens the daily session", async ({
