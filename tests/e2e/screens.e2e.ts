@@ -191,18 +191,26 @@ test("after a long break Mulai belajar opens Cek ingatan and Lewati opens the da
 	await expect(page.getByRole("heading", { name: "Sesi hari ini" })).toBeVisible();
 });
 
-test("undoing an introduction takes its re-ask back out", async ({ page }) => {
+test("the progress total holds steady when an introduction is answered and undone", async ({
+	page
+}) => {
 	await seen(page);
 	await page.goto("/sesi");
 	await page.getByRole("heading", { name: "Sesi hari ini" }).waitFor();
 	await page.keyboard.press("Enter");
 	const count = page.getByText(/^\d+\/\d+$/).first();
 	await page.getByRole("heading", { level: 2 }).waitFor();
-	const planned = Number((await count.textContent())!.split("/")[1]);
+	const shown = (await count.textContent())!;
 	await page.keyboard.press("f");
-	await expect(count).toHaveText(`1/${planned + 1}`);
+	await expect.poll(async () => (await rows(page, "review_logs")).length).toBe(1);
+	await expect(count).toHaveText(shown);
 	await page.keyboard.press("z");
-	await expect(count).toHaveText(`1/${planned}`);
+	await expect(count).toHaveText(shown);
+	await page.keyboard.press("f");
+	await page.keyboard.press("Enter");
+	await page.getByRole("heading", { level: 2 }).waitFor();
+	const [, total] = shown.split("/");
+	await expect(count).toHaveText(`2/${total}`);
 });
 
 test("undo restores the question", async ({ page }) => {

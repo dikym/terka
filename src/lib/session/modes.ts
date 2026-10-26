@@ -242,7 +242,7 @@ export function reaskCard(
 	return { ...card, id: `${cardId}${REASK_MARK}${serial}` };
 }
 
-const REASK_MARK = "#r";
+export const REASK_MARK = "#r";
 
 /**
  * Where the re-ask of an answered card goes: a fresh code a few cards later, a lapse at the end.
