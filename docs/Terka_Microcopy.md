@@ -136,7 +136,7 @@ Tidak ada tombol **Latihan lagi** pada keadaan kosong setelah sesi harian selesa
 ### 3.3 Saat menjawab soal
 
 | Situasi                                   | Teks UI                                                                           |
-| ----------------------------------------- | --------------------------------------------------------------------------------- |
+|-------------------------------------------|-----------------------------------------------------------------------------------|
 | Kolom jawaban                             | **Ketik jawaban…**                                                                |
 | Jawaban benar                             | **Benar**                                                                         |
 | Jawaban diterima dengan koreksi ejaan     | **Benar · ejaan diperbaiki** diikuti nama bakunya                                 |
@@ -154,7 +154,7 @@ Tidak ada tombol **Latihan lagi** pada keadaan kosong setelah sesi harian selesa
 | Tombol batal di bawah hasil jawaban       | **Batalkan jawaban**                                                              |
 | Jawaban terakhir dibatalkan               | **Jawaban dibatalkan**                                                            |
 | Lanjut dengan keyboard                    | **Enter untuk lanjut**                                                            |
-| Label soal Perkenalan                     | **Materi baru**                                                      |
+| Label soal Perkenalan                     | **Materi baru**                                                                   |
 | Setelah tebakan Perkenalan                | **Jawaban: Bali** diikuti **Tebakan tidak dinilai.**                              |
 | Undo tidak tersedia di Mode Kilat         | Tombol **Batalkan jawaban** tidak tampil; Z tidak berpengaruh                     |
 
@@ -195,19 +195,19 @@ Tampilkan dampak perubahan level pada kedua arah. **Dihitung penuh** berarti has
 
 ### 3.5 Tes penempatan
 
-| Situasi                      | Teks UI                                                                                                                  |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| Tawaran di pembukaan pertama | **Mulai dengan tes singkat untuk menentukan titik awalmu. Belum tahu satu kode pun juga tidak apa-apa.** |
-| Penjelasan tes | **Jawab Tidak tahu kalau belum kenal kodenya; tes berhenti sendiri saat sudah cukup.** |
+| Situasi                      | Teks UI                                                                                                                                                                                            |
+|------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Tawaran di pembukaan pertama | **Mulai dengan tes singkat untuk menentukan titik awalmu. Belum tahu satu kode pun juga tidak apa-apa.**                                                                                           |
+| Penjelasan tes               | **Jawab Tidak tahu kalau belum kenal kodenya; tes berhenti sendiri saat sudah cukup.**                                                                                                             |
 | Halaman awal, ajakan penutup | **Mulai dari tes penempatan** · **Tes singkat menentukan titik awalmu. Kode yang sudah kamu kenal langsung diulang, sisanya diperkenalkan bertahap. Belum tahu satu kode pun juga tidak apa-apa.** |
-| Keterangan                   | **Sekitar {menit} menit · maksimal {batas} soal · tanpa penilaian per soal**                                             |
-| Tombol                       | **Mulai tes** · **Lewati, mulai dari awal**                                                                              |
-| Tombol lewati soal           | **Tidak tahu**                                                                                                           |
-| Hasil                        | **Tingkat: Menengah** |
-| Rincian                      | **Sekitar {persentase}% kode sudah dikenal. {jumlahBenarTanpaGangguan} kode langsung masuk pengulangan. Materi lainnya dibuka bertahap, hingga {batas} per hari.** |
-| Saran Cakupan                | **Cakupan yang disarankan: Kawasan Sulawesi**                                                                            |
-| Tombol saran                 | **Pakai saran ini** · **Pilih sendiri**                                                                                  |
-| Ulangi dari Statistik        | **Ulangi tes penempatan** — hanya tampil selama belum ada jawaban terhitung di luar tes, dari mode mana pun              |
+| Keterangan                   | **Sekitar {menit} menit · maksimal {batas} soal · tanpa penilaian per soal**                                                                                                                       |
+| Tombol                       | **Mulai tes** · **Lewati, mulai dari awal**                                                                                                                                                        |
+| Tombol lewati soal           | **Tidak tahu**                                                                                                                                                                                     |
+| Hasil                        | **Tingkat: Menengah**                                                                                                                                                                              |
+| Rincian                      | **Sekitar {persentase}% kode sudah dikenal. {jumlahBenarTanpaGangguan} kode langsung masuk pengulangan. Materi lainnya dibuka bertahap, hingga {batas} per hari.**                                 |
+| Saran Cakupan                | **Cakupan yang disarankan: Kawasan Sulawesi**                                                                                                                                                      |
+| Tombol saran                 | **Pakai saran ini** · **Pilih sendiri**                                                                                                                                                            |
+| Ulangi dari Statistik        | **Ulangi tes penempatan** — hanya tampil selama belum ada jawaban terhitung di luar tes, dari mode mana pun                                                                                        |
 
 Tingkat tidak ditampilkan di beranda dan tidak dipakai sebagai label pengguna. Tingkat bukan status yang perlu dikejar. Perubahan tingkat hanya disebut di pratinjau sesi pada hari perubahan, dengan nada deskriptif: **Tingkat disesuaikan**, bukan "Kamu turun tingkat".
 
@@ -240,13 +240,13 @@ Pratinjau memakai angka, bukan kalimat panjang (aturan 8 di bagian 2 dokumen ini
 
 ### 3.7 Bandingkan Kode
 
-| Situasi                   | Teks UI                                          |
-| ------------------------- | ------------------------------------------------ |
-| Judul                     | **Bandingkan Kode**                              |
-| Pengantar pasangan        | **BE dan BD sering tertukar. Bedakan keduanya.** |
+| Situasi                        | Teks UI                                                                             |
+|--------------------------------|-------------------------------------------------------------------------------------|
+| Judul                          | **Bandingkan Kode**                                                                 |
+| Pengantar pasangan             | **BE dan BD sering tertukar. Bedakan keduanya.**                                    |
 | Ciri pembeda, setelah menjawab | **{kodeA}: {tempatA} · {kodeB}: {tempatB}**, misalnya **BE: Sumatera · DE: Maluku** |
-| Setelah benar             | **Benar**                                        |
-| Pasangan tidak lagi aktif | **Latihan khusus untuk pasangan ini selesai.**   |
+| Setelah benar                  | **Benar**                                                                           |
+| Pasangan tidak lagi aktif      | **Latihan khusus untuk pasangan ini selesai.**                                      |
 
 Di Beranda, setiap pasangan memakai penghitung kecil **{hariBenar}/5**, misalnya **3/5**: jumlah hari berbeda drill pertamanya benar.
 
@@ -296,16 +296,16 @@ Tawaran catatan pengingat tidak muncul di tengah alur cepat: letaknya di bawah h
 
 ### 3.11 Pemilih Cakupan
 
-| Situasi                         | Teks UI                                   |
-| ------------------------------- | ----------------------------------------- |
-| Judul tab                       | **Cakupan**                               |
-| Wilayah yang sedang aktif       | **Aktif sekarang**                        |
-| Jumlah materi                   | **8 materi baru tersedia**                |
-| Terapkan pilihan                | **Pilih wilayah ini**                     |
-| Latihan tanpa mengganti pilihan | **Latih wilayah ini**                     |
-| Tidak ada materi baru           | **Tidak ada materi baru di wilayah ini.** |
-| Kembali ke nasional             | **Seluruh Indonesia**                     |
-| Label persentase wilayah        | **kemajuan**                              |
+| Situasi                             | Teks UI                                    |
+|-------------------------------------|--------------------------------------------|
+| Judul tab                           | **Cakupan**                                |
+| Wilayah yang sedang aktif           | **Aktif sekarang**                         |
+| Jumlah materi                       | **8 materi baru tersedia**                 |
+| Terapkan pilihan                    | **Pilih wilayah ini**                      |
+| Latihan tanpa mengganti pilihan     | **Latih wilayah ini**                      |
+| Tidak ada materi baru               | **Tidak ada materi baru di wilayah ini.**  |
+| Kembali ke nasional                 | **Seluruh Indonesia**                      |
+| Label persentase wilayah            | **kemajuan**                               |
 | Tooltip provinsi di Peta Penguasaan | **16%** diikuti **0 dari 5 kode dikuasai** |
 
 **Pilih wilayah ini** mengubah Cakupan. **Latih wilayah ini** hanya memulai Latihan Terfokus. Kedua tindakan tidak boleh berlabel mirip karena konsekuensinya berbeda.
@@ -345,31 +345,31 @@ Layar ini tidak menampilkan Tombol untuk mengulang sesi atau menambah materi bar
 
 ### 3.13 Tantangan Harian
 
-| Situasi                  | Teks UI                                                 |
-| ------------------------ | ------------------------------------------------------- |
-| Sebelum mulai            | **{jumlahSoal} soal · sekali sehari** — paling banyak 5 |
-| Tombol                   | **Mulai tantangan**                                     |
-| Selesai                  | **Tantangan hari ini selesai**                          |
-| Sudah dikerjakan         | **Sudah selesai untuk hari ini**                        |
-| Hari toleransi digunakan | **Jatah toleransi digunakan hari ini.**                 |
-| Label rangkaian hari     | **Hari Beruntun**                                       |
+| Situasi                   | Teks UI                                                          |
+|---------------------------|------------------------------------------------------------------|
+| Sebelum mulai             | **{jumlahSoal} soal · sekali sehari** — paling banyak 5          |
+| Tombol                    | **Mulai tantangan**                                              |
+| Selesai                   | **Tantangan hari ini selesai**                                   |
+| Sudah dikerjakan          | **Sudah selesai untuk hari ini**                                 |
+| Hari toleransi digunakan  | **Jatah toleransi digunakan hari ini.**                          |
+| Label rangkaian hari      | **Hari Beruntun**                                                |
 | Sumber hitungan (Beranda) | **Dihitung dari sesi harian yang tuntas atau Tantangan Harian.** |
 
 Jika satu hari terlewat, aplikasi tidak memakai pesan seperti "Streak-mu rusak". Cukup sampaikan keadaan catatan Hari Beruntun saat ini.
 
 ### 3.13a Cek Ingatan
 
-| Situasi                                  | Teks UI                                                                                                   |
-| ---------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| Judul pratinjau                          | **Cek ingatan**                                                                                           |
-| Keterangan pratinjau                     | **Sudah 8 hari sejak latihan terakhir. Jawab 20 soal untuk melihat seberapa banyak yang masih kamu ingat.** |
-| Tautan melewati                          | **Lewati, mulai sesi biasa**                                                                              |
-| Judul ringkasan                          | **Cek ingatan selesai**                                                                                   |
-| Label hasil per kawasan                  | **Ingatanmu per kawasan**                                                                                 |
-| Baris hasil                              | **Jawa · 75% benar · perkiraan 82%**                                                                      |
-| Dibuka lagi setelah dikerjakan hari ini | **Cek ingatan hari ini sudah dikerjakan.** diikuti **Lanjutkan dengan sesi harian.** |
-| Dibuka tanpa libur panjang | **Cek ingatan ditawarkan setelah libur panjang.** |
-| Penutup hasil                            | **Sisa pengulangan dibagi ke hari-hari berikutnya, mulai dari kawasan yang paling banyak terlupa.**        |
+| Situasi                                 | Teks UI                                                                                                     |
+|-----------------------------------------|-------------------------------------------------------------------------------------------------------------|
+| Judul pratinjau                         | **Cek ingatan**                                                                                             |
+| Keterangan pratinjau                    | **Sudah 8 hari sejak latihan terakhir. Jawab 20 soal untuk melihat seberapa banyak yang masih kamu ingat.** |
+| Tautan melewati                         | **Lewati, mulai sesi biasa**                                                                                |
+| Judul ringkasan                         | **Cek ingatan selesai**                                                                                     |
+| Label hasil per kawasan                 | **Ingatanmu per kawasan**                                                                                   |
+| Baris hasil                             | **Jawa · 75% benar · perkiraan 82%**                                                                        |
+| Dibuka lagi setelah dikerjakan hari ini | **Cek ingatan hari ini sudah dikerjakan.** diikuti **Lanjutkan dengan sesi harian.**                        |
+| Dibuka tanpa libur panjang              | **Cek ingatan ditawarkan setelah libur panjang.**                                                           |
+| Penutup hasil                           | **Sisa pengulangan dibagi ke hari-hari berikutnya, mulai dari kawasan yang paling banyak terlupa.**         |
 
 Tombol **Mulai belajar** di Beranda membuka Cek ingatan selama tawarannya berlaku; teksnya tidak berubah.
 
@@ -425,7 +425,7 @@ Status detail hanya perlu muncul di halaman statistik atau pemeriksaan kode. Sta
 ### 3.17 Akun, sinkronisasi, dan ekspor
 
 | Situasi                                 | Teks UI                                                                                                                                                                  |
-| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+|-----------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Ajakan masuk di Statistik               | **Masuk untuk menyinkronkan progres antarperangkat**                                                                                                                     |
 | Tombol utama masuk                      | **Masuk dengan Google**                                                                                                                                                  |
 | Pemisah                                 | **atau**                                                                                                                                                                 |
@@ -456,7 +456,7 @@ Status detail hanya perlu muncul di halaman statistik atau pemeriksaan kode. Sta
 | Batas perangkat aktif                   | **Akun ini sudah dipakai di {batas} perangkat dalam {hari} hari terakhir. Latihan tetap berjalan, dan data tersimpan di perangkat ini. Sinkronisasi dicoba lagi besok.** |
 | Kebijakan diperbarui                    | **Kebijakan privasi diperbarui. Baca dan setujui untuk melanjutkan sinkronisasi.**                                                                                       |
 | Tombol impor                            | **Impor data**                                                                                                                                                           |
-| Versi file impor tidak didukung | **File ini dibuat Terka versi lain dan tidak dapat diimpor. Tidak ada data yang diubah.** |
+| Versi file impor tidak didukung         | **File ini dibuat Terka versi lain dan tidak dapat diimpor. Tidak ada data yang diubah.**                                                                                |
 | Pembaruan aplikasi diperlukan           | **Perbarui Terka untuk melanjutkan sinkronisasi. Data di perangkat ini tetap tersedia untuk diekspor.**                                                                  |
 | Perangkat lain memakai versi lebih baru | **Perangkat lain memakai Terka versi baru. Perbarui Terka untuk melanjutkan sinkronisasi. Latihan tetap berjalan.**                                                      |
 | Pendaftaran akun baru ditutup           | **Sinkronisasi untuk akun baru sedang ditutup sementara. Latihan tetap berjalan, dan data tersimpan di perangkat ini.**                                                  |
