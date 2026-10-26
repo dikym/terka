@@ -59,7 +59,7 @@ function Group({ title, count, items }: { title: string; count: number; items: S
 					key={item.title}
 					className={`flex items-start justify-between gap-5 border-b border-hairline py-4 lg:grid lg:grid-cols-[160px_minmax(0,1fr)] lg:gap-4 lg:border-t lg:border-b-0 lg:py-3 ${item.hint ? "lg:items-baseline" : "lg:items-center"}`}
 				>
-					<span className="order-last flex flex-none flex-wrap justify-end gap-1 lg:order-none lg:justify-start">
+					<span className="order-last flex flex-none flex-wrap justify-end gap-1 lg:order-0 lg:justify-start">
 						{item.keys.map((key) => (
 							<Kbd
 								key={key}
@@ -71,7 +71,7 @@ function Group({ title, count, items }: { title: string; count: number; items: S
 							</Kbd>
 						))}
 					</span>
-					<span className="flex min-w-0 flex-col gap-1 lg:gap-[3px]">
+					<span className="flex min-w-0 flex-col gap-1 lg:gap-0.75">
 						<span className="font-sans text-body-md leading-[1.3] font-medium text-ink-1000 lg:font-display lg:font-semibold lg:text-ink-900">
 							{item.title}
 						</span>

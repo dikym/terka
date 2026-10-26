@@ -122,7 +122,7 @@ function ProvinceRow({ province, group }: { province: Province; group: GroupId }
 				<span className="min-w-0 font-sans text-body-md leading-[1.2] font-medium tracking-title">
 					{province.name}
 				</span>
-				<span className="flex flex-none justify-end gap-[3px]">
+				<span className="flex flex-none justify-end gap-0.75">
 					{province.codes.map((code) => (
 						<CodeChip key={code} code={code} group={group} size="xs" />
 					))}
@@ -181,7 +181,7 @@ function Panel({
 						[stats.codes, "kode", "1.2em"],
 						[`${stats.percent}%`, "kemajuan", "2.2em"]
 					].map(([value, label, width]) => (
-						<span key={label} className="flex min-w-0 flex-col gap-[3px]">
+						<span key={label} className="flex min-w-0 flex-col gap-0.75">
 							<span className="font-mono text-body-md leading-none font-semibold text-ink-1000">
 								{loading ? <SkeletonText width={width as string} /> : value}
 							</span>
@@ -366,7 +366,7 @@ export function Cakupan({
 						Menelusuri hanya menyorot. Cakupan berganti setelah Pilih wilayah ini
 						ditekan.
 					</p>
-					<div className="order-1 flex flex-col gap-2 lg:order-none">
+					<div className="order-1 flex flex-col gap-2 lg:order-0">
 						<Row
 							node="national"
 							indent={0}
@@ -440,7 +440,7 @@ export function Cakupan({
 							);
 						})}
 					</div>
-					<div className="order-1 flex items-center justify-between gap-4 rounded-sm border border-ink-200 bg-paper-50 px-4 py-3 lg:order-none">
+					<div className="order-1 flex items-center justify-between gap-4 rounded-sm border border-ink-200 bg-paper-50 px-4 py-3 lg:order-0">
 						<div className="flex min-w-0 flex-col gap-1">
 							<span className="type-label text-ink-700">Aturan</span>
 							<span className="text-ink-900 type-body">

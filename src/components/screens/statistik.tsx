@@ -7,7 +7,7 @@ import { GROUP_BG } from "@/components/ui/groups";
 import { Icon } from "@/components/ui/icon";
 import { type MapProvince, MasteryMap } from "@/components/ui/mastery-map";
 import { Tooltip } from "@/components/ui/tooltip";
-import { type CodeStatus, STATUS_LABEL, type Stats } from "@/lib/view/stats";
+import { type CodeStatus, type Stats, STATUS_LABEL } from "@/lib/view/stats";
 import { SIGHTING_WINDOW_DAYS } from "@/rules";
 import { SyncChip } from "./sync-chip";
 
@@ -109,7 +109,7 @@ function NationalSummary({ s, loading }: { s: Stats; loading: boolean }) {
 						key={level.level}
 						className="grid grid-cols-[72px_minmax(0,1fr)_44px] items-center gap-3 lg:grid-cols-[96px_minmax(0,1fr)_44px]"
 					>
-						<div className="flex flex-col gap-[3px]">
+						<div className="flex flex-col gap-0.75">
 							<span className="font-display text-body-sm leading-none font-semibold">
 								{text(loading, level.level)}
 							</span>
@@ -357,7 +357,7 @@ function ByGroup({ s, loading }: { s: Stats; loading: boolean }) {
 						key={row.group}
 						className="grid grid-cols-[minmax(0,1fr)_repeat(3,58px)] items-center border-t border-hairline lg:grid-cols-[minmax(0,1fr)_repeat(3,76px)]"
 					>
-						<span className="flex items-center gap-2 py-[9px] font-sans text-body-sm leading-[1.2] text-ink-900">
+						<span className="flex items-center gap-2 py-2.25 font-sans text-body-sm leading-[1.2] text-ink-900">
 							<span
 								className={`size-2 rounded-full ${loading ? "bg-ink-100" : GROUP_BG[row.group]}`}
 							/>
@@ -366,7 +366,7 @@ function ByGroup({ s, loading }: { s: Stats; loading: boolean }) {
 						{row.levels.map((value, index) => (
 							<span
 								key={index}
-								className={`py-[9px] text-right font-mono text-body-sm leading-[1.2] ${index === 2 ? "font-bold text-ink-1000" : "font-medium text-ink-700"}`}
+								className={`py-2.25 text-right font-mono text-body-sm leading-[1.2] ${index === 2 ? "font-bold text-ink-1000" : "font-medium text-ink-700"}`}
 							>
 								{text(loading, value)}
 							</span>
@@ -578,7 +578,7 @@ function Account({ s, loading, onExport }: { s: Stats; loading: boolean; onExpor
 					<Row key={icon} last={index === rows.length - 1}>
 						<div className="flex min-w-0 items-start gap-3">
 							{/* Level with the first line when the text wraps. */}
-							<Icon name={icon} size={16} className="mt-[3px]" />
+							<Icon name={icon} size={16} className="mt-0.75" />
 							<span className="text-ink-900 type-body">{text(loading, label)}</span>
 						</div>
 					</Row>

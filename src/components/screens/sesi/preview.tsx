@@ -176,11 +176,11 @@ export function SessionPreview({
 			</div>
 			{p.composition && (
 				<div className="flex flex-col gap-3">
-					<div className="flex h-3.5 gap-[3px]">
+					<div className="flex h-3.5 gap-0.75">
 						{p.composition.map(([label, value, color]) => (
 							<span
 								key={label}
-								className={`rounded-[2px] ${color}`}
+								className={`rounded-xs ${color}`}
 								style={{ flex: value / total }}
 							/>
 						))}
@@ -191,7 +191,7 @@ export function SessionPreview({
 								key={label}
 								className="inline-flex items-center gap-2 text-ink-900 type-body"
 							>
-								<span className={`size-3 rounded-[2px] ${color}`} />
+								<span className={`size-3 rounded-xs ${color}`} />
 								{label}
 								<b className="font-mono">{value}</b>
 							</span>
