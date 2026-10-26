@@ -284,7 +284,7 @@ export function Setelan({
 						<LinkRow icon="info" label="Tentang Terka" href="/tentang" />
 						<LinkRow icon="shield-check" label="Kebijakan privasi" href="/privasi" />
 						<LinkRow
-							icon="circle-alert"
+							icon="mail"
 							label="Laporkan data yang keliru"
 							href={`mailto:${s.contact}`}
 						/>

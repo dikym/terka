@@ -29,6 +29,7 @@ export const ICON_NAMES = [
 	"layers",
 	"lock",
 	"log-out",
+	"mail",
 	"medal",
 	"minus",
 	"play",
