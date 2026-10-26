@@ -105,7 +105,7 @@ export const ACTIVE_DEVICE_DAYS = 90;
 export const FACT_RECENT_MAX = 20;
 export const FORECAST_DAYS = 14;
 export const WEAKEST_LIMIT = 10;
-// Placement ties and the Pemula suggestion start here; other groups follow data order.
+// The Pemula placement suggestion starts here.
 export const SUGGESTED_GROUP_ORDER: readonly string[] = ["bali-nusa-tenggara", "jawa"];
 
 export const OPTIMIZE_FIRST_REVIEWS = 1_000;

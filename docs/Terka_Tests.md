@@ -470,6 +470,8 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | SR-243 | Tes ditutup di soal ke-12                                                        | Sesi diabaikan seluruhnya                                                                                             | batas    | SRD 4.13 |
 | SR-244 | Tes selesai di dua perangkat sebelum sinkron                                     | Sesi dengan kunci pengurutan terbaru yang berlaku                                                                     | batas    | SRD 8.9  |
 | SR-245 | Tes selesai                                                                      | Tidak menambah Hari Beruntun; tidak masuk syarat optimasi                                                             | batas    | SRD 4.13 |
+| SR-382 | Hasil tes Ahli | Saran Cakupan **Seluruh Indonesia** | normal | SRD 4.13 |
+| SR-383 | Hasil tes Menengah atau Mahir | Saran kawasan dengan materi baru tersisa terbanyak; seri ke kawasan yang lebih dulu di data | normal | SRD 4.13 |
 | SR-246 | Rekomendasi Cakupan untuk Pemula, dan untuk Mahir yang paling lemah di Papua     | Bali & Nusa Tenggara, dan Papua                                                                                       | normal   | SRD 4.13 |
 | SR-247 | Pemilihan kode tahap 2                                                           | Minimal satu kode dari tiap kawasan yang memiliki kode `medium`; sama untuk seed yang sama                            | batas    | SRD 4.13 |
 | SR-248 | Perkiraan persentase kode dikenal untuk Pemula yang benar 2 dari 8 kode `common` | Hanya kode `common` yang dihitung; tier lain 0%                                                                       | batas    | SRD 4.13 |
