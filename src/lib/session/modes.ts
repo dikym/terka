@@ -127,7 +127,14 @@ const empty = (mode: Mode, message: string, detail?: string): Plan => ({
 	detail
 });
 
-function cardsOf(input: PlanInput, state: AppState, items: QueueItem[], mode: Mode, scope: Scope) {
+function cardsOf(
+	input: PlanInput,
+	state: AppState,
+	items: QueueItem[],
+	mode: Mode,
+	scope: Scope,
+	variant?: number
+) {
 	return items.map((item, index) => {
 		const entry = effectiveCard(state, item.cardId)!;
 		// Terfokus marks the answers that also move today's schedule.
@@ -137,6 +144,7 @@ function cardsOf(input: PlanInput, state: AppState, items: QueueItem[], mode: Mo
 			format: item.format,
 			drillPair: item.drillPair,
 			scope,
+			variant,
 			note: input.notes.get(contentOf(item.cardId)) ?? null
 		});
 		const card = toCard(question, item, entry, {
@@ -238,7 +246,7 @@ export function reaskCard(
 	const state = prepare(input.state, input.ctx);
 	const entry = effectiveCard(state, cardId);
 	if (!entry || !STEPS.has(entry.state) || entry.due > input.ctx.now) return null;
-	const [card] = cardsOf(input, state, [{ cardId, context, slot: "step" }], mode, scope);
+	const [card] = cardsOf(input, state, [{ cardId, context, slot: "step" }], mode, scope, serial);
 	return { ...card, id: `${cardId}${REASK_MARK}${serial}` };
 }
 

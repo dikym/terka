@@ -1,6 +1,6 @@
 import { TIMED_LIMIT_MS } from "@/rules";
 import type { Bundle, Special } from "../content/schema";
-import { seeded, shuffle } from "../random";
+import { shuffle } from "../random";
 import { isLeech } from "../scheduling/card";
 import type { CardMemory } from "../scheduling/card-memory";
 import { specialChoices } from "./distractors";
@@ -10,7 +10,8 @@ import {
 	type LevelSource,
 	parseCardId,
 	type Question,
-	type QuestionOptions
+	type QuestionOptions,
+	questionRandom
 } from "./question";
 import { levelSourceFor, type ResolvedLevels } from "./region";
 
@@ -24,7 +25,7 @@ export function buildSpecialQuestion(
 	const id = parseCardId(card.cardId).contentId;
 	const special: Special | undefined = bundle.specials.find((entry) => entry.id === id);
 	if (!special) throw new Error(`unknown special ${id}`);
-	const random = (purpose: string) => seeded(`${card.cardId}:${card.reps}:${purpose}`);
+	const random = (purpose: string) => questionRandom(card, options, purpose);
 	const toHolder = mode === "special2holder";
 	const code = `CD ${special.number}`;
 	const intro = options.context === "intro";

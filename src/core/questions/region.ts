@@ -3,7 +3,7 @@ import { areaDisplayName, highMembers, provinceName } from "../answers/dictionar
 import { groupName } from "../content/names";
 import { setThreshold } from "../answers/match-set";
 import type { Area, Bundle, Region } from "../content/schema";
-import { seeded, shuffle } from "../random";
+import { shuffle } from "../random";
 import { isLeech } from "../scheduling/card";
 import type { CardMemory } from "../scheduling/card-memory";
 import { foreignAreas, NATIONAL, otherCodes } from "./distractors";
@@ -15,7 +15,8 @@ import {
 	parseCardId,
 	type Question,
 	type QuestionAnswer,
-	type QuestionOptions
+	type QuestionOptions,
+	questionRandom
 } from "./question";
 
 export type ResolvedLevels = { level: Level; autoLevel: Level; levelSource: LevelSource };
@@ -51,7 +52,7 @@ export function buildRegionQuestion(
 	const region = findRegion(bundle, parseCardId(card.cardId).contentId);
 	const members = highMembers(bundle, region);
 	if (!members.length) throw new Error(`${region.id}: no high member areas`);
-	const random = (purpose: string) => seeded(`${card.cardId}:${card.reps}:${purpose}`);
+	const random = (purpose: string) => questionRandom(card, options, purpose);
 	const scope = options.scope ?? NATIONAL;
 	const intro = options.context === "intro";
 	const leech = isLeech(card) && !intro;
