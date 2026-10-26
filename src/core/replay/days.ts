@@ -51,7 +51,7 @@ export function priorityLoad(state: AppState, day: string, tz: string): number {
 		if (ACTIVE.has(card.state) && card.due < end) load++;
 	}
 	for (const [key, pair] of state.pairs) {
-		if (!pair.flagged) continue;
+		if (!pair.flagged || pair.drillDay === day) continue;
 		const codes = key.split(">").map((id) => effectiveCard(state, `${id}::code2region`));
 		if (codes.every((card) => card !== undefined && card.state !== "suspended")) load++;
 	}

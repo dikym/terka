@@ -24,7 +24,7 @@ const isOutdated = (events: readonly LearningEvent[]) =>
 			(event.table === "card_events" && !known(CARD_MODES, event.row.mode))
 	);
 
-const PRACTICE = new Set(["daily", "drill", "focused", "setrecall", "special"]);
+const PRACTICE = new Set(["daily", "drill", "focused", "setrecall", "special", "recheck"]);
 
 // A placement taken after real practice began cannot replace the level set before it.
 function effectivePlacement(

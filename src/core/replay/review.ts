@@ -86,8 +86,8 @@ function recordRunCard(state: AppState, row: ReviewLog, cardId: string) {
 }
 
 function recordRecheck(state: AppState, row: ReviewLog) {
-	if (state.recheck?.day !== row.localDay)
-		state.recheck = { day: row.localDay, results: new Map() };
+	const key = row.runId ?? row.localDay;
+	if (state.recheck?.key !== key) state.recheck = { key, day: row.localDay, results: new Map() };
 	if (!state.recheck.results.has(row.contentId))
 		state.recheck.results.set(row.contentId, row.correct === true);
 }

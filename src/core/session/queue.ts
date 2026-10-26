@@ -1,4 +1,11 @@
-import { RELATED_SKIP_LIMIT, REVIEW_CAP_PER_DAY, SPECIAL_HOLD, TIERS } from "@/rules";
+import {
+	RECHECK_AWAY_DAYS,
+	RELATED_SKIP_LIMIT,
+	REVIEW_CAP_PER_DAY,
+	SPECIAL_HOLD,
+	TIERS
+} from "@/rules";
+import { dayNumber } from "../time/day";
 import type { Bundle, Region } from "../content/schema";
 import { inScope } from "../questions/distractors";
 import type { QuestionContext } from "../questions/question";
@@ -85,8 +92,12 @@ export function dueReviewCount(input: AppState, ctx: SessionContext): number {
 }
 
 // Share answered right per group on the latest Cek Ingatan; groups it did not reach have no score.
-export function recheckScores(state: AppState, bundle: Bundle): Map<string, number> | null {
-	if (!state.recheck) return null;
+export function recheckScores(
+	state: AppState,
+	bundle: Bundle,
+	today: string
+): Map<string, number> | null {
+	if (!state.recheck || brokeSince(state, state.recheck.day, today)) return null;
 	const groupOf = new Map(bundle.regions.map((region) => [region.id, region.group]));
 	const tally = new Map<string, { right: number; asked: number }>();
 	for (const [contentId, right] of state.recheck.results) {
@@ -98,9 +109,25 @@ export function recheckScores(state: AppState, bundle: Bundle): Map<string, numb
 	return new Map([...tally].map(([group, { right, asked }]) => [group, right / asked]));
 }
 
+// A later long break makes an older recheck say nothing about the backlog that follows it.
+function brokeSince(state: AppState, since: string, today: string): boolean {
+	const days = [...[...state.activeDays].filter((day) => day > since).sort(compareText), today];
+	let previous = since;
+	for (const day of days) {
+		if (dayNumber(day) - dayNumber(previous) >= RECHECK_AWAY_DAYS) return true;
+		previous = day;
+	}
+	return false;
+}
+
 // While a backlog is over the cap, the groups the recheck found weakest are worked off first.
-function byRecheck(state: AppState, bundle: Bundle, reviews: QueueItem[]): QueueItem[] {
-	const scores = reviews.length > REVIEW_CAP_PER_DAY ? recheckScores(state, bundle) : null;
+function byRecheck(
+	state: AppState,
+	bundle: Bundle,
+	today: string,
+	reviews: QueueItem[]
+): QueueItem[] {
+	const scores = reviews.length > REVIEW_CAP_PER_DAY ? recheckScores(state, bundle, today) : null;
 	if (!scores) return reviews;
 	const groupOf = new Map(bundle.regions.map((region) => [region.id, region.group]));
 	// Scores run 0–1; an unscored group sorts after every scored one.
@@ -152,7 +179,7 @@ export function dailyQueue(
 	const due = uniqueItems([
 		...dueSteps(cards, ctx.now, "daily"),
 		...drills(state, today),
-		...byRecheck(state, bundle, dueReviews(state, cards, today, ctx.now, "daily")).slice(
+		...byRecheck(state, bundle, today, dueReviews(state, cards, today, ctx.now, "daily")).slice(
 			0,
 			reviewsLeft(state, today)
 		)

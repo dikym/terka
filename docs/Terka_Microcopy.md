@@ -364,6 +364,8 @@ Jika satu hari terlewat, aplikasi tidak memakai pesan seperti "Streak-mu rusak".
 | Judul ringkasan                          | **Cek ingatan selesai**                                                                                   |
 | Label hasil per kawasan                  | **Ingatanmu per kawasan**                                                                                 |
 | Baris hasil                              | **Jawa · 75% benar · perkiraan 82%**                                                                      |
+| Dibuka lagi setelah dikerjakan hari ini | **Cek ingatan hari ini sudah dikerjakan.** diikuti **Lanjutkan dengan sesi harian.** |
+| Dibuka tanpa libur panjang | **Cek ingatan ditawarkan setelah libur panjang.** |
 | Penutup hasil                            | **Sisa pengulangan dibagi ke hari-hari berikutnya, mulai dari kawasan yang paling banyak terlupa.**        |
 
 Tombol **Mulai belajar** di Beranda membuka Cek ingatan selama tawarannya berlaku; teksnya tidak berubah.

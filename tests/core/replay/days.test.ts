@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { advanceDays, advanceTo, priorityLoad, quotaLeft } from "../../../src/core/replay/days";
 import type { AppState } from "../../../src/core/replay/state";
-import { addDays } from "../../../src/core/time/day";
+import { addDays, localDay } from "../../../src/core/time/day";
 import { DAY, fresh, manyRegions, NOW, reviewCard, seedCard, WITA } from "./fixtures";
 
 const TODAY = "2026-09-21";
@@ -212,5 +212,19 @@ describe("day advance", () => {
 		state.currentDay = TODAY;
 		advanceDays(state, "2026-09-20");
 		expect(state.currentDay).toBe(TODAY);
+	});
+});
+
+describe("load at the edges", () => {
+	test("a pair already drilled today no longer adds to the load", () => {
+		const state = fresh();
+		seedCard(state, "be::code2region", reviewCard({ due: NOW + 5 * DAY }));
+		seedCard(state, "bd::code2region", reviewCard({ due: NOW + 5 * DAY }));
+		const pair = { occurrences: [], flagged: true, cleared: false, drillStreak: 1 };
+		state.pairs.set("be>bd", { ...pair, drillDay: null });
+		const today = localDay(NOW, WITA);
+		const before = priorityLoad(state, today, WITA);
+		state.pairs.set("be>bd", { ...pair, drillDay: today });
+		expect(priorityLoad(state, today, WITA)).toBe(before - 1);
 	});
 });

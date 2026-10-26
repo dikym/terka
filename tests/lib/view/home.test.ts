@@ -84,6 +84,22 @@ describe("home view", () => {
 		expect(view([intro("bk", NOW - DAY)]).nextScope).toBeNull();
 	});
 
+	test("a pair flagged both ways shows the direction still furthest from clearing", () => {
+		const state = stateOf([]);
+		const pair = { occurrences: [], flagged: true, cleared: false, drillDay: null };
+		state.pairs.set("ba>bb", { ...pair, drillStreak: 4 });
+		state.pairs.set("bb>ba", { ...pair, drillStreak: 1 });
+		const home = homeView(
+			state,
+			ruleBundle(),
+			SETTINGS,
+			ctxAt(NOW),
+			"Tersimpan di perangkat ini"
+		);
+		expect(home.pairs).toHaveLength(1);
+		expect(home.pairs[0].streak).toBe(1);
+	});
+
 	test("a single missed day inside a streak shows as tolerance", () => {
 		const today = localDay(NOW, WITA);
 		const events = [3, 2, 0].map((back) => run("challenge", NOW - back * DAY));

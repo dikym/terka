@@ -98,21 +98,28 @@ function scopeRows(state: AppState, bundle: Bundle, settings: SessionSettings) {
 		}));
 }
 
+// A pair flagged both ways shows as one chip, at the count of the direction furthest from clearing.
 function flaggedPairs(state: AppState, bundle: Bundle) {
 	const codes = new Map(bundle.regions.map((region) => [region.id, region]));
-	const seen = new Set<string>();
-	const pairs: Home["pairs"] = [];
+	const pairs = new Map<string, Home["pairs"][number]>();
 	for (const [key, pair] of state.pairs) {
 		if (!pair.flagged) continue;
 		const [from, to] = key.split(">");
 		const id = [from, to].sort().join(">");
 		const a = codes.get(from);
 		const b = codes.get(to);
-		if (seen.has(id) || !a || !b) continue;
-		seen.add(id);
-		pairs.push({ a: a.code, b: b.code, group: uiGroup(a.group), streak: pair.drillStreak });
+		if (!a || !b) continue;
+		const shown = pairs.get(id);
+		if (shown) shown.streak = Math.min(shown.streak, pair.drillStreak);
+		else
+			pairs.set(id, {
+				a: a.code,
+				b: b.code,
+				group: uiGroup(a.group),
+				streak: pair.drillStreak
+			});
 	}
-	return pairs;
+	return [...pairs.values()];
 }
 
 function offer(state: AppState, bundle: Bundle, scope: Scope): Home["nextScope"] {

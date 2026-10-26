@@ -26,6 +26,8 @@ import {
 export type InfoItem = "held" | "tier-changed" | "timed" | "leech" | "outside-scope" | "keyboard";
 export type Preview = {
 	questions: Question[];
+	/** Introductions the session will ask once more; part of the count and the estimate. */
+	reasks: number;
 	counts: Record<QueueItem["slot"], number>;
 	byType: Partial<Record<Question["questionType"], number>>;
 	byLevel: Record<Level, number>;
@@ -106,6 +108,8 @@ export function buildPreview(
 		byLevel[question.level]++;
 		estimatedMs += questionMs(state, question, items[index], inputMode);
 	});
+	const reasks = questions.filter((question) => question.context === "intro").length;
+	estimatedMs += reasks * NOMINAL_MS.step;
 	const outside = items.some((item) => {
 		const region = regions.get(contentOf(item.cardId));
 		return item.slot === "review" && region !== undefined && !inScope(region, settings.scope);
@@ -128,6 +132,7 @@ export function buildPreview(
 	];
 	return {
 		questions,
+		reasks,
 		counts,
 		byType,
 		byLevel,

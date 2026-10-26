@@ -36,12 +36,13 @@ function reviews(state: ReturnType<typeof fresh>, codes: string[]): QueueItem[] 
 }
 
 describe("estimate", () => {
-	test("without history, four introductions and ten Level 2 reviews are two minutes", () => {
+	test("without history, four introductions with their re-asks and ten Level 2 reviews take two to three minutes", () => {
 		const state = fresh();
 		const items = [...intros(CODES.slice(0, 4)), ...reviews(state, CODES.slice(4, 14))];
 		const preview = buildPreview(state, bundle, items, SETTINGS, at, extras());
-		expect(preview.estimatedMs).toBe(120_000);
-		expect(preview.range).toEqual({ kind: "minutes", min: 2, max: 2 });
+		expect(preview.reasks).toBe(4);
+		expect(preview.estimatedMs).toBe(160_000);
+		expect(preview.range).toEqual({ kind: "minutes", min: 2, max: 3 });
 		expect(preview.counts).toEqual({ step: 0, drill: 0, review: 10, new: 4 });
 		expect(preview.byLevel).toEqual({ 1: 4, 2: 10, 3: 0 });
 		expect(preview.byType.typed).toBe(10);

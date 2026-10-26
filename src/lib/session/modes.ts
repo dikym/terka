@@ -115,6 +115,8 @@ const ICON: Record<Mode, IconName> = {
 const NOTHING_LEARNED = "Belum ada materi yang bisa dilatih di wilayah ini.";
 const NOTHING_DUE = "Tidak ada soal yang perlu diulang hari ini.";
 const HELD = "Materi baru dijeda hari ini agar sesi tetap ringan.";
+const RECHECK_DONE = "Cek ingatan hari ini sudah dikerjakan.";
+const RECHECK_LATER = "Cek ingatan ditawarkan setelah libur panjang.";
 
 const empty = (mode: Mode, message: string, detail?: string): Plan => ({
 	kind: "empty",
@@ -269,7 +271,7 @@ export function planSession(mode: Mode, input: PlanInput, params: PlanParams): P
 				icon: ICON[mode],
 				title: TITLE[mode],
 				scope: scopeRow(bundle, settings.scope),
-				count: String(core.questions.length),
+				count: String(core.questions.length + core.reasks),
 				unit: "soal",
 				aside: duration(core),
 				composition: composition(core.counts),
@@ -280,7 +282,10 @@ export function planSession(mode: Mode, input: PlanInput, params: PlanParams): P
 			}));
 		}
 		case "cek": {
-			if (!recheckOffer(state, ctx)) return empty(mode, NOTHING_DUE);
+			if (!recheckOffer(state, ctx))
+				return state.recheck?.day === today
+					? empty(mode, RECHECK_DONE, "Lanjutkan dengan sesi harian.")
+					: empty(mode, RECHECK_LATER);
 			const { items, predicted } = recheckQueue(state, bundle, ctx);
 			const away = dayNumber(today) - dayNumber([...state.activeDays].sort().at(-1)!);
 			const plan = ready(mode, input, state, items, settings.scope, false, (core) => ({
@@ -411,7 +416,7 @@ export function planSession(mode: Mode, input: PlanInput, params: PlanParams): P
 				icon: ICON[mode],
 				title: TITLE[mode],
 				facts: [["calendar-days", "Jadwal terpisah dari latihan wilayah"]],
-				count: String(core.questions.length),
+				count: String(core.questions.length + core.reasks),
 				unit: "soal",
 				aside: duration(core),
 				composition: composition(core.counts),

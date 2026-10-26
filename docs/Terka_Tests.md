@@ -202,6 +202,13 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | SR-366 | Setelah Cek Ingatan, tunggakan tidak lagi melebihi 30 | Urutan kembali mengikuti peluang ingat | batas | SRD 4.7 |
 | SR-372 | Semua jawaban Cek Ingatan di satu kawasan dibatalkan lewat undo | Kawasan itu tidak tampil di hasil | batas | SRD 4.7 |
 | SR-373 | Kode di Cek Ingatan dijawab salah lalu benar pada soal ulang | Hasil memakai jawaban pertama | batas | SRD 4.7 |
+| SR-374 | Cek Ingatan melewati tengah malam | Hasil memuat jawaban sebelum dan sesudah tengah malam | batas | SRD 4.7 |
+| SR-375 | Ada jeda 7 hari tanpa aktivitas setelah Cek Ingatan, lalu tunggakan di atas 30 | Hasil Cek lama tidak lagi mengurutkan tunggakan | batas | SRD 4.7 |
+| SR-376 | Cek Ingatan dibuka lagi setelah dikerjakan hari ini | **Cek ingatan hari ini sudah dikerjakan.** dan **Lanjutkan dengan sesi harian.** | batas | SRD 4.7 |
+| SR-377 | Cek Ingatan dibuka tanpa libur panjang | **Cek ingatan ditawarkan setelah libur panjang.** | batas | SRD 4.7 |
+| SR-378 | Tes penempatan selesai setelah ada jawaban Cek Ingatan | Tingkat tidak berubah | batas | SRD 4.13 |
+| SR-379 | Pasangan sudah dilatih hari ini | Tidak dihitung dalam ambang penahanan materi baru | batas | SRD 4.7 |
+| SR-380 | Pasangan ditandai ke dua arah dengan hitungan 4 dan 1 | Beranda menampilkan satu pasangan dengan **1/5** | batas | SRD 6.2 |
 
 ### 5.6 Perkenalan
 
@@ -471,7 +478,7 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | ID     | Skenario                                                                                 | Hasil yang diharapkan                                                                                                                  | Kategori | Aturan   |
 | ------ | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------- | -------- |
 | SR-249 | Pratinjau sesi harian tetap dan hasil jawabannya membuat belajar awal/belajar ulang baru | Soal sesi sama dengan salinan antrean, ditambah satu soal ulang untuk tiap kode yang baru diperkenalkan atau baru salah; langkah yang belum dijawab tetap jatuh tempo di sesi berikutnya, dan yang sudah dijawab tidak jatuh tempo lagi hari itu | normal   | AC-33    |
-| SR-250 | Tanpa riwayat: salinan antrean 4 Perkenalan dan 10 pengulangan Level 2                   | E = 4×15 + 10×6 = 120 detik; rentang dibulatkan menjadi sekitar 2 menit waktu aktif; langkah belajar awal yang ditanyakan sekali lagi tidak dihitung    | batas    | SRD 4.14 |
+| SR-250 | Tanpa riwayat: salinan antrean 4 Perkenalan dan 10 pengulangan Level 2                   | E = 4×15 + 4×10 + 10×6 = 160 detik, termasuk satu soal ulang untuk tiap Perkenalan; rentang 2–3 menit waktu aktif | batas    | SRD 4.14 |
 | SR-251 | Kelompok memiliki 30 sampel valid atau lebih                                             | d memakai median `ms_total` pribadi ditambah perkiraan waktu membaca hasil jawaban f; bukan nilai nominal penuh                        | normal   | SRD 4.14 |
 | SR-252 | E = 45 detik                                                                             | Tampil "kurang dari 1 menit"                                                                                                           | batas    | SRD 4.14 |
 | SR-253 | Enam butir info berlaku sekaligus                                                        | Hanya tiga butir teratas menurut prioritas yang tampil                                                                                 | batas    | SRD 4.14 |

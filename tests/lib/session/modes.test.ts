@@ -162,7 +162,7 @@ describe("planning cek ingatan", () => {
 		const plan = planSession("cek", input(), NO_PARAMS);
 		expect(plan.kind).toBe("empty");
 		if (plan.kind === "empty")
-			expect(plan.message).toBe("Tidak ada soal yang perlu diulang hari ini.");
+			expect(plan.message).toBe("Cek ingatan ditawarkan setelah libur panjang.");
 	});
 });
 
@@ -247,5 +247,32 @@ describe("where a re-ask goes", () => {
 	});
 	test("an answer to a re-ask never adds another", () => {
 		expect(reaskPosition(fresh, 2, 20)).toBeNull();
+	});
+});
+
+describe("previews and empty screens after review", () => {
+	test("the daily preview counts the re-ask every new code will get", () => {
+		const plan = planSession("hariIni", input(), NO_PARAMS);
+		if (plan.kind !== "ready") throw new Error("expected a plan");
+		expect(plan.preview?.count).toBe(String(plan.cards.length * 2));
+	});
+	test("cek reopened after it was taken today says so", () => {
+		const state = stateOf([
+			intro("bk", NOW - 30 * DAY),
+			review("bk", "code2region", NOW - 30 * DAY + 60_000),
+			// NOW is the first minute of the local day, so the recheck is answered at NOW itself.
+			review("bk", "code2region", NOW, { context: "recheck" })
+		]);
+		const plan = planSession("cek", { ...input(), state }, NO_PARAMS);
+		expect(plan.kind).toBe("empty");
+		if (plan.kind === "empty") {
+			expect(plan.message).toBe("Cek ingatan hari ini sudah dikerjakan.");
+			expect(plan.detail).toBe("Lanjutkan dengan sesi harian.");
+		}
+	});
+	test("cek without a long break explains when it is offered", () => {
+		const plan = planSession("cek", input(learned), NO_PARAMS);
+		if (plan.kind !== "empty") throw new Error("expected an empty plan");
+		expect(plan.message).toBe("Cek ingatan ditawarkan setelah libur panjang.");
 	});
 });

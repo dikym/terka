@@ -52,8 +52,9 @@ export type AppState = {
 	dailyRuns: Map<string, { localDay: string; plannedCount: number }>;
 	runCards: Map<string, { localDay: string; cards: Set<string> }>;
 	doneDays: Set<string>;
-	// First answer per code on the latest Cek Ingatan day; orders the backlog that follows it.
-	recheck: { day: string; results: Map<string, boolean> } | null;
+	// First answer per code in the latest Cek Ingatan run (keyed by run, else by day); orders the
+	// backlog that follows it.
+	recheck: { key: string; day: string; results: Map<string, boolean> } | null;
 	activeDays: Set<string>;
 	kilatRecords: Map<string, number>;
 	factViews: { factId: string; localDay: string; runId: string | null }[];
