@@ -163,15 +163,14 @@ describe("new material", () => {
 		state.tier.current = "pemula";
 		expect(dailyQueue(state, bundleOf(), SETTINGS, at).items).toHaveLength(1);
 	});
-	test("only code2region of the scope is new; unlocked region2code comes from any code", () => {
+	test("only cards of the scope are new; unlocked region2code outside it waits", () => {
 		const state = fresh();
 		seedCard(state, "dk::code2region", reviewCard({ due: NOW + 9 * DAY }));
 		seedCard(state, "dk::region2code", { state: "new" });
 		const queue = dailyQueue(state, bundleOf(), { ...SETTINGS, scope: SUMATERA }, at);
-		expect(ids(queue.items.filter((item) => item.slot === "new"))).toEqual([
-			...["bk", "bb", "ba", "bm", "bp", "be", "bd"].map((code) => `${code}::code2region`),
-			"dk::region2code"
-		]);
+		expect(ids(queue.items.filter((item) => item.slot === "new"))).toEqual(
+			["bk", "bb", "ba", "bm", "bp", "be", "bd"].map((code) => `${code}::code2region`)
+		);
 		expect(queue.outsideScopeNew).toBe(8);
 	});
 	test("at most one introduction per related group per day", () => {
