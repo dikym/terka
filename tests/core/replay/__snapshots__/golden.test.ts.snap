@@ -1660,7 +1660,7 @@ exports[`the golden log replays to the recorded state 1`] = `
   "voided": [],
   "wide": [
     [
-      "1|keyboard",
+      "1|keyboard|choice",
       [
         {
           "answerForm": "choice",

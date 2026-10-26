@@ -1,4 +1,10 @@
-import { PLACEMENT_LIMIT_MS, TIMED_LIMIT_MS, TRUE_FALSE_LIMIT_MS } from "@/rules";
+import {
+	PLACEMENT_LIMIT_MS,
+	RUNG_DISTRACTOR_POPULARITY,
+	RUNG_PROMPT_POPULARITY,
+	TIMED_LIMIT_MS,
+	TRUE_FALSE_LIMIT_MS
+} from "@/rules";
 import { areaDisplayName, highMembers, provinceName } from "../answers/dictionary";
 import { groupName } from "../content/names";
 import { setThreshold } from "../answers/match-set";
@@ -6,7 +12,13 @@ import type { Area, Bundle, Region } from "../content/schema";
 import { shuffle } from "../random";
 import { isLeech } from "../scheduling/card";
 import type { CardMemory } from "../scheduling/card-memory";
-import { foreignAreas, NATIONAL, otherCodes } from "./distractors";
+import {
+	foreignAreas,
+	type ForeignOptions,
+	NATIONAL,
+	otherCodes,
+	provinceChoices
+} from "./distractors";
 import {
 	type CompareHint,
 	LABELS,
@@ -18,6 +30,7 @@ import {
 	type QuestionOptions,
 	questionRandom
 } from "./question";
+import type { Rung } from "./rung";
 
 export type ResolvedLevels = { level: Level; autoLevel: Level; levelSource: LevelSource };
 
@@ -47,7 +60,8 @@ export function buildRegionQuestion(
 	mode: "code2region" | "region2code" | "setrecall",
 	bundle: Bundle,
 	levels: ResolvedLevels,
-	options: QuestionOptions
+	options: QuestionOptions,
+	rung: Rung
 ): Question {
 	const region = findRegion(bundle, parseCardId(card.cardId).contentId);
 	const members = highMembers(bundle, region);
@@ -119,7 +133,10 @@ export function buildRegionQuestion(
 			members.length > 1
 				? members.filter((area) => area.id !== options.previousPromptAreaId)
 				: members;
-		const shown = shuffle(candidates, random("prompt-area"))[0];
+		const known = candidates.filter(
+			(area) => area.popularity <= (RUNG_PROMPT_POPULARITY[rung] ?? 5)
+		);
+		const shown = shuffle(known.length ? known : candidates, random("prompt-area"))[0];
 		validCodeIds = bundle.regions
 			.filter((item) =>
 				item.areas.some((m) => m.areaId === shown.id && m.confidence === "high")
@@ -151,14 +168,41 @@ export function buildRegionQuestion(
 	});
 	if (options.context === "placement")
 		return { ...typed(2, "auto"), limit: { ms: PLACEMENT_LIMIT_MS, until: "first-input" } };
-	if (levels.level > 1) return typed(levels.level, levels.levelSource);
+	// The middle rung mixes the two: a card is either still chosen or already typed.
+	const form = rung === 4 ? (questionRandom(card, options, "form")() < 0.5 ? 3 : 5) : rung;
+	if (form >= 5) return typed(levels.level, levels.levelSource);
 
-	const format = options.format ?? "choice";
+	// True or false is half a guess, so only a beginner sees it; Level 2 always offers four choices.
+	const format = form <= 2 ? (options.format ?? "choice") : "choice";
 	const pickMember = (): Area => shuffle(members, random("answer"))[0];
+	const provinces =
+		mode === "code2region" && form === 1 && format === "choice"
+			? provinceChoices(bundle, region, 3, random("distractors"))
+			: null;
+	if (provinces?.length === 3) {
+		const own = provinceName(region.province);
+		return {
+			...base,
+			questionType: "choice",
+			answerForm: "choice",
+			label: intro ? LABELS.intro : label,
+			prompt,
+			answer: { kind: "literal", value: own, confusedWith: null },
+			promptAreaId,
+			choices: shuffle([own, ...provinces], random("order"))
+		};
+	}
+	// A set card keeps its scope distractors: its introduction leads into naming the whole set.
+	const sources: ForeignOptions =
+		form <= 2 && mode !== "setrecall"
+			? {
+					national: true,
+					maxPopularity: RUNG_DISTRACTOR_POPULARITY,
+					preferOtherProvince: true
+				}
+			: { preferOtherProvince: true };
 	if (mode === "code2region" && format === "truefalse") {
-		const [foreign] = foreignAreas(bundle, region, scope, 1, random("distractors"), {
-			preferOtherProvince: true
-		});
+		const [foreign] = foreignAreas(bundle, region, scope, 1, random("distractors"), sources);
 		const truthful = !foreign || random("truefalse")() < 0.5;
 		const shown = truthful ? pickMember() : foreign.area;
 		return {
@@ -177,9 +221,7 @@ export function buildRegionQuestion(
 		};
 	}
 	if (mode === "code2region" && format === "oddoneout") {
-		const [foreign] = foreignAreas(bundle, region, scope, 1, random("distractors"), {
-			preferOtherProvince: true
-		});
+		const [foreign] = foreignAreas(bundle, region, scope, 1, random("distractors"), sources);
 		if (foreign && members.length >= 3) {
 			const odd = areaDisplayName(foreign.area);
 			return {
@@ -216,9 +258,14 @@ export function buildRegionQuestion(
 						: [];
 				})()
 			: (() => {
-					const foreign = foreignAreas(bundle, region, scope, 3, random("distractors"), {
-						preferOtherProvince: true
-					});
+					const foreign = foreignAreas(
+						bundle,
+						region,
+						scope,
+						3,
+						random("distractors"),
+						sources
+					);
 					return foreign.length === 3
 						? shuffle(
 								[

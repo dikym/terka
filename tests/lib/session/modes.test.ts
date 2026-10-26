@@ -8,14 +8,20 @@ import {
 	reaskCard,
 	reaskPosition
 } from "../../../src/lib/session/modes";
+import { buildPreview } from "../../../src/core/session/preview";
+import { dailyQueue } from "../../../src/core/session/queue";
 import {
 	DAY,
+	fresh,
+	HOUR,
 	intro,
 	manyRegions,
 	NOW,
 	review,
+	reviewCard,
 	ruleBundle,
 	run,
+	seedCard,
 	stateOf
 } from "../../core/replay/fixtures";
 import { ctxAt, SETTINGS } from "../../core/session/fixtures";
@@ -34,6 +40,37 @@ const NO_PARAMS = { scope: null, code: null };
 const learned = [intro("bk", NOW - 2 * DAY), review("bk", "code2region", NOW - 2 * DAY + 60_000)];
 
 describe("planning a session", () => {
+	test("the preview counts the same question forms the session builds", () => {
+		const state = fresh();
+		state.levelTwoResults = Array.from({ length: 200 }, () => true);
+		for (const code of ["bk", "bb", "ba", "bm", "bp", "be", "bd", "a", "ab", "p", "r", "dk"])
+			seedCard(
+				state,
+				`${code}::code2region`,
+				reviewCard({
+					stability: 2,
+					intervalDays: 2,
+					lastReviewAt: NOW - DAY,
+					due: NOW - HOUR
+				})
+			);
+		const plan = planSession("hariIni", { ...input(), state }, NO_PARAMS);
+		expect(plan.kind).toBe("ready");
+		if (plan.kind !== "ready") return;
+		const session: Record<string, number> = {};
+		for (const card of plan.cards)
+			session[card.question.questionType] = (session[card.question.questionType] ?? 0) + 1;
+		const { items } = dailyQueue(state, bundle, SETTINGS, ctxAt(NOW));
+		const preview = buildPreview(state, bundle, items, SETTINGS, ctxAt(NOW), {
+			held: false,
+			lastInputMode: null,
+			completedSessions: 0,
+			revision: ""
+		});
+		expect(session.typed).toBeGreaterThan(0);
+		expect(preview.byType).toEqual(session);
+	});
+
 	test("with nothing learned, practice modes have nothing to ask", () => {
 		for (const mode of ["terfokus", "kilat", "harian"] as const) {
 			const plan = planSession(mode, input(), NO_PARAMS);

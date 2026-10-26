@@ -1,6 +1,5 @@
 import { normalizeName } from "@/core/text";
-import type { Question } from "@/core/questions/question";
-import type { Level, SessionCard } from "./cards";
+import type { SessionCard } from "./cards";
 import { type Mode, REASK_MARK } from "./modes";
 
 export type Verdict = "right" | "wrong" | "unverified";
@@ -17,8 +16,6 @@ export type SessionState = {
 	/** The last answer was taken back; the question shows a notice until the next answer. */
 	undone: boolean;
 	noteOffered: boolean;
-	/** Ids of cards whose level was lowered to 1 for this session. */
-	lowered: string[];
 	/** Areas named so far on a Sebutkan card. */
 	named: string[];
 	results: Verdict[];
@@ -40,8 +37,6 @@ export type SessionAction =
 	| { type: "review"; text: string }
 	| { type: "next" }
 	| { type: "undo" }
-	| { type: "lowerLevel" }
-	| { type: "restoreLevel" }
 	| { type: "dismissNote" }
 	| { type: "add" }
 	| { type: "remove"; value: string }
@@ -61,7 +56,6 @@ export const initialSession = (mode: Mode, cards: SessionCard[]): SessionState =
 	timedOut: false,
 	undone: false,
 	noteOffered: false,
-	lowered: [],
 	named: [],
 	results: [],
 	feedback: {}
@@ -81,22 +75,6 @@ export function sessionTotal(state: SessionState): number {
 	).length;
 	return state.cards.length + pending;
 }
-
-const isLowered = (state: SessionState, card: SessionCard) => state.lowered.includes(card.id);
-
-export const cardLevel = (state: SessionState, card = currentCard(state)): Level =>
-	isLowered(state, card) ? 1 : card.level;
-
-/** The question really on screen: the lowered one while the level is lowered. */
-export const activeQuestion = (state: SessionState, card = currentCard(state)): Question =>
-	isLowered(state, card) && card.lowered ? card.lowered : card.question;
-
-/** The choices on screen, or null for a typed answer. */
-export const cardOptions = (state: SessionState, card = currentCard(state)) =>
-	isLowered(state, card) ? (card.lowered?.choices ?? null) : (card.options ?? null);
-
-export const cardAnswer = (state: SessionState, card = currentCard(state)) =>
-	isLowered(state, card) ? (card.loweredAnswer ?? card.answer) : card.answer;
 
 /** A typed answer needs text; a naming card needs at least one name. */
 export function submittable(state: SessionState): boolean {
@@ -168,16 +146,6 @@ export function sessionReducer(state: SessionState, action: SessionAction): Sess
 				feedback: {},
 				results: state.results.slice(0, -1)
 			};
-		case "lowerLevel": {
-			const card = currentCard(state);
-			if (state.phase !== "ask" || !card.lowerable || isLowered(state, card)) return state;
-			return { ...state, lowered: [...state.lowered, card.id] };
-		}
-		case "restoreLevel": {
-			if (state.phase !== "ask") return state;
-			const card = currentCard(state);
-			return { ...state, lowered: state.lowered.filter((id) => id !== card.id) };
-		}
 		case "dismissNote":
 			return { ...state, noteOffered: false };
 		case "add": {

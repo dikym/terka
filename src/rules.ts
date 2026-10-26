@@ -2,6 +2,20 @@
 export const TARGET_RETENTION = 0.9;
 
 export const MATURE_INTERVAL_DAYS = 21;
+
+// Question difficulty rungs read from FSRS memory, and the per-user calibration of their bounds.
+export const RUNG_STABILITY_DAYS = [3, 10] as const;
+export const RUNG_HARD_DIFFICULTY = 7;
+export const RUNG_FADED_RETRIEVABILITY = 0.8;
+export const LADDER_WINDOW = 200;
+export const LADDER_MIN_SAMPLES = 100;
+export const LADDER_TARGET = 0.85;
+export const LADDER_SPREAD = 0.07;
+export const LADDER_SCALE_MIN = 0.5;
+export const LADDER_SCALE_MAX = 2;
+// Popularity tiers (1 best known) a beginner is asked about and offered as distractors.
+export const RUNG_PROMPT_POPULARITY: Partial<Record<number, number>> = { 1: 2, 2: 3 };
+export const RUNG_DISTRACTOR_POPULARITY = 3;
 export const LEECH_LAPSES = 6;
 export const SUSPEND_LAPSES = 8;
 export const FUZZ_MIN_DAYS = 3;

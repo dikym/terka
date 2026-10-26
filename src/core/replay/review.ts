@@ -1,4 +1,4 @@
-import { UNLOCK_REVERSE_DAYS, UNLOCK_SET_DAYS } from "@/rules";
+import { LADDER_WINDOW, UNLOCK_REVERSE_DAYS, UNLOCK_SET_DAYS } from "@/rules";
 import { gradePlacement, gradeWithGroup } from "../grading/grade";
 import type { ReviewLog } from "../log/events";
 import {
@@ -164,9 +164,14 @@ export function applyReview(state: AppState, row: ReviewLog, at: number): void {
 			settled: SETTLED.has(card.state),
 			correct: row.correct === true,
 			serverSeq: row.serverSeq,
-			msTotal: row.msTotal
+			msTotal: row.msTotal,
+			recognized: row.level === 2 && signals.answerForm === "choice"
 		});
 		if (!step) state.groupDay.set(row.contentId, row.localDay);
+		if (row.level === 2 && REGION_MODES.has(row.mode))
+			state.levelTwoResults = [...state.levelTwoResults, row.correct === true].slice(
+				-LADDER_WINDOW
+			);
 		if (state.firstCountedDay === null) state.firstCountedDay = row.localDay;
 		if (SETTLED.has(card.state)) {
 			const stats = dayStats(state, row.localDay);

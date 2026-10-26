@@ -32,7 +32,9 @@ export const isPercentileSample = (signals: AnswerSignals) =>
 
 export const narrowKey = (signals: AnswerSignals) =>
 	`${signals.level}|${signals.inputMode}|${signals.answerForm}`;
-export const wideKey = (signals: AnswerSignals) => `${signals.level}|${signals.inputMode}`;
+// Choices are answered far faster than typing, so they never share a group even at the same level.
+export const wideKey = (signals: AnswerSignals) =>
+	`${signals.level}|${signals.inputMode}${signals.answerForm === "choice" ? "|choice" : ""}`;
 
 export function pickGroup(narrow: AnswerSignals[], wide: AnswerSignals[]): AnswerSignals[] {
 	if (narrow.length >= FLUENCY_MIN_SAMPLES) return narrow;

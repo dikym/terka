@@ -5,8 +5,8 @@ import { Flag, Icon } from "@/components/ui/icon";
 import { Kbd } from "@/components/ui/kbd";
 import { Plate } from "@/components/ui/plate";
 import type { SessionCard } from "@/lib/session/cards";
-import { cardAnswer, cardLevel, cardOptions, type SessionState } from "@/lib/session/state";
-import { LevelMark, levelName, StatusPill, TimeBar } from "./indicators";
+import type { SessionState } from "@/lib/session/state";
+import { StatusPill, TimeBar } from "./indicators";
 
 const KEYS = ["F", "G", "H", "J"];
 // Two options sit under the index fingers, F and J.
@@ -21,8 +21,6 @@ type Props = {
 	onSubmit: () => void;
 	onChoose: (option: string) => void;
 	onNext: () => void;
-	onLower: () => void;
-	onRestore: () => void;
 	onAdd: () => void;
 	onRemove: (value: string) => void;
 	onDismissNote: () => void;
@@ -133,7 +131,7 @@ function AnswerBox({
 }
 
 function Verdict({ state, card }: { state: SessionState; card: SessionCard }) {
-	const answer = cardAnswer(state, card);
+	const answer = card.answer;
 	if (state.verdict === "unverified")
 		return (
 			<div className="flex flex-col gap-2">
@@ -184,7 +182,7 @@ function ChoiceGrid({
 	onChoose: (option: string) => void;
 }) {
 	const graded = state.phase === "graded";
-	const answer = cardAnswer(state, card);
+	const answer = card.answer;
 	return (
 		// Four choices stack on a phone; a pair stays side by side.
 		<div
@@ -252,36 +250,6 @@ function LeechPanel({ leech }: { leech: NonNullable<SessionCard["leech"]> }) {
 				)}
 			</Card>
 		</>
-	);
-}
-
-function LoweredPanel({ card, onRestore }: { card: SessionCard; onRestore: () => void }) {
-	return (
-		<Card>
-			<div className="flex min-w-0 flex-col gap-3">
-				<div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 lg:flex-nowrap lg:gap-3">
-					<span className="flex min-w-0 flex-col gap-2">
-						<span className="type-card-title">
-							{card.lowered?.label ?? "Tebak daerah"}
-						</span>
-						<span className="inline-flex items-center gap-2">
-							<LevelMark level={1} />
-							<span className="font-sans text-body-sm leading-none text-ink-500">
-								Level 1 Kenali
-							</span>
-						</span>
-					</span>
-					<StatusPill tone="muted">Tidak memengaruhi jadwal</StatusPill>
-				</div>
-				<div className="h-px bg-hairline" />
-				<div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 lg:flex-nowrap lg:gap-3">
-					<Button variant="outline" className="w-fit" onClick={onRestore}>
-						Kembali ke Level {card.level} {levelName(card.level)}
-					</Button>
-					<StatusPill tone="go">Dihitung penuh</StatusPill>
-				</div>
-			</div>
-		</Card>
 	);
 }
 
@@ -505,8 +473,6 @@ export function Question(props: Props) {
 		onSubmit,
 		onChoose,
 		onNext,
-		onLower,
-		onRestore,
 		onDismissNote,
 		onUnknown,
 		countdown
@@ -515,16 +481,14 @@ export function Question(props: Props) {
 	if (card.form === "perkenalan") return <Intro {...props} />;
 	if (card.form === "sebutkan") return <NameAll {...props} />;
 
-	const options = cardOptions(state, card);
+	const options = card.options ?? null;
 	const graded = state.phase === "graded";
-	const lowered = state.lowered.includes(card.id);
 	const timed = card.timer && countdown !== null && !graded;
-	// The start timer waits while the answer is being typed; a lowered level starts it over.
+	// The start timer waits while the answer is being typed.
 	const running = !(card.timer?.kind === "start" && state.input.trim() !== "");
-	const timerKey = `${card.id}-${lowered}`;
+	const timerKey = card.id;
 	return (
 		<>
-			{lowered && <LoweredPanel card={card} onRestore={onRestore} />}
 			{state.undone && <StatusPill tone="muted">Jawaban dibatalkan</StatusPill>}
 			{card.leech && !graded && <LeechPanel leech={card.leech} />}
 			{card.notice && (
@@ -581,20 +545,6 @@ export function Question(props: Props) {
 				<Button variant="quiet" block className="bg-transparent" onClick={onUnknown}>
 					Tidak tahu
 				</Button>
-			)}
-			{!graded && card.lowerable && !lowered && cardLevel(state, card) > 1 && (
-				<button
-					type="button"
-					onClick={onLower}
-					className="inline-flex min-h-9 w-auto cursor-pointer items-center justify-center gap-2 self-center rounded-sm border border-transparent bg-transparent px-3 py-1.5 font-display text-body-sm leading-none font-semibold whitespace-nowrap text-ink-700"
-				>
-					<span className="flex flex-col items-start gap-1 text-left">
-						<span>Turunkan ke Level 1</span>
-						<span className="font-sans text-micro leading-none font-normal text-ink-500">
-							Tidak memengaruhi jadwal
-						</span>
-					</span>
-				</button>
 			)}
 			{graded && state.noteOffered && (
 				<NoteOffer code={card.plate?.[0] ?? ""} onDismiss={onDismissNote} />

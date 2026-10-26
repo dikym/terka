@@ -21,6 +21,7 @@ import {
 import { challengeQueue, focusedQueue, kilatQuestion, setrecallQueue } from "@/core/session/modes";
 import { placementItems, type Stage } from "@/core/session/placement";
 import { buildPreview, kilatPreview, type Preview as CorePreview } from "@/core/session/preview";
+import { rungMemory } from "@/core/session/rung";
 import { dailyQueue, specialQueue } from "@/core/session/queue";
 import { recheckOffer, recheckQueue } from "@/core/session/recheck";
 import { buildQuestion } from "@/core/questions/build";
@@ -145,6 +146,7 @@ function cardsOf(
 			drillPair: item.drillPair,
 			scope,
 			variant,
+			memory: rungMemory(state, entry, input.ctx.now),
 			note: input.notes.get(contentOf(item.cardId)) ?? null
 		});
 		const card = toCard(question, item, entry, {

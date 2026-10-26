@@ -27,7 +27,9 @@ export function gradeWithGroup(signals: AnswerSignals, group: AnswerSignals[]): 
 	if (signals.correct !== true || signals.timedOut) return 1;
 	if (isInterrupted(signals)) return 3;
 	const score = fluencyScore(signals, group);
-	return score >= 2 ? 4 : score >= 0 ? 3 : 2;
+	// A Level 2 choice can be recognized rather than recalled, so it is never proof of an easy recall.
+	const ceiling = signals.level === 2 && signals.answerForm === "choice" ? 3 : 4;
+	return Math.min(ceiling, score >= 2 ? 4 : score >= 0 ? 3 : 2) as Grade;
 }
 
 export function gradePlacement(signals: AnswerSignals): Grade | null {

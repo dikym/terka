@@ -133,11 +133,11 @@ Cakupan menentukan dua hal: materi baru mana yang dibuka, dan daftar nama yang b
 
 **Jawaban di tingkat kabupaten/kota.** Soal "Apa daerah kode BK?" diterima dengan nama kabupaten/kota mana pun yang memakai BK — Medan, Binjai, Deli Serdang. Satu nama sudah cukup. Menyebut sebanyak mungkin adalah tugas bentuk "sebutkan sebanyak mungkin", bukan bentuk ini. Setelah jawaban benar, UI menampilkan beberapa kab/kota lain dari kode yang sama.
 
-**Nama provinsi** tidak pernah jadi pilihan. Nama provinsi hanya diterima sebagai jawaban ketik jika kode itu mencakup seluruh provinsi dan provinsi itu tidak memakai kode lain, seperti DK untuk Bali atau BL untuk Aceh. BK tidak bisa dijawab "Sumatera Utara", karena provinsi itu juga memakai BB. Sifat "mencakup seluruh provinsi" dihitung saat build dari data kab/kota, bukan ditulis manual.
+**Nama provinsi** hanya jadi pilihan di Perkenalan soal kode → daerah (anak tangga 1, bagian 3.2), dan hanya untuk kode yang tidak membentang ke provinsi lain (`spans` kosong). Pilihannya provinsi kode itu ditambah tiga provinsi dari kawasan lain, sehingga mudah dieliminasi. Di luar itu, nama provinsi hanya diterima sebagai jawaban ketik jika kode itu mencakup seluruh provinsi dan provinsi itu tidak memakai kode lain, seperti DK untuk Bali atau BL untuk Aceh. BK tidak bisa dijawab "Sumatera Utara", karena provinsi itu juga memakai BB. Sifat "mencakup seluruh provinsi" dihitung saat build dari data kab/kota, bukan ditulis manual.
 
-**Pengecoh dan pilihan.** Untuk soal kode → daerah, ambil tiga nama kab/kota `high` dari kode lain dan satu jawaban benar. Tidak boleh ada pengecoh yang juga merupakan jawaban sah, termasuk akibat relasi banyak-ke-banyak. Sumber awal mengikuti tabel. Jika belum cukup tiga pengecoh unik, perluas ke kawasan kartu, lalu nasional. Ini berlaku juga di provinsi satu kode seperti Bali; perluasan hanya mengubah pilihan, tidak membuka materi baru di luar Cakupan. Jika data nasional pun tidak cukup, bentuk empat pilihan tidak dibuat: Perkenalan memakai soal informasi tanpa tebakan, dicatat `context = intro`, `question_type = 'intro_read'`; selain Perkenalan gunakan jawaban ketik dengan level yang sesuai.
+**Pengecoh dan pilihan.** Untuk soal kode → daerah, ambil tiga nama kab/kota `high` dari kode lain dan satu jawaban benar. Tidak boleh ada pengecoh yang juga merupakan jawaban sah, termasuk akibat relasi banyak-ke-banyak. Sumber awal bergantung pada anak tangga (bagian 3.2): anak tangga 1–2 mengambil kab/kota populer (tingkat popularitas 1–3) dari seluruh Indonesia lebih dulu, lalu kab/kota lain bila kurang; anak tangga 3 ke atas mengikuti tabel. Popularitas tiap kab/kota disimpan di data konten dengan skala 1 (dikenal hampir semua orang) sampai 5 (jarang didengar di luar provinsinya). Jika belum cukup tiga pengecoh unik, perluas ke kawasan kartu, lalu nasional. Ini berlaku juga di provinsi satu kode seperti Bali; perluasan hanya mengubah pilihan, tidak membuka materi baru di luar Cakupan. Jika data nasional pun tidak cukup, bentuk empat pilihan tidak dibuat: Perkenalan memakai soal informasi tanpa tebakan, dicatat `context = intro`, `question_type = 'intro_read'`; selain Perkenalan gunakan jawaban ketik dengan level yang sesuai.
 
-Untuk soal daerah → kode, pilihan Level 1 berupa kode yang berbeda. Semua kode berlabel `high` yang sah untuk daerah tersebut diterima dan tidak boleh menjadi pengecoh. Sumber pilihan diperluas dengan urutan yang sama seperti soal kode → daerah. Nama provinsi tidak digunakan sebagai pilihan jawaban.
+Untuk soal daerah → kode, pilihan berupa kode yang berbeda. Daerah yang ditanyakan di anak tangga 1 dipilih dari tingkat popularitas 1–2 dan di anak tangga 2 dari 1–3, bila kode itu punya anggota setenar itu. Semua kode berlabel `high` yang sah untuk daerah tersebut diterima dan tidak boleh menjadi pengecoh. Sumber pilihan diperluas dengan urutan yang sama seperti soal kode → daerah. Nama provinsi tidak digunakan sebagai pilihan jawaban soal daerah → kode.
 
 **Kartu dari luar Cakupan.** Kartu yang sudah perlu diulang tetap muncul dari seluruh kartu (bagian 2.4). Untuk kartu seperti itu, sumber pengecohnya kawasan kartu itu sendiri, supaya kartu DK tidak diberi pengecoh dari Sumatera hanya karena Cakupan aktifnya Sumatera.
 
@@ -185,15 +185,15 @@ Pengecoh tidak boleh berupa jawaban sah dari soal itu, termasuk alias pemegang y
 
 ### 3.1 Tiga Tingkat
 
-Tingkat kesulitan didefinisikan dari **cara pengguna mengeluarkan jawaban**: memilih, mengetik, atau mengetik di bawah batas waktu. Tidak ada tingkat yang memakai petunjuk parsial seperti huruf pertama, digit pertama, atau tipe pemegang. Petunjuk seperti itu tanggung: terlalu banyak membantu untuk menguji ingatan, tetapi tidak cukup untuk mengajarkan jawabannya. Jika pengguna belum ingat, jalan keluarnya pilihan ganda di Level 1 atau jawaban yang ditampilkan setelah menjawab, bukan setengah jawaban sebelum menjawab.
+Tingkat kesulitan didefinisikan dari **cara pengguna mengeluarkan jawaban**: memilih, memilih atau mengetik, atau mengetik di bawah batas waktu. Di dalam tiap level, anak tangga (bagian 3.2) menentukan bentuk soal dan sumber pengecoh. Tidak ada tingkat yang memakai petunjuk parsial seperti huruf pertama, digit pertama, atau tipe pemegang. Petunjuk seperti itu tanggung: terlalu banyak membantu untuk menguji ingatan, tetapi tidak cukup untuk mengajarkan jawabannya. Jika pengguna belum ingat, jalan keluarnya pilihan ganda di Level 1 atau jawaban yang ditampilkan setelah menjawab, bukan setengah jawaban sebelum menjawab.
 
 | Level | Nama   | Tuntutan                                                                                                         | Bentuk soal khas                                                   |
 | ----- | ------ | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
 | 1     | Kenali | Jawaban ada di layar, tinggal dipilih                                                                            | Pilihan ganda, benar atau salah, mana yang bukan                   |
-| 2     | Ingat  | Jawaban diketik tanpa pilihan dan tanpa batas waktu                                                              | Tebak daerah, Tebak kode                                           |
+| 2     | Ingat  | Jawaban dipilih dari pengecoh Cakupan, lalu diketik tanpa pilihan dan tanpa batas waktu                          | Tebak daerah, Tebak kode                                           |
 | 3     | Kuasai | Jawaban diketik dengan batas waktu input pertama, disebut sebanyak mungkin, atau harus membedakan dua item mirip | Tebak berwaktu, Sebutkan sebanyak mungkin, latihan Bandingkan Kode |
 
-Pilihan dan pengecoh mengikuti mode serta sumber awal dan aturan perluasan di bagian 2.8; daerah → kode memakai pilihan kode. Di dalam sumber itu, pengecoh ikut berubah menurut level. Level 1 memakai daerah dari provinsi lain jika tersedia, jadi lebih mudah dieliminasi. Latihan Bandingkan Kode di Level 3 memakai daerah dari kode yang sering tertukar dengan kartu itu.
+Pilihan dan pengecoh mengikuti mode serta sumber awal dan aturan perluasan di bagian 2.8; daerah → kode memakai pilihan kode. Di dalam sumber itu, pengecoh ikut berubah menurut anak tangga dan memakai daerah dari provinsi lain jika tersedia, jadi lebih mudah dieliminasi. Latihan Bandingkan Kode di Level 3 memakai daerah dari kode yang sering tertukar dengan kartu itu.
 
 ### 3.2 Penentuan Level Otomatis
 
@@ -217,22 +217,33 @@ Pada uji penguasaan otomatis, `code2region` meminta satu kab/kota tanpa bantuan;
 
 Keberhasilan Level 3 dicatat historis per kartu dari jawaban sah yang tidak dibatalkan, bukan Perkenalan, bukan `unverified`, bukan jawaban saat suspended, dan tanpa konteks leech yang membocorkan jawaban. Untuk `setrecall`, keberhasilan berarti mencapai ambang. Setelah pembaruan jadwal, kartu menjadi `mature` hanya jika interval hasilnya ≥ 21 hari dan syarat historis itu terpenuhi. Menjawab kartu terkait tidak meluluskan kartu lain.
 
-Pemilihan level berbasis peluang ingat tetap pekerjaan Fase 3 tahap 2 di PRD bagian 11. Rilis pertama memakai pemetaan eksplisit ini.
+**Anak tangga.** Di dalam level, setiap kartu `code2region` dan `region2code` berada di satu anak tangga 1–6 yang dibaca dari memori FSRS kartu itu. Level tetap seperti tabel di atas; anak tangga hanya memilih bentuk soal dan sumber pengecoh di dalam pita levelnya.
 
-### 3.3 Dampak Perubahan Level Secara Manual
+| Anak tangga | Level | Kondisi kartu | Bentuk soal |
+| --- | --- | --- | --- |
+| 1 | 1 | Perkenalan | Pilihan ganda; kode → daerah memakai nama provinsi (bagian 2.8) |
+| 2 | 1 | `learning` | Pilihan ganda; pengecoh kab/kota populer dari seluruh Indonesia |
+| 3 | 2 | `relearning`, atau `review` dengan S < 3 hari | Pilihan ganda empat opsi; pengecoh dari Cakupan, diperluas ke kawasan lalu nasional |
+| 4 | 2 | `review` dengan 3 ≤ S < 10 hari | Diundi per kartu dengan seed `cardId` dan `reps`: separuh seperti anak tangga 3, separuh diketik |
+| 5 | 2 | `review` dengan S ≥ 10 hari | Diketik tanpa batas waktu |
+| 6 | 3 | Uji penguasaan otomatis atau `mature` | Tebak berwaktu |
 
-Pengguna boleh mengganti level manual, tetapi konsekuensinya tidak simetris:
+Kenapa S, bukan peluang ingat R: kartu dijadwalkan tepat saat R turun ke target retensi 0,90, sehingga hampir semua kartu yang muncul punya R yang sama. S membedakan memori yang rapuh dari yang kuat.
+
+Penyesuaian kartu `review`: turun satu anak tangga bila D ≥ 7, dan turun satu lagi bila R saat disajikan < 0,80. Hasilnya tidak keluar dari pita levelnya, dan kartu `review` tidak pernah turun ke anak tangga 1–2, termasuk di Mode Kilat. Benar atau salah dan mana yang bukan hanya dipakai di anak tangga 1–2, karena benar atau salah bisa ditebak separuh peluang. Level yang ditetapkan konteks, seperti Mode Kilat, dan level manual dari riwayat lama memakai anak tangga tertinggi pitanya. Cek Ingatan juga memakai anak tangga tertinggi pitanya, karena tujuannya mengukur ingatan, bukan mengenali pilihan. Perkenalan kartu `setrecall` tetap memakai pengecoh dari Cakupan. Kalibrasi hanya memakai jawaban kode wilayah, bukan kode diplomat.
+
+**Kalibrasi per pengguna.** Replay menyimpan benar atau salah dari 200 jawaban Level 2 terakhir yang memperbarui jadwal. Batas S (3 dan 10 hari) dikali `2^((0,85 − persentase benar) / 0,07)`, dibatasi 0,5–2. Pengguna yang hampir tidak pernah salah naik lebih cepat; pengguna yang sering salah naik lebih lambat. Sebelum ada 100 jawaban Level 2, pengalinya 1.
+
+### 3.3 Level Manual pada Riwayat Lama
+
+Pengguna tidak lagi mengganti level secara manual. Anak tangga (bagian 3.2) sudah menurunkan kesulitan dengan sendirinya: kartu yang lemah, sulit, atau lama tidak diulang mendapat pilihan ganda, bukan ketikan. Tombol untuk menurunkan level ke Level 1 dihapus.
+
+Riwayat yang sudah tercatat tetap bisa berisi jawaban berlevel manual (`level_source` `manual_up` atau `manual_down`). Replay memutarnya dengan aturan berikut agar jadwal lama tidak berubah:
 
 | Perubahan manual | Dampak                                                                                            |
 | ---------------- | ------------------------------------------------------------------------------------------------- |
 | Level dinaikkan  | Jawaban dapat memperbarui jadwal jika syarat mode, waktu pengulangan, dan kartu terkait terpenuhi |
 | Level diturunkan | Jawaban tidak memperbarui D, S, atau interval; akurasi dan kode tertukar tetap dicatat            |
-
-Aturan ini memakai prinsip yang sama dengan Latihan Terfokus di bagian 2.4. Tanpanya, pengguna bisa menurunkan level untuk mendapat hasil yang terlihat bagus, padahal kemampuan yang ingin diukur justru tidak diuji pada tuntutan yang semestinya.
-
-Aturan biner ini sengaja sederhana: jawaban di level lebih rendah tidak dipakai memperbarui jadwal, walaupun sebenarnya tetap membawa sebagian informasi soal penguasaan kartu. Pendekatan yang lebih halus — misalnya bobot parsial — memerlukan data untuk mengukur seberapa besar tiap level menggeser peluang berhasil. Pendekatan itu dijadwalkan di PRD bagian 11, Fase 3 tahap 2.
-
-Pengguna tetap boleh menurunkan level karena fiturnya berguna di kondisi tertentu, misalnya setelah lama tidak berlatih atau saat situasi tidak memungkinkan mengetik. Yang dibatasi bukan tindakan menurunkan level, melainkan pemakaian hasilnya sebagai bukti penguasaan penuh.
 
 ### 3.4 Syarat Status Dikuasai
 
@@ -327,7 +338,7 @@ Karena D dan S dihitung per kartu, kartu yang sudah dikuasai dapat interval yang
 
 Ganti pilihan hanya terukur saat Level 1 dijawab dengan keyboard: angka 1–4 memilih, Enter mengunci. Klik atau ketuk langsung mengunci, jadi nilainya selalu 0.
 
-**Kelompok pembanding.** Persentil selalu dihitung terhadap jawaban benar pengguna sendiri dalam kelompok yang sebanding: `level × bentuk jawaban × metode input`. Ada tiga kelompok bentuk jawaban: pilihan, kode, dan nama daerah. Setiap kelompok memakai rentang bergerak 200 jawaban benar terakhir. Jika kelompok belum memiliki 30 jawaban, sistem memakai kelompok yang lebih lebar, `level × metode input`. Jika kelompok lebar juga belum 30, komponen berbasis persentil bernilai 0.
+**Kelompok pembanding.** Persentil selalu dihitung terhadap jawaban benar pengguna sendiri dalam kelompok yang sebanding: `level × bentuk jawaban × metode input`. Ada tiga kelompok bentuk jawaban: pilihan, kode, dan nama daerah. Setiap kelompok memakai rentang bergerak 200 jawaban benar terakhir. Jika kelompok belum memiliki 30 jawaban, sistem memakai kelompok yang lebih lebar, `level × metode input`, yang tetap memisahkan pilihan dari jawaban ketik karena memilih jauh lebih cepat daripada mengetik. Jika kelompok lebar juga belum 30, komponen berbasis persentil bernilai 0.
 
 Metode input masuk kelompok karena tanpa pemisahan itu, setiap jawaban yang diketik di ponsel akan terlihat ragu dibanding jawaban dari laptop, dan kartu yang sering dijawab di ponsel dijadwalkan terlalu rapat.
 
@@ -358,6 +369,8 @@ Syarat 1.200 ms pada jeda terpanjang mencegah penalti untuk jeda yang pendek tet
 | Benar, skor ≤ −1        | 2 — Sulit                                     |
 
 Akibatnya, Mudah hanya untuk jawaban yang cepat **dan** bersih: latensi di bawah P20 tanpa satu penalti pun. Jawaban lambat langsung Sulit.
+
+**Pilihan ganda di Level 2 paling tinggi Bagus.** FSRS memodelkan peluang mengingat, sedangkan pilihan ganda bisa dijawab dengan mengenali atau menebak. Jika jawaban pilihan di Level 2 boleh bernilai Mudah, S naik terlalu cepat dan retensi nyata turun di bawah target. Batas ini tidak berlaku di Level 1, dan riwayat lama tidak berubah karena sebelumnya Level 2 selalu diketik. Untuk alasan yang sama, optimasi parameter (bagian 4.12) tetap memakai jawaban pilihan Level 2 sebagai bagian riwayat kartu, tetapi tidak menjadikannya target prediksi.
 
 **Salah ketik hanya mengurangi satu poin.** Jawaban cepat dengan satu salah ketik tetap Bagus, karena salah ketik ringan lebih sering kesalahan jari daripada tanda ingatan yang goyah. Variasi penulisan yang umum, seperti "Bukit Tinggi", tidak mengurangi poin sama sekali.
 

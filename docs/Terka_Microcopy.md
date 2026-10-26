@@ -146,8 +146,6 @@ Tidak ada tombol **Latihan lagi** pada keadaan kosong setelah sesi harian selesa
 | Jawaban salah                             | **Belum tepat**                                                                   |
 | Batas waktu habis                         | **Waktu habis**                                                                   |
 | Menampilkan jawaban                       | **Jawaban: Bengkulu**                                                             |
-| Level diturunkan manual                   | **Tidak memengaruhi jadwal**                                                      |
-| Level dinaikkan manual                    | **Dihitung penuh** — tetap tunduk syarat waktunya diulang dan aturan mode/sibling |
 | Uji penguasaan otomatis                   | **Uji penguasaan · mulai mengetik dalam {detik} detik**                           |
 | Perkenalan tanpa pilihan cukup            | **Kenali kode ini** diikuti daerahnya; tanpa kolom tebakan                        |
 | Himpunan mencapai batas input             | **{batas} jawaban sudah dicatat. Hasil dihitung sekarang.**                       |
@@ -159,8 +157,6 @@ Tidak ada tombol **Latihan lagi** pada keadaan kosong setelah sesi harian selesa
 | Undo tidak tersedia di Mode Kilat         | Tombol **Batalkan jawaban** tidak tampil; Z tidak berpengaruh                     |
 
 Untuk jawaban salah, UI menampilkan **Belum tepat** diikuti jawaban yang benar. Sistem tidak memakai teks seperti "Salah besar", "Coba lagi", atau pesan motivasional acak karena tidak menambah informasi.
-
-Tampilkan dampak perubahan level pada kedua arah. **Dihitung penuh** berarti hasil dapat memengaruhi jadwal jika syarat waktu pengulangan dan aturan mode terpenuhi; **Tidak memengaruhi jadwal** digunakan saat level diturunkan. Label harus sesuai hasil perhitungan, bukan menjanjikan perubahan jadwal pada setiap jawaban.
 
 **Label dan kalimat soal.** Label tampil kecil di atas pertanyaan.
 

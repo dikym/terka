@@ -14,6 +14,8 @@ export type CountedAnswer = {
 	correct: boolean;
 	serverSeq: number | null;
 	msTotal: number;
+	// A Level 2 choice may be recognition, not recall: it moves the schedule but is not a training target.
+	recognized?: boolean;
 };
 
 export function countedAnswers(

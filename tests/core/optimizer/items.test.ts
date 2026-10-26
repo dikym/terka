@@ -31,6 +31,26 @@ describe("buildItems", () => {
 		]);
 	});
 
+	test("a recognized choice stays in the history but is never a prediction target", () => {
+		const [first, second, third] = answers(3, 1);
+		const items = buildItems([
+			first,
+			{ ...second, recognized: true },
+			{ ...third, at: NOW + 3 * DAY, localDay: "2026-09-24" }
+		]);
+		expect(items).toEqual([
+			{
+				cardId: first.cardId,
+				lastAt: NOW + 3 * DAY,
+				reviews: [
+					{ rating: 3, deltaT: 0 },
+					{ rating: 3, deltaT: 0 },
+					{ rating: 3, deltaT: 3 }
+				]
+			}
+		]);
+	});
+
 	test("emits nothing for a card reviewed once", () => {
 		expect(buildItems(answers(1, 1))).toEqual([]);
 	});

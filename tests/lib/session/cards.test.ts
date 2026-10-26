@@ -11,7 +11,8 @@ const deps = { bundle, dictionary: buildDictionary(bundle), notes: new Map<strin
 const reviewing = (cardId: string, overrides: Partial<CardEntry> = {}): CardEntry => ({
 	...newEntry(cardId),
 	state: "review",
-	intervalDays: 5,
+	stability: 15,
+	intervalDays: 15,
 	reps: 3,
 	...overrides
 });
@@ -69,20 +70,12 @@ describe("session cards", () => {
 		expect(result.plate).toBeUndefined();
 	});
 
-	test("a level 2 typed card can drop to level 1 choices", () => {
-		const result = card(reviewing("bk::code2region"));
-		expect(result.lowerable).toBe(true);
-		expect(result.lowered?.choices.length).toBe(4);
-		expect(result.lowered?.choices).toContain(result.loweredAnswer!);
-	});
-
 	test("an introduction keeps its four choices and lists the code's areas", () => {
 		const result = card(newEntry("bk::code2region") as CardEntry, "intro");
 		expect(result.form).toBe("perkenalan");
 		expect(result.options).toHaveLength(4);
 		expect(result.options).toContain(result.answer);
 		expect(result.intro?.areas).toContain("Kota Medan");
-		expect(result.lowerable).toBe(false);
 	});
 
 	test("a diplomat card shows the CD plate and the holder's flag", () => {
