@@ -108,7 +108,7 @@ const NAV = [
 const FOOTER: { icon: IconName; label: string; href: string }[] = [
 	{ icon: "info", label: "Tentang Terka", href: "/tentang" },
 	{ icon: "shield-check", label: "Kebijakan privasi", href: "/privasi" },
-	{ icon: "circle-alert", label: "Laporkan data yang keliru", href: "mailto:contact@terka.my.id" }
+	{ icon: "mail", label: "Laporkan data yang keliru", href: "mailto:contact@terka.my.id" }
 ];
 
 function Heading({ label, title }: { label?: string; title: string }) {
