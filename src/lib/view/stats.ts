@@ -43,7 +43,7 @@ export type Stats = {
 	account: { email: string | null; sync: string; export: string };
 };
 
-const REGION_MODES = new Set(["code2region", "region2code", "setrecall"]);
+export const REGION_MODES = new Set(["code2region", "region2code", "setrecall"]);
 const LEFT_OUT = new Set(["locked", "suspended"]);
 const UNSTARTED = new Set(["locked", "new"]);
 const LEVELS = [
@@ -75,7 +75,11 @@ const statusOf = (card: CardEntry): CodeStatus =>
 	card.state === "suspended" ? "suspended" : card.lapses >= LEECH_LAPSES ? "leech" : "learning";
 
 /** A code is Dikuasai when every card it has, apart from locked or suspended ones, is mature. */
-function codeMastered(state: AppState, contentId: string, modes: ReadonlySet<string>): boolean {
+export function codeMastered(
+	state: AppState,
+	contentId: string,
+	modes: ReadonlySet<string>
+): boolean {
 	let counted = 0;
 	for (const cardId of state.cards.keys()) {
 		if (contentOf(cardId) !== contentId || !modes.has(modeOf(cardId))) continue;

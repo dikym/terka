@@ -99,7 +99,7 @@ function NationalSummary({ s, loading }: { s: Stats; loading: boolean }) {
 					{loading ? <SkeletonText width="1.7em" /> : s.national.percent}
 				</span>
 				<div className="grid grid-cols-2 gap-4">
-					<Figure value={s.national.codes} label="kode Dikuasai" loading={loading} />
+					<Figure value={s.national.codes} label="kode dikuasai" loading={loading} />
 					<Figure value={s.national.groups} label="kawasan dikuasai" loading={loading} />
 				</div>
 			</div>
