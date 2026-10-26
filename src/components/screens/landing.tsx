@@ -226,7 +226,7 @@ function HowItWorks() {
 					{LEVELS.map(([level, text]) => (
 						<div
 							key={level}
-							className="grid grid-cols-[72px_minmax(0,1fr)] items-baseline gap-3 border-b border-hairline py-3 last:border-b-0 lg:flex lg:flex-col lg:gap-2 lg:border-b-0 lg:py-0"
+							className="grid grid-cols-[72px_minmax(0,1fr)] items-baseline gap-3 border-b border-hairline py-3 lg:flex lg:flex-col lg:gap-2 lg:border-b-0 lg:py-0"
 						>
 							<span className="font-display text-body-md leading-[1.3] font-semibold text-ink-1000 lg:leading-none">
 								{level}

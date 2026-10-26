@@ -47,6 +47,31 @@ test("the landing page starts with the placement test, through one button", asyn
 	await expect(welcome.getByText("Tes penempatan", { exact: true })).toBeVisible();
 });
 
+test("the landing demo plays three questions without resizing and can start again", async ({
+	page
+}) => {
+	await page.goto("/");
+	const card = page.locator("div.shadow-block", { hasText: "Coba tebak daerah" });
+	await expect(card.getByText("1/3")).toBeVisible();
+	const height = async () => (await card.boundingBox())!.height;
+	const start = await height();
+	for (const step of [1, 2, 3]) {
+		await expect(card.getByText(`${step}/3`)).toBeVisible();
+		await page.keyboard.press("Tab");
+		await card.getByRole("button").first().press("f");
+		await expect(card.getByText(/^(Benar\.|Belum tepat, ini .+\.)$/)).toBeVisible();
+		expect(await height()).toBe(start);
+		await card
+			.getByRole("button", { name: step === 3 ? "Lihat hasil" : "Soal berikutnya" })
+			.click();
+	}
+	await expect(card.getByText(/^\d dari 3 benar\.$/)).toBeVisible();
+	expect(await height()).toBe(start);
+	await expect(card.getByRole("link", { name: "Mulai belajar" })).toHaveCount(0);
+	await card.getByRole("button", { name: "Coba kode lain" }).click();
+	await expect(card.getByText("1/3")).toBeVisible();
+});
+
 test("starting the placement test goes straight to it without showing the home screen", async ({
 	page
 }) => {
