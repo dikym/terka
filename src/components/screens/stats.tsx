@@ -326,7 +326,7 @@ function Forecast({ s, loading }: { s: Stats; loading: boolean }) {
 					))}
 				</div>
 			</div>
-			<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">
+			<p className="font-sans text-body-sm leading-normal text-ink-500">
 				Jumlah soal yang perlu diulang per hari. Selama di bawah ambang, materi baru tetap
 				dibuka.
 			</p>
@@ -374,7 +374,7 @@ function ByGroup({ s, loading }: { s: Stats; loading: boolean }) {
 					</div>
 				))}
 			</div>
-			<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">
+			<p className="font-sans text-body-sm leading-normal text-ink-500">
 				{loading ? (
 					<SkeletonText width="24em" />
 				) : (
@@ -476,7 +476,7 @@ function NameAll({ s, loading }: { s: Stats; loading: boolean }) {
 					</div>
 				))}
 			</div>
-			<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">
+			<p className="font-sans text-body-sm leading-normal text-ink-500">
 				Sebutkan semua kab/kota yang memakai satu kode. Satu kode per sesi, di luar sesi
 				harian.
 			</p>
@@ -515,7 +515,7 @@ function Diplomat({ s, loading }: { s: Stats; loading: boolean }) {
 					className="h-2 flex-none"
 				/>
 			)}
-			<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">
+			<p className="font-sans text-body-sm leading-normal text-ink-500">
 				Dihitung terpisah dari penguasaan wilayah.
 			</p>
 		</Card>
@@ -557,7 +557,7 @@ function Seen({ s, loading }: { s: Stats; loading: boolean }) {
 					</span>
 				</div>
 			))}
-			<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">
+			<p className="font-sans text-body-sm leading-normal text-ink-500">
 				Dari pencarian kode di Referensi. Dipakai mengurutkan materi baru.
 			</p>
 		</Card>

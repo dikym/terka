@@ -88,7 +88,7 @@ function Heading({ id, children }: { id: string; children: React.ReactNode }) {
 
 function Body({ id, children }: { id?: string; children: React.ReactNode }) {
 	return (
-		<p id={id} className="m-0 text-pretty text-ink-900 type-prose">
+		<p id={id} className="m-0 text-ink-900 type-prose">
 			{children}
 		</p>
 	);

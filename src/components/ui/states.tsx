@@ -6,7 +6,7 @@ export function EmptyState({ label, children }: { label?: string; children: Reac
 		<section className="rounded-md border border-hairline bg-paper-0 shadow-lift">
 			<div className="flex flex-col gap-3 p-4">
 				{label && <span className="type-label text-ink-500">{label}</span>}
-				<p className="m-0 text-pretty text-ink-500 type-body">{children}</p>
+				<p className="m-0 text-ink-500 type-body">{children}</p>
 			</div>
 		</section>
 	);

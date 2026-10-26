@@ -66,9 +66,7 @@ function Right({ right }: { right: Preview["right"] }) {
 					</span>
 					<span className="text-ink-900 type-body">hari</span>
 				</div>
-				<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">
-					{right.note}
-				</p>
+				<p className="font-sans text-body-sm leading-normal text-ink-500">{right.note}</p>
 			</Card>
 		);
 	return (
@@ -154,9 +152,7 @@ export function SessionPreview({
 					</div>
 				)}
 				{p.description && (
-					<p className="max-w-[62ch] text-pretty text-ink-900 type-body">
-						{p.description}
-					</p>
+					<p className="max-w-[62ch] text-ink-900 type-body">{p.description}</p>
 				)}
 			</div>
 			<div className="flex flex-col items-start gap-3 border-t border-b border-t-ink-1000 border-b-hairline py-5 lg:flex-row lg:items-end lg:justify-between lg:gap-6">
@@ -229,7 +225,7 @@ export function SessionPreview({
 									color="bg-ink-700"
 									className="mt-0.5 lg:mt-0"
 								/>
-								<span className="text-pretty text-ink-900 type-body">
+								<span className="text-ink-900 type-body">
 									{count && (
 										<span className="font-mono font-semibold text-ink-1000">
 											{count}

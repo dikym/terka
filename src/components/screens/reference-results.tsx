@@ -13,9 +13,7 @@ import type { Area, DiplomatEntry, diplomatList, RegionDetail } from "@/lib/view
 export const REFERENCE_ONLY = "Tersedia di Referensi, belum masuk latihan.";
 
 export function Hint({ children }: { children: React.ReactNode }) {
-	return (
-		<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">{children}</p>
-	);
+	return <p className="font-sans text-body-sm leading-normal text-ink-500">{children}</p>;
 }
 
 export function Divider({ label }: { label: React.ReactNode }) {
@@ -55,7 +53,7 @@ export function UnverifiedLegend({ note }: { note?: string }) {
 					Belum terverifikasi penuh.
 				</span>
 				{note && (
-					<p className="font-sans text-body-sm leading-[1.4] text-pretty text-ink-500 lg:leading-normal">
+					<p className="font-sans text-body-sm leading-[1.4] text-ink-500 lg:leading-normal">
 						{note}
 					</p>
 				)}
@@ -269,16 +267,12 @@ export function FormatCards() {
 					aside={<DotLabel hint={REFERENCE_ONLY}>Referensi saja</DotLabel>}
 				/>
 				<SpecialPlate parts={["CC", "12", "10"]} size="md" />
-				<p className="font-sans text-body-sm leading-normal text-pretty text-ink-900">
-					{CC_TEXT}
-				</p>
+				<p className="font-sans text-body-sm leading-normal text-ink-900">{CC_TEXT}</p>
 			</Card>
 			<Card className="gap-3">
 				<CardHeader label="RI" aside={<DotLabel>Hanya format</DotLabel>} />
 				<SpecialPlate parts={["RI", "1", ""]} size="md" />
-				<p className="font-sans text-body-sm leading-normal text-pretty text-ink-900">
-					{RI_TEXT}
-				</p>
+				<p className="font-sans text-body-sm leading-normal text-ink-900">{RI_TEXT}</p>
 				<Hint>{RI_CAVEAT}</Hint>
 			</Card>
 		</div>
@@ -305,10 +299,8 @@ export function FormatCard({ kind }: { kind: "cc" | "ri" }) {
 					</DotLabel>
 				</span>
 			</div>
-			<p className="max-w-prose text-pretty text-ink-900 type-body">
-				{cc ? CC_TEXT : RI_TEXT}
-			</p>
-			{!cc && <p className="max-w-prose text-pretty text-ink-900 type-body">{RI_CAVEAT}</p>}
+			<p className="max-w-prose text-ink-900 type-body">{cc ? CC_TEXT : RI_TEXT}</p>
+			{!cc && <p className="max-w-prose text-ink-900 type-body">{RI_CAVEAT}</p>}
 			<div>
 				{cc && <DetailRow label="Kode sejenis">CH, konsul kehormatan</DetailRow>}
 				<DetailRow label="Latihan">{cc ? "Belum tersedia" : "Tidak tersedia"}</DetailRow>
@@ -324,7 +316,7 @@ export function NoResult({ query }: { query: string }) {
 				<SpecialPlate parts={["", "?", ""]} size="lg" empty />
 			</div>
 			<div className="flex flex-col items-center gap-2">
-				<h2 className="font-display text-title leading-[1.2] font-bold tracking-title text-pretty">
+				<h2 className="font-display text-title leading-[1.2] font-bold tracking-title">
 					Tidak ada hasil untuk &ldquo;{query}&rdquo;.
 				</h2>
 			</div>

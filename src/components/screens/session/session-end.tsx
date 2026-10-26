@@ -37,7 +37,7 @@ function FactCard({ fact }: { fact: FactCardView }) {
 						className="max-lg:h-7.5 max-lg:w-11 max-lg:text-body-md"
 					/>
 				)}
-				<p className="max-w-prose text-pretty text-ink-900 type-prose max-lg:text-body-md max-lg:leading-[1.6]">
+				<p className="max-w-prose text-ink-900 type-prose max-lg:text-body-md max-lg:leading-[1.6]">
 					{fact.text}
 				</p>
 			</div>

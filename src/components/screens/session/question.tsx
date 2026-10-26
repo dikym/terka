@@ -51,7 +51,7 @@ function QuestionPlate({ card }: { card: SessionCard }) {
 // A negative prompt is easy to misread as a positive one.
 function Title({ children }: { children: string }) {
 	return (
-		<h2 className="font-display text-title leading-[1.15] font-bold tracking-title text-pretty">
+		<h2 className="font-display text-title leading-[1.15] font-bold tracking-title">
 			{children.split(/\b(tidak)\b/).map((part, index) =>
 				index % 2 ? (
 					<mark

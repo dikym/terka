@@ -10,7 +10,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 	return (
 		<section className="flex flex-col gap-3">
 			<h2 className="border-b border-ink-1000 pb-2 type-label text-ink-1000">{title}</h2>
-			<div className="flex flex-col gap-3 text-pretty text-ink-900">{children}</div>
+			<div className="flex flex-col gap-3 text-ink-900">{children}</div>
 		</section>
 	);
 }
@@ -24,7 +24,7 @@ export default function Page() {
 					<p className="font-display text-subhead leading-snug font-semibold text-ink-1000">
 						Lihat pelatnya, terka asalnya.
 					</p>
-					<p className="text-pretty text-ink-900">
+					<p className="text-ink-900">
 						Terka adalah aplikasi latihan untuk menghafal kode depan pelat kendaraan
 						Indonesia beserta kabupaten/kota yang memakainya. Latihan diulang pada waktu
 						yang sesuai, meminta jawaban tanpa bantuan secara bertahap, dan membantu

@@ -44,7 +44,7 @@ export function Toast({ toast, onClose }: { toast: ToastItem; onClose: () => voi
 				{toast.label && (
 					<span className={`leading-[20px] type-label ${tone.text}`}>{toast.label}</span>
 				)}
-				<span className="font-sans text-body-md leading-[20px] font-medium text-pretty text-ink-900">
+				<span className="font-sans text-body-md leading-[20px] font-medium text-ink-900">
 					{toast.text}
 				</span>
 			</div>
