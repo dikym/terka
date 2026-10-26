@@ -271,6 +271,20 @@ export function MasteryMap({
 		return () => element.removeEventListener("wheel", onWheel);
 	}, []);
 
+	// The browser sends no pointerleave when the map moves out from under a still cursor
+	// (scrolling) or when focus leaves the window, so the tooltip would be left behind.
+	useEffect(() => {
+		const clear = () => setTip(null);
+		window.addEventListener("blur", clear);
+		window.addEventListener("scroll", clear, { capture: true, passive: true });
+		document.documentElement.addEventListener("mouseleave", clear);
+		return () => {
+			window.removeEventListener("blur", clear);
+			window.removeEventListener("scroll", clear, { capture: true });
+			document.documentElement.removeEventListener("mouseleave", clear);
+		};
+	}, []);
+
 	const zoomButton = (factor: number | null) => {
 		setAnimate(true);
 		setTip(null);
