@@ -1,7 +1,7 @@
 import { normalizeName } from "@/core/text";
 import type { Question } from "@/core/questions/question";
 import type { Level, SessionCard } from "./cards";
-import type { Mode } from "./modes";
+import { type Mode, REASK_MARK } from "./modes";
 
 export type Verdict = "right" | "wrong" | "unverified";
 
@@ -68,6 +68,19 @@ export const initialSession = (mode: Mode, cards: SessionCard[]): SessionState =
 });
 
 export const currentCard = (state: SessionState): SessionCard => state.cards[state.index];
+
+// Every introduction comes back once, so its re-ask counts from the start and the bar never steps back.
+export function sessionTotal(state: SessionState): number {
+	const reasked = new Set(
+		state.cards
+			.filter((card) => card.id.includes(REASK_MARK))
+			.map((card) => card.question.cardId)
+	);
+	const pending = state.cards.filter(
+		(card) => card.question.context === "intro" && !reasked.has(card.question.cardId)
+	).length;
+	return state.cards.length + pending;
+}
 
 const isLowered = (state: SessionState, card: SessionCard) => state.lowered.includes(card.id);
 

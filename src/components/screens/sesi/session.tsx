@@ -49,6 +49,7 @@ import {
 	type SessionAction,
 	type SessionState,
 	sessionReducer,
+	sessionTotal,
 	submittable,
 	type Verdict
 } from "@/lib/session/state";
@@ -635,7 +636,7 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 	if (finished && mode !== "penempatan" ? !end : finished && !placementEnd)
 		return <SessionLoading onExit={exit} />;
 
-	const total = mode === "penempatan" ? Math.max(state.cards.length, 1) : state.cards.length;
+	const total = mode === "penempatan" ? Math.max(state.cards.length, 1) : sessionTotal(state);
 	const scope = plan.run.scope;
 	const bar: BarProps = {
 		mode,

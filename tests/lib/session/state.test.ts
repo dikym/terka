@@ -10,6 +10,7 @@ import {
 	initialSession,
 	type SessionState,
 	sessionReducer,
+	sessionTotal,
 	submittable
 } from "../../../src/lib/session/state";
 import { ruleBundle } from "../../core/replay/fixtures";
@@ -178,5 +179,48 @@ describe("re-asks at the edges", () => {
 		state = sessionReducer(state, { type: "insert", card: first, at: 99 });
 		state = sessionReducer(state, { type: "insert", card: second, at: 99 });
 		expect(state.cards.slice(-2).map((card) => card.id)).toEqual([first.id, second.id]);
+	});
+});
+
+describe("the session total", () => {
+	const introCard = (code: string) => {
+		const entry = newEntry(`${code}::code2region`);
+		return toCard(
+			buildQuestion(entry, bundle, { context: "intro" }),
+			{ cardId: entry.cardId, context: "intro", slot: "new" },
+			entry,
+			{ bundle, dictionary, notes: new Map(), mode: "hariIni", counts: false }
+		);
+	};
+	const reaskOf = (code: string) => ({
+		...cardsFor("hariIni", [`${code}::code2region`])[0],
+		id: `${code}::code2region#r1`
+	});
+
+	test("counts the re-ask of every introduction from the start", () => {
+		const state = initialSession("hariIni", [
+			introCard("bk"),
+			introCard("ba"),
+			...cardsFor("hariIni", ["bb::code2region"])
+		]);
+		expect(sessionTotal(state)).toBe(5);
+	});
+	test("stays the same once a re-ask is in the session", () => {
+		const start = sessionReducer(
+			initialSession("hariIni", [introCard("bk"), introCard("ba")]),
+			{
+				type: "start"
+			}
+		);
+		const before = sessionTotal(start);
+		const answered = sessionReducer(graded(start, "right"), {
+			type: "insert",
+			card: reaskOf("bk"),
+			at: 99
+		});
+		expect(sessionTotal(answered)).toBe(before);
+	});
+	test("a session without introductions counts its cards", () => {
+		expect(sessionTotal(initialSession("hariIni", cardsFor("hariIni")))).toBe(2);
 	});
 });
