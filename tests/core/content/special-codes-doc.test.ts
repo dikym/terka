@@ -23,7 +23,7 @@ const TYPES: Record<string, Special["holderType"]> = {
 test("the diplomatic code table matches the special codes data row by row", () => {
 	const rows = doc
 		.split("\n")
-		.filter((line) => /^\| CD \d+ \|/.test(line))
+		.filter((line) => /^\| CD \d+\s*\|/.test(line))
 		.map((line) => {
 			const [code, holder, type, sourceName, aliases, label] = line
 				.split("|")
