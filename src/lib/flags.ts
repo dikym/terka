@@ -39,6 +39,6 @@ export function writeFlag(store: Store, key: string, value: string) {
 	}
 }
 
-export const WELCOME_SEEN = "terka.welcomeSeen";
+export { WELCOME_SEEN } from "./flag-keys";
 export const LOGIN_PROMPT_DISMISSED = "terka.loginPromptDismissed";
 export const SEEN_CONTENT_REV = "terka.seenContentRev";

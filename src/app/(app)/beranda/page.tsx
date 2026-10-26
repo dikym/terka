@@ -1,11 +1,11 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { AppFailed } from "@/components/screens/app-status";
 import { Beranda } from "@/components/screens/beranda";
 import { PerubahanData } from "@/components/screens/perubahan-data";
-import { Sambutan } from "@/components/screens/sambutan";
+import { Sambutan, SambutanSkeleton } from "@/components/screens/sambutan";
 import { showToast } from "@/lib/toasts";
 import { placementAvailable } from "@/core/session/placement";
 import { pendingNotices } from "@/core/views/notices";
@@ -22,6 +22,8 @@ const NOTICE = {
 	"missing-data": "Data kode ini perlu diverifikasi. Soalnya dinonaktifkan sementara."
 };
 
+const subscribeNever = () => () => {};
+
 function Home() {
 	const router = useRouter();
 	const params = useSearchParams();
@@ -31,6 +33,16 @@ function Home() {
 	const syncLabel = useSyncLabel(runtime);
 	const welcomeSeen = useFlag("local", WELCOME_SEEN, "1");
 	const [dismissed, setDismissed] = useState(false);
+	const [starting, setStarting] = useState(false);
+	// False while hydrating the static page, true from the first client render on.
+	const mounted = useSyncExternalStore(
+		subscribeNever,
+		() => true,
+		() => false
+	);
+	useEffect(() => {
+		if (mounted) delete document.documentElement.dataset.welcome;
+	}, [mounted]);
 	const [notified, setNotified] = useState<Set<string> | null>(null);
 
 	const data = useMemo(() => {
@@ -79,7 +91,14 @@ function Home() {
 		});
 	}, [noticeKey, router]);
 
-	const welcome = !!app && placementAvailable(app.log.state) && welcomeSeen !== "1" && !dismissed;
+	// Before the log loads, a visitor who has not seen the welcome is almost always new, so it shows
+	// at once; it closes again if the log turns out to hold practice already.
+	const welcome =
+		starting ||
+		(mounted &&
+			welcomeSeen !== "1" &&
+			!dismissed &&
+			(!app || placementAvailable(app.log.state)));
 	const dismiss = () => {
 		writeFlag("local", WELCOME_SEEN, "1");
 		setDismissed(true);
@@ -110,8 +129,10 @@ function Home() {
 			/>
 			{welcome && (
 				<Sambutan
+					// The welcome stays on screen until the test opens, so the home screen never flashes.
 					onStart={() => {
-						dismiss();
+						setStarting(true);
+						writeFlag("local", WELCOME_SEEN, "1");
 						router.push("/sesi?mode=penempatan");
 					}}
 					onSkip={dismiss}
@@ -123,8 +144,11 @@ function Home() {
 
 export default function Page() {
 	return (
-		<Suspense>
-			<Home />
-		</Suspense>
+		<>
+			<SambutanSkeleton />
+			<Suspense>
+				<Home />
+			</Suspense>
+		</>
 	);
 }

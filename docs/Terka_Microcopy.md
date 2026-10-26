@@ -197,7 +197,9 @@ Tampilkan dampak perubahan level pada kedua arah. **Dihitung penuh** berarti has
 
 | Situasi                      | Teks UI                                                                                                                  |
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| Tawaran di pembukaan pertama | **Sudah tahu sebagian kode pelat? Tes singkat ini memindahkan kode yang sudah dikenal langsung ke pengulangan.**         |
+| Tawaran di pembukaan pertama | **Mulai dengan tes singkat untuk menentukan titik awalmu. Belum tahu satu kode pun juga tidak apa-apa.** |
+| Penjelasan tes | **Jawab Tidak tahu kalau belum kenal kodenya; tes berhenti sendiri saat sudah cukup.** |
+| Halaman awal, ajakan penutup | **Mulai dari tes penempatan** · **Tes singkat menentukan titik awalmu. Kode yang sudah kamu kenal langsung diulang, sisanya diperkenalkan bertahap. Belum tahu satu kode pun juga tidak apa-apa.** |
 | Keterangan                   | **Sekitar {menit} menit · maksimal {batas} soal · tanpa penilaian per soal**                                             |
 | Tombol                       | **Mulai tes** · **Lewati, mulai dari awal**                                                                              |
 | Tombol lewati soal           | **Tidak tahu**                                                                                                           |
