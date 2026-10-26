@@ -2,7 +2,18 @@ import { describe, expect, test } from "bun:test";
 import type { PracticeRun } from "../../../src/core/log/events";
 import { streakDays } from "../../../src/core/replay/streak";
 import { localDay } from "../../../src/core/time/day";
-import { DAY as DAY_MS, intro, MINUTE, NOW, review, run, stateOf, voidOf, WITA } from "./fixtures";
+import {
+	DAY as DAY_MS,
+	HOUR,
+	intro,
+	MINUTE,
+	NOW,
+	review,
+	run,
+	stateOf,
+	voidOf,
+	WITA
+} from "./fixtures";
 
 const DAY = localDay(NOW, WITA);
 
@@ -54,5 +65,41 @@ describe("completed daily sessions", () => {
 		const challenge = run("challenge", NOW + DAY_MS);
 		const state = stateOf([daily, ...answers(daily.row.id, ["ba"]), challenge]);
 		expect([...streakDays(state)].sort()).toEqual([DAY, localDay(NOW + DAY_MS, WITA)]);
+	});
+});
+
+describe("completed sessions whatever the replay order", () => {
+	test("answers that sort before their run still complete it", () => {
+		// A clock running ahead can tie the run and its answers on time, so ids decide the order.
+		const daily = run("daily", NOW + HOUR, { plannedCount: 2, endedAt: NOW + 2 * HOUR });
+		const state = stateOf([
+			review("ba", "code2region", NOW + MINUTE, { runId: daily.row.id }),
+			review("bb", "code2region", NOW + 2 * MINUTE, { runId: daily.row.id }),
+			daily
+		]);
+		expect(state.doneDays.has(DAY)).toBe(true);
+	});
+	test("a finished cek ingatan counts for the day", () => {
+		const recheck = run("recheck", NOW, { plannedCount: 2, endedAt: NOW + HOUR });
+		const state = stateOf([
+			recheck,
+			...["ba", "bb"].map((code, index) =>
+				review(code, "code2region", NOW + (index + 1) * MINUTE, {
+					runId: recheck.row.id,
+					context: "recheck"
+				})
+			)
+		]);
+		expect(state.doneDays.has(DAY)).toBe(true);
+	});
+	test("old unfinished runs are forgotten once their day has passed", () => {
+		const daily = dailyRun(3);
+		const state = stateOf([
+			daily,
+			...answers(daily.row.id, ["ba"]),
+			review("bb", "code2region", NOW + 3 * DAY_MS)
+		]);
+		expect(state.runCards.size).toBe(0);
+		expect(state.dailyRuns.size).toBe(0);
 	});
 });

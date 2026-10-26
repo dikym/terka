@@ -47,8 +47,10 @@ export type AppState = {
 	openDue: string[];
 	tier: { current: Tier; changedOn: string | null; days: Map<string, DayStats> };
 	challengeDays: Set<string>;
-	// Closed daily runs still short of their plan; a run's answers replay after the run itself.
-	dailyRuns: Map<string, { localDay: string; plannedCount: number; cards: Set<string> }>;
+	// Closed daily and recheck runs, and the cards answered per run, kept apart because a run and
+	// its answers can replay in either order. Both are dropped once their day has passed.
+	dailyRuns: Map<string, { localDay: string; plannedCount: number }>;
+	runCards: Map<string, { localDay: string; cards: Set<string> }>;
 	doneDays: Set<string>;
 	// First answer per code on the latest Cek Ingatan day; orders the backlog that follows it.
 	recheck: { day: string; results: Map<string, boolean> } | null;
@@ -103,6 +105,7 @@ export function initialState(
 		},
 		challengeDays: new Set(),
 		dailyRuns: new Map(),
+		runCards: new Map(),
 		doneDays: new Set(),
 		recheck: null,
 		activeDays: new Set(),

@@ -25,7 +25,7 @@ import { dailyQueue, specialQueue } from "@/core/session/queue";
 import { recheckOffer, recheckQueue } from "@/core/session/recheck";
 import { buildQuestion } from "@/core/questions/build";
 import { addDays, dayNumber } from "@/core/time/day";
-import { CHALLENGE_SIZE, KILAT_ROUND_MS, TIER_ORDER } from "@/rules";
+import { CHALLENGE_SIZE, KILAT_ROUND_MS, REASK_GAP, TIER_ORDER } from "@/rules";
 import { clock, durationLabel } from "../view/format";
 import { scopeGroup, scopeTitle } from "../view/groups";
 import { type SessionCard, toCard } from "./cards";
@@ -237,7 +237,18 @@ export function reaskCard(
 	const entry = effectiveCard(state, cardId);
 	if (!entry || !STEPS.has(entry.state) || entry.due > input.ctx.now) return null;
 	const [card] = cardsOf(input, state, [{ cardId, context, slot: "step" }], mode, scope);
-	return { ...card, id: `${cardId}#r${serial}` };
+	return { ...card, id: `${cardId}${REASK_MARK}${serial}` };
+}
+
+const REASK_MARK = "#r";
+
+/**
+ * Where the re-ask of an answered card goes: a fresh code a few cards later, a lapse at the end.
+ * The re-ask itself never adds another, even when its answer could not be graded.
+ */
+export function reaskPosition(answered: SessionCard, index: number, length: number): number | null {
+	if (answered.id.includes(REASK_MARK)) return null;
+	return answered.question.context === "intro" ? index + 1 + REASK_GAP : length;
 }
 
 export function planSession(mode: Mode, input: PlanInput, params: PlanParams): Plan {

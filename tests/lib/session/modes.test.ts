@@ -1,7 +1,13 @@
 import { describe, expect, test } from "bun:test";
 import { buildDictionary } from "../../../src/core/answers/dictionary";
 import type { LearningEvent } from "../../../src/core/log/events";
-import { kilatCards, type PlanInput, planSession, reaskCard } from "../../../src/lib/session/modes";
+import {
+	kilatCards,
+	type PlanInput,
+	planSession,
+	reaskCard,
+	reaskPosition
+} from "../../../src/lib/session/modes";
 import {
 	DAY,
 	intro,
@@ -211,5 +217,35 @@ describe("re-asking at the edges", () => {
 			2
 		);
 		expect(first!.id).not.toBe(second!.id);
+	});
+});
+
+describe("where a re-ask goes", () => {
+	const fresh = reaskCard(
+		input([intro("bk", NOW - 60_000)]),
+		"hariIni",
+		"bk::code2region",
+		SETTINGS.scope,
+		1
+	)!;
+	const asIntro = {
+		...fresh,
+		id: "bk::code2region#3",
+		question: { ...fresh.question, context: "intro" as const }
+	};
+	const asReview = {
+		...fresh,
+		id: "bk::code2region#3",
+		question: { ...fresh.question, context: "daily" as const }
+	};
+
+	test("an introduction comes back four cards later", () => {
+		expect(reaskPosition(asIntro, 2, 20)).toBe(7);
+	});
+	test("a lapse comes back at the end", () => {
+		expect(reaskPosition(asReview, 2, 20)).toBe(20);
+	});
+	test("an answer to a re-ask never adds another", () => {
+		expect(reaskPosition(fresh, 2, 20)).toBeNull();
 	});
 });

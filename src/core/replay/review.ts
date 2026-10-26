@@ -68,14 +68,21 @@ function afterAnswer(state: AppState, row: ReviewLog, cardId: string, valid: boo
 }
 
 // Re-asks repeat a planned card, so a run is done only once every distinct planned card is answered.
-function recordRunCard(state: AppState, runId: string | null, cardId: string) {
-	if (runId === null) return;
+export function completeRun(state: AppState, runId: string) {
 	const run = state.dailyRuns.get(runId);
-	if (!run) return;
-	run.cards.add(cardId);
-	if (run.cards.size < run.plannedCount) return;
+	const answered = state.runCards.get(runId);
+	if (!run || !answered || answered.cards.size < run.plannedCount) return;
 	state.doneDays.add(run.localDay);
 	state.dailyRuns.delete(runId);
+	state.runCards.delete(runId);
+}
+
+function recordRunCard(state: AppState, row: ReviewLog, cardId: string) {
+	if (row.runId === null) return;
+	const entry = state.runCards.get(row.runId) ?? { localDay: row.localDay, cards: new Set() };
+	entry.cards.add(cardId);
+	state.runCards.set(row.runId, entry);
+	completeRun(state, row.runId);
 }
 
 function recordRecheck(state: AppState, row: ReviewLog) {
@@ -89,7 +96,7 @@ export function applyReview(state: AppState, row: ReviewLog, at: number): void {
 	if (state.voided.has(row.id)) return;
 	if (row.context === "placement" && row.runId !== state.placementRunId) return;
 	const cardId = `${row.contentId}::${row.mode}`;
-	recordRunCard(state, row.runId, cardId);
+	recordRunCard(state, row, cardId);
 	if (row.context === "recheck") recordRecheck(state, row);
 	const card = state.cards.get(cardId) ?? newEntry(cardId);
 	state.cards.set(cardId, card);
