@@ -179,7 +179,7 @@ function Panel({
 					{[
 						[stats.provinces, "provinsi", "1.2em"],
 						[stats.codes, "kode", "1.2em"],
-						[`${stats.percent}%`, "Dikuasai", "2.2em"]
+						[`${stats.percent}%`, "kemajuan", "2.2em"]
 					].map(([value, label, width]) => (
 						<span key={label} className="flex min-w-0 flex-col gap-[3px]">
 							<span className="font-mono text-body-md leading-none font-semibold text-ink-1000">

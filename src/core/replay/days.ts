@@ -105,6 +105,8 @@ function openDay(state: AppState, day: string) {
 
 // A due card is skipped when its related group used the day's scheduled answer on another card.
 function closeDay(state: AppState, day: string) {
+	for (const runs of [state.dailyRuns, state.runCards])
+		for (const [runId, run] of runs) if (run.localDay < day) runs.delete(runId);
 	for (const cardId of state.openDue) {
 		const card = state.cards.get(cardId)!;
 		if (card.scheduledDay === day) state.cards.set(cardId, { ...card, relatedSkips: 0 });

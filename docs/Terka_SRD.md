@@ -433,7 +433,7 @@ Perkenalan memakai kuota materi baru. Undo pada Perkenalan mengembalikan kartu k
 
 **Batas per tingkat.** Batas materi baru harian dan ambang penahanan mengikuti tingkat hasil tes penempatan (bagian 4.13). Pengguna yang melewati tes memakai batas Menengah.
 
-Satu materi baru Golongan A diperkirakan memerlukan tiga interaksi: Perkenalan sekitar 15 detik, lalu satu langkah belajar sekitar 10 detik. Total waktu aktifnya sekitar 25 detik, tersebar dalam satu atau beberapa sesi. Waktu menunggu pengulangan tidak dihitung. Untuk perhitungan beban harian, satu pengulangan biasa diperkirakan 5 detik. Pratinjau sesi memakai perhitungan yang lebih rinci dalam bagian 4.14.
+Satu materi baru Golongan A diperkirakan memerlukan dua interaksi: Perkenalan sekitar 15 detik, lalu satu langkah belajar sekitar 10 detik. Total waktu aktifnya sekitar 25 detik, tersebar dalam satu atau beberapa sesi. Waktu menunggu pengulangan tidak dihitung. Untuk perhitungan beban harian, satu pengulangan biasa diperkirakan 5 detik. Pratinjau sesi memakai perhitungan yang lebih rinci dalam bagian 4.14.
 
 | Tingkat  | Materi baru per hari | Ambang penahanan | Perkiraan waktu aktif                    |
 | -------- | -------------------- | ---------------- | ---------------------------------------- |

@@ -16,7 +16,7 @@ import { dailyQueue } from "@/core/session/queue";
 import { factViewEvent, pickFact } from "@/core/views/facts";
 import { loginPromptDue, noteOffer } from "@/core/views/notices";
 import { placementResult } from "@/core/views/placement-result";
-import { KILAT_ROUND_MS, REASK_GAP, TIERS, type Tier } from "@/rules";
+import { KILAT_ROUND_MS, TIERS, type Tier } from "@/rules";
 import type { LearningEvent } from "@/core/log/events";
 import { failedMessage, QUOTA_MESSAGE } from "@/components/screens/app-status";
 import { ErrorState } from "@/components/ui/states";
@@ -37,7 +37,8 @@ import {
 	type PlanParams,
 	placementCards,
 	planSession,
-	reaskCard
+	reaskCard,
+	reaskPosition
 } from "@/lib/session/modes";
 import {
 	activeQuestion,
@@ -354,9 +355,10 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 		if (question.questionType === "intro_read") proceed();
 	};
 
-	// A fresh code comes back a few cards later; a lapsed one at the end, after the rest has settled.
 	const reask = (row: ReviewLog, card: SessionCard, index: number, after: AppState) => {
 		if (!runtime || !prefs || plan?.kind !== "ready") return;
+		const at = reaskPosition(card, index, latest.current.cards.length);
+		if (at === null) return;
 		const added = reaskCard(
 			planInput(runtime, after, prefs),
 			mode,
@@ -366,8 +368,6 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 		);
 		if (!added) return;
 		engine.current.reasks.set(row.id, added.id);
-		const at =
-			card.question.context === "intro" ? index + 1 + REASK_GAP : latest.current.cards.length;
 		act({ type: "insert", card: added, at });
 	};
 

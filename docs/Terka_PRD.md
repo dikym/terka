@@ -58,7 +58,7 @@ Proyek dikembangkan secara mandiri, gratis, dan tanpa iklan. Dokumen referensi m
 | Operasional     | Pengeluaran awal dibatasi pada domain; pemicu penyesuaian layanan ditetapkan dalam TRD 6                                           |
 | Mutu            | Setiap aturan memiliki skenario uji; kegagalan pemeriksaan wajib menghentikan penerbitan                                           |
 
-Tahap belajar awal dapat berlangsung dalam beberapa sesi. Sesi tidak menunggu hitungan satu atau sepuluh menit selesai dan tidak menambah soal baru setelah dimulai. Perhitungan durasi dijelaskan dalam SRD 4.7 dan 4.14.
+Tahap belajar awal selesai di sesi yang sama: kode baru ditanyakan sekali lagi beberapa soal kemudian, dan kode yang dijawab salah ditanyakan sekali lagi di akhir sesi. Selain soal ulang itu, sesi tidak menambah soal setelah dimulai. Perhitungan durasi dijelaskan dalam SRD 4.7 dan 4.14.
 
 ## 4. Pengguna Sasaran
 

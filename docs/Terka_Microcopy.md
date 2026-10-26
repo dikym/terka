@@ -303,6 +303,7 @@ Tawaran catatan pengingat tidak muncul di tengah alur cepat: letaknya di bawah h
 | Latihan tanpa mengganti pilihan | **Latih wilayah ini**                     |
 | Tidak ada materi baru           | **Tidak ada materi baru di wilayah ini.** |
 | Kembali ke nasional             | **Seluruh Indonesia**                     |
+| Label persentase wilayah        | **kemajuan**                              |
 
 **Pilih wilayah ini** mengubah Cakupan. **Latih wilayah ini** hanya memulai Latihan Terfokus. Kedua tindakan tidak boleh berlabel mirip karena konsekuensinya berbeda.
 

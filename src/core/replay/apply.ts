@@ -4,7 +4,7 @@ import { suspend, unsuspend } from "../scheduling/card";
 import { isTimeZone } from "../time/day";
 import { advanceDays } from "./days";
 import { addParams } from "./params";
-import { applyReview } from "./review";
+import { applyReview, completeRun } from "./review";
 import { putCard, type AppState } from "./state";
 
 const CONTENT_ID = /^[a-z0-9-]{1,32}$/;
@@ -24,12 +24,10 @@ function applyCardEvent(state: AppState, row: CardEvent) {
 function applyRun(state: AppState, run: PracticeRun) {
 	if (run.endedAt === null) return;
 	if (run.kind === "challenge") state.challengeDays.add(run.localDay);
-	if (run.kind === "daily" && run.plannedCount)
-		state.dailyRuns.set(run.id, {
-			localDay: run.localDay,
-			plannedCount: run.plannedCount,
-			cards: new Set()
-		});
+	if ((run.kind === "daily" || run.kind === "recheck") && run.plannedCount) {
+		state.dailyRuns.set(run.id, { localDay: run.localDay, plannedCount: run.plannedCount });
+		completeRun(state, run.id);
+	}
 	if (run.kind === "kilat" && run.score !== null) {
 		const key = `${run.scopeLevel}|${run.scopeId ?? ""}`;
 		state.kilatRecords.set(key, Math.max(state.kilatRecords.get(key) ?? 0, run.score));

@@ -179,12 +179,30 @@ test("after a long break Mulai belajar opens Cek ingatan and Lewati opens the da
 	// Learned long ago, last practised 270 days back: everything is due and the user has been away.
 	await seed(page, learnedLog(ids, [], Date.now() - 300 * DAY), { logVersion: 1000 });
 	await page.goto("/beranda");
+	await page.getByRole("link", { name: "Mulai belajar" }).first().waitFor();
+	await page.keyboard.press("s");
+	await expect(page.getByRole("heading", { name: "Cek ingatan" })).toBeVisible();
+	await page.goto("/beranda");
 	await page.getByRole("link", { name: "Mulai belajar" }).first().click();
 	await expect(page.getByRole("heading", { name: "Cek ingatan" })).toBeVisible();
 	await expect(page.getByText(/seberapa banyak yang masih kamu ingat/)).toBeVisible();
 	await page.getByRole("link", { name: "Lewati, mulai sesi biasa" }).click();
 	await expect(page).toHaveURL(/\/sesi$/);
 	await expect(page.getByRole("heading", { name: "Sesi hari ini" })).toBeVisible();
+});
+
+test("undoing an introduction takes its re-ask back out", async ({ page }) => {
+	await seen(page);
+	await page.goto("/sesi");
+	await page.getByRole("heading", { name: "Sesi hari ini" }).waitFor();
+	await page.keyboard.press("Enter");
+	const count = page.getByText(/^\d+\/\d+$/).first();
+	await page.getByRole("heading", { level: 2 }).waitFor();
+	const planned = Number((await count.textContent())!.split("/")[1]);
+	await page.keyboard.press("f");
+	await expect(count).toHaveText(`1/${planned + 1}`);
+	await page.keyboard.press("z");
+	await expect(count).toHaveText(`1/${planned}`);
 });
 
 test("undo restores the question", async ({ page }) => {
@@ -235,6 +253,8 @@ test("coverage selection changes the side panel", async ({ page }) => {
 	await page.goto("/cakupan");
 	await page.getByRole("button", { name: "Sumatera" }).first().click();
 	await expect(page.getByRole("heading", { name: "Kawasan Sumatera" })).toBeVisible();
+	await expect(page.getByText("kemajuan", { exact: true })).toBeVisible();
+	await expect(page.getByText("Dikuasai", { exact: true })).toHaveCount(0);
 	await page.getByRole("button", { name: "Seluruh Indonesia" }).first().click();
 	await expect(page.getByText(/^\d+ materi baru tersedia$/)).toBeVisible();
 });

@@ -2,6 +2,9 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { recheckOffer } from "@/core/session/recheck";
+import { sessionCtx } from "@/lib/app/runtime";
+import { useAppState, useReady } from "@/lib/app/use-runtime";
 import { keyAction } from "@/lib/keys";
 import { MobileHeader } from "./mobile-header";
 import { Sidebar } from "./sidebar";
@@ -15,6 +18,8 @@ export const SEARCH_HASH = "cari";
 export function AppShell({ children }: { children: React.ReactNode }) {
 	const router = useRouter();
 	const pathname = usePathname();
+	const { runtime } = useReady();
+	const state = useAppState(runtime)?.log.state;
 
 	useEffect(() => {
 		const onKey = (event: KeyboardEvent) => {
@@ -26,7 +31,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 				"app"
 			);
 			const search = document.getElementById(SEARCH_ID);
-			if (action === "start") router.push("/sesi");
+			// Same target as the Mulai belajar button; checked on the key press, since it replays the day.
+			if (action === "start")
+				router.push(
+					runtime && state && recheckOffer(state, sessionCtx(runtime))
+						? "/sesi?mode=cek"
+						: "/sesi"
+				);
 			else if (action === "kilat") router.push("/sesi?mode=kilat");
 			else if (action === "search" || (action === "cakupan" && pathname === "/referensi")) {
 				event.preventDefault();
@@ -36,7 +47,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 		};
 		window.addEventListener("keydown", onKey);
 		return () => window.removeEventListener("keydown", onKey);
-	}, [router, pathname]);
+	}, [router, pathname, runtime, state]);
 
 	return (
 		<div className="group flex min-h-dvh flex-col lg:flex-row">
