@@ -13,8 +13,8 @@ const TITLE =
 const STEPS: { icon: IconName; title: string; text: string }[] = [
 	{
 		icon: "layers",
-		title: "Pilih Cakupan",
-		text: "Mulai dari satu provinsi, satu kawasan, atau langsung seluruh Indonesia. Materi baru dibuka bertahap dari wilayah yang kamu pilih."
+		title: "Mulai dengan tes penempatan",
+		text: "Tes singkat menentukan titik mulaimu. Setelah itu pilih wilayah yang mau dipelajari dulu: satu provinsi, satu kawasan, atau seluruh Indonesia."
 	},
 	{
 		icon: "keyboard",
@@ -24,7 +24,7 @@ const STEPS: { icon: IconName; title: string; text: string }[] = [
 	{
 		icon: "calendar-days",
 		title: "Ulangi sesuai jadwal",
-		text: "Jadwal pengulangan dihitung dari benar-salah dan kecepatan jawabanmu. Kode yang sudah melekat jarang muncul, kode yang masih goyah muncul lebih sering."
+		text: "Jadwal dihitung dari benar-salah dan kecepatan jawabanmu. Setelah sesi harian selesai, tidak ada soal lagi sampai besok. Kode yang sudah melekat jarang muncul, yang masih goyah lebih sering."
 	}
 ];
 
@@ -50,7 +50,7 @@ const EXTRAS: { bar: string; icon: IconName; title: string; meta: string; text: 
 		icon: "calendar-check",
 		title: "Tantangan Harian",
 		meta: "5 soal, sekali sehari",
-		text: "Dari kode yang sudah dipelajari. Hari yang terisi tercatat sebagai Hari Beruntun."
+		text: "Dari kode yang sudah dipelajari. Menyelesaikannya mencatat Hari Beruntun, sama seperti sesi harian yang tuntas."
 	},
 	{
 		bar: "bg-go-500",
@@ -64,7 +64,7 @@ const EXTRAS: { bar: string; icon: IconName; title: string; meta: string; text: 
 		icon: "git-compare-arrows",
 		title: "Bandingkan Kode",
 		meta: "BE dan BD",
-		text: "Dua kode yang sering tertukar dilatih berdampingan sampai bisa dibedakan."
+		text: "Dua kode yang sering tertukar muncul berdampingan, sekali sehari, sampai kamu membedakannya dengan benar di lima hari berbeda."
 	},
 	{
 		bar: "bg-ink-1000",
@@ -198,8 +198,8 @@ function Hero() {
 						</h1>
 						<p className="text-body-lg leading-[1.6] text-ink-700 lg:max-w-[46ch] lg:leading-loose">
 							Terka membantu menghafal kode depan pelat kendaraan dan daerah
-							pemakainya. Soal muncul lagi tepat saat ingatanmu mulai pudar, jadi
-							beberapa menit sehari sudah cukup.
+							pemakainya. Soal muncul lagi sebelum ingatanmu pudar, jadi beberapa
+							menit sehari sudah cukup.
 						</p>
 					</div>
 					<div className="flex flex-col gap-3 max-lg:order-last lg:gap-6">
@@ -354,7 +354,10 @@ function Privacy() {
 				className={`${WRAP} grid gap-6 py-12 lg:grid-cols-2 lg:items-start lg:gap-10 lg:py-16`}
 			>
 				<div className="flex flex-col gap-3 lg:max-w-[44ch]">
-					<Heading label="Data dan privasi" title="Progresmu tetap di tanganmu." />
+					<Heading
+						label="Data dan privasi"
+						title="Progres tersimpan di perangkatmu sampai kamu memilih sinkronisasi."
+					/>
 					<p className="text-ink-700 type-body">
 						Terka membantu belajar kode pelat, bukan rujukan resmi. Data yang belum
 						cukup terverifikasi diberi penanda.
@@ -432,7 +435,7 @@ function Footer() {
 						<span>RKA</span>
 					</span>
 					<span className="text-body-sm leading-[1.4] text-ink-500">
-						Dikembangkan mandiri, gratis, dan tanpa iklan.
+						Dikembangkan mandiri.
 					</span>
 				</div>
 				<nav className="flex flex-col lg:flex-row lg:flex-wrap lg:gap-5">
