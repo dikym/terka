@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { Suspense, useMemo } from "react";
-import { Session } from "@/components/screens/sesi/session";
+import { Session } from "@/components/screens/session/session";
 import { modeFromParam } from "@/lib/session/modes";
 import { parseScope } from "@/lib/view/groups";
 

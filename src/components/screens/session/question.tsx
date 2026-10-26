@@ -6,7 +6,7 @@ import { Kbd } from "@/components/ui/kbd";
 import { Plate } from "@/components/ui/plate";
 import type { SessionCard } from "@/lib/session/cards";
 import { cardAnswer, cardLevel, cardOptions, type SessionState } from "@/lib/session/state";
-import { LevelMark, levelName, StatusPill, TimeBar } from "./parts";
+import { LevelMark, levelName, StatusPill, TimeBar } from "./indicators";
 
 const KEYS = ["F", "G", "H", "J"];
 // Two options sit under the index fingers, F and J.

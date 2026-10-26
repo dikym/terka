@@ -52,7 +52,7 @@ import {
 	RegionCard,
 	SpecialCard,
 	UnverifiedLegend
-} from "./referensi-results";
+} from "./reference-results";
 
 const LISTBOX_ID = "referensi-saran";
 const optionId = (position: number) => `referensi-saran-${position}`;
@@ -600,7 +600,7 @@ export type ReferenceEntry = {
 const entryQuery = (initial: ReferenceEntry) =>
 	initial.kode ?? initial.cari ?? (initial.provinsi && provinceName(initial.provinsi)) ?? "";
 
-export function Referensi({
+export function ReferenceScreen({
 	data,
 	initial,
 	onQuery

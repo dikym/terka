@@ -2,9 +2,9 @@
 
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { AppFailed } from "@/components/screens/app-status";
-import { OtherAccount, type SignIn } from "@/components/screens/akun-masuk";
+import { OtherAccount, type SignIn } from "@/components/screens/sign-in";
 import { useAccountActions } from "@/components/screens/account-actions";
-import { Akun } from "@/components/screens/statistik-sub";
+import { AccountScreen } from "@/components/screens/stats-detail";
 import { exportReminderDue } from "@/core/views/notices";
 import { authClient } from "@/lib/app/auth";
 import { sessionCtx } from "@/lib/app/runtime";
@@ -156,7 +156,7 @@ export default function Page() {
 
 	return (
 		<>
-			<Akun
+			<AccountScreen
 				page={
 					account.email
 						? {

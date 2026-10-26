@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { AppFailed } from "@/components/screens/app-status";
-import { Cakupan, type Node } from "@/components/screens/cakupan";
+import { CoverageScreen, type Node } from "@/components/screens/coverage";
 import { NATIONAL } from "@/core/questions/distractors";
 import { useAppState, usePrefs, useReady } from "@/lib/app/use-runtime";
 import { coverageView } from "@/lib/view/coverage";
@@ -30,5 +30,5 @@ export default function Page() {
 			scope: node === "national" ? NATIONAL : { level: "group", id: bundleGroup(node) }
 		});
 	};
-	return <Cakupan data={data} active={active} onPick={pick} />;
+	return <CoverageScreen data={data} active={active} onPick={pick} />;
 }

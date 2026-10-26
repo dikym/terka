@@ -15,10 +15,10 @@ import { showToast } from "@/lib/toasts";
 import { referenceHref } from "@/lib/view/reference";
 import type { HardCard, MasteryRow } from "@/lib/view/stats";
 import { NOTE_MAX_CHARS } from "@/rules";
-import { AkunMasuk, type SignIn } from "./akun-masuk";
-import { MapHint, MapLegend } from "./statistik";
+import { SignInForm, type SignIn } from "./sign-in";
+import { MapHint, MapLegend } from "./stats";
 
-export function PetaPenguasaan({
+export function MasteryMapScreen({
 	provinces,
 	rows
 }: {
@@ -112,7 +112,7 @@ const statusPill = (status: "leech" | "suspended", className = "") =>
 
 const NOT_SAVED = "Perubahan belum tersimpan. Coba lagi.";
 
-export function KodeSulit({
+export function HardCodesScreen({
 	cards,
 	notes,
 	initial,
@@ -324,7 +324,7 @@ export type AccountActions = {
 	deleteAccount: () => void;
 };
 
-export function Akun({
+export function AccountScreen({
 	page,
 	lastExport,
 	signIn,
@@ -367,7 +367,7 @@ export function Akun({
 							</div>
 						</Card>
 					) : (
-						signIn && <AkunMasuk signIn={signIn} />
+						signIn && <SignInForm signIn={signIn} />
 					)}
 					<Card>
 						<CardHeader label="Ekspor dan impor" title={lastExport ?? "…"} />

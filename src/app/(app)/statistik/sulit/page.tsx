@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { Suspense, useMemo } from "react";
-import { KodeSulit } from "@/components/screens/statistik-sub";
+import { HardCodesScreen } from "@/components/screens/stats-detail";
 import { cardEvent } from "@/core/session/commands";
 import { lastDayOf, sessionCtx } from "@/lib/app/runtime";
 import { useAppState, usePrefs, useReady } from "@/lib/app/use-runtime";
@@ -18,7 +18,7 @@ function Sulit() {
 		[runtime, app]
 	);
 	return (
-		<KodeSulit
+		<HardCodesScreen
 			cards={cards}
 			notes={prefs?.notes ?? new Map()}
 			initial={initial}

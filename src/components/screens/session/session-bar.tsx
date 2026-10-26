@@ -4,7 +4,7 @@ import { Tooltip } from "@/components/ui/tooltip";
 import { GROUP_BG, type GroupId } from "@/components/ui/groups";
 import type { Level, SessionCard } from "@/lib/session/cards";
 import type { Mode } from "@/lib/session/modes";
-import { LevelMark, StatusPill, TimeBar } from "./parts";
+import { LevelMark, StatusPill, TimeBar } from "./indicators";
 
 function Progress({ done, total }: { done: number; total: number }) {
 	return (
