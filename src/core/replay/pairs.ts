@@ -30,10 +30,13 @@ export function recordConfusion(state: AppState, from: string, to: string, local
 		(day) => today - dayNumber(day) < PAIR_WINDOW_DAYS
 	);
 	const threshold = pair.cleared ? PAIR_RETHRESHOLD : PAIR_THRESHOLD;
+	const flagged = pair.flagged || occurrences.length >= threshold;
+	// A pair flagged today starts its drills tomorrow, not in the session that caused it.
 	state.pairs.set(key, {
 		...pair,
 		occurrences,
-		flagged: pair.flagged || occurrences.length >= threshold
+		flagged,
+		drillDay: flagged && !pair.flagged ? localDay : pair.drillDay
 	});
 }
 

@@ -12,6 +12,11 @@ describe("confused pairs", () => {
 		for (const offset of [0, 10, 29]) recordConfusion(state, "be", "bd", day(offset));
 		expect(state.pairs.get("be>bd")?.flagged).toBe(true);
 	});
+	test("a pair flagged today is not drilled until tomorrow", () => {
+		const state = fresh();
+		for (const offset of [0, 10, 29]) recordConfusion(state, "be", "bd", day(offset));
+		expect(state.pairs.get("be>bd")?.drillDay).toBe(day(29));
+	});
 	test("three occurrences spread over 31 days do not", () => {
 		const state = fresh();
 		for (const offset of [0, 15, 30]) recordConfusion(state, "be", "bd", day(offset));
