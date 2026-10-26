@@ -1,9 +1,10 @@
 "use client";
 
 import { Link } from "@/components/ui/app-link";
-import { useEffect, useRef } from "react";
+import { type ReactNode, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Icon } from "@/components/ui/icon";
+import { Skeleton } from "@/components/ui/feedback";
+import { Icon, type IconName } from "@/components/ui/icon";
 import { Wordmark } from "@/components/ui/plate";
 import { useFocusTrap } from "@/components/ui/use-focus-trap";
 
@@ -12,6 +13,175 @@ const FACTS = [
 	["paling banyak", "28 soal"],
 	["penilaian per soal", "tidak ada"]
 ];
+
+const NOTES: [IconName, string][] = [
+	["user", "Langsung belajar tanpa akun. Progres tersimpan di perangkat ini."],
+	[
+		"info",
+		"Terka membantu belajar kode pelat, bukan rujukan resmi. Data yang belum cukup terverifikasi diberi penanda."
+	]
+];
+
+// The skeleton is the welcome itself with its text hidden, so every line wraps, at every width and
+// with either font, exactly where the real text will. Each line shows only a 0.72em bar, the same
+// size as SkeletonText.
+const MASK =
+	"box-decoration-clone bg-[linear-gradient(transparent_calc(50%-0.36em),var(--color-ink-100)_calc(50%-0.36em),var(--color-ink-100)_calc(50%+0.36em),transparent_calc(50%+0.36em))] text-transparent animate-pulse [&_*]:text-transparent";
+
+function Text({ ghost, children }: { ghost: boolean; children: ReactNode }) {
+	return ghost ? <span className={MASK}>{children}</span> : <>{children}</>;
+}
+
+function Mark({
+	ghost,
+	name,
+	size,
+	className = ""
+}: {
+	ghost: boolean;
+	name: IconName;
+	size: number;
+	className?: string;
+}) {
+	return ghost ? (
+		<Skeleton className={`flex-none rounded-full ${className}`} width={`${size}px`} />
+	) : (
+		<Icon name={name} size={size} color="bg-ink-500" className={className} />
+	);
+}
+
+function WelcomeBody({
+	ghost,
+	onStart,
+	onSkip
+}: {
+	ghost: boolean;
+	onStart?: () => void;
+	onSkip?: () => void;
+}) {
+	return (
+		<>
+			<section className="border-b border-hairline bg-paper-50">
+				<div className="container flex flex-col items-start gap-6 pt-8 pb-6 lg:gap-8 lg:py-10">
+					<Wordmark />
+					<div className="flex min-w-0 flex-col gap-4">
+						<h1
+							id={ghost ? undefined : "sambutan-title"}
+							className="font-display text-display leading-[1.05] font-bold tracking-title"
+						>
+							<Text ghost={ghost}>Terka</Text>
+						</h1>
+						<p className="max-w-[24ch] font-display text-heading leading-[1.3] font-semibold text-pretty text-ink-900">
+							<Text ghost={ghost}>
+								Lihat pelatnya, terka asalnya. Latihan hafalan kode pelat nomor
+								Indonesia.
+							</Text>
+						</p>
+					</div>
+				</div>
+			</section>
+			<section className="container flex flex-1 flex-col gap-6 py-6 lg:gap-8 lg:py-10">
+				<div className="flex min-w-0 flex-col gap-4">
+					<span className="type-label text-ink-500">
+						<Text ghost={ghost}>Tes penempatan</Text>
+					</span>
+					<h2 className="font-display text-heading leading-[1.2] font-bold tracking-title text-pretty lg:text-title lg:leading-snug">
+						<Text ghost={ghost}>
+							Mulai dengan tes singkat untuk menentukan titik awalmu. Belum tahu satu
+							kode pun juga tidak apa-apa.
+						</Text>
+					</h2>
+				</div>
+				<div className="contents lg:grid lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start lg:gap-10">
+					<div className="flex min-w-0 flex-col gap-4">
+						<div className="flex flex-col border-t border-hairline">
+							{FACTS.map(([label, value]) => (
+								<div
+									key={label}
+									className="flex items-baseline justify-between gap-4 border-b border-hairline py-3"
+								>
+									<span className="font-sans text-body-sm leading-[1.2] text-ink-500">
+										<Text ghost={ghost}>{label}</Text>
+									</span>
+									<span className="font-mono text-body-md leading-none font-semibold text-ink-1000">
+										<Text ghost={ghost}>{value}</Text>
+									</span>
+								</div>
+							))}
+						</div>
+						<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">
+							<Text ghost={ghost}>
+								Jawab <b className="font-semibold text-ink-900">Tidak tahu</b> kalau
+								belum kenal kodenya; tes berhenti sendiri saat sudah cukup. Kode
+								yang dijawab benar langsung masuk pengulangan, sisanya diperkenalkan
+								bertahap. Hasilnya juga menentukan batas materi baru per hari.
+							</Text>
+						</p>
+					</div>
+					<div className="flex min-w-0 flex-col gap-3">
+						{ghost ? (
+							<>
+								<Skeleton className="block h-12 w-full rounded-sm" />
+								<Skeleton className="block h-12 w-full rounded-sm" />
+							</>
+						) : (
+							<>
+								<Button
+									block
+									icon="play"
+									kbd="Enter"
+									className="px-4"
+									onClick={onStart}
+								>
+									Mulai tes
+								</Button>
+								<Button variant="secondary" block className="px-4" onClick={onSkip}>
+									Lewati, mulai dari awal
+								</Button>
+							</>
+						)}
+					</div>
+				</div>
+			</section>
+			<footer className="border-t border-hairline bg-paper-50">
+				<div className="container flex flex-col gap-5 py-6 lg:flex-row lg:items-center lg:justify-between lg:gap-10 lg:py-5">
+					<ul className="flex min-w-0 flex-col gap-3 lg:flex-row lg:gap-8">
+						{NOTES.map(([icon, text]) => (
+							<li key={icon} className="flex max-w-[52ch] min-w-0 items-start gap-3">
+								<Mark
+									ghost={ghost}
+									name={icon}
+									size={18}
+									className="mt-0.5 h-4.5"
+								/>
+								<p className="font-sans text-body-sm leading-normal text-pretty text-ink-700">
+									<Text ghost={ghost}>{text}</Text>
+								</p>
+							</li>
+						))}
+					</ul>
+					<div className="flex-none border-t border-hairline pt-4 lg:border-t-0 lg:pt-0">
+						{ghost ? (
+							<span className="inline-flex items-center gap-1.5 font-display text-body-sm leading-none font-semibold">
+								<Text ghost>Tentang Terka</Text>
+								<Mark ghost name="chevron-right" size={16} className="h-4" />
+							</span>
+						) : (
+							<Link
+								href="/tentang"
+								onClick={onSkip}
+								className="inline-flex items-center gap-1.5 font-display text-body-sm leading-none font-semibold text-ink-1000 underline underline-offset-[3px]"
+							>
+								Tentang Terka
+								<Icon name="chevron-right" size={16} />
+							</Link>
+						)}
+					</div>
+				</div>
+			</footer>
+		</>
+	);
+}
 
 export function Sambutan({ onStart, onSkip }: { onStart: () => void; onSkip: () => void }) {
 	const dialog = useRef<HTMLDivElement>(null);
@@ -32,87 +202,23 @@ export function Sambutan({ onStart, onSkip }: { onStart: () => void; onSkip: () 
 			aria-labelledby="sambutan-title"
 			className="fixed inset-0 z-40 flex flex-col overflow-y-auto bg-paper-0"
 		>
-			<section className="border-b border-hairline bg-paper-50">
-				<div className="container flex flex-col items-start gap-6 pt-8 pb-6 lg:gap-8 lg:py-10">
-					<Wordmark />
-					<div className="flex min-w-0 flex-col gap-4">
-						<h1
-							id="sambutan-title"
-							className="font-display text-display leading-[1.05] font-bold tracking-title"
-						>
-							Terka
-						</h1>
-						<p className="max-w-[24ch] font-display text-heading leading-[1.3] font-semibold text-pretty text-ink-900">
-							Lihat pelatnya, terka asalnya. Latihan hafalan kode pelat nomor
-							Indonesia.
-						</p>
-					</div>
-				</div>
-			</section>
-			<section className="container flex flex-1 flex-col gap-6 py-6 lg:gap-8 lg:py-10">
-				<div className="flex min-w-0 flex-col gap-4">
-					<span className="type-label text-ink-500">Tes penempatan</span>
-					<h2 className="font-display text-heading leading-[1.2] font-bold tracking-title text-pretty lg:text-title lg:leading-snug">
-						Sudah tahu sebagian kode pelat? Tes singkat ini memindahkan kode yang sudah
-						dikenal langsung ke pengulangan.
-					</h2>
-				</div>
-				<div className="contents lg:grid lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start lg:gap-10">
-					<div className="flex min-w-0 flex-col gap-4">
-						<div className="flex flex-col border-t border-hairline">
-							{FACTS.map(([label, value]) => (
-								<div
-									key={label}
-									className="flex items-baseline justify-between gap-4 border-b border-hairline py-3"
-								>
-									<span className="font-sans text-body-sm leading-[1.2] text-ink-500">
-										{label}
-									</span>
-									<span className="font-mono text-body-md leading-none font-semibold text-ink-1000">
-										{value}
-									</span>
-								</div>
-							))}
-						</div>
-						<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">
-							Kode yang dijawab benar langsung masuk pengulangan; lainnya tetap jadi
-							materi baru. Hasilnya juga menentukan batas materi baru per hari.
-						</p>
-					</div>
-					<div className="flex min-w-0 flex-col gap-3">
-						<Button block icon="play" kbd="Enter" className="px-4" onClick={onStart}>
-							Mulai tes
-						</Button>
-						<Button variant="secondary" block className="px-4" onClick={onSkip}>
-							Lewati, mulai dari awal
-						</Button>
-					</div>
-				</div>
-			</section>
-			<footer className="border-t border-hairline">
-				<div className="container grid grid-cols-1 items-start gap-4 pt-5 pb-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] lg:gap-10 lg:py-5">
-					<div className="flex min-w-0 items-start gap-3">
-						<Icon name="user" size={18} className="mt-0.5 lg:mt-0" />
-						<p className="font-sans text-body-sm leading-normal text-pretty text-ink-900">
-							Langsung belajar tanpa akun. Progres tersimpan di perangkat ini.
-						</p>
-					</div>
-					<div className="flex min-w-0 items-start gap-3">
-						<Icon name="info" size={18} className="mt-0.5 lg:mt-0" />
-						<p className="font-sans text-body-sm leading-normal text-pretty text-ink-900">
-							Terka membantu belajar kode pelat, bukan rujukan resmi. Data yang belum
-							cukup terverifikasi diberi penanda.
-						</p>
-					</div>
-					<Link
-						href="/tentang"
-						onClick={onSkip}
-						className="font-display text-body-sm leading-normal font-semibold whitespace-nowrap text-caution-700 hover:text-ink-1000"
-					>
-						Tentang Terka
-					</Link>
-				</div>
-			</footer>
+			<WelcomeBody ghost={false} onStart={onStart} onSkip={onSkip} />
+		</div>
+	);
+}
+
+/**
+ * The welcome's shape before React has decided whether to show it. It sits in the static page and
+ * shows only while the first-visit script marks the page, covering the home skeleton underneath.
+ */
+export function SambutanSkeleton() {
+	return (
+		<div
+			data-welcome-skeleton
+			aria-hidden="true"
+			className="fixed inset-0 z-40 hidden flex-col overflow-y-auto bg-paper-0"
+		>
+			<WelcomeBody ghost />
 		</div>
 	);
 }

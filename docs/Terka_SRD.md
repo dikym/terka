@@ -559,7 +559,7 @@ Penurunan tepat 1% sudah diterima. Ambang 1% mencegah parameter berganti-ganti k
 
 Tes penempatan mengukur kode mana yang sudah dikenal sebelum sesi pertama. Tanpa tes ini, pengguna yang sudah hafal puluhan kode tetap harus melewati Perkenalan satu per satu, sekitar 10 per hari — hampir seminggu hanya untuk mengulang yang sudah diketahui.
 
-**Kapan tersedia.** Ditawarkan saat aplikasi pertama kali dibuka, sebelum sesi pertama. Bisa dilewati. Bisa diambil atau diulang selama belum ada jawaban yang dihitung untuk jadwal di luar tes, dari mode mana pun. Membuka pratinjau, memulai sesi tanpa menjawab, dan Perkenalan saja belum menutup kesempatan. Undo yang menghapus satu-satunya jawaban terhitung membukanya kembali. Setelah itu riwayat nyata lebih informatif daripada tes mana pun, jadi tawarannya hilang.
+**Kapan tersedia.** Ditawarkan saat aplikasi pertama kali dibuka, sebelum sesi pertama; satu-satunya tombol **Mulai belajar** di halaman awal membawa pengguna baru ke tawaran ini. Tes ini untuk semua pengguna, termasuk yang belum tahu satu kode pun: jawaban **Tidak tahu** membuat tes berhenti di tahap pertama. Bisa dilewati. Bisa diambil atau diulang selama belum ada jawaban yang dihitung untuk jadwal di luar tes, dari mode mana pun. Membuka pratinjau, memulai sesi tanpa menjawab, dan Perkenalan saja belum menutup kesempatan. Undo yang menghapus satu-satunya jawaban terhitung membukanya kembali. Setelah itu riwayat nyata lebih informatif daripada tes mana pun, jadi tawarannya hilang.
 
 **Bentuk soal.** Kode → daerah, diketik, Level 2, tanpa pilihan ganda. Ada tombol **Tidak tahu** supaya pengguna tidak menebak. Tidak ada umpan balik per soal. Batas waktu 15 detik untuk ketukan pertama; lewat batas itu dihitung Tidak tahu.
 

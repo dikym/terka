@@ -38,6 +38,71 @@ test("first visit shows the welcome screen", async ({ page }) => {
 	await expect(page.getByText("soal perlu diulang")).toBeVisible();
 });
 
+test("the landing page starts with the placement test, through one button", async ({ page }) => {
+	await page.goto("/");
+	await expect(page.getByRole("link", { name: "Ikut tes penempatan" })).toHaveCount(0);
+	await page.getByRole("link", { name: "Mulai belajar" }).first().click();
+	const welcome = page.getByRole("dialog", { name: "Terka" });
+	await expect(welcome).toBeVisible();
+	await expect(welcome.getByText("Tes penempatan", { exact: true })).toBeVisible();
+});
+
+test("starting the placement test goes straight to it without showing the home screen", async ({
+	page
+}) => {
+	await page.goto("/beranda");
+	await expect(page.getByRole("dialog", { name: "Terka" })).toBeVisible();
+	await page.evaluate(() => {
+		const seen = window as unknown as { homeFlash: boolean };
+		seen.homeFlash = false;
+		new MutationObserver(() => {
+			if (location.pathname === "/beranda" && !document.querySelector('[role="dialog"]'))
+				seen.homeFlash = true;
+		}).observe(document.body, { childList: true, subtree: true });
+	});
+	await page.getByRole("button", { name: "Mulai tes" }).click();
+	await expect(page).toHaveURL(/mode=penempatan/);
+	expect(await page.evaluate(() => (window as unknown as { homeFlash: boolean }).homeFlash)).toBe(
+		false
+	);
+});
+
+test("a first visit paints the welcome skeleton, never the home skeleton", async ({ page }) => {
+	await page.addInitScript(() => {
+		document.addEventListener("DOMContentLoaded", () => {
+			const skeleton = document.querySelector("[data-welcome-skeleton]");
+			(window as unknown as { firstPaint: string }).firstPaint = skeleton
+				? getComputedStyle(skeleton).display
+				: "missing";
+		});
+	});
+	await page.goto("/beranda");
+	await expect(page.getByRole("dialog", { name: "Terka" })).toBeVisible();
+	expect(
+		await page.evaluate(() => (window as unknown as { firstPaint: string }).firstPaint)
+	).toBe("flex");
+	await expect(page.locator("[data-welcome-skeleton]")).toBeHidden();
+});
+
+test("the welcome skeleton stays up however long the scripts take", async ({ page }) => {
+	await page.route(/\.js(\?|$)/, async (route) => {
+		await new Promise((done) => setTimeout(done, 4500));
+		await route.continue();
+	});
+	await page.goto("/beranda", { waitUntil: "commit" });
+	await page.waitForTimeout(4000);
+	await expect(page.locator("[data-welcome-skeleton]")).toBeVisible();
+	await expect(page.getByRole("dialog", { name: "Terka" })).toBeVisible({ timeout: 15_000 });
+	await expect(page.locator("[data-welcome-skeleton]")).toBeHidden();
+});
+
+test("a returning visit never shows the welcome skeleton", async ({ page }) => {
+	await seen(page);
+	await page.goto("/beranda", { waitUntil: "commit" });
+	await page.waitForLoadState("domcontentloaded");
+	await expect(page.locator("[data-welcome-skeleton]")).toBeHidden();
+});
+
 test("home shows a skeleton before data", async ({ page }) => {
 	await seen(page);
 	await page.goto("/beranda", { waitUntil: "commit" });

@@ -174,7 +174,7 @@ function DemoCard() {
 				Ketik jawaban…
 			</div>
 			<span className="inline-flex items-center gap-2 text-body-sm leading-none text-ink-500 max-lg:hidden">
-				<kbd className="rounded-xs border border-ink-300 px-[5px] py-[3px] font-mono text-micro leading-none font-medium text-ink-900">
+				<kbd className="rounded-xs border border-ink-300 px-1.25 py-0.75 font-mono text-micro leading-none font-medium text-ink-900">
 					Enter
 				</kbd>
 				untuk lanjut
@@ -203,16 +203,11 @@ function Hero() {
 						</p>
 					</div>
 					<div className="flex flex-col gap-3 max-lg:order-last lg:gap-6">
+						{/* New learners land on the placement test; returning ones on their home screen. */}
 						<div className="flex flex-col gap-3 lg:flex-row lg:flex-wrap lg:items-center">
-							<Button href="/sesi" size="lg" icon="play">
+							<Button href="/beranda" size="lg" icon="play">
 								Mulai belajar
 							</Button>
-							<Link
-								href="/beranda"
-								className="inline-flex h-12 items-center justify-center rounded-sm border border-transparent px-4 font-display text-body-md leading-none font-semibold whitespace-nowrap text-ink-1000 transition-colors duration-90 hover:bg-paper-50 lg:h-14 lg:px-5"
-							>
-								Ikut tes penempatan
-							</Link>
 						</div>
 						<span className="text-center text-body-sm leading-normal text-ink-500 lg:text-left">
 							Gratis, tanpa iklan, dan tanpa akun.
@@ -229,7 +224,7 @@ function HowItWorks() {
 	return (
 		<section
 			id="cara-kerja"
-			className="scroll-mt-[61px] border-b border-hairline bg-paper-50 lg:scroll-mt-[69px]"
+			className="scroll-mt-15.25 border-b border-hairline bg-paper-50 lg:scroll-mt-17.25"
 		>
 			<div className={`${WRAP} flex flex-col gap-6 py-12 lg:gap-10 lg:py-16`}>
 				<div className="flex max-w-prose flex-col gap-3">
@@ -277,7 +272,7 @@ function QuestionKinds() {
 	return (
 		<section
 			id="bentuk-soal"
-			className="scroll-mt-[61px] border-b border-hairline lg:scroll-mt-[69px]"
+			className="scroll-mt-15.25 border-b border-hairline lg:scroll-mt-17.25"
 		>
 			<div
 				className={`${WRAP} grid gap-6 py-12 lg:grid-cols-2 lg:items-start lg:gap-10 lg:py-16`}
@@ -346,10 +341,7 @@ function Extras() {
 
 function Privacy() {
 	return (
-		<section
-			id="data"
-			className="scroll-mt-[61px] border-b border-hairline lg:scroll-mt-[69px]"
-		>
+		<section id="data" className="scroll-mt-15.25 border-b border-hairline lg:scroll-mt-17.25">
 			<div
 				className={`${WRAP} grid gap-6 py-12 lg:grid-cols-2 lg:items-start lg:gap-10 lg:py-16`}
 			>
@@ -408,13 +400,14 @@ function Closing() {
 				className={`${WRAP} flex flex-col gap-5 py-12 lg:flex-row lg:flex-wrap lg:items-center lg:justify-between lg:gap-6 lg:py-16`}
 			>
 				<div className="flex flex-col gap-3 lg:max-w-[52ch]">
-					<Heading title="Sudah tahu sebagian kode pelat?" />
+					<Heading title="Mulai dari tes penempatan" />
 					<p className="text-ink-700 type-body">
-						Tes penempatan memindahkan kode yang sudah kamu kenal langsung ke
-						pengulangan. Boleh dilewati.
+						Tes singkat menentukan titik awalmu. Kode yang sudah kamu kenal langsung
+						diulang, sisanya diperkenalkan bertahap. Belum tahu satu kode pun juga tidak
+						apa-apa.
 					</p>
 				</div>
-				<Link href="/sesi" className={buttonClass("primary", "lg", false)}>
+				<Link href="/beranda" className={buttonClass("primary", "lg", false)}>
 					<span>Mulai belajar</span>
 					<Icon name="arrow-right" size={18} />
 				</Link>
@@ -464,7 +457,7 @@ export function Mulai() {
 	return (
 		<>
 			<Header />
-			<main className="pt-[61px] lg:pt-[69px]">
+			<main className="pt-15.25 lg:pt-17.25">
 				<Hero />
 				<HowItWorks />
 				<QuestionKinds />
