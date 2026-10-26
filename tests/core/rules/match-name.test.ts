@@ -126,7 +126,8 @@ describe("region name matching", () => {
 				name: "Sabang",
 				province: "aceh",
 				aliases: [],
-				variants: []
+				variants: [],
+				popularity: 3
 			},
 			{
 				id: "kota-sabank",
@@ -134,7 +135,8 @@ describe("region name matching", () => {
 				name: "Sabank",
 				province: "aceh",
 				aliases: [],
-				variants: []
+				variants: [],
+				popularity: 3
 			}
 		);
 		const crowded = matchName("Sabanh", "sa", buildDictionary(bundle));
@@ -173,7 +175,8 @@ describe("region name matching", () => {
 				name: "Nedanx",
 				province: "aceh",
 				aliases: [],
-				variants: []
+				variants: [],
+				popularity: 3
 			},
 			{
 				id: "kota-medanx",
@@ -181,7 +184,8 @@ describe("region name matching", () => {
 				name: "Medanx",
 				province: "aceh",
 				aliases: [],
-				variants: []
+				variants: [],
+				popularity: 3
 			}
 		);
 		// "Medanz" is a clean 0.5 typo of Medanx (owned by yy), but Nedanx (a different code,
@@ -197,7 +201,8 @@ describe("region name matching", () => {
 			name: "Tangerang",
 			province: "banten",
 			aliases: [],
-			variants: []
+			variants: [],
+			popularity: 3
 		});
 		bundle.regions
 			.find((region) => region.id === "b")!

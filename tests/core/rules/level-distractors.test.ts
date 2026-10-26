@@ -115,7 +115,8 @@ describe("distractor sources", () => {
 			name: "Tangerang",
 			province: "banten",
 			aliases: [],
-			variants: []
+			variants: [],
+			popularity: 3
 		};
 		const withTwin: Bundle = {
 			...bundle,

@@ -32,7 +32,9 @@ export const areaSchema = z.object({
 	name: z.string().min(1),
 	province: contentIdSchema,
 	aliases: z.array(z.string().min(1)),
-	variants: z.array(z.string().min(1))
+	variants: z.array(z.string().min(1)),
+	// 1 = known to almost everyone, 5 = rarely heard outside its province.
+	popularity: z.number().int().min(1).max(5)
 });
 export const factSchema = z.object({
 	id: contentIdSchema,
