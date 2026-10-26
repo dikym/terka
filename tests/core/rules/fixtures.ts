@@ -13,6 +13,7 @@ const area = (id: string, name: string, province: string, extra: Partial<Area> =
 	province,
 	aliases: [],
 	variants: [],
+	popularity: 3,
 	...extra
 });
 const region = (

@@ -1,6 +1,6 @@
 {
 	"version": "2026.10.26",
-	"contentRev": 7,
+	"contentRev": 8,
 	"contentHistory": [
 		{
 			"contentRev": 1,
@@ -28,6 +28,10 @@
 		},
 		{
 			"contentRev": 7,
+			"version": "2026.10.26"
+		},
+		{
+			"contentRev": 8,
 			"version": "2026.10.26"
 		}
 	],
@@ -4061,7 +4065,8 @@
 			"name": "Banda Aceh",
 			"province": "aceh",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kota-sabang",
@@ -4069,7 +4074,8 @@
 			"name": "Sabang",
 			"province": "aceh",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-langsa",
@@ -4077,7 +4083,8 @@
 			"name": "Langsa",
 			"province": "aceh",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kota-lhokseumawe",
@@ -4085,7 +4092,8 @@
 			"name": "Lhokseumawe",
 			"province": "aceh",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-subulussalam",
@@ -4093,7 +4101,8 @@
 			"name": "Subulussalam",
 			"province": "aceh",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-aceh-besar",
@@ -4101,7 +4110,8 @@
 			"name": "Aceh Besar",
 			"province": "aceh",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-aceh-utara",
@@ -4109,7 +4119,8 @@
 			"name": "Aceh Utara",
 			"province": "aceh",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-aceh-timur",
@@ -4117,7 +4128,8 @@
 			"name": "Aceh Timur",
 			"province": "aceh",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-aceh-tengah",
@@ -4125,7 +4137,8 @@
 			"name": "Aceh Tengah",
 			"province": "aceh",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-aceh-barat",
@@ -4133,7 +4146,8 @@
 			"name": "Aceh Barat",
 			"province": "aceh",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-aceh-selatan",
@@ -4141,7 +4155,8 @@
 			"name": "Aceh Selatan",
 			"province": "aceh",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-bireuen",
@@ -4149,7 +4164,8 @@
 			"name": "Bireuen",
 			"province": "aceh",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-pidie",
@@ -4157,7 +4173,8 @@
 			"name": "Pidie",
 			"province": "aceh",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-pidie-jaya",
@@ -4165,7 +4182,8 @@
 			"name": "Pidie Jaya",
 			"province": "aceh",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-bener-meriah",
@@ -4173,7 +4191,8 @@
 			"name": "Bener Meriah",
 			"province": "aceh",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-gayo-lues",
@@ -4181,7 +4200,8 @@
 			"name": "Gayo Lues",
 			"province": "aceh",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-nagan-raya",
@@ -4189,7 +4209,8 @@
 			"name": "Nagan Raya",
 			"province": "aceh",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-simeulue",
@@ -4197,7 +4218,8 @@
 			"name": "Simeulue",
 			"province": "aceh",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-aceh-singkil",
@@ -4205,7 +4227,8 @@
 			"name": "Aceh Singkil",
 			"province": "aceh",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-aceh-tamiang",
@@ -4213,7 +4236,8 @@
 			"name": "Aceh Tamiang",
 			"province": "aceh",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-aceh-jaya",
@@ -4221,7 +4245,8 @@
 			"name": "Aceh Jaya",
 			"province": "aceh",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-aceh-barat-daya",
@@ -4229,7 +4254,8 @@
 			"name": "Aceh Barat Daya",
 			"province": "aceh",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-aceh-tenggara",
@@ -4237,7 +4263,8 @@
 			"name": "Aceh Tenggara",
 			"province": "aceh",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kota-sibolga",
@@ -4245,7 +4272,8 @@
 			"name": "Sibolga",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kota-padang-sidempuan",
@@ -4253,7 +4281,8 @@
 			"name": "Padang Sidempuan",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kota-gunungsitoli",
@@ -4261,7 +4290,8 @@
 			"name": "Gunungsitoli",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-tapanuli-tengah",
@@ -4269,7 +4299,8 @@
 			"name": "Tapanuli Tengah",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-tapanuli-utara",
@@ -4277,7 +4308,8 @@
 			"name": "Tapanuli Utara",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-tapanuli-selatan",
@@ -4285,7 +4317,8 @@
 			"name": "Tapanuli Selatan",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-mandailing-natal",
@@ -4293,7 +4326,8 @@
 			"name": "Mandailing Natal",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-padang-lawas",
@@ -4301,7 +4335,8 @@
 			"name": "Padang Lawas",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-padang-lawas-utara",
@@ -4309,7 +4344,8 @@
 			"name": "Padang Lawas Utara",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-nias",
@@ -4317,7 +4353,8 @@
 			"name": "Nias",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-nias-selatan",
@@ -4325,7 +4362,8 @@
 			"name": "Nias Selatan",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-nias-utara",
@@ -4333,7 +4371,8 @@
 			"name": "Nias Utara",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-nias-barat",
@@ -4341,7 +4380,8 @@
 			"name": "Nias Barat",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-toba",
@@ -4349,7 +4389,8 @@
 			"name": "Toba",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-samosir",
@@ -4357,7 +4398,8 @@
 			"name": "Samosir",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-humbang-hasundutan",
@@ -4365,7 +4407,8 @@
 			"name": "Humbang Hasundutan",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-dairi",
@@ -4373,7 +4416,8 @@
 			"name": "Dairi",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-pakpak-bharat",
@@ -4381,7 +4425,8 @@
 			"name": "Pakpak Bharat",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kota-medan",
@@ -4389,7 +4434,8 @@
 			"name": "Medan",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 1
 		},
 		{
 			"id": "kota-binjai",
@@ -4397,7 +4443,8 @@
 			"name": "Binjai",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-tebing-tinggi",
@@ -4405,7 +4452,8 @@
 			"name": "Tebing Tinggi",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kota-pematangsiantar",
@@ -4413,7 +4461,8 @@
 			"name": "Pematangsiantar",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-tanjungbalai",
@@ -4421,7 +4470,8 @@
 			"name": "Tanjungbalai",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-deli-serdang",
@@ -4429,7 +4479,8 @@
 			"name": "Deli Serdang",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-serdang-bedagai",
@@ -4437,7 +4488,8 @@
 			"name": "Serdang Bedagai",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-langkat",
@@ -4445,7 +4497,8 @@
 			"name": "Langkat",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-karo",
@@ -4453,7 +4506,8 @@
 			"name": "Karo",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-simalungun",
@@ -4461,7 +4515,8 @@
 			"name": "Simalungun",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-asahan",
@@ -4469,7 +4524,8 @@
 			"name": "Asahan",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-batu-bara",
@@ -4477,7 +4533,8 @@
 			"name": "Batu Bara",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-labuhanbatu",
@@ -4485,7 +4542,8 @@
 			"name": "Labuhanbatu",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-labuhanbatu-utara",
@@ -4493,7 +4551,8 @@
 			"name": "Labuhanbatu Utara",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-labuhanbatu-selatan",
@@ -4501,7 +4560,8 @@
 			"name": "Labuhanbatu Selatan",
 			"province": "sumatera-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kota-padang",
@@ -4509,7 +4569,8 @@
 			"name": "Padang",
 			"province": "sumatera-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kota-bukittinggi",
@@ -4517,7 +4578,8 @@
 			"name": "Bukittinggi",
 			"province": "sumatera-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kota-payakumbuh",
@@ -4525,7 +4587,8 @@
 			"name": "Payakumbuh",
 			"province": "sumatera-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kota-padang-panjang",
@@ -4533,7 +4596,8 @@
 			"name": "Padang Panjang",
 			"province": "sumatera-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kota-sawahlunto",
@@ -4541,7 +4605,8 @@
 			"name": "Sawahlunto",
 			"province": "sumatera-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kota-solok",
@@ -4549,7 +4614,8 @@
 			"name": "Solok",
 			"province": "sumatera-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-solok",
@@ -4557,7 +4623,8 @@
 			"name": "Solok",
 			"province": "sumatera-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kota-pariaman",
@@ -4565,7 +4632,8 @@
 			"name": "Pariaman",
 			"province": "sumatera-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-agam",
@@ -4573,7 +4641,8 @@
 			"name": "Agam",
 			"province": "sumatera-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-pasaman",
@@ -4581,7 +4650,8 @@
 			"name": "Pasaman",
 			"province": "sumatera-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-pasaman-barat",
@@ -4589,7 +4659,8 @@
 			"name": "Pasaman Barat",
 			"province": "sumatera-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-tanah-datar",
@@ -4597,7 +4668,8 @@
 			"name": "Tanah Datar",
 			"province": "sumatera-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-pesisir-selatan",
@@ -4605,7 +4677,8 @@
 			"name": "Pesisir Selatan",
 			"province": "sumatera-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-kepulauan-mentawai",
@@ -4613,7 +4686,8 @@
 			"name": "Kepulauan Mentawai",
 			"province": "sumatera-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-dharmasraya",
@@ -4621,7 +4695,8 @@
 			"name": "Dharmasraya",
 			"province": "sumatera-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-sijunjung",
@@ -4629,7 +4704,8 @@
 			"name": "Sijunjung",
 			"province": "sumatera-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-lima-puluh-kota",
@@ -4637,7 +4713,8 @@
 			"name": "Lima Puluh Kota",
 			"province": "sumatera-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-solok-selatan",
@@ -4645,7 +4722,8 @@
 			"name": "Solok Selatan",
 			"province": "sumatera-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-padang-pariaman",
@@ -4653,7 +4731,8 @@
 			"name": "Padang Pariaman",
 			"province": "sumatera-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kota-pekanbaru",
@@ -4661,7 +4740,8 @@
 			"name": "Pekanbaru",
 			"province": "riau",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kota-dumai",
@@ -4669,7 +4749,8 @@
 			"name": "Dumai",
 			"province": "riau",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-kampar",
@@ -4677,7 +4758,8 @@
 			"name": "Kampar",
 			"province": "riau",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-bengkalis",
@@ -4685,7 +4767,8 @@
 			"name": "Bengkalis",
 			"province": "riau",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-siak",
@@ -4693,7 +4776,8 @@
 			"name": "Siak",
 			"province": "riau",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-pelalawan",
@@ -4701,7 +4785,8 @@
 			"name": "Pelalawan",
 			"province": "riau",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-rokan-hulu",
@@ -4709,7 +4794,8 @@
 			"name": "Rokan Hulu",
 			"province": "riau",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-rokan-hilir",
@@ -4717,7 +4803,8 @@
 			"name": "Rokan Hilir",
 			"province": "riau",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-indragiri-hulu",
@@ -4725,7 +4812,8 @@
 			"name": "Indragiri Hulu",
 			"province": "riau",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-indragiri-hilir",
@@ -4733,7 +4821,8 @@
 			"name": "Indragiri Hilir",
 			"province": "riau",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-kuantan-singingi",
@@ -4741,7 +4830,8 @@
 			"name": "Kuantan Singingi",
 			"province": "riau",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-kepulauan-meranti",
@@ -4749,7 +4839,8 @@
 			"name": "Kepulauan Meranti",
 			"province": "riau",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kota-batam",
@@ -4757,7 +4848,8 @@
 			"name": "Batam",
 			"province": "kepulauan-riau",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kota-tanjung-pinang",
@@ -4765,7 +4857,8 @@
 			"name": "Tanjung Pinang",
 			"province": "kepulauan-riau",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-bintan",
@@ -4773,7 +4866,8 @@
 			"name": "Bintan",
 			"province": "kepulauan-riau",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-karimun",
@@ -4781,7 +4875,8 @@
 			"name": "Karimun",
 			"province": "kepulauan-riau",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-lingga",
@@ -4789,7 +4884,8 @@
 			"name": "Lingga",
 			"province": "kepulauan-riau",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-natuna",
@@ -4797,7 +4893,8 @@
 			"name": "Natuna",
 			"province": "kepulauan-riau",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-kepulauan-anambas",
@@ -4805,7 +4902,8 @@
 			"name": "Kepulauan Anambas",
 			"province": "kepulauan-riau",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kota-jambi",
@@ -4813,7 +4911,8 @@
 			"name": "Jambi",
 			"province": "jambi",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kota-sungai-penuh",
@@ -4821,7 +4920,8 @@
 			"name": "Sungai Penuh",
 			"province": "jambi",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-batanghari",
@@ -4829,7 +4929,8 @@
 			"name": "Batanghari",
 			"province": "jambi",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-muaro-jambi",
@@ -4837,7 +4938,8 @@
 			"name": "Muaro Jambi",
 			"province": "jambi",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-tanjung-jabung-barat",
@@ -4845,7 +4947,8 @@
 			"name": "Tanjung Jabung Barat",
 			"province": "jambi",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-tanjung-jabung-timur",
@@ -4853,7 +4956,8 @@
 			"name": "Tanjung Jabung Timur",
 			"province": "jambi",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-bungo",
@@ -4861,7 +4965,8 @@
 			"name": "Bungo",
 			"province": "jambi",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-tebo",
@@ -4869,7 +4974,8 @@
 			"name": "Tebo",
 			"province": "jambi",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-merangin",
@@ -4877,7 +4983,8 @@
 			"name": "Merangin",
 			"province": "jambi",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-sarolangun",
@@ -4885,7 +4992,8 @@
 			"name": "Sarolangun",
 			"province": "jambi",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-kerinci",
@@ -4893,7 +5001,8 @@
 			"name": "Kerinci",
 			"province": "jambi",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-palembang",
@@ -4901,7 +5010,8 @@
 			"name": "Palembang",
 			"province": "sumatera-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 1
 		},
 		{
 			"id": "kota-prabumulih",
@@ -4909,7 +5019,8 @@
 			"name": "Prabumulih",
 			"province": "sumatera-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kota-lubuklinggau",
@@ -4917,7 +5028,8 @@
 			"name": "Lubuklinggau",
 			"province": "sumatera-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kota-pagar-alam",
@@ -4925,7 +5037,8 @@
 			"name": "Pagar Alam",
 			"province": "sumatera-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-banyuasin",
@@ -4933,7 +5046,8 @@
 			"name": "Banyuasin",
 			"province": "sumatera-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-ogan-ilir",
@@ -4941,7 +5055,8 @@
 			"name": "Ogan Ilir",
 			"province": "sumatera-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-ogan-komering-ilir",
@@ -4949,7 +5064,8 @@
 			"name": "Ogan Komering Ilir",
 			"province": "sumatera-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-ogan-komering-ulu",
@@ -4957,7 +5073,8 @@
 			"name": "Ogan Komering Ulu",
 			"province": "sumatera-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-ogan-komering-ulu-timur",
@@ -4965,7 +5082,8 @@
 			"name": "Ogan Komering Ulu Timur",
 			"province": "sumatera-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-ogan-komering-ulu-selatan",
@@ -4973,7 +5091,8 @@
 			"name": "Ogan Komering Ulu Selatan",
 			"province": "sumatera-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-muara-enim",
@@ -4981,7 +5100,8 @@
 			"name": "Muara Enim",
 			"province": "sumatera-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-lahat",
@@ -4989,7 +5109,8 @@
 			"name": "Lahat",
 			"province": "sumatera-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-musi-banyuasin",
@@ -4997,7 +5118,8 @@
 			"name": "Musi Banyuasin",
 			"province": "sumatera-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-musi-rawas",
@@ -5005,7 +5127,8 @@
 			"name": "Musi Rawas",
 			"province": "sumatera-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-musi-rawas-utara",
@@ -5013,7 +5136,8 @@
 			"name": "Musi Rawas Utara",
 			"province": "sumatera-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-empat-lawang",
@@ -5021,7 +5145,8 @@
 			"name": "Empat Lawang",
 			"province": "sumatera-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-penukal-abab-lematang-ilir",
@@ -5029,7 +5154,8 @@
 			"name": "Penukal Abab Lematang Ilir",
 			"province": "sumatera-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kota-pangkalpinang",
@@ -5037,7 +5163,8 @@
 			"name": "Pangkalpinang",
 			"province": "kepulauan-bangka-belitung",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-bangka",
@@ -5045,7 +5172,8 @@
 			"name": "Bangka",
 			"province": "kepulauan-bangka-belitung",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-bangka-barat",
@@ -5053,7 +5181,8 @@
 			"name": "Bangka Barat",
 			"province": "kepulauan-bangka-belitung",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-bangka-tengah",
@@ -5061,7 +5190,8 @@
 			"name": "Bangka Tengah",
 			"province": "kepulauan-bangka-belitung",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-bangka-selatan",
@@ -5069,7 +5199,8 @@
 			"name": "Bangka Selatan",
 			"province": "kepulauan-bangka-belitung",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-belitung",
@@ -5077,7 +5208,8 @@
 			"name": "Belitung",
 			"province": "kepulauan-bangka-belitung",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-belitung-timur",
@@ -5085,7 +5217,8 @@
 			"name": "Belitung Timur",
 			"province": "kepulauan-bangka-belitung",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-bandar-lampung",
@@ -5093,7 +5226,8 @@
 			"name": "Bandar Lampung",
 			"province": "lampung",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kota-metro",
@@ -5101,7 +5235,8 @@
 			"name": "Metro",
 			"province": "lampung",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-lampung-selatan",
@@ -5109,7 +5244,8 @@
 			"name": "Lampung Selatan",
 			"province": "lampung",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-lampung-tengah",
@@ -5117,7 +5253,8 @@
 			"name": "Lampung Tengah",
 			"province": "lampung",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-lampung-utara",
@@ -5125,7 +5262,8 @@
 			"name": "Lampung Utara",
 			"province": "lampung",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-lampung-timur",
@@ -5133,7 +5271,8 @@
 			"name": "Lampung Timur",
 			"province": "lampung",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-lampung-barat",
@@ -5141,7 +5280,8 @@
 			"name": "Lampung Barat",
 			"province": "lampung",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-pesawaran",
@@ -5149,7 +5289,8 @@
 			"name": "Pesawaran",
 			"province": "lampung",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-pringsewu",
@@ -5157,7 +5298,8 @@
 			"name": "Pringsewu",
 			"province": "lampung",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-tanggamus",
@@ -5165,7 +5307,8 @@
 			"name": "Tanggamus",
 			"province": "lampung",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-tulang-bawang",
@@ -5173,7 +5316,8 @@
 			"name": "Tulang Bawang",
 			"province": "lampung",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-tulang-bawang-barat",
@@ -5181,7 +5325,8 @@
 			"name": "Tulang Bawang Barat",
 			"province": "lampung",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-way-kanan",
@@ -5189,7 +5334,8 @@
 			"name": "Way Kanan",
 			"province": "lampung",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-mesuji",
@@ -5197,7 +5343,8 @@
 			"name": "Mesuji",
 			"province": "lampung",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-pesisir-barat",
@@ -5205,7 +5352,8 @@
 			"name": "Pesisir Barat",
 			"province": "lampung",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kota-bengkulu",
@@ -5213,7 +5361,8 @@
 			"name": "Bengkulu",
 			"province": "bengkulu",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-bengkulu-utara",
@@ -5221,7 +5370,8 @@
 			"name": "Bengkulu Utara",
 			"province": "bengkulu",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-bengkulu-selatan",
@@ -5229,7 +5379,8 @@
 			"name": "Bengkulu Selatan",
 			"province": "bengkulu",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-bengkulu-tengah",
@@ -5237,7 +5388,8 @@
 			"name": "Bengkulu Tengah",
 			"province": "bengkulu",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-rejang-lebong",
@@ -5245,7 +5397,8 @@
 			"name": "Rejang Lebong",
 			"province": "bengkulu",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-kepahiang",
@@ -5253,7 +5406,8 @@
 			"name": "Kepahiang",
 			"province": "bengkulu",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-lebong",
@@ -5261,7 +5415,8 @@
 			"name": "Lebong",
 			"province": "bengkulu",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-kaur",
@@ -5269,7 +5424,8 @@
 			"name": "Kaur",
 			"province": "bengkulu",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-seluma",
@@ -5277,7 +5433,8 @@
 			"name": "Seluma",
 			"province": "bengkulu",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-muko-muko",
@@ -5285,7 +5442,8 @@
 			"name": "Muko-Muko",
 			"province": "bengkulu",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kota-serang",
@@ -5293,7 +5451,8 @@
 			"name": "Serang",
 			"province": "banten",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-serang",
@@ -5301,7 +5460,8 @@
 			"name": "Serang",
 			"province": "banten",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-cilegon",
@@ -5309,7 +5469,8 @@
 			"name": "Cilegon",
 			"province": "banten",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-pandeglang",
@@ -5317,7 +5478,8 @@
 			"name": "Pandeglang",
 			"province": "banten",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-lebak",
@@ -5325,7 +5487,8 @@
 			"name": "Lebak",
 			"province": "banten",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-tangerang",
@@ -5333,7 +5496,8 @@
 			"name": "Tangerang",
 			"province": "banten",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-jakarta-pusat",
@@ -5341,7 +5505,8 @@
 			"name": "Jakarta Pusat",
 			"province": "jakarta",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 1
 		},
 		{
 			"id": "kota-jakarta-utara",
@@ -5349,7 +5514,8 @@
 			"name": "Jakarta Utara",
 			"province": "jakarta",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 1
 		},
 		{
 			"id": "kota-jakarta-barat",
@@ -5357,7 +5523,8 @@
 			"name": "Jakarta Barat",
 			"province": "jakarta",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 1
 		},
 		{
 			"id": "kota-jakarta-selatan",
@@ -5365,7 +5532,8 @@
 			"name": "Jakarta Selatan",
 			"province": "jakarta",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 1
 		},
 		{
 			"id": "kota-jakarta-timur",
@@ -5373,7 +5541,8 @@
 			"name": "Jakarta Timur",
 			"province": "jakarta",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 1
 		},
 		{
 			"id": "kab-kepulauan-seribu",
@@ -5381,7 +5550,8 @@
 			"name": "Kepulauan Seribu",
 			"province": "jakarta",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-bekasi",
@@ -5389,7 +5559,8 @@
 			"name": "Bekasi",
 			"province": "jawa-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 1
 		},
 		{
 			"id": "kab-bekasi",
@@ -5397,7 +5568,8 @@
 			"name": "Bekasi",
 			"province": "jawa-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kota-depok",
@@ -5405,7 +5577,8 @@
 			"name": "Depok",
 			"province": "jawa-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 1
 		},
 		{
 			"id": "kota-tangerang",
@@ -5413,7 +5586,8 @@
 			"name": "Tangerang",
 			"province": "banten",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 1
 		},
 		{
 			"id": "kota-tangerang-selatan",
@@ -5421,7 +5595,8 @@
 			"name": "Tangerang Selatan",
 			"province": "banten",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kota-bandung",
@@ -5429,7 +5604,8 @@
 			"name": "Bandung",
 			"province": "jawa-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 1
 		},
 		{
 			"id": "kota-cimahi",
@@ -5437,7 +5613,8 @@
 			"name": "Cimahi",
 			"province": "jawa-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-bandung",
@@ -5445,7 +5622,8 @@
 			"name": "Bandung",
 			"province": "jawa-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-bandung-barat",
@@ -5453,7 +5631,8 @@
 			"name": "Bandung Barat",
 			"province": "jawa-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-bogor",
@@ -5461,7 +5640,8 @@
 			"name": "Bogor",
 			"province": "jawa-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 1
 		},
 		{
 			"id": "kab-bogor",
@@ -5469,7 +5649,8 @@
 			"name": "Bogor",
 			"province": "jawa-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kota-sukabumi",
@@ -5477,7 +5658,8 @@
 			"name": "Sukabumi",
 			"province": "jawa-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-sukabumi",
@@ -5485,7 +5667,8 @@
 			"name": "Sukabumi",
 			"province": "jawa-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-cianjur",
@@ -5493,7 +5676,8 @@
 			"name": "Cianjur",
 			"province": "jawa-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kota-cirebon",
@@ -5501,7 +5685,8 @@
 			"name": "Cirebon",
 			"province": "jawa-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-cirebon",
@@ -5509,7 +5694,8 @@
 			"name": "Cirebon",
 			"province": "jawa-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-indramayu",
@@ -5517,7 +5703,8 @@
 			"name": "Indramayu",
 			"province": "jawa-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-majalengka",
@@ -5525,7 +5712,8 @@
 			"name": "Majalengka",
 			"province": "jawa-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-kuningan",
@@ -5533,7 +5721,8 @@
 			"name": "Kuningan",
 			"province": "jawa-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-purwakarta",
@@ -5541,7 +5730,8 @@
 			"name": "Purwakarta",
 			"province": "jawa-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-subang",
@@ -5549,7 +5739,8 @@
 			"name": "Subang",
 			"province": "jawa-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-karawang",
@@ -5557,7 +5748,8 @@
 			"name": "Karawang",
 			"province": "jawa-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-sumedang",
@@ -5565,7 +5757,8 @@
 			"name": "Sumedang",
 			"province": "jawa-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-garut",
@@ -5573,7 +5766,8 @@
 			"name": "Garut",
 			"province": "jawa-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kota-tasikmalaya",
@@ -5581,7 +5775,8 @@
 			"name": "Tasikmalaya",
 			"province": "jawa-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-tasikmalaya",
@@ -5589,7 +5784,8 @@
 			"name": "Tasikmalaya",
 			"province": "jawa-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-ciamis",
@@ -5597,7 +5793,8 @@
 			"name": "Ciamis",
 			"province": "jawa-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-pangandaran",
@@ -5605,7 +5802,8 @@
 			"name": "Pangandaran",
 			"province": "jawa-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-banjar",
@@ -5613,7 +5811,8 @@
 			"name": "Banjar",
 			"province": "jawa-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kota-pekalongan",
@@ -5621,7 +5820,8 @@
 			"name": "Pekalongan",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-pekalongan",
@@ -5629,7 +5829,8 @@
 			"name": "Pekalongan",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kota-tegal",
@@ -5637,7 +5838,8 @@
 			"name": "Tegal",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-tegal",
@@ -5645,7 +5847,8 @@
 			"name": "Tegal",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-batang",
@@ -5653,7 +5856,8 @@
 			"name": "Batang",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-pemalang",
@@ -5661,7 +5865,8 @@
 			"name": "Pemalang",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-brebes",
@@ -5669,7 +5874,8 @@
 			"name": "Brebes",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-semarang",
@@ -5677,7 +5883,8 @@
 			"name": "Semarang",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 1
 		},
 		{
 			"id": "kota-salatiga",
@@ -5685,7 +5892,8 @@
 			"name": "Salatiga",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-semarang",
@@ -5693,7 +5901,8 @@
 			"name": "Semarang",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-kendal",
@@ -5701,7 +5910,8 @@
 			"name": "Kendal",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-demak",
@@ -5709,7 +5919,8 @@
 			"name": "Demak",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-pati",
@@ -5717,7 +5928,8 @@
 			"name": "Pati",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-kudus",
@@ -5725,7 +5937,8 @@
 			"name": "Kudus",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-jepara",
@@ -5733,7 +5946,8 @@
 			"name": "Jepara",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-rembang",
@@ -5741,7 +5955,8 @@
 			"name": "Rembang",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-blora",
@@ -5749,7 +5964,8 @@
 			"name": "Blora",
 			"province": "jawa-tengah",
 			"aliases": ["Cepu"],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-grobogan",
@@ -5757,7 +5973,8 @@
 			"name": "Grobogan",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-banyumas",
@@ -5765,7 +5982,8 @@
 			"name": "Banyumas",
 			"province": "jawa-tengah",
 			"aliases": ["Purwokerto"],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-cilacap",
@@ -5773,7 +5991,8 @@
 			"name": "Cilacap",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-purbalingga",
@@ -5781,7 +6000,8 @@
 			"name": "Purbalingga",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-banjarnegara",
@@ -5789,7 +6009,8 @@
 			"name": "Banjarnegara",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kota-magelang",
@@ -5797,7 +6018,8 @@
 			"name": "Magelang",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-magelang",
@@ -5805,7 +6027,8 @@
 			"name": "Magelang",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-purworejo",
@@ -5813,7 +6036,8 @@
 			"name": "Purworejo",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-kebumen",
@@ -5821,7 +6045,8 @@
 			"name": "Kebumen",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-temanggung",
@@ -5829,7 +6054,8 @@
 			"name": "Temanggung",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-wonosobo",
@@ -5837,7 +6063,8 @@
 			"name": "Wonosobo",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-surakarta",
@@ -5845,7 +6072,8 @@
 			"name": "Surakarta",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 1
 		},
 		{
 			"id": "kab-sukoharjo",
@@ -5853,7 +6081,8 @@
 			"name": "Sukoharjo",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-klaten",
@@ -5861,7 +6090,8 @@
 			"name": "Klaten",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-boyolali",
@@ -5869,7 +6099,8 @@
 			"name": "Boyolali",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-sragen",
@@ -5877,7 +6108,8 @@
 			"name": "Sragen",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-karanganyar",
@@ -5885,7 +6117,8 @@
 			"name": "Karanganyar",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-wonogiri",
@@ -5893,7 +6126,8 @@
 			"name": "Wonogiri",
 			"province": "jawa-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-yogyakarta",
@@ -5901,7 +6135,8 @@
 			"name": "Yogyakarta",
 			"province": "yogyakarta",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 1
 		},
 		{
 			"id": "kab-bantul",
@@ -5909,7 +6144,8 @@
 			"name": "Bantul",
 			"province": "yogyakarta",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-sleman",
@@ -5917,7 +6153,8 @@
 			"name": "Sleman",
 			"province": "yogyakarta",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-gunungkidul",
@@ -5925,7 +6162,8 @@
 			"name": "Gunungkidul",
 			"province": "yogyakarta",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-kulon-progo",
@@ -5933,7 +6171,8 @@
 			"name": "Kulon Progo",
 			"province": "yogyakarta",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-surabaya",
@@ -5941,7 +6180,8 @@
 			"name": "Surabaya",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 1
 		},
 		{
 			"id": "kab-sidoarjo",
@@ -5949,7 +6189,8 @@
 			"name": "Sidoarjo",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-gresik",
@@ -5957,7 +6198,8 @@
 			"name": "Gresik",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-bangkalan",
@@ -5965,7 +6207,8 @@
 			"name": "Bangkalan",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-sampang",
@@ -5973,7 +6216,8 @@
 			"name": "Sampang",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-pamekasan",
@@ -5981,7 +6225,8 @@
 			"name": "Pamekasan",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-sumenep",
@@ -5989,7 +6234,8 @@
 			"name": "Sumenep",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-malang",
@@ -5997,7 +6243,8 @@
 			"name": "Malang",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 1
 		},
 		{
 			"id": "kab-malang",
@@ -6005,7 +6252,8 @@
 			"name": "Malang",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-batu",
@@ -6013,7 +6261,8 @@
 			"name": "Batu",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kota-pasuruan",
@@ -6021,7 +6270,8 @@
 			"name": "Pasuruan",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-pasuruan",
@@ -6029,7 +6279,8 @@
 			"name": "Pasuruan",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-probolinggo",
@@ -6037,7 +6288,8 @@
 			"name": "Probolinggo",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-probolinggo",
@@ -6045,7 +6297,8 @@
 			"name": "Probolinggo",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-lumajang",
@@ -6053,7 +6306,8 @@
 			"name": "Lumajang",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-jember",
@@ -6061,7 +6315,8 @@
 			"name": "Jember",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-banyuwangi",
@@ -6069,7 +6324,8 @@
 			"name": "Banyuwangi",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-bondowoso",
@@ -6077,7 +6333,8 @@
 			"name": "Bondowoso",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-situbondo",
@@ -6085,7 +6342,8 @@
 			"name": "Situbondo",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-bojonegoro",
@@ -6093,7 +6351,8 @@
 			"name": "Bojonegoro",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-tuban",
@@ -6101,7 +6360,8 @@
 			"name": "Tuban",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-lamongan",
@@ -6109,7 +6369,8 @@
 			"name": "Lamongan",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-mojokerto",
@@ -6117,7 +6378,8 @@
 			"name": "Mojokerto",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-mojokerto",
@@ -6125,7 +6387,8 @@
 			"name": "Mojokerto",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-jombang",
@@ -6133,7 +6396,8 @@
 			"name": "Jombang",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-kediri",
@@ -6141,7 +6405,8 @@
 			"name": "Kediri",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-kediri",
@@ -6149,7 +6414,8 @@
 			"name": "Kediri",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-blitar",
@@ -6157,7 +6423,8 @@
 			"name": "Blitar",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-blitar",
@@ -6165,7 +6432,8 @@
 			"name": "Blitar",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-tulungagung",
@@ -6173,7 +6441,8 @@
 			"name": "Tulungagung",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-trenggalek",
@@ -6181,7 +6450,8 @@
 			"name": "Trenggalek",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-nganjuk",
@@ -6189,7 +6459,8 @@
 			"name": "Nganjuk",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kota-madiun",
@@ -6197,7 +6468,8 @@
 			"name": "Madiun",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-madiun",
@@ -6205,7 +6477,8 @@
 			"name": "Madiun",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-ngawi",
@@ -6213,7 +6486,8 @@
 			"name": "Ngawi",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-magetan",
@@ -6221,7 +6495,8 @@
 			"name": "Magetan",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-ponorogo",
@@ -6229,7 +6504,8 @@
 			"name": "Ponorogo",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-pacitan",
@@ -6237,7 +6513,8 @@
 			"name": "Pacitan",
 			"province": "jawa-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-denpasar",
@@ -6245,7 +6522,8 @@
 			"name": "Denpasar",
 			"province": "bali",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 1
 		},
 		{
 			"id": "kab-badung",
@@ -6253,7 +6531,8 @@
 			"name": "Badung",
 			"province": "bali",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 1
 		},
 		{
 			"id": "kab-gianyar",
@@ -6261,7 +6540,8 @@
 			"name": "Gianyar",
 			"province": "bali",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-tabanan",
@@ -6269,7 +6549,8 @@
 			"name": "Tabanan",
 			"province": "bali",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-buleleng",
@@ -6277,7 +6558,8 @@
 			"name": "Buleleng",
 			"province": "bali",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-karangasem",
@@ -6285,7 +6567,8 @@
 			"name": "Karangasem",
 			"province": "bali",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-klungkung",
@@ -6293,7 +6576,8 @@
 			"name": "Klungkung",
 			"province": "bali",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-bangli",
@@ -6301,7 +6585,8 @@
 			"name": "Bangli",
 			"province": "bali",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-jembrana",
@@ -6309,7 +6594,8 @@
 			"name": "Jembrana",
 			"province": "bali",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kota-mataram",
@@ -6317,7 +6603,8 @@
 			"name": "Mataram",
 			"province": "nusa-tenggara-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-lombok-barat",
@@ -6325,7 +6612,8 @@
 			"name": "Lombok Barat",
 			"province": "nusa-tenggara-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-lombok-tengah",
@@ -6333,7 +6621,8 @@
 			"name": "Lombok Tengah",
 			"province": "nusa-tenggara-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-lombok-timur",
@@ -6341,7 +6630,8 @@
 			"name": "Lombok Timur",
 			"province": "nusa-tenggara-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-lombok-utara",
@@ -6349,7 +6639,8 @@
 			"name": "Lombok Utara",
 			"province": "nusa-tenggara-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-bima",
@@ -6357,7 +6648,8 @@
 			"name": "Bima",
 			"province": "nusa-tenggara-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-bima",
@@ -6365,7 +6657,8 @@
 			"name": "Bima",
 			"province": "nusa-tenggara-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-dompu",
@@ -6373,7 +6666,8 @@
 			"name": "Dompu",
 			"province": "nusa-tenggara-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-sumbawa",
@@ -6381,7 +6675,8 @@
 			"name": "Sumbawa",
 			"province": "nusa-tenggara-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-sumbawa-barat",
@@ -6389,7 +6684,8 @@
 			"name": "Sumbawa Barat",
 			"province": "nusa-tenggara-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kota-kupang",
@@ -6397,7 +6693,8 @@
 			"name": "Kupang",
 			"province": "nusa-tenggara-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-kupang",
@@ -6405,7 +6702,8 @@
 			"name": "Kupang",
 			"province": "nusa-tenggara-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-timor-tengah-selatan",
@@ -6413,7 +6711,8 @@
 			"name": "Timor Tengah Selatan",
 			"province": "nusa-tenggara-timur",
 			"aliases": ["Soe"],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-timor-tengah-utara",
@@ -6421,7 +6720,8 @@
 			"name": "Timor Tengah Utara",
 			"province": "nusa-tenggara-timur",
 			"aliases": ["Kefamenanu"],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-belu",
@@ -6429,7 +6729,8 @@
 			"name": "Belu",
 			"province": "nusa-tenggara-timur",
 			"aliases": ["Atambua"],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-malaka",
@@ -6437,7 +6738,8 @@
 			"name": "Malaka",
 			"province": "nusa-tenggara-timur",
 			"aliases": ["Betun"],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-rote-ndao",
@@ -6445,7 +6747,8 @@
 			"name": "Rote Ndao",
 			"province": "nusa-tenggara-timur",
 			"aliases": ["Baa"],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-sabu-raijua",
@@ -6453,7 +6756,8 @@
 			"name": "Sabu Raijua",
 			"province": "nusa-tenggara-timur",
 			"aliases": ["Seba"],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-sikka",
@@ -6461,7 +6765,8 @@
 			"name": "Sikka",
 			"province": "nusa-tenggara-timur",
 			"aliases": ["Maumere"],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-ende",
@@ -6469,7 +6774,8 @@
 			"name": "Ende",
 			"province": "nusa-tenggara-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-ngada",
@@ -6477,7 +6783,8 @@
 			"name": "Ngada",
 			"province": "nusa-tenggara-timur",
 			"aliases": ["Bajawa"],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-nagekeo",
@@ -6485,7 +6792,8 @@
 			"name": "Nagekeo",
 			"province": "nusa-tenggara-timur",
 			"aliases": ["Mbay"],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-flores-timur",
@@ -6493,7 +6801,8 @@
 			"name": "Flores Timur",
 			"province": "nusa-tenggara-timur",
 			"aliases": ["Larantuka"],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-manggarai",
@@ -6501,7 +6810,8 @@
 			"name": "Manggarai",
 			"province": "nusa-tenggara-timur",
 			"aliases": ["Ruteng"],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-manggarai-barat",
@@ -6509,7 +6819,8 @@
 			"name": "Manggarai Barat",
 			"province": "nusa-tenggara-timur",
 			"aliases": ["Labuan Bajo"],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-manggarai-timur",
@@ -6517,7 +6828,8 @@
 			"name": "Manggarai Timur",
 			"province": "nusa-tenggara-timur",
 			"aliases": ["Borong"],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-alor",
@@ -6525,7 +6837,8 @@
 			"name": "Alor",
 			"province": "nusa-tenggara-timur",
 			"aliases": ["Kalabahi"],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-lembata",
@@ -6533,7 +6846,8 @@
 			"name": "Lembata",
 			"province": "nusa-tenggara-timur",
 			"aliases": ["Lewoleba"],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-sumba-barat",
@@ -6541,7 +6855,8 @@
 			"name": "Sumba Barat",
 			"province": "nusa-tenggara-timur",
 			"aliases": ["Waikabubak"],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-sumba-timur",
@@ -6549,7 +6864,8 @@
 			"name": "Sumba Timur",
 			"province": "nusa-tenggara-timur",
 			"aliases": ["Waingapu"],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-sumba-tengah",
@@ -6557,7 +6873,8 @@
 			"name": "Sumba Tengah",
 			"province": "nusa-tenggara-timur",
 			"aliases": ["Waibakul"],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-sumba-barat-daya",
@@ -6565,7 +6882,8 @@
 			"name": "Sumba Barat Daya",
 			"province": "nusa-tenggara-timur",
 			"aliases": ["Tambolaka"],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kota-pontianak",
@@ -6573,7 +6891,8 @@
 			"name": "Pontianak",
 			"province": "kalimantan-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kota-singkawang",
@@ -6581,7 +6900,8 @@
 			"name": "Singkawang",
 			"province": "kalimantan-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-kubu-raya",
@@ -6589,7 +6909,8 @@
 			"name": "Kubu Raya",
 			"province": "kalimantan-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-mempawah",
@@ -6597,7 +6918,8 @@
 			"name": "Mempawah",
 			"province": "kalimantan-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-sambas",
@@ -6605,7 +6927,8 @@
 			"name": "Sambas",
 			"province": "kalimantan-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-bengkayang",
@@ -6613,7 +6936,8 @@
 			"name": "Bengkayang",
 			"province": "kalimantan-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-landak",
@@ -6621,7 +6945,8 @@
 			"name": "Landak",
 			"province": "kalimantan-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-sanggau",
@@ -6629,7 +6954,8 @@
 			"name": "Sanggau",
 			"province": "kalimantan-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-sekadau",
@@ -6637,7 +6963,8 @@
 			"name": "Sekadau",
 			"province": "kalimantan-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-sintang",
@@ -6645,7 +6972,8 @@
 			"name": "Sintang",
 			"province": "kalimantan-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-melawi",
@@ -6653,7 +6981,8 @@
 			"name": "Melawi",
 			"province": "kalimantan-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-kapuas-hulu",
@@ -6661,7 +6990,8 @@
 			"name": "Kapuas Hulu",
 			"province": "kalimantan-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-ketapang",
@@ -6669,7 +6999,8 @@
 			"name": "Ketapang",
 			"province": "kalimantan-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-kayong-utara",
@@ -6677,7 +7008,8 @@
 			"name": "Kayong Utara",
 			"province": "kalimantan-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kota-banjarmasin",
@@ -6685,7 +7017,8 @@
 			"name": "Banjarmasin",
 			"province": "kalimantan-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kota-banjarbaru",
@@ -6693,7 +7026,8 @@
 			"name": "Banjarbaru",
 			"province": "kalimantan-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-banjar",
@@ -6701,7 +7035,8 @@
 			"name": "Banjar",
 			"province": "kalimantan-selatan",
 			"aliases": ["Martapura"],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-barito-kuala",
@@ -6709,7 +7044,8 @@
 			"name": "Barito Kuala",
 			"province": "kalimantan-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-tapin",
@@ -6717,7 +7053,8 @@
 			"name": "Tapin",
 			"province": "kalimantan-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-hulu-sungai-selatan",
@@ -6725,7 +7062,8 @@
 			"name": "Hulu Sungai Selatan",
 			"province": "kalimantan-selatan",
 			"aliases": ["Kandangan"],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-hulu-sungai-tengah",
@@ -6733,7 +7071,8 @@
 			"name": "Hulu Sungai Tengah",
 			"province": "kalimantan-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-hulu-sungai-utara",
@@ -6741,7 +7080,8 @@
 			"name": "Hulu Sungai Utara",
 			"province": "kalimantan-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-tabalong",
@@ -6749,7 +7089,8 @@
 			"name": "Tabalong",
 			"province": "kalimantan-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-balangan",
@@ -6757,7 +7098,8 @@
 			"name": "Balangan",
 			"province": "kalimantan-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-tanah-laut",
@@ -6765,7 +7107,8 @@
 			"name": "Tanah Laut",
 			"province": "kalimantan-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-tanah-bumbu",
@@ -6773,7 +7116,8 @@
 			"name": "Tanah Bumbu",
 			"province": "kalimantan-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-kotabaru",
@@ -6781,7 +7125,8 @@
 			"name": "Kotabaru",
 			"province": "kalimantan-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kota-palangka-raya",
@@ -6789,7 +7134,8 @@
 			"name": "Palangka Raya",
 			"province": "kalimantan-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-kotawaringin-timur",
@@ -6797,7 +7143,8 @@
 			"name": "Kotawaringin Timur",
 			"province": "kalimantan-tengah",
 			"aliases": ["Sampit"],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-kotawaringin-barat",
@@ -6805,7 +7152,8 @@
 			"name": "Kotawaringin Barat",
 			"province": "kalimantan-tengah",
 			"aliases": ["Pangkalan Bun"],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-kapuas",
@@ -6813,7 +7161,8 @@
 			"name": "Kapuas",
 			"province": "kalimantan-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-barito-selatan",
@@ -6821,7 +7170,8 @@
 			"name": "Barito Selatan",
 			"province": "kalimantan-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-barito-utara",
@@ -6829,7 +7179,8 @@
 			"name": "Barito Utara",
 			"province": "kalimantan-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-barito-timur",
@@ -6837,7 +7188,8 @@
 			"name": "Barito Timur",
 			"province": "kalimantan-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-katingan",
@@ -6845,7 +7197,8 @@
 			"name": "Katingan",
 			"province": "kalimantan-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-seruyan",
@@ -6853,7 +7206,8 @@
 			"name": "Seruyan",
 			"province": "kalimantan-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-sukamara",
@@ -6861,7 +7215,8 @@
 			"name": "Sukamara",
 			"province": "kalimantan-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-lamandau",
@@ -6869,7 +7224,8 @@
 			"name": "Lamandau",
 			"province": "kalimantan-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-gunung-mas",
@@ -6877,7 +7233,8 @@
 			"name": "Gunung Mas",
 			"province": "kalimantan-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-murung-raya",
@@ -6885,7 +7242,8 @@
 			"name": "Murung Raya",
 			"province": "kalimantan-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-pulang-pisau",
@@ -6893,7 +7251,8 @@
 			"name": "Pulang Pisau",
 			"province": "kalimantan-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kota-samarinda",
@@ -6901,7 +7260,8 @@
 			"name": "Samarinda",
 			"province": "kalimantan-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kota-balikpapan",
@@ -6909,7 +7269,8 @@
 			"name": "Balikpapan",
 			"province": "kalimantan-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kota-bontang",
@@ -6917,7 +7278,8 @@
 			"name": "Bontang",
 			"province": "kalimantan-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-kutai-kartanegara",
@@ -6925,7 +7287,8 @@
 			"name": "Kutai Kartanegara",
 			"province": "kalimantan-timur",
 			"aliases": ["Tenggarong"],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-kutai-timur",
@@ -6933,7 +7296,8 @@
 			"name": "Kutai Timur",
 			"province": "kalimantan-timur",
 			"aliases": ["Sangatta"],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-kutai-barat",
@@ -6941,7 +7305,8 @@
 			"name": "Kutai Barat",
 			"province": "kalimantan-timur",
 			"aliases": ["Sendawar"],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-berau",
@@ -6949,7 +7314,8 @@
 			"name": "Berau",
 			"province": "kalimantan-timur",
 			"aliases": ["Tanjung Redeb"],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-paser",
@@ -6957,7 +7323,8 @@
 			"name": "Paser",
 			"province": "kalimantan-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-penajam-paser-utara",
@@ -6965,7 +7332,8 @@
 			"name": "Penajam Paser Utara",
 			"province": "kalimantan-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-mahakam-ulu",
@@ -6973,7 +7341,8 @@
 			"name": "Mahakam Ulu",
 			"province": "kalimantan-timur",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kota-tarakan",
@@ -6981,7 +7350,8 @@
 			"name": "Tarakan",
 			"province": "kalimantan-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-bulungan",
@@ -6989,7 +7359,8 @@
 			"name": "Bulungan",
 			"province": "kalimantan-utara",
 			"aliases": ["Tanjung Selor"],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-nunukan",
@@ -6997,7 +7368,8 @@
 			"name": "Nunukan",
 			"province": "kalimantan-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-malinau",
@@ -7005,7 +7377,8 @@
 			"name": "Malinau",
 			"province": "kalimantan-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-tana-tidung",
@@ -7013,7 +7386,8 @@
 			"name": "Tana Tidung",
 			"province": "kalimantan-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kota-manado",
@@ -7021,7 +7395,8 @@
 			"name": "Manado",
 			"province": "sulawesi-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kota-bitung",
@@ -7029,7 +7404,8 @@
 			"name": "Bitung",
 			"province": "sulawesi-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-tomohon",
@@ -7037,7 +7413,8 @@
 			"name": "Tomohon",
 			"province": "sulawesi-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-kotamobagu",
@@ -7045,7 +7422,8 @@
 			"name": "Kotamobagu",
 			"province": "sulawesi-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-minahasa",
@@ -7053,7 +7431,8 @@
 			"name": "Minahasa",
 			"province": "sulawesi-utara",
 			"aliases": ["Tondano"],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-minahasa-utara",
@@ -7061,7 +7440,8 @@
 			"name": "Minahasa Utara",
 			"province": "sulawesi-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-minahasa-selatan",
@@ -7069,7 +7449,8 @@
 			"name": "Minahasa Selatan",
 			"province": "sulawesi-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-minahasa-tenggara",
@@ -7077,7 +7458,8 @@
 			"name": "Minahasa Tenggara",
 			"province": "sulawesi-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-bolaang-mongondow",
@@ -7085,7 +7467,8 @@
 			"name": "Bolaang Mongondow",
 			"province": "sulawesi-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-bolaang-mongondow-utara",
@@ -7093,7 +7476,8 @@
 			"name": "Bolaang Mongondow Utara",
 			"province": "sulawesi-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-bolaang-mongondow-timur",
@@ -7101,7 +7485,8 @@
 			"name": "Bolaang Mongondow Timur",
 			"province": "sulawesi-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-bolaang-mongondow-selatan",
@@ -7109,7 +7494,8 @@
 			"name": "Bolaang Mongondow Selatan",
 			"province": "sulawesi-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-kepulauan-sangihe",
@@ -7117,7 +7503,8 @@
 			"name": "Kepulauan Sangihe",
 			"province": "sulawesi-utara",
 			"aliases": ["Tahuna"],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-kepulauan-talaud",
@@ -7125,7 +7512,8 @@
 			"name": "Kepulauan Talaud",
 			"province": "sulawesi-utara",
 			"aliases": ["Melonguane"],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-kepulauan-sitaro",
@@ -7133,7 +7521,8 @@
 			"name": "Kepulauan Siau Tagulandang Biaro",
 			"province": "sulawesi-utara",
 			"aliases": ["Ondong", "Sitaro"],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kota-gorontalo",
@@ -7141,7 +7530,8 @@
 			"name": "Gorontalo",
 			"province": "gorontalo",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-gorontalo",
@@ -7149,7 +7539,8 @@
 			"name": "Gorontalo",
 			"province": "gorontalo",
 			"aliases": ["Limboto"],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-gorontalo-utara",
@@ -7157,7 +7548,8 @@
 			"name": "Gorontalo Utara",
 			"province": "gorontalo",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-bone-bolango",
@@ -7165,7 +7557,8 @@
 			"name": "Bone Bolango",
 			"province": "gorontalo",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-boalemo",
@@ -7173,7 +7566,8 @@
 			"name": "Boalemo",
 			"province": "gorontalo",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-pohuwato",
@@ -7181,7 +7575,8 @@
 			"name": "Pohuwato",
 			"province": "gorontalo",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kota-palu",
@@ -7189,7 +7584,8 @@
 			"name": "Palu",
 			"province": "sulawesi-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-donggala",
@@ -7197,7 +7593,8 @@
 			"name": "Donggala",
 			"province": "sulawesi-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-sigi",
@@ -7205,7 +7602,8 @@
 			"name": "Sigi",
 			"province": "sulawesi-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-parigi-moutong",
@@ -7213,7 +7611,8 @@
 			"name": "Parigi Moutong",
 			"province": "sulawesi-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-poso",
@@ -7221,7 +7620,8 @@
 			"name": "Poso",
 			"province": "sulawesi-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-tolitoli",
@@ -7229,7 +7629,8 @@
 			"name": "Tolitoli",
 			"province": "sulawesi-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-buol",
@@ -7237,7 +7638,8 @@
 			"name": "Buol",
 			"province": "sulawesi-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-banggai",
@@ -7245,7 +7647,8 @@
 			"name": "Banggai",
 			"province": "sulawesi-tengah",
 			"aliases": ["Luwuk"],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-banggai-kepulauan",
@@ -7253,7 +7656,8 @@
 			"name": "Banggai Kepulauan",
 			"province": "sulawesi-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-banggai-laut",
@@ -7261,7 +7665,8 @@
 			"name": "Banggai Laut",
 			"province": "sulawesi-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-morowali",
@@ -7269,7 +7674,8 @@
 			"name": "Morowali",
 			"province": "sulawesi-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-morowali-utara",
@@ -7277,7 +7683,8 @@
 			"name": "Morowali Utara",
 			"province": "sulawesi-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-tojo-una-una",
@@ -7285,7 +7692,8 @@
 			"name": "Tojo Una-Una",
 			"province": "sulawesi-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kota-kendari",
@@ -7293,7 +7701,8 @@
 			"name": "Kendari",
 			"province": "sulawesi-tenggara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kota-baubau",
@@ -7301,7 +7710,8 @@
 			"name": "Baubau",
 			"province": "sulawesi-tenggara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-konawe",
@@ -7309,7 +7719,8 @@
 			"name": "Konawe",
 			"province": "sulawesi-tenggara",
 			"aliases": ["Unaaha"],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-konawe-selatan",
@@ -7317,7 +7728,8 @@
 			"name": "Konawe Selatan",
 			"province": "sulawesi-tenggara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-konawe-utara",
@@ -7325,7 +7737,8 @@
 			"name": "Konawe Utara",
 			"province": "sulawesi-tenggara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-konawe-kepulauan",
@@ -7333,7 +7746,8 @@
 			"name": "Konawe Kepulauan",
 			"province": "sulawesi-tenggara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-kolaka",
@@ -7341,7 +7755,8 @@
 			"name": "Kolaka",
 			"province": "sulawesi-tenggara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-kolaka-utara",
@@ -7349,7 +7764,8 @@
 			"name": "Kolaka Utara",
 			"province": "sulawesi-tenggara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-kolaka-timur",
@@ -7357,7 +7773,8 @@
 			"name": "Kolaka Timur",
 			"province": "sulawesi-tenggara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-bombana",
@@ -7365,7 +7782,8 @@
 			"name": "Bombana",
 			"province": "sulawesi-tenggara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-buton",
@@ -7373,7 +7791,8 @@
 			"name": "Buton",
 			"province": "sulawesi-tenggara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-buton-utara",
@@ -7381,7 +7800,8 @@
 			"name": "Buton Utara",
 			"province": "sulawesi-tenggara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-buton-selatan",
@@ -7389,7 +7809,8 @@
 			"name": "Buton Selatan",
 			"province": "sulawesi-tenggara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-buton-tengah",
@@ -7397,7 +7818,8 @@
 			"name": "Buton Tengah",
 			"province": "sulawesi-tenggara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-muna",
@@ -7405,7 +7827,8 @@
 			"name": "Muna",
 			"province": "sulawesi-tenggara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-muna-barat",
@@ -7413,7 +7836,8 @@
 			"name": "Muna Barat",
 			"province": "sulawesi-tenggara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-wakatobi",
@@ -7421,7 +7845,8 @@
 			"name": "Wakatobi",
 			"province": "sulawesi-tenggara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-makassar",
@@ -7429,7 +7854,8 @@
 			"name": "Makassar",
 			"province": "sulawesi-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 1
 		},
 		{
 			"id": "kab-gowa",
@@ -7437,7 +7863,8 @@
 			"name": "Gowa",
 			"province": "sulawesi-selatan",
 			"aliases": ["Sungguminasa"],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-maros",
@@ -7445,7 +7872,8 @@
 			"name": "Maros",
 			"province": "sulawesi-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-pangkajene-dan-kepulauan",
@@ -7453,7 +7881,8 @@
 			"name": "Pangkajene dan Kepulauan",
 			"province": "sulawesi-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-takalar",
@@ -7461,7 +7890,8 @@
 			"name": "Takalar",
 			"province": "sulawesi-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-jeneponto",
@@ -7469,7 +7899,8 @@
 			"name": "Jeneponto",
 			"province": "sulawesi-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-bantaeng",
@@ -7477,7 +7908,8 @@
 			"name": "Bantaeng",
 			"province": "sulawesi-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-bulukumba",
@@ -7485,7 +7917,8 @@
 			"name": "Bulukumba",
 			"province": "sulawesi-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-kepulauan-selayar",
@@ -7493,7 +7926,8 @@
 			"name": "Kepulauan Selayar",
 			"province": "sulawesi-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-bone",
@@ -7501,7 +7935,8 @@
 			"name": "Bone",
 			"province": "sulawesi-selatan",
 			"aliases": ["Watampone"],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-soppeng",
@@ -7509,7 +7944,8 @@
 			"name": "Soppeng",
 			"province": "sulawesi-selatan",
 			"aliases": ["Watansoppeng"],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-wajo",
@@ -7517,7 +7953,8 @@
 			"name": "Wajo",
 			"province": "sulawesi-selatan",
 			"aliases": ["Sengkang"],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-sinjai",
@@ -7525,7 +7962,8 @@
 			"name": "Sinjai",
 			"province": "sulawesi-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kota-parepare",
@@ -7533,7 +7971,8 @@
 			"name": "Parepare",
 			"province": "sulawesi-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-palopo",
@@ -7541,7 +7980,8 @@
 			"name": "Palopo",
 			"province": "sulawesi-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-barru",
@@ -7549,7 +7989,8 @@
 			"name": "Barru",
 			"province": "sulawesi-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-sidenreng-rappang",
@@ -7557,7 +7998,8 @@
 			"name": "Sidenreng Rappang",
 			"province": "sulawesi-selatan",
 			"aliases": ["Sidrap"],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-pinrang",
@@ -7565,7 +8007,8 @@
 			"name": "Pinrang",
 			"province": "sulawesi-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-enrekang",
@@ -7573,7 +8016,8 @@
 			"name": "Enrekang",
 			"province": "sulawesi-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-luwu",
@@ -7581,7 +8025,8 @@
 			"name": "Luwu",
 			"province": "sulawesi-selatan",
 			"aliases": ["Belopa"],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-luwu-utara",
@@ -7589,7 +8034,8 @@
 			"name": "Luwu Utara",
 			"province": "sulawesi-selatan",
 			"aliases": ["Masamba"],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-luwu-timur",
@@ -7597,7 +8043,8 @@
 			"name": "Luwu Timur",
 			"province": "sulawesi-selatan",
 			"aliases": ["Malili"],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-tana-toraja",
@@ -7605,7 +8052,8 @@
 			"name": "Tana Toraja",
 			"province": "sulawesi-selatan",
 			"aliases": ["Makale"],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-toraja-utara",
@@ -7613,7 +8061,8 @@
 			"name": "Toraja Utara",
 			"province": "sulawesi-selatan",
 			"aliases": ["Rantepao"],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-mamuju",
@@ -7621,7 +8070,8 @@
 			"name": "Mamuju",
 			"province": "sulawesi-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-mamuju-tengah",
@@ -7629,7 +8079,8 @@
 			"name": "Mamuju Tengah",
 			"province": "sulawesi-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-pasangkayu",
@@ -7637,7 +8088,8 @@
 			"name": "Pasangkayu",
 			"province": "sulawesi-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-majene",
@@ -7645,7 +8097,8 @@
 			"name": "Majene",
 			"province": "sulawesi-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-polewali-mandar",
@@ -7653,7 +8106,8 @@
 			"name": "Polewali Mandar",
 			"province": "sulawesi-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-mamasa",
@@ -7661,7 +8115,8 @@
 			"name": "Mamasa",
 			"province": "sulawesi-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kota-ambon",
@@ -7669,7 +8124,8 @@
 			"name": "Ambon",
 			"province": "maluku",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kota-tual",
@@ -7677,7 +8133,8 @@
 			"name": "Tual",
 			"province": "maluku",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-maluku-tengah",
@@ -7685,7 +8142,8 @@
 			"name": "Maluku Tengah",
 			"province": "maluku",
 			"aliases": ["Masohi"],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-seram-bagian-barat",
@@ -7693,7 +8151,8 @@
 			"name": "Seram Bagian Barat",
 			"province": "maluku",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-seram-bagian-timur",
@@ -7701,7 +8160,8 @@
 			"name": "Seram Bagian Timur",
 			"province": "maluku",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-maluku-tenggara",
@@ -7709,7 +8169,8 @@
 			"name": "Maluku Tenggara",
 			"province": "maluku",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-kepulauan-tanimbar",
@@ -7717,7 +8178,8 @@
 			"name": "Kepulauan Tanimbar",
 			"province": "maluku",
 			"aliases": ["Saumlaki"],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-maluku-barat-daya",
@@ -7725,7 +8187,8 @@
 			"name": "Maluku Barat Daya",
 			"province": "maluku",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-kepulauan-aru",
@@ -7733,7 +8196,8 @@
 			"name": "Kepulauan Aru",
 			"province": "maluku",
 			"aliases": ["Dobo"],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-buru",
@@ -7741,7 +8205,8 @@
 			"name": "Buru",
 			"province": "maluku",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-buru-selatan",
@@ -7749,7 +8214,8 @@
 			"name": "Buru Selatan",
 			"province": "maluku",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kota-ternate",
@@ -7757,7 +8223,8 @@
 			"name": "Ternate",
 			"province": "maluku-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kota-tidore-kepulauan",
@@ -7765,7 +8232,8 @@
 			"name": "Tidore Kepulauan",
 			"province": "maluku-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-halmahera-barat",
@@ -7773,7 +8241,8 @@
 			"name": "Halmahera Barat",
 			"province": "maluku-utara",
 			"aliases": ["Jailolo"],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-halmahera-tengah",
@@ -7781,7 +8250,8 @@
 			"name": "Halmahera Tengah",
 			"province": "maluku-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-halmahera-utara",
@@ -7789,7 +8259,8 @@
 			"name": "Halmahera Utara",
 			"province": "maluku-utara",
 			"aliases": ["Tobelo"],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-halmahera-timur",
@@ -7797,7 +8268,8 @@
 			"name": "Halmahera Timur",
 			"province": "maluku-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-halmahera-selatan",
@@ -7805,7 +8277,8 @@
 			"name": "Halmahera Selatan",
 			"province": "maluku-utara",
 			"aliases": ["Labuha"],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-kepulauan-sula",
@@ -7813,7 +8286,8 @@
 			"name": "Kepulauan Sula",
 			"province": "maluku-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-pulau-morotai",
@@ -7821,7 +8295,8 @@
 			"name": "Pulau Morotai",
 			"province": "maluku-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-pulau-taliabu",
@@ -7829,7 +8304,8 @@
 			"name": "Pulau Taliabu",
 			"province": "maluku-utara",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kota-jayapura",
@@ -7837,7 +8313,8 @@
 			"name": "Jayapura",
 			"province": "papua",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-jayapura",
@@ -7845,7 +8322,8 @@
 			"name": "Jayapura",
 			"province": "papua",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-biak-numfor",
@@ -7853,7 +8331,8 @@
 			"name": "Biak Numfor",
 			"province": "papua",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-kepulauan-yapen",
@@ -7861,7 +8340,8 @@
 			"name": "Kepulauan Yapen",
 			"province": "papua",
 			"aliases": ["Serui"],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-sarmi",
@@ -7869,7 +8349,8 @@
 			"name": "Sarmi",
 			"province": "papua",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-keerom",
@@ -7877,7 +8358,8 @@
 			"name": "Keerom",
 			"province": "papua",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-waropen",
@@ -7885,7 +8367,8 @@
 			"name": "Waropen",
 			"province": "papua",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-supiori",
@@ -7893,7 +8376,8 @@
 			"name": "Supiori",
 			"province": "papua",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-mamberamo-raya",
@@ -7901,7 +8385,8 @@
 			"name": "Mamberamo Raya",
 			"province": "papua",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-manokwari",
@@ -7909,7 +8394,8 @@
 			"name": "Manokwari",
 			"province": "papua-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-manokwari-selatan",
@@ -7917,7 +8403,8 @@
 			"name": "Manokwari Selatan",
 			"province": "papua-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-pegunungan-arfak",
@@ -7925,7 +8412,8 @@
 			"name": "Pegunungan Arfak",
 			"province": "papua-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-fakfak",
@@ -7933,7 +8421,8 @@
 			"name": "Fakfak",
 			"province": "papua-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-kaimana",
@@ -7941,7 +8430,8 @@
 			"name": "Kaimana",
 			"province": "papua-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-teluk-bintuni",
@@ -7949,7 +8439,8 @@
 			"name": "Teluk Bintuni",
 			"province": "papua-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-teluk-wondama",
@@ -7957,7 +8448,8 @@
 			"name": "Teluk Wondama",
 			"province": "papua-barat",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kota-sorong",
@@ -7965,7 +8457,8 @@
 			"name": "Sorong",
 			"province": "papua-barat-daya",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-sorong",
@@ -7973,7 +8466,8 @@
 			"name": "Sorong",
 			"province": "papua-barat-daya",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-sorong-selatan",
@@ -7981,7 +8475,8 @@
 			"name": "Sorong Selatan",
 			"province": "papua-barat-daya",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-raja-ampat",
@@ -7989,7 +8484,8 @@
 			"name": "Raja Ampat",
 			"province": "papua-barat-daya",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 2
 		},
 		{
 			"id": "kab-tambrauw",
@@ -7997,7 +8493,8 @@
 			"name": "Tambrauw",
 			"province": "papua-barat-daya",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-maybrat",
@@ -8005,7 +8502,8 @@
 			"name": "Maybrat",
 			"province": "papua-barat-daya",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-merauke",
@@ -8013,7 +8511,8 @@
 			"name": "Merauke",
 			"province": "papua-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-boven-digoel",
@@ -8021,7 +8520,8 @@
 			"name": "Boven Digoel",
 			"province": "papua-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-mappi",
@@ -8029,7 +8529,8 @@
 			"name": "Mappi",
 			"province": "papua-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-asmat",
@@ -8037,7 +8538,8 @@
 			"name": "Asmat",
 			"province": "papua-selatan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-nabire",
@@ -8045,7 +8547,8 @@
 			"name": "Nabire",
 			"province": "papua-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-mimika",
@@ -8053,7 +8556,8 @@
 			"name": "Mimika",
 			"province": "papua-tengah",
 			"aliases": ["Timika"],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-paniai",
@@ -8061,7 +8565,8 @@
 			"name": "Paniai",
 			"province": "papua-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-puncak",
@@ -8069,7 +8574,8 @@
 			"name": "Puncak",
 			"province": "papua-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-puncak-jaya",
@@ -8077,7 +8583,8 @@
 			"name": "Puncak Jaya",
 			"province": "papua-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-dogiyai",
@@ -8085,7 +8592,8 @@
 			"name": "Dogiyai",
 			"province": "papua-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-deiyai",
@@ -8093,7 +8601,8 @@
 			"name": "Deiyai",
 			"province": "papua-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-intan-jaya",
@@ -8101,7 +8610,8 @@
 			"name": "Intan Jaya",
 			"province": "papua-tengah",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-jayawijaya",
@@ -8109,7 +8619,8 @@
 			"name": "Jayawijaya",
 			"province": "papua-pegunungan",
 			"aliases": ["Wamena"],
-			"variants": []
+			"variants": [],
+			"popularity": 3
 		},
 		{
 			"id": "kab-yahukimo",
@@ -8117,7 +8628,8 @@
 			"name": "Yahukimo",
 			"province": "papua-pegunungan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-nduga",
@@ -8125,7 +8637,8 @@
 			"name": "Nduga",
 			"province": "papua-pegunungan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 4
 		},
 		{
 			"id": "kab-pegunungan-bintang",
@@ -8133,7 +8646,8 @@
 			"name": "Pegunungan Bintang",
 			"province": "papua-pegunungan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-tolikara",
@@ -8141,7 +8655,8 @@
 			"name": "Tolikara",
 			"province": "papua-pegunungan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-lanny-jaya",
@@ -8149,7 +8664,8 @@
 			"name": "Lanny Jaya",
 			"province": "papua-pegunungan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-mamberamo-tengah",
@@ -8157,7 +8673,8 @@
 			"name": "Mamberamo Tengah",
 			"province": "papua-pegunungan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		},
 		{
 			"id": "kab-yalimo",
@@ -8165,7 +8682,8 @@
 			"name": "Yalimo",
 			"province": "papua-pegunungan",
 			"aliases": [],
-			"variants": []
+			"variants": [],
+			"popularity": 5
 		}
 	],
 	"retiredIds": [

@@ -40,7 +40,8 @@ export function validDraft(): ContentDraft {
 				name: `Daerah ${idAt(index)}`,
 				province: `province-${idAt(index)}`,
 				aliases: [],
-				variants: []
+				variants: [],
+				popularity: 3
 			})),
 			retiredIds: []
 		},

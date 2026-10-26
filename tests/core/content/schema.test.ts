@@ -28,7 +28,8 @@ const bundle = () => ({
 			name: "Denpasar",
 			province: "bali",
 			aliases: [],
-			variants: []
+			variants: [],
+			popularity: 3
 		}
 	],
 	facts: [],
