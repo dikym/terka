@@ -55,7 +55,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 			<MobileHeader />
 			<div className="flex min-w-0 flex-1 flex-col">
 				{/* Phone padding clears the fixed 60 px top bar and tab bar. */}
-				<main className="container flex flex-col gap-5 pt-20 pb-[calc(--spacing(23)+env(safe-area-inset-bottom))] lg:gap-6 lg:pt-8 lg:pb-10">
+				<main className="container flex flex-1 flex-col gap-5 pt-20 pb-[calc(--spacing(23)+env(safe-area-inset-bottom))] lg:gap-6 lg:pt-8 lg:pb-10">
 					{children}
 				</main>
 			</div>
