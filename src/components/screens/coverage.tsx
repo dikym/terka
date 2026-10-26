@@ -219,7 +219,7 @@ function Panel({
 										<CodeChip key={code} code={code} group={node as GroupId} />
 									))}
 						</div>
-						<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">
+						<p className="font-sans text-body-sm leading-normal text-ink-500">
 							Rincian kab/kota setiap kode ada di Referensi.
 						</p>
 					</>
@@ -254,7 +254,7 @@ function Panel({
 						</>
 					)}
 					{!loading && group && !active && (
-						<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">
+						<p className="font-sans text-body-sm leading-normal text-ink-500">
 							Latih wilayah ini membuka Latihan Terfokus tanpa mengubah Cakupan.
 						</p>
 					)}
@@ -279,7 +279,7 @@ const EMPTY: Coverage = {
 
 export function CoverageScreen({
 	data,
-	active,
+	active: saved,
 	onPick
 }: {
 	data: Coverage | null;
@@ -290,6 +290,9 @@ export function CoverageScreen({
 	const coverage = data ?? EMPTY;
 	const [highlight, setHighlight] = useState<Node | null>(null);
 	const [open, setOpen] = useState<Set<GroupId>>(new Set());
+	// The saved scope arrives a moment after the pick; until it changes, the picked node counts as active.
+	const [picked, setPicked] = useState<{ node: Node; from: Node } | null>(null);
+	const active = picked && picked.from === saved ? picked.node : saved;
 	const shown = highlight ?? active;
 
 	const toggle = (id: GroupId) =>
@@ -300,7 +303,10 @@ export function CoverageScreen({
 			return next;
 		});
 	const pick = () => {
-		if (highlight) onPick(highlight);
+		if (highlight) {
+			onPick(highlight);
+			setPicked({ node: highlight, from: saved });
+		}
 		setHighlight(null);
 	};
 
@@ -362,7 +368,7 @@ export function CoverageScreen({
 							</>
 						)}
 					</div>
-					<p className="font-sans text-body-sm leading-normal text-pretty text-ink-500">
+					<p className="font-sans text-body-sm leading-normal text-ink-500">
 						Menelusuri hanya menyorot. Cakupan berganti setelah Pilih wilayah ini
 						ditekan.
 					</p>
