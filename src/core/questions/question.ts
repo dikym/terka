@@ -1,5 +1,6 @@
 import type { AnswerSignals } from "../grading/signals";
 import { seeded } from "../random";
+import type { RungMemory } from "./rung";
 import type { Scope } from "./distractors";
 
 export type CardMode =
@@ -54,6 +55,7 @@ export type QuestionOptions = {
 	previousPromptAreaId?: string | null;
 	// A re-ask of a card keeps its prompt but draws its own options and their order.
 	variant?: number;
+	memory?: RungMemory;
 };
 
 const VARIED_PURPOSES = new Set(["distractors", "order"]);

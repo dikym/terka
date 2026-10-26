@@ -2,7 +2,6 @@ import type { FlagCode } from "@/components/ui/icon";
 import { holderFlag } from "../view/flags";
 import { areaDisplayName, highMembers, type NameDictionary } from "@/core/answers/dictionary";
 import type { Bundle } from "@/core/content/schema";
-import { buildQuestion } from "@/core/questions/build";
 import type { Scope } from "@/core/questions/distractors";
 import { LABELS, parseCardId, type Question } from "@/core/questions/question";
 import type { CardEntry } from "@/core/replay/state";
@@ -40,12 +39,8 @@ export type SessionCard = {
 	notice?: string;
 	compare?: { lead: string; hint: string };
 	intro?: { code: string; areas: string[]; wrongTag?: Record<string, string> };
-	lowerable?: boolean;
 	question: Question;
 	item: QueueItem;
-	/** The level-1 version a typed card turns into when its level is lowered. */
-	lowered: Question | null;
-	loweredAnswer: string | null;
 };
 
 export type CardDeps = {
@@ -58,7 +53,6 @@ export type CardDeps = {
 	scope?: Scope;
 };
 
-const LOWERABLE = new Set(["daily", "focused", "special", "challenge", "recheck"]);
 const NO_PILL = new Set<Mode>(["kilat", "harian", "penempatan"]);
 const LEECH_SHOWN = 5;
 
@@ -121,9 +115,7 @@ export function toCard(
 		answer: correct ?? shownAnswer(question, bundle),
 		level: question.level,
 		question,
-		item,
-		lowered: null,
-		loweredAnswer: null
+		item
 	};
 	if (question.choices.length) card.options = question.choices;
 	if (region && mode !== "region2code" && form !== "bandingkan") card.plate = [region.code];
@@ -174,19 +166,5 @@ export function toCard(
 	}
 	if (form === "perkenalan" && special)
 		card.intro = { code: `CD ${special.number}`, areas: [special.holder] };
-	if (question.questionType === "typed" && question.level > 1 && LOWERABLE.has(item.context)) {
-		const lowered = buildQuestion(entry, bundle, {
-			context: item.context,
-			level: 1,
-			format: "choice",
-			scope: deps.scope
-		});
-		if (lowered.choices.length && lowered.questionType !== "typed") {
-			card.lowered = lowered;
-			card.loweredAnswer = rightChoice(lowered, bundle, dictionary);
-			card.lowerable = true;
-		}
-	}
-	card.lowerable ??= false;
 	return card;
 }

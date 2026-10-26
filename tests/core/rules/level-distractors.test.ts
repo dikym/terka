@@ -1,10 +1,11 @@
 import { describe, expect, test } from "bun:test";
-import { areaDisplayName } from "../../../src/core/answers/dictionary";
+import { areaDisplayName, provinceName } from "../../../src/core/answers/dictionary";
 import type { Area, Bundle } from "../../../src/core/content/schema";
 import {
 	foreignAreas,
 	NATIONAL,
 	otherCodes,
+	provinceChoices,
 	specialChoices
 } from "../../../src/core/questions/distractors";
 import { automaticLevel, resolveLevel } from "../../../src/core/questions/level";
@@ -165,6 +166,88 @@ describe("distractor sources", () => {
 			expect(picked).toHaveLength(3);
 			expect(picked.every(({ owner }) => owner.id !== "bb")).toBe(true);
 		}
+	});
+	test("province choices come from other groups and never the asked province", () => {
+		const sumatera = new Set(
+			bundle.regions
+				.filter((item) => item.group === "sumatera")
+				.map((item) => provinceName(item.province))
+		);
+		for (let seed = 0; seed < 10; seed++) {
+			const picked = provinceChoices(bundle, region("bk"), 3, seeded(`p${seed}`))!;
+			expect(picked).toHaveLength(3);
+			expect(new Set(picked).size).toBe(3);
+			expect(picked.some((name) => sumatera.has(name))).toBe(false);
+		}
+	});
+	test("the asked province is never a distractor, even when another group shares it", () => {
+		const shared: Bundle = {
+			...bundle,
+			regions: bundle.regions.map((item) =>
+				item.id === "dk" ? { ...item, province: "sumatera-utara" } : item
+			)
+		};
+		for (let seed = 0; seed < 20; seed++) {
+			const picked = provinceChoices(shared, region("bk"), 3, seeded(`q${seed}`))!;
+			expect(picked).not.toContain(provinceName("sumatera-utara"));
+		}
+	});
+	test("a code spanning provinces gets no province choices", () => {
+		expect(provinceChoices(bundle, region("b"), 3, seeded("s"))).toBeNull();
+	});
+	test("national popular distractors prefer well-known areas and fall back to the rest", () => {
+		const known = new Set(["kota-medan", "kota-padang", "kota-denpasar", "kota-yogyakarta"]);
+		const few: Bundle = {
+			...bundle,
+			areas: bundle.areas.map((area) => ({
+				...area,
+				popularity: area.id === "kota-padang" ? 1 : 5
+			}))
+		};
+		const fallback = foreignAreas(few, region("dk"), NATIONAL, 3, seeded("f"), {
+			national: true,
+			maxPopularity: 1
+		});
+		expect(fallback).toHaveLength(3);
+		expect(fallback.some(({ area }) => area.id === "kota-padang")).toBe(true);
+		const ranked: Bundle = {
+			...bundle,
+			areas: bundle.areas.map((area) => ({ ...area, popularity: known.has(area.id) ? 1 : 5 }))
+		};
+		for (let seed = 0; seed < 10; seed++) {
+			const picked = foreignAreas(ranked, region("dk"), NATIONAL, 3, seeded(`n${seed}`), {
+				national: true,
+				maxPopularity: 3
+			});
+			expect(picked).toHaveLength(3);
+			expect(picked.every(({ area }) => area.popularity <= 3)).toBe(true);
+			const thin = foreignAreas(ranked, region("bk"), NATIONAL, 3, seeded(`n${seed}`), {
+				national: true,
+				maxPopularity: 1
+			});
+			expect(thin).toHaveLength(3);
+			expect(thin.filter(({ area }) => area.popularity === 1)).toHaveLength(3);
+			const sparse = foreignAreas(ranked, region("bk"), NATIONAL, 3, seeded(`n${seed}`), {
+				national: true,
+				maxPopularity: 1,
+				preferOtherProvince: true
+			});
+			expect(sparse).toHaveLength(3);
+		}
+	});
+	test("national distractors ignore the scope", () => {
+		const groups = new Set<string>();
+		for (let seed = 0; seed < 20; seed++)
+			for (const { owner } of foreignAreas(
+				bundle,
+				region("bk"),
+				{ level: "group", id: "sumatera" },
+				3,
+				seeded(`g${seed}`),
+				{ national: true }
+			))
+				groups.add(owner.group);
+		expect(groups.size).toBeGreaterThan(1);
 	});
 	test("other codes exclude every valid code", () => {
 		const codes = otherCodes(

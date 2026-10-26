@@ -37,7 +37,7 @@ const STEPS: { icon: IconName; title: string; text: string }[] = [
 
 const LEVELS = [
 	["Level 1", "Kenali. Pilih dari beberapa jawaban."],
-	["Level 2", "Ingat. Ketik jawabanmu sendiri."],
+	["Level 2", "Ingat. Pilih dari pengecoh yang lebih mirip, lalu ketik sendiri."],
 	["Level 3", "Kuasai. Jawab sebelum waktu habis."]
 ];
 

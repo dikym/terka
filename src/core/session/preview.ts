@@ -14,6 +14,7 @@ import { inScope, type Scope } from "../questions/distractors";
 import type { Level, Question } from "../questions/question";
 import type { AppState } from "../replay/state";
 import { effectiveCard } from "../replay/universe";
+import { rungMemory } from "./rung";
 import {
 	contentOf,
 	prepare,
@@ -66,7 +67,8 @@ export function questionMs(
 	if (question.questionType === "setrecall") return NOMINAL_MS.set;
 	if (item.slot === "drill") return NOMINAL_MS.drill;
 	if (item.slot === "step") return NOMINAL_MS.step;
-	return NOMINAL_MS.level[question.level];
+	// Picking is as quick at Level 2 as at Level 1; only typing takes longer.
+	return NOMINAL_MS.level[question.answerForm === "choice" ? 1 : question.level];
 }
 
 export const durationRange = (ms: number): Preview["range"] =>
@@ -90,14 +92,16 @@ export function buildPreview(
 	const today = todayOf(ctx);
 	const inputMode = extras.lastInputMode ?? "keyboard";
 	const regions = new Map(bundle.regions.map((region) => [region.id, region]));
-	const questions = items.map((item) =>
-		buildQuestion(effectiveCard(state, item.cardId)!, bundle, {
+	const questions = items.map((item) => {
+		const entry = effectiveCard(state, item.cardId)!;
+		return buildQuestion(entry, bundle, {
 			context: item.context,
 			format: item.format,
 			drillPair: item.drillPair,
-			scope: settings.scope
-		})
-	);
+			scope: settings.scope,
+			memory: rungMemory(state, entry, ctx.now)
+		});
+	});
 	const counts: Preview["counts"] = { step: 0, drill: 0, review: 0, new: 0 };
 	const byType: Preview["byType"] = {};
 	const byLevel: Preview["byLevel"] = { 1: 0, 2: 0, 3: 0 };

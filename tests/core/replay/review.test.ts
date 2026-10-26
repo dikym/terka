@@ -355,3 +355,52 @@ describe("content overlay during replay", () => {
 		});
 	});
 });
+
+describe("recent level two results", () => {
+	test("counted level two answers are kept in answer order", () => {
+		const state = fresh();
+		for (const code of ["dk", "dr", "ea"])
+			seedCard(state, `${code}::code2region`, reviewCard());
+		applyEvent(state, review("dk", "code2region", NOW + HOUR));
+		applyEvent(state, review("dr", "code2region", NOW + 2 * HOUR));
+		applyEvent(state, review("ea", "code2region", NOW + 3 * HOUR, { correct: false }));
+		expect(state.levelTwoResults).toEqual([true, true, false]);
+	});
+	test("answers that do not change the schedule or are not level two are left out", () => {
+		const state = fresh();
+		for (const code of ["dk", "dr"]) seedCard(state, `${code}::code2region`, reviewCard());
+		applyEvent(state, review("dk", "code2region", NOW + HOUR, { level: 3 }));
+		applyEvent(state, review("dk", "code2region", NOW + 2 * HOUR));
+		applyEvent(state, review("dr", "code2region", NOW + HOUR, { context: "kilat", level: 1 }));
+		expect(state.levelTwoResults).toEqual([]);
+	});
+	test("diplomat answers do not calibrate the region rungs", () => {
+		const state = fresh();
+		seedCard(state, "cd-49-jepang::special2holder", reviewCard());
+		applyEvent(
+			state,
+			review("cd-49-jepang", "special2holder", NOW + HOUR, { context: "special" })
+		);
+		expect(state.levelTwoResults).toEqual([]);
+	});
+	test("only the latest window is kept", () => {
+		const state = fresh();
+		state.levelTwoResults = Array.from({ length: 200 }, () => true);
+		seedCard(state, "dk::code2region", reviewCard());
+		applyEvent(state, review("dk", "code2region", NOW + HOUR, { correct: false }));
+		expect(state.levelTwoResults).toHaveLength(200);
+		expect(state.levelTwoResults.at(-1)).toBe(false);
+	});
+});
+
+describe("optimizer training data", () => {
+	test("a level two choice is marked as recognized, a typed answer is not", () => {
+		const state = fresh();
+		state.counted = [];
+		seedCard(state, "dk::code2region", reviewCard());
+		seedCard(state, "dr::code2region", reviewCard());
+		applyEvent(state, review("dk", "code2region", NOW + HOUR, { questionType: "choice" }));
+		applyEvent(state, review("dr", "code2region", NOW + HOUR));
+		expect(state.counted.map((answer) => answer.recognized)).toEqual([true, false]);
+	});
+});

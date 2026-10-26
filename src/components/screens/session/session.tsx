@@ -41,9 +41,6 @@ import {
 	reaskPosition
 } from "@/lib/session/modes";
 import {
-	activeQuestion,
-	cardLevel,
-	cardOptions,
 	currentCard,
 	initialSession,
 	type SessionAction,
@@ -211,7 +208,7 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 		if (next === previous) return;
 		latest.current = next;
 		const moved = next.index !== previous.index || next.phase !== previous.phase;
-		if (moved || action.type === "lowerLevel" || action.type === "restoreLevel") {
+		if (moved) {
 			const card = next.cards[next.index];
 			const timer = next.phase === "ask" ? activeTimer(next, card) : null;
 			setCountdown(timer);
@@ -222,7 +219,7 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 
 	const activeTimer = (state: SessionState, card: SessionCard | undefined) => {
 		if (!card) return null;
-		const limit = activeQuestion(state, card).limit;
+		const limit = card.question.limit;
 		return limit ? limit.ms / 1000 : null;
 	};
 
@@ -270,7 +267,7 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 		const current = latest.current;
 		if (!runtime || current.phase !== "ask") return;
 		const card = currentCard(current);
-		const question = activeQuestion(current, card);
+		const question = card.question;
 		const { bundle, dictionary } = runtime;
 		const ctx = sessionCtx(runtime);
 		const checked = checkAnswer(question, response, bundle, dictionary);
@@ -503,9 +500,7 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 
 	const card = state.phase === "preview" || state.phase === "done" ? null : currentCard(state);
 	const typingStarted =
-		!!card &&
-		activeQuestion(state, card).limit?.until === "first-input" &&
-		state.input.trim() !== "";
+		!!card && card.question.limit?.until === "first-input" && state.input.trim() !== "";
 
 	useTicker(countdown !== null && state.phase === "ask" && !typingStarted, (elapsed) => {
 		if (countdown === null) return;
@@ -584,7 +579,7 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 			}
 			if (state.phase === "done") return;
 			const current = currentCard(state);
-			const options = cardOptions(state, current);
+			const options = current.options ?? null;
 			if (action === "confirm") {
 				event.preventDefault();
 				if (state.phase === "graded") proceed();
@@ -640,7 +635,7 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 	const bar: BarProps = {
 		mode,
 		card,
-		level: card ? cardLevel(state, card) : null,
+		level: card ? card.level : null,
 		done: finished ? total : Math.min(total, state.index + 1),
 		total,
 		finished,
@@ -701,8 +696,6 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 					onSubmit={submit}
 					onChoose={choose}
 					onNext={proceed}
-					onLower={() => act({ type: "lowerLevel" })}
-					onRestore={() => act({ type: "restoreLevel" })}
 					onAdd={() => act({ type: "add" })}
 					onRemove={(value) => act({ type: "remove", value })}
 					onDismissNote={() => act({ type: "dismissNote" })}

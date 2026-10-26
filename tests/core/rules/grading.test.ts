@@ -155,7 +155,32 @@ describe("comparison group selection", () => {
 	});
 	test("keys split by level, input mode and answer form", () => {
 		expect(narrowKey(answer())).toBe("2|keyboard|name");
-		expect(wideKey(answer({ answerForm: "code" }))).toBe("2|keyboard");
+		expect(wideKey(answer({ answerForm: "code" }))).toBe(wideKey(answer()));
+	});
+	test("the wide group never mixes choices with typed answers", () => {
+		expect(wideKey(answer({ answerForm: "choice" }))).not.toBe(wideKey(answer()));
+		const choices = history(40, { answerForm: "choice", questionType: "choice" });
+		expect(gradeAnswer(answer({ msToFirstKey: 5000 }), choices)).toBe(3);
+	});
+	test("a fast right choice at level two grades good, never easy", () => {
+		const choices = history(30, { answerForm: "choice", questionType: "choice" });
+		const fast = answer({ answerForm: "choice", questionType: "choice", msToFirstKey: 100 });
+		expect(gradeAnswer(fast, choices)).toBe(3);
+	});
+	test("a hesitant right choice at level two grades hard", () => {
+		const choices = history(30, { answerForm: "choice", questionType: "choice" });
+		const slow = answer({ answerForm: "choice", questionType: "choice", msToFirstKey: 5000 });
+		expect(gradeAnswer(slow, choices)).toBe(2);
+	});
+	test("a fast right choice at level one still grades easy", () => {
+		const choices = history(30, { level: 1, answerForm: "choice", questionType: "choice" });
+		const fast = answer({
+			level: 1,
+			answerForm: "choice",
+			questionType: "choice",
+			msToFirstKey: 100
+		});
+		expect(gradeAnswer(fast, choices)).toBe(4);
 	});
 	test("grading against a chosen group matches grading against the raw history", () => {
 		const signals = answer({ msToFirstKey: 100 });

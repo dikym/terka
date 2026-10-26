@@ -1,4 +1,4 @@
-import { areaDisplayName, highMembers } from "../answers/dictionary";
+import { areaDisplayName, highMembers, provinceName } from "../answers/dictionary";
 import type { Area, Bundle, Region, Special } from "../content/schema";
 import { shuffle } from "../random";
 import { compactName, holderKey } from "../text";
@@ -46,6 +46,13 @@ export function pickLayered<T>(
 	return [...chosen.values()];
 }
 
+export type ForeignOptions = {
+	preferOtherProvince?: boolean;
+	national?: boolean;
+	// Well-known areas first; the rest only fill what they cannot.
+	maxPopularity?: number;
+};
+
 // Excludes every name the asked code uses: a same-named twin under another code grades correct.
 export function foreignAreas(
 	bundle: Pick<Bundle, "regions" | "areas">,
@@ -53,7 +60,7 @@ export function foreignAreas(
 	scope: Scope,
 	count: number,
 	random: () => number,
-	options: { preferOtherProvince?: boolean } = {}
+	options: ForeignOptions = {}
 ): { owner: Region; area: Area }[] {
 	const memberNames = new Set(
 		region.areas
@@ -61,20 +68,56 @@ export function foreignAreas(
 			.filter((area): area is Area => area !== undefined)
 			.map((area) => compactName(area.name))
 	);
-	const layers = regionLayers(bundle, region, scope).map((layer) =>
+	const owners = options.national
+		? [eligibleRegions(bundle)]
+		: regionLayers(bundle, region, scope);
+	const layers = owners.map((layer) =>
 		layer.flatMap((owner) =>
 			highMembers(bundle, owner)
 				.filter((area) => !memberNames.has(compactName(area.name)))
 				.map((area) => ({ owner, area }))
 		)
 	);
-	const split = options.preferOtherProvince
+	const byProvince = options.preferOtherProvince
 		? layers.flatMap((layer) => [
 				layer.filter(({ owner }) => owner.province !== region.province),
 				layer.filter(({ owner }) => owner.province === region.province)
 			])
 		: layers;
+	const max = options.maxPopularity;
+	const split =
+		max === undefined
+			? byProvince
+			: [
+					...byProvince.map((layer) =>
+						layer.filter(({ area }) => area.popularity <= max)
+					),
+					...byProvince
+				];
 	return pickLayered(split, ({ area }) => areaDisplayName(area), count, random);
+}
+
+// Province names for a beginner's choice; null when the code covers more than one province.
+export function provinceChoices(
+	bundle: Pick<Bundle, "regions">,
+	region: Region,
+	count: number,
+	random: () => number
+): string[] | null {
+	if (region.spans.length) return null;
+	const provinces = [
+		...new Set(
+			bundle.regions
+				.filter(
+					(item) =>
+						item.group !== region.group &&
+						item.province !== region.province &&
+						item.confidence === "high"
+				)
+				.map((item) => item.province)
+		)
+	];
+	return shuffle(provinces, random).slice(0, count).map(provinceName);
 }
 
 export function otherCodes(

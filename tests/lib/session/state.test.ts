@@ -5,8 +5,6 @@ import { type CardEntry, newEntry } from "../../../src/core/replay/state";
 import { toCard } from "../../../src/lib/session/cards";
 import type { Mode } from "../../../src/lib/session/modes";
 import {
-	activeQuestion,
-	cardOptions,
 	initialSession,
 	type SessionState,
 	sessionReducer,
@@ -20,7 +18,8 @@ const dictionary = buildDictionary(bundle);
 const typed = (cardId: string): CardEntry => ({
 	...newEntry(cardId),
 	state: "review",
-	intervalDays: 5,
+	stability: 15,
+	intervalDays: 15,
 	reps: 3
 });
 const cardsFor = (mode: Mode, ids = ["bk::code2region", "ba::code2region"]) =>
@@ -84,14 +83,6 @@ describe("session state", () => {
 		expect(sessionReducer(graded(second, "right"), { type: "next" }).phase).toBe("done");
 		const kilat = sessionReducer(graded(started("kilat"), "right"), { type: "next" });
 		expect(sessionReducer(graded(kilat, "right"), { type: "next" }).phase).toBe("graded");
-	});
-
-	test("a lowered card asks its level 1 choices", () => {
-		const state = sessionReducer(started(), { type: "lowerLevel" });
-		const card = state.cards[0];
-		expect(cardOptions(state, card)).toEqual(card.lowered!.choices);
-		expect(activeQuestion(state, card)).toBe(card.lowered!);
-		expect(cardOptions(sessionReducer(state, { type: "restoreLevel" }), card)).toBeNull();
 	});
 
 	test("names on a naming card are added once each", () => {

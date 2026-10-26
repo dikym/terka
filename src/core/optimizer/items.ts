@@ -34,7 +34,8 @@ export function buildItems(counted: readonly CountedAnswer[]): ReviewSeq[] {
 			const deltaT =
 				index === 0 ? 0 : dayNumber(answer.localDay) - dayNumber(list[index - 1].localDay);
 			reviews.push({ rating: answer.grade, deltaT });
-			if (index > 0) items.push({ cardId, lastAt: answer.at, reviews: [...reviews] });
+			if (index > 0 && !answer.recognized)
+				items.push({ cardId, lastAt: answer.at, reviews: [...reviews] });
 		});
 	}
 	return items;

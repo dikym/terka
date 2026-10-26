@@ -1,10 +1,12 @@
 import { describe, expect, test } from "bun:test";
+import { buildQuestion } from "../../../src/core/questions/build";
 import type { QueueItem } from "../../../src/core/session/context";
 import {
 	buildPreview,
 	durationRange,
 	kilatPreview,
 	PLACEMENT_PREVIEW,
+	questionMs,
 	previewStale,
 	type PreviewExtras
 } from "../../../src/core/session/preview";
@@ -136,5 +138,21 @@ describe("fixed-length previews", () => {
 	});
 	test("placement shows at most 28 questions and about three minutes", () => {
 		expect(PLACEMENT_PREVIEW).toEqual({ maxQuestions: 28, approxMinutes: 3 });
+	});
+});
+
+describe("question duration", () => {
+	test("a level two choice is estimated as a choice, not as typing", () => {
+		const state = fresh();
+		const entry = seedCard(
+			state,
+			"dk::code2region",
+			reviewCard({ stability: 1, intervalDays: 1, lastReviewAt: NOW - DAY })
+		);
+		const question = buildQuestion(entry, bundle, { context: "daily" });
+		expect(question.level).toBe(2);
+		expect(question.questionType).toBe("choice");
+		const item: QueueItem = { cardId: entry.cardId, context: "daily", slot: "review" };
+		expect(questionMs(state, question, item, "keyboard")).toBe(4_000);
 	});
 });

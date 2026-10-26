@@ -59,6 +59,8 @@ export type AppState = {
 	kilatRecords: Map<string, number>;
 	factViews: { factId: string; localDay: string; runId: string | null }[];
 	sightings: Map<string, string[]>;
+	// Right or wrong for the latest Level 2 answers that changed a schedule; calibrates the rungs.
+	levelTwoResults: boolean[];
 	params: FsrsParams[];
 	voided: Set<string>;
 	placementRunId: string | null;
@@ -113,6 +115,7 @@ export function initialState(
 		kilatRecords: new Map(),
 		factViews: [],
 		sightings: new Map(),
+		levelTwoResults: [],
 		params: [],
 		voided,
 		placementRunId: placement?.id ?? null,
