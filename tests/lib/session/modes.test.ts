@@ -189,7 +189,10 @@ describe("planning cek ingatan", () => {
 		expect(plan.run.kind).toBe("recheck");
 		expect(plan.cards.every((card) => card.question.context === "recheck")).toBe(true);
 		expect(plan.preview?.title).toBe("Cek ingatan");
-		expect(plan.preview?.skip).toEqual({ label: "Lewati, mulai sesi biasa", href: "/sesi" });
+		expect(plan.preview?.skip).toEqual({
+			label: "Lewati, mulai sesi biasa",
+			href: "/sesi?mode=harian"
+		});
 		expect(plan.preview?.description).toBe(
 			`Sudah 8 hari sejak latihan terakhir. Jawab ${plan.cards.length} soal untuk melihat seberapa banyak yang masih kamu ingat.`
 		);

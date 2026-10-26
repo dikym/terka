@@ -121,12 +121,7 @@ function Home() {
 	}
 	return (
 		<>
-			<HomeScreen
-				data={data}
-				onScope={(scope) => {
-					if (runtime && prefs) void runtime.saveSettings({ ...prefs.settings, scope });
-				}}
-			/>
+			<HomeScreen data={data} />
 			{welcome && (
 				<Welcome
 					// The welcome stays on screen until the test opens, so the home screen never flashes.

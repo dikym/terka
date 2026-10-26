@@ -165,7 +165,7 @@ test("mode param picks the preview", async ({ page }) => {
 	await seen(page);
 	const titles: [string, string][] = [
 		["/sesi", "Sesi hari ini"],
-		["/sesi?mode=harian", "Tantangan Harian"],
+		["/sesi?mode=tantangan", "Tantangan Harian"],
 		["/sesi?mode=kilat", "Mode Kilat"],
 		["/sesi?mode=terfokus", "Latihan Terfokus"],
 		["/sesi?mode=diplomat", "Kode diplomat"]
@@ -179,7 +179,7 @@ test("mode param picks the preview", async ({ page }) => {
 test("a session runs to its summary from the keyboard", async ({ page }) => {
 	await seen(page);
 	await withLearned(page);
-	await page.goto("/sesi?mode=harian");
+	await page.goto("/sesi?mode=tantangan");
 	await page.getByRole("heading", { name: "Tantangan Harian" }).waitFor();
 	await page.keyboard.press("Enter");
 	for (let i = 0; i < 5; i++) {
@@ -277,7 +277,7 @@ test("after a long break Mulai belajar opens Cek ingatan and Lewati opens the da
 	await expect(page.getByRole("heading", { name: "Cek ingatan" })).toBeVisible();
 	await expect(page.getByText(/seberapa banyak yang masih kamu ingat/)).toBeVisible();
 	await page.getByRole("link", { name: "Lewati, mulai sesi biasa" }).click();
-	await expect(page).toHaveURL(/\/sesi$/);
+	await expect(page).toHaveURL(/\/sesi\?mode=harian$/);
 	await expect(page.getByRole("heading", { name: "Sesi hari ini" })).toBeVisible();
 });
 

@@ -6,6 +6,7 @@ import { recheckOffer } from "@/core/session/recheck";
 import { sessionCtx } from "@/lib/app/runtime";
 import { useAppState, useReady } from "@/lib/app/use-runtime";
 import { keyAction } from "@/lib/keys";
+import { DAILY_SESSION } from "@/lib/session/modes";
 import { MobileHeader } from "./mobile-header";
 import { Sidebar } from "./sidebar";
 import { SyncNotices } from "./sync-notices";
@@ -36,7 +37,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 				router.push(
 					runtime && state && recheckOffer(state, sessionCtx(runtime))
 						? "/sesi?mode=cek"
-						: "/sesi"
+						: DAILY_SESSION
 				);
 			else if (action === "kilat") router.push("/sesi?mode=kilat");
 			else if (action === "search" || (action === "cakupan" && pathname === "/referensi")) {
