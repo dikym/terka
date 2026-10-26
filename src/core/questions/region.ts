@@ -179,7 +179,7 @@ export function buildRegionQuestion(
 		const [foreign] = foreignAreas(bundle, region, scope, 1, random("distractors"), {
 			preferOtherProvince: true
 		});
-		if (foreign) {
+		if (foreign && members.length >= 3) {
 			const odd = areaDisplayName(foreign.area);
 			return {
 				...base,
