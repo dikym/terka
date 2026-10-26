@@ -396,20 +396,21 @@ export function Beranda({
 								</Link>
 							}
 						/>
-						<div className="flex flex-col">
+						<div className="@container flex flex-col">
 							{scopeRows.map((row, index) => (
 								<div
 									key={row.name}
-									className="grid min-h-12 grid-cols-[minmax(0,1fr)_64px_40px] items-center gap-x-3 gap-y-2 border-b border-hairline py-3 last:border-b-0 lg:grid-cols-[minmax(0,1fr)_auto_180px_44px] lg:gap-4 lg:py-0"
+									className="grid min-h-12 grid-cols-[minmax(0,1fr)_64px_40px] items-center gap-x-3 gap-y-2 border-b border-hairline py-3 last:border-b-0 @xl:grid-cols-[minmax(7.5rem,auto)_minmax(0,1fr)_180px_44px] @xl:gap-4 @xl:py-2"
 								>
-									<span className="row-start-1 text-ink-900 type-body lg:row-auto">
+									<span className="row-start-1 text-ink-900 type-body @xl:row-auto">
 										{d ? (
 											row.name
 										) : (
 											<SkeletonText width={SKELETON_ROW_WIDTHS[index]} />
 										)}
 									</span>
-									<span className="col-span-full row-start-2 flex gap-1 lg:col-auto lg:row-auto">
+									{/* Beside the name, four 2.5rem chips and their gaps: at most four codes per line. */}
+									<span className="col-span-full row-start-2 flex flex-wrap gap-1 @xl:col-auto @xl:row-auto @xl:max-w-[10.75rem] @xl:justify-end @xl:justify-self-end">
 										{row.codes.map((code) =>
 											d ? (
 												<CodeLink
@@ -426,15 +427,15 @@ export function Beranda({
 										<ProgressBar
 											value={row.percent}
 											color={scopeBar}
-											className="row-start-1 h-1.5 min-w-0 flex-1 lg:row-auto"
+											className="row-start-1 h-1.5 min-w-0 flex-1 @xl:row-auto"
 										/>
 									) : (
 										<div
 											data-skeleton
-											className="row-start-1 h-1.5 min-w-0 flex-1 animate-skl overflow-hidden rounded-xs bg-ink-100 lg:row-auto"
+											className="row-start-1 h-1.5 min-w-0 flex-1 animate-skl overflow-hidden rounded-xs bg-ink-100 @xl:row-auto"
 										/>
 									)}
-									<span className="row-start-1 text-right lg:row-auto">
+									<span className="row-start-1 text-right @xl:row-auto">
 										<span className="font-mono text-body-sm leading-[1.2] font-medium text-ink-1000 tabular-nums">
 											{d ? `${row.percent}%` : <SkeletonText width="2.2em" />}
 										</span>
