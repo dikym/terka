@@ -110,7 +110,7 @@ function Tooltip({ province }: { province: MapProvince }) {
 							{percent}%
 						</b>
 						<span className="font-sans text-micro leading-[1.3] text-ink-700">
-							{province.mastered} dari {province.total} kartu Dikuasai
+							{province.mastered} dari {province.total} kode dikuasai
 						</span>
 					</div>
 					<div className="h-1 overflow-hidden rounded-xs bg-ink-100">
@@ -153,7 +153,7 @@ function Selection({ id, province }: { id: string; province: MapProvince }) {
 							{percent}%
 						</b>
 						<span className="font-sans text-body-sm leading-[1.3] text-ink-700">
-							{province.mastered} dari {province.total} kartu Dikuasai
+							{province.mastered} dari {province.total} kode dikuasai
 						</span>
 					</div>
 					<div className="h-1 overflow-hidden rounded-xs bg-ink-100">

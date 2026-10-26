@@ -209,6 +209,7 @@ Setiap aturan di SRD memiliki minimal satu tes. Hampir semua tes di bagian ini b
 | SR-378 | Tes penempatan selesai setelah ada jawaban Cek Ingatan | Tingkat tidak berubah | batas | SRD 4.13 |
 | SR-379 | Pasangan sudah dilatih hari ini | Tidak dihitung dalam ambang penahanan materi baru | batas | SRD 4.7 |
 | SR-380 | Pasangan ditandai ke dua arah dengan hitungan 4 dan 1 | Beranda menampilkan satu pasangan dengan **1/5** | batas | SRD 6.2 |
+| SR-381 | Tooltip provinsi Jawa Barat, 4 dari 5 kode semua kartunya `mature` | **4 dari 5 kode dikuasai**; dihitung per kode, bukan per kartu | normal | SRD 2.5 |
 
 ### 5.6 Perkenalan
 

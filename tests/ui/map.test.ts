@@ -37,3 +37,26 @@ test("a trackpad zooms continuously with the gesture", () => {
 	// A full pinch of about 100 pixels doubles the scale, like one notch.
 	expect(wheelZoom(-100, 0, true).factor).toBeCloseTo(2, 5);
 });
+
+test("a province counts its codes, not its cards", () => {
+	const bundle = plates as unknown as Bundle;
+	const state = stateOf([], bundle);
+	const jawaBarat = bundle.regions.filter((region) => region.province === "jawa-barat");
+	for (const region of jawaBarat)
+		for (const mode of ["code2region", "region2code", "setrecall"]) {
+			const card = state.cards.get(`${region.id}::${mode}`);
+			if (card)
+				state.cards.set(card.cardId, {
+					...card,
+					state: "mature",
+					intervalDays: 30,
+					passedLevel3: true
+				});
+		}
+	const [first] = jawaBarat;
+	const reverse = state.cards.get(`${first.id}::region2code`)!;
+	state.cards.set(reverse.cardId, { ...reverse, state: "review", intervalDays: 3 });
+	const province = mapProvinces(state, bundle)["jawa-barat"];
+	expect(province.total).toBe(jawaBarat.length);
+	expect(province.mastered).toBe(jawaBarat.length - 1);
+});
