@@ -576,13 +576,12 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 				"session"
 			);
 			if (!action) return;
+			if (action === "exit") return exit();
 			if (state.phase === "preview") {
 				if (loading || plan?.kind !== "ready") return;
 				if (action === "confirm") void start();
-				if (action === "exit") exit();
 				return;
 			}
-			if (action === "exit") return exit();
 			if (state.phase === "done") return;
 			const current = currentCard(state);
 			const options = cardOptions(state, current);
