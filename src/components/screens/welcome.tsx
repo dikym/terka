@@ -61,26 +61,42 @@ function WelcomeBody({
 }) {
 	return (
 		<>
-			<section className="border-b border-hairline bg-paper-50">
-				<div className="container flex flex-col items-start gap-6 pt-8 pb-6 lg:gap-8 lg:py-10">
+			<header className="border-b border-hairline">
+				<div className="container flex min-h-15 items-center justify-between gap-3 py-2 lg:gap-4 lg:py-4">
 					<Wordmark />
-					<div className="flex min-w-0 flex-col gap-4">
-						<h1
-							id={ghost ? undefined : "sambutan-title"}
-							className="font-display text-display leading-[1.05] font-bold tracking-title"
+					{ghost ? (
+						<span className="inline-flex items-center gap-1.5 font-display text-body-sm leading-none font-semibold">
+							<Text ghost>Tentang Terka</Text>
+							<Mark ghost name="chevron-right" size={16} className="h-4" />
+						</span>
+					) : (
+						<Link
+							href="/tentang"
+							onClick={onSkip}
+							className="inline-flex items-center gap-1.5 font-display text-body-sm leading-none font-semibold text-ink-1000 underline underline-offset-[3px]"
 						>
-							<Text ghost={ghost}>Terka</Text>
-						</h1>
-						<p className="max-w-[24ch] font-display text-heading leading-[1.3] font-semibold text-ink-900">
-							<Text ghost={ghost}>
-								Lihat pelatnya, terka asalnya. Latihan hafalan kode pelat nomor
-								Indonesia.
-							</Text>
-						</p>
-					</div>
+							Tentang Terka
+							<Icon name="chevron-right" size={16} />
+						</Link>
+					)}
 				</div>
-			</section>
+			</header>
 			<section className="container flex flex-1 flex-col gap-6 py-6 lg:gap-8 lg:py-10">
+				<div className="flex min-w-0 flex-col gap-4 border-b border-hairline pb-6 lg:pb-8">
+					<h1
+						id={ghost ? undefined : "sambutan-title"}
+						className="font-display text-display leading-[1.05] font-bold tracking-title"
+					>
+						<Text ghost={ghost}>Terka</Text>
+					</h1>
+					<p className="font-display text-subhead leading-[1.3] font-semibold text-ink-900 lg:text-heading">
+						<Text ghost={ghost}>
+							Lihat pelatnya, terka asalnya.
+							<br />
+							Latihan hafalan kode pelat nomor Indonesia.
+						</Text>
+					</p>
+				</div>
 				<div className="flex min-w-0 flex-col gap-4">
 					<span className="type-label text-ink-500">
 						<Text ghost={ghost}>Tes penempatan</Text>
@@ -143,41 +159,17 @@ function WelcomeBody({
 					</div>
 				</div>
 			</section>
-			<footer className="border-t border-hairline bg-paper-50">
-				<div className="container flex flex-col gap-5 py-6 lg:flex-row lg:items-center lg:justify-between lg:gap-10 lg:py-5">
-					<ul className="flex min-w-0 flex-col gap-3 lg:flex-row lg:gap-8">
-						{NOTES.map(([icon, text]) => (
-							<li key={icon} className="flex max-w-[52ch] min-w-0 items-start gap-3">
-								<Mark
-									ghost={ghost}
-									name={icon}
-									size={18}
-									className="mt-0.5 h-4.5"
-								/>
-								<p className="font-sans text-body-sm leading-normal text-ink-700">
-									<Text ghost={ghost}>{text}</Text>
-								</p>
-							</li>
-						))}
-					</ul>
-					<div className="flex-none border-t border-hairline pt-4 lg:border-t-0 lg:pt-0">
-						{ghost ? (
-							<span className="inline-flex items-center gap-1.5 font-display text-body-sm leading-none font-semibold">
-								<Text ghost>Tentang Terka</Text>
-								<Mark ghost name="chevron-right" size={16} className="h-4" />
-							</span>
-						) : (
-							<Link
-								href="/tentang"
-								onClick={onSkip}
-								className="inline-flex items-center gap-1.5 font-display text-body-sm leading-none font-semibold text-ink-1000 underline underline-offset-[3px]"
-							>
-								Tentang Terka
-								<Icon name="chevron-right" size={16} />
-							</Link>
-						)}
-					</div>
-				</div>
+			<footer className="border-t border-hairline">
+				<ul className="container flex flex-col gap-3 py-6 lg:flex-row lg:gap-10 lg:py-5">
+					{NOTES.map(([icon, text]) => (
+						<li key={icon} className="flex min-w-0 items-start gap-3 lg:last:flex-1">
+							<Mark ghost={ghost} name={icon} size={18} className="mt-0.5 h-4.5" />
+							<p className="font-sans text-body-sm leading-normal text-ink-500">
+								<Text ghost={ghost}>{text}</Text>
+							</p>
+						</li>
+					))}
+				</ul>
 			</footer>
 		</>
 	);
