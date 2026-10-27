@@ -1,9 +1,9 @@
-// Copies the popularity tiers from docs/urutan-kabkota-populer.md into data/plate-curation.json.
+// Copies the popularity tiers from docs/City_Popularity_Ranking.md into data/plate-curation.json.
 import { readFile, writeFile } from "node:fs/promises";
 
 const root = new URL("../../", import.meta.url);
 const curationUrl = new URL("data/plate-curation.json", root);
-const doc = await readFile(new URL("docs/urutan-kabkota-populer.md", root), "utf8");
+const doc = await readFile(new URL("docs/City_Popularity_Ranking.md", root), "utf8");
 const curation = JSON.parse(await readFile(curationUrl, "utf8"));
 
 // The ranking spells this city the official way; the curation keeps the older spelling.
