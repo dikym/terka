@@ -19,6 +19,7 @@ import { placementResult } from "@/core/views/placement-result";
 import { KILAT_ROUND_MS, TIERS, type Tier } from "@/rules";
 import type { LearningEvent } from "@/core/log/events";
 import { failedMessage, QUOTA_MESSAGE } from "@/components/screens/app-status";
+import { ConfirmDialog } from "@/components/ui/dialog";
 import { ErrorState } from "@/components/ui/states";
 import { showToast } from "@/lib/toasts";
 import { lastDayOf, type Runtime, sessionCtx } from "@/lib/app/runtime";
@@ -131,6 +132,7 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 	const [clock, setClock] = useState(KILAT_ROUND_MS / 1000);
 	const [end, setEnd] = useState<EndView | null>(null);
 	const [placementEnd, setPlacementEnd] = useState<PlacementEndView | null>(null);
+	const [leaving, setLeaving] = useState(false);
 	const engine = useRef<Engine>({
 		run: null,
 		before: null,
@@ -147,23 +149,21 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 		reaskSerial: 0
 	});
 
-	const exit = () => {
-		// A run left halfway is closed with what was answered; an unfinished Kilat round or
-		// placement test has no score or tier to close with, so it stays open and never counts.
-		const run = engine.current.run;
-		if (runtime && run && !engine.current.closed && mode !== "kilat" && mode !== "penempatan") {
+	const leave = () => {
+		// Leaving discards the run: its answers are voided and the run stays open, so it never counts.
+		const { run, answers } = engine.current;
+		if (runtime && run && !engine.current.closed) {
 			engine.current.closed = true;
-			const answers = engine.current.answers;
-			void write([
-				closeRun(run, sessionCtx(runtime), {
-					answered: answers.length,
-					correct: answers.filter((row) => row.correct === true).length,
-					activeMs: answers.reduce((sum, row) => sum + row.msTotal, 0)
-				})
-			]);
+			const ctx = sessionCtx(runtime);
+			if (answers.length) void write(answers.map((row) => voidEvent(row, ctx)));
 		}
 		if (window.history.length > 1) router.back();
 		else router.push("/beranda");
+	};
+
+	const exit = () => {
+		if (engine.current.answers.length && !engine.current.closed) setLeaving(true);
+		else leave();
 	};
 
 	// The plan is made once, from the log as it was when the screen opened.
@@ -565,7 +565,7 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 
 	useEffect(() => {
 		const onKey = (event: KeyboardEvent) => {
-			if (event.metaKey || event.ctrlKey || event.altKey) return;
+			if (leaving || event.metaKey || event.ctrlKey || event.altKey) return;
 			const action = keyAction(
 				{ key: event.key, target: event.target as HTMLElement | null },
 				"session"
@@ -661,6 +661,16 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 			footer={finished && mode !== "penempatan" ? <EndFooter /> : undefined}
 			variant={finished ? "end" : "question"}
 		>
+			{leaving && (
+				<ConfirmDialog
+					title="Keluar dari sesi?"
+					safe={{ label: "Lanjut sesi", onClick: () => setLeaving(false) }}
+					destructive={{ label: "Keluar", onClick: leave }}
+				>
+					Progres sesi ini tidak akan tersimpan. Jawaban yang sudah kamu kerjakan tidak
+					akan dihitung.
+				</ConfirmDialog>
+			)}
 			{finished && placementEnd ? (
 				<PlacementEnd
 					view={placementEnd}
