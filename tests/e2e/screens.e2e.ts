@@ -945,6 +945,19 @@ test("a code link is exactly as wide as its chip", async ({ page }) => {
 	}
 });
 
+test("the kawasan dots stay round on a narrow screen", async ({ page }) => {
+	await seen(page);
+	await page.setViewportSize({ width: 320, height: 800 });
+	await page.goto("/statistik");
+	await page.getByRole("heading", { name: "Lolos per level" }).waitFor();
+	const dots = page.locator("span.rounded-full[class*='bg-group-']");
+	await dots.first().waitFor();
+	for (const dot of await dots.all()) {
+		const box = (await dot.boundingBox())!;
+		expect(box.width).toBeCloseTo(box.height, 1);
+	}
+});
+
 test("the home page's code chips open Referensi", async ({ page }) => {
 	await seen(page);
 	// A kawasan scope lists its provinces with their code chips.
