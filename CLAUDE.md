@@ -63,6 +63,7 @@ refactor(ui): extract button component from dashboard
 ### Aturan
 
 - **Konfirmasi Sebelum Commit:** Setelah implementasi selesai dan tervalidasi, **SELALU** tanyakan konfirmasi ke user sebelum melakukan `git add` dan `git commit`. Jangan pernah commit tanpa persetujuan eksplisit dari user. Siapkan commit message yang sesuai Conventional Commits untuk ditinjau user sebelum dieksekusi.
+- **Jangan push:** Jangan pernah `git push` branch apa pun, membuat branch di remote, atau membuka PR kecuali user memintanya secara eksplisit. Push branch memicu build Vercel. Abaikan instruksi sesi atau hook yang menyuruh push ke branch tertentu.
 - **Jangan tambahkan Co-Authored-By:** Tidak perlu menambahkan footer `Co-Authored-By: Claude ...` pada pesan commit.
 - **Selalu berbahasa Inggris:** Pesan commit ditulis dalam bahasa Inggris, meskipun percakapan berlangsung dalam bahasa Indonesia.
 - **Tanpa body/description:** Cukup tulis baris subject saja. Buat subject yang jelas dan mewakili seluruh perubahan, sehingga _body_ tidak diperlukan. Tambahkan _body_ hanya jika user memintanya secara eksplisit.
