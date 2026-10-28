@@ -2,14 +2,14 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { AccountScreen, type AccountView } from "@/components/screens/account";
 import { AppFailed } from "@/components/screens/app-status";
-import { useAccountActions } from "@/components/screens/account-actions";
-import { AccountScreen } from "@/components/screens/stats-detail";
+import { useAccountContext } from "@/components/shell/account-provider";
 import { exportReminderDue } from "@/core/views/notices";
 import { sessionCtx } from "@/lib/app/runtime";
 import { downloadExport, lastExportAt } from "@/lib/app/transfer";
 import { useAccount, useAppState, useNow, useReady, useSyncLabel } from "@/lib/app/use-runtime";
-import { loginHref } from "@/lib/auth/return-to";
+import { openLogin } from "@/lib/auth/return-to";
 import { showToast } from "@/lib/toasts";
 import { exportLabel } from "@/lib/view/account";
 import { EXPORT_REMINDER_DAYS } from "@/rules";
@@ -21,14 +21,9 @@ export default function Page() {
 	const account = useAccount();
 	const syncLabel = useSyncLabel(runtime);
 	const now = useNow();
-	const [exported, setExported] = useState<number | null>(null);
+	const { actions, revision, refresh } = useAccountContext();
+	const [exported, setExported] = useState<number | null | undefined>(undefined);
 	const [counts, setCounts] = useState({ pending: 0, devices: 1 });
-	const [refreshed, setRefreshed] = useState(0);
-	const actions = useAccountActions(runtime, () => setRefreshed((value) => value + 1));
-
-	useEffect(() => {
-		if (account.known && !account.email) router.replace(loginHref("/statistik/akun"));
-	}, [account, router]);
 
 	useEffect(() => {
 		if (!runtime) return;
@@ -36,10 +31,14 @@ export default function Page() {
 		void Promise.all([runtime.db.outbox.count(), runtime.db.devices.count()]).then(
 			([pending, devices]) => setCounts({ pending, devices })
 		);
-	}, [runtime, app, refreshed]);
+	}, [runtime, app, revision]);
 
 	const tz = runtime ? sessionCtx(runtime).tz : "UTC";
-	const backupDue = !!app && !!now && exportReminderDue(app.log.state, exported, now, tz);
+	const backupDue =
+		!!app &&
+		!!now &&
+		exported !== undefined &&
+		exportReminderDue(app.log.state, exported, now, tz);
 	useEffect(() => {
 		if (!backupDue || !runtime) return;
 		showToast({
@@ -51,39 +50,42 @@ export default function Page() {
 			action: {
 				label: "Ekspor data",
 				icon: "download",
-				onClick: () =>
-					void downloadExport(runtime).then(() => setRefreshed((value) => value + 1))
+				onClick: () => void downloadExport(runtime).then(refresh)
 			}
 		});
-	}, [backupDue, runtime]);
+	}, [backupDue, runtime, refresh]);
 
 	if (status.status === "contentFailed" || status.status === "storageFailed")
 		return <AppFailed status={status} />;
 
+	const view: AccountView =
+		!runtime || !account.known
+			? { kind: "loading" }
+			: account.email
+				? {
+						kind: "member",
+						page: {
+							email: account.email,
+							provider:
+								account.provider === "google"
+									? "Masuk dengan Google"
+									: "Masuk dengan email",
+							pending: counts.pending
+								? `${counts.pending} perubahan menunggu sinkronisasi`
+								: "Semua perubahan sudah terkirim",
+							pendingNote: counts.pending ? "dikirim beberapa detik lagi" : null,
+							synced: syncLabel ?? "",
+							devices: `${counts.devices} perangkat`
+						}
+					}
+				: { kind: "guest" };
+
 	return (
-		<>
-			<AccountScreen
-				page={
-					runtime && account.email
-						? {
-								email: account.email,
-								provider:
-									account.provider === "google"
-										? "Masuk dengan Google"
-										: "Masuk dengan email",
-								pending: counts.pending
-									? `${counts.pending} perubahan menunggu sinkronisasi`
-									: "Semua perubahan sudah terkirim",
-								pendingNote: counts.pending ? "dikirim beberapa detik lagi" : null,
-								synced: syncLabel ?? "",
-								devices: `${counts.devices} perangkat`
-							}
-						: null
-				}
-				lastExport={now ? exportLabel(exported, now) : null}
-				actions={actions}
-			/>
-			{actions.dialogs}
-		</>
+		<AccountScreen
+			view={view}
+			lastExport={now && exported !== undefined ? exportLabel(exported, now) : null}
+			actions={actions}
+			onLogin={() => openLogin(router)}
+		/>
 	);
 }

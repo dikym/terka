@@ -8,16 +8,29 @@ export type MenuEntry =
 
 /**
  * Actions behind one trigger. Arrow keys move, Enter picks, Esc closes and gives focus back
- * to the trigger; a click outside closes it too.
+ * to the trigger; a click outside closes it too. The caller styles the trigger and places the
+ * list: `menuClassName` carries its position and width.
  */
 export function Menu({
 	label,
 	icon,
-	entries
+	entries,
+	iconOnly = false,
+	caret,
+	className = "",
+	triggerClassName,
+	menuClassName
 }: {
 	label: string;
 	icon: IconName;
 	entries: MenuEntry[];
+	/** The trigger shows only its icon; the label still names it. */
+	iconOnly?: boolean;
+	/** The arrow at the end of the trigger, pointing where the list opens. */
+	caret?: "up" | "down";
+	className?: string;
+	triggerClassName: string;
+	menuClassName: string;
 }) {
 	const id = useId();
 	const root = useRef<HTMLDivElement>(null);
@@ -47,6 +60,8 @@ export function Menu({
 		items[index]?.onSelect();
 	};
 	const onKey = (event: React.KeyboardEvent) => {
+		// A closed menu leaves the keys to the page: Esc leaves the keyboard page, arrows scroll.
+		if (!open) return;
 		if (event.key === "ArrowDown" || event.key === "ArrowUp") {
 			event.preventDefault();
 			const step = event.key === "ArrowDown" ? 1 : -1;
@@ -60,13 +75,14 @@ export function Menu({
 
 	let index = -1;
 	return (
-		<div ref={root} className="relative inline-flex flex-col items-end" onKeyDown={onKey}>
+		<div ref={root} className={`relative ${className}`} onKeyDown={onKey}>
 			<button
 				ref={trigger}
 				type="button"
 				aria-haspopup="menu"
 				aria-expanded={open}
 				aria-controls={open ? id : undefined}
+				aria-label={iconOnly ? label : undefined}
 				onClick={() => {
 					setActive(0);
 					setOpen((value) => !value);
@@ -78,18 +94,24 @@ export function Menu({
 						setOpen(true);
 					}
 				}}
-				className="inline-flex h-9 cursor-pointer items-center gap-2 rounded-sm border border-ink-1000 bg-paper-0 px-3 font-display text-body-sm leading-none font-semibold text-ink-1000"
+				className={triggerClassName}
 			>
-				<Icon name={icon} size={16} />
-				{label}
-				<Icon name="chevron-down" size={16} />
+				<Icon name={icon} />
+				{!iconOnly && <span>{label}</span>}
+				{caret && (
+					<Icon
+						name="chevron-down"
+						size={16}
+						className={`ml-auto ${caret === "up" ? "rotate-180" : ""}`}
+					/>
+				)}
 			</button>
 			{open && (
 				<div
 					id={id}
 					role="menu"
 					aria-label={label}
-					className="absolute top-[calc(100%+8px)] right-0 z-40 flex min-w-60 flex-col rounded-md border border-ink-1000 bg-paper-0 p-1 shadow-overlay"
+					className={`absolute z-40 flex flex-col overflow-y-auto rounded-md border border-hairline bg-paper-0 p-1 shadow-overlay ${menuClassName}`}
 				>
 					{entries.map((entry, position) => {
 						if (entry === "separator")
@@ -97,7 +119,7 @@ export function Menu({
 								<div
 									key={`separator-${position}`}
 									role="separator"
-									className="my-1 h-px bg-hairline"
+									className="my-1 h-px flex-none bg-hairline"
 								/>
 							);
 						const at = ++index;
@@ -113,7 +135,7 @@ export function Menu({
 								tabIndex={-1}
 								onClick={() => pick(at)}
 								onPointerEnter={() => setActive(at)}
-								className={`flex h-10 cursor-pointer items-center gap-3 rounded-sm px-3 text-left outline-none type-body ${tone}`}
+								className={`flex h-11 flex-none cursor-pointer items-center gap-3 rounded-sm px-3 text-left outline-none type-body lg:h-10 ${tone}`}
 							>
 								<Icon
 									name={entry.icon}

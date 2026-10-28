@@ -230,8 +230,8 @@ export function SettingsScreen({
 									: "Penyimpanan permanen tidak tersedia. Masuk untuk menyinkronkan progres, atau ekspor data secara rutin."}
 							</Note>
 						</Row>
-						<Row title="Akun, sinkronisasi, ekspor, dan impor" href="/statistik/akun">
-							<Note>Dikelola dari Statistik.</Note>
+						<Row title="Akun, sinkronisasi, ekspor, dan impor" href="/setelan/akun">
+							<Note>Masuk, sinkronkan antarperangkat, dan simpan cadangan data.</Note>
 						</Row>
 						<Row
 							title="Data pelat"

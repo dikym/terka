@@ -12,7 +12,7 @@ import { afterSignIn, finishCallback, switchAccount } from "@/lib/auth/signin";
 import { showToast } from "@/lib/toasts";
 import { mergedMessage } from "@/lib/view/account";
 
-const ACCOUNT = "/statistik/akun";
+const ACCOUNT = "/setelan/akun";
 
 type Outcome = { kind: "message"; text: string } | { kind: "otherAccount" } | null;
 

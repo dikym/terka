@@ -12,7 +12,7 @@ import { importMessage } from "@/lib/view/account";
 const NOT_SAVED = "Perubahan belum tersimpan. Coba lagi.";
 
 /**
- * Export, import, sign-out and account deletion, shared by the Statistik menu and the account
+ * Export, import, sign-out and account deletion, shared by the account menu and the account
  * screen. Render `dialogs` once: it holds the file picker and whichever confirmation is open.
  */
 export function useAccountActions(runtime: Runtime | null, onChange?: () => void) {

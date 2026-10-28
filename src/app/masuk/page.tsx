@@ -1,24 +1,26 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { SiteHeader } from "@/components/shell/site-header";
 import { OtherAccount, SignInForm, SignInSkeleton } from "@/components/screens/sign-in";
 import { useSignIn } from "@/components/screens/use-sign-in";
 import { useAccount, useReady } from "@/lib/app/use-runtime";
-import { safeReturnPath } from "@/lib/auth/return-to";
+import { leaveLogin, peekReturnTo } from "@/lib/auth/return-to";
 import { showToast } from "@/lib/toasts";
 
-const ACCOUNT = "/statistik/akun";
+const ACCOUNT = "/setelan/akun";
 
-function SignInRoute() {
+export default function Page() {
 	const router = useRouter();
-	const destination = safeReturnPath(useSearchParams().get("kembali")) ?? ACCOUNT;
+	// Read once: a later visit to the privacy policy and back must not lose it.
+	const [remembered] = useState(() => peekReturnTo());
+	const destination = remembered ?? ACCOUNT;
 	const { runtime } = useReady();
 	const account = useAccount();
 	const { signIn, conflict } = useSignIn(runtime, destination, (message) => {
 		if (message) showToast({ tone: "success", text: message, key: "signIn" });
-		router.replace(destination);
+		leaveLogin(router, destination);
 	});
 
 	// Only someone already signed in when the page opens is sent on. A sign-in finishing here
@@ -27,7 +29,7 @@ function SignInRoute() {
 	useEffect(() => {
 		if (!account.known || decided.current) return;
 		decided.current = true;
-		if (account.email) router.replace(destination);
+		if (account.email) leaveLogin(router, destination);
 	}, [account, destination, router]);
 
 	const waiting = !account.known || !!account.email;
@@ -47,13 +49,5 @@ function SignInRoute() {
 				{conflict && <OtherAccount onBack={conflict.onBack} onWipe={conflict.onWipe} />}
 			</main>
 		</>
-	);
-}
-
-export default function Page() {
-	return (
-		<Suspense>
-			<SignInRoute />
-		</Suspense>
 	);
 }

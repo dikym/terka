@@ -12,6 +12,11 @@ test.use({ viewport: { width: 1280, height: 900 } });
 const seen = async (page: Page) =>
 	page.addInitScript(() => localStorage.setItem("terka.welcomeSeen", "1"));
 
+const accountMenu = async (page: Page) => {
+	await page.getByRole("button", { name: "Akun" }).click();
+	return page.getByRole("menu", { name: "Akun" });
+};
+
 const search = (page: Page, query: string) => page.locator("#referensi-search").fill(query);
 
 // Ten Sumatera codes learned over the past two months; BK also has its Sebutkan card open.
@@ -352,16 +357,11 @@ test("statistics leave out cards that have nothing to show yet", async ({ page }
 	await expect(page.getByText("Pelat Terlihat", { exact: true })).toHaveCount(0);
 });
 
-test("statistics links reach their screens", async ({ page }) => {
+test("the statistics map link reaches its screen", async ({ page }) => {
 	await seen(page);
-	for (const [link, title] of [
-		["Buka Peta Penguasaan", "Peta Penguasaan"],
-		["Masuk", "Masuk"]
-	]) {
-		await page.goto("/statistik");
-		await page.getByRole("link", { name: link, exact: true }).click();
-		await expect(page.getByRole("heading", { level: 1, name: title })).toBeVisible();
-	}
+	await page.goto("/statistik");
+	await page.getByRole("link", { name: "Buka Peta Penguasaan", exact: true }).click();
+	await expect(page.getByRole("heading", { level: 1, name: "Peta Penguasaan" })).toBeVisible();
 });
 
 test("the schedule parameters row in Setelan opens its screen", async ({ page }) => {
@@ -374,12 +374,28 @@ test("the schedule parameters row in Setelan opens its screen", async ({ page })
 	await expect(page.getByText("Belum ada optimasi.")).toBeVisible();
 });
 
-test("the account page sends a visitor who is signed out to the sign-in page", async ({ page }) => {
+test("the account page offers a signed-out visitor sign-in, export and import", async ({
+	page
+}) => {
 	await seen(page);
-	await page.goto("/statistik/akun");
-	await expect(page).toHaveURL(/\/masuk\?kembali=%2Fstatistik%2Fakun$/);
+	await page.goto("/setelan/akun");
+	await expect(page.getByRole("heading", { level: 1, name: "Akun" })).toBeVisible();
+	await expect(page.getByText("Belum masuk")).toBeVisible();
+	await expect(page.getByRole("button", { name: "Ekspor data" })).toBeVisible();
+	await expect(page.getByRole("button", { name: "Impor data" })).toBeVisible();
+	await expect(page.getByRole("button", { name: "Hapus akun" })).toHaveCount(0);
+	await page.getByRole("button", { name: "Masuk" }).click();
+	await expect(page).toHaveURL(/\/masuk$/);
 	await expect(page.getByRole("heading", { level: 1, name: "Masuk" })).toBeVisible();
-	await expect(page.locator("aside")).toHaveCount(0);
+});
+
+test("the sign-in page keeps the page it came from out of its address", async ({ page }) => {
+	await seen(page);
+	await page.goto("/setelan/akun");
+	await page.getByRole("button", { name: "Masuk" }).click();
+	await expect(page).toHaveURL(/\/masuk$/);
+	await page.goBack();
+	await expect(page).toHaveURL(/\/setelan\/akun$/);
 });
 
 test("coverage selection changes the side panel", async ({ page }) => {
@@ -406,7 +422,7 @@ test("enter on the highlighted row picks that region", async ({ page }) => {
 test("the keyboard page has its own address and Esc goes back", async ({ page }) => {
 	await seen(page);
 	await page.goto("/beranda");
-	await page.getByRole("link", { name: "Papan tombol" }).click();
+	await (await accountMenu(page)).getByRole("menuitem", { name: "Papan tombol" }).click();
 	await expect(page).toHaveURL(/\/papan-tombol$/);
 	await expect(page.getByRole("heading", { level: 1, name: "Papan tombol" })).toBeVisible();
 	await page.keyboard.press("Escape");
@@ -474,12 +490,12 @@ test("the wheel zooms the map without scrolling the page", async ({ page }) => {
 	expect(await page.evaluate(() => window.scrollY)).toBe(before);
 });
 
-test("the sidebar leaves the keyboard page for the page it came from", async ({ page }) => {
+test("the account menu leaves the keyboard page for Setelan", async ({ page }) => {
 	await seen(page);
 	await page.goto("/setelan");
-	await page.getByRole("link", { name: "Papan tombol" }).click();
+	await (await accountMenu(page)).getByRole("menuitem", { name: "Papan tombol" }).click();
 	await expect(page).toHaveURL(/\/papan-tombol$/);
-	await page.getByRole("link", { name: "Setelan" }).click();
+	await (await accountMenu(page)).getByRole("menuitem", { name: "Setelan" }).click();
 	await expect(page).toHaveURL(/\/setelan$/);
 	await expect(page.getByRole("heading", { level: 1, name: "Setelan" })).toBeVisible();
 });
@@ -504,15 +520,51 @@ test("shadowed buttons sink while pressed, links included", async ({ page }) => 
 
 test("the account menu moves with the arrows and Esc gives focus back", async ({ page }) => {
 	await seen(page);
-	await page.goto("/statistik");
+	await page.goto("/beranda");
 	const trigger = page.getByRole("button", { name: "Akun" });
 	await trigger.click();
-	await expect(page.getByRole("menuitem", { name: "Ekspor data" })).toBeFocused();
+	await expect(page.getByRole("menuitem", { name: "Setelan" })).toBeFocused();
 	await page.keyboard.press("ArrowDown");
-	await expect(page.getByRole("menuitem", { name: "Impor data" })).toBeFocused();
+	await expect(page.getByRole("menuitem", { name: "Papan tombol" })).toBeFocused();
 	await page.keyboard.press("Escape");
 	await expect(page.getByRole("menu")).toHaveCount(0);
 	await expect(trigger).toBeFocused();
+});
+
+test("the account menu lists settings, shortcuts, export, import and sign-in for a visitor", async ({
+	page
+}) => {
+	await seen(page);
+	await page.goto("/beranda");
+	const menu = await accountMenu(page);
+	await expect(menu.getByRole("menuitem")).toHaveText([
+		"Setelan",
+		"Papan tombol",
+		"Ekspor data",
+		"Impor data",
+		"Masuk"
+	]);
+	await menu.getByRole("menuitem", { name: "Masuk" }).click();
+	await expect(page).toHaveURL(/\/masuk$/);
+});
+
+test("the sidebar's account menu opens upward and stays inside the sidebar", async ({ page }) => {
+	await seen(page);
+	await page.goto("/beranda");
+	const trigger = (await page.getByRole("button", { name: "Akun" }).boundingBox())!;
+	const menu = (await (await accountMenu(page)).boundingBox())!;
+	const sidebar = (await page.locator("aside").first().boundingBox())!;
+	expect(menu.y + menu.height).toBeLessThanOrEqual(trigger.y);
+	expect(menu.x).toBeGreaterThanOrEqual(sidebar.x);
+	expect(menu.x + menu.width).toBeLessThanOrEqual(sidebar.x + sidebar.width);
+});
+
+test("the statistics page no longer carries account controls", async ({ page }) => {
+	await seen(page);
+	await page.goto("/statistik");
+	await expect(page.getByRole("heading", { level: 1, name: "Statistik" })).toBeVisible();
+	await expect(page.locator("main").getByRole("button", { name: "Akun" })).toHaveCount(0);
+	await expect(page.getByText("Akun dan sinkronisasi")).toHaveCount(0);
 });
 
 // A point inside the province's own shape, not just inside its bounding box.
@@ -793,15 +845,15 @@ test("a shortened area list in the weakest codes table shows in full on hover", 
 
 test("a menu opened with the mouse highlights nothing until hovered", async ({ page }) => {
 	await seen(page);
-	await page.goto("/statistik");
+	await page.goto("/beranda");
 	await page.getByRole("button", { name: "Akun" }).click();
-	const first = page.getByRole("menuitem", { name: "Ekspor data" });
+	const first = page.getByRole("menuitem", { name: "Setelan" });
 	await expect(first).toBeFocused();
 	const background = (item: Locator) =>
 		item.evaluate((element) => getComputedStyle(element).backgroundColor);
 	expect(await background(first)).toBe("rgba(0, 0, 0, 0)");
 	await page.keyboard.press("ArrowDown");
-	const second = page.getByRole("menuitem", { name: "Impor data" });
+	const second = page.getByRole("menuitem", { name: "Papan tombol" });
 	await expect(second).toBeFocused();
 	expect(await background(second)).not.toBe("rgba(0, 0, 0, 0)");
 });

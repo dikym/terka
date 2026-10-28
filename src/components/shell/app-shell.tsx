@@ -7,6 +7,7 @@ import { sessionCtx } from "@/lib/app/runtime";
 import { useAppState, useReady } from "@/lib/app/use-runtime";
 import { keyAction } from "@/lib/keys";
 import { DAILY_SESSION } from "@/lib/session/modes";
+import { AccountProvider } from "./account-provider";
 import { MobileHeader } from "./mobile-header";
 import { Sidebar } from "./sidebar";
 import { SyncNotices } from "./sync-notices";
@@ -51,17 +52,19 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 	}, [router, pathname, runtime, state]);
 
 	return (
-		<div className="group flex min-h-dvh flex-col lg:flex-row">
-			<Sidebar />
-			<MobileHeader />
-			<div className="flex min-w-0 flex-1 flex-col">
-				{/* Phone padding clears the fixed 60 px top bar and tab bar. */}
-				<main className="container flex flex-1 flex-col gap-5 pt-20 pb-[calc(--spacing(23)+env(safe-area-inset-bottom))] lg:gap-6 lg:pt-8 lg:pb-10">
-					{children}
-				</main>
+		<AccountProvider runtime={runtime}>
+			<div className="group flex min-h-dvh flex-col lg:flex-row">
+				<Sidebar />
+				<MobileHeader />
+				<div className="flex min-w-0 flex-1 flex-col">
+					{/* Phone padding clears the fixed 60 px top bar and tab bar. */}
+					<main className="container flex flex-1 flex-col gap-5 pt-20 pb-[calc(--spacing(23)+env(safe-area-inset-bottom))] lg:gap-6 lg:pt-8 lg:pb-10">
+						{children}
+					</main>
+				</div>
+				<TabBar />
+				<SyncNotices />
 			</div>
-			<TabBar />
-			<SyncNotices />
-		</div>
+		</AccountProvider>
 	);
 }

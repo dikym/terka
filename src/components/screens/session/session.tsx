@@ -25,7 +25,7 @@ import { showToast } from "@/lib/toasts";
 import { lastDayOf, type Runtime, sessionCtx } from "@/lib/app/runtime";
 import { useAccount, useAppState, usePrefs, useReady } from "@/lib/app/use-runtime";
 import { markNoteOffer, readFlags } from "@/lib/db/flags";
-import { loginHref } from "@/lib/auth/return-to";
+import { openLogin } from "@/lib/auth/return-to";
 import { LOGIN_PROMPT_DISMISSED, readFlag, writeFlag } from "@/lib/flags";
 import { keyAction } from "@/lib/keys";
 import type { SessionCard } from "@/lib/session/cards";
@@ -688,7 +688,7 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 			) : finished && end ? (
 				<SessionEnd
 					view={end}
-					onLogin={() => router.push(loginHref("/beranda"))}
+					onLogin={() => openLogin(router, "/beranda")}
 					onDismissLogin={() => {
 						writeFlag("local", LOGIN_PROMPT_DISMISSED, "1");
 						setEnd({ ...end, loginPrompt: false });
