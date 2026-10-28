@@ -87,6 +87,8 @@ Bagian ini memisahkan dua konsep yang sekilas mirip tetapi fungsinya berbeda.
 
 Antrean harian mengambil kartu yang perlu diulang dari seluruh wilayah, lalu menambahkan materi baru dari Cakupan aktif. Jumlah materi baru di luar Cakupan tetap terlihat, tetapi tidak ikut dimasukkan. Mengganti Cakupan tidak mengubah jadwal atau mengembalikan kuota yang sudah dipakai.
 
+Jika soal terjadwal (pengulangan dan materi baru) kurang dari 10, sesi harian dilengkapi soal Latihan Terfokus dari Cakupan aktif sampai 10 soal, dimulai dari kartu dengan peluang ingat terendah. Dengan begitu pengguna tetap bisa berlatih setelah semua materi di Cakupan dipelajari. Soal pengisi mengikuti aturan Latihan Terfokus di atas.
+
 Batas kartu baru berlaku global per hari. Pengguna tidak bisa berulang kali mengganti Cakupan untuk menarik materi baru melebihi batas harian.
 
 Dengan beberapa perangkat, batas harian dihitung dari gabungan log semua perangkat per `local_day`. Aturan untuk kuota yang terlampaui karena dua perangkat offline bersamaan ada di bagian 8.4.
@@ -428,8 +430,11 @@ Rentang geser dipakai untuk mengisi hari yang lebih sepi lebih dulu, jadi beban 
 2. Latihan Bandingkan Kode untuk pasangan aktif.
 3. Pengulangan dari seluruh wilayah, dimulai dari peluang ingat terendah dan mengikuti aturan kartu terkait.
 4. Perkenalan materi baru dalam Cakupan, selama kuota masih tersedia.
+5. Soal pengisi dari Latihan Terfokus di Cakupan aktif, hanya jika langkah 1–4 berjumlah kurang dari 10 soal. Pengisi memakai kartu yang sudah dipelajari dan belum ada di antrean, diurutkan dari peluang ingat terendah, sampai antrean berjumlah 10.
 
 Hanya Golongan A masuk antrean harian. Sesi `setrecall` berjalan terpisah. Jika jumlah kartu pada prioritas 1–3 melebihi ambang penahanan, materi baru tidak ditambahkan hari itu. Pasangan Bandingkan Kode yang sudah dilatih hari itu tidak lagi dihitung dalam jumlah tersebut.
+
+Soal pengisi tidak dihitung dalam ambang penahanan dan tidak menghabiskan batas pengulangan harian. Jika langkah 1–4 kosong dan seluruh sesi terdiri atas soal pengisi, sesi dicatat sebagai `practice_runs.kind = 'focused'`: hari tidak ditandai selesai dan Hari Beruntun tidak bertambah. Jika ada soal terjadwal, sesi dicatat sebagai `daily` dan hari ditandai selesai setelah seluruh soal, termasuk pengisi, dijawab.
 
 **Batas pengulangan harian.** Prioritas 3 paling banyak berisi 30 soal per `local_day`, dikurangi pengulangan yang sudah dijawab hari itu. Yang dihitung adalah jawaban yang memperbarui memori FSRS pada kartu `code2region` atau `region2code` berstatus `review` atau `mature`, dari sesi mana pun (harian, Cek Ingatan, latihan terfokus). Langkah belajar, soal ulang di dalam sesi, Bandingkan Kode, `setrecall`, dan kode khusus tidak dihitung; kode khusus tetap memakai ambang penahanannya sendiri. Sisa pengulangan bergeser ke hari berikutnya tanpa pemberitahuan, tetap diurutkan dari peluang ingat terendah. Batas ini hanya memotong antrean harian; latihan terfokus yang dimulai pengguna tidak pernah diblokir. Ambang penahanan materi baru tetap dihitung dari seluruh tunggakan, jadi selama tunggakan besar materi baru tetap dijeda.
 
@@ -521,7 +526,7 @@ Ditulis eksplisit supaya satu kartu tidak pernah dinilai dua kali dalam sehari:
 
 | Mode                           | Sumber kartu                                     | Memperbarui jadwal?                                                                                                |
 | ------------------------------ | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
-| Sesi harian                    | Antrean Golongan A bagian 4.7                    | Ya                                                                                                                 |
+| Sesi harian                    | Antrean Golongan A bagian 4.7                    | Ya. Soal pengisi dari Latihan Terfokus hanya jika kartunya sudah waktunya diulang                                  |
 | Sesi Sebutkan sebanyak mungkin | Kartu `setrecall` yang terbuka; antrean terpisah | Hanya jika kartu sudah perlu diulang, termasuk belajar awal; tunduk aturan kartu terkait. Perkenalan tidak dinilai |
 | Perkenalan                     | Materi baru                                      | Tidak dinilai; memindahkan kartu dari `new` ke `learning`                                                          |
 | Latihan Bandingkan Kode        | Pasangan yang sering tertukar                    | Hanya jika kartu sasarannya sudah waktunya diulang                                                                 |

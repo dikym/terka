@@ -75,7 +75,7 @@ Microcopy Terka mengikuti aturan berikut supaya seluruh UI terasa konsisten:
 3. **Jangan tampilkan istilah implementasi.** Pengguna tidak perlu melihat `mature`, `relearning`, `lapses`, `node`, `activeScope`, FSRS, atau peluang ingat selama alur belajar normal. Pengecualian tertulis: **Level 1**, **Level 2**, dan **Level 3** beserta namanya — Kenali, Ingat, Kuasai — boleh tampil, karena ketiganya konsep yang dipahami pengguna, bukan nama properti model data.
 4. **Hindari bahasa yang menghakimi.** Pakai **Belum tepat**, bukan "Salah!", dan **Perlu ditinjau**, bukan kalimat yang menyiratkan pengguna gagal.
 5. **Pesan kesalahan menyebut tindakan berikutnya.** Jangan hanya menampilkan "Terjadi kesalahan". Jelaskan apa yang gagal dan apa yang bisa dilakukan pengguna.
-6. **Jangan memancing latihan tambahan setelah sesi selesai.** Layar akhir cukup merangkum hasil dan menyediakan jalan kembali ke beranda.
+6. **Jangan memancing latihan tambahan setelah sesi selesai.** Layar akhir cukup merangkum hasil dan menyediakan jalan kembali ke beranda. Latihan tambahan hanya hadir sebagai isi sesi harian yang dimulai pengguna sendiri lewat **Mulai belajar**.
 7. **Satu istilah untuk satu konsep.** Kartu `due` selalu disebut **soal yang perlu diulang**, materi yang belum pernah dipelajari disebut **materi baru**, dan pengaturan materi baru selalu disebut **Cakupan**, tidak pernah "wilayah belajar" atau "lingkup".
 8. **Angka mengalahkan kalimat panjang.** Pakai **12 soal perlu diulang**, bukan "Terdapat dua belas soal yang sudah waktunya untuk diulang hari ini".
 9. **Pilih kata sesuai konteks belajar.** Jadwal ditulis **waktunya diulang** atau **perlu diulang**. Durasi ditulis **perkiraan durasi**, **target waktu aktif**, atau **batas waktu**, sesuai maksudnya. Hindari terjemahan harfiah dan istilah administrasi keuangan.
@@ -117,6 +117,8 @@ Bilah bawah tidak memakai lencana jumlah soal. Jumlah pengulangan cukup ditampil
 | Ada pengulangan                                              | **12 soal perlu diulang**                                               |
 | Ada materi baru                                              | **4 materi baru tersedia**                                              |
 | Tidak ada pengulangan                                        | **Tidak ada soal yang perlu diulang hari ini.**                         |
+| Sesi harian belum dikerjakan dan tidak ada soal terjadwal    | **Belum ada soal terjadwal hari ini**                                   |
+| Sesi harian sudah dikerjakan dan tidak ada soal tersisa      | **Sesi hari ini selesai**                                               |
 | Semua materi baru di Cakupan sudah diperkenalkan             | **Semua materi di wilayah ini sudah diperkenalkan.**                    |
 | Materi baru ditahan karena antrean pengulangan terlalu besar | **Materi baru dijeda hari ini agar sesi tetap ringan.**                 |
 | Label wilayah aktif                                          | **Cakupan**                                                             |
@@ -131,7 +133,7 @@ Bilah bawah tidak memakai lencana jumlah soal. Jumlah pengulangan cukup ditampil
 | Ikon sinkronisasi, ada yang menunggu                         | Ikon dengan titik; saat ditekan: **12 perubahan menunggu sinkronisasi** |
 | Memuat data di perangkat baru                                | **Menyiapkan data belajar…**                                            |
 
-Tidak ada tombol **Latihan lagi** pada keadaan kosong setelah sesi harian selesai. Jika memang tidak ada soal yang perlu diulang, beranda cukup menunjukkan jadwal hari itu sudah selesai.
+Tidak ada tombol **Latihan lagi** terpisah pada keadaan kosong. **Mulai belajar** tetap aktif dan membuka latihan tambahan jika tidak ada soal terjadwal. Beranda menulis **Sesi hari ini selesai** hanya setelah sesi harian dikerjakan; sebelum itu keadaan kosong ditulis **Belum ada soal terjadwal hari ini**.
 
 ### 3.3 Saat menjawab soal
 
@@ -213,6 +215,8 @@ Tingkat tidak ditampilkan di beranda dan tidak dipakai sebagai label pengguna. T
 | ---------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | Judul sesi harian            | **Sesi hari ini**                                                                                          |
 | Judul Latihan Terfokus       | **Latihan Terfokus · Kawasan Maluku**                                                                      |
+| Pengantar sesi harian yang seluruhnya latihan tambahan | **Semua soal terjadwal hari ini sudah selesai. Kamu bisa lanjut berlatih; hanya soal yang sudah waktunya diulang yang dapat memengaruhi jadwal.** |
+| Rincian jumlah soal, ada soal pengisi | Baris **Latihan tambahan** di samping **Pengulangan** dan **Materi baru** |
 | Jumlah soal                  | **18 soal · 12 pengulangan · 4 materi baru · 2 Bandingkan Kode**                                           |
 | Jenis soal                   | **Tebak daerah · 11**, **Tebak kode · 4**, **Tebak berwaktu · 3**                                          |
 | Tingkat kesulitan            | **Level 1 · 4**, **Level 2 · 10**, **Level 3 · 4**                                                         |
