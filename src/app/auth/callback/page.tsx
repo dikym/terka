@@ -49,7 +49,7 @@ export default function Page() {
 			if (signed.status === "otherAccount") return setOutcome({ kind: "otherAccount" });
 			if (signed.status !== "ok")
 				return setOutcome({ kind: "message", text: "Masuk belum berhasil. Coba lagi." });
-			await settleAfterSignIn(syncOnce(runtime), runtime.reload);
+			void settleAfterSignIn(syncOnce(runtime), runtime.reload);
 			showToast({ tone: "success", text: mergedMessage(signed.answers), key: "signIn" });
 			router.replace(takeReturnTo() ?? HOME);
 		})();
@@ -67,7 +67,7 @@ export default function Page() {
 					}
 					onWipe={() =>
 						void switchAccount(runtime.db, auth.client, Date.now()).then(async () => {
-							await settleAfterSignIn(syncOnce(runtime), runtime.reload);
+							void settleAfterSignIn(syncOnce(runtime), runtime.reload);
 							router.replace(takeReturnTo() ?? HOME);
 						})
 					}

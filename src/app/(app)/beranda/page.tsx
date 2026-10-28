@@ -10,7 +10,7 @@ import { showToast } from "@/lib/toasts";
 import { placementAvailable } from "@/core/session/placement";
 import { pendingNotices } from "@/core/views/notices";
 import { sessionCtx } from "@/lib/app/runtime";
-import { useAppState, usePrefs, useReady, useSyncLabel } from "@/lib/app/use-runtime";
+import { useAppState, usePrefs, useReady, useSettling, useSyncLabel } from "@/lib/app/use-runtime";
 import { markNotified, readFlags } from "@/lib/db/flags";
 import { readFlag, SEEN_CONTENT_REV, useFlag, WELCOME_SEEN, writeFlag } from "@/lib/flags";
 import { dataChanges } from "@/lib/view/changes";
@@ -31,6 +31,7 @@ function Home() {
 	const app = useAppState(runtime);
 	const prefs = usePrefs(runtime);
 	const syncLabel = useSyncLabel(runtime);
+	const settling = useSettling();
 	const welcomeSeen = useFlag("local", WELCOME_SEEN, "1");
 	const [dismissed, setDismissed] = useState(false);
 	const [starting, setStarting] = useState(false);
@@ -96,6 +97,7 @@ function Home() {
 	const welcome =
 		starting ||
 		(mounted &&
+			!settling &&
 			welcomeSeen !== "1" &&
 			!dismissed &&
 			(!app || placementAvailable(app.log.state)));
