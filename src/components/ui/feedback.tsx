@@ -93,13 +93,31 @@ export function Switch({
 			aria-label={label}
 			disabled={disabled}
 			onClick={() => onChange(!checked)}
-			// Every length is in rem, and the outline is an inset ring, so the knob stays centred in the
-			// track at any root font size; a px border and padding drift apart from rem sizes.
-			className={`relative inline-block h-7 w-11.5 flex-none cursor-pointer rounded-full inset-ring-1 inset-ring-ink-200 transition-colors duration-150 ease-out disabled:cursor-not-allowed disabled:opacity-40 motion-reduce:transition-none ${checked ? "bg-go-500" : "bg-paper-50"}`}
+			className="inline-block h-7 w-11.5 flex-none cursor-pointer rounded-full disabled:cursor-not-allowed disabled:opacity-40"
 		>
-			<span
-				className={`absolute top-1 left-1 block size-5 rounded-full transition-[translate,background-color] duration-150 ease-out motion-reduce:transition-none ${checked ? "translate-x-4.5 bg-paper-0" : "bg-ink-1000"}`}
-			/>
+			{/* Track and knob are one drawing. As separate boxes the browser snaps their edges to whole
+			    device pixels on its own, so at fractional zoom or root font size the knob sits a pixel
+			    off centre. The 46 × 28 viewBox matches the button, so it scales without letterboxing. */}
+			<svg
+				viewBox="0 0 46 28"
+				aria-hidden="true"
+				className="block size-full overflow-visible"
+			>
+				<rect
+					x="0.5"
+					y="0.5"
+					width="45"
+					height="27"
+					rx="13.5"
+					className={`stroke-ink-200 transition-colors duration-150 ease-out motion-reduce:transition-none ${checked ? "fill-go-500" : "fill-paper-50"}`}
+				/>
+				<circle
+					cx="14"
+					cy="14"
+					r="10"
+					className={`transition-[translate,fill] duration-150 ease-out motion-reduce:transition-none ${checked ? "translate-x-[18px] fill-paper-0" : "fill-ink-1000"}`}
+				/>
+			</svg>
 		</button>
 	);
 }
