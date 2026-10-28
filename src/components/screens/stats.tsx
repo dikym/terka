@@ -7,6 +7,7 @@ import { GROUP_BG } from "@/components/ui/groups";
 import { Icon } from "@/components/ui/icon";
 import { type MapProvince, MasteryMap } from "@/components/ui/mastery-map";
 import { Tooltip } from "@/components/ui/tooltip";
+import type { SyncIcon } from "@/lib/view/sync-label";
 import { type CodeStatus, type Stats, STATUS_LABEL } from "@/lib/view/stats";
 import { SIGHTING_WINDOW_DAYS } from "@/rules";
 
@@ -566,6 +567,7 @@ function Seen({ s, loading }: { s: Stats; loading: boolean }) {
 function Sync({
 	label,
 	last,
+	icon,
 	signedIn,
 	syncing,
 	onSync,
@@ -573,13 +575,14 @@ function Sync({
 }: {
 	label: string | null;
 	last: string | null;
+	icon: SyncIcon;
 	signedIn: boolean;
 	syncing: boolean;
 	onSync: () => void;
 	onLogin: () => void;
 }) {
 	const rows = [
-		["cloud-check", label],
+		[icon, label],
 		["clock", last]
 	] as const;
 	return (
@@ -609,7 +612,7 @@ function Sync({
 					variant="secondary"
 					size="sm"
 					block
-					icon="cloud-upload"
+					icon={syncing ? "cloud-sync" : "cloud-upload"}
 					disabled={syncing}
 					onClick={onSync}
 				>
@@ -629,6 +632,7 @@ export function StatsScreen({
 	provinces,
 	syncLabel,
 	lastSyncLabel,
+	syncIcon,
 	signedIn,
 	syncing,
 	onSync,
@@ -638,6 +642,7 @@ export function StatsScreen({
 	provinces: Record<string, MapProvince>;
 	syncLabel: string | null;
 	lastSyncLabel: string | null;
+	syncIcon: SyncIcon;
 	signedIn: boolean;
 	syncing: boolean;
 	onSync: () => void;
@@ -667,6 +672,7 @@ export function StatsScreen({
 					<Sync
 						label={syncLabel}
 						last={lastSyncLabel}
+						icon={syncIcon}
 						signedIn={signedIn}
 						syncing={syncing}
 						onSync={onSync}

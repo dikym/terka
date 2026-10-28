@@ -1,7 +1,9 @@
 import { Icon } from "@/components/ui/icon";
+import { useReady, useSyncIcon } from "@/lib/app/use-runtime";
 
 /** Desktop only: on a phone the sync status is an icon in the top bar. */
 export function SyncChip({ label }: { label: string | null }) {
+	const icon = useSyncIcon(useReady().runtime);
 	if (label === null)
 		return (
 			<span
@@ -17,7 +19,7 @@ export function SyncChip({ label }: { label: string | null }) {
 		);
 	return (
 		<span className="hidden h-9 items-center gap-2 rounded-sm border border-ink-200 px-3 text-ink-700 lg:inline-flex">
-			<Icon name="cloud-check" size={16} />
+			<Icon name={icon} size={16} />
 			<span className="font-sans text-body-sm leading-none font-medium">{label}</span>
 		</span>
 	);
