@@ -250,6 +250,7 @@ export function HomeScreen({ data }: { data: Home | null }) {
 	// After a long break, the main button opens Cek ingatan; its preview links on to the usual session.
 	const start = d?.summary.recheck ? "/sesi?mode=cek" : DAILY_SESSION;
 	const challengeDone = d?.challengeDone ?? false;
+	const quiet = d?.finished || d?.idle;
 	const scopeBar = d?.scope.group ? GROUP_BG[d.scope.group] : "bg-ink-1000";
 	const week = (d ?? SKELETON_HOME).week;
 	const scopeRows = d?.scope.rows ?? SKELETON_ROWS;
@@ -264,13 +265,15 @@ export function HomeScreen({ data }: { data: Home | null }) {
 			<div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-8">
 				<div className="flex min-w-0 flex-col gap-5">
 					<div className="flex flex-col gap-3">
-						{!d?.finished && (
+						{!quiet && (
 							<span className="type-label text-ink-500">Perlu diulang hari ini</span>
 						)}
 						<div className="flex items-baseline gap-3">
-							{d?.finished ? (
+							{quiet ? (
 								<span className="font-display text-title leading-tight font-bold text-ink-1000">
-									Sesi hari ini selesai
+									{d?.finished
+										? "Sesi hari ini selesai"
+										: "Belum ada soal terjadwal hari ini"}
 								</span>
 							) : (
 								<>
@@ -311,11 +314,11 @@ export function HomeScreen({ data }: { data: Home | null }) {
 						start={start}
 					/>
 
-					{(!d || !d.finished || d.pairs.length > 0) && (
+					{(!d || !quiet || d.pairs.length > 0) && (
 						<section
-							className={`grid grid-cols-1 overflow-hidden rounded-md border border-hairline bg-paper-0 shadow-lift ${d?.finished ? "" : "lg:grid-cols-3"}`}
+							className={`grid grid-cols-1 overflow-hidden rounded-md border border-hairline bg-paper-0 shadow-lift ${quiet ? "" : "lg:grid-cols-3"}`}
 						>
-							{!d?.finished && (
+							{!quiet && (
 								<>
 									<Stat
 										label="Pengulangan"

@@ -69,6 +69,18 @@ export function learnedLog(
 	return withUuids([...events, ...sets]);
 }
 
+// Codes whose learning steps finished minutes ago, so nothing is due again today.
+export function justLearnedLog(regionIds: string[], now = Date.now()): LearningEvent[] {
+	const start = now - 30 * MINUTE;
+	return withUuids(
+		regionIds.flatMap((id) => [
+			review(id, "code2region", start, { ...choice, context: "intro" }),
+			review(id, "code2region", start + MINUTE, choice),
+			review(id, "code2region", start + 11 * MINUTE, choice)
+		])
+	);
+}
+
 /** BK learned, then missed once: enough to put it in the weakest codes table. */
 export function missedLog(now = Date.now()): LearningEvent[] {
 	const learned = learnedLog(["bk"], [], now - DAY);
