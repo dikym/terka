@@ -389,7 +389,7 @@ export function AccountScreen({
 					</div>
 					<aside className="flex min-w-0 flex-col gap-5">
 						<Card>
-							<CardHeader label="Keluar dan hapus akun" />
+							<CardHeader label="Keluar" />
 							<p className="font-sans text-body-sm leading-normal text-ink-500">
 								Keluar menyelesaikan sinkronisasi lebih dulu, lalu menghapus data
 								dari perangkat ini.
@@ -403,18 +403,17 @@ export function AccountScreen({
 							>
 								Keluar
 							</Button>
-							<div className="h-px bg-hairline" />
+						</Card>
+						<Card bar="bg-stop-500">
+							<CardHeader
+								label={<span className="text-stop-700">Hapus akun</span>}
+								aside={<Icon name="triangle-alert" size={18} color="bg-stop-700" />}
+							/>
 							<p className="font-sans text-body-sm leading-normal text-ink-500">
 								Menghapus akun menghapus data di server. Data di perangkat ini tetap
 								ada.
 							</p>
-							<Button
-								variant="quiet"
-								size="sm"
-								block
-								className="text-ink-1000"
-								onClick={actions.deleteAccount}
-							>
+							<Button variant="stop" size="sm" block onClick={actions.deleteAccount}>
 								Hapus akun
 							</Button>
 						</Card>
