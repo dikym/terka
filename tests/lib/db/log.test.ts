@@ -196,6 +196,26 @@ describe("recording events", () => {
 		expect((await db.outbox.toArray()).map((item) => item.op)).toEqual(["insert", "close"]);
 		expect(snapshot(log.state)).toEqual(snapshot(stateOf([closed])));
 	});
+	test("a session that arrives already closed gets an insert and a close item", async () => {
+		const db = freshDb();
+		const closed = run("daily", NOW, { plannedCount: 1 });
+		await recorded(db, await opened(db), [closed]);
+		expect((await db.outbox.toArray()).map((item) => [item.key, item.op])).toEqual([
+			[closed.row.id, "insert"],
+			[closed.row.id, "close"]
+		]);
+	});
+	test("an open session that arrives open gets only an insert item", async () => {
+		const db = freshDb();
+		const open = run("daily", NOW, {
+			endedAt: null,
+			answered: null,
+			correct: null,
+			activeMs: null
+		});
+		await recorded(db, await opened(db), [open]);
+		expect((await db.outbox.toArray()).map((item) => item.op)).toEqual(["insert"]);
+	});
 	test("a void replays the whole log and is stored", async () => {
 		const db = freshDb();
 		const events = answers();
