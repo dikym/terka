@@ -3,9 +3,14 @@ import { ACTIVE_DEVICE_DAYS, ACTIVE_DEVICE_LIMIT } from "@/rules";
 import { ago } from "./format";
 
 /** One line for the sync chip and the account screen. */
-export function syncLabel(status: SyncStatus | null, signedIn: boolean, now: number): string {
+export function syncLabel(
+	status: SyncStatus | null,
+	signedIn: boolean,
+	now: number,
+	syncing = false
+): string {
 	if (!signedIn) return "Tersimpan di perangkat ini";
-	if (!status) return "Menyinkronkan…";
+	if (!status || syncing) return "Menyinkronkan…";
 	switch (status.state) {
 		case "synced":
 			return status.lastSyncAt === null

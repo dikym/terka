@@ -2,7 +2,7 @@ import { describe, expect, test } from "bun:test";
 import { seeded } from "../../../src/core/random";
 import { openApp } from "../../../src/lib/app/boot";
 import { createAppStore } from "../../../src/lib/app/store";
-import { startSync } from "../../../src/lib/app/sync";
+import { startSync, syncRunning, trackRound } from "../../../src/lib/app/sync";
 import type { SyncStatus } from "../../../src/lib/sync/status";
 import { NOW, review, ruleBundle } from "../../core/replay/fixtures";
 import { freshDb, withUuids } from "../db/fixtures";
@@ -92,5 +92,36 @@ describe("startSync", () => {
 		const { h, stop } = await started();
 		stop();
 		expect(h.listeners.size).toBe(0);
+	});
+});
+
+describe("tracking sync rounds", () => {
+	test("reports a round while it runs and not after", async () => {
+		let release: () => void = () => {};
+		const round = trackRound(() => new Promise<void>((resolve) => (release = resolve)));
+		expect(syncRunning.get()).toBe(true);
+		release();
+		await round;
+		expect(syncRunning.get()).toBe(false);
+	});
+
+	test("stays on until the last of two overlapping rounds ends", async () => {
+		const releases: (() => void)[] = [];
+		const wait = () => new Promise<void>((resolve) => releases.push(resolve));
+		const first = trackRound(wait);
+		const second = trackRound(wait);
+		releases[0]();
+		await first;
+		expect(syncRunning.get()).toBe(true);
+		releases[1]();
+		await second;
+		expect(syncRunning.get()).toBe(false);
+	});
+
+	test("goes off when a round fails", async () => {
+		await expect(trackRound(() => Promise.reject(new Error("offline")))).rejects.toThrow(
+			"offline"
+		);
+		expect(syncRunning.get()).toBe(false);
 	});
 });

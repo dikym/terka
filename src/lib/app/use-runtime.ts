@@ -11,6 +11,7 @@ import {
 	runtimeSnapshot,
 	subscribeRuntime
 } from "./runtime";
+import { syncRunning } from "./sync";
 import { lastSyncLabel, type SyncIcon, syncIcon, syncLabel } from "../view/sync-label";
 import type { AppState } from "./store";
 
@@ -34,6 +35,10 @@ function useStore<T>(store: StoreApi<T> | null): T | null {
 		() => null
 	);
 }
+
+/** True while any sync round is running. */
+export const useSyncRunning = () =>
+	useSyncExternalStore(syncRunning.subscribe, syncRunning.get, () => false);
 
 export const useSettling = () =>
 	useSyncExternalStore(settling.subscribe, settling.get, () => false);
@@ -83,12 +88,12 @@ const clockSnapshot = () => now;
 export const useNow = () => useSyncExternalStore(subscribeClock, clockSnapshot, () => 0);
 
 /** The sync line for the chip and the phone header; null while the app opens. */
-export function useSyncLabel(runtime: Runtime | null): string | null {
+export function useSyncLabel(runtime: Runtime | null, syncing = false): string | null {
 	const app = useAppState(runtime);
 	const { known, email } = useAccount();
 	const at = useNow();
 	if (!app || !known || at === 0) return null;
-	return syncLabel(app.sync, email !== null, at);
+	return syncLabel(app.sync, email !== null, at, syncing);
 }
 
 /** The cloud icon for the sync status; `syncing` marks a sync the person just started. */

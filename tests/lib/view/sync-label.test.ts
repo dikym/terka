@@ -26,6 +26,13 @@ test("a signed-in device that has not synced yet says so", () => {
 	expect(syncLabel(null, true, NOW)).toBe("Menyinkronkan…");
 });
 
+test("a running sync reads as syncing whatever the last status was", () => {
+	const synced = { quarantined: 0, lastSyncAt: NOW, state: "synced" } as const;
+	expect(syncLabel(synced, true, NOW, true)).toBe("Menyinkronkan…");
+	expect(syncLabel(synced, true, NOW, false)).toBe("Tersinkron baru saja");
+	expect(syncLabel(synced, false, NOW, true)).toBe("Tersimpan di perangkat ini");
+});
+
 test("the last sync time shows in any state, and a device that never synced says so", () => {
 	const offline = { quarantined: 0, lastSyncAt: NOW - 2 * 3_600_000, state: "offline" } as const;
 	expect(lastSyncLabel(offline, NOW)).toBe("Sinkron terakhir 2 jam lalu");

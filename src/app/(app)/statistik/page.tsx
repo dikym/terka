@@ -12,7 +12,8 @@ import {
 	useLastSyncLabel,
 	useReady,
 	useSyncIcon,
-	useSyncLabel
+	useSyncLabel,
+	useSyncRunning
 } from "@/lib/app/use-runtime";
 import { openLogin } from "@/lib/auth/return-to";
 import { mapProvinces } from "@/lib/view/map";
@@ -21,12 +22,14 @@ import { statsView } from "@/lib/view/stats";
 export default function Page() {
 	const { status, runtime } = useReady();
 	const app = useAppState(runtime);
-	const syncLabel = useSyncLabel(runtime);
 	const lastSyncLabel = useLastSyncLabel(runtime);
 	const { email } = useAccount();
 	const router = useRouter();
 	const [syncing, setSyncing] = useState(false);
-	const syncIcon = useSyncIcon(runtime, syncing);
+	const running = useSyncRunning();
+	const busy = syncing || running;
+	const syncLabel = useSyncLabel(runtime, busy);
+	const syncIcon = useSyncIcon(runtime, busy);
 	const sync = () => {
 		if (!runtime || syncing) return;
 		setSyncing(true);
@@ -52,7 +55,7 @@ export default function Page() {
 			lastSyncLabel={lastSyncLabel}
 			syncIcon={syncIcon}
 			signedIn={email !== null}
-			syncing={syncing}
+			syncing={busy}
 			onSync={sync}
 			onLogin={() => openLogin(router)}
 		/>
