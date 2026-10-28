@@ -234,10 +234,15 @@ export function OtherAccount({ onBack, onWipe }: { onBack: () => void; onWipe: (
 			onClose={onBack}
 			actions={
 				<>
-					<Button size="sm" block data-autofocus onClick={onBack}>
+					<Button size="sm" className="max-lg:w-full" data-autofocus onClick={onBack}>
 						Kembali ke akun sebelumnya
 					</Button>
-					<Button variant="secondary" size="sm" block onClick={onWipe}>
+					<Button
+						variant="secondary"
+						size="sm"
+						className="max-lg:w-full"
+						onClick={onWipe}
+					>
 						Hapus data di perangkat ini
 					</Button>
 				</>
