@@ -359,7 +359,7 @@ function ByGroup({ s, loading }: { s: Stats; loading: boolean }) {
 					>
 						<span className="flex items-center gap-2 py-2.25 font-sans text-body-sm leading-[1.2] text-ink-900">
 							<span
-								className={`size-2 rounded-full ${loading ? "bg-ink-100" : GROUP_BG[row.group]}`}
+								className={`size-2 flex-none rounded-full ${loading ? "bg-ink-100" : GROUP_BG[row.group]}`}
 							/>
 							{text(loading, row.name)}
 						</span>

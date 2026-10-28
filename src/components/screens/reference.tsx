@@ -290,7 +290,7 @@ function RegionList({
 								active={filter === id}
 								onClick={() => setFilter(id)}
 							>
-								<span className={`size-2 rounded-full ${GROUP_BG[id]}`} />
+								<span className={`size-2 flex-none rounded-full ${GROUP_BG[id]}`} />
 								{GROUP_NAME[id]}
 							</TagButton>
 						))}
