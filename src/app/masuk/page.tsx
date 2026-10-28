@@ -9,13 +9,13 @@ import { useAccount, useReady } from "@/lib/app/use-runtime";
 import { leaveLogin, peekReturnTo } from "@/lib/auth/return-to";
 import { showToast } from "@/lib/toasts";
 
-const ACCOUNT = "/setelan/akun";
+const HOME = "/beranda";
 
 export default function Page() {
 	const router = useRouter();
 	// Read once: a later visit to the privacy policy and back must not lose it.
 	const [remembered] = useState(() => peekReturnTo());
-	const destination = remembered ?? ACCOUNT;
+	const destination = remembered ?? HOME;
 	const { runtime } = useReady();
 	const account = useAccount();
 	const { signIn, conflict } = useSignIn(runtime, destination, (message) => {
