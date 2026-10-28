@@ -42,7 +42,7 @@ export function Toast({ toast, onClose }: { toast: ToastItem; onClose: () => voi
 			<Icon name={toast.icon ?? tone.glyph} size={18} color={tone.icon} className="mt-px" />
 			<div className="flex min-w-0 flex-1 flex-col gap-0.5">
 				{toast.label && (
-					<span className={`leading-[20px] type-label ${tone.text}`}>{toast.label}</span>
+					<span className={`leading-[20px]! type-label ${tone.text}`}>{toast.label}</span>
 				)}
 				<span className="font-sans text-body-md leading-[20px] font-medium text-ink-900">
 					{toast.text}
