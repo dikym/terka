@@ -157,11 +157,17 @@ export function ConfirmDialog({
 				<Body id={`${id}-text`}>{children}</Body>
 			</div>
 			<div className="flex flex-col-reverse gap-3 lg:flex-row lg:justify-end">
-				<Button variant="secondary" className="max-lg:w-full" onClick={destructive.onClick}>
+				<Button
+					variant="secondary"
+					size="sm"
+					className="max-lg:w-full"
+					onClick={destructive.onClick}
+				>
 					{destructive.label}
 				</Button>
 				<Button
 					icon={safe.icon}
+					size="sm"
 					className="max-lg:w-full"
 					data-autofocus
 					onClick={safe.onClick}
@@ -262,11 +268,17 @@ export function TypedConfirm({
 				className="h-12 w-full rounded-sm border border-ink-1000 bg-paper-0 px-4 font-mono text-body-lg leading-none font-medium tracking-[0.08em] text-ink-1000"
 			/>
 			<div className="flex flex-col gap-3 lg:flex-row lg:justify-end">
-				<Button variant="ghost" className="text-ink-1000 max-lg:w-full" onClick={onCancel}>
+				<Button
+					variant="ghost"
+					size="sm"
+					className="text-ink-1000 max-lg:w-full"
+					onClick={onCancel}
+				>
 					Batal
 				</Button>
 				<Button
 					variant="stop"
+					size="sm"
 					disabled={!ready}
 					aria-disabled={!ready}
 					className={`max-lg:w-full ${DISABLED_GREY}`}

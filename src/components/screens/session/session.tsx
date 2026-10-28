@@ -149,6 +149,9 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 		reasks: new Map(),
 		reaskSerial: 0
 	});
+	// While a run is going, an extra history entry sits on top so the browser's back button lands
+	// on this screen first and can ask before leaving.
+	const trap = useRef({ held: false, hasPrevious: false, exiting: false });
 
 	const leave = () => {
 		// Leaving discards the run: its answers are voided and the run stays open, so it never counts.
@@ -158,7 +161,11 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 			const ctx = sessionCtx(runtime);
 			if (answers.length) void write(answers.map((row) => voidEvent(row, ctx)));
 		}
-		if (window.history.length > 1) router.back();
+		trap.current.exiting = true;
+		const { held, hasPrevious } = trap.current;
+		trap.current.held = false;
+		if (held && hasPrevious) window.history.go(-2);
+		else if (!held && window.history.length > 1) router.back();
 		else router.push("/beranda");
 	};
 
@@ -601,6 +608,42 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 		window.addEventListener("keydown", onKey);
 		return () => window.removeEventListener("keydown", onKey);
 	});
+
+	const running = state.phase === "ask" || state.phase === "graded";
+	const onBack = () => {
+		const { answers, closed } = engine.current;
+		trap.current.held = false;
+		if (answers.length && !closed) {
+			window.history.pushState(window.history.state, "");
+			trap.current.held = true;
+			setLeaving(true);
+		} else leave();
+	};
+	const latestOnBack = useRef(onBack);
+	useEffect(() => {
+		latestOnBack.current = onBack;
+	});
+
+	useEffect(() => {
+		if (!running) return;
+		const hold = trap.current;
+		if (!hold.held) {
+			hold.hasPrevious = window.history.length > 1;
+			window.history.pushState(window.history.state, "");
+			hold.held = true;
+		}
+		const onPop = () => {
+			if (!hold.exiting) latestOnBack.current();
+		};
+		window.addEventListener("popstate", onPop);
+		return () => window.removeEventListener("popstate", onPop);
+	}, [running]);
+
+	useEffect(() => {
+		if (state.phase !== "done" || !trap.current.held) return;
+		trap.current.held = false;
+		window.history.back();
+	}, [state.phase]);
 
 	const failed = failedMessage(status);
 	if (failed)
