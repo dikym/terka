@@ -24,6 +24,7 @@ export const ICON_NAMES = [
 	"flame",
 	"git-compare-arrows",
 	"globe",
+	"globe-off",
 	"hard-drive",
 	"house",
 	"info",
@@ -51,6 +52,7 @@ export const ICON_NAMES = [
 	"undo-2",
 	"upload",
 	"user",
+	"user-x",
 	"x",
 	"zap"
 ] as const;

@@ -20,17 +20,17 @@ const STEPS: { icon: IconName; title: string; text: string }[] = [
 	{
 		icon: "layers",
 		title: "Mulai dengan tes penempatan",
-		text: "Tes singkat menentukan titik mulaimu. Setelah itu pilih wilayah yang mau dipelajari dulu: satu provinsi, satu kawasan, atau seluruh Indonesia."
+		text: "Tes singkat menentukan titik mulaimu, dan boleh dilewati. Setelah itu pilih wilayah yang mau dipelajari dulu: satu provinsi, satu kawasan, atau seluruh Indonesia."
 	},
 	{
 		icon: "keyboard",
-		title: "Jawab dengan mengetik",
-		text: "Pilihan ganda hanya dipakai saat berkenalan dengan kode baru. Setelah itu kamu mengetik sendiri jawabannya, dan salah ketik kecil tetap diterima."
+		title: "Pilih dulu, lalu ketik sendiri",
+		text: "Kode baru dimulai dengan pilihan ganda. Makin kuat ingatanmu pada satu kode, makin sering kamu mengetik sendiri jawabannya, dan salah ketik kecil tetap diterima."
 	},
 	{
 		icon: "calendar-days",
 		title: "Ulangi sesuai jadwal",
-		text: "Jadwal dihitung dari benar-salah dan kecepatan jawabanmu. Setelah sesi harian selesai, tidak ada soal lagi sampai besok. Kode yang sudah melekat jarang muncul, yang masih goyah lebih sering."
+		text: "Jadwal dihitung dari benar-salah dan kecepatan jawabanmu, lalu disesuaikan dengan caramu mengingat setelah riwayatmu cukup. Kode yang sudah melekat jarang muncul, yang masih goyah lebih sering. Kalau soal terjadwal habis, kamu tetap bisa lanjut berlatih; hanya soal yang memang sudah waktunya diulang yang memengaruhi jadwal."
 	}
 ];
 
@@ -50,6 +50,25 @@ const KINDS = [
 	["Tebak diplomat", "CD 49 dipakai perwakilan mana?"]
 ];
 
+const TOOLS = [
+	[
+		"Statistik",
+		"Peta Penguasaan tiap provinsi, kode yang paling sering belum tepat, dan perkiraan beban pengulangan 14 hari ke depan."
+	],
+	[
+		"Referensi",
+		"Cari kode atau nama daerah, termasuk kode diplomat dan format pelat khusus. Tidak ada soal di sini."
+	],
+	[
+		"Catatan pengingat",
+		"Tulis kaitan pribadimu untuk kode yang sulit diingat, misalnya “DR: Dari Rinjani”. Tawarannya muncul setelah kode itu beberapa kali gagal diulang."
+	],
+	[
+		"Pintasan keyboard",
+		"F, G, H, dan J memilih jawaban, Enter lanjut ke soal berikutnya, dan Z membatalkan jawaban terakhir."
+	]
+];
+
 const EXTRAS: { bar: string; icon: IconName; title: string; meta: string; text: string }[] = [
 	{
 		bar: "bg-tangerine-700",
@@ -66,11 +85,25 @@ const EXTRAS: { bar: string; icon: IconName; title: string; meta: string; text: 
 		text: "Rekor terbaik dicatat terpisah untuk tiap wilayah. Jadwal belajar tidak berubah."
 	},
 	{
+		bar: "bg-grape-500",
+		icon: "crosshair",
+		title: "Latihan Terfokus",
+		meta: "Satu wilayah pilihan",
+		text: "Latih kode yang sudah kamu pelajari di satu provinsi atau kawasan, tanpa mengganti Cakupan."
+	},
+	{
 		bar: "bg-caution-500",
 		icon: "git-compare-arrows",
 		title: "Bandingkan Kode",
 		meta: "BE dan BD",
-		text: "Dua kode yang sering tertukar muncul berdampingan, sekali sehari, sampai kamu membedakannya dengan benar di lima hari berbeda."
+		text: "Dua kode yang sering tertukar muncul berdampingan sekali sehari, sampai kamu benar di lima hari berbeda."
+	},
+	{
+		bar: "bg-tangerine-500",
+		icon: "brain",
+		title: "Cek Ingatan",
+		meta: "20 soal setelah libur panjang",
+		text: "Setelah berhenti seminggu lebih dan soal menumpuk, ukur dulu seberapa banyak yang masih kamu ingat."
 	},
 	{
 		bar: "bg-ink-1000",
@@ -83,17 +116,17 @@ const EXTRAS: { bar: string; icon: IconName; title: string; meta: string; text: 
 
 const PRIVACY: { icon: IconName; title: string; text: string }[] = [
 	{
-		icon: "hard-drive",
+		icon: "user-x",
 		title: "Tanpa akun",
 		text: "Langsung belajar tanpa akun. Progres tersimpan di perangkat ini."
 	},
 	{
-		icon: "cloud-check",
+		icon: "cloud-sync",
 		title: "Sinkronisasi kalau perlu",
-		text: "Masuk dengan Google atau email untuk memakai riwayat yang sama di perangkat lain. Data bisa diekspor dan akun bisa dihapus kapan saja."
+		text: "Masuk dengan Google atau email untuk memakai riwayat yang sama di perangkat lain. Status sinkronisasi dan daftar perangkat bisa kamu lihat, data bisa diekspor, dan akun bisa dihapus kapan saja."
 	},
 	{
-		icon: "download",
+		icon: "globe-off",
 		title: "Tetap jalan saat offline",
 		text: "Pasang Terka di layar utama ponsel. Latihan tetap bisa dipakai tanpa sinyal."
 	}
@@ -117,6 +150,26 @@ function Heading({ label, title }: { label?: string; title: string }) {
 			{label && <span className={LABEL}>{label}</span>}
 			<h2 className={TITLE}>{title}</h2>
 		</>
+	);
+}
+
+function NameRows({ rows }: { rows: string[][] }) {
+	return (
+		<div className="flex min-w-0 flex-col border-t border-hairline">
+			{rows.map(([name, text]) => (
+				<div
+					key={name}
+					className="flex flex-col gap-1 border-b border-hairline py-3 lg:grid lg:grid-cols-[minmax(150px,210px)_minmax(0,1fr)] lg:items-baseline lg:gap-x-5 lg:gap-y-2 lg:py-4"
+				>
+					<span className="font-display text-body-md leading-[1.3] font-semibold text-ink-1000">
+						{name}
+					</span>
+					<span className="text-body-sm leading-normal text-ink-700 lg:text-body-md">
+						{text}
+					</span>
+				</div>
+			))}
+		</div>
 	);
 }
 
@@ -221,21 +274,26 @@ function QuestionKinds() {
 						tidak pernah memberi huruf atau angka awal sebagai petunjuk.
 					</p>
 				</div>
-				<div className="flex min-w-0 flex-col border-t border-hairline">
-					{KINDS.map(([name, example]) => (
-						<div
-							key={name}
-							className="flex flex-col gap-1 border-b border-hairline py-3 lg:grid lg:grid-cols-[minmax(150px,210px)_minmax(0,1fr)] lg:items-baseline lg:gap-x-5 lg:gap-y-2 lg:py-4"
-						>
-							<span className="font-display text-body-md leading-[1.3] font-semibold text-ink-1000">
-								{name}
-							</span>
-							<span className="text-body-sm leading-normal text-ink-700 lg:text-body-md">
-								{example}
-							</span>
-						</div>
-					))}
+				<NameRows rows={KINDS} />
+			</div>
+		</section>
+	);
+}
+
+function Tools() {
+	return (
+		<section className="border-b border-hairline">
+			<div
+				className={`${WRAP} grid gap-6 py-12 lg:grid-cols-2 lg:items-start lg:gap-10 lg:py-16`}
+			>
+				<div className="flex flex-col gap-3 lg:max-w-[40ch]">
+					<Heading label="Alat bantu" title="Pantau kemajuan, cari kode kapan saja." />
+					<p className="text-ink-700 type-body">
+						Statistik dan Referensi tidak memuat soal, jadi membukanya tidak mengubah
+						jadwal belajarmu.
+					</p>
 				</div>
+				<NameRows rows={TOOLS} />
 			</div>
 		</section>
 	);
@@ -251,7 +309,7 @@ function Extras() {
 						title="Latihan singkat untuk hari yang longgar."
 					/>
 				</div>
-				<div className="grid gap-3 lg:grid-cols-4 lg:gap-5">
+				<div className="grid gap-3 lg:grid-cols-3 lg:gap-5">
 					{EXTRAS.map((extra) => (
 						<Card
 							key={extra.title}
@@ -399,6 +457,7 @@ export function Landing() {
 				<HowItWorks />
 				<QuestionKinds />
 				<Extras />
+				<Tools />
 				<Privacy />
 				<Closing />
 			</main>
