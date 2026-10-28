@@ -12,7 +12,7 @@ import { afterSignIn, finishCallback, switchAccount } from "@/lib/auth/signin";
 import { showToast } from "@/lib/toasts";
 import { mergedMessage } from "@/lib/view/account";
 
-const ACCOUNT = "/setelan/akun";
+const HOME = "/beranda";
 
 type Outcome = { kind: "message"; text: string } | { kind: "otherAccount" } | null;
 
@@ -51,7 +51,7 @@ export default function Page() {
 				return setOutcome({ kind: "message", text: "Masuk belum berhasil. Coba lagi." });
 			await runtime.reload();
 			showToast({ tone: "success", text: mergedMessage(signed.answers), key: "signIn" });
-			router.replace(takeReturnTo() ?? ACCOUNT);
+			router.replace(takeReturnTo() ?? HOME);
 		})();
 	}, [runtime, router]);
 
@@ -68,7 +68,7 @@ export default function Page() {
 					onWipe={() =>
 						void switchAccount(runtime.db, auth.client, Date.now()).then(async () => {
 							await runtime.reload();
-							router.replace(takeReturnTo() ?? ACCOUNT);
+							router.replace(takeReturnTo() ?? HOME);
 						})
 					}
 				/>
