@@ -265,10 +265,7 @@ export function SettingsScreen({
 						/>
 					</Section>
 					<Section title="Pengaturan lanjutan">
-						<Row
-							title="Parameter jadwal"
-							control={<Icon name="chevron-right" size={16} />}
-						>
+						<Row title="Parameter jadwal" href="/setelan/parameter">
 							<Note>{line(s.params)}</Note>
 						</Row>
 						<Row
