@@ -7,7 +7,6 @@ import { GROUP_BG } from "@/components/ui/groups";
 import { Icon } from "@/components/ui/icon";
 import { type MapProvince, MasteryMap } from "@/components/ui/mastery-map";
 import { Tooltip } from "@/components/ui/tooltip";
-import { loginHref } from "@/lib/auth/return-to";
 import { type CodeStatus, type Stats, STATUS_LABEL } from "@/lib/view/stats";
 import { SIGHTING_WINDOW_DAYS } from "@/rules";
 import { SyncChip } from "./sync-chip";
@@ -565,72 +564,14 @@ function Seen({ s, loading }: { s: Stats; loading: boolean }) {
 	);
 }
 
-function Account({ s, loading, onExport }: { s: Stats; loading: boolean; onExport: () => void }) {
-	const rows = [
-		["user", s.account.email ?? "Belum masuk. Progres tersimpan di perangkat ini."],
-		["cloud-check", s.account.sync],
-		["download", s.account.export]
-	] as const;
-	return (
-		<Card className="gap-3">
-			<CardHeader label="Akun dan sinkronisasi" />
-			<div className="flex flex-col">
-				{rows.map(([icon, label], index) => (
-					<Row key={icon} last={index === rows.length - 1}>
-						<div className="flex min-w-0 items-start gap-3">
-							{/* Level with the first line when the text wraps. */}
-							<Icon name={icon} size={16} className="mt-0.75" />
-							<span className="text-ink-900 type-body">{text(loading, label)}</span>
-						</div>
-					</Row>
-				))}
-			</div>
-			<div className="grid grid-cols-2 gap-2">
-				{loading ? (
-					<>
-						<Skeleton className="block h-9 w-full rounded-sm" />
-						<Skeleton className="block h-9 w-full rounded-sm" />
-					</>
-				) : (
-					<>
-						<Button
-							variant="secondary"
-							size="sm"
-							block
-							icon="download"
-							onClick={onExport}
-						>
-							Ekspor data
-						</Button>
-						<Button
-							variant="quiet"
-							size="sm"
-							block
-							href={s.account.email ? "/statistik/akun" : loginHref("/statistik")}
-							className="text-ink-1000"
-						>
-							{s.account.email ? "Kelola akun" : "Masuk"}
-						</Button>
-					</>
-				)}
-			</div>
-		</Card>
-	);
-}
-
 export function StatsScreen({
 	data,
 	provinces,
-	syncLabel,
-	menu,
-	onExport
+	syncLabel
 }: {
 	data: Stats | null;
 	provinces: Record<string, MapProvince>;
 	syncLabel: string | null;
-	/** The account menu beside the sync chip. */
-	menu?: React.ReactNode;
-	onExport: () => void;
 }) {
 	const loading = data === null;
 	const s = data ?? SKELETON;
@@ -640,10 +581,7 @@ export function StatsScreen({
 				<div className="flex items-center gap-3">
 					<h1 className="type-screen-title">Statistik</h1>
 				</div>
-				<div className="flex items-center gap-3">
-					<SyncChip label={loading ? null : syncLabel} />
-					{menu}
-				</div>
+				<SyncChip label={loading ? null : syncLabel} />
 			</div>
 			<NationalSummary s={s} loading={loading} />
 			<MapCard loading={loading} provinces={provinces} />
@@ -659,7 +597,6 @@ export function StatsScreen({
 					{(loading || s.nameAll.length > 0) && <NameAll s={s} loading={loading} />}
 					{(loading || s.diplomat.started) && <Diplomat s={s} loading={loading} />}
 					{(loading || s.seen.length > 0) && <Seen s={s} loading={loading} />}
-					<Account s={s} loading={loading} onExport={onExport} />
 				</aside>
 			</div>
 		</>
@@ -704,10 +641,5 @@ const SKELETON: Stats = {
 		wait: null
 	})),
 	diplomat: { mastered: 42, total: 130, started: true },
-	seen: ["a", "b", "c"].map((code) => ({ code, group: "jawa", count: 1 })),
-	account: {
-		email: "nama@email.com",
-		sync: "Tersinkron 3 menit lalu",
-		export: "Ekspor terakhir 12 hari lalu"
-	}
+	seen: ["a", "b", "c"].map((code) => ({ code, group: "jawa", count: 1 }))
 };

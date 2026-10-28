@@ -4,9 +4,8 @@ import { DAY, intro, NOW, review, ruleBundle, stateOf } from "../../core/replay/
 import { ctxAt } from "../../core/session/fixtures";
 
 const bundle = ruleBundle();
-const account = { email: null, sync: "Tersimpan di perangkat ini", export: "Belum pernah ekspor" };
 const view = (events: Parameters<typeof stateOf>[0]) =>
-	statsView(stateOf(events), bundle, ctxAt(NOW), account);
+	statsView(stateOf(events), bundle, ctxAt(NOW));
 
 describe("statistics view", () => {
 	test("a new learner sees empty statistics", () => {

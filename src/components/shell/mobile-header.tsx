@@ -1,11 +1,11 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { Link } from "@/components/ui/app-link";
 import { Icon } from "@/components/ui/icon";
 import { Wordmark } from "@/components/ui/plate";
 import { Tooltip } from "@/components/ui/tooltip";
 import { useReady, useSyncLabel } from "@/lib/app/use-runtime";
+import { AccountMenu } from "./account-menu";
 
 const ICON_BUTTON =
 	"inline-flex size-11 flex-none cursor-pointer items-center justify-center rounded-sm border border-transparent bg-transparent text-ink-700 focus-visible:-outline-offset-2";
@@ -31,11 +31,11 @@ export function MobileHeader() {
 						</button>
 					</Tooltip>
 				)}
-				<Tooltip content="Setelan">
-					<Link href="/setelan" aria-label="Setelan" className={ICON_BUTTON}>
-						<Icon name="settings" />
-					</Link>
-				</Tooltip>
+				<AccountMenu
+					iconOnly
+					triggerClassName={ICON_BUTTON}
+					menuClassName="top-[calc(100%+12px)] right-2.5 max-h-[calc(100dvh-5rem)] w-56 max-w-[calc(100vw-2rem)]"
+				/>
 			</span>
 		</header>
 	);

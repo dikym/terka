@@ -147,3 +147,23 @@ test("opening a code chip in Referensi returns to the top", async ({ page }) => 
 	await expect(page).toHaveURL(/kode=PA/);
 	expect(await page.evaluate(() => window.scrollY)).toBe(0);
 });
+
+test("the top bar's account menu fits the phone and reaches Setelan", async ({ page }) => {
+	await seen(page);
+	await page.goto("/beranda");
+	await page.getByRole("button", { name: "Akun" }).click();
+	const menu = page.getByRole("menu", { name: "Akun" });
+	await expect(menu.getByRole("menuitem")).toHaveText([
+		"Setelan",
+		"Papan tombol",
+		"Ekspor data",
+		"Impor data",
+		"Masuk"
+	]);
+	const box = (await menu.boundingBox())!;
+	const viewport = page.viewportSize()!;
+	expect(box.x).toBeGreaterThanOrEqual(0);
+	expect(box.x + box.width).toBeLessThanOrEqual(viewport.width);
+	await menu.getByRole("menuitem", { name: "Setelan" }).click();
+	await expect(page).toHaveURL(/\/setelan$/);
+});

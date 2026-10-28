@@ -40,7 +40,6 @@ export type Stats = {
 	/** `started`: some diplomat code was introduced, so the card has something to report. */
 	diplomat: { mastered: number; total: number; started: boolean };
 	seen: { code: string; group: GroupId; count: number }[];
-	account: { email: string | null; sync: string; export: string };
 };
 
 export const REGION_MODES = new Set(["code2region", "region2code", "setrecall"]);
@@ -123,12 +122,7 @@ function forecastView(state: AppState, ctx: SessionContext): Stats["forecast"] {
 	};
 }
 
-export function statsView(
-	input: AppState,
-	bundle: Bundle,
-	ctx: SessionContext,
-	account: Stats["account"]
-): Stats {
+export function statsView(input: AppState, bundle: Bundle, ctx: SessionContext): Stats {
 	const state = prepare(input, ctx);
 	const today = todayOf(ctx);
 	const regions = regionsById(bundle);
@@ -233,8 +227,7 @@ export function statsView(
 				})
 			)
 		},
-		seen,
-		account
+		seen
 	};
 }
 

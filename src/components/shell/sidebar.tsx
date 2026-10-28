@@ -4,6 +4,7 @@ import { Link } from "@/components/ui/app-link";
 import { usePathname } from "next/navigation";
 import { Icon, type IconName } from "@/components/ui/icon";
 import { Wordmark } from "@/components/ui/plate";
+import { AccountMenu } from "./account-menu";
 
 export const NAV: { href: string; label: string; icon: IconName }[] = [
 	{ href: "/beranda", label: "Beranda", icon: "house" },
@@ -21,8 +22,12 @@ const IDLE = "border-r-transparent bg-transparent text-ink-500";
 export const isActive = (pathname: string, href: string) =>
 	pathname === href || pathname.startsWith(`${href}/`);
 
+// Setelan and Papan tombol open from the account menu, which stands for them while one is open.
+const ACCOUNT_PATHS = ["/setelan", "/papan-tombol"];
+
 export function Sidebar() {
 	const pathname = usePathname();
+	const accountActive = ACCOUNT_PATHS.some((href) => isActive(pathname, href));
 	const link = (href: string, label: string, icon: IconName) => {
 		const active = isActive(pathname, href);
 		return (
@@ -47,10 +52,10 @@ export function Sidebar() {
 						{NAV.map((item) => link(item.href, item.label, item.icon))}
 					</nav>
 				</div>
-				<div className="flex flex-col gap-0.5">
-					{link("/papan-tombol", "Papan tombol", "keyboard")}
-					{link("/setelan", "Setelan", "settings")}
-				</div>
+				<AccountMenu
+					triggerClassName={`${ITEM} w-[calc(100%+2rem)] text-left aria-expanded:bg-nav-active aria-expanded:text-ink-1000 ${accountActive ? ACTIVE : IDLE}`}
+					menuClassName="bottom-[calc(100%+8px)] -inset-x-3"
+				/>
 			</aside>
 		</div>
 	);
