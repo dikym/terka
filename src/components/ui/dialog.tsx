@@ -173,6 +173,56 @@ export function ConfirmDialog({
 	);
 }
 
+/**
+ * For removing one thing: a plain cancel on the left takes the first focus, the red action sits on
+ * its right. On a phone the cancel is on top.
+ */
+export function DangerConfirm({
+	title,
+	children,
+	cancel,
+	confirm
+}: {
+	title: string;
+	children: React.ReactNode;
+	cancel: { label: string; onClick: () => void };
+	confirm: { label: string; onClick: () => void };
+}) {
+	const id = useId();
+	return (
+		<Overlay
+			role="alertdialog"
+			labelledBy={id}
+			describedBy={`${id}-text`}
+			onDismiss={cancel.onClick}
+		>
+			<div className="flex flex-col gap-2">
+				<Heading id={id}>{title}</Heading>
+				<Body id={`${id}-text`}>{children}</Body>
+			</div>
+			<div className="flex flex-col gap-3 lg:flex-row lg:justify-end">
+				<Button
+					variant="secondary"
+					size="sm"
+					className="max-lg:w-full"
+					data-autofocus
+					onClick={cancel.onClick}
+				>
+					{cancel.label}
+				</Button>
+				<Button
+					variant="stop"
+					size="sm"
+					className="max-lg:w-full"
+					onClick={confirm.onClick}
+				>
+					{confirm.label}
+				</Button>
+			</div>
+		</Overlay>
+	);
+}
+
 /** Only for deleting the account: the final button waits for the exact word. */
 export function TypedConfirm({
 	title,

@@ -1,11 +1,11 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { ConfirmDialog, TypedConfirm } from "@/components/ui/dialog";
+import { ConfirmDialog, DangerConfirm, TypedConfirm } from "@/components/ui/dialog";
 import { authClient, syncOnce } from "@/lib/app/auth";
 import type { Runtime } from "@/lib/app/runtime";
 import { downloadExport, importFile } from "@/lib/app/transfer";
-import { deleteAccount, signOut } from "@/lib/auth/account";
+import { deleteAccount, removeDevice, signOut } from "@/lib/auth/account";
 import { showToast } from "@/lib/toasts";
 import { importMessage } from "@/lib/view/account";
 
@@ -17,7 +17,10 @@ const NOT_SAVED = "Perubahan belum tersimpan. Coba lagi.";
  */
 export function useAccountActions(runtime: Runtime | null, onChange?: () => void) {
 	const [dialog, setDialog] = useState<
-		{ kind: "signOut"; pending: number } | { kind: "delete" } | null
+		| { kind: "signOut"; pending: number }
+		| { kind: "delete" }
+		| { kind: "device"; id: string; name: string }
+		| null
 	>(null);
 	const file = useRef<HTMLInputElement>(null);
 	const auth = authClient();
@@ -78,6 +81,40 @@ export function useAccountActions(runtime: Runtime | null, onChange?: () => void
 					dari perangkat ini.
 				</ConfirmDialog>
 			)}
+			{dialog?.kind === "device" && (
+				<DangerConfirm
+					title="Hapus perangkat"
+					cancel={{ label: "Batal", onClick: () => setDialog(null) }}
+					confirm={{
+						label: "Hapus",
+						onClick: () => {
+							const { id } = dialog;
+							setDialog(null);
+							if (!runtime || !auth) return;
+							void removeDevice(runtime.db, auth.client, id, Date.now()).then(
+								(result) => {
+									showToast(
+										result.status === "ok"
+											? {
+													tone: "success",
+													text: "Perangkat dihapus dari daftar"
+												}
+											: {
+													tone: "danger",
+													text: "Perangkat belum terhapus. Coba lagi."
+												}
+									);
+									onChange?.();
+								}
+							);
+						}
+					}}
+				>
+					{dialog.name} dihapus dari daftar perangkat akun ini. Riwayat latihan tidak ikut
+					terhapus. Kalau perangkat itu masih dipakai, ia muncul lagi setelah sinkronisasi
+					berikutnya.
+				</DangerConfirm>
+			)}
 			{dialog?.kind === "delete" && (
 				<TypedConfirm
 					title="Hapus akun"
@@ -112,6 +149,7 @@ export function useAccountActions(runtime: Runtime | null, onChange?: () => void
 		importData: () => file.current?.click(),
 		signOut: () => void leave(false),
 		deleteAccount: () => setDialog({ kind: "delete" }),
+		removeDevice: (id: string, name: string) => setDialog({ kind: "device", id, name }),
 		dialogs
 	};
 }

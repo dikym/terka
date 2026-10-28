@@ -119,6 +119,8 @@ export const LOGIN_PROMPT_ACTIVE_DAYS = 7;
 // The server's device_limit trigger repeats these two numbers; keep both in step.
 export const ACTIVE_DEVICE_LIMIT = 20;
 export const ACTIVE_DEVICE_DAYS = 90;
+// The account screen lists only devices seen this recently; older ones are most likely gone.
+export const LISTED_DEVICE_DAYS = 7;
 export const FACT_RECENT_MAX = 20;
 export const FORECAST_DAYS = 14;
 export const WEAKEST_LIMIT = 10;

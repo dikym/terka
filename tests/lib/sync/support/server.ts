@@ -32,7 +32,7 @@ const CLOSING = ["ended_at", "answered", "correct", "active_ms", "score", "place
 const SERVER_FILLED = ["received_at", "server_seq", "last_seen_at"];
 const UPDATABLE: Record<string, string[]> = {
 	practice_runs: CLOSING,
-	devices: ["last_seen_at"],
+	devices: ["last_seen_at", "removed_at"],
 	user_settings: [],
 	card_notes: []
 };
@@ -51,6 +51,8 @@ export class FakeServer {
 	allowedKinds = new Set([...RUN_KINDS, "recheck"]);
 	limits = { daily: 1000, total: 50_000, devices: 20 };
 	signupsOpen = true;
+	// False for a server that has not run the migration that adds removed_at.
+	deviceRemoval = true;
 	// A server may return fewer rows than asked for; a short page is not the end of a table.
 	rowCap = Infinity;
 	policyVersions: Row[] = [
@@ -210,7 +212,8 @@ export class FakeServer {
 			const fresh = payload.filter((row) => !own.some((other) => other.id === row.id));
 			if (fresh.length && !own.length && !this.signupsOpen)
 				return failure(400, "TK004", "signups are closed");
-			if (fresh.length && own.length >= this.limits.devices)
+			const active = own.filter((other) => !other.removed_at);
+			if (fresh.length && active.length >= this.limits.devices)
 				return failure(400, "TK003", "active device limit reached");
 		}
 		const staged: Row[] = [];
@@ -238,9 +241,10 @@ export class FakeServer {
 			if (table === "practice_runs") {
 				for (const column of CLOSING) stored[column] ??= null;
 				stored.server_seq = this.nextSeq(table);
-			} else if (table === "devices")
+			} else if (table === "devices") {
 				stored.last_seen_at = new Date(this.clock.now).toISOString();
-			else if (LOG_TABLES.includes(table)) stored.server_seq = this.nextSeq(table);
+				stored.removed_at = null;
+			} else if (LOG_TABLES.includes(table)) stored.server_seq = this.nextSeq(table);
 			staged.push(stored);
 		}
 		const limit = this.usage(table, user, staged.length);
@@ -329,6 +333,12 @@ export class FakeServer {
 	}
 
 	update(table: string, user: string, values: Row, matches: (row: Row) => boolean): Result {
+		if (table === "devices" && "removed_at" in values && !this.deviceRemoval)
+			return failure(
+				400,
+				"PGRST204",
+				"Could not find the 'removed_at' column of 'devices' in the schema cache"
+			);
 		const allowed = UPDATABLE[table] ?? [];
 		for (const column of Object.keys(values))
 			if (!allowed.includes(column))
@@ -355,8 +365,10 @@ export class FakeServer {
 						'new row violates check constraint "practice_runs_check"'
 					);
 				Object.assign(row, values, { server_seq: this.nextSeq(table) });
-			} else if (table === "devices")
+			} else if (table === "devices") {
 				row.last_seen_at = new Date(this.clock.now).toISOString();
+				if ("removed_at" in values) row.removed_at = values.removed_at;
+			}
 			changed.push(row);
 		}
 		return { data: changed, error: null, status: 200 };

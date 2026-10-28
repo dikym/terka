@@ -1,5 +1,5 @@
 begin;
-select plan(46);
+select plan(49);
 
 create function pg_temp.reviews(owner uuid, count integer, overrides jsonb default '{}') returns jsonb
 language sql as $$
@@ -167,6 +167,9 @@ where id = (select id from public.devices where user_id = current_setting('tests
 alter table public.devices enable trigger device_seen;
 select lives_ok(format('select tests.add_device(%L)', current_setting('tests.f')), 'a device unused for 91 days no longer counts');
 select is((select count(*)::integer from public.devices where user_id = current_setting('tests.f')::uuid), 21, 'old devices are kept');
+update public.devices set removed_at = now()
+where id = (select id from public.devices where user_id = current_setting('tests.f')::uuid and last_seen_at > now() - interval '1 day' limit 1);
+select lives_ok(format('select tests.add_device(%L)', current_setting('tests.f')), 'a device removed from the list no longer counts');
 select lives_ok(
 	format(
 		$$ insert into public.devices (user_id, id, created_at, label, platform)
@@ -187,6 +190,14 @@ select lives_ok(
 select ok(
 	(select last_seen_at > now() - interval '1 minute' from public.devices where id = current_setting('tests.g_device')::uuid),
 	'the server time replaces the sent last_seen_at'
+);
+select lives_ok(
+	format($$ update public.devices set removed_at = now() where id = %L $$, current_setting('tests.g_device')),
+	'a device can be marked removed'
+);
+select ok(
+	(select removed_at is not null from public.devices where id = current_setting('tests.g_device')::uuid),
+	'the removal mark is stored'
 );
 select tests.as_owner();
 update public.service_flags set signups_open = false;
