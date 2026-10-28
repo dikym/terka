@@ -37,6 +37,8 @@ export const SET_THRESHOLD_MAX = 5;
 export const SET_MIN_AREAS = 3;
 export const ANSWER_MAX_CHARS = 120;
 export const EXPORT_REMINDER_DAYS = 30;
+// Keep equal to Supabase Auth's minimum interval between emails to one user.
+export const EMAIL_RESEND_SECONDS = 60;
 
 // Typo budget by the length of the canonical name without spaces; short names get none.
 export function typoThreshold(length: number): number {

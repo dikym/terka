@@ -1,8 +1,8 @@
+import { SITE_WRAP as WRAP, SiteHeader } from "@/components/shell/site-header";
 import { Link } from "@/components/ui/app-link";
 import { Button, buttonClass } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Icon, type IconName } from "@/components/ui/icon";
-import { Wordmark } from "@/components/ui/plate";
 import type { Bundle } from "@/core/content/schema";
 import plates from "@/data/plates.json";
 import { demoQuestions } from "@/lib/view/demo";
@@ -12,7 +12,6 @@ import { DemoCard } from "./landing-demo";
 const DEMO = demoQuestions(plates as unknown as Bundle);
 
 // The landing column is wider than the app's: 1120 px with a 20 px gutter on desktop.
-const WRAP = "container max-w-280 lg:px-5";
 const LABEL = "type-label text-ink-500";
 const TITLE =
 	"font-display text-title leading-snug font-bold tracking-title text-balance text-ink-1000";
@@ -106,12 +105,6 @@ const FACT_LABELS = [
 	["Mitos", "bg-[oklch(0.955_0.04_298)] text-grape-700"]
 ];
 
-const NAV = [
-	["Cara kerja", "#cara-kerja"],
-	["Bentuk soal", "#bentuk-soal"],
-	["Data", "#data"]
-];
-
 const FOOTER: { icon: IconName; label: string; href: string }[] = [
 	{ icon: "info", label: "Tentang Terka", href: "/tentang" },
 	{ icon: "shield-check", label: "Kebijakan privasi", href: "/privasi" },
@@ -124,34 +117,6 @@ function Heading({ label, title }: { label?: string; title: string }) {
 			{label && <span className={LABEL}>{label}</span>}
 			<h2 className={TITLE}>{title}</h2>
 		</>
-	);
-}
-
-function Header() {
-	return (
-		<header className="fixed inset-x-0 top-0 z-30 border-b border-hairline bg-paper-0">
-			<div
-				className={`${WRAP} flex min-h-15 items-center justify-between gap-3 py-2 lg:gap-4 lg:py-4`}
-			>
-				<Link href="/" aria-label="Terka">
-					<Wordmark />
-				</Link>
-				<nav className="flex items-center gap-5">
-					{NAV.map(([label, href]) => (
-						<a
-							key={href}
-							href={href}
-							className="font-display text-body-sm leading-none font-semibold text-ink-700 max-lg:hidden"
-						>
-							{label}
-						</a>
-					))}
-					<Button href="/beranda" variant="secondary" size="sm" className="max-lg:h-11">
-						Buka aplikasi
-					</Button>
-				</nav>
-			</div>
-		</header>
 	);
 }
 
@@ -428,7 +393,7 @@ function Footer() {
 export function Landing() {
 	return (
 		<>
-			<Header />
+			<SiteHeader home />
 			<main className="pt-15.25 lg:pt-17.25">
 				<Hero />
 				<HowItWorks />

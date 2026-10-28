@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "@/components/ui/app-link";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { Modal } from "@/components/ui/dialog";
-import { Callout } from "@/components/ui/feedback";
+import { Callout, Skeleton, SkeletonText } from "@/components/ui/feedback";
 import { GoogleMark } from "@/components/ui/icon";
+import { EMAIL_RESEND_SECONDS } from "@/rules";
 
 export type SignIn = {
 	/** Why sign-in cannot start now, or null when it can. */
@@ -26,9 +27,32 @@ function Hint({ children }: { children: React.ReactNode }) {
 	return <p className="font-sans text-body-sm leading-normal text-ink-500">{children}</p>;
 }
 
+/** Whole seconds left of a wait started with `start`, counted down once a second. */
+function useCooldown() {
+	const [until, setUntil] = useState(0);
+	const [now, setNow] = useState(0);
+	useEffect(() => {
+		if (!until) return;
+		const timer = setInterval(() => {
+			const at = Date.now();
+			setNow(at);
+			if (at >= until) clearInterval(timer);
+		}, 1_000);
+		return () => clearInterval(timer);
+	}, [until]);
+	return {
+		left: Math.max(0, Math.ceil((until - now) / 1_000)),
+		start(seconds: number) {
+			const at = Date.now();
+			setNow(at);
+			setUntil(at + seconds * 1_000);
+		}
+	};
+}
+
 /**
- * Sign-in for Statistik › Akun: consent first on every attempt, then Google or an emailed
- * code. Each handler returns the message to show, or null when nothing needs saying.
+ * Sign-in: consent first on every attempt, then Google or an emailed code. Each handler
+ * returns the message to show, or null when nothing needs saying.
  */
 export function SignInForm({ signIn }: { signIn: SignIn }) {
 	const [step, setStep] = useState<"consent" | "choose" | "code">("consent");
@@ -36,6 +60,7 @@ export function SignInForm({ signIn }: { signIn: SignIn }) {
 	const [code, setCode] = useState("");
 	const [busy, setBusy] = useState(false);
 	const [message, setMessage] = useState<string | null>(null);
+	const resend = useCooldown();
 
 	const run = async (work: () => Promise<string | null>) => {
 		setBusy(true);
@@ -129,7 +154,10 @@ export function SignInForm({ signIn }: { signIn: SignIn }) {
 						onClick={() =>
 							void run(async () => {
 								const problem = await signIn.sendCode(email.trim());
-								if (!problem) setStep("code");
+								if (!problem) {
+									resend.start(EMAIL_RESEND_SECONDS);
+									setStep("code");
+								}
 								return problem;
 							})
 						}
@@ -165,20 +193,35 @@ export function SignInForm({ signIn }: { signIn: SignIn }) {
 					<Button
 						variant="quiet"
 						size="sm"
-						className="w-fit bg-transparent"
-						disabled={busy}
+						className="w-fit bg-transparent tabular-nums"
+						disabled={busy || resend.left > 0}
 						onClick={() =>
 							void run(async () => {
 								setCode("");
-								return signIn.sendCode(email.trim());
+								const problem = await signIn.sendCode(email.trim());
+								if (!problem) resend.start(EMAIL_RESEND_SECONDS);
+								return problem;
 							})
 						}
 					>
-						Kirim kode baru
+						{resend.left > 0
+							? `Kirim kode baru dalam ${resend.left} detik`
+							: "Kirim kode baru"}
 					</Button>
 				</>
 			)}
 			{message && <Hint>{message}</Hint>}
+		</Card>
+	);
+}
+
+/** Holds the form's place until the stored session is known. */
+export function SignInSkeleton() {
+	return (
+		<Card>
+			<CardHeader label="Akun" title={<SkeletonText width="18em" />} />
+			<Skeleton className="block h-12 w-full rounded-sm" />
+			<Skeleton className="block h-12 w-full rounded-sm" />
 		</Card>
 	);
 }
