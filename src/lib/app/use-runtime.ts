@@ -11,7 +11,7 @@ import {
 	runtimeSnapshot,
 	subscribeRuntime
 } from "./runtime";
-import { lastSyncLabel, syncLabel } from "../view/sync-label";
+import { lastSyncLabel, type SyncIcon, syncIcon, syncLabel } from "../view/sync-label";
 import type { AppState } from "./store";
 
 /** The shared runtime; the static export and the first client render see "loading". */
@@ -84,6 +84,14 @@ export function useSyncLabel(runtime: Runtime | null): string | null {
 	const at = useNow();
 	if (!app || !known || at === 0) return null;
 	return syncLabel(app.sync, email !== null, at);
+}
+
+/** The cloud icon for the sync status; `syncing` marks a sync the person just started. */
+export function useSyncIcon(runtime: Runtime | null, syncing = false): SyncIcon {
+	const app = useAppState(runtime);
+	const { known, email } = useAccount();
+	if (!app || !known) return "cloud-check";
+	return syncIcon(app.sync, email !== null, syncing);
 }
 
 /** When the last sync finished; null while the app opens. */

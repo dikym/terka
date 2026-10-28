@@ -578,6 +578,8 @@ test("the statistics sync card shows the status and opens sign-in when signed ou
 	await expect(card.getByText("Tersimpan di perangkat ini")).toBeVisible();
 	await expect(page.getByText("Tersimpan di perangkat ini")).toHaveCount(1);
 	await expect(card.getByText("Belum pernah sinkron")).toBeVisible();
+	await expect(card.locator('[style*="cloud-off.svg"]')).toHaveCount(1);
+	await expect(card.locator('[style*="cloud-check.svg"]')).toHaveCount(0);
 	await expect(card.getByRole("button")).toHaveCount(1);
 	await card.getByRole("button", { name: "Masuk untuk sinkronisasi" }).click();
 	await expect(page).toHaveURL(/\/masuk$/);

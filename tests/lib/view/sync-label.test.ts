@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { lastSyncLabel, syncLabel } from "../../../src/lib/view/sync-label";
+import { lastSyncLabel, syncIcon, syncLabel } from "../../../src/lib/view/sync-label";
 
 const NOW = Date.parse("2026-10-25T08:00:00Z");
 
@@ -31,4 +31,13 @@ test("the last sync time shows in any state, and a device that never synced says
 	expect(lastSyncLabel(offline, NOW)).toBe("Sinkron terakhir 2 jam lalu");
 	expect(lastSyncLabel({ ...offline, lastSyncAt: null }, NOW)).toBe("Belum pernah sinkron");
 	expect(lastSyncLabel(null, NOW)).toBe("Belum pernah sinkron");
+});
+
+test("the sync icon follows the account and a running sync", () => {
+	const synced = { quarantined: 0, lastSyncAt: NOW, state: "synced" } as const;
+	expect(syncIcon(null, false)).toBe("cloud-off");
+	expect(syncIcon(synced, false, true)).toBe("cloud-off");
+	expect(syncIcon(synced, true)).toBe("cloud-check");
+	expect(syncIcon(synced, true, true)).toBe("cloud-sync");
+	expect(syncIcon(null, true)).toBe("cloud-sync");
 });

@@ -43,3 +43,11 @@ export function lastSyncLabel(status: SyncStatus | null, now: number): string {
 	if (status?.lastSyncAt == null) return "Belum pernah sinkron";
 	return `Sinkron terakhir ${ago(now - status.lastSyncAt)}`;
 }
+
+export type SyncIcon = "cloud-check" | "cloud-off" | "cloud-sync";
+
+/** A cloud with a slash while nothing leaves this device, and circling arrows while a sync runs. */
+export function syncIcon(status: SyncStatus | null, signedIn: boolean, syncing = false): SyncIcon {
+	if (!signedIn) return "cloud-off";
+	return syncing || status === null ? "cloud-sync" : "cloud-check";
+}

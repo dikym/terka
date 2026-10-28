@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { Icon } from "@/components/ui/icon";
 import { Wordmark } from "@/components/ui/plate";
 import { Tooltip } from "@/components/ui/tooltip";
-import { useReady, useSyncLabel } from "@/lib/app/use-runtime";
+import { useReady, useSyncIcon, useSyncLabel } from "@/lib/app/use-runtime";
 import { AccountMenu } from "./account-menu";
 
 const ICON_BUTTON =
@@ -19,7 +19,9 @@ const SYNC_SCREENS = ["/beranda", "/statistik"];
  */
 export function MobileHeader() {
 	const pathname = usePathname();
-	const label = useSyncLabel(useReady().runtime) ?? "";
+	const { runtime } = useReady();
+	const label = useSyncLabel(runtime) ?? "";
+	const icon = useSyncIcon(runtime);
 	return (
 		<header className="fixed inset-x-0 top-0 z-30 flex min-h-15 items-center justify-between gap-3 border-b border-hairline bg-paper-0 px-4 py-2 group-has-[[data-topbar]]:hidden lg:hidden">
 			<Wordmark />
@@ -27,7 +29,7 @@ export function MobileHeader() {
 				{SYNC_SCREENS.includes(pathname) && (
 					<Tooltip content={label}>
 						<button type="button" aria-label={label} className={ICON_BUTTON}>
-							<Icon name="cloud-check" />
+							<Icon name={icon} />
 						</button>
 					</Tooltip>
 				)}

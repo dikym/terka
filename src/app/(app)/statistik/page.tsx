@@ -11,6 +11,7 @@ import {
 	useAppState,
 	useLastSyncLabel,
 	useReady,
+	useSyncIcon,
 	useSyncLabel
 } from "@/lib/app/use-runtime";
 import { openLogin } from "@/lib/auth/return-to";
@@ -25,6 +26,7 @@ export default function Page() {
 	const { email } = useAccount();
 	const router = useRouter();
 	const [syncing, setSyncing] = useState(false);
+	const syncIcon = useSyncIcon(runtime, syncing);
 	const sync = () => {
 		if (!runtime || syncing) return;
 		setSyncing(true);
@@ -48,6 +50,7 @@ export default function Page() {
 			provinces={provinces}
 			syncLabel={syncLabel}
 			lastSyncLabel={lastSyncLabel}
+			syncIcon={syncIcon}
 			signedIn={email !== null}
 			syncing={syncing}
 			onSync={sync}

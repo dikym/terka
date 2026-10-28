@@ -14,6 +14,8 @@ export const ICON_NAMES = [
 	"circle-plus",
 	"clock",
 	"cloud-check",
+	"cloud-off",
+	"cloud-sync",
 	"cloud-upload",
 	"crosshair",
 	"download",
