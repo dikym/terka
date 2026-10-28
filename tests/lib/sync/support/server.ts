@@ -397,8 +397,12 @@ class Query implements PromiseLike<Result> {
 		this.values = values;
 		return this;
 	}
-	gt(column: string, value: number) {
-		this.filters.push((row) => Number(row[column]) > value);
+	gt(column: string, value: number | string) {
+		this.filters.push((row) => (row[column] as number | string) > value);
+		return this;
+	}
+	is(column: string, value: null) {
+		this.filters.push((row) => (row[column] ?? null) === value);
 		return this;
 	}
 	eq(column: string, value: unknown) {
@@ -466,7 +470,10 @@ class Query implements PromiseLike<Result> {
 				.rows(this.table, user)
 				.filter((row) => this.filters.every((test) => test(row)));
 			const column = this.sortColumn;
-			if (column) rows = [...rows].sort((a, b) => Number(a[column]) - Number(b[column]));
+			if (column)
+				rows = [...rows].sort((a, b) =>
+					(a[column] as number | string) < (b[column] as number | string) ? -1 : 1
+				);
 			rows = rows.slice(0, Math.min(this.size, server.rowCap));
 			const data = this.pick(rows, this.columns);
 			if (this.one)
