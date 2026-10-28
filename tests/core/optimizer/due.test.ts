@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { optimizationDue } from "../../../src/core/optimizer/due";
+import { optimizationDue, optimizationProgress } from "../../../src/core/optimizer/due";
 import { answers, DAY, NOW, paramsRow } from "./fixtures";
 
 const later = NOW + 1_000 * 3_600_000;
@@ -46,6 +46,27 @@ describe("optimizationDue", () => {
 				createdAt: NOW + 25 * DAY
 			});
 			expect(optimizationDue(fresh, [last, elsewhere], NOW + 30 * DAY)).toBe(false);
+		});
+	});
+});
+
+describe("optimizationProgress", () => {
+	test("before the first run, counts answers and distinct cards against 1,000 and 200", () => {
+		expect(optimizationProgress(answers(640, 150), [], later)).toEqual({
+			reviews: { have: 640, need: 1_000 },
+			cards: { have: 150, need: 200 },
+			days: null
+		});
+	});
+
+	test("after a run, counts newer answers and whole days against 500 and 30", () => {
+		const last = paramsRow({ createdAt: NOW, activatedAt: NOW });
+		const fresh = answers(120, 40, { from: NOW + 1 });
+		const older = answers(300, 80, { from: NOW - 300 * 3_600_000 });
+		expect(optimizationProgress([...older, ...fresh], [last], NOW + 12.9 * DAY)).toEqual({
+			reviews: { have: 120, need: 500 },
+			cards: null,
+			days: { have: 12, need: 30 }
 		});
 	});
 });
