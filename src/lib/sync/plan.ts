@@ -68,8 +68,10 @@ export function planPush(outbox: OutboxRow[], blocks: Block[], now: number): Bat
 	for (const [table, op] of groups) {
 		if (isBlocked(table, blocks, now)) continue;
 		const group = items.filter((item) => item.table === table && item.op === op);
-		for (let start = 0; start < group.length; start += BATCH)
-			batches.push({ table, op, items: group.slice(start, start + BATCH) });
+		// A close is its own request, so each one is sent and settled on its own.
+		const size = op === "close" ? 1 : BATCH;
+		for (let start = 0; start < group.length; start += size)
+			batches.push({ table, op, items: group.slice(start, start + size) });
 	}
 	return batches;
 }
