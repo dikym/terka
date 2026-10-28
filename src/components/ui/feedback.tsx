@@ -93,10 +93,12 @@ export function Switch({
 			aria-label={label}
 			disabled={disabled}
 			onClick={() => onChange(!checked)}
-			className={`inline-flex h-7 w-11.5 flex-none cursor-pointer items-center rounded-full border border-ink-200 p-[3px] disabled:cursor-not-allowed disabled:opacity-40 ${checked ? "justify-end bg-go-500" : "justify-start bg-paper-50"}`}
+			// Every length is in rem, and the outline is an inset ring, so the knob stays centred in the
+			// track at any root font size; a px border and padding drift apart from rem sizes.
+			className={`relative inline-block h-7 w-11.5 flex-none cursor-pointer rounded-full inset-ring-1 inset-ring-ink-200 transition-colors duration-150 ease-out disabled:cursor-not-allowed disabled:opacity-40 motion-reduce:transition-none ${checked ? "bg-go-500" : "bg-paper-50"}`}
 		>
 			<span
-				className={`block size-5 rounded-full ${checked ? "bg-paper-0" : "bg-ink-1000"}`}
+				className={`absolute top-1 left-1 block size-5 rounded-full transition-[translate,background-color] duration-150 ease-out motion-reduce:transition-none ${checked ? "translate-x-4.5 bg-paper-0" : "bg-ink-1000"}`}
 			/>
 		</button>
 	);
