@@ -564,14 +564,85 @@ function Seen({ s, loading }: { s: Stats; loading: boolean }) {
 	);
 }
 
+function Sync({
+	label,
+	last,
+	signedIn,
+	syncing,
+	onSync,
+	onLogin
+}: {
+	label: string | null;
+	last: string | null;
+	signedIn: boolean;
+	syncing: boolean;
+	onSync: () => void;
+	onLogin: () => void;
+}) {
+	const rows = [
+		["cloud-check", label],
+		["clock", last]
+	] as const;
+	return (
+		<Card className="gap-3">
+			<CardHeader label="Sinkronisasi" />
+			<div className="flex flex-col">
+				{rows.map(([icon, copy], index) => (
+					<Row key={icon} last={index === rows.length - 1}>
+						<div className="flex min-w-0 items-start gap-3">
+							{/* Level with the first line when the text wraps. */}
+							<Icon name={icon} size={16} className="mt-0.75" />
+							<span className="text-ink-900 type-body">
+								{copy ?? (
+									<SkeletonText
+										width={skeletonWidth("Tersinkron 3 menit lalu")}
+									/>
+								)}
+							</span>
+						</div>
+					</Row>
+				))}
+			</div>
+			{label === null ? (
+				<Skeleton className="block h-9 w-full rounded-sm" />
+			) : signedIn ? (
+				<Button
+					variant="secondary"
+					size="sm"
+					block
+					icon="cloud-upload"
+					disabled={syncing}
+					onClick={onSync}
+				>
+					{syncing ? "Menyinkronkan…" : "Sinkronkan sekarang"}
+				</Button>
+			) : (
+				<Button variant="quiet" size="sm" block onClick={onLogin} className="text-ink-1000">
+					Masuk untuk sinkronisasi
+				</Button>
+			)}
+		</Card>
+	);
+}
+
 export function StatsScreen({
 	data,
 	provinces,
-	syncLabel
+	syncLabel,
+	lastSyncLabel,
+	signedIn,
+	syncing,
+	onSync,
+	onLogin
 }: {
 	data: Stats | null;
 	provinces: Record<string, MapProvince>;
 	syncLabel: string | null;
+	lastSyncLabel: string | null;
+	signedIn: boolean;
+	syncing: boolean;
+	onSync: () => void;
+	onLogin: () => void;
 }) {
 	const loading = data === null;
 	const s = data ?? SKELETON;
@@ -597,6 +668,14 @@ export function StatsScreen({
 					{(loading || s.nameAll.length > 0) && <NameAll s={s} loading={loading} />}
 					{(loading || s.diplomat.started) && <Diplomat s={s} loading={loading} />}
 					{(loading || s.seen.length > 0) && <Seen s={s} loading={loading} />}
+					<Sync
+						label={syncLabel}
+						last={lastSyncLabel}
+						signedIn={signedIn}
+						syncing={syncing}
+						onSync={onSync}
+						onLogin={onLogin}
+					/>
 				</aside>
 			</div>
 		</>

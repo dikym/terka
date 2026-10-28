@@ -37,3 +37,9 @@ export function syncLabel(status: SyncStatus | null, signedIn: boolean, now: num
 			return "Kebijakan privasi diperbarui. Baca dan setujui untuk melanjutkan sinkronisasi.";
 	}
 }
+
+/** When the last sync finished, whatever state the sync is in now. */
+export function lastSyncLabel(status: SyncStatus | null, now: number): string {
+	if (status?.lastSyncAt == null) return "Belum pernah sinkron";
+	return `Sinkron terakhir ${ago(now - status.lastSyncAt)}`;
+}

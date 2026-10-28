@@ -25,6 +25,7 @@ describe("sync status", () => {
 	test("waiting changes are counted", () => {
 		expect(syncStatus(calm, 12, 0, NOW)).toEqual({
 			quarantined: 0,
+			lastSyncAt: NOW - 180_000,
 			state: "pending",
 			count: 12
 		});
@@ -36,6 +37,7 @@ describe("sync status", () => {
 		const failing = { ...calm, failingSince: NOW - 3 * DAY, lastPushAt: NOW - 4 * DAY };
 		expect(syncStatus(failing, 1, 0, NOW)).toEqual({
 			quarantined: 0,
+			lastSyncAt: NOW - 180_000,
 			state: "unreachable",
 			days: 4
 		});
@@ -83,7 +85,13 @@ describe("sync status", () => {
 				0,
 				NOW
 			)
-		).toEqual({ quarantined: 0, state: "staged", sent: 1_000, total: 2_500 });
+		).toEqual({
+			quarantined: 0,
+			lastSyncAt: NOW - 180_000,
+			state: "staged",
+			sent: 1_000,
+			total: 2_500
+		});
 	});
 	test("a claim without the daily limit reads as ordinary waiting", () => {
 		expect(
