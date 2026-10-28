@@ -9,7 +9,6 @@ import { type MapProvince, MasteryMap } from "@/components/ui/mastery-map";
 import { Tooltip } from "@/components/ui/tooltip";
 import { type CodeStatus, type Stats, STATUS_LABEL } from "@/lib/view/stats";
 import { SIGHTING_WINDOW_DAYS } from "@/rules";
-import { SyncChip } from "./sync-chip";
 
 const PILL_TONE = { learning: "learning", leech: "leech", suspended: "off" } as const;
 
@@ -648,11 +647,8 @@ export function StatsScreen({
 	const s = data ?? SKELETON;
 	return (
 		<>
-			<div className="flex items-center justify-between gap-4">
-				<div className="flex items-center gap-3">
-					<h1 className="type-screen-title">Statistik</h1>
-				</div>
-				<SyncChip label={loading ? null : syncLabel} />
+			<div className="flex items-center gap-3">
+				<h1 className="type-screen-title">Statistik</h1>
 			</div>
 			<NationalSummary s={s} loading={loading} />
 			<MapCard loading={loading} provinces={provinces} />
