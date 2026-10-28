@@ -364,6 +364,14 @@ test("statistics links reach their screens", async ({ page }) => {
 	}
 });
 
+test("the account page sends a visitor who is signed out to the sign-in page", async ({ page }) => {
+	await seen(page);
+	await page.goto("/statistik/akun");
+	await expect(page).toHaveURL(/\/masuk\?kembali=%2Fstatistik%2Fakun$/);
+	await expect(page.getByRole("heading", { level: 1, name: "Masuk" })).toBeVisible();
+	await expect(page.locator("aside")).toHaveCount(0);
+});
+
 test("coverage selection changes the side panel", async ({ page }) => {
 	await seen(page);
 	await page.goto("/cakupan");

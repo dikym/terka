@@ -5,7 +5,7 @@ import { Link } from "@/components/ui/app-link";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { CodeLink } from "@/components/ui/code-chip";
-import { Pill, ProgressBar } from "@/components/ui/feedback";
+import { Pill, ProgressBar, Skeleton, SkeletonText } from "@/components/ui/feedback";
 import { GROUP_BG } from "@/components/ui/groups";
 import { Icon } from "@/components/ui/icon";
 import { type MapProvince, MasteryMap } from "@/components/ui/mastery-map";
@@ -15,7 +15,6 @@ import { showToast } from "@/lib/toasts";
 import { referenceHref } from "@/lib/view/reference";
 import type { HardCard, MasteryRow } from "@/lib/view/stats";
 import { NOTE_MAX_CHARS } from "@/rules";
-import { SignInForm, type SignIn } from "./sign-in";
 import { MapHint, MapLegend } from "./stats";
 
 export function MasteryMapScreen({
@@ -288,7 +287,7 @@ function AccountRow({
 	icon: "user" | "cloud-upload" | "cloud-check";
 	last?: boolean;
 	children: React.ReactNode;
-	aside?: string;
+	aside?: React.ReactNode;
 }) {
 	return (
 		<div
@@ -327,73 +326,94 @@ export type AccountActions = {
 export function AccountScreen({
 	page,
 	lastExport,
-	signIn,
 	actions
 }: {
-	/** Null while signed out. */
+	/** Null while the stored session is still being read: the same layout shows as a skeleton. */
 	page: AccountPage | null;
 	lastExport: string | null;
-	signIn: SignIn | null;
 	actions: AccountActions;
 }) {
-	const exportCard = (
-		<Card fill>
-			<CardHeader label="Ekspor dan impor" title={lastExport ?? "…"} />
-			<p className="font-sans text-body-sm leading-normal text-ink-500">
-				Ekspor menyimpan riwayat latihan, pengaturan, dan catatan pengingat dalam satu
-				berkas JSON. Sinkronisasi menyimpan salinan di server; ekspor tetap berguna sebagai
-				salinan yang kamu pegang sendiri.
-			</p>
-			<div className="mt-auto flex items-center gap-3">
-				<Button size="sm" icon="download" onClick={actions.exportData}>
-					Ekspor data
-				</Button>
-				<Button variant="secondary" size="sm" icon="upload" onClick={actions.importData}>
-					Impor data
-				</Button>
-			</div>
-		</Card>
-	);
+	const block = (className: string) => <Skeleton className={`block rounded-sm ${className}`} />;
 
 	return (
 		<>
 			<PageTitle title="Akun dan sinkronisasi" back="/statistik" />
-			{page ? (
-				<div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-8">
-					<div className="flex min-w-0 flex-col gap-5">
-						<Card>
-							<CardHeader label="Akun" />
-							<div className="flex flex-col">
-								<AccountRow icon="user">
-									<div className="flex flex-col gap-0.75">
-										<span className="font-display text-body-md leading-[1.2] font-semibold">
-											{page.email}
-										</span>
-										<span className="font-sans text-body-sm leading-[1.2] text-ink-500">
-											{page.provider}
-										</span>
-									</div>
-								</AccountRow>
-								<AccountRow
-									icon="cloud-upload"
-									aside={page.pendingNote ?? undefined}
-								>
-									<span className="text-ink-900 type-body">{page.pending}</span>
-								</AccountRow>
-								<AccountRow icon="cloud-check" aside={page.devices} last>
-									<span className="text-ink-900 type-body">{page.synced}</span>
-								</AccountRow>
-							</div>
-						</Card>
-						{exportCard}
-					</div>
-					<aside className="flex min-w-0 flex-col gap-5">
-						<Card>
-							<CardHeader label="Keluar" />
-							<p className="font-sans text-body-sm leading-normal text-ink-500">
-								Keluar menyelesaikan sinkronisasi lebih dulu, lalu menghapus data
-								dari perangkat ini.
-							</p>
+			<div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-8">
+				<div className="flex min-w-0 flex-col gap-5">
+					<Card>
+						<CardHeader label="Akun" />
+						<div className="flex flex-col">
+							<AccountRow icon="user">
+								<div className="flex flex-col gap-0.75">
+									<span className="font-display text-body-md leading-[1.2] font-semibold">
+										{page ? page.email : <SkeletonText width="13em" />}
+									</span>
+									<span className="font-sans text-body-sm leading-[1.2] text-ink-500">
+										{page ? page.provider : <SkeletonText width="9em" />}
+									</span>
+								</div>
+							</AccountRow>
+							<AccountRow
+								icon="cloud-upload"
+								aside={page ? (page.pendingNote ?? undefined) : undefined}
+							>
+								<span className="text-ink-900 type-body">
+									{page ? page.pending : <SkeletonText width="16em" />}
+								</span>
+							</AccountRow>
+							<AccountRow
+								icon="cloud-check"
+								aside={page ? page.devices : <SkeletonText width="4.5em" />}
+								last
+							>
+								<span className="text-ink-900 type-body">
+									{page ? page.synced : <SkeletonText width="12em" />}
+								</span>
+							</AccountRow>
+						</div>
+					</Card>
+					<Card>
+						<CardHeader
+							label="Ekspor dan impor"
+							title={page && lastExport ? lastExport : <SkeletonText width="9em" />}
+						/>
+						<p className="font-sans text-body-sm leading-normal text-ink-500">
+							Ekspor menyimpan riwayat latihan, pengaturan, dan catatan pengingat
+							dalam satu berkas JSON. Sinkronisasi menyimpan salinan di server; ekspor
+							tetap berguna sebagai salinan yang kamu pegang sendiri.
+						</p>
+						<div className="flex items-center gap-3">
+							{page ? (
+								<>
+									<Button size="sm" icon="download" onClick={actions.exportData}>
+										Ekspor data
+									</Button>
+									<Button
+										variant="secondary"
+										size="sm"
+										icon="upload"
+										onClick={actions.importData}
+									>
+										Impor data
+									</Button>
+								</>
+							) : (
+								<>
+									{block("h-9 w-30")}
+									{block("h-9 w-30")}
+								</>
+							)}
+						</div>
+					</Card>
+				</div>
+				<aside className="flex min-w-0 flex-col gap-5">
+					<Card>
+						<CardHeader label="Keluar" />
+						<p className="font-sans text-body-sm leading-normal text-ink-500">
+							Keluar menyelesaikan sinkronisasi lebih dulu, lalu menghapus data dari
+							perangkat ini.
+						</p>
+						{page ? (
 							<Button
 								variant="secondary"
 								size="sm"
@@ -403,28 +423,29 @@ export function AccountScreen({
 							>
 								Keluar
 							</Button>
-						</Card>
-						<Card bar="bg-stop-500">
-							<CardHeader
-								label={<span className="text-stop-700">Hapus akun</span>}
-								aside={<Icon name="triangle-alert" size={18} color="bg-stop-700" />}
-							/>
-							<p className="font-sans text-body-sm leading-normal text-ink-500">
-								Menghapus akun menghapus data di server. Data di perangkat ini tetap
-								ada.
-							</p>
+						) : (
+							block("h-9 w-full")
+						)}
+					</Card>
+					<Card bar="bg-stop-500">
+						<CardHeader
+							label={<span className="text-stop-700">Hapus akun</span>}
+							aside={<Icon name="triangle-alert" size={18} color="bg-stop-700" />}
+						/>
+						<p className="font-sans text-body-sm leading-normal text-ink-500">
+							Menghapus akun menghapus data di server. Data di perangkat ini tetap
+							ada.
+						</p>
+						{page ? (
 							<Button variant="stop" size="sm" block onClick={actions.deleteAccount}>
 								Hapus akun
 							</Button>
-						</Card>
-					</aside>
-				</div>
-			) : (
-				<div className="grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-8">
-					{signIn && <SignInForm signIn={signIn} />}
-					{exportCard}
-				</div>
-			)}
+						) : (
+							block("h-9 w-full")
+						)}
+					</Card>
+				</aside>
+			</div>
 		</>
 	);
 }
