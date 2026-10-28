@@ -111,6 +111,9 @@ export async function storeEvent(
 	const op = existing ? "close" : "insert";
 	await db.table(event.table).put(event.row);
 	await db.outbox.add({ table: event.table, key: event.row.id, op });
+	// A session is sent open and closed by a second request, also when it arrives already closed.
+	if (!existing && event.table === "practice_runs" && event.row.endedAt !== null)
+		await db.outbox.add({ table: event.table, key: event.row.id, op: "close" });
 	return op;
 }
 
