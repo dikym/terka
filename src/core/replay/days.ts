@@ -17,7 +17,6 @@ import { effectiveCard } from "./universe";
 const ACTIVE = new Set<string>(["learning", "relearning", "review", "mature"]);
 const SETTLED = new Set<string>(["review", "mature"]);
 const contentOf = (cardId: string) => cardId.slice(0, cardId.indexOf("::"));
-const modeOf = (cardId: string) => cardId.slice(cardId.indexOf("::") + 2);
 
 export function dayStats(state: AppState, day: string): DayStats {
 	let stats = state.tier.days.get(day);
@@ -44,11 +43,12 @@ export function quotaLeft(state: AppState, track: "region" | "special", day: str
 export function priorityLoad(state: AppState, day: string, tz: string): number {
 	const end = dayStart(addDays(day, 1), tz);
 	let load = 0;
-	for (const cardId of state.cards.keys()) {
-		const mode = modeOf(cardId);
-		if (mode !== "code2region" && mode !== "region2code") continue;
-		const card = effectiveCard(state, cardId)!;
-		if (ACTIVE.has(card.state) && card.due < end) load++;
+	for (const [cardId, card] of state.cards) {
+		// Cheapest tests first: this runs for every card on every day of the log.
+		if (card.due >= end || !ACTIVE.has(card.state)) continue;
+		if (!cardId.endsWith("::code2region") && !cardId.endsWith("::region2code")) continue;
+		// A card whose data is in doubt reads as suspended, which is never active.
+		if (state.content.get(contentOf(cardId)) === "ok") load++;
 	}
 	for (const [key, pair] of state.pairs) {
 		if (!pair.flagged || pair.drillDay === day) continue;
@@ -98,9 +98,10 @@ function openDay(state: AppState, day: string) {
 	stats.tier = state.tier.current;
 	stats.held = priorityLoad(state, day, tz) > TIERS[state.tier.current].hold;
 	const end = dayStart(addDays(day, 1), tz);
-	state.openDue = [...state.cards.values()]
-		.filter((card) => SETTLED.has(card.state) && card.due < end)
-		.map((card) => card.cardId);
+	const due: string[] = [];
+	for (const card of state.cards.values())
+		if (SETTLED.has(card.state) && card.due < end) due.push(card.cardId);
+	state.openDue = due;
 }
 
 // A due card is skipped when its related group used the day's scheduled answer on another card.
