@@ -41,6 +41,7 @@ export async function openDevice(
 
 	const device = {
 		id: boot.deviceId,
+		server,
 		db: boot.db as TerkaDb,
 		store,
 		client,

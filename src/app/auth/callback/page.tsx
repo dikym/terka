@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { OtherAccount } from "@/components/screens/sign-in";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
-import { authClient } from "@/lib/app/auth";
+import { authClient, settleAfterSignIn, syncOnce } from "@/lib/app/auth";
 import { useReady } from "@/lib/app/use-runtime";
 import { takeReturnTo } from "@/lib/auth/return-to";
 import { afterSignIn, finishCallback, switchAccount } from "@/lib/auth/signin";
@@ -49,7 +49,7 @@ export default function Page() {
 			if (signed.status === "otherAccount") return setOutcome({ kind: "otherAccount" });
 			if (signed.status !== "ok")
 				return setOutcome({ kind: "message", text: "Masuk belum berhasil. Coba lagi." });
-			await runtime.reload();
+			await settleAfterSignIn(syncOnce(runtime), runtime.reload);
 			showToast({ tone: "success", text: mergedMessage(signed.answers), key: "signIn" });
 			router.replace(takeReturnTo() ?? HOME);
 		})();
@@ -67,7 +67,7 @@ export default function Page() {
 					}
 					onWipe={() =>
 						void switchAccount(runtime.db, auth.client, Date.now()).then(async () => {
-							await runtime.reload();
+							await settleAfterSignIn(syncOnce(runtime), runtime.reload);
 							router.replace(takeReturnTo() ?? HOME);
 						})
 					}
