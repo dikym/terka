@@ -287,9 +287,14 @@ export async function touchDevice(db: TerkaDb, client: SupabaseClient, now: numb
 	const deviceId = await readMeta<string>(db, "deviceId");
 	const last = (await readMeta<number>(db, "lastTouchAt")) ?? 0;
 	if (!deviceId || now - last < HOUR) return;
-	const response = await client
-		.from("devices")
-		.update({ last_seen_at: new Date(now).toISOString() })
-		.eq("id", deviceId);
+	const touch = (extra: Record<string, unknown>) =>
+		client
+			.from("devices")
+			.update({ last_seen_at: new Date(now).toISOString(), ...extra })
+			.eq("id", deviceId);
+	// A device in use is no longer a removed one. A server without the column refuses the key, and
+	// the touch must go through all the same.
+	let response = await touch({ removed_at: null });
+	if (response.error) response = await touch({});
 	if (!response.error) await db.sync_meta.put({ key: "lastTouchAt", value: now });
 }

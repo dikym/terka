@@ -75,6 +75,7 @@ entity devices {
   * platform : text
   * created_at : timestamptz
   * last_seen_at : timestamptz = now()
+  removed_at : timestamptz
   --
   maks. 20 perangkat aktif (90 hari)
 }

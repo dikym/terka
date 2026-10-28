@@ -1,6 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Bundle } from "@/core/content/schema";
 import type { LearningEvent } from "@/core/log/events";
+import { deviceInfoOf } from "@/lib/db/device";
 import { bumpLogVersion, settlePulled, type LogState } from "@/lib/db/log";
 import {
 	EVENT_TABLES,
@@ -121,6 +122,10 @@ async function pullWhole(
 				const server = local("devices", row) as DeviceRow;
 				if (!(await db.devices.get(server.id))) await db.devices.put(server);
 			}
+			await db.sync_meta.put({
+				key: "deviceList",
+				value: devices.data!.map((row) => deviceInfoOf(row))
+			});
 			for (const row of consents.data!) {
 				const server = local("privacy_consents", row) as ConsentRow;
 				if (!(await db.privacy_consents.get(server.policyVersion)))

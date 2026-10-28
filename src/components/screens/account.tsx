@@ -5,6 +5,9 @@ import { Card, CardHeader } from "@/components/ui/card";
 import { Skeleton, SkeletonText } from "@/components/ui/feedback";
 import { Icon } from "@/components/ui/icon";
 import { PageTitle } from "@/components/ui/page-title";
+import { DotLabel } from "@/components/ui/tag";
+import type { DeviceRow } from "@/lib/view/account";
+import type { SyncIcon } from "@/lib/view/sync-label";
 
 function AccountRow({
 	icon,
@@ -12,7 +15,7 @@ function AccountRow({
 	children,
 	aside
 }: {
-	icon: "user" | "cloud-upload" | "cloud-check";
+	icon: "user" | "cloud-upload" | SyncIcon;
 	last?: boolean;
 	children: React.ReactNode;
 	aside?: React.ReactNode;
@@ -41,7 +44,9 @@ export type AccountPage = {
 	pending: string;
 	pendingNote: string | null;
 	synced: string;
+	syncIcon: SyncIcon;
 	devices: string;
+	deviceRows: DeviceRow[];
 };
 
 /** `loading`: the stored session is still being read, so the signed-in layout shows as a skeleton. */
@@ -53,9 +58,73 @@ export type AccountActions = {
 	importData: () => void;
 	signOut: () => void;
 	deleteAccount: () => void;
+	removeDevice: (id: string, name: string) => void;
 };
 
 const block = (className: string) => <Skeleton className={`block rounded-sm ${className}`} />;
+
+function DevicesCard({ rows, actions }: { rows: DeviceRow[] | null; actions: AccountActions }) {
+	return (
+		<Card>
+			<CardHeader label="Perangkat" />
+			<div className="flex flex-col">
+				{rows
+					? rows.map((device, index) => (
+							<div
+								key={device.id}
+								className={`flex items-center justify-between gap-3 py-3 ${index === rows.length - 1 ? "" : "border-b border-hairline"}`}
+							>
+								<div className="flex min-w-0 items-center gap-3">
+									<Icon
+										name={device.icon}
+										size={18}
+										color={device.current ? "bg-go-700" : "bg-black"}
+									/>
+									<div className="flex min-w-0 flex-col gap-0.75">
+										<span className="truncate font-display text-body-md leading-[1.2] font-semibold">
+											{device.name}
+										</span>
+										{device.current ? (
+											<DotLabel tone="go">{device.note}</DotLabel>
+										) : (
+											<span className="font-sans text-body-sm leading-[1.2] text-ink-500">
+												{device.note}
+											</span>
+										)}
+									</div>
+								</div>
+								{!device.current && (
+									<Button
+										variant="quiet"
+										size="sm"
+										icon="trash"
+										aria-label={`Hapus ${device.name}`}
+										onClick={() => actions.removeDevice(device.id, device.name)}
+									>
+										Hapus
+									</Button>
+								)}
+							</div>
+						))
+					: [0, 1].map((index) => (
+							<div
+								key={index}
+								className="flex items-center gap-3 border-b border-hairline py-3 last:border-0"
+							>
+								<Skeleton className="size-4.5 flex-none rounded-full" />
+								<div className="flex flex-col gap-1.5">
+									<SkeletonText width="9em" />
+									<SkeletonText width="7em" />
+								</div>
+							</div>
+						))}
+			</div>
+			<p className="font-sans text-body-sm leading-normal text-ink-500">
+				Perangkat yang tidak aktif lebih dari 7 hari tidak ditampilkan.
+			</p>
+		</Card>
+	);
+}
 
 function TransferCard({
 	ready,
@@ -162,7 +231,7 @@ export function AccountScreen({
 								</span>
 							</AccountRow>
 							<AccountRow
-								icon="cloud-check"
+								icon={page ? page.syncIcon : "cloud-check"}
 								aside={page ? page.devices : <SkeletonText width="4.5em" />}
 								last
 							>
@@ -172,6 +241,7 @@ export function AccountScreen({
 							</AccountRow>
 						</div>
 					</Card>
+					<DevicesCard rows={page ? page.deviceRows : null} actions={actions} />
 					<TransferCard ready={!!page} lastExport={lastExport} actions={actions} />
 				</div>
 				<aside className="flex min-w-0 flex-col gap-5">
@@ -205,7 +275,13 @@ export function AccountScreen({
 							ada.
 						</p>
 						{page ? (
-							<Button variant="stop" size="sm" block onClick={actions.deleteAccount}>
+							<Button
+								variant="stop"
+								size="sm"
+								block
+								icon="trash"
+								onClick={actions.deleteAccount}
+							>
 								Hapus akun
 							</Button>
 						) : (

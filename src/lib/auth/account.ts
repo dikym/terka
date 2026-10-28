@@ -1,4 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
+import type { DeviceInfo } from "@/lib/db/device";
 import { readMeta, wipesOf, type TerkaDb } from "@/lib/db/schema";
 
 export async function claimLocalData(
@@ -57,5 +58,30 @@ export async function deleteAccount(
 	const { error } = await client.rpc("delete_user");
 	if (error) return { status: "failed" };
 	await client.auth.signOut({ scope: "local" });
+	return { status: "ok" };
+}
+
+/**
+ * Takes another device off the account's list. The row stays on the server, marked, because its
+ * sessions and answers still point at it; a device that is really in use clears the mark again.
+ */
+export async function removeDevice(
+	db: TerkaDb,
+	client: SupabaseClient,
+	id: string,
+	now: number
+): Promise<{ status: "ok" } | { status: "failed" }> {
+	if (id === (await readMeta<string>(db, "deviceId"))) return { status: "failed" };
+	const response = await client
+		.from("devices")
+		.update({ removed_at: new Date(now).toISOString() })
+		.eq("id", id)
+		.select("id");
+	if (response.error || !response.data?.length) return { status: "failed" };
+	const list = (await readMeta<DeviceInfo[]>(db, "deviceList")) ?? [];
+	await db.sync_meta.put({
+		key: "deviceList",
+		value: list.map((device) => (device.id === id ? { ...device, removedAt: now } : device))
+	});
 	return { status: "ok" };
 }

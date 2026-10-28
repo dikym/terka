@@ -35,3 +35,44 @@ export async function ensurePersistence(
 	if (await storage.persisted()) return true;
 	return storage.persist();
 }
+
+/** A device of the account as the account screen needs it. */
+export type DeviceInfo = {
+	id: string;
+	label: string;
+	platform: string;
+	lastSeenAt: number | null;
+	removedAt: number | null;
+};
+
+const stamp = (value: unknown) => (typeof value === "string" ? Date.parse(value) : null);
+
+export const deviceInfoOf = (row: Record<string, unknown>): DeviceInfo => ({
+	id: String(row.id),
+	label: String(row.label),
+	platform: String(row.platform),
+	lastSeenAt: stamp(row.last_seen_at),
+	removedAt: stamp(row.removed_at)
+});
+
+/**
+ * The account's devices as the last pull saw them, plus this one from its own row: before any pull,
+ * or when the server has not registered it (a device limit), it is still on the list.
+ */
+export async function listDevices(db: TerkaDb): Promise<DeviceInfo[]> {
+	const pulled = (await readMeta<DeviceInfo[]>(db, "deviceList")) ?? [];
+	const ownId = await readMeta<string>(db, "deviceId");
+	const local = (await db.devices.toArray()).map((row): DeviceInfo => ({
+		id: row.id,
+		label: row.label,
+		platform: row.platform,
+		lastSeenAt: row.lastSeenAt,
+		removedAt: null
+	}));
+	const own = local.find((device) => device.id === ownId);
+	return own && !pulled.some((device) => device.id === own.id)
+		? [...pulled, own]
+		: pulled.length
+			? pulled
+			: local;
+}
