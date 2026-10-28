@@ -7,12 +7,16 @@ import {
 } from "@/rules";
 import type { AnswerSignals } from "./signals";
 
-export function percentile(values: number[], fraction: number): number {
-	const sorted = [...values].sort((a, b) => a - b);
+const ascending = (values: number[]) => [...values].sort((a, b) => a - b);
+
+function quantile(sorted: number[], fraction: number): number {
 	const index = (sorted.length - 1) * fraction;
 	const lower = Math.floor(index);
 	return sorted[lower] + (sorted[Math.ceil(index)] - sorted[lower]) * (index - lower);
 }
+
+export const percentile = (values: number[], fraction: number): number =>
+	quantile(ascending(values), fraction);
 
 export const isInterrupted = (signals: AnswerSignals) =>
 	signals.interrupted ||
@@ -65,8 +69,9 @@ export function fluencyScore(signals: AnswerSignals, group: AnswerSignals[]): nu
 	if (group.length) {
 		const latencies = present(group.map((item) => item.msToFirstKey));
 		if (signals.msToFirstKey !== null) {
-			if (signals.msToFirstKey < percentile(latencies, 0.2)) score += 2;
-			else if (signals.msToFirstKey > percentile(latencies, 0.8)) score -= 2;
+			const sorted = ascending(latencies);
+			if (signals.msToFirstKey < quantile(sorted, 0.2)) score += 2;
+			else if (signals.msToFirstKey > quantile(sorted, 0.8)) score -= 2;
 		}
 		const speed = msPerChar(signals);
 		const speeds = present(group.map(msPerChar));

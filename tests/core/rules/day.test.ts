@@ -54,6 +54,48 @@ describe("local day", () => {
 		expect(dayNumber("1970-01-02")).toBe(1);
 		expect(dayNumber("2026-09-22") - dayNumber("2026-09-21")).toBe(1);
 	});
+	test("addDays and dayNumber agree with Date arithmetic on every day from 1970 to 2100", () => {
+		const DAY_MS = 86_400_000;
+		const offsets = [-400, -31, -1, 0, 1, 7, 31, 400];
+		for (let epochDay = 0; epochDay <= 47_500; epochDay++) {
+			const day = new Date(epochDay * DAY_MS).toISOString().slice(0, 10);
+			expect([day, dayNumber(day)]).toEqual([day, epochDay]);
+			for (const offset of offsets) {
+				const expected = new Date((epochDay + offset) * DAY_MS).toISOString().slice(0, 10);
+				if (addDays(day, offset) !== expected)
+					throw new Error(
+						`${day} + ${offset}: ${addDays(day, offset)} instead of ${expected}`
+					);
+			}
+		}
+	});
+	test("localDay agrees with the wall clock across daylight saving in several zones", () => {
+		const zones = [
+			"UTC",
+			WITA,
+			"America/New_York",
+			"Europe/London",
+			"Australia/Lord_Howe",
+			"Pacific/Apia"
+		];
+		const start = Date.parse("2025-01-01T00:00:00Z");
+		for (const tz of zones) {
+			const parts = new Intl.DateTimeFormat("en-CA", {
+				timeZone: tz,
+				year: "numeric",
+				month: "2-digit",
+				day: "2-digit"
+			});
+			for (let step = 0; step < 6_000; step++) {
+				const at = start + step * 29 * 60_000;
+				const [year, month, day] = ["year", "month", "day"].map(
+					(type) => parts.formatToParts(at).find((part) => part.type === type)!.value
+				);
+				if (localDay(at, tz) !== `${year}-${month}-${day}`)
+					throw new Error(`${tz} at ${at}: ${localDay(at, tz)}`);
+			}
+		}
+	});
 	test("travelling east does not start a new day before the old zone's midnight", () => {
 		const last = { localDay: "2026-09-20", tz: WIB };
 		// 23:30 WIB = 01:30 WIT: WIT says a new day started, WIB has not reached midnight yet.
