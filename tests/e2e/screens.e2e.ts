@@ -237,6 +237,40 @@ test("the daily session introduces new codes and moves them out of new material"
 	await expect(page.getByText(/^9 materi baru hari ini$/)).toBeVisible();
 });
 
+test("the browser back button asks before leaving a session that has answers", async ({ page }) => {
+	await seen(page);
+	await page.goto("/beranda");
+	await page.goto("/sesi");
+	await page.getByRole("heading", { name: "Sesi hari ini" }).waitFor();
+	await page.keyboard.press("Enter");
+	await answerOne(page);
+	await expect.poll(async () => (await rows(page, "review_logs")).length).toBe(1);
+
+	await page.goBack();
+	const dialog = page.getByRole("alertdialog", { name: "Keluar dari sesi?" });
+	await expect(dialog).toBeVisible();
+	await expect(page).toHaveURL(/\/sesi/);
+
+	await dialog.getByRole("button", { name: "Lanjut sesi" }).click();
+	await expect(dialog).toHaveCount(0);
+	await page.goBack();
+	await expect(dialog).toBeVisible();
+
+	await dialog.getByRole("button", { name: "Keluar" }).click();
+	await expect(page).toHaveURL(/\/beranda/);
+});
+
+test("the browser back button leaves a session without answers at once", async ({ page }) => {
+	await seen(page);
+	await page.goto("/beranda");
+	await page.goto("/sesi");
+	await page.getByRole("heading", { name: "Sesi hari ini" }).waitFor();
+	await page.keyboard.press("Enter");
+	await page.getByRole("heading", { level: 2 }).waitFor();
+	await page.goBack();
+	await expect(page).toHaveURL(/\/beranda/);
+});
+
 test("a new code is asked once more before the session ends and nothing is due afterwards", async ({
 	page
 }) => {
