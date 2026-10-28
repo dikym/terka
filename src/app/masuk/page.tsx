@@ -35,7 +35,7 @@ export default function Page() {
 	const waiting = !account.known || !!account.email;
 	return (
 		<>
-			<SiteHeader />
+			<SiteHeader signIn={false} />
 			<main className="flex min-h-dvh flex-col items-center px-4 pt-15.25 pb-6 lg:pt-17.25 lg:pb-10">
 				<div className="flex w-full max-w-md flex-1 flex-col gap-6 py-6 lg:justify-center lg:py-10">
 					<div className="flex flex-col gap-2">
