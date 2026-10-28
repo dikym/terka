@@ -3,11 +3,18 @@ import type { LearningEvent } from "../../../src/core/log/events";
 import type { CardMode } from "../../../src/core/questions/question";
 import { seeded } from "../../../src/core/random";
 import { universe } from "../../../src/core/replay/universe";
-import { DAY, MINUTE, NOW, review } from "../../core/replay/fixtures";
+import { localDay } from "../../../src/core/time/day";
+import { DAY, MINUTE, NOW, review as fixtureReview } from "../../core/replay/fixtures";
 import { randomLog } from "../../core/replay/generator";
 import { withUuids } from "../../lib/db/fixtures";
 
 const choice = { level: 1, questionType: "choice" } as const;
+
+// The page runs in the machine's zone. A log stamped in another zone puts its last day ahead of
+// the page's today for part of every day, and anything recorded after it lands in the future.
+const zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+const review: typeof fixtureReview = (contentId, mode, at, overrides) =>
+	fixtureReview(contentId, mode, at, { localDay: localDay(at, zone), tz: zone, ...overrides });
 
 function learn(contentId: string, mode: CardMode, start: number, random: () => number) {
 	const events = [
