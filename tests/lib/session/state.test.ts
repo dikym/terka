@@ -39,7 +39,7 @@ const cardsFor = (mode: Mode, ids = ["bk::code2region", "ba::code2region"]) =>
 			}
 		);
 	});
-const started = (mode: Mode = "hariIni") =>
+const started = (mode: Mode = "harian") =>
 	sessionReducer(initialSession(mode, cardsFor(mode)), { type: "start" });
 const graded = (state: SessionState, verdict: "right" | "wrong" | "unverified") =>
 	sessionReducer(state, {
@@ -98,9 +98,9 @@ describe("session state", () => {
 
 describe("re-asks inside a session", () => {
 	const five = ["bk", "ba", "bb", "bm", "bp"].map((code) => `${code}::code2region`);
-	const extra = () => cardsFor("hariIni", ["be::code2region"])[0];
+	const extra = () => cardsFor("harian", ["be::code2region"])[0];
 	const begun = () =>
-		sessionReducer(initialSession("hariIni", cardsFor("hariIni", five)), { type: "start" });
+		sessionReducer(initialSession("harian", cardsFor("harian", five)), { type: "start" });
 
 	test("insert places a card after the given number of later cards", () => {
 		const card = extra();
@@ -137,7 +137,7 @@ describe("re-asks inside a session", () => {
 
 describe("re-asks at the edges", () => {
 	const two = ["bk::code2region", "ba::code2region"];
-	const extra = () => cardsFor("hariIni", ["be::code2region"])[0];
+	const extra = () => cardsFor("harian", ["be::code2region"])[0];
 
 	test("a re-ask added after the last answer keeps the session going", () => {
 		const onLast = sessionReducer(graded(started(), "right"), { type: "next" });
@@ -156,15 +156,15 @@ describe("re-asks at the edges", () => {
 		expect(sessionReducer(graded(onLast, "right"), { type: "next" }).phase).toBe("done");
 	});
 	test("dropping an unknown card changes nothing", () => {
-		const state = sessionReducer(initialSession("hariIni", cardsFor("hariIni", two)), {
+		const state = sessionReducer(initialSession("harian", cardsFor("harian", two)), {
 			type: "start"
 		});
 		expect(sessionReducer(state, { type: "drop", id: "nope" })).toBe(state);
 	});
 	test("two re-asks keep the order they were added in", () => {
-		const first = cardsFor("hariIni", ["be::code2region"])[0];
-		const second = cardsFor("hariIni", ["bd::code2region"])[0];
-		let state = sessionReducer(initialSession("hariIni", cardsFor("hariIni", two)), {
+		const first = cardsFor("harian", ["be::code2region"])[0];
+		const second = cardsFor("harian", ["bd::code2region"])[0];
+		let state = sessionReducer(initialSession("harian", cardsFor("harian", two)), {
 			type: "start"
 		});
 		state = sessionReducer(state, { type: "insert", card: first, at: 99 });
@@ -180,29 +180,26 @@ describe("the session total", () => {
 			buildQuestion(entry, bundle, { context: "intro" }),
 			{ cardId: entry.cardId, context: "intro", slot: "new" },
 			entry,
-			{ bundle, dictionary, notes: new Map(), mode: "hariIni", counts: false }
+			{ bundle, dictionary, notes: new Map(), mode: "harian", counts: false }
 		);
 	};
 	const reaskOf = (code: string) => ({
-		...cardsFor("hariIni", [`${code}::code2region`])[0],
+		...cardsFor("harian", [`${code}::code2region`])[0],
 		id: `${code}::code2region#r1`
 	});
 
 	test("counts the re-ask of every introduction from the start", () => {
-		const state = initialSession("hariIni", [
+		const state = initialSession("harian", [
 			introCard("bk"),
 			introCard("ba"),
-			...cardsFor("hariIni", ["bb::code2region"])
+			...cardsFor("harian", ["bb::code2region"])
 		]);
 		expect(sessionTotal(state)).toBe(5);
 	});
 	test("stays the same once a re-ask is in the session", () => {
-		const start = sessionReducer(
-			initialSession("hariIni", [introCard("bk"), introCard("ba")]),
-			{
-				type: "start"
-			}
-		);
+		const start = sessionReducer(initialSession("harian", [introCard("bk"), introCard("ba")]), {
+			type: "start"
+		});
 		const before = sessionTotal(start);
 		const answered = sessionReducer(graded(start, "right"), {
 			type: "insert",
@@ -212,6 +209,6 @@ describe("the session total", () => {
 		expect(sessionTotal(answered)).toBe(before);
 	});
 	test("a session without introductions counts its cards", () => {
-		expect(sessionTotal(initialSession("hariIni", cardsFor("hariIni")))).toBe(2);
+		expect(sessionTotal(initialSession("harian", cardsFor("harian")))).toBe(2);
 	});
 });

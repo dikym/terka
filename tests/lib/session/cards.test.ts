@@ -26,7 +26,7 @@ const card = (
 		question,
 		{ cardId: entry.cardId, context, slot: "review", format: extra.format },
 		entry,
-		{ ...deps, counts: false, mode: "hariIni" }
+		{ ...deps, counts: false, mode: "harian" }
 	);
 };
 

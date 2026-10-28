@@ -95,8 +95,8 @@ function Note({ label, children }: { label: string; children: React.ReactNode })
 }
 
 const TITLE: Record<Mode, string> = {
-	hariIni: "Sesi selesai",
-	harian: "Tantangan hari ini selesai",
+	harian: "Sesi selesai",
+	tantangan: "Tantangan hari ini selesai",
 	kilat: "Waktu habis",
 	terfokus: "Latihan selesai",
 	diplomat: "Sesi selesai",
@@ -135,7 +135,7 @@ export function SessionEnd({
 	onDismissLogin: () => void;
 }) {
 	let body: React.ReactNode;
-	if (view.mode === "harian")
+	if (view.mode === "tantangan")
 		body = (
 			<div className="grid grid-cols-2 items-end gap-4 lg:items-stretch lg:gap-5">
 				<Metric
@@ -247,7 +247,7 @@ export function SessionEnd({
 						</span>
 					</Note>
 				)}
-				{view.mode === "hariIni" && (
+				{view.mode === "harian" && (
 					<Callout tone="success" label="Jadwal hari ini">
 						{view.remainingDue
 							? `${view.remainingDue} soal masih perlu diulang hari ini.`

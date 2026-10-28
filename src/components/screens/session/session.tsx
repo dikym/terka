@@ -470,7 +470,7 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 			const after = runtime.store.getState().log.state;
 			const ctx = sessionCtx(runtime);
 			const remaining =
-				mode === "hariIni" && prefs
+				mode === "harian" && prefs
 					? dailyQueue(after, runtime.bundle, prefs.settings, ctx).items.filter(
 							(item) => item.slot !== "new"
 						).length

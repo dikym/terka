@@ -54,7 +54,7 @@ describe("planning a session", () => {
 					due: NOW - HOUR
 				})
 			);
-		const plan = planSession("hariIni", { ...input(), state }, NO_PARAMS);
+		const plan = planSession("harian", { ...input(), state }, NO_PARAMS);
 		expect(plan.kind).toBe("ready");
 		if (plan.kind !== "ready") return;
 		const session: Record<string, number> = {};
@@ -72,7 +72,7 @@ describe("planning a session", () => {
 	});
 
 	test("with nothing learned, practice modes have nothing to ask", () => {
-		for (const mode of ["terfokus", "kilat", "harian"] as const) {
+		for (const mode of ["terfokus", "kilat", "tantangan"] as const) {
 			const plan = planSession(mode, input(), NO_PARAMS);
 			expect(plan.kind).toBe("empty");
 			if (plan.kind === "empty")
@@ -81,7 +81,7 @@ describe("planning a session", () => {
 	});
 
 	test("a new learner's daily session introduces new material", () => {
-		const plan = planSession("hariIni", input(), NO_PARAMS);
+		const plan = planSession("harian", input(), NO_PARAMS);
 		expect(plan.kind).toBe("ready");
 		if (plan.kind !== "ready") return;
 		expect(plan.cards.length).toBeGreaterThan(0);
@@ -98,7 +98,11 @@ describe("planning a session", () => {
 	});
 
 	test("a finished challenge cannot be played again today", () => {
-		const plan = planSession("harian", input([...learned, run("challenge", NOW)]), NO_PARAMS);
+		const plan = planSession(
+			"tantangan",
+			input([...learned, run("challenge", NOW)]),
+			NO_PARAMS
+		);
 		expect(plan).toMatchObject({ kind: "empty", message: "Sudah selesai untuk hari ini" });
 	});
 
@@ -129,7 +133,7 @@ describe("re-asking inside a session", () => {
 	test("a just-introduced card gets a step re-ask in a daily session", () => {
 		const card = reaskCard(
 			input(justIntroduced),
-			"hariIni",
+			"harian",
 			"bk::code2region",
 			SETTINGS.scope,
 			1
@@ -150,11 +154,11 @@ describe("re-asking inside a session", () => {
 	});
 	test("a settled card gets no re-ask", () => {
 		expect(
-			reaskCard(input(learned), "hariIni", "bk::code2region", SETTINGS.scope, 1)
+			reaskCard(input(learned), "harian", "bk::code2region", SETTINGS.scope, 1)
 		).toBeNull();
 	});
 	test("Kilat, the challenge and the placement test never re-ask", () => {
-		for (const mode of ["kilat", "harian", "penempatan"] as const)
+		for (const mode of ["kilat", "tantangan", "penempatan"] as const)
 			expect(
 				reaskCard(input(justIntroduced), mode, "bk::code2region", SETTINGS.scope, 1)
 			).toBeNull();
@@ -211,7 +215,7 @@ describe("re-asking at the edges", () => {
 
 	test("each scheduling mode re-asks in its own context", () => {
 		const contexts = {
-			hariIni: "daily",
+			harian: "daily",
 			terfokus: "focused",
 			diplomat: "special",
 			sebutkan: "setrecall",
@@ -230,7 +234,7 @@ describe("re-asking at the edges", () => {
 	});
 	test("a card not due yet, suspended, or unknown gets no re-ask", () => {
 		const future = input([intro("bk", NOW + 60_000)]);
-		expect(reaskCard(future, "hariIni", "bk::code2region", SETTINGS.scope, 1)).toBeNull();
+		expect(reaskCard(future, "harian", "bk::code2region", SETTINGS.scope, 1)).toBeNull();
 		const suspended = input(justIntroduced);
 		const card = suspended.state.cards.get("bk::code2region")!;
 		suspended.state.cards.set("bk::code2region", {
@@ -238,20 +242,20 @@ describe("re-asking at the edges", () => {
 			state: "suspended",
 			suspension: { reason: "manual", resume: "learning" }
 		});
-		expect(reaskCard(suspended, "hariIni", "bk::code2region", SETTINGS.scope, 1)).toBeNull();
-		expect(reaskCard(input(), "hariIni", "zz::code2region", SETTINGS.scope, 1)).toBeNull();
+		expect(reaskCard(suspended, "harian", "bk::code2region", SETTINGS.scope, 1)).toBeNull();
+		expect(reaskCard(input(), "harian", "zz::code2region", SETTINGS.scope, 1)).toBeNull();
 	});
 	test("serials keep two re-asks of one card apart", () => {
 		const first = reaskCard(
 			input(justIntroduced),
-			"hariIni",
+			"harian",
 			"bk::code2region",
 			SETTINGS.scope,
 			1
 		);
 		const second = reaskCard(
 			input(justIntroduced),
-			"hariIni",
+			"harian",
 			"bk::code2region",
 			SETTINGS.scope,
 			2
@@ -263,7 +267,7 @@ describe("re-asking at the edges", () => {
 describe("where a re-ask goes", () => {
 	const fresh = reaskCard(
 		input([intro("bk", NOW - 60_000)]),
-		"hariIni",
+		"harian",
 		"bk::code2region",
 		SETTINGS.scope,
 		1
@@ -292,7 +296,7 @@ describe("where a re-ask goes", () => {
 
 describe("previews and empty screens after review", () => {
 	test("the daily preview counts the re-ask every new code will get", () => {
-		const plan = planSession("hariIni", input(), NO_PARAMS);
+		const plan = planSession("harian", input(), NO_PARAMS);
 		if (plan.kind !== "ready") throw new Error("expected a plan");
 		expect(plan.preview?.count).toBe(String(plan.cards.length * 2));
 	});
