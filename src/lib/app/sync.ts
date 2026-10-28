@@ -1,4 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { createStore } from "zustand/vanilla";
 import type { LogState } from "../db/log";
 import { createScheduler } from "../sync/scheduler";
 import { syncNow, type SyncResult } from "../sync/sync";
@@ -44,6 +45,23 @@ export function startSync(store: AppStore, deps: StartSyncDeps): () => void {
 	};
 }
 
+const roundsStore = createStore<{ running: number }>()(() => ({ running: 0 }));
+
+/** True while any sync round is in flight, whoever started it. */
+export const syncRunning = {
+	subscribe: roundsStore.subscribe,
+	get: () => roundsStore.getState().running > 0
+};
+
+export async function trackRound<T>(work: () => Promise<T>): Promise<T> {
+	roundsStore.setState((state) => ({ running: state.running + 1 }));
+	try {
+		return await work();
+	} finally {
+		roundsStore.setState((state) => ({ running: state.running - 1 }));
+	}
+}
+
 export const liveSync =
 	(
 		store: AppStore,
@@ -51,10 +69,12 @@ export const liveSync =
 		retryAfter: () => number | null
 	): StartSyncDeps["run"] =>
 	(log) =>
-		syncNow(
-			store.db,
-			client,
-			{ now: Date.now(), random: Math.random, online: navigator.onLine, retryAfter },
-			log,
-			store.bundle
+		trackRound(() =>
+			syncNow(
+				store.db,
+				client,
+				{ now: Date.now(), random: Math.random, online: navigator.onLine, retryAfter },
+				log,
+				store.bundle
+			)
 		);
