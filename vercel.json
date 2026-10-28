@@ -3,9 +3,6 @@
 	"framework": null,
 	"outputDirectory": "out",
 	"cleanUrls": true,
-	"redirects": [
-		{ "source": "/statistik/akun", "destination": "/setelan/akun", "permanent": true }
-	],
 	"headers": [
 		{
 			"source": "/(.*)",
