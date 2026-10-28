@@ -8,6 +8,8 @@ const GAP = 10;
 const EDGE = 8;
 // Where the arrow points on a start-aligned tooltip, from the trigger's left edge.
 const START_ARROW = 21;
+const ARROW_WIDTH = 12;
+const ARROW_HEIGHT = 7;
 
 /** Where the arrow should point and the room above and below the trigger, in viewport pixels. */
 type Place = { x: number; above: number; below: number; align: "center" | "start" };
@@ -65,17 +67,40 @@ export function Tooltip({
 	useLayoutEffect(() => {
 		const tip = box.current;
 		if (!place || !tip || !arrow.current) return;
-		const flip = place.above - tip.offsetHeight < EDGE;
-		tip.style.top = `${flip ? place.below : place.above - tip.offsetHeight}px`;
-		arrow.current.style.top = flip ? "auto" : "100%";
-		arrow.current.style.bottom = flip ? "100%" : "auto";
-		arrow.current.style.rotate = flip ? "180deg" : "";
-		const width = tip.offsetWidth;
+		// At a fractional pixel ratio the browser rounds the border down to whole device pixels,
+		// so everything is placed on the device grid and the arrow is drawn to the real border.
+		const dpr = window.devicePixelRatio || 1;
+		const snap = (value: number) => Math.round(value * dpr) / dpr;
+		const rect = tip.getBoundingClientRect();
+		const border = parseFloat(getComputedStyle(tip).borderTopWidth) || 1;
+		const height = snap(ARROW_HEIGHT);
+		const flip = place.above - rect.height < EDGE;
+		tip.style.top = `${snap(flip ? place.below : place.above - rect.height)}px`;
+		const svg = arrow.current;
+		svg.style.top = flip ? "auto" : "100%";
+		svg.style.bottom = flip ? "100%" : "auto";
+		svg.setAttribute("height", String(height));
+		svg.setAttribute("viewBox", `0 0 ${ARROW_WIDTH} ${height}`);
+		// Flipped inside the svg: a CSS transform on the svg itself skips the pixel snapping the border gets.
+		const [wedge, leg] = svg.querySelectorAll("path");
+		svg.firstElementChild?.setAttribute(
+			"transform",
+			flip ? `matrix(1 0 0 -1 0 ${height})` : ""
+		);
+		const half = border / 2;
+		const mid = ARROW_WIDTH / 2;
+		wedge.setAttribute(
+			"d",
+			`M${-half} ${-half} L${mid} ${mid} L${ARROW_WIDTH + half} ${-half} Z`
+		);
+		leg.setAttribute("d", `M0 ${half} L${mid} ${mid + half} L${ARROW_WIDTH} ${half}`);
+		leg.setAttribute("stroke-width", String(border * Math.SQRT1_2));
+		const width = rect.width;
 		const wanted = place.align === "center" ? place.x - width / 2 : place.x - START_ARROW;
-		const left = Math.round(Math.max(EDGE, Math.min(wanted, window.innerWidth - width - EDGE)));
+		const left = snap(Math.max(EDGE, Math.min(wanted, window.innerWidth - width - EDGE)));
 		tip.style.left = `${left}px`;
 		tip.style.visibility = "visible";
-		arrow.current.style.left = `${Math.round(place.x - left - 6)}px`;
+		svg.style.left = `${snap(place.x - left - mid)}px`;
 	}, [place]);
 	const close = () => {
 		if (timer.current) clearTimeout(timer.current);
@@ -142,15 +167,22 @@ export function Tooltip({
 							viewBox="0 0 12 7"
 							className="absolute block overflow-visible"
 						>
-							{/* Reaches half a pixel into the box, so no sliver of border survives at a
-						    fractional zoom; its sides run along the inner edges of the legs. */}
-							<path d="M-0.5 -0.5 L6 6 L12.5 -0.5 Z" fill="var(--color-paper-0)" />
-							<path
-								d="M0 0.5 L6 6.5 L12 0.5"
-								fill="none"
-								stroke="var(--color-ink-1000)"
-								strokeWidth={Math.SQRT1_2}
-							/>
+							<g>
+								{/* Reaches half a pixel into the box, so no sliver of border survives at a
+							    fractional zoom; its sides run along the inner edges of the legs. The square
+							    caps make each leg reach the border's outer edge, where the wedge erased it. */}
+								<path
+									d="M-0.5 -0.5 L6 6 L12.5 -0.5 Z"
+									fill="var(--color-paper-0)"
+								/>
+								<path
+									d="M0 0.5 L6 6.5 L12 0.5"
+									fill="none"
+									stroke="var(--color-ink-1000)"
+									strokeWidth={Math.SQRT1_2}
+									strokeLinecap="square"
+								/>
+							</g>
 						</svg>
 					</span>,
 					document.body
