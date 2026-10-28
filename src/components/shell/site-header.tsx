@@ -1,6 +1,6 @@
 import { Link } from "@/components/ui/app-link";
-import { Button } from "@/components/ui/button";
 import { Wordmark } from "@/components/ui/plate";
+import { SiteHeaderAction } from "./site-header-action";
 
 /** The page column of the public pages: the landing page and the sign-in page. */
 export const SITE_WRAP = "container max-w-280 lg:px-5";
@@ -13,7 +13,7 @@ const NAV = [
 
 /**
  * The top bar of the public pages. Off the landing page its section links lead back to it.
- * The sign-in page hides its own button.
+ * The button is Masuk until someone is signed in; the sign-in page always shows Buka aplikasi.
  */
 export function SiteHeader({ home = false, signIn = true }: { home?: boolean; signIn?: boolean }) {
 	return (
@@ -34,16 +34,7 @@ export function SiteHeader({ home = false, signIn = true }: { home?: boolean; si
 							{label}
 						</a>
 					))}
-					<div className="flex items-center gap-2 lg:gap-3">
-						{signIn && (
-							<Button href="/masuk" variant="outline" size="sm">
-								Masuk
-							</Button>
-						)}
-						<Button href="/beranda" size="sm">
-							Buka aplikasi
-						</Button>
-					</div>
+					<SiteHeaderAction signIn={signIn} />
 				</nav>
 			</div>
 		</header>
