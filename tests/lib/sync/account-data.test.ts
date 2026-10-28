@@ -202,6 +202,25 @@ describe("history from before signing in", () => {
 	});
 });
 
+describe("a device that has just signed in", () => {
+	test("pulls nothing in a round that starts before its data is claimed", async () => {
+		const { a } = await pair();
+		const daily = openRun("daily", NOW, { plannedCount: 1 });
+		await a.record(daily);
+		await a.record(...answersOf(daily, ["ba"], NOW));
+		await a.record(closeOf(daily, NOW + 5 * MINUTE));
+		await a.sync();
+		const fresh = await openDevice(a.server, { name: "tablet" });
+		fresh.auth.userId = "user-1";
+		const early = await fresh.sync();
+		expect(early.status.state).toBe("otherAccount");
+		expect(await fresh.ids("review_logs")).toEqual([]);
+		await afterSignIn(fresh.db, fresh.client, fresh.now());
+		await fresh.sync();
+		expect(fresh.state().doneDays.has(DAY_KEY)).toBe(true);
+	});
+});
+
 describe("signing out and in again", () => {
 	test("brings back everything from the server and the same state", async () => {
 		const { a } = await pair();

@@ -2,7 +2,7 @@
 
 import { useState, useSyncExternalStore } from "react";
 import type { SignIn } from "@/components/screens/sign-in";
-import { authClient } from "@/lib/app/auth";
+import { authClient, settleAfterSignIn, syncOnce } from "@/lib/app/auth";
 import type { Runtime } from "@/lib/app/runtime";
 import { isInAppBrowser } from "@/lib/auth/browsers";
 import { acceptPolicy } from "@/lib/auth/consent";
@@ -64,7 +64,7 @@ export function useSignIn(
 			return null;
 		}
 		if (result.status !== "ok") return "Masuk belum berhasil. Coba lagi.";
-		await runtime.reload();
+		await settleAfterSignIn(syncOnce(runtime), runtime.reload);
 		onDone(mergedMessage(result.answers));
 		return null;
 	};
@@ -127,7 +127,7 @@ export function useSignIn(
 					},
 					onWipe: () =>
 						void switchAccount(runtime.db, auth.client, Date.now()).then(async () => {
-							await runtime.reload();
+							await settleAfterSignIn(syncOnce(runtime), runtime.reload);
 							setOtherAccount(false);
 							onDone(null);
 						})
