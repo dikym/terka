@@ -5,6 +5,7 @@ import { readMeta, wipesOf, type TerkaDb } from "@/lib/db/schema";
 import { backoff, type Action, type Block } from "./errors";
 import { runPull } from "./pull";
 import { runPush, touchDevice } from "./push";
+import { requeueLostCloses } from "./reconcile";
 import { activeBlocks, syncStatus, type SyncStatus } from "./status";
 
 export type SyncContext = {
@@ -89,6 +90,7 @@ export async function syncNow(
 	if ((await readMeta<string>(db, "ownerUserId")) !== data.session.user.id)
 		return { log, status: await statusOf(db, log, ctx, true), nextAt: null };
 
+	await requeueLostCloses(db, client, wipes);
 	let push = await runPush(db, client, ctx);
 	if (push.action?.kind === "reauth") {
 		const refreshed = await client.auth.refreshSession();
