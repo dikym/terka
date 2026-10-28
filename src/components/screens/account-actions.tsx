@@ -75,7 +75,7 @@ export function useAccountActions(runtime: Runtime | null, onChange?: () => void
 							if (runtime) void syncOnce(runtime).then(onChange);
 						}
 					}}
-					destructive={{ label: "Keluar tetap", onClick: () => void leave(true) }}
+					destructive={{ label: "Keluar", onClick: () => void leave(true) }}
 				>
 					{dialog.pending} perubahan belum tersinkron. Keluar sekarang akan menghapusnya
 					dari perangkat ini.
