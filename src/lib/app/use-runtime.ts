@@ -2,7 +2,7 @@
 
 import { useEffect, useSyncExternalStore } from "react";
 import type { StoreApi } from "zustand/vanilla";
-import { account, startAuth } from "./auth";
+import { account, settling, startAuth } from "./auth";
 import {
 	bootRuntime,
 	loadingSnapshot,
@@ -35,9 +35,14 @@ function useStore<T>(store: StoreApi<T> | null): T | null {
 	);
 }
 
-/** The log and sync status; null while the app is still opening. */
-export const useAppState = (runtime: Runtime | null): AppState | null =>
-	useStore(runtime?.store ?? null);
+export const useSettling = () =>
+	useSyncExternalStore(settling.subscribe, settling.get, () => false);
+
+/** The log and sync status; null while the app is still opening or settling after sign-in. */
+export function useAppState(runtime: Runtime | null): AppState | null {
+	const state = useStore(runtime?.store ?? null);
+	return useSettling() ? null : state;
+}
 
 export const usePrefs = (runtime: Runtime | null): PrefsState | null =>
 	useStore(runtime?.prefs ?? null);

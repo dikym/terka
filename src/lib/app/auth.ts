@@ -79,21 +79,35 @@ export async function syncOnce(runtime: Runtime): Promise<void> {
 	runtime.store.adopt(result.log, result.status);
 }
 
+const settlingStore = createStore<{ active: boolean }>()(() => ({ active: false }));
+
+/** True while the first round after sign-in runs; screens read nothing from the log until it ends. */
+export const settling = {
+	subscribe: settlingStore.subscribe,
+	get: () => settlingStore.getState().active
+};
+
 /**
  * The first round after sign-in. The sign-in event fires before the device's data is claimed, so
  * the round it starts has nothing to do; without this one the next screen shows what the device
- * held before until something else triggers a sync. A slow network ends the wait, not the sign-in.
+ * held before until something else triggers a sync. Start it, then leave the sign-in page: screens
+ * show their own loading state while it runs. A slow network ends the wait, not the sign-in.
  */
 export async function settleAfterSignIn(
 	sync: Promise<unknown>,
 	reload: () => Promise<void>,
 	limitMs = 15_000
 ): Promise<void> {
+	settlingStore.setState({ active: true });
 	let timer: ReturnType<typeof setTimeout> | undefined;
-	const limit = new Promise<void>((resolve) => {
-		timer = setTimeout(resolve, limitMs);
-	});
-	await Promise.race([sync.catch(() => {}), limit]);
-	clearTimeout(timer);
-	await reload();
+	try {
+		const limit = new Promise<void>((resolve) => {
+			timer = setTimeout(resolve, limitMs);
+		});
+		await Promise.race([sync.catch(() => {}), limit]);
+		await reload();
+	} finally {
+		clearTimeout(timer);
+		settlingStore.setState({ active: false });
+	}
 }

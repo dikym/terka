@@ -64,7 +64,7 @@ export function useSignIn(
 			return null;
 		}
 		if (result.status !== "ok") return "Masuk belum berhasil. Coba lagi.";
-		await settleAfterSignIn(syncOnce(runtime), runtime.reload);
+		void settleAfterSignIn(syncOnce(runtime), runtime.reload);
 		onDone(mergedMessage(result.answers));
 		return null;
 	};
@@ -127,7 +127,7 @@ export function useSignIn(
 					},
 					onWipe: () =>
 						void switchAccount(runtime.db, auth.client, Date.now()).then(async () => {
-							await settleAfterSignIn(syncOnce(runtime), runtime.reload);
+							void settleAfterSignIn(syncOnce(runtime), runtime.reload);
 							setOtherAccount(false);
 							onDone(null);
 						})
