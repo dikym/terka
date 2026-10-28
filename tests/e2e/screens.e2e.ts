@@ -2,7 +2,7 @@ import { expect, type Locator, type Page, test } from "@playwright/test";
 import type { Bundle } from "../../src/core/content/schema";
 import plates from "../../src/data/plates.json";
 import { DAY } from "../core/replay/fixtures";
-import { learnedLog, missedLog } from "./support/logs";
+import { justLearnedLog, learnedLog, missedLog } from "./support/logs";
 import { pageErrors } from "./support/pwa";
 import { rows, seed } from "./support/seed";
 
@@ -255,6 +255,24 @@ test("a new code is asked once more before the session ends and nothing is due a
 	expect(logs.length).toBe(asked.size * 2);
 	await page.goto("/beranda");
 	await expect(page.getByText("Sesi hari ini selesai")).toBeVisible();
+});
+
+test("with everything learned and nothing due, home is not finished and the daily session offers extra practice", async ({
+	page
+}) => {
+	await seen(page);
+	await page.goto("/beranda");
+	const ids = (plates as unknown as Bundle).regions.map((region) => region.id);
+	await seed(page, justLearnedLog(ids), { logVersion: 1000 });
+	await page.goto("/beranda");
+	await expect(page.getByText("Belum ada soal terjadwal hari ini")).toBeVisible();
+	await expect(page.getByText("Sesi hari ini selesai")).toHaveCount(0);
+	await page.getByRole("link", { name: "Mulai belajar" }).first().click();
+	await expect(page.getByRole("heading", { name: "Sesi hari ini" })).toBeVisible();
+	await expect(page.getByText(/Semua soal terjadwal hari ini sudah selesai/)).toBeVisible();
+	await page.keyboard.press("Enter");
+	await answerOne(page);
+	await page.getByRole("button", { name: "Lanjut" }).waitFor();
 });
 
 test("after a long break Mulai belajar opens Cek ingatan and Lewati opens the daily session", async ({

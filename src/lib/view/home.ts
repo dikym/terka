@@ -30,6 +30,7 @@ export type Home = {
 	duration: string;
 	note: string | null;
 	finished: boolean;
+	idle: boolean;
 	reviewsOutsideScope: number;
 	newLimit: number;
 	pairs: { a: string; b: string; group: GroupId; streak: number }[];
@@ -160,13 +161,15 @@ export function homeView(
 		return region && inScope(region, settings.scope);
 	}).length;
 	const used = toleranceUsed(streakDays(state), today);
+	const quiet = summary.due === 0 && summary.newAvailable === 0 && !summary.held;
 	return {
 		summary,
 		dateLabel: dateLabel(ctx.now, ctx.tz),
 		syncLabel,
 		duration: daily.items.length ? durationLabel(preview.range) : "",
 		note: note(summary),
-		finished: summary.due === 0 && summary.newAvailable === 0 && !summary.held,
+		finished: quiet && state.doneDays.has(today),
+		idle: quiet && !state.doneDays.has(today),
 		reviewsOutsideScope: outside,
 		newLimit: TIERS[state.tier.current].newPerDay,
 		pairs: flaggedPairs(state, bundle),

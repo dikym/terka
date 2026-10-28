@@ -60,11 +60,23 @@ describe("home view", () => {
 		expect(view([]).summary.recheck).toBe(false);
 	});
 
-	test("a scope with everything introduced and nothing due counts as finished", () => {
+	test("a scope with everything introduced and nothing due is idle until the daily session is done", () => {
 		const scope = { level: "province", id: "bali" } as const;
-		const done = view([intro("dk", NOW + 1)], { ...SETTINGS, scope });
-		expect(done.summary.allIntroduced).toBe(true);
+		const idle = view([intro("dk", NOW + 1)], { ...SETTINGS, scope });
+		expect(idle.summary.allIntroduced).toBe(true);
+		expect(idle.idle).toBe(true);
+		expect(idle.finished).toBe(false);
+	});
+
+	test("the day is finished only once the daily session is done and nothing is left", () => {
+		const scope = { level: "province", id: "bali" } as const;
+		const daily = run("daily", NOW, { plannedCount: 1 });
+		const done = view([intro("dk", NOW + 1, { runId: daily.row.id }), daily], {
+			...SETTINGS,
+			scope
+		});
 		expect(done.finished).toBe(true);
+		expect(done.idle).toBe(false);
 	});
 
 	test("a pair flagged both ways shows the direction still furthest from clearing", () => {
