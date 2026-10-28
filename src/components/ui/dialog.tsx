@@ -4,6 +4,8 @@ import { useEffect, useId, useRef, useState } from "react";
 import { Button } from "./button";
 import { Icon } from "./icon";
 import { useFocusTrap } from "./use-focus-trap";
+import { useScrollLock } from "./use-scroll-lock";
+import { useSheetDrag } from "./use-sheet-drag";
 
 export const typedMatches = (word: string, value: string) => value !== "" && value === word;
 
@@ -13,7 +15,8 @@ const DISABLED_GREY =
 
 /**
  * The scrim and panel shared by every dialog. On a phone the panel is a bottom sheet with a
- * handle and rounded top corners; Esc and the scrim do what the safe button does.
+ * handle and rounded top corners that can be swiped down; Esc, the scrim and the swipe do what
+ * the safe button does. The page behind stays frozen.
  */
 function Overlay({
 	role,
@@ -33,6 +36,8 @@ function Overlay({
 }) {
 	const panel = useRef<HTMLDivElement>(null);
 	useFocusTrap(panel);
+	useScrollLock();
+	useSheetDrag(panel, onDismiss);
 	const latest = useRef(onDismiss);
 	useEffect(() => {
 		latest.current = onDismiss;
@@ -57,7 +62,7 @@ function Overlay({
 			<div
 				aria-hidden="true"
 				onClick={onDismiss}
-				className="absolute inset-0 bg-[oklch(0.14_0.012_60/0.45)]"
+				className="absolute inset-0 touch-none bg-[oklch(0.14_0.012_60/0.45)]"
 			/>
 			<div
 				ref={panel}
@@ -66,7 +71,7 @@ function Overlay({
 				aria-labelledby={labelledBy}
 				aria-describedby={describedBy}
 				tabIndex={-1}
-				className={`relative flex max-h-[90dvh] w-full flex-col overflow-y-auto rounded-t-lg border-t border-ink-1000 bg-paper-0 shadow-overlay outline-none lg:w-120 lg:rounded-lg lg:border ${padded ? "gap-5 px-5 pt-3 pb-[calc(--spacing(8)+env(safe-area-inset-bottom))] lg:p-6" : "pb-[env(safe-area-inset-bottom)] lg:pb-0"}`}
+				className={`relative flex max-h-[90dvh] w-full flex-col overflow-y-auto overscroll-contain rounded-t-lg bg-paper-0 shadow-overlay outline-none lg:w-120 lg:rounded-lg lg:border lg:border-ink-1000 ${padded ? "gap-5 px-5 pt-3 pb-[calc(--spacing(8)+env(safe-area-inset-bottom))] lg:p-6" : "pb-[env(safe-area-inset-bottom)] lg:pb-0"}`}
 			>
 				<span
 					aria-hidden="true"
