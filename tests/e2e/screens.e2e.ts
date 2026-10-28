@@ -576,6 +576,7 @@ test("the statistics sync card shows the status and opens sign-in when signed ou
 		.locator("main aside > *")
 		.filter({ has: page.getByText("Sinkronisasi", { exact: true }) });
 	await expect(card.getByText("Tersimpan di perangkat ini")).toBeVisible();
+	await expect(page.getByText("Tersimpan di perangkat ini")).toHaveCount(1);
 	await expect(card.getByText("Belum pernah sinkron")).toBeVisible();
 	await expect(card.getByRole("button")).toHaveCount(1);
 	await card.getByRole("button", { name: "Masuk untuk sinkronisasi" }).click();
