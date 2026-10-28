@@ -101,6 +101,10 @@ function Home() {
 			welcomeSeen !== "1" &&
 			!dismissed &&
 			(!app || placementAvailable(app.log.state)));
+	// A device that holds practice has nothing to welcome, so the first-visit cover stays off on reload.
+	useEffect(() => {
+		if (app && !placementAvailable(app.log.state)) writeFlag("local", WELCOME_SEEN, "1");
+	}, [app]);
 	const dismiss = () => {
 		writeFlag("local", WELCOME_SEEN, "1");
 		setDismissed(true);
