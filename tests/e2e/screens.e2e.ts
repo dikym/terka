@@ -364,6 +364,16 @@ test("statistics links reach their screens", async ({ page }) => {
 	}
 });
 
+test("the schedule parameters row in Setelan opens its screen", async ({ page }) => {
+	await seen(page);
+	await page.goto("/setelan");
+	await page.getByRole("link", { name: /Parameter jadwal/ }).click();
+	await expect(page.getByRole("heading", { level: 1, name: "Parameter jadwal" })).toBeVisible();
+	await expect(page.getByText("Bawaan FSRS-6")).toBeVisible();
+	await expect(page.getByText("Mengumpulkan data")).toBeVisible();
+	await expect(page.getByText("Belum ada optimasi.")).toBeVisible();
+});
+
 test("the account page sends a visitor who is signed out to the sign-in page", async ({ page }) => {
 	await seen(page);
 	await page.goto("/statistik/akun");
