@@ -336,12 +336,31 @@ export function AccountScreen({
 	signIn: SignIn | null;
 	actions: AccountActions;
 }) {
+	const exportCard = (
+		<Card fill>
+			<CardHeader label="Ekspor dan impor" title={lastExport ?? "…"} />
+			<p className="font-sans text-body-sm leading-normal text-ink-500">
+				Ekspor menyimpan riwayat latihan, pengaturan, dan catatan pengingat dalam satu
+				berkas JSON. Sinkronisasi menyimpan salinan di server; ekspor tetap berguna sebagai
+				salinan yang kamu pegang sendiri.
+			</p>
+			<div className="mt-auto flex items-center gap-3">
+				<Button size="sm" icon="download" onClick={actions.exportData}>
+					Ekspor data
+				</Button>
+				<Button variant="secondary" size="sm" icon="upload" onClick={actions.importData}>
+					Impor data
+				</Button>
+			</div>
+		</Card>
+	);
+
 	return (
 		<>
 			<PageTitle title="Akun dan sinkronisasi" back="/statistik" />
-			<div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-8">
-				<div className="flex min-w-0 flex-col gap-5">
-					{page ? (
+			{page ? (
+				<div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-8">
+					<div className="flex min-w-0 flex-col gap-5">
 						<Card>
 							<CardHeader label="Akun" />
 							<div className="flex flex-col">
@@ -366,32 +385,8 @@ export function AccountScreen({
 								</AccountRow>
 							</div>
 						</Card>
-					) : (
-						signIn && <SignInForm signIn={signIn} />
-					)}
-					<Card>
-						<CardHeader label="Ekspor dan impor" title={lastExport ?? "…"} />
-						<p className="font-sans text-body-sm leading-normal text-ink-500">
-							Ekspor menyimpan riwayat latihan, pengaturan, dan catatan pengingat
-							dalam satu berkas JSON. Sinkronisasi menyimpan salinan di server; ekspor
-							tetap berguna sebagai salinan yang kamu pegang sendiri.
-						</p>
-						<div className="flex items-center gap-3">
-							<Button size="sm" icon="download" onClick={actions.exportData}>
-								Ekspor data
-							</Button>
-							<Button
-								variant="secondary"
-								size="sm"
-								icon="upload"
-								onClick={actions.importData}
-							>
-								Impor data
-							</Button>
-						</div>
-					</Card>
-				</div>
-				{page && (
+						{exportCard}
+					</div>
 					<aside className="flex min-w-0 flex-col gap-5">
 						<Card>
 							<CardHeader label="Keluar dan hapus akun" />
@@ -424,8 +419,13 @@ export function AccountScreen({
 							</Button>
 						</Card>
 					</aside>
-				)}
-			</div>
+				</div>
+			) : (
+				<div className="grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-8">
+					{signIn && <SignInForm signIn={signIn} />}
+					{exportCard}
+				</div>
+			)}
 		</>
 	);
 }
