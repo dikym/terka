@@ -30,7 +30,7 @@ const STEPS: { icon: IconName; title: string; text: string }[] = [
 	{
 		icon: "calendar-days",
 		title: "Ulangi sesuai jadwal",
-		text: "Jadwal dihitung dari benar-salah dan kecepatan jawabanmu, lalu disesuaikan dengan caramu mengingat setelah riwayatmu cukup. Kode yang sudah melekat jarang muncul, yang masih goyah lebih sering. Kalau soal terjadwal habis, kamu tetap bisa lanjut berlatih; hanya soal yang memang sudah waktunya diulang yang memengaruhi jadwal."
+		text: "Jadwal dihitung dari benar-salah dan kecepatan jawabanmu. Kode yang sudah melekat jarang muncul, yang masih goyah lebih sering. Kalau soal terjadwal habis, kamu tetap bisa lanjut berlatih."
 	}
 ];
 
