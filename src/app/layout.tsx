@@ -18,7 +18,9 @@ export const viewport: Viewport = { themeColor: "#0f172a" };
 // mark the page before the first paint so the welcome skeleton covers it until React decides. No
 // time limit: on a slow connection the scripts can take many seconds, and the page is unusable
 // without them anyway.
-const FIRST_VISIT = `try{if(location.pathname==="/beranda"&&!localStorage.getItem("${WELCOME_SEEN}")){document.documentElement.dataset.welcome="pending"}}catch(e){}`;
+// Someone who has already been through the welcome skips the landing page. The page is hidden while
+// the redirect loads so it never flashes; a link with a hash, such as /#data, still opens it.
+const FIRST_VISIT = `try{var seen=localStorage.getItem("${WELCOME_SEEN}");var at=location.pathname;if(at==="/beranda"&&!seen){document.documentElement.dataset.welcome="pending"}else if(at==="/"&&seen&&!location.hash){document.documentElement.dataset.returning="1";location.replace("/beranda")}}catch(e){}`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
@@ -26,7 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 		<html lang="id" className={fontVariables} suppressHydrationWarning>
 			<head>
 				{/* Inline, not in the stylesheet: it must apply before the first paint, also in dev. */}
-				<style>{`html[data-welcome="pending"] [data-welcome-skeleton]{display:flex}`}</style>
+				<style>{`html[data-welcome="pending"] [data-welcome-skeleton]{display:flex}html[data-returning]{display:none}`}</style>
 				<script dangerouslySetInnerHTML={{ __html: FIRST_VISIT }} />
 			</head>
 			<body>

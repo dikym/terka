@@ -52,6 +52,23 @@ test("the landing page starts with the placement test, through one button", asyn
 	await expect(welcome.getByText("Tes penempatan", { exact: true })).toBeVisible();
 });
 
+test("a returning visitor opening the landing page goes straight to the home screen", async ({
+	page
+}) => {
+	await seen(page);
+	await page.goto("/");
+	await expect(page).toHaveURL(/\/beranda$/);
+});
+
+test("a returning visitor can still open a landing section through its link", async ({ page }) => {
+	await seen(page);
+	await page.goto("/#data");
+	await expect(page).toHaveURL(/\/#data$/);
+	await expect(
+		page.getByRole("heading", { name: /Progres tersimpan di perangkatmu/ })
+	).toBeVisible();
+});
+
 test("the landing demo plays three questions without resizing and can start again", async ({
 	page
 }) => {
