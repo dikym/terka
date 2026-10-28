@@ -85,6 +85,7 @@ export const KILAT_ROUND_MS = 60_000;
 export const SIGHTING_WINDOW_DAYS = 90;
 export const SIGHTING_DEDUPE_MS = 600_000;
 export const CHALLENGE_SIZE = 5;
+export const DAILY_MIN_SIZE = 10;
 export const RELATED_SKIP_LIMIT = 2;
 export const PLACEMENT_PASS = { 1: 3, 2: 6 } as const;
 export const PLACEMENT_EXPERT_SHARE = 0.7;
