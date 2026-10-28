@@ -188,7 +188,7 @@ export function ConfirmDialog({
 
 /**
  * For removing one thing: a plain cancel on the left takes the first focus, the red action sits on
- * its right. On a phone the cancel is on top.
+ * its right. On a phone the red action is on top and the cancel at the bottom.
  */
 export function DangerConfirm({
 	title,
@@ -213,7 +213,7 @@ export function DangerConfirm({
 				<Heading id={id}>{title}</Heading>
 				<Body id={`${id}-text`}>{children}</Body>
 			</div>
-			<div className="flex flex-col gap-3 lg:flex-row lg:justify-end">
+			<div className="flex flex-col-reverse gap-3 lg:flex-row lg:justify-end">
 				<Button
 					variant="secondary"
 					size="sm"
@@ -274,7 +274,7 @@ export function TypedConfirm({
 				spellCheck={false}
 				className="h-12 w-full rounded-sm border border-ink-1000 bg-paper-0 px-4 font-mono text-body-lg leading-none font-medium tracking-[0.08em] text-ink-1000"
 			/>
-			<div className="flex flex-col gap-3 lg:flex-row lg:justify-end">
+			<div className="flex flex-col-reverse gap-3 lg:flex-row lg:justify-end">
 				<Button variant="secondary" size="sm" className="max-lg:w-full" onClick={onCancel}>
 					Batal
 				</Button>
