@@ -41,6 +41,23 @@ describe("planning a push", () => {
 			"upsert:card_notes:1"
 		]);
 	});
+	test("every session close is a request of its own", () => {
+		const outbox = [
+			item("practice_runs", "a", "close"),
+			item("practice_runs", "b", "close"),
+			item("practice_runs", "c", "close")
+		];
+		expect(shape(outbox)).toEqual([
+			"close:practice_runs:1",
+			"close:practice_runs:1",
+			"close:practice_runs:1"
+		]);
+		expect(planPush(outbox, [], NOW).map((batch) => batch.items[0].key)).toEqual([
+			"a",
+			"b",
+			"c"
+		]);
+	});
 	test("1,250 answers go out in seven batches of at most 200, oldest first", () => {
 		const outbox = Array.from({ length: 1250 }, (_, index) => item("review_logs", `r${index}`));
 		const batches = planPush(outbox, [], NOW);
