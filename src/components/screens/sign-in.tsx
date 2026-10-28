@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { Modal } from "@/components/ui/dialog";
 import { Callout } from "@/components/ui/feedback";
+import { GoogleMark } from "@/components/ui/icon";
 
 export type SignIn = {
 	/** Why sign-in cannot start now, or null when it can. */
@@ -94,11 +95,15 @@ export function SignInForm({ signIn }: { signIn: SignIn }) {
 						</Callout>
 					) : (
 						<Button
+							variant="secondary"
 							block
 							disabled={!!signIn.blocked || busy}
 							onClick={() => void run(signIn.google)}
 						>
-							Masuk dengan Google
+							<span className="flex items-center gap-2">
+								<GoogleMark />
+								Masuk dengan Google
+							</span>
 						</Button>
 					)}
 					<div className="flex items-center gap-3">
