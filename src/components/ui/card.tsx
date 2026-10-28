@@ -1,18 +1,25 @@
 export function Card({
 	bar,
 	className = "gap-4",
+	fill,
 	children
 }: {
 	/** A `bg-*` class for the 4 px classification bar across the top. */
 	bar?: string;
 	/** Classes for the padded body, usually its `gap-*`. */
 	className?: string;
+	/** Lets the body take the card's full height, so a `mt-auto` child sits at the bottom. */
+	fill?: boolean;
 	children: React.ReactNode;
 }) {
 	return (
-		<section className="min-w-0 overflow-hidden rounded-md border border-hairline bg-paper-0 shadow-lift">
+		<section
+			className={`min-w-0 overflow-hidden rounded-md border border-hairline bg-paper-0 shadow-lift ${fill ? "flex flex-col" : ""}`}
+		>
 			{bar && <div className={`h-1 ${bar}`} />}
-			<div className={`flex flex-col p-4 ${className}`}>{children}</div>
+			<div className={`flex flex-col p-4 ${fill ? "flex-1" : ""} ${className}`}>
+				{children}
+			</div>
 		</section>
 	);
 }
