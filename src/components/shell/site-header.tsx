@@ -11,8 +11,11 @@ const NAV = [
 	["Data", "#data"]
 ];
 
-/** The top bar of the public pages. Off the landing page its section links lead back to it. */
-export function SiteHeader({ home = false }: { home?: boolean }) {
+/**
+ * The top bar of the public pages. Off the landing page its section links lead back to it.
+ * The sign-in page hides its own button.
+ */
+export function SiteHeader({ home = false, signIn = true }: { home?: boolean; signIn?: boolean }) {
 	return (
 		<header className="fixed inset-x-0 top-0 z-30 border-b border-hairline bg-paper-0">
 			<div
@@ -26,14 +29,21 @@ export function SiteHeader({ home = false }: { home?: boolean }) {
 						<a
 							key={hash}
 							href={home ? hash : `/${hash}`}
-							className="font-display text-body-sm leading-none font-semibold text-ink-700 max-lg:hidden"
+							className="font-display text-body-sm leading-none font-semibold text-ink-700 hover:text-ink-1000 max-lg:hidden"
 						>
 							{label}
 						</a>
 					))}
-					<Button href="/beranda" variant="secondary" size="sm" className="max-lg:h-11">
-						Buka aplikasi
-					</Button>
+					<div className="flex items-center gap-2 lg:gap-3">
+						{signIn && (
+							<Button href="/masuk" variant="outline" size="sm">
+								Masuk
+							</Button>
+						)}
+						<Button href="/beranda" size="sm">
+							Buka aplikasi
+						</Button>
+					</div>
 				</nav>
 			</div>
 		</header>
