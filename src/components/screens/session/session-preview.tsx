@@ -131,7 +131,7 @@ export function SessionPreview({
 				{p.scope && (
 					<div className="flex items-center gap-2">
 						<span
-							className={`size-2.5 flex-none rounded-full ${p.scope.group === "national" ? "bg-ink-1000" : GROUP_BG[p.scope.group]}`}
+							className={`size-2.5 flex-none dot ${p.scope.group === "national" ? "bg-ink-1000" : GROUP_BG[p.scope.group]}`}
 						/>
 						<span className="font-sans text-body-md leading-[1.2] font-medium text-ink-700">
 							{p.scope.label}

@@ -87,7 +87,7 @@ function Row({
 				{...(onClick ? { type: "button" as const, onClick, "data-node": node } : {})}
 				className={`flex min-w-0 flex-1 items-center gap-3 text-left ${onClick ? "cursor-pointer" : ""}`}
 			>
-				<span className={`size-2.5 flex-none rounded-full ${dot}`} />
+				<span className={`size-2.5 flex-none dot ${dot}`} />
 				<span className="flex min-w-0 flex-1 flex-col gap-1">{children}</span>
 			</Tag>
 		</div>

@@ -65,7 +65,7 @@ export function DotLabel({
 		<span
 			className={`inline-flex flex-none items-center gap-1.5 font-display text-label leading-none font-semibold tracking-[0.02em] whitespace-nowrap ${color}`}
 		>
-			<span className="size-[7px] flex-none rounded-full bg-current" />
+			<span className="size-[7px] flex-none bg-current dot" />
 			{children}
 		</span>
 	);

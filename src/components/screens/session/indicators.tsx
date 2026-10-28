@@ -57,7 +57,7 @@ export function StatusPill({
 		<span
 			className={`inline-flex w-fit items-center gap-2 self-start rounded-full border border-transparent px-2.5 py-1 type-label whitespace-nowrap ${PILL_TONE[tone]} ${className}`}
 		>
-			<span className="size-[7px] flex-none rounded-full bg-current" />
+			<span className="size-[7px] flex-none bg-current dot" />
 			{children}
 		</span>
 	);

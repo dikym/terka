@@ -156,6 +156,11 @@
 	font: 400 var(--text-body-lg) / var(--leading-loose) var(--font-sans);
 }
 
+@utility dot {
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Ccircle cx='5' cy='5' r='5'/%3E%3C/svg%3E")
+		center / contain no-repeat;
+}
+
 @utility type-label {
 	font: 600 var(--text-label) / 1.2 var(--font-display);
 	letter-spacing: var(--tracking-label);

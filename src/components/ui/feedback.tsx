@@ -42,14 +42,14 @@ export function Pill({
 		<span
 			className={`inline-flex w-fit items-center gap-2 rounded-full border border-transparent px-2.5 py-1 type-label whitespace-nowrap ${PILL[tone]} ${className}`}
 		>
-			<span className="size-[7px] flex-none rounded-full bg-current" />
+			<span className="size-[7px] flex-none bg-current dot" />
 			{children}
 		</span>
 	);
 }
 
 export function RegionDot({ group, size = "size-2" }: { group: GroupId; size?: string }) {
-	return <span className={`inline-block flex-none rounded-full ${size} ${GROUP_BG[group]}`} />;
+	return <span className={`inline-block flex-none dot ${size} ${GROUP_BG[group]}`} />;
 }
 
 /** A pulsing placeholder; give it the size of what it stands in for. */

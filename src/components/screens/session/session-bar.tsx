@@ -70,7 +70,7 @@ export function SessionMeta({
 		return (
 			<div className={row}>
 				<span className="inline-flex flex-none items-center gap-2 font-sans text-body-sm leading-none font-medium text-ink-900">
-					<span aria-hidden="true" className={`size-2.5 flex-none rounded-full ${dot}`} />
+					<span aria-hidden="true" className={`size-2.5 flex-none dot ${dot}`} />
 					{scope?.label ?? "Seluruh Indonesia"}
 				</span>
 				<span className="ml-auto inline-flex flex-none items-center gap-3">
@@ -101,10 +101,7 @@ export function SessionMeta({
 				)}
 				{mode === "terfokus" && (
 					<span className="inline-flex items-center gap-2 font-sans text-body-sm leading-none font-medium text-ink-900">
-						<span
-							aria-hidden="true"
-							className={`size-2.5 flex-none rounded-full ${dot}`}
-						/>
+						<span aria-hidden="true" className={`size-2.5 flex-none dot ${dot}`} />
 						{scope?.label}
 					</span>
 				)}

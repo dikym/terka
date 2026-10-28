@@ -23,7 +23,7 @@ export function DataChanges({ data, onClose }: { data: DataChanges | null; onClo
 					<div className="flex min-w-0 flex-col gap-3">
 						<div className="flex items-center gap-3">
 							<span className="inline-flex w-fit items-center gap-2 self-start rounded-full border border-transparent bg-sky-100 px-2.5 py-1 type-label whitespace-nowrap text-ink-1000">
-								<span className="size-1.75 flex-none rounded-full bg-current" />
+								<span className="size-1.75 flex-none bg-current dot" />
 								Data diperbarui
 							</span>
 							<span className="font-mono text-body-sm leading-none font-medium text-ink-700">

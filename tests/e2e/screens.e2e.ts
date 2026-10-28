@@ -950,7 +950,7 @@ test("the kawasan dots stay round on a narrow screen", async ({ page }) => {
 	await page.setViewportSize({ width: 320, height: 800 });
 	await page.goto("/statistik");
 	await page.getByRole("heading", { name: "Lolos per level" }).waitFor();
-	const dots = page.locator("span.rounded-full[class*='bg-group-']");
+	const dots = page.locator("span.dot[class*='bg-group-']");
 	await dots.first().waitFor();
 	for (const dot of await dots.all()) {
 		const box = (await dot.boundingBox())!;

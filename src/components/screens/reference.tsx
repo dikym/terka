@@ -290,7 +290,7 @@ function RegionList({
 								active={filter === id}
 								onClick={() => setFilter(id)}
 							>
-								<span className={`size-2 flex-none rounded-full ${GROUP_BG[id]}`} />
+								<span className={`size-2 flex-none dot ${GROUP_BG[id]}`} />
 								{GROUP_NAME[id]}
 							</TagButton>
 						))}
@@ -421,7 +421,7 @@ function SpecialCodesCard({ loading }: { loading: boolean }) {
 						</span>
 						{loading ? (
 							<span className="flex items-center gap-1.5">
-								<Skeleton className="size-1.75 rounded-full" />
+								<Skeleton className="size-1.75 dot" />
 								<SkeletonText width={skeletonWidth(label)} />
 							</span>
 						) : (

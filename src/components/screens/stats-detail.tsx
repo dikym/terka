@@ -45,9 +45,7 @@ export function MasteryMapScreen({
 						key={row.group}
 						className="grid grid-cols-[10px_minmax(0,1fr)_44px] items-start gap-3 border-b border-hairline py-4 lg:grid-cols-[10px_minmax(0,1fr)_160px_48px] lg:items-center lg:gap-x-4"
 					>
-						<span
-							className={`mt-1 size-2.5 rounded-full lg:mt-0 ${GROUP_BG[row.group]}`}
-						/>
+						<span className={`mt-1 size-2.5 dot lg:mt-0 ${GROUP_BG[row.group]}`} />
 						<div className="flex min-w-0 flex-col gap-2">
 							<Link
 								href={referenceHref("kawasan", row.group)}
