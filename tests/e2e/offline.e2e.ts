@@ -1,12 +1,13 @@
 import { expect, test } from "@playwright/test";
 import { MAIN_ROUTES } from "../../scripts/build/routes";
 import { installed } from "./support/pwa";
+import { opened } from "./support/routes";
 
 test("every main route opens offline on the second visit", async ({ page, context }) => {
 	await installed(page);
 	await context.setOffline(true);
 	for (const route of [...MAIN_ROUTES, "/auth/callback?code=abc"]) {
-		await page.goto(route);
+		await opened(page, route);
 		await expect(page.locator("main")).toBeVisible();
 	}
 	const assets = await page.evaluate(() =>
