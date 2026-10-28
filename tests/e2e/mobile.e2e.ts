@@ -1,6 +1,7 @@
 import { expect, type Page, test } from "@playwright/test";
 import { MAIN_ROUTES } from "../../scripts/build/routes";
 import { learnedLog } from "./support/logs";
+import { opened } from "./support/routes";
 import { seed } from "./support/seed";
 
 test.use({ viewport: { width: 390, height: 844 }, hasTouch: true });
@@ -31,8 +32,7 @@ test("the tab bar reaches every main tab", async ({ page }) => {
 test("no screen scrolls sideways at phone width", async ({ page }) => {
 	await seen(page);
 	for (const route of MAIN_ROUTES) {
-		await page.goto(route);
-		await page.locator("main").waitFor();
+		await opened(page, route);
 		const overflow = await page.evaluate(
 			() => document.documentElement.scrollWidth - window.innerWidth
 		);
