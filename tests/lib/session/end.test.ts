@@ -12,7 +12,7 @@ describe("session end", () => {
 	test("accuracy leaves out unverified answers and latency reads in seconds", () => {
 		const state = stateOf([]);
 		const view = endView({
-			mode: "hariIni",
+			mode: "harian",
 			before: state,
 			after: state,
 			answers: [answer(true, 2000), answer(false, 2200), answer(null, 1900)],
@@ -114,7 +114,7 @@ describe("recheck end", () => {
 	test("other sessions have no recheck section", () => {
 		const state = stateOf([]);
 		const view = endView({
-			mode: "hariIni",
+			mode: "harian",
 			before: state,
 			after: state,
 			answers: [answer(true, 900)],

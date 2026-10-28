@@ -84,14 +84,14 @@ export function SessionMeta({
 			</div>
 		);
 	const left =
-		(mode === "harian" && !finished) || mode === "terfokus" || (card?.pill && !finished);
+		(mode === "tantangan" && !finished) || mode === "terfokus" || (card?.pill && !finished);
 	return (
 		<div className={row}>
 			{/* Desktop keeps the empty span: its gap is part of the bar's spacing. */}
 			<span
 				className={`min-w-0 flex-wrap items-center gap-3 ${left ? "inline-flex" : "hidden lg:inline-flex"}`}
 			>
-				{mode === "harian" && !finished && (
+				{mode === "tantangan" && !finished && (
 					<div className="flex items-center gap-2">
 						<Icon name="flame" size={16} color="bg-tangerine-700" />
 						<span className="type-label text-tangerine-700">
@@ -118,7 +118,7 @@ export function SessionMeta({
 			<span
 				className={`inline-flex flex-none items-center gap-3 ${left ? "ml-auto" : "lg:ml-auto"}`}
 			>
-				{mode === "harian" && (
+				{mode === "tantangan" && (
 					<Tooltip content="Tantangan Harian">
 						<span
 							role="img"
@@ -186,7 +186,7 @@ export function SessionBar(props: BarProps) {
 					) : (
 						<>
 							{/* The finished screen keeps undo on desktop only. */}
-							{(mode === "harian" || mode === "terfokus") && (
+							{(mode === "tantangan" || mode === "terfokus") && (
 								<span className="contents max-lg:hidden">
 									<BarButton
 										icon="undo-2"

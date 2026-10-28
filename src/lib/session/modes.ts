@@ -33,11 +33,11 @@ import { type SessionCard, toCard } from "./cards";
 import { composition, infoNotes, type Preview, typeRows } from "./preview";
 
 export type Mode =
-	"hariIni" | "harian" | "kilat" | "terfokus" | "diplomat" | "sebutkan" | "penempatan" | "cek";
+	"harian" | "tantangan" | "kilat" | "terfokus" | "diplomat" | "sebutkan" | "penempatan" | "cek";
 
 const PARAMS: Record<string, Mode> = {
-	harian: "hariIni",
-	tantangan: "harian",
+	harian: "harian",
+	tantangan: "tantangan",
 	kilat: "kilat",
 	terfokus: "terfokus",
 	diplomat: "diplomat",
@@ -50,7 +50,7 @@ const PARAMS: Record<string, Mode> = {
 export const DAILY_SESSION = "/sesi?mode=harian";
 
 export const modeFromParam = (value: string | null): Mode =>
-	value && Object.hasOwn(PARAMS, value) ? PARAMS[value] : "hariIni";
+	value && Object.hasOwn(PARAMS, value) ? PARAMS[value] : "harian";
 
 export type PlanInput = {
 	state: AppState;
@@ -85,8 +85,8 @@ export type Plan =
 	  };
 
 const RUN_KIND: Record<Mode, RunKind> = {
-	hariIni: "daily",
-	harian: "challenge",
+	harian: "daily",
+	tantangan: "challenge",
 	kilat: "kilat",
 	terfokus: "focused",
 	diplomat: "special",
@@ -96,8 +96,8 @@ const RUN_KIND: Record<Mode, RunKind> = {
 };
 
 const TITLE: Record<Mode, string> = {
-	hariIni: "Sesi hari ini",
-	harian: "Tantangan Harian",
+	harian: "Sesi hari ini",
+	tantangan: "Tantangan Harian",
 	kilat: "Mode Kilat",
 	terfokus: "Latihan Terfokus",
 	diplomat: "Kode diplomat",
@@ -107,8 +107,8 @@ const TITLE: Record<Mode, string> = {
 };
 
 const ICON: Record<Mode, IconName> = {
-	hariIni: "play",
-	harian: "calendar-check",
+	harian: "play",
+	tantangan: "calendar-check",
 	kilat: "zap",
 	terfokus: "crosshair",
 	diplomat: "flag",
@@ -224,7 +224,7 @@ function ready(
 		kind: "ready",
 		mode,
 		cards,
-		run: { kind: RUN_KIND[mode], scope: mode === "hariIni" ? input.settings.scope : scope },
+		run: { kind: RUN_KIND[mode], scope: mode === "harian" ? input.settings.scope : scope },
 		preview: describe(core, cards),
 		held,
 		estimatedMs: core.estimatedMs
@@ -233,7 +233,7 @@ function ready(
 
 // Modes whose answers schedule cards ask a fresh or lapsed card once more before they end.
 const REASK_CONTEXT: Partial<Record<Mode, QuestionContext>> = {
-	hariIni: "daily",
+	harian: "daily",
 	terfokus: "focused",
 	diplomat: "special",
 	sebutkan: "setrecall",
@@ -272,7 +272,7 @@ export function planSession(mode: Mode, input: PlanInput, params: PlanParams): P
 	const { bundle, settings, ctx } = input;
 	const today = todayOf(ctx);
 	switch (mode) {
-		case "hariIni": {
+		case "harian": {
 			const daily = dailyQueue(state, bundle, settings, ctx);
 			if (!daily.items.length) {
 				const next = cardsWhereActive(state).filter((due) => due > ctx.now);
@@ -317,7 +317,7 @@ export function planSession(mode: Mode, input: PlanInput, params: PlanParams): P
 			}));
 			return plan.kind === "ready" ? { ...plan, predicted } : plan;
 		}
-		case "harian": {
+		case "tantangan": {
 			const queue = challengeQueue(state, ctx);
 			if (!Array.isArray(queue))
 				return empty(

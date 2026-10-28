@@ -53,7 +53,7 @@ export type CardDeps = {
 	scope?: Scope;
 };
 
-const NO_PILL = new Set<Mode>(["kilat", "harian", "penempatan"]);
+const NO_PILL = new Set<Mode>(["kilat", "tantangan", "penempatan"]);
 const LEECH_SHOWN = 5;
 
 export const rightChoice = (
