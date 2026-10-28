@@ -104,7 +104,7 @@ export function Modal({
 	title: string;
 	onClose: () => void;
 	children: React.ReactNode;
-	/** Full-width buttons, the safest first. */
+	/** The safest first: on a phone it is on top, on a desktop the other action sits on its left. */
 	actions: React.ReactNode;
 }) {
 	const id = useId();
@@ -124,7 +124,9 @@ export function Modal({
 			<div className="p-6">
 				<Body>{children}</Body>
 			</div>
-			<footer className="flex flex-col gap-3 px-6 pb-6">{actions}</footer>
+			<footer className="flex flex-col gap-3 px-6 pb-6 lg:flex-row-reverse lg:justify-start">
+				{actions}
+			</footer>
 		</Overlay>
 	);
 }
@@ -268,12 +270,7 @@ export function TypedConfirm({
 				className="h-12 w-full rounded-sm border border-ink-1000 bg-paper-0 px-4 font-mono text-body-lg leading-none font-medium tracking-[0.08em] text-ink-1000"
 			/>
 			<div className="flex flex-col gap-3 lg:flex-row lg:justify-end">
-				<Button
-					variant="ghost"
-					size="sm"
-					className="text-ink-1000 max-lg:w-full"
-					onClick={onCancel}
-				>
+				<Button variant="secondary" size="sm" className="max-lg:w-full" onClick={onCancel}>
 					Batal
 				</Button>
 				<Button
