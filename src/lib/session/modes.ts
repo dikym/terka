@@ -16,7 +16,8 @@ import {
 	type QueueItem,
 	type SessionContext,
 	type SessionSettings,
-	todayOf
+	todayOf,
+	uniqueItems
 } from "@/core/session/context";
 import { challengeQueue, focusedQueue, kilatQuestion, setrecallQueue } from "@/core/session/modes";
 import { placementItems, type Stage } from "@/core/session/placement";
@@ -26,7 +27,7 @@ import { dailyQueue, specialQueue } from "@/core/session/queue";
 import { recheckOffer, recheckQueue } from "@/core/session/recheck";
 import { buildQuestion } from "@/core/questions/build";
 import { addDays, dayNumber } from "@/core/time/day";
-import { CHALLENGE_SIZE, KILAT_ROUND_MS, REASK_GAP, TIER_ORDER } from "@/rules";
+import { CHALLENGE_SIZE, DAILY_MIN_SIZE, KILAT_ROUND_MS, REASK_GAP, TIER_ORDER } from "@/rules";
 import { clock, durationLabel } from "../view/format";
 import { scopeGroup, scopeTitle } from "../view/groups";
 import { type SessionCard, toCard } from "./cards";
@@ -142,8 +143,11 @@ function cardsOf(
 ) {
 	return items.map((item, index) => {
 		const entry = effectiveCard(state, item.cardId)!;
-		// Terfokus marks the answers that also move today's schedule.
-		const counts = mode === "terfokus" && ACTIVE.has(entry.state) && entry.due <= input.ctx.now;
+		// Focused practice marks the answers that also move today's schedule.
+		const counts =
+			(mode === "terfokus" || item.context === "focused") &&
+			ACTIVE.has(entry.state) &&
+			entry.due <= input.ctx.now;
 		const question = buildQuestion(entry, input.bundle, {
 			context: item.context,
 			format: item.format,
@@ -231,6 +235,44 @@ function ready(
 	};
 }
 
+const FOCUSED_NOTE =
+	"Latihan tambahan. Hanya soal yang sudah waktunya diulang yang dapat memengaruhi jadwal.";
+const EXTRA_NOTE =
+	"Semua soal terjadwal hari ini sudah selesai. Kamu bisa lanjut berlatih; hanya soal yang sudah waktunya diulang yang dapat memengaruhi jadwal.";
+
+// Runs as a focused run, so extra practice never counts as the daily session or moves the streak.
+function focusedPlan(
+	input: PlanInput,
+	state: AppState,
+	items: QueueItem[],
+	scope: Scope,
+	title: string,
+	description: string
+): Plan {
+	return ready("terfokus", input, state, items, scope, false, (core, cards) => {
+		const counted = cards.filter((card) => card.notice).length;
+		return {
+			icon: ICON.terfokus,
+			title,
+			scope: scopeRow(input.bundle, scope),
+			description,
+			count: String(cards.length),
+			unit: "soal",
+			aside: duration(core),
+			composition: (
+				[
+					["Dihitung untuk jadwal", counted, "bg-ink-1000"],
+					["Latihan tambahan", cards.length - counted, "bg-ink-200"]
+				] as [string, number, string][]
+			).filter(([, value]) => value > 0),
+			types: typeRows(core.questions.map((question) => question.label)),
+			right: levels(core),
+			notes: notesOf(input, state, core, items),
+			start: "Mulai"
+		};
+	});
+}
+
 // Modes whose answers schedule cards ask a fresh or lapsed card once more before they end.
 const REASK_CONTEXT: Partial<Record<Mode, QuestionContext>> = {
 	harian: "daily",
@@ -274,26 +316,49 @@ export function planSession(mode: Mode, input: PlanInput, params: PlanParams): P
 	switch (mode) {
 		case "harian": {
 			const daily = dailyQueue(state, bundle, settings, ctx);
+			const room = Math.max(0, DAILY_MIN_SIZE - daily.items.length);
+			const filler = room
+				? uniqueItems([
+						...daily.items,
+						...focusedQueue(state, bundle, settings.scope, ctx)
+					]).slice(daily.items.length, daily.items.length + room)
+				: [];
 			if (!daily.items.length) {
+				if (filler.length)
+					return focusedPlan(
+						input,
+						state,
+						filler,
+						settings.scope,
+						TITLE[mode],
+						EXTRA_NOTE
+					);
 				const next = cardsWhereActive(state).filter((due) => due > ctx.now);
 				const detail = next.length
 					? `Pengulangan berikutnya tersedia pukul ${clock(Math.min(...next), ctx.tz)}.`
 					: undefined;
 				return empty(mode, daily.held ? HELD : NOTHING_DUE, detail);
 			}
-			return ready(mode, input, state, daily.items, settings.scope, daily.held, (core) => ({
-				icon: ICON[mode],
-				title: TITLE[mode],
-				scope: scopeRow(bundle, settings.scope),
-				count: String(core.questions.length + core.reasks),
-				unit: "soal",
-				aside: duration(core),
-				composition: composition(core.counts),
-				types: typeRows(core.questions.map((question) => question.label)),
-				right: levels(core),
-				notes: notesOf(input, state, core, daily.items),
-				start: "Mulai"
-			}));
+			const items = [...daily.items, ...filler];
+			return ready(mode, input, state, items, settings.scope, daily.held, (core) => {
+				const counts = { ...core.counts };
+				for (const item of filler) counts[item.slot]--;
+				const rows = composition(counts);
+				if (filler.length) rows.push(["Latihan tambahan", filler.length, "bg-ink-200"]);
+				return {
+					icon: ICON[mode],
+					title: TITLE[mode],
+					scope: scopeRow(bundle, settings.scope),
+					count: String(core.questions.length + core.reasks),
+					unit: "soal",
+					aside: duration(core),
+					composition: rows,
+					types: typeRows(core.questions.map((question) => question.label)),
+					right: levels(core),
+					notes: notesOf(input, state, core, items),
+					start: "Mulai"
+				};
+			});
 		}
 		case "cek": {
 			if (!recheckOffer(state, ctx))
@@ -391,29 +456,7 @@ export function planSession(mode: Mode, input: PlanInput, params: PlanParams): P
 			const scope = params.scope ?? settings.scope;
 			const items = focusedQueue(state, bundle, scope, ctx);
 			if (!items.length) return empty(mode, NOTHING_LEARNED);
-			return ready(mode, input, state, items, scope, false, (core, cards) => {
-				const counted = cards.filter((card) => card.notice).length;
-				return {
-					icon: ICON[mode],
-					title: TITLE[mode],
-					scope: scopeRow(bundle, scope),
-					description:
-						"Latihan tambahan. Hanya soal yang sudah waktunya diulang yang dapat memengaruhi jadwal.",
-					count: String(cards.length),
-					unit: "soal",
-					aside: duration(core),
-					composition: (
-						[
-							["Dihitung untuk jadwal", counted, "bg-ink-1000"],
-							["Latihan tambahan", cards.length - counted, "bg-ink-200"]
-						] as [string, number, string][]
-					).filter(([, value]) => value > 0),
-					types: typeRows(core.questions.map((question) => question.label)),
-					right: levels(core),
-					notes: notesOf(input, state, core, items),
-					start: "Mulai"
-				};
-			});
+			return focusedPlan(input, state, items, scope, TITLE[mode], FOCUSED_NOTE);
 		}
 		case "diplomat": {
 			const queue = specialQueue(state, bundle, settings, ctx);

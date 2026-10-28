@@ -10,6 +10,7 @@ import {
 } from "../../../src/lib/session/modes";
 import { buildPreview } from "../../../src/core/session/preview";
 import { dailyQueue } from "../../../src/core/session/queue";
+import { DAILY_MIN_SIZE } from "../../../src/rules";
 import {
 	DAY,
 	fresh,
@@ -88,6 +89,57 @@ describe("planning a session", () => {
 		expect(plan.cards.every((card) => card.form === "perkenalan")).toBe(true);
 		expect(plan.run).toEqual({ kind: "daily", scope: SETTINGS.scope });
 		expect(plan.preview?.title).toBe("Sesi hari ini");
+	});
+
+	test("a daily session with nothing due falls back to extra practice on learned codes", () => {
+		const state = fresh();
+		for (const region of bundle.regions)
+			seedCard(
+				state,
+				`${region.id}::code2region`,
+				reviewCard({
+					stability: 2,
+					intervalDays: 2,
+					lastReviewAt: NOW - DAY,
+					due: NOW + DAY
+				})
+			);
+		expect(dailyQueue(state, bundle, SETTINGS, ctxAt(NOW)).items).toHaveLength(0);
+		const plan = planSession("harian", { ...input(), state }, NO_PARAMS);
+		expect(plan.kind).toBe("ready");
+		if (plan.kind !== "ready") return;
+		expect(plan.cards.length).toBeGreaterThan(0);
+		expect(plan.run).toEqual({ kind: "focused", scope: SETTINGS.scope });
+		expect(plan.preview?.title).toBe("Sesi hari ini");
+		expect(plan.cards.every((card) => card.question.context === "focused")).toBe(true);
+	});
+
+	test("a daily session with few items is topped up with focused practice", () => {
+		const state = fresh();
+		for (const region of bundle.regions)
+			seedCard(
+				state,
+				`${region.id}::code2region`,
+				reviewCard({
+					stability: 2,
+					intervalDays: 2,
+					lastReviewAt: NOW - DAY,
+					due: NOW + DAY
+				})
+			);
+		const [first] = bundle.regions;
+		seedCard(state, `${first.id}::code2region`, reviewCard({ due: NOW - HOUR }));
+		const plan = planSession("harian", { ...input(), state }, NO_PARAMS);
+		expect(plan.kind).toBe("ready");
+		if (plan.kind !== "ready") return;
+		expect(plan.run.kind).toBe("daily");
+		expect(plan.cards.length).toBeGreaterThan(1);
+		expect(plan.cards.length).toBeLessThanOrEqual(DAILY_MIN_SIZE);
+		expect(plan.cards[0].question.context).toBe("daily");
+		expect(plan.cards.slice(1).every((card) => card.question.context === "focused")).toBe(true);
+		expect(new Set(plan.cards.map((card) => card.question.cardId)).size).toBe(
+			plan.cards.length
+		);
 	});
 
 	test("an empty plan carries the mode's icon", () => {
