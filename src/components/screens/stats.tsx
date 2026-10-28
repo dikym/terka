@@ -7,6 +7,7 @@ import { GROUP_BG } from "@/components/ui/groups";
 import { Icon } from "@/components/ui/icon";
 import { type MapProvince, MasteryMap } from "@/components/ui/mastery-map";
 import { Tooltip } from "@/components/ui/tooltip";
+import { loginHref } from "@/lib/auth/return-to";
 import { type CodeStatus, type Stats, STATUS_LABEL } from "@/lib/view/stats";
 import { SIGHTING_WINDOW_DAYS } from "@/rules";
 import { SyncChip } from "./sync-chip";
@@ -605,7 +606,7 @@ function Account({ s, loading, onExport }: { s: Stats; loading: boolean; onExpor
 							variant="quiet"
 							size="sm"
 							block
-							href="/statistik/akun"
+							href={s.account.email ? "/statistik/akun" : loginHref("/statistik")}
 							className="text-ink-1000"
 						>
 							{s.account.email ? "Kelola akun" : "Masuk"}

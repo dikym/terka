@@ -9,6 +9,7 @@ import { Menu } from "@/components/ui/menu";
 import { sessionCtx } from "@/lib/app/runtime";
 import { lastExportAt } from "@/lib/app/transfer";
 import { useAccount, useAppState, useNow, useReady, useSyncLabel } from "@/lib/app/use-runtime";
+import { loginHref } from "@/lib/auth/return-to";
 import { exportLabel } from "@/lib/view/account";
 import { mapProvinces } from "@/lib/view/map";
 import { statsView } from "@/lib/view/stats";
@@ -84,7 +85,7 @@ export default function Page() {
 											{
 												label: "Masuk",
 												icon: "user" as const,
-												onSelect: () => router.push("/statistik/akun")
+												onSelect: () => router.push(loginHref("/statistik"))
 											}
 										])
 							]}

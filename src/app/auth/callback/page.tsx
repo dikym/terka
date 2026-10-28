@@ -7,8 +7,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { authClient } from "@/lib/app/auth";
 import { useReady } from "@/lib/app/use-runtime";
+import { takeReturnTo } from "@/lib/auth/return-to";
 import { afterSignIn, finishCallback, switchAccount } from "@/lib/auth/signin";
-import { count } from "@/lib/view/format";
+import { showToast } from "@/lib/toasts";
+import { mergedMessage } from "@/lib/view/account";
+
+const ACCOUNT = "/statistik/akun";
 
 type Outcome = { kind: "message"; text: string } | { kind: "otherAccount" } | null;
 
@@ -32,13 +36,13 @@ export default function Page() {
 			const result = await finishCallback(auth.client, location.href);
 			// The code is single-use; a reload must not try it again.
 			history.replaceState(null, "", location.pathname);
-			if (result.status === "cancelled") return router.replace("/statistik/akun");
+			if (result.status === "cancelled") return router.replace("/masuk");
 			if (result.status === "failed")
 				return setOutcome({
 					kind: "message",
 					text:
 						result.reason === "otherBrowser"
-							? "Masuk harus diselesaikan di browser yang sama. Masuk dengan kode email dari halaman Akun."
+							? "Masuk harus diselesaikan di browser yang sama. Masuk dengan kode email dari halaman masuk."
 							: "Masuk dengan Google gagal. Coba lagi, atau masuk dengan email."
 				});
 			const signed = await afterSignIn(runtime.db, auth.client, Date.now());
@@ -46,10 +50,8 @@ export default function Page() {
 			if (signed.status !== "ok")
 				return setOutcome({ kind: "message", text: "Masuk belum berhasil. Coba lagi." });
 			await runtime.reload();
-			setOutcome({
-				kind: "message",
-				text: `Riwayat di perangkat ini digabung ke akun. ${count(signed.answers)} jawaban ditambahkan.`
-			});
+			showToast({ tone: "success", text: mergedMessage(signed.answers), key: "signIn" });
+			router.replace(takeReturnTo() ?? ACCOUNT);
 		})();
 	}, [runtime, router]);
 
@@ -61,12 +63,12 @@ export default function Page() {
 					onBack={() =>
 						void auth.client.auth
 							.signOut({ scope: "local" })
-							.then(() => router.replace("/statistik/akun"))
+							.then(() => router.replace("/masuk"))
 					}
 					onWipe={() =>
 						void switchAccount(runtime.db, auth.client, Date.now()).then(async () => {
 							await runtime.reload();
-							router.replace("/statistik/akun");
+							router.replace(takeReturnTo() ?? ACCOUNT);
 						})
 					}
 				/>
@@ -77,8 +79,8 @@ export default function Page() {
 						{outcome?.kind === "message" ? outcome.text : "Menyelesaikan masuk…"}
 					</p>
 					{outcome && (
-						<Button block href="/statistik/akun">
-							Buka akun
+						<Button block href="/masuk">
+							Kembali ke halaman masuk
 						</Button>
 					)}
 				</Card>

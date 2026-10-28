@@ -12,6 +12,7 @@ export const MAIN_ROUTES = [
 	"/statistik/akun",
 	"/tentang",
 	"/auth/callback",
+	"/masuk",
 	"/privasi",
 	"/beranda"
 ] as const;

@@ -356,7 +356,7 @@ test("statistics links reach their screens", async ({ page }) => {
 	await seen(page);
 	for (const [link, title] of [
 		["Buka Peta Penguasaan", "Peta Penguasaan"],
-		["Masuk", "Akun dan sinkronisasi"]
+		["Masuk", "Masuk"]
 	]) {
 		await page.goto("/statistik");
 		await page.getByRole("link", { name: link, exact: true }).click();
