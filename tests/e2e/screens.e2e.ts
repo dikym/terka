@@ -567,6 +567,21 @@ test("the statistics page no longer carries account controls", async ({ page }) 
 	await expect(page.getByText("Akun dan sinkronisasi")).toHaveCount(0);
 });
 
+test("the statistics sync card shows the status and opens sign-in when signed out", async ({
+	page
+}) => {
+	await seen(page);
+	await page.goto("/statistik");
+	const card = page
+		.locator("main aside > *")
+		.filter({ has: page.getByText("Sinkronisasi", { exact: true }) });
+	await expect(card.getByText("Tersimpan di perangkat ini")).toBeVisible();
+	await expect(card.getByText("Belum pernah sinkron")).toBeVisible();
+	await expect(card.getByRole("button")).toHaveCount(1);
+	await card.getByRole("button", { name: "Masuk untuk sinkronisasi" }).click();
+	await expect(page).toHaveURL(/\/masuk$/);
+});
+
 // A point inside the province's own shape, not just inside its bounding box.
 async function insideProvince(page: Page, id: string) {
 	const path = page.locator(`path#${id}`);

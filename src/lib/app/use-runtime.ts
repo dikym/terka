@@ -11,7 +11,7 @@ import {
 	runtimeSnapshot,
 	subscribeRuntime
 } from "./runtime";
-import { syncLabel } from "../view/sync-label";
+import { lastSyncLabel, syncLabel } from "../view/sync-label";
 import type { AppState } from "./store";
 
 /** The shared runtime; the static export and the first client render see "loading". */
@@ -84,4 +84,12 @@ export function useSyncLabel(runtime: Runtime | null): string | null {
 	const at = useNow();
 	if (!app || !known || at === 0) return null;
 	return syncLabel(app.sync, email !== null, at);
+}
+
+/** When the last sync finished; null while the app opens. */
+export function useLastSyncLabel(runtime: Runtime | null): string | null {
+	const app = useAppState(runtime);
+	const at = useNow();
+	if (!app || at === 0) return null;
+	return lastSyncLabel(app.sync, at);
 }

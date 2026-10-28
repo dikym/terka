@@ -16,13 +16,13 @@ export type SyncFacts = {
 	claim?: { total: number; pending: number } | null;
 };
 
-export type SyncStatus = { quarantined: number } & (
+export type SyncStatus = { quarantined: number; lastSyncAt: number | null } & (
 	| { state: "otherAccount" | "outdated" | "sessionEnded" | "offline" }
 	| { state: BlockReason }
 	| { state: "unreachable"; days: number }
 	| { state: "pending"; count: number }
 	| { state: "staged"; sent: number; total: number }
-	| { state: "synced"; lastSyncAt: number | null }
+	| { state: "synced" }
 );
 
 const BLOCK_ORDER: BlockReason[] = [
@@ -42,7 +42,7 @@ export function syncStatus(
 	quarantined: number,
 	now: number
 ): SyncStatus {
-	const base = { quarantined };
+	const base = { quarantined, lastSyncAt: facts.lastSyncAt };
 	if (facts.otherAccount) return { ...base, state: "otherAccount" };
 	if (facts.outdated) return { ...base, state: "outdated" };
 	if (facts.sessionEnded) return { ...base, state: "sessionEnded" };
@@ -66,5 +66,5 @@ export function syncStatus(
 		};
 	if (!facts.online) return { ...base, state: "offline" };
 	if (pending > 0) return { ...base, state: "pending", count: pending };
-	return { ...base, state: "synced", lastSyncAt: facts.lastSyncAt };
+	return { ...base, state: "synced" };
 }

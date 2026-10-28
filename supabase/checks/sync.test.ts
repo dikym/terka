@@ -62,7 +62,7 @@ describe("a sync round", () => {
 		});
 		down.auth.getSession = async () => ({ data: { session }, error: null }) as never;
 		const first = await syncNow(phone.db, down, ctx(), await opened(phone.db), bundle);
-		expect(first.status).toEqual({ quarantined: 0, state: "pending", count: 2 });
+		expect(first.status).toMatchObject({ quarantined: 0, state: "pending", count: 2 });
 		expect(first.nextAt).toBe(NOW + 750);
 		const later = await syncNow(
 			phone.db,
@@ -71,7 +71,7 @@ describe("a sync round", () => {
 			await opened(phone.db),
 			bundle
 		);
-		expect(later.status).toEqual({ quarantined: 0, state: "unreachable", days: 3 });
+		expect(later.status).toMatchObject({ quarantined: 0, state: "unreachable", days: 3 });
 		const back = await syncNow(
 			phone.db,
 			phone.client,
