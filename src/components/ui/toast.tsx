@@ -75,7 +75,7 @@ export function Toast({ toast, onClose }: { toast: ToastItem; onClose: () => voi
 
 const NONE: ToastItem[] = [];
 
-/** Every status message of the app, bottom left of the content area; one per page. */
+/** Every status message of the app, bottom right of the screen; one per page. */
 export function ToastHost() {
 	// A session screen has neither the sidebar nor the tab bar to clear.
 	const bare = usePathname().startsWith("/sesi");
@@ -87,9 +87,9 @@ export function ToastHost() {
 	if (!items.length) return null;
 	return (
 		// On a phone the stack spans the screen and sits 16 px above the tab bar; on desktop it
-		// starts 24 px right of the 232 px sidebar.
+		// sits 24 px from the right and bottom edges.
 		<div
-			className={`fixed inset-x-4 z-50 flex flex-col items-start gap-3 lg:inset-x-auto lg:bottom-6 ${bare ? "bottom-[calc(--spacing(4)+env(safe-area-inset-bottom))] lg:left-6" : "bottom-[calc(--spacing(19)+env(safe-area-inset-bottom))] lg:left-64"}`}
+			className={`fixed inset-x-4 z-50 flex flex-col items-end gap-3 lg:inset-x-auto lg:right-6 lg:bottom-6 ${bare ? "bottom-[calc(--spacing(4)+env(safe-area-inset-bottom))]" : "bottom-[calc(--spacing(19)+env(safe-area-inset-bottom))]"}`}
 		>
 			{items.map((toast) => (
 				<Toast key={toast.id} toast={toast} onClose={() => dismissToast(toast.id)} />

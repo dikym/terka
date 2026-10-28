@@ -19,9 +19,9 @@ export type ToastInput = {
 export type ToastItem = ToastInput & { id: number };
 
 const MAX_SHOWN = 3;
-const AUTO_HIDE_MS = 4_000;
-// Good news and plain information go by themselves; warnings and failures wait for the user.
-const AUTO_HIDE = new Set<ToastTone>(["success", "info"]);
+const AUTO_HIDE_MS = 10_000;
+// Good news goes by itself; information, warnings and failures wait for the user.
+const AUTO_HIDE = new Set<ToastTone>(["success"]);
 
 export function createToasts(schedule: (run: () => void, ms: number) => void) {
 	const store = createStore<{ items: ToastItem[] }>()(() => ({ items: [] }));

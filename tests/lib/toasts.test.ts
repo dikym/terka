@@ -17,14 +17,15 @@ describe("toasts", () => {
 		expect(toasts.store.getState().items.map((item) => item.text)).toEqual(["b", "c", "d"]);
 	});
 
-	test("success and info hide by themselves after four seconds, warnings stay", () => {
+	test("success hides by itself after ten seconds, other tones stay", () => {
 		const timers = manualTimers();
 		const toasts = createToasts(timers.schedule);
 		toasts.show({ tone: "success", text: "Data diekspor" });
+		toasts.show({ tone: "info", text: "Sedang offline." });
 		toasts.show({ tone: "danger", text: "Perubahan belum tersimpan. Coba lagi." });
-		expect(timers.pending.map((timer) => timer.ms)).toEqual([4000]);
+		expect(timers.pending.map((timer) => timer.ms)).toEqual([10_000]);
 		timers.pending[0].run();
-		expect(toasts.store.getState().items.map((item) => item.tone)).toEqual(["danger"]);
+		expect(toasts.store.getState().items.map((item) => item.tone)).toEqual(["info", "danger"]);
 	});
 
 	test("a toast with the same key replaces the earlier one", () => {
