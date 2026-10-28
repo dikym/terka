@@ -1,7 +1,8 @@
 import { SessionFrame, TopBar } from "@/components/shell/session-frame";
 import { Button, buttonClass } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
-import { GROUP_BG } from "@/components/ui/groups";
+import { Dot } from "@/components/ui/feedback";
+import { GROUP_TEXT } from "@/components/ui/groups";
 import { Icon, type IconName } from "@/components/ui/icon";
 import { Kbd } from "@/components/ui/kbd";
 import { BACK_BUTTON } from "@/components/ui/page-title";
@@ -130,8 +131,13 @@ export function SessionPreview({
 				</h1>
 				{p.scope && (
 					<div className="flex items-center gap-2">
-						<span
-							className={`size-2.5 flex-none dot ${p.scope.group === "national" ? "bg-ink-1000" : GROUP_BG[p.scope.group]}`}
+						<Dot
+							size={10}
+							className={
+								p.scope.group === "national"
+									? "text-ink-1000"
+									: GROUP_TEXT[p.scope.group]
+							}
 						/>
 						<span className="font-sans text-body-md leading-[1.2] font-medium text-ink-700">
 							{p.scope.label}

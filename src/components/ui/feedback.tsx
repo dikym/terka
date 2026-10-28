@@ -1,5 +1,3 @@
-import { GROUP_BG, type GroupId } from "./groups";
-
 export function ProgressBar({
 	value,
 	color = "bg-ink-1000",
@@ -42,14 +40,28 @@ export function Pill({
 		<span
 			className={`inline-flex w-fit items-center gap-2 rounded-full border border-transparent px-2.5 py-1 type-label whitespace-nowrap ${PILL[tone]} ${className}`}
 		>
-			<span className="size-[7px] flex-none bg-current dot" />
+			<Dot size={7} />
 			{children}
 		</span>
 	);
 }
 
-export function RegionDot({ group, size = "size-2" }: { group: GroupId; size?: string }) {
-	return <span className={`inline-block flex-none dot ${size} ${GROUP_BG[group]}`} />;
+/**
+ * A status dot, filled with the text colour. It is one vector circle: as a box with rounded corners
+ * the browser snaps its edges to whole device pixels, and at fractional zoom or on a fractional
+ * position that bends the circle out of shape.
+ */
+export function Dot({ size, className = "" }: { size: number; className?: string }) {
+	return (
+		<svg
+			aria-hidden="true"
+			width={size}
+			height={size}
+			className={`block flex-none overflow-visible ${className}`}
+		>
+			<circle cx={size / 2} cy={size / 2} r={size / 2} fill="currentColor" />
+		</svg>
+	);
 }
 
 /** A pulsing placeholder; give it the size of what it stands in for. */

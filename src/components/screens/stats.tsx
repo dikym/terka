@@ -2,8 +2,15 @@ import { Link } from "@/components/ui/app-link";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { CodeLink } from "@/components/ui/code-chip";
-import { Pill, ProgressBar, Skeleton, SkeletonText, skeletonWidth } from "@/components/ui/feedback";
-import { GROUP_BG } from "@/components/ui/groups";
+import {
+	Dot,
+	Pill,
+	ProgressBar,
+	Skeleton,
+	SkeletonText,
+	skeletonWidth
+} from "@/components/ui/feedback";
+import { GROUP_TEXT } from "@/components/ui/groups";
 import { Icon } from "@/components/ui/icon";
 import { type MapProvince, MasteryMap } from "@/components/ui/mastery-map";
 import { Tooltip } from "@/components/ui/tooltip";
@@ -358,8 +365,9 @@ function ByGroup({ s, loading }: { s: Stats; loading: boolean }) {
 						className="grid grid-cols-[minmax(0,1fr)_repeat(3,58px)] items-center border-t border-hairline lg:grid-cols-[minmax(0,1fr)_repeat(3,76px)]"
 					>
 						<span className="flex items-center gap-2 py-2.25 font-sans text-body-sm leading-[1.2] text-ink-900">
-							<span
-								className={`size-2 flex-none dot ${loading ? "bg-ink-100" : GROUP_BG[row.group]}`}
+							<Dot
+								size={8}
+								className={loading ? "text-ink-100" : GROUP_TEXT[row.group]}
 							/>
 							{text(loading, row.name)}
 						</span>

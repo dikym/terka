@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Dot } from "@/components/ui/feedback";
 import { Icon } from "@/components/ui/icon";
 import { Tooltip } from "@/components/ui/tooltip";
 import type { Level } from "@/lib/session/cards";
@@ -57,7 +58,7 @@ export function StatusPill({
 		<span
 			className={`inline-flex w-fit items-center gap-2 self-start rounded-full border border-transparent px-2.5 py-1 type-label whitespace-nowrap ${PILL_TONE[tone]} ${className}`}
 		>
-			<span className="size-[7px] flex-none bg-current dot" />
+			<Dot size={7} />
 			{children}
 		</span>
 	);

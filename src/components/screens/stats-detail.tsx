@@ -5,8 +5,8 @@ import { Link } from "@/components/ui/app-link";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { CodeLink } from "@/components/ui/code-chip";
-import { Pill, ProgressBar } from "@/components/ui/feedback";
-import { GROUP_BG } from "@/components/ui/groups";
+import { Dot, Pill, ProgressBar } from "@/components/ui/feedback";
+import { GROUP_BG, GROUP_TEXT } from "@/components/ui/groups";
 import { type MapProvince, MasteryMap } from "@/components/ui/mastery-map";
 import { PageTitle } from "@/components/ui/page-title";
 import { EmptyState } from "@/components/ui/states";
@@ -45,7 +45,7 @@ export function MasteryMapScreen({
 						key={row.group}
 						className="grid grid-cols-[10px_minmax(0,1fr)_44px] items-start gap-3 border-b border-hairline py-4 lg:grid-cols-[10px_minmax(0,1fr)_160px_48px] lg:items-center lg:gap-x-4"
 					>
-						<span className={`mt-1 size-2.5 dot lg:mt-0 ${GROUP_BG[row.group]}`} />
+						<Dot size={10} className={`mt-1 lg:mt-0 ${GROUP_TEXT[row.group]}`} />
 						<div className="flex min-w-0 flex-col gap-2">
 							<Link
 								href={referenceHref("kawasan", row.group)}

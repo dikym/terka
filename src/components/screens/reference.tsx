@@ -4,9 +4,9 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { SEARCH_HASH, SEARCH_ID } from "@/components/shell/app-shell";
 import { Card, CardHeader } from "@/components/ui/card";
 import { CodeChip } from "@/components/ui/code-chip";
-import { Skeleton, SkeletonText, skeletonWidth } from "@/components/ui/feedback";
+import { Dot, Skeleton, SkeletonText, skeletonWidth } from "@/components/ui/feedback";
 import {
-	GROUP_BG,
+	GROUP_TEXT,
 	GROUP_BORDER,
 	GROUP_IDS,
 	GROUP_NAME,
@@ -290,7 +290,7 @@ function RegionList({
 								active={filter === id}
 								onClick={() => setFilter(id)}
 							>
-								<span className={`size-2 flex-none dot ${GROUP_BG[id]}`} />
+								<Dot size={8} className={GROUP_TEXT[id]} />
 								{GROUP_NAME[id]}
 							</TagButton>
 						))}
@@ -421,7 +421,7 @@ function SpecialCodesCard({ loading }: { loading: boolean }) {
 						</span>
 						{loading ? (
 							<span className="flex items-center gap-1.5">
-								<Skeleton className="size-1.75 dot" />
+								<Skeleton className="size-1.75 rounded-full" />
 								<SkeletonText width={skeletonWidth(label)} />
 							</span>
 						) : (

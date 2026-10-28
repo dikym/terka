@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CodeChip } from "@/components/ui/code-chip";
-import { Skeleton, SkeletonText, skeletonWidth } from "@/components/ui/feedback";
-import { GROUP_BG, GROUP_IDS, GROUP_NAME, type GroupId } from "@/components/ui/groups";
+import { Dot, Skeleton, SkeletonText, skeletonWidth } from "@/components/ui/feedback";
+import { GROUP_BG, GROUP_IDS, GROUP_NAME, GROUP_TEXT, type GroupId } from "@/components/ui/groups";
 import { Icon } from "@/components/ui/icon";
 import type { Coverage, Province } from "@/lib/view/coverage";
 import { keyAction } from "@/lib/keys";
@@ -87,7 +87,7 @@ function Row({
 				{...(onClick ? { type: "button" as const, onClick, "data-node": node } : {})}
 				className={`flex min-w-0 flex-1 items-center gap-3 text-left ${onClick ? "cursor-pointer" : ""}`}
 			>
-				<span className={`size-2.5 flex-none dot ${dot}`} />
+				<Dot size={10} className={dot} />
 				<span className="flex min-w-0 flex-1 flex-col gap-1">{children}</span>
 			</Tag>
 		</div>
@@ -117,7 +117,7 @@ function NodeHeading({
 
 function ProvinceRow({ province, group }: { province: Province; group: GroupId }) {
 	return (
-		<Row indent={2} state="idle" dot={GROUP_BG[group]}>
+		<Row indent={2} state="idle" dot={GROUP_TEXT[group]}>
 			<span className="flex flex-wrap items-start justify-between gap-x-2 gap-y-1.5">
 				<span className="min-w-0 font-sans text-body-md leading-[1.2] font-medium tracking-title">
 					{province.name}
@@ -377,7 +377,7 @@ export function CoverageScreen({
 							node="national"
 							indent={0}
 							state={loading ? "idle" : state("national")}
-							dot={loading ? "bg-ink-100" : "bg-ink-1000"}
+							dot={loading ? "text-ink-100" : "text-ink-1000"}
 							onClick={loading ? undefined : () => setHighlight("national")}
 						>
 							{state("national") === "active" && !loading && (
@@ -404,7 +404,7 @@ export function CoverageScreen({
 										indent={1}
 										state={loading ? "idle" : state(group.id)}
 										chevron={expanded ? "open" : "closed"}
-										dot={loading ? "bg-ink-100" : GROUP_BG[group.id]}
+										dot={loading ? "text-ink-100" : GROUP_TEXT[group.id]}
 										onClick={
 											loading
 												? undefined

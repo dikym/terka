@@ -5,7 +5,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { referenceHref } from "@/lib/view/reference";
 import { Button } from "./button";
 import { CodeChip, CodeLink } from "./code-chip";
-import { GROUP_BG, GROUP_NAME, type GroupId } from "./groups";
+import { Dot } from "./feedback";
+import { GROUP_NAME, GROUP_TEXT, type GroupId } from "./groups";
 import { Icon, type IconName } from "./icon";
 import { Tooltip as LabelTip } from "./tooltip";
 
@@ -93,7 +94,7 @@ function Tooltip({ province }: { province: MapProvince }) {
 	return (
 		<>
 			<div className="flex items-center gap-1.5 font-display text-[10px] leading-[1.2] font-semibold tracking-label text-ink-500 uppercase">
-				<span className={`size-2 flex-none dot ${GROUP_BG[province.group]}`} />
+				<Dot size={8} className={GROUP_TEXT[province.group]} />
 				Kawasan {GROUP_NAME[province.group]}
 			</div>
 			<div className="font-display text-body-md leading-[1.2] font-semibold text-ink-1000">
@@ -136,7 +137,7 @@ function Selection({ id, province }: { id: string; province: MapProvince }) {
 			className="flex flex-col gap-2.5 border-t border-hairline px-4 pt-3.5 pb-4 lg:hidden"
 		>
 			<div className="flex items-center gap-1.5 type-label text-ink-500">
-				<span className={`size-2 flex-none dot ${GROUP_BG[province.group]}`} />
+				<Dot size={8} className={GROUP_TEXT[province.group]} />
 				Kawasan {GROUP_NAME[province.group]}
 			</div>
 			<div className="font-display text-subhead leading-[1.2] font-semibold text-ink-1000">

@@ -1,7 +1,8 @@
 import { BarButton, TopBar } from "@/components/shell/session-frame";
 import { Icon } from "@/components/ui/icon";
 import { Tooltip } from "@/components/ui/tooltip";
-import { GROUP_BG, type GroupId } from "@/components/ui/groups";
+import { Dot } from "@/components/ui/feedback";
+import { GROUP_TEXT, type GroupId } from "@/components/ui/groups";
 import type { Level, SessionCard } from "@/lib/session/cards";
 import type { Mode } from "@/lib/session/modes";
 import { LevelMark, StatusPill, TimeBar } from "./indicators";
@@ -64,13 +65,13 @@ export function SessionMeta({
 	streak,
 	className = "flex"
 }: BarProps & { className?: string }) {
-	const dot = scope?.group ? GROUP_BG[scope.group] : "bg-ink-1000";
+	const dot = scope?.group ? GROUP_TEXT[scope.group] : "text-ink-1000";
 	const row = `${className} min-h-6 flex-wrap items-center justify-between gap-x-3 gap-y-2 lg:min-h-0 lg:flex-nowrap lg:gap-3`;
 	if (mode === "kilat")
 		return (
 			<div className={row}>
 				<span className="inline-flex flex-none items-center gap-2 font-sans text-body-sm leading-none font-medium text-ink-900">
-					<span aria-hidden="true" className={`size-2.5 flex-none dot ${dot}`} />
+					<Dot size={10} className={dot} />
 					{scope?.label ?? "Seluruh Indonesia"}
 				</span>
 				<span className="ml-auto inline-flex flex-none items-center gap-3">
@@ -101,7 +102,7 @@ export function SessionMeta({
 				)}
 				{mode === "terfokus" && (
 					<span className="inline-flex items-center gap-2 font-sans text-body-sm leading-none font-medium text-ink-900">
-						<span aria-hidden="true" className={`size-2.5 flex-none dot ${dot}`} />
+						<Dot size={10} className={dot} />
 						{scope?.label}
 					</span>
 				)}
