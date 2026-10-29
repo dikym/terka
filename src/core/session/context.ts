@@ -25,6 +25,9 @@ export const SETTLED = new Set<string>(["review", "mature"]);
 export const todayOf = (ctx: Pick<SessionContext, "now" | "tz">) => localDay(ctx.now, ctx.tz);
 export const contentOf = (cardId: string) => cardId.slice(0, cardId.indexOf("::"));
 export const modeOf = (cardId: string) => cardId.slice(cardId.indexOf("::") + 2);
+/** A reversed question on a code that is already introduced, not a new code. */
+export const isReversedNew = (item: Pick<QueueItem, "cardId" | "slot">) =>
+	item.slot === "new" && modeOf(item.cardId) === "region2code";
 export const isGroupA = (cardId: string) =>
 	modeOf(cardId) === "code2region" || modeOf(cardId) === "region2code";
 export const isSpecial = (cardId: string) =>

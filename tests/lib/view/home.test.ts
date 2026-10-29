@@ -83,11 +83,13 @@ describe("home view", () => {
 		test("codes nobody has seen are called new codes", () => {
 			const home = view([]);
 			expect(home.newLabel).toBe(`${home.summary.newAvailable} kode baru hari ini`);
+			expect(home.newFromKnown).toBe(false);
 		});
 		test("reversed questions for known codes are not called new codes", () => {
 			const home = homeOf(reverseOpen(), bali);
 			expect(home.summary).toMatchObject({ allIntroduced: true, newAvailable: 1 });
 			expect(home.newLabel).toBe("1 soal baru dari kode yang sudah dikenal");
+			expect(home.newFromKnown).toBe(true);
 			expect(home.note).toBeNull();
 		});
 		test("a mix of both is called new material", () => {
@@ -97,6 +99,7 @@ describe("home view", () => {
 			};
 			const home = homeOf(reverseOpen(), group);
 			expect(home.newLabel).toBe("3 materi baru hari ini");
+			expect(home.newFromKnown).toBe(false);
 		});
 		test("nothing is named when no new material waits, and the note says every code is known", () => {
 			const home = view([intro("dk", NOW + 1)], bali);

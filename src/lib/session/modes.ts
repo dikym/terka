@@ -11,6 +11,7 @@ import {
 	ACTIVE,
 	contentOf,
 	isGroupA,
+	isReversedNew,
 	prepare,
 	STEPS,
 	type QueueItem,
@@ -369,7 +370,10 @@ export function planSession(mode: Mode, input: PlanInput, params: PlanParams): P
 			return ready(mode, input, state, items, settings.scope, daily.held, (core) => {
 				const counts = { ...core.counts };
 				for (const item of filler) counts[item.slot]--;
-				const rows = composition(counts);
+				const rows = composition(
+					counts,
+					core.newReversed - filler.filter(isReversedNew).length
+				);
 				if (filler.length) rows.push(["Latihan tambahan", filler.length, "bg-ink-200"]);
 				return {
 					icon: ICON[mode],

@@ -69,6 +69,7 @@ export function buildRegionQuestion(
 	const random = (purpose: string) => questionRandom(card, options, purpose);
 	const scope = options.scope ?? NATIONAL;
 	const intro = options.context === "intro";
+	const introLabel = mode === "region2code" ? LABELS.introReversed : LABELS.intro;
 	const leech = isLeech(card) && !intro;
 	const base = {
 		cardId: card.cardId,
@@ -283,7 +284,7 @@ export function buildRegionQuestion(
 					...base,
 					questionType: "intro_read",
 					answerForm: "choice",
-					label: LABELS.intro,
+					label: introLabel,
 					prompt: "Kenali kode ini",
 					answer,
 					promptAreaId,
@@ -295,7 +296,7 @@ export function buildRegionQuestion(
 		...base,
 		questionType: "choice",
 		answerForm: "choice",
-		label: intro ? LABELS.intro : label,
+		label: intro ? introLabel : label,
 		prompt,
 		answer,
 		promptAreaId,
