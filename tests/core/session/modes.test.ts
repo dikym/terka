@@ -106,6 +106,53 @@ describe("Mode Kilat", () => {
 	test("no learned card in the scope gives no question", () => {
 		expect(kilatQuestion(fresh(), bundle, SUMATERA, "run-k", 0)).toBeNull();
 	});
+	describe("with several learned cards", () => {
+		const CODES = ["bk", "bb", "ba", "bm", "bp"];
+		const learned = () => {
+			const state = fresh();
+			for (const code of CODES) seedCard(state, `${code}::code2region`, reviewCard());
+			return state;
+		};
+		const run = (runId: string, length = 60) => {
+			const state = learned();
+			return Array.from({ length }, (_, index) =>
+				kilatQuestion(state, bundle, SUMATERA, runId, index)!
+			);
+		};
+
+		test("never asks the same card twice in a row, across passes too", () => {
+			for (let seed = 0; seed < 40; seed++) {
+				const ids = run(`run-${seed}`).map((item) => item.cardId);
+				ids.slice(1).forEach((id, index) => expect(id).not.toBe(ids[index]));
+			}
+		});
+		test("each pass covers every learned card once", () => {
+			const ids = run("run-k", 20).map((item) => item.cardId);
+			for (let pass = 0; pass < 4; pass++)
+				expect(new Set(ids.slice(pass * 5, pass * 5 + 5)).size).toBe(5);
+		});
+		test("another run deals another order, the same run the same one", () => {
+			expect(run("run-a")).toEqual(run("run-a"));
+			const first = run("run-a", 5)
+				.map((item) => item.cardId)
+				.join();
+			const others = Array.from({ length: 8 }, (_, index) =>
+				run(`run-${index}`, 5)
+					.map((item) => item.cardId)
+					.join()
+			);
+			expect(others.some((order) => order !== first)).toBe(true);
+		});
+		test("two learned cards alternate", () => {
+			const state = fresh();
+			for (const code of ["bk", "bb"]) seedCard(state, `${code}::code2region`, reviewCard());
+			const ids = Array.from(
+				{ length: 30 },
+				(_, index) => kilatQuestion(state, bundle, SUMATERA, "run-k", index)!.cardId
+			);
+			ids.slice(1).forEach((id, index) => expect(id).not.toBe(ids[index]));
+		});
+	});
 });
 
 describe("Sebutkan sebanyak mungkin", () => {
