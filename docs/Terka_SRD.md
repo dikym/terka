@@ -89,6 +89,8 @@ Antrean harian mengambil kartu yang perlu diulang dari seluruh wilayah, lalu men
 
 Jika soal terjadwal (pengulangan dan materi baru) kurang dari 10, sesi harian dilengkapi soal Latihan Terfokus dari Cakupan aktif sampai 10 soal, dimulai dari kartu dengan peluang ingat terendah. Dengan begitu pengguna tetap bisa berlatih setelah semua materi di Cakupan dipelajari. Soal pengisi mengikuti aturan Latihan Terfokus di atas.
 
+Latihan Terfokus, termasuk soal pengisi, tidak menaikkan jumlah ulangan kartu, sehingga soalnya tidak berubah dengan sendirinya. Karena itu setiap kali layar sesi dibuka, urutan kartu, jenis soal, kartu yang dipilih sebagai pengisi, dan opsi jawaban diundi ulang. Kartu yang sudah waktunya diulang tetap lebih dulu, dan kartu yang lebih lemah lebih mungkin muncul lebih awal. Soal terjadwal tidak terpengaruh.
+
 Batas kartu baru berlaku global per hari. Pengguna tidak bisa berulang kali mengganti Cakupan untuk menarik materi baru melebihi batas harian.
 
 Dengan beberapa perangkat, batas harian dihitung dari gabungan log semua perangkat per `local_day`. Aturan untuk kuota yang terlampaui karena dua perangkat offline bersamaan ada di bagian 8.4.

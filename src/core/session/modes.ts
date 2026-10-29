@@ -31,22 +31,45 @@ function learnedIn(state: AppState, bundle: Bundle, scope: Scope): CardEntry[] {
 	});
 }
 
+// Lets weak cards come first without the same few leading every time.
+const RECALL_FLOOR = 1.1;
+
+/**
+ * Without a nonce the order is fixed, weakest recall first. With one, cards due now still lead,
+ * but within each group a nonce-seeded draw weighted by weakness sets the order, and the nonce
+ * also varies each question's format.
+ */
 export function focusedQueue(
 	input: AppState,
 	bundle: Bundle,
 	scope: Scope,
-	ctx: SessionContext
+	ctx: SessionContext,
+	nonce?: string
 ): QueueItem[] {
 	const state = prepare(input, ctx);
 	const scheduler = schedulerAt(state.params, ctx.now);
+	const random = nonce === undefined ? null : seeded(`focused:${nonce}`);
 	return learnedIn(state, bundle, scope)
-		.map((card) => ({ card, r: retrievability(scheduler, card, ctx.now) }))
-		.sort((a, b) => a.r - b.r || compareText(a.card.cardId, b.card.cardId))
+		.map((card) => {
+			const r = retrievability(scheduler, card, ctx.now);
+			const draw = random ? -Math.log(1 - random()) / (RECALL_FLOOR - r) : r;
+			return { card, due: random ? card.due <= ctx.now : false, draw };
+		})
+		.sort(
+			(a, b) =>
+				Number(b.due) - Number(a.due) ||
+				a.draw - b.draw ||
+				compareText(a.card.cardId, b.card.cardId)
+		)
 		.map(({ card }) => ({
 			cardId: card.cardId,
 			context: "focused",
 			slot: SETTLED.has(card.state) ? "review" : "step",
-			format: pickFormat(card.cardId, `${card.cardId}:${card.reps}`, "focused")
+			format: pickFormat(
+				card.cardId,
+				`${card.cardId}:${card.reps}${nonce === undefined ? "" : `:${nonce}`}`,
+				"focused"
+			)
 		}));
 }
 

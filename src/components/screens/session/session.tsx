@@ -108,7 +108,8 @@ type Engine = {
 function planInput(
 	runtime: Runtime,
 	state: AppState,
-	prefs: NonNullable<ReturnType<typeof usePrefs>>
+	prefs: NonNullable<ReturnType<typeof usePrefs>>,
+	nonce?: string
 ): PlanInput {
 	return {
 		state,
@@ -116,7 +117,8 @@ function planInput(
 		dictionary: runtime.dictionary,
 		settings: prefs.settings,
 		notes: prefs.notes,
-		ctx: sessionCtx(runtime)
+		ctx: sessionCtx(runtime),
+		nonce
 	};
 }
 
@@ -127,6 +129,8 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 	const prefs = usePrefs(runtime);
 	const account = useAccount();
 	const [plan, setPlan] = useState<Plan | null>(null);
+	// Fresh for every visit, so extra practice never replays the last run's questions.
+	const [nonce] = useState(() => Math.random().toString(36).slice(2));
 	const [state, setState] = useState<SessionState>(() => initialSession(mode, []));
 	const [loading, setLoading] = useState(false);
 	const [countdown, setCountdown] = useState<number | null>(null);
@@ -177,7 +181,7 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 
 	// The plan is made once, from the log as it was when the screen opened.
 	if (!plan && runtime && app && prefs) {
-		const made = planSession(mode, planInput(runtime, app.log.state, prefs), params);
+		const made = planSession(mode, planInput(runtime, app.log.state, prefs, nonce), params);
 		setPlan(made);
 		if (made.kind === "ready") setState(initialSession(mode, made.cards));
 	}
@@ -369,7 +373,7 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 		const at = reaskPosition(card, index, latest.current.cards.length);
 		if (at === null) return;
 		const added = reaskCard(
-			planInput(runtime, after, prefs),
+			planInput(runtime, after, prefs, nonce),
 			mode,
 			card.question.cardId,
 			plan.run.scope,
