@@ -1,4 +1,5 @@
 import { normalizeName } from "@/core/text";
+import type { SetFeedback } from "@/core/session/feedback";
 import type { SessionCard } from "./cards";
 import { type Mode, REASK_MARK } from "./modes";
 
@@ -20,7 +21,7 @@ export type SessionState = {
 	named: string[];
 	results: Verdict[];
 	/** Shown under a right answer: accepted spelling, other areas, the next review. */
-	feedback: { aliasNote?: string; review?: string };
+	feedback: { aliasNote?: string; review?: string; set?: SetFeedback };
 };
 
 export type SessionAction =
@@ -33,6 +34,8 @@ export type SessionAction =
 			chosen: string | null;
 			noteOffered: boolean;
 			aliasNote?: string;
+			/** How a Sebutkan list fared. */
+			set?: SetFeedback | null;
 	  }
 	| { type: "review"; text: string }
 	| { type: "next" }
@@ -123,7 +126,10 @@ export function sessionReducer(state: SessionState, action: SessionAction): Sess
 				undone: false,
 				noteOffered: action.noteOffered,
 				results: [...state.results, action.verdict],
-				feedback: action.aliasNote ? { aliasNote: action.aliasNote } : {}
+				feedback: {
+					...(action.aliasNote ? { aliasNote: action.aliasNote } : {}),
+					...(action.set ? { set: action.set } : {})
+				}
 			};
 		case "review":
 			return state.phase === "graded"

@@ -553,6 +553,77 @@ test("a naming round can be finished with the mouse", async ({ page }) => {
 	await expect(page.getByRole("heading", { name: "Sesi selesai" })).toBeVisible();
 });
 
+async function startNaming(page: Page) {
+	await seen(page);
+	await withLearned(page);
+	await page.goto("/sesi?mode=sebutkan&code=BK");
+	await page.getByRole("button", { name: "Mulai" }).click();
+}
+
+async function addName(page: Page, name: string) {
+	await page.locator("#jawaban").fill(name);
+	await page.getByRole("button", { name: "Tambah" }).click();
+}
+
+const chip = (page: Page, name: string) =>
+	page.locator("span.inline-flex.h-9", { hasText: name }).first();
+
+test("a naming round colours each answer by itself and keeps the box neutral", async ({ page }) => {
+	await startNaming(page);
+	await addName(page, "Medan");
+	await addName(page, "Sumatera Utara");
+	await addName(page, "Medan Johor");
+	await page.getByRole("button", { name: "Selesai" }).click();
+	await expect(chip(page, "Medan")).toHaveClass(/border-go-500/);
+	await expect(chip(page, "Sumatera Utara")).toHaveClass(/border-stop-500/);
+	await expect(page.locator("#jawaban")).not.toHaveClass(/stop-500|go-500/);
+	await expect(page.getByText("Belum cukup")).toBeVisible();
+	await expect(page.getByText(/Baru 1 daerah yang benar, perlu minimal \d+\./)).toBeVisible();
+	await expect(
+		page.getByText(/Sumatera Utara \(nama provinsi atau julukan, bukan kab\/kota\)/)
+	).toBeVisible();
+	await expect(page.getByText(/Jawaban yang benar:.*Kota Medan/)).toBeVisible();
+});
+
+test("right answers that are too few stay green and the shortfall is told apart", async ({
+	page
+}) => {
+	await startNaming(page);
+	await addName(page, "Medan");
+	await addName(page, "Binjai");
+	await page.getByRole("button", { name: "Selesai" }).click();
+	await expect(chip(page, "Medan")).toHaveClass(/border-go-500/);
+	await expect(chip(page, "Binjai")).toHaveClass(/border-go-500/);
+	await expect(page.locator("span.inline-flex.h-9.border-stop-500")).toHaveCount(0);
+	await expect(page.getByText(/Baru 2 daerah yang benar/)).toBeVisible();
+	await expect(page.getByText("Tidak dihitung:")).toHaveCount(0);
+	await expect(page.getByText(/Jawaban yang benar:.*Kota Medan.*Kota Binjai/)).toBeVisible();
+});
+
+test("a naming round is finished with control and Enter, and the button says so", async ({
+	page
+}) => {
+	await startNaming(page);
+	await expect(page.getByRole("button", { name: /^Selesai/ })).toContainText("Ctrl Enter");
+	await addName(page, "Medan");
+	await page.keyboard.press("Control+Enter");
+	await expect(page.getByText(/Baru 1 daerah yang benar/)).toBeVisible();
+});
+
+test("on an Apple device the same round is finished with command and Enter", async ({ page }) => {
+	await page.addInitScript(() => {
+		Object.defineProperty(navigator, "platform", { get: () => "MacIntel" });
+		Object.defineProperty(navigator, "userAgentData", { get: () => undefined });
+	});
+	await startNaming(page);
+	await expect(page.getByRole("button", { name: /^Selesai/ })).toContainText("⌘ Enter");
+	await addName(page, "Medan");
+	await page.keyboard.press("Control+Enter");
+	await expect(page.getByText(/Baru 1 daerah yang benar/)).toHaveCount(0);
+	await page.keyboard.press("Meta+Enter");
+	await expect(page.getByText(/Baru 1 daerah yang benar/)).toBeVisible();
+});
+
 test("slash from another page opens Referensi with the search focused", async ({ page }) => {
 	await seen(page);
 	await page.goto("/statistik");

@@ -7,7 +7,7 @@ import type { PracticeRun, ReviewLog } from "@/core/log/events";
 import type { Scope } from "@/core/questions/distractors";
 import type { AppState } from "@/core/replay/state";
 import { effectiveCard } from "@/core/replay/universe";
-import { alsoCorrect } from "@/core/session/feedback";
+import { alsoCorrect, setFeedback } from "@/core/session/feedback";
 import { canUndo, closeRun, answerEvent, startRun, voidEvent } from "@/core/session/commands";
 import { checkAnswer, type Response } from "@/core/session/check";
 import { contentOf, prepare, todayOf } from "@/core/session/context";
@@ -28,6 +28,7 @@ import { markNoteOffer, readFlags } from "@/lib/db/flags";
 import { openLogin } from "@/lib/auth/return-to";
 import { LOGIN_PROMPT_DISMISSED, readFlag, writeFlag } from "@/lib/flags";
 import { keyAction } from "@/lib/keys";
+import { isFinishKey } from "@/lib/platform";
 import type { SessionCard } from "@/lib/session/cards";
 import { endView, type EndView, factCard } from "@/lib/session/end";
 import { createMeasure, type Measure } from "@/lib/session/measure";
@@ -309,7 +310,8 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 				: also.length
 					? `Juga benar: ${also.join(", ")}`
 					: undefined;
-		act({ type: "grade", verdict, timedOut, chosen, noteOffered: false, aliasNote });
+		const set = setFeedback(bundle, dictionary, question, checked);
+		act({ type: "grade", verdict, timedOut, chosen, noteOffered: false, aliasNote, set });
 		void write([event]).then((outcome) => {
 			if (outcome !== "ok" && outcome !== "outdated") return;
 			const after = runtime.store.getState().log.state;
@@ -580,6 +582,13 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 
 	useEffect(() => {
 		const onKey = (event: KeyboardEvent) => {
+			// Finishes a Sebutkan list with the key this device uses for it (command or control).
+			if (!leaving && state.phase === "ask" && isFinishKey(event)) {
+				if (currentCard(state).form !== "sebutkan") return;
+				event.preventDefault();
+				submit();
+				return;
+			}
 			if (leaving || event.metaKey || event.ctrlKey || event.altKey) return;
 			const action = keyAction(
 				{ key: event.key, target: event.target as HTMLElement | null },
