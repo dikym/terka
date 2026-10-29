@@ -287,14 +287,10 @@ export function HomeScreen({ data }: { data: Home | null }) {
 							)}
 						</div>
 						<div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-							{(!d || d.summary.newAvailable > 0) && (
+							{(!d || d.newLabel) && (
 								<span className="inline-flex items-center gap-1.5 font-sans text-body-sm leading-[1.3] text-ink-700">
 									<Icon name="circle-plus" size={14} />
-									{d ? (
-										`${d.summary.newAvailable} materi baru hari ini`
-									) : (
-										<SkeletonText width="12.1em" />
-									)}
+									{d ? d.newLabel : <SkeletonText width="12.1em" />}
 								</span>
 							)}
 							{(!d || d.duration) && (
@@ -477,15 +473,15 @@ export function HomeScreen({ data }: { data: Home | null }) {
 						>
 							{[
 								[d?.scope.mastered, "kemajuan", "1.7em", "6em"],
-								[d?.scope.newInScope, "belum dipelajari", "1.2em", "7.5em"],
+								[d?.scope.newInScope, "kode belum dipelajari", "1.2em", "9em"],
 								...(d?.scope.national
 									? []
 									: [
 											[
 												d?.scope.newOutside,
-												"belum dipelajari di luar Cakupan",
+												"kode belum dipelajari di luar Cakupan",
 												"1.7em",
-												"9em"
+												"12em"
 											]
 										])
 							].map(([value, label, valueWidth, labelWidth]) => (

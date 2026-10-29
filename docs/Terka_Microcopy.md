@@ -116,13 +116,18 @@ Bilah bawah tidak memakai lencana jumlah soal. Jumlah pengulangan cukup ditampil
 | ------------------------------------------------------------ | ----------------------------------------------------------------------- |
 | Ada pengulangan                                              | **12 soal perlu diulang**                                               |
 | Ada materi baru                                              | **4 materi baru tersedia**                                              |
+| Semua materi baru hari ini adalah kode yang belum dikenal    | **9 kode baru hari ini**                                                |
+| Semua materi baru hari ini adalah soal untuk kode yang dikenal | **9 soal baru dari kode yang sudah dikenal**                            |
+| Materi baru hari ini campuran kode dan soal kode yang dikenal | **9 materi baru hari ini**                                              |
 | Tidak ada pengulangan                                        | **Tidak ada soal yang perlu diulang hari ini.**                         |
 | Sesi harian belum dikerjakan dan tidak ada soal terjadwal    | **Belum ada soal terjadwal hari ini**                                   |
 | Sesi harian sudah dikerjakan dan tidak ada soal tersisa      | **Sesi hari ini selesai**                                               |
-| Semua materi baru di Cakupan sudah diperkenalkan             | **Semua materi di wilayah ini sudah diperkenalkan.**                    |
+| Semua kode di Cakupan sudah diperkenalkan, tanpa soal baru   | **Semua kode di wilayah ini sudah diperkenalkan.**                      |
 | Materi baru ditahan karena antrean pengulangan terlalu besar | **Materi baru dijeda hari ini agar sesi tetap ringan.**                 |
 | Label wilayah aktif                                          | **Cakupan**                                                             |
 | Label persentase di bawah daftar Cakupan                     | **kemajuan**                                                            |
+| Label jumlah kode yang belum dipelajari di Cakupan           | **kode belum dipelajari**                                               |
+| Label jumlah kode belum dipelajari di luar Cakupan           | **kode belum dipelajari di luar Cakupan**                               |
 | Materi baru di Cakupan habis, ada Cakupan berikutnya         | **Materi di Kawasan Sumatera sudah dikenalkan semua.**                  |
 | Tombol pindah ke Cakupan berikutnya                          | **Lanjut ke Kawasan Jawa**                                              |
 | Tombol sesi utama                                            | **Mulai belajar**                                                       |

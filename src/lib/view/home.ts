@@ -29,6 +29,8 @@ export type Home = {
 	syncLabel: string;
 	duration: string;
 	note: string | null;
+	// "9 kode baru hari ini", or what the cards are when all of them are reversed questions.
+	newLabel: string | null;
 	finished: boolean;
 	idle: boolean;
 	reviewsOutsideScope: number;
@@ -123,11 +125,23 @@ function flaggedPairs(state: AppState, bundle: Bundle) {
 	return [...pairs.values()];
 }
 
+// Waiting reversed questions belong to codes that are already introduced, so the note holds back
+// while any of them is on offer.
 function note(summary: HomeSummary): string | null {
 	if (summary.held) return "Materi baru dijeda hari ini agar sesi tetap ringan.";
-	if (summary.due === 0 && summary.allIntroduced)
-		return "Semua materi di wilayah ini sudah diperkenalkan.";
+	if (summary.due === 0 && summary.allIntroduced && summary.newAvailable === 0)
+		return "Semua kode di wilayah ini sudah diperkenalkan.";
 	return null;
+}
+
+// Reversed questions are for codes the person already knows, so they are not counted as new codes.
+function newLabel(items: { cardId: string; slot: string }[]): string | null {
+	const fresh = items.filter((item) => item.slot === "new");
+	if (!fresh.length) return null;
+	const reversed = fresh.filter((item) => modeOf(item.cardId) === "region2code").length;
+	if (reversed === 0) return `${fresh.length} kode baru hari ini`;
+	if (reversed === fresh.length) return `${fresh.length} soal baru dari kode yang sudah dikenal`;
+	return `${fresh.length} materi baru hari ini`;
 }
 
 export function homeView(
@@ -168,6 +182,7 @@ export function homeView(
 		syncLabel,
 		duration: daily.items.length ? durationLabel(preview.range) : "",
 		note: note(summary),
+		newLabel: newLabel(daily.items),
 		finished: quiet && state.doneDays.has(today),
 		idle: quiet && !state.doneDays.has(today),
 		reviewsOutsideScope: outside,
