@@ -1,5 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { expect } from "bun:test";
+import type { Bundle } from "../../../../src/core/content/schema";
 import type { LearningEvent } from "../../../../src/core/log/events";
 import { seeded } from "../../../../src/core/random";
 import { replay } from "../../../../src/core/replay/replay";
@@ -19,7 +20,12 @@ export type Device = Awaited<ReturnType<typeof openDevice>>;
 // Each device is a full app instance with its own database, as on two phones.
 export async function openDevice(
 	server: FakeServer,
-	options: { name: string; skew?: number; online?: boolean } = { name: "device" }
+	options: {
+		name: string;
+		skew?: number;
+		online?: boolean;
+		bundle?: () => Bundle;
+	} = { name: "device" }
 ) {
 	const auth: { userId: string | null; refreshFails?: boolean; expired?: boolean } = {
 		userId: null
@@ -30,7 +36,10 @@ export async function openDevice(
 		now,
 		random: seeded(options.name),
 		userAgent: options.name,
-		loadContent: async () => ({ status: "ok" as const, bundle: ruleBundle() }),
+		loadContent: async () => ({
+			status: "ok" as const,
+			bundle: (options.bundle ?? ruleBundle)()
+		}),
 		openDb: freshDb
 	});
 	if (boot.status !== "ready") throw new Error("expected a ready app");

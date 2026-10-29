@@ -25,7 +25,11 @@ function applyRun(state: AppState, run: PracticeRun) {
 	if (run.endedAt === null) return;
 	if (run.kind === "challenge") state.challengeDays.add(run.localDay);
 	if ((run.kind === "daily" || run.kind === "recheck") && run.plannedCount) {
-		state.dailyRuns.set(run.id, { localDay: run.localDay, plannedCount: run.plannedCount });
+		state.dailyRuns.set(run.id, {
+			localDay: run.localDay,
+			plannedCount: run.plannedCount,
+			kind: run.kind
+		});
 		completeRun(state, run.id);
 	}
 	if (run.kind === "kilat" && run.score !== null) {

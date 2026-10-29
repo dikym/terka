@@ -202,6 +202,42 @@ describe("new material", () => {
 	});
 });
 
+describe("one daily session a day", () => {
+	const due = () => {
+		const state = settle(fresh());
+		seedCard(state, "bk::code2region", reviewCard());
+		return state;
+	};
+	test("a completed daily session leaves nothing scheduled for the rest of the day", () => {
+		const state = fresh();
+		seedCard(state, "bk::code2region", reviewCard());
+		expect(dailyQueue(state, bundleOf(), SETTINGS, at).items.length).toBeGreaterThan(0);
+		state.dailyDoneDays.add(TODAY);
+		const queue = dailyQueue(state, bundleOf(), SETTINGS, at);
+		expect(queue).toMatchObject({ items: [], held: false });
+	});
+	test("cards still due wait for the next day's session", () => {
+		const state = due();
+		state.dailyDoneDays.add(TODAY);
+		const tomorrow = ctxAt(NOW + DAY + 2 * 3_600_000);
+		expect(ids(dailyQueue(state, bundleOf(), SETTINGS, tomorrow).items)).toEqual([
+			"bk::code2region"
+		]);
+	});
+	test("a finished Cek Ingatan does not close the daily session", () => {
+		const state = due();
+		state.doneDays.add(TODAY);
+		expect(ids(dailyQueue(state, bundleOf(), SETTINGS, at).items)).toEqual(["bk::code2region"]);
+	});
+	test("still counts the codes outside the scope that wait", () => {
+		const state = fresh();
+		state.dailyDoneDays.add(TODAY);
+		const closed = dailyQueue(state, bundleOf(), { ...SETTINGS, scope: SUMATERA }, at);
+		const open = dailyQueue(fresh(), bundleOf(), { ...SETTINGS, scope: SUMATERA }, at);
+		expect(closed.outsideScopeNew).toBe(open.outsideScopeNew);
+	});
+});
+
 describe("Kode Khusus queue", () => {
 	test("switched off: no new special cards, but due ones still come", () => {
 		const state = fresh();

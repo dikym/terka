@@ -73,6 +73,7 @@ export function completeRun(state: AppState, runId: string) {
 	const answered = state.runCards.get(runId);
 	if (!run || !answered || answered.cards.size < run.plannedCount) return;
 	state.doneDays.add(run.localDay);
+	if (run.kind === "daily") state.dailyDoneDays.add(run.localDay);
 	state.dailyRuns.delete(runId);
 	state.runCards.delete(runId);
 }

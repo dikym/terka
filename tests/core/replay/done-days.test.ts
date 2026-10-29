@@ -60,6 +60,38 @@ describe("completed daily sessions", () => {
 		expect(state.doneDays.has(DAY)).toBe(false);
 	});
 
+	test("only a completed daily session closes the daily queue, a cek ingatan does not", () => {
+		const daily = dailyRun(2);
+		const recheck = run("recheck", NOW + DAY_MS, {
+			plannedCount: 1,
+			endedAt: NOW + DAY_MS + MINUTE
+		});
+		const state = stateOf([
+			daily,
+			...answers(daily.row.id, ["ba", "bb"]),
+			recheck,
+			review("ba", "code2region", NOW + DAY_MS + MINUTE / 2, {
+				runId: recheck.row.id,
+				context: "recheck"
+			})
+		]);
+		const next = localDay(NOW + DAY_MS, WITA);
+		expect(state.doneDays.has(next)).toBe(true);
+		expect([...state.dailyDoneDays]).toEqual([DAY]);
+	});
+
+	test("a daily session finished the same day as a cek ingatan still closes the queue", () => {
+		const recheck = run("recheck", NOW, { plannedCount: 1, endedAt: NOW + MINUTE });
+		const daily = run("daily", NOW + HOUR, { plannedCount: 1, endedAt: NOW + 2 * HOUR });
+		const state = stateOf([
+			recheck,
+			review("ba", "code2region", NOW + 1, { runId: recheck.row.id, context: "recheck" }),
+			daily,
+			review("bb", "code2region", NOW + HOUR + MINUTE, { runId: daily.row.id })
+		]);
+		expect([...state.dailyDoneDays]).toEqual([DAY]);
+	});
+
 	test("challenge days and completed daily days both feed the streak", () => {
 		const daily = dailyRun(1);
 		const challenge = run("challenge", NOW + DAY_MS);
