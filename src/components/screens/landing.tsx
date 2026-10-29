@@ -1,3 +1,4 @@
+import { SiteFooter } from "@/components/shell/site-footer";
 import { SITE_WRAP as WRAP, SiteHeader } from "@/components/shell/site-header";
 import { Link } from "@/components/ui/app-link";
 import { Button, buttonClass } from "@/components/ui/button";
@@ -136,12 +137,6 @@ const FACT_LABELS = [
 	["Terverifikasi", "bg-go-100 text-go-700"],
 	["Diperdebatkan", "bg-caution-100 text-caution-700"],
 	["Mitos", "bg-[oklch(0.955_0.04_298)] text-grape-700"]
-];
-
-const FOOTER: { icon: IconName; label: string; href: string }[] = [
-	{ icon: "info", label: "Tentang Terka", href: "/tentang" },
-	{ icon: "shield-check", label: "Kebijakan privasi", href: "/privasi" },
-	{ icon: "mail", label: "Laporkan data yang keliru", href: "mailto:contact@terka.my.id" }
 ];
 
 function Heading({ label, title }: { label?: string; title: string }) {
@@ -411,43 +406,6 @@ function Closing() {
 	);
 }
 
-function Footer() {
-	return (
-		<footer className="border-t border-hairline">
-			<div
-				className={`${WRAP} flex flex-col gap-5 pt-8 pb-10 lg:flex-row lg:flex-wrap lg:items-center lg:justify-between lg:py-8`}
-			>
-				<div className="flex flex-col items-start gap-3 lg:flex-row lg:flex-wrap lg:items-center lg:gap-4">
-					<span className="inline-flex items-center gap-[0.3em] rounded-sm border-2 border-ink-1000 px-2 py-0.75 font-plate text-body-lg leading-none font-bold tracking-wider text-ink-1000">
-						T<span>3</span>
-						<span>RKA</span>
-					</span>
-					<span className="text-body-sm leading-[1.4] text-ink-500">
-						Dikembangkan mandiri.
-					</span>
-				</div>
-				<nav className="flex flex-col lg:flex-row lg:flex-wrap lg:gap-5">
-					{FOOTER.map(({ icon, label, href }) => (
-						<a
-							key={href}
-							href={href}
-							className="flex min-h-12 items-center gap-3 border-t border-hairline text-body-md leading-none font-medium text-caution-700 hover:text-ink-1000 max-lg:last:border-b lg:min-h-0 lg:gap-2 lg:border-0 lg:text-body-sm"
-						>
-							<Icon
-								name={icon}
-								size={null}
-								color="bg-current"
-								className="size-4.5 lg:size-4"
-							/>
-							{label}
-						</a>
-					))}
-				</nav>
-			</div>
-		</footer>
-	);
-}
-
 export function Landing() {
 	return (
 		<>
@@ -461,7 +419,7 @@ export function Landing() {
 				<Privacy />
 				<Closing />
 			</main>
-			<Footer />
+			<SiteFooter />
 		</>
 	);
 }

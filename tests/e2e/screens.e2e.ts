@@ -880,6 +880,81 @@ test("the about page credits its maker and says how to report data", async ({ pa
 	await expect(page.getByText("bukan rujukan resmi", { exact: false }).first()).toBeVisible();
 });
 
+for (const [path, title] of [
+	["/tentang", "Tentang Terka"],
+	["/privasi", "Kebijakan privasi"]
+]) {
+	test(`${path} opened directly has the site header and footer but no sidebar or back arrow`, async ({
+		page
+	}) => {
+		await seen(page);
+		await page.goto(path);
+		await expect(page.getByRole("heading", { level: 1, name: title })).toBeVisible();
+		await expect(page.locator("header").getByRole("link", { name: "Terka" })).toBeVisible();
+		await expect(page.locator("footer").getByRole("link", { name: title })).toBeVisible();
+		await expect(page.locator("aside")).toHaveCount(0);
+		await expect(page.getByRole("link", { name: "Kembali" })).toHaveCount(0);
+		expect(new URL(page.url()).pathname + new URL(page.url()).search).toBe(path);
+	});
+
+	test(`${path} opened from Setelan has the sidebar and back arrow but no site footer`, async ({
+		page
+	}) => {
+		await seen(page);
+		await page.goto("/setelan");
+		await page.getByRole("link", { name: title, exact: true }).click();
+		await expect(page).toHaveURL(new RegExp(`${path}$`));
+		await expect(page.getByRole("heading", { level: 1, name: title })).toBeVisible();
+		await expect(page.locator("aside")).toBeVisible();
+		await expect(page.locator("footer")).toHaveCount(0);
+		await page.getByRole("link", { name: "Kembali" }).click();
+		await expect(page).toHaveURL(/\/setelan$/);
+	});
+}
+
+test("the about page keeps the sidebar when it leads on to the privacy policy from Setelan", async ({
+	page
+}) => {
+	await seen(page);
+	await page.goto("/setelan");
+	await page.getByRole("link", { name: "Tentang Terka", exact: true }).click();
+	await page.getByRole("link", { name: "Kebijakan privasi", exact: true }).click();
+	await expect(page.getByRole("heading", { level: 1, name: "Kebijakan privasi" })).toBeVisible();
+	await expect(page.locator("aside")).toBeVisible();
+});
+
+test("a legal page typed into the address bar after Setelan is public again", async ({ page }) => {
+	await seen(page);
+	await page.goto("/setelan");
+	await page.getByRole("link", { name: "Kebijakan privasi", exact: true }).click();
+	await expect(page.locator("aside")).toBeVisible();
+	await page.goto("/privasi");
+	await expect(page.locator("footer")).toBeVisible();
+	await expect(page.locator("aside")).toHaveCount(0);
+});
+
+test("reloading a legal page opened from Setelan keeps the sidebar", async ({ page }) => {
+	await seen(page);
+	await page.goto("/setelan");
+	await page.getByRole("link", { name: "Tentang Terka", exact: true }).click();
+	await page.reload();
+	await expect(page.locator("aside")).toBeVisible();
+	await expect(page.getByRole("link", { name: "Kembali" })).toBeVisible();
+});
+
+test("reloading a legal page opened from Setelan never paints the public frame", async ({
+	page
+}) => {
+	await seen(page);
+	await page.goto("/setelan");
+	await page.getByRole("link", { name: "Kebijakan privasi", exact: true }).click();
+	await expect(page.locator("aside")).toBeVisible();
+	await page.route("**/_next/static/**/*.js", (route) => route.abort());
+	await page.reload();
+	await expect(page.getByRole("heading", { level: 1, name: "Kebijakan privasi" })).toBeHidden();
+	await expect(page.locator("footer")).toBeHidden();
+});
+
 test("a chip in the region list or Pelat Terlihat opens its code", async ({ page }) => {
 	await seen(page);
 	await page.goto("/referensi");

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PageTitle } from "@/components/ui/page-title";
+import { LegalFrame } from "@/components/shell/legal-frame";
 import { PRIVACY_POLICY_VERSION } from "@/rules";
 
 export const metadata: Metadata = { title: "Kebijakan privasi · Terka" };
@@ -16,8 +16,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 // Static and readable without JavaScript: the Google consent screen links here.
 export default function Page() {
 	return (
-		<div className="mx-auto flex w-full max-w-prose flex-col gap-5 lg:gap-6">
-			<PageTitle title="Kebijakan privasi" back="/setelan" />
+		<LegalFrame title="Kebijakan privasi">
 			<article className="flex flex-col gap-8">
 				<p className="font-mono text-body-sm leading-[1.2] font-medium text-ink-500 tabular-nums">
 					Versi {PRIVACY_POLICY_VERSION}
@@ -81,6 +80,6 @@ export default function Page() {
 					.
 				</Section>
 			</article>
-		</div>
+		</LegalFrame>
 	);
 }

@@ -5,7 +5,7 @@ import { InstallStatus } from "./install-status";
 import { OptimizerOnIdle } from "./optimizer-on-idle";
 import { PageViews } from "./page-views";
 import { ToastHost } from "@/components/ui/toast";
-import { WELCOME_SEEN } from "@/lib/flag-keys";
+import { LEGAL_FROM_SETTINGS, WELCOME_SEEN } from "@/lib/flag-keys";
 
 export const metadata: Metadata = {
 	title: "Terka",
@@ -20,7 +20,10 @@ export const viewport: Viewport = { themeColor: "#0f172a" };
 // without them anyway.
 // Someone who has already been through the welcome skips the landing page. The page is hidden while
 // the redirect loads so it never flashes; a link with a hash, such as /#data, still opens it.
-const FIRST_VISIT = `try{var seen=localStorage.getItem("${WELCOME_SEEN}");var at=location.pathname;if(at==="/beranda"&&!seen){document.documentElement.dataset.welcome="pending"}else if(at==="/"&&seen&&!location.hash){document.documentElement.dataset.returning="1";location.replace("/beranda")}}catch(e){}`;
+// The about page and privacy policy are server-rendered in their public form. Reloaded after being
+// opened from Setelan, the public frame stays hidden until React draws the app version. A fresh
+// navigation (not a reload or history step) always starts public, as in legal-origin.ts.
+const FIRST_VISIT = `try{var seen=localStorage.getItem("${WELCOME_SEEN}");var at=location.pathname;if(at==="/beranda"&&!seen){document.documentElement.dataset.welcome="pending"}else if(at==="/"&&seen&&!location.hash){document.documentElement.dataset.returning="1";location.replace("/beranda")}else if(at==="/tentang"||at==="/privasi"){var nav=performance.getEntriesByType("navigation")[0];if((!nav||nav.type!=="navigate")&&sessionStorage.getItem("${LEGAL_FROM_SETTINGS}")==="1")document.documentElement.dataset.legal="app"}}catch(e){}`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
@@ -28,7 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 		<html lang="id" className={fontVariables} suppressHydrationWarning>
 			<head>
 				{/* Inline, not in the stylesheet: it must apply before the first paint, also in dev. */}
-				<style>{`html[data-welcome="pending"] [data-welcome-skeleton]{display:flex}html[data-returning]{display:none}`}</style>
+				<style>{`html[data-welcome="pending"] [data-welcome-skeleton]{display:flex}html[data-returning]{display:none}html[data-legal="app"] [data-legal-public]{display:none}`}</style>
 				<script dangerouslySetInnerHTML={{ __html: FIRST_VISIT }} />
 			</head>
 			<body>
