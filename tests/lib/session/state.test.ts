@@ -57,6 +57,26 @@ describe("session state", () => {
 		expect(submittable(sessionReducer(state, { type: "input", value: "Medan" }))).toBe(true);
 	});
 
+	test("a graded list keeps how each of its answers was judged", () => {
+		const set = {
+			counted: 1,
+			needed: 5,
+			items: [{ text: "Medan", status: "counted" as const, reason: null }],
+			missing: ["Kota Binjai"],
+			all: ["Kota Medan", "Kota Binjai"]
+		};
+		const state = sessionReducer(started(), {
+			type: "grade",
+			verdict: "wrong",
+			timedOut: false,
+			chosen: null,
+			noteOffered: false,
+			set
+		});
+		expect(state.feedback.set).toEqual(set);
+		expect(sessionReducer(state, { type: "next" }).feedback.set).toBeUndefined();
+	});
+
 	test("an unverified answer is recorded as neither right nor wrong", () => {
 		const state = graded(started(), "unverified");
 		expect(state.phase).toBe("graded");

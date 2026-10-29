@@ -4,6 +4,8 @@ import { Callout } from "@/components/ui/feedback";
 import { Flag, Icon } from "@/components/ui/icon";
 import { Kbd } from "@/components/ui/kbd";
 import { Plate } from "@/components/ui/plate";
+import type { SetFeedback } from "@/core/session/feedback";
+import { useFinishKey } from "@/lib/platform";
 import type { SessionCard } from "@/lib/session/cards";
 import type { SessionState } from "@/lib/session/state";
 import { StatusPill, TimeBar } from "./indicators";
@@ -95,18 +97,22 @@ function Countdown({
 function AnswerBox({
 	state,
 	onInput,
-	mono
+	mono,
+	plain = false
 }: {
 	state: SessionState;
 	onInput: (value: string) => void;
 	mono: boolean;
+	/** The answers carry the verdict, so the box itself stays neutral. */
+	plain?: boolean;
 }) {
 	const graded = state.phase === "graded";
-	const tone = !graded
-		? "border border-ink-1000 bg-paper-0"
-		: state.verdict === "right"
-			? "border-2 border-go-500 bg-go-100"
-			: "border-2 border-stop-500 bg-stop-100";
+	const tone =
+		!graded || plain
+			? "border border-ink-1000 bg-paper-0"
+			: state.verdict === "right"
+				? "border-2 border-go-500 bg-go-100"
+				: "border-2 border-stop-500 bg-stop-100";
 	return (
 		<label className="flex flex-col gap-2">
 			<span className="sr-only">Jawaban</span>
@@ -416,39 +422,107 @@ function Intro({
 	);
 }
 
+const MISSING_SHOWN = 8;
+const CHIP =
+	"inline-flex h-9 items-center gap-2 rounded-sm border px-3 font-sans text-body-md leading-none font-medium text-ink-1000";
+const CHIP_TONE = {
+	counted: "border-go-500 bg-go-100",
+	wrong: "border-stop-500 bg-stop-100",
+	repeat: "border-hairline bg-paper-50"
+};
+const CHIP_MARK = { counted: "benar", wrong: "salah", repeat: "sudah disebut" };
+
+/** After a Sebutkan list: how many counted, what did not and why, and the areas that were meant. */
+function SetVerdict({ verdict, set }: { verdict: SessionState["verdict"]; set: SetFeedback }) {
+	const right = verdict === "right";
+	const notCounted = set.items.filter((item) => item.status !== "counted");
+	const wrong = notCounted.some((item) => item.status === "wrong");
+	const rest = set.missing.length - MISSING_SHOWN;
+	return (
+		<div className="flex flex-col gap-3">
+			<StatusPill tone={right ? "go" : wrong ? "stop" : "caution"}>
+				{right ? "Benar" : "Belum cukup"}
+			</StatusPill>
+			<p className="text-ink-900 type-body">
+				{right
+					? `${set.counted} daerah benar, cukup untuk lulus (minimal ${set.needed}).`
+					: `Baru ${set.counted} daerah yang benar, perlu minimal ${set.needed}.`}
+			</p>
+			{notCounted.length > 0 && (
+				<p className="text-ink-900 type-body">
+					<b className="font-semibold">Tidak dihitung:</b>{" "}
+					{notCounted.map(({ text, reason }) => `${text} (${reason})`).join("; ")}.
+				</p>
+			)}
+			{right && set.missing.length > 0 && (
+				<p className="text-ink-900 type-body">
+					<b className="font-semibold">Belum disebut:</b>{" "}
+					{set.missing.slice(0, MISSING_SHOWN).join(", ")}
+					{rest > 0 ? `, dan ${rest} lainnya` : ""}.
+				</p>
+			)}
+			{!right && (
+				<p className="text-ink-900 type-body">
+					<b className="font-semibold">Jawaban yang benar:</b> {set.all.join(", ")}.
+				</p>
+			)}
+		</div>
+	);
+}
+
 function NameAll({ state, card, onInput, onAdd, onRemove, onSubmit, onNext }: Props) {
+	const finishKey = useFinishKey();
 	return (
 		<>
 			<div className="flex flex-col items-start gap-4">
 				<QuestionPlate card={card} />
 				<Title>{card.prompt}</Title>
 			</div>
-			{state.named.length > 0 && (
+			{state.phase === "graded" && state.feedback.set ? (
 				<div className="flex flex-col gap-2">
 					<span className="type-label text-ink-500">
-						{state.named.length} jawaban dicatat
+						{state.feedback.set.items.length} jawaban dikirim
 					</span>
 					<div className="flex flex-wrap gap-2">
-						{state.named.map((name) => (
+						{state.feedback.set.items.map(({ text, status }, index) => (
 							<span
-								key={name}
-								className="inline-flex h-9 items-center gap-2 rounded-sm border border-ink-1000 bg-paper-0 px-3 font-sans text-body-md leading-none font-medium text-ink-1000"
+								key={`${text}-${index}`}
+								className={`${CHIP} ${CHIP_TONE[status]}`}
 							>
-								{name}
-								<button
-									type="button"
-									aria-label={`Hapus ${name}`}
-									onClick={() => onRemove(name)}
-									className="cursor-pointer"
-								>
-									<Icon name="x" size={14} />
-								</button>
+								{text}
+								<span className="sr-only">{CHIP_MARK[status]}</span>
 							</span>
 						))}
 					</div>
 				</div>
+			) : (
+				state.named.length > 0 && (
+					<div className="flex flex-col gap-2">
+						<span className="type-label text-ink-500">
+							{state.named.length} jawaban dicatat
+						</span>
+						<div className="flex flex-wrap gap-2">
+							{state.named.map((name) => (
+								<span key={name} className={`${CHIP} border-ink-1000 bg-paper-0`}>
+									{name}
+									<button
+										type="button"
+										aria-label={`Hapus ${name}`}
+										onClick={() => onRemove(name)}
+										className="cursor-pointer"
+									>
+										<Icon name="x" size={14} />
+									</button>
+								</span>
+							))}
+						</div>
+					</div>
+				)
 			)}
-			<AnswerBox state={state} onInput={onInput} mono={false} />
+			<AnswerBox state={state} onInput={onInput} mono={false} plain />
+			{state.phase === "graded" && state.feedback.set && (
+				<SetVerdict verdict={state.verdict} set={state.feedback.set} />
+			)}
 			{state.phase === "graded" ? (
 				<NextButton onNext={onNext} />
 			) : (
@@ -456,7 +530,7 @@ function NameAll({ state, card, onInput, onAdd, onRemove, onSubmit, onNext }: Pr
 					<Button variant="outline" block kbd="Enter" onClick={onAdd}>
 						Tambah
 					</Button>
-					<Button block onClick={onSubmit}>
+					<Button block kbd={finishKey} onClick={onSubmit}>
 						Selesai
 					</Button>
 				</div>
