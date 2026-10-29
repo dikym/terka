@@ -105,11 +105,14 @@ export function applyReview(state: AppState, row: ReviewLog, at: number): void {
 	recordSample(state, row, signals);
 
 	if (row.context === "intro") {
-		if (card.state !== "new") return;
-		putCard(state, card, introduce(card, at), row.tz);
+		const known = card.state !== "new";
+		// Another device may have taught the card on an earlier day. The person still spent that
+		// day's new-material slot on it, so it counts; a repeat on the same day is only recorded.
+		if (known && state.introDay.get(row.contentId) === row.localDay) return;
 		const quotaKey = `${trackOf(row.mode)}|${row.localDay}`;
 		state.quota.set(quotaKey, (state.quota.get(quotaKey) ?? 0) + 1);
 		state.introDay.set(row.contentId, row.localDay);
+		if (!known) putCard(state, card, introduce(card, at), row.tz);
 		return;
 	}
 

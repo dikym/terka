@@ -905,6 +905,8 @@ Contoh: DK waktunya diulang hari Senin. Pukul 07.10 dijawab benar di ponsel saat
 
 Dua perangkat offline bisa sama-sama menghabiskan kuota materi baru di hari yang sama. Perkenalan yang sudah terjadi tidak dibatalkan, karena pengguna sudah melihat materinya. Kelebihannya dipotong dari kuota hari berikutnya, paling banyak sebesar batas harian. Untuk tingkat Menengah (batas 10), kelebihan 4 membuat kuota besok jadi 6; kelebihan 15 membuat kuota besok 0, dan kuota lusa kembali 10.
 
+Perkenalan kartu yang sudah dikenal dari perangkat lain tetap memakai kuota hari perkenalan itu terjadi. Contoh: ponsel sudah memperkenalkan DK hari Senin, lalu laptop yang belum tahu memperkenalkannya lagi hari Rabu. Setelah sinkron, kartu DK tetap mengikuti perkenalan hari Senin, tetapi satu slot kuota hari Rabu terpakai, karena pengguna memang menghabiskan slot itu untuk materi tersebut. Sesi harian yang sudah selesai di laptop tidak membuka materi baru lagi hanya karena riwayat ponsel masuk. Perkenalan kartu yang sama pada hari yang sama dihitung satu kali.
+
 ### 8.5 Pembatalan Antarperangkat
 
 Undo hanya membatalkan jawaban terakhir di perangkat yang sama (bagian 4.10). Jika jawaban itu sudah terkirim, perangkat lain ikut kembali ke keadaan aplikasi sebelum jawaban itu setelah menerima event pembatalannya.
