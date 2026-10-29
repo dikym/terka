@@ -215,6 +215,7 @@ Tingkat tidak ditampilkan di beranda dan tidak dipakai sebagai label pengguna. T
 | ---------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | Judul sesi harian            | **Sesi hari ini**                                                                                          |
 | Judul Latihan Terfokus       | **Latihan Terfokus · Kawasan Maluku**                                                                      |
+| Judul sesi harian yang seluruhnya latihan tambahan | **Latihan Terfokus**, bukan **Sesi hari ini**, supaya tidak bertentangan dengan beranda yang menulis sesi hari ini selesai |
 | Pengantar sesi harian yang seluruhnya latihan tambahan | **Semua soal terjadwal hari ini sudah selesai. Kamu bisa lanjut berlatih; hanya soal yang sudah waktunya diulang yang dapat memengaruhi jadwal.** |
 | Rincian jumlah soal, ada soal pengisi | Baris **Latihan tambahan** di samping **Pengulangan** dan **Materi baru** |
 | Jumlah soal                  | **18 soal · 12 pengulangan · 4 materi baru · 2 Bandingkan Kode**                                           |
@@ -328,7 +329,8 @@ Keadaan khusus:
 
 - Tidak ada pasangan baru → **Tidak ada kode baru yang sering tertukar.**
 - Penguasaan tidak berubah → **Penguasaan wilayah belum berubah pada sesi ini.**
-- Tombol keluar → **Kembali ke beranda**.
+- Tombol keluar → **Kembali ke beranda**, dengan pintasan **Esc**.
+- Info **Jadwal hari ini** hanya tampil setelah sesi harian yang masih menyisakan soal untuk diulang hari ini. Sesi yang seluruhnya latihan tambahan memakai ringkasan Latihan Terfokus.
 
 **Fun Facts** tampil di bawah metrik, sebelum tombol keluar:
 

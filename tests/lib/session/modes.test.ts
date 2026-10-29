@@ -110,7 +110,7 @@ describe("planning a session", () => {
 		if (plan.kind !== "ready") return;
 		expect(plan.cards.length).toBeGreaterThan(0);
 		expect(plan.run).toEqual({ kind: "focused", scope: SETTINGS.scope });
-		expect(plan.preview?.title).toBe("Sesi hari ini");
+		expect(plan.preview?.title).toBe("Latihan Terfokus");
 		expect(plan.cards.every((card) => card.question.context === "focused")).toBe(true);
 	});
 

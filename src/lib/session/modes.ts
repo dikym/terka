@@ -330,7 +330,7 @@ export function planSession(mode: Mode, input: PlanInput, params: PlanParams): P
 						state,
 						filler,
 						settings.scope,
-						TITLE[mode],
+						TITLE.terfokus,
 						EXTRA_NOTE
 					);
 				const next = cardsWhereActive(state).filter((due) => due > ctx.now);
