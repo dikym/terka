@@ -333,6 +333,24 @@ test("with everything learned and nothing due, home is not finished and the dail
 	await page.getByRole("button", { name: "Lanjut" }).waitFor();
 });
 
+test("extra practice names the question kind before the area", async ({ page }) => {
+	await seen(page);
+	await page.goto("/beranda");
+	const ids = (plates as unknown as Bundle).regions.map((region) => region.id);
+	await seed(page, justLearnedLog(ids), { logVersion: 1000 });
+	await page.goto("/sesi");
+	await page.getByRole("button", { name: "Mulai" }).click();
+	await page.getByRole("heading", { level: 2 }).waitFor();
+	const kind = page
+		.getByText(/^Tebak (daerah|kode)$/i)
+		.filter({ visible: true })
+		.first();
+	const area = page.getByText("Seluruh Indonesia", { exact: true }).filter({ visible: true });
+	const [kindBox, areaBox] = [await kind.boundingBox(), await area.first().boundingBox()];
+	expect(kindBox!.x).toBeLessThan(areaBox!.x);
+	expect(Math.abs(kindBox!.y - areaBox!.y)).toBeLessThan(20);
+});
+
 test("after a long break Mulai belajar opens Cek ingatan and Lewati opens the daily session", async ({
 	page
 }) => {
