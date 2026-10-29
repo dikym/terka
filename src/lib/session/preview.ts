@@ -1,5 +1,6 @@
 import type { GroupId } from "@/components/ui/groups";
 import type { IconName } from "@/components/ui/icon";
+import { LABELS } from "@/core/questions/question";
 import type { InfoItem, Preview as CorePreview } from "@/core/session/preview";
 import { TIERS, TIMED_LIMIT_MS, type Tier } from "@/rules";
 import { TIER_NAME } from "../view/format";
@@ -26,10 +27,15 @@ export type Preview = {
 	start: string;
 };
 
-export function composition(counts: CorePreview["counts"]): [string, number, string][] {
+export function composition(
+	counts: CorePreview["counts"],
+	reversedNew = 0
+): [string, number, string][] {
+	const fresh =
+		counts.new > 0 && reversedNew === counts.new ? LABELS.introReversed : LABELS.intro;
 	const rows: [string, number, string][] = [
 		["Pengulangan", counts.review + counts.step, "bg-ink-1000"],
-		["Materi baru", counts.new, "bg-caution-500"],
+		[fresh, counts.new, "bg-caution-500"],
 		["Bandingkan Kode", counts.drill, "bg-tangerine-500"]
 	];
 	return rows.filter(([, value]) => value > 0);

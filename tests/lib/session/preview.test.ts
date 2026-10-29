@@ -8,6 +8,16 @@ describe("session preview", () => {
 		]);
 	});
 
+	test("composition calls new questions on known codes by that name", () => {
+		const counts = { step: 0, drill: 0, review: 1, new: 2 };
+		expect(composition(counts, 2)).toEqual([
+			["Pengulangan", 1, "bg-ink-1000"],
+			["Soal baru", 2, "bg-caution-500"]
+		]);
+		expect(composition(counts, 1)[1]).toEqual(["Materi baru", 2, "bg-caution-500"]);
+		expect(composition(counts)[1]).toEqual(["Materi baru", 2, "bg-caution-500"]);
+	});
+
 	test("question types are counted by their label", () => {
 		expect(typeRows(["Tebak daerah", "Tebak kode", "Tebak daerah"])).toEqual([
 			["Tebak daerah", "2"],

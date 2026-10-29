@@ -331,7 +331,7 @@ export function HomeScreen({ data }: { data: Home | null }) {
 										</Note>
 									</Stat>
 									<Stat
-										label="Materi baru"
+										label={d?.newFromKnown ? "Soal baru" : "Materi baru"}
 										value={
 											d ? (
 												d.summary.newAvailable
@@ -354,7 +354,13 @@ export function HomeScreen({ data }: { data: Home | null }) {
 									>
 										<Note>
 											{d ? (
-												d.scope.national ? (
+												d.newFromKnown ? (
+													d.scope.national ? (
+														"Dari kode yang dikenal. Batas harian seluruh Indonesia."
+													) : (
+														"Dari kode yang dikenal. Batas harian semua Cakupan."
+													)
+												) : d.scope.national ? (
 													"Batas harian untuk seluruh Indonesia."
 												) : (
 													"Batas harian, berlaku untuk semua Cakupan."

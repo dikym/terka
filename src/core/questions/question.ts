@@ -81,7 +81,8 @@ export const LABELS = {
 	oddOneOut: "Mana yang bukan",
 	compare: "Bandingkan Kode",
 	diplomat: "Tebak diplomat",
-	intro: "Materi baru"
+	intro: "Materi baru",
+	introReversed: "Soal baru"
 } as const;
 
 const MODES: CardMode[] = [

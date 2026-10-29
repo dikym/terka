@@ -17,6 +17,7 @@ import { effectiveCard } from "../replay/universe";
 import { rungMemory } from "./rung";
 import {
 	contentOf,
+	isReversedNew,
 	prepare,
 	type QueueItem,
 	type SessionContext,
@@ -30,6 +31,8 @@ export type Preview = {
 	/** Introductions the session will ask once more; part of the count and the estimate. */
 	reasks: number;
 	counts: Record<QueueItem["slot"], number>;
+	/** How many of the new questions are reversed questions on codes already introduced. */
+	newReversed: number;
 	byType: Partial<Record<Question["questionType"], number>>;
 	byLevel: Record<Level, number>;
 	estimatedMs: number;
@@ -141,6 +144,7 @@ export function buildPreview(
 		questions,
 		reasks,
 		counts,
+		newReversed: items.filter(isReversedNew).length,
 		byType,
 		byLevel,
 		estimatedMs,
