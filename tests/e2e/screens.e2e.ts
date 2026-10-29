@@ -309,7 +309,9 @@ test("a new code is asked once more before the session ends and nothing is due a
 	const logs = await rows(page, "review_logs");
 	const asked = new Set(logs.map((row) => (row as { contentId: string }).contentId));
 	expect(logs.length).toBe(asked.size * 2);
-	await page.goto("/beranda");
+	await expect(page.getByText("Jadwal hari ini", { exact: true })).toHaveCount(0);
+	await page.keyboard.press("Escape");
+	await expect(page).toHaveURL(/\/beranda/);
 	await expect(page.getByText("Sesi hari ini selesai")).toBeVisible();
 });
 
@@ -324,7 +326,7 @@ test("with everything learned and nothing due, home is not finished and the dail
 	await expect(page.getByText("Belum ada soal terjadwal hari ini")).toBeVisible();
 	await expect(page.getByText("Sesi hari ini selesai")).toHaveCount(0);
 	await page.getByRole("link", { name: "Mulai belajar" }).first().click();
-	await expect(page.getByRole("heading", { name: "Sesi hari ini" })).toBeVisible();
+	await expect(page.getByRole("heading", { name: "Latihan Terfokus" })).toBeVisible();
 	await expect(page.getByText(/Semua soal terjadwal hari ini sudah selesai/)).toBeVisible();
 	await page.keyboard.press("Enter");
 	await answerOne(page);

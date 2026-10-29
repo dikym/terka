@@ -170,7 +170,8 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 	};
 
 	const exit = () => {
-		if (engine.current.answers.length && !engine.current.closed) setLeaving(true);
+		if (state.phase === "done" && mode !== "penempatan") router.push("/beranda");
+		else if (engine.current.answers.length && !engine.current.closed) setLeaving(true);
 		else leave();
 	};
 
@@ -180,6 +181,8 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 		setPlan(made);
 		if (made.kind === "ready") setState(initialSession(mode, made.cards));
 	}
+	// A daily session made only of extra practice runs, and ends, as a focused one.
+	const shown = plan?.kind === "ready" ? plan.mode : mode;
 	useEffect(() => {
 		if (runtime)
 			void readFlags(runtime.db).then(
@@ -478,14 +481,14 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 			const after = runtime.store.getState().log.state;
 			const ctx = sessionCtx(runtime);
 			const remaining =
-				mode === "harian" && prefs
+				shown === "harian" && prefs
 					? dailyQueue(after, runtime.bundle, prefs.settings, ctx).items.filter(
 							(item) => item.slot !== "new"
 						).length
 					: 0;
 			setEnd(
 				endView({
-					mode,
+					mode: shown,
 					before,
 					after,
 					answers: engine.current.answers,
@@ -677,7 +680,7 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 	const total = mode === "penempatan" ? Math.max(state.cards.length, 1) : sessionTotal(state);
 	const scope = plan.run.scope;
 	const bar: BarProps = {
-		mode,
+		mode: shown,
 		card,
 		level: card ? card.level : null,
 		done: finished ? total : Math.min(total, state.index + 1),
@@ -698,7 +701,7 @@ export function Session({ mode, params }: { mode: Mode; params: PlanParams }) {
 			bar={<SessionBar {...bar} />}
 			// Mode Kilat and Latihan Terfokus keep their area row on the summary.
 			meta={
-				finished && mode !== "kilat" && mode !== "terfokus" ? undefined : (
+				finished && shown !== "kilat" && shown !== "terfokus" ? undefined : (
 					<SessionMeta {...bar} />
 				)
 			}

@@ -247,11 +247,9 @@ export function SessionEnd({
 						</span>
 					</Note>
 				)}
-				{view.mode === "harian" && (
+				{view.mode === "harian" && view.remainingDue > 0 && (
 					<Callout tone="success" label="Jadwal hari ini">
-						{view.remainingDue
-							? `${view.remainingDue} soal masih perlu diulang hari ini.`
-							: "Jadwal hari ini sudah beres."}
+						{`${view.remainingDue} soal masih perlu diulang hari ini.`}
 					</Callout>
 				)}
 				{view.held && (
@@ -269,7 +267,7 @@ export function SessionEnd({
 			{body}
 			{view.fact && <FactCard fact={view.fact} />}
 			{view.loginPrompt && <LoginPrompt onLogin={onLogin} onDismiss={onDismissLogin} />}
-			<Button block href="/beranda" className="max-lg:hidden">
+			<Button block href="/beranda" kbd="Esc" className="max-lg:hidden">
 				Kembali ke beranda
 			</Button>
 		</>
