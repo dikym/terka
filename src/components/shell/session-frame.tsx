@@ -10,9 +10,10 @@ const COLUMN = {
 
 const MAIN = {
 	// A phone preview fills the screen so its buttons can sit at the bottom.
-	preview: "flex-1 py-6 lg:flex-none lg:pt-10 lg:pb-12",
-	question: "flex-1 pt-4 pb-6 lg:flex-none lg:py-10",
-	end: "flex-1 pt-4 pb-6 lg:flex-none lg:py-10"
+	// A phone's top bar is fixed, so the column starts below its 60 px.
+	preview: "flex-1 pt-21 pb-6 lg:flex-none lg:pt-10 lg:pb-12",
+	question: "flex-1 pt-19 pb-6 lg:flex-none lg:py-10",
+	end: "flex-1 pt-19 pb-6 lg:flex-none lg:py-10"
 };
 
 /** Chrome-free session layout: a top bar over a centred column. */
@@ -41,7 +42,7 @@ export function SessionFrame({
 				</div>
 			</main>
 			{footer && (
-				<div className="sticky bottom-0 z-30 transform-gpu border-t border-hairline bg-paper-0 px-4 pt-3 pb-[calc(--spacing(4)+env(safe-area-inset-bottom))] lg:hidden">
+				<div className="sticky bottom-0 z-30 border-t border-hairline bg-paper-0 px-4 pt-3 pb-[calc(--spacing(4)+env(safe-area-inset-bottom))] lg:hidden">
 					{footer}
 				</div>
 			)}
@@ -65,10 +66,10 @@ export function TopBar({
 	children: React.ReactNode;
 }) {
 	return (
-		// On a phone both sticky bars get a layer of their own: iOS leaves one unpainted until the
-		// page is scrolled when the screen changes under it, as at the end of a session.
+		// Fixed, not sticky, on a phone: iOS leaves a sticky bar unpainted until the page is scrolled
+		// when the screen changes under it, as at the end of a session.
 		<div
-			className={`sticky top-0 z-30 flex items-center border-b border-hairline bg-paper-0 max-lg:transform-gpu lg:static lg:h-auto lg:min-h-0 lg:gap-5 lg:px-6 lg:py-4 ${PHONE_BAR[variant]} ${className}`}
+			className={`fixed inset-x-0 top-0 z-30 flex items-center border-b border-hairline bg-paper-0 lg:static lg:h-auto lg:min-h-0 lg:gap-5 lg:px-6 lg:py-4 ${PHONE_BAR[variant]} ${className}`}
 		>
 			{children}
 		</div>
