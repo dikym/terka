@@ -9,7 +9,10 @@ import { LEGAL_FROM_SETTINGS, WELCOME_SEEN } from "@/lib/flag-keys";
 
 export const metadata: Metadata = {
 	title: "Terka",
-	description: "Lihat pelatnya, terka asalnya."
+	description: "Lihat pelatnya, terka asalnya.",
+	// iOS otherwise turns email addresses, dates and numbers into underlined links, such as the
+	// account's own email on the Akun screen. Links meant to be tapped are written as links.
+	formatDetection: { email: false, telephone: false, address: false, date: false }
 };
 
 export const viewport: Viewport = { themeColor: "#0f172a" };
