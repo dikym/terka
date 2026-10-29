@@ -155,7 +155,6 @@ test("the top bar's account menu fits the phone and reaches Setelan", async ({ p
 	const menu = page.getByRole("menu", { name: "Akun" });
 	await expect(menu.getByRole("menuitem")).toHaveText([
 		"Setelan",
-		"Papan tombol",
 		"Ekspor data",
 		"Impor data",
 		"Masuk"

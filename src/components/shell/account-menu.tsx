@@ -24,7 +24,16 @@ export function AccountMenu({
 
 	const entries: MenuEntry[] = [
 		{ label: "Setelan", icon: "settings", onSelect: () => router.push("/setelan") },
-		{ label: "Papan tombol", icon: "keyboard", onSelect: () => router.push("/papan-tombol") },
+		// A phone has no keyboard to list shortcuts for.
+		...(iconOnly
+			? []
+			: [
+					{
+						label: "Papan tombol",
+						icon: "keyboard",
+						onSelect: () => router.push("/papan-tombol")
+					} satisfies MenuEntry
+				]),
 		"separator",
 		{ label: "Ekspor data", icon: "download", onSelect: actions.exportData },
 		{ label: "Impor data", icon: "upload", onSelect: actions.importData }

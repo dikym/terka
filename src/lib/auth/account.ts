@@ -38,13 +38,40 @@ export async function wipeLocalData(db: TerkaDb): Promise<void> {
 	});
 }
 
+export const LEAVE_WAIT_MS = 3_000;
+
+/**
+ * Takes this device off the account's list when it signs out. Signing out must work offline too,
+ * so a refusal, a failure or a slow server is ignored; the device then leaves the list on its own
+ * once it has not been seen for a week. Signing in again clears the mark.
+ */
+async function markDeviceLeft(db: TerkaDb, client: SupabaseClient, now: number): Promise<void> {
+	const id = await readMeta<string>(db, "deviceId");
+	if (!id) return;
+	let timer: ReturnType<typeof setTimeout> | undefined;
+	const patience = new Promise<void>((resolve) => {
+		timer = setTimeout(resolve, LEAVE_WAIT_MS);
+	});
+	const mark = client
+		.from("devices")
+		.update({ removed_at: new Date(now).toISOString() })
+		.eq("id", id)
+		.then(
+			() => undefined,
+			() => undefined
+		);
+	await Promise.race([mark, patience]);
+	clearTimeout(timer);
+}
+
 export async function signOut(
 	db: TerkaDb,
 	client: SupabaseClient,
-	options: { confirmed: boolean }
+	options: { confirmed: boolean; now: number }
 ): Promise<{ status: "ok" } | { status: "pending"; count: number }> {
 	const count = await db.outbox.count();
 	if (count > 0 && !options.confirmed) return { status: "pending", count };
+	await markDeviceLeft(db, client, options.now);
 	await client.auth.signOut({ scope: "local" });
 	await wipeLocalData(db);
 	return { status: "ok" };

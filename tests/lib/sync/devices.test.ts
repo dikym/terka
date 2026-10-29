@@ -1,9 +1,9 @@
 import { describe, expect, test } from "bun:test";
-import { removeDevice } from "../../../src/lib/auth/account";
+import { LEAVE_WAIT_MS, removeDevice, signOut } from "../../../src/lib/auth/account";
 import { listDevices } from "../../../src/lib/db/device";
 import { deviceRows } from "../../../src/lib/view/account";
 import { openDevice } from "./support/device";
-import { answersOf, DAY, HOUR, MINUTE, NOW, openRun } from "./support/events";
+import { answersOf, DAY, HOUR, MINUTE, NOW, openRun, review } from "./support/events";
 import { FakeServer } from "./support/server";
 import { pair, trio } from "./support/world";
 
@@ -166,5 +166,85 @@ describe("removing a device", () => {
 		const accepted = await c.sync();
 		expect(accepted.status.state).toBe("synced");
 		expect(server.ids("devices")).toContain(c.id);
+	});
+});
+
+describe("signing out", () => {
+	const settled = async () => {
+		const world = await pair();
+		for (const device of [world.a, world.b, world.a]) await device.sync();
+		return world;
+	};
+
+	test("takes this device off the account's list for the others", async () => {
+		const { server, a, b } = await settled();
+		const out = await signOut(b.db, b.client, { confirmed: true, now: b.now() });
+		expect(out).toEqual({ status: "ok" });
+		expect(server.rowOf("devices", b.id)?.removed_at).not.toBeNull();
+		await a.sync();
+		expect(await listed(a)).toEqual([a.id]);
+	});
+
+	test("keeps the device's sessions and answers on the server", async () => {
+		const { server, a, b } = await settled();
+		const daily = openRun("daily", NOW, { plannedCount: 1 });
+		await b.record(daily);
+		await b.record(...answersOf(daily, ["ba"], NOW));
+		await b.sync();
+		await signOut(b.db, b.client, { confirmed: true, now: b.now() });
+		await a.sync();
+		expect(server.rows("review_logs")).toHaveLength(1);
+		expect(server.rowOf("devices", b.id)).toBeDefined();
+	});
+
+	test("brings the device back to the list when it signs in again", async () => {
+		const { server, a, b } = await settled();
+		await signOut(b.db, b.client, { confirmed: true, now: b.now() });
+		server.clock.now += MINUTE;
+		await b.signIn();
+		await b.sync();
+		expect(server.rowOf("devices", b.id)?.removed_at).toBeNull();
+		await a.sync();
+		expect(await listed(a)).toContain(b.id);
+	});
+
+	test("still signs out when the server refuses the mark", async () => {
+		const { server, b } = await settled();
+		server.fail({ table: "devices", op: "update", status: 503 });
+		const out = await signOut(b.db, b.client, { confirmed: true, now: b.now() });
+		expect(out).toEqual({ status: "ok" });
+		expect(server.rowOf("devices", b.id)?.removed_at).toBeNull();
+		expect((await b.client.auth.getSession()).data.session).toBeNull();
+		expect(await b.ids("review_logs")).toEqual([]);
+	});
+
+	test("still signs out on a server that has no device removal", async () => {
+		const { server, b } = await settled();
+		server.deviceRemoval = false;
+		const out = await signOut(b.db, b.client, { confirmed: true, now: b.now() });
+		expect(out).toEqual({ status: "ok" });
+		expect((await b.client.auth.getSession()).data.session).toBeNull();
+	});
+
+	test("does not wait on a server that never answers", async () => {
+		const { server, b } = await settled();
+		server.beforeRequest = ({ table, op }) =>
+			table === "devices" && op === "update"
+				? new Promise((resolve) => setTimeout(resolve, 60_000)).then(() => undefined)
+				: undefined;
+		const started = Date.now();
+		const out = await signOut(b.db, b.client, { confirmed: true, now: b.now() });
+		expect(out).toEqual({ status: "ok" });
+		expect(Date.now() - started).toBeLessThan(LEAVE_WAIT_MS + 1_000);
+		expect((await b.client.auth.getSession()).data.session).toBeNull();
+		server.beforeRequest = null;
+	}, 15_000);
+
+	test("marks nothing when the sign-out is held back for unsent changes", async () => {
+		const { server, b } = await settled();
+		await b.record(review("ba", "code2region", NOW + MINUTE));
+		const out = await signOut(b.db, b.client, { confirmed: false, now: b.now() });
+		expect(out.status).toBe("pending");
+		expect(server.rowOf("devices", b.id)?.removed_at).toBeNull();
 	});
 });
