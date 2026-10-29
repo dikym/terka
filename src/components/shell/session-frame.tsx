@@ -41,7 +41,7 @@ export function SessionFrame({
 				</div>
 			</main>
 			{footer && (
-				<div className="sticky bottom-0 z-30 border-t border-hairline bg-paper-0 px-4 pt-3 pb-[calc(--spacing(4)+env(safe-area-inset-bottom))] lg:hidden">
+				<div className="sticky bottom-0 z-30 transform-gpu border-t border-hairline bg-paper-0 px-4 pt-3 pb-[calc(--spacing(4)+env(safe-area-inset-bottom))] lg:hidden">
 					{footer}
 				</div>
 			)}
@@ -65,8 +65,10 @@ export function TopBar({
 	children: React.ReactNode;
 }) {
 	return (
+		// On a phone both sticky bars get a layer of their own: iOS leaves one unpainted until the
+		// page is scrolled when the screen changes under it, as at the end of a session.
 		<div
-			className={`sticky top-0 z-30 flex items-center border-b border-hairline bg-paper-0 lg:static lg:h-auto lg:min-h-0 lg:gap-5 lg:px-6 lg:py-4 ${PHONE_BAR[variant]} ${className}`}
+			className={`sticky top-0 z-30 flex items-center border-b border-hairline bg-paper-0 max-lg:transform-gpu lg:static lg:h-auto lg:min-h-0 lg:gap-5 lg:px-6 lg:py-4 ${PHONE_BAR[variant]} ${className}`}
 		>
 			{children}
 		</div>

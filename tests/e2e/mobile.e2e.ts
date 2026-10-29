@@ -105,6 +105,30 @@ test("a finished session keeps its way home in the bottom bar", async ({ page })
 	expect(bottom).toBeGreaterThan(page.viewportSize()!.height - 40);
 });
 
+test("the top bar stays in view on a finished session's summary", async ({ page }) => {
+	await seen(page);
+	await page.goto("/beranda");
+	await seed(page, learnedLog(["bl", "bk", "bb", "ba", "bm", "bp"]), { logVersion: 1000 });
+	await page.goto("/sesi?mode=tantangan");
+	await page.getByRole("button", { name: "Mulai tantangan" }).click();
+	for (let i = 0; i < 5; i++) {
+		await page.getByRole("heading", { level: 2 }).waitFor();
+		const input = page.locator("#jawaban");
+		if (await input.count()) {
+			await input.fill("x");
+			await page.getByRole("button", { name: "Periksa" }).click();
+		} else await page.locator("main button:not([disabled])").first().click();
+		await page.getByRole("button", { name: "Lanjut" }).click();
+	}
+	const exit = page.getByRole("button", { name: "Keluar sesi" });
+	await expect(exit).toBeVisible();
+	await expect(page.getByText("5/5")).toBeVisible();
+	await page.mouse.wheel(0, 400);
+	const top = await exit.evaluate((button) => button.getBoundingClientRect().top);
+	expect(top).toBeGreaterThanOrEqual(0);
+	expect(top).toBeLessThan(40);
+});
+
 test("extra practice names the question kind before the area on a phone", async ({ page }) => {
 	await seen(page);
 	await page.goto("/beranda");
