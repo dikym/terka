@@ -4,10 +4,11 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { Kbd } from "@/components/ui/kbd";
 import { PageTitle } from "@/components/ui/page-title";
+import { useFinishKey } from "@/lib/platform";
 
 type Shortcut = { keys: string[]; title: string; hint?: string };
 
-const IN_SESSION: Shortcut[] = [
+const inSession = (finishKey: string): Shortcut[] => [
 	{
 		keys: ["Enter"],
 		title: "Kirim jawaban, lalu lanjut",
@@ -24,33 +25,55 @@ const IN_SESSION: Shortcut[] = [
 		hint: "Benar atau salah, dan Bandingkan Kode"
 	},
 	{
+		keys: ["Enter"],
+		title: "Tambah jawaban ke daftar",
+		hint: "Hanya di soal Sebutkan"
+	},
+	{
+		keys: [finishKey],
+		title: "Selesaikan daftar",
+		hint: "Kirim semua jawaban yang sudah dicatat di soal Sebutkan"
+	},
+	{
 		keys: ["Z"],
 		title: "Batalkan jawaban terakhir",
 		hint: "Berlaku sampai soal berikutnya dinilai. Tidak tersedia di Mode Kilat."
 	},
-	{ keys: ["Esc"], title: "Keluar sesi" }
+	{ keys: ["Esc"], title: "Keluar sesi", hint: "Juga dari layar akhir sesi" }
 ];
 
 const OUTSIDE: Shortcut[] = [
 	{ keys: ["S"], title: "Mulai belajar" },
 	{ keys: ["B"], title: "Mode Kilat" },
-	{ keys: ["C"], title: "Buka Cakupan" },
+	{ keys: ["C"], title: "Buka Cakupan", hint: "Di Referensi, langsung ke kolom cari" },
 	{ keys: ["/"], title: "Cari di Referensi" },
 	{
 		keys: ["Enter"],
 		title: "Mulai sesi atau pilih wilayah",
-		hint: "Di pratinjau sesi dan Cakupan"
+		hint: "Di sambutan, pratinjau sesi, dan Cakupan"
 	},
-	{ keys: ["Esc"], title: "Kembali", hint: "Dari pratinjau sesi" }
+	{
+		keys: ["↑", "↓"],
+		title: "Pindah pilihan",
+		hint: "Di saran pencarian Referensi dan menu akun. Enter memilih."
+	},
+	{ keys: ["Esc"], title: "Kembali", hint: "Dari pratinjau sesi" },
+	{
+		keys: ["Esc"],
+		title: "Tutup atau hapus",
+		hint: "Menutup menu akun dan dialog, menghapus pencarian di Referensi"
+	}
 ];
 
-function Group({ title, count, items }: { title: string; count: number; items: Shortcut[] }) {
+const countKeys = (items: Shortcut[]) => new Set(items.flatMap((item) => item.keys)).size;
+
+function Group({ title, items }: { title: string; items: Shortcut[] }) {
 	return (
 		<div className="flex flex-col">
 			<header className="flex items-baseline justify-between gap-3 border-b border-ink-1000 pb-2 lg:border-0 lg:pb-3">
 				<span className="type-label text-ink-1000">{title}</span>
 				<span className="font-mono text-micro leading-none font-medium text-ink-500">
-					{count} tombol
+					{countKeys(items)} tombol
 				</span>
 			</header>
 			{items.map((item) => (
@@ -89,6 +112,7 @@ function Group({ title, count, items }: { title: string; count: number; items: S
 
 export function KeyboardShortcutsScreen() {
 	const router = useRouter();
+	const finishKey = useFinishKey();
 	const back = () => (window.history.length > 1 ? router.back() : router.push("/beranda"));
 	const latestBack = useRef(back);
 	useEffect(() => {
@@ -116,8 +140,8 @@ export function KeyboardShortcutsScreen() {
 				</div>
 			</div>
 			<div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-2 lg:gap-6">
-				<Group title="Selama sesi" count={7} items={IN_SESSION} />
-				<Group title="Di luar sesi" count={6} items={OUTSIDE} />
+				<Group title="Selama sesi" items={inSession(finishKey)} />
+				<Group title="Di luar sesi" items={OUTSIDE} />
 			</div>
 		</>
 	);
