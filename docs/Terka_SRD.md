@@ -93,6 +93,8 @@ Latihan Terfokus, termasuk soal pengisi, tidak menaikkan jumlah ulangan kartu, s
 
 Batas kartu baru berlaku global per hari. Pengguna tidak bisa berulang kali mengganti Cakupan untuk menarik materi baru melebihi batas harian.
 
+Soal terjadwal (pengulangan dan materi baru) hanya ada dalam satu sesi harian per `local_day`. Begitu sesi harian hari itu selesai (jumlah kartu berbeda yang dijawab ≥ `planned_count`), antrean harian kosong sampai hari berikutnya. Pengulangan yang baru jatuh tempo sesudahnya, misalnya karena riwayat perangkat lain masuk lewat sinkronisasi, menunggu sesi besok. Sesi harian yang dibuka lagi pada hari itu berisi Latihan Terfokus. Cek Ingatan yang selesai tidak menutup sesi harian.
+
 Dengan beberapa perangkat, batas harian dihitung dari gabungan log semua perangkat per `local_day`. Aturan untuk kuota yang terlampaui karena dua perangkat offline bersamaan ada di bagian 8.4.
 
 ### 2.5 Penguasaan per Cakupan

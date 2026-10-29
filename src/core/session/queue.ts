@@ -204,12 +204,16 @@ export function dailyQueue(
 		);
 	});
 	const quota = held ? 0 : quotaLeft(state, "region", today);
+	const outsideScopeNew = waiting.filter(
+		(card) => modeOf(card.cardId) === "code2region" && !scoped(card)
+	).length;
+	// Scheduled reviews and new material are one session a day. Whatever becomes due afterwards,
+	// for instance through another device's history, waits for tomorrow; extra practice stays open.
+	if (state.dailyDoneDays.has(today)) return { items: [], held: false, outsideScopeNew };
 	return {
 		items: uniqueItems([...due, ...introductions(state, candidates, quota, today)]),
 		held,
-		outsideScopeNew: waiting.filter(
-			(card) => modeOf(card.cardId) === "code2region" && !scoped(card)
-		).length
+		outsideScopeNew
 	};
 }
 

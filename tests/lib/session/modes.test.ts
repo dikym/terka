@@ -114,6 +114,20 @@ describe("planning a session", () => {
 		expect(plan.cards.every((card) => card.question.context === "focused")).toBe(true);
 	});
 
+	test("after the day's session is done, due cards and new material are left for tomorrow", () => {
+		const state = stateOf(learned);
+		seedCard(state, "bb::code2region", reviewCard({ due: NOW - HOUR }));
+		const open = planSession("harian", { ...input(), state }, NO_PARAMS);
+		if (open.kind !== "ready") throw new Error("expected a plan");
+		expect(open.cards.some((card) => card.question.context === "intro")).toBe(true);
+		state.dailyDoneDays.add("2026-09-21");
+		const plan = planSession("harian", { ...input(), state }, NO_PARAMS);
+		if (plan.kind !== "ready") throw new Error("expected extra practice");
+		expect(plan.run).toEqual({ kind: "focused", scope: SETTINGS.scope });
+		expect(plan.preview?.title).toBe("Latihan Terfokus");
+		expect(plan.cards.every((card) => card.question.context === "focused")).toBe(true);
+	});
+
 	test("extra practice draws other cards, forms and options each visit", () => {
 		const state = fresh();
 		for (const region of bundle.regions)
