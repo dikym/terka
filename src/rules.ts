@@ -82,7 +82,7 @@ export const TIER_COOLDOWN_DAYS = 14;
 
 export const STREAK_WINDOW_DAYS = 30;
 
-export const ANSWER_RULES_VERSION = 1;
+export const ANSWER_RULES_VERSION = 2;
 export const KILAT_ROUND_MS = 60_000;
 export const SIGHTING_WINDOW_DAYS = 90;
 export const SIGHTING_DEDUPE_MS = 600_000;

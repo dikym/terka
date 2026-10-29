@@ -1,10 +1,10 @@
-import { exclusiveProvinces } from "../content/rules/provinces";
 import type { Area, Bundle, Confidence, Region } from "../content/schema";
 
 export type NameOwner = { codeId: string; confidence: Confidence };
 export type NameEntry = {
 	id: string;
-	kind: "area" | "province";
+	// A province or a code's own alias (Jogja, Lombok) is a wider name than an area.
+	kind: "area" | "province" | "alias";
 	areaType: Area["type"] | null;
 	canonical: string;
 	forms: string[];
@@ -50,22 +50,36 @@ export function buildDictionary(bundle: Pick<Bundle, "regions" | "areas">): Name
 		variants: area.variants,
 		owners: owners.get(area.id) ?? []
 	}));
-	const exclusive = [...exclusiveProvinces(bundle)];
-	const provinces: NameEntry[] = [...new Set(bundle.areas.map((area) => area.province))].map(
-		(id) => ({
-			id: `province:${id}`,
-			kind: "province",
+	// A province is a fair answer for every code whose own province it is, also when another code
+	// shares it: Banten for A although B covers some of it, Sumatera Utara for both BK and BB.
+	const provinceIds = new Set([
+		...bundle.areas.map((area) => area.province),
+		...bundle.regions.map((region) => region.province)
+	]);
+	const provinces: NameEntry[] = [...provinceIds].map((id) => ({
+		id: `province:${id}`,
+		kind: "province",
+		areaType: null,
+		canonical: provinceName(id),
+		forms: [provinceName(id)],
+		variants: [],
+		owners: bundle.regions
+			.filter((region) => region.province === id)
+			.map((region) => ({ codeId: region.id, confidence: region.confidence }))
+	}));
+	const aliases: NameEntry[] = bundle.regions
+		.filter((region) => region.aliases.length)
+		.map((region) => ({
+			id: `alias:${region.id}`,
+			kind: "alias",
 			areaType: null,
-			canonical: provinceName(id),
-			forms: [provinceName(id)],
+			canonical: region.aliases[0],
+			forms: region.aliases,
 			variants: [],
-			owners: exclusive
-				.filter(([, province]) => province === id)
-				.map(([codeId]) => ({ codeId, confidence: "high" as const }))
-		})
-	);
+			owners: [{ codeId: region.id, confidence: region.confidence }]
+		}));
 	return {
-		entries: [...areas, ...provinces],
+		entries: [...areas, ...provinces, ...aliases],
 		codeOrder: new Map(bundle.regions.map((region, index) => [region.id, index]))
 	};
 }

@@ -52,8 +52,7 @@ export function matchName(
 	const entries = dictionary.entries;
 	const role = (entry: NameEntry): Role => {
 		const own = entry.owners.find((owner) => owner.codeId === codeId);
-		if (entry.kind === "province") return allowProvince && own ? "accepted" : "other";
-		if (!own) return "other";
+		if (!own || (entry.kind !== "area" && !allowProvince)) return "other";
 		return own.confidence === "high" ? "accepted" : "pending";
 	};
 	const exactHit = (entry: NameEntry) => entry.forms.some((form) => compactName(form) === answer);

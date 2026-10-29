@@ -68,17 +68,38 @@ describe("region name matching", () => {
 	test("a medium membership is not graded", () => {
 		expect(match("Langkat", "bk").matchType).toBe("unverified");
 	});
-	test("province names count only when exclusive", () => {
-		expect(match("Sumatera Utara", "bk")).toMatchObject({
-			matchType: "none",
-			confusedWith: null
-		});
+	test("a province name counts for every code whose own province it is, shared or not", () => {
+		expect(match("Sumatera Utara", "bk").matchType).toBe("exact");
+		expect(match("Sumatera Utara", "bb").matchType).toBe("exact");
 		expect(match("Bali", "dk").matchType).toBe("exact");
 		expect(match("Kepulauan Riau", "bm")).toMatchObject({
 			matchType: "none",
 			confusedWith: "bp"
 		});
 		expect(matchName("Bali", "dk", dictionary, { allowProvince: false }).matchType).toBe(
+			"none"
+		);
+	});
+	test("an alias of a code is accepted for that code only", () => {
+		const bundle = ruleBundle();
+		bundle.regions.find((region) => region.id === "dk")!.aliases = ["Pulau Dewata", "Dewata"];
+		const aliased = buildDictionary(bundle);
+		expect(matchName("Pulau Dewata", "dk", aliased)).toMatchObject({
+			matchType: "exact",
+			acceptedAreaId: null,
+			correction: "Pulau Dewata"
+		});
+		expect(matchName("dewata", "dk", aliased).matchType).toBe("exact");
+		expect(matchName("Pulau Dewata", "dr", aliased)).toMatchObject({
+			matchType: "none",
+			confusedWith: "dk"
+		});
+	});
+	test("an alias is not an item of a set answer", () => {
+		const bundle = ruleBundle();
+		bundle.regions.find((region) => region.id === "dk")!.aliases = ["Pulau Dewata"];
+		const aliased = buildDictionary(bundle);
+		expect(matchName("Pulau Dewata", "dk", aliased, { allowProvince: false }).matchType).toBe(
 			"none"
 		);
 	});
