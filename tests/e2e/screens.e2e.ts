@@ -624,6 +624,24 @@ test("on an Apple device the same round is finished with command and Enter", asy
 	await expect(page.getByText(/Baru 1 daerah yang benar/)).toBeVisible();
 });
 
+test("the keyboard page shows the finish combination as one key cap", async ({ page }) => {
+	await seen(page);
+	await page.goto("/papan-tombol");
+	await expect(page.locator("kbd", { hasText: /^Ctrl Enter$/ })).toHaveCount(1);
+});
+
+test("on an Apple device the keyboard page shows command and Enter in one key cap", async ({
+	page
+}) => {
+	await page.addInitScript(() => {
+		Object.defineProperty(navigator, "platform", { get: () => "MacIntel" });
+		Object.defineProperty(navigator, "userAgentData", { get: () => undefined });
+	});
+	await seen(page);
+	await page.goto("/papan-tombol");
+	await expect(page.locator("kbd", { hasText: /^⌘ Enter$/ })).toHaveCount(1);
+});
+
 test("slash from another page opens Referensi with the search focused", async ({ page }) => {
 	await seen(page);
 	await page.goto("/statistik");
