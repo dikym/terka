@@ -12,17 +12,16 @@ const LEVEL = {
 
 export const levelName = (level: Level) => LEVEL[level].name;
 
-/** Three squares filled up to the level, then the level's icon. */
+/**
+ * Three squares filled up to the level, then the level's icon. Each part explains itself: the
+ * squares name the level, the icon names what that level asks for. The padding widens the
+ * targets for a finger without moving anything.
+ */
 export function LevelMark({ level, className = "" }: { level: Level; className?: string }) {
-	const label = `Level ${level} ${LEVEL[level].name}`;
 	return (
-		<Tooltip content={label} className={`inline-flex flex-none ${className}`}>
-			<span
-				role="img"
-				aria-label={label}
-				className="inline-flex flex-none items-center gap-2"
-			>
-				<span className="inline-flex gap-[3px]">
+		<span className={`inline-flex flex-none items-center gap-2 ${className}`}>
+			<Tooltip content={`Level ${level}`} tap className="-m-2 inline-flex flex-none p-2">
+				<span role="img" aria-label={`Level ${level}`} className="inline-flex gap-[3px]">
 					{[1, 2, 3].map((step) => (
 						<span
 							key={step}
@@ -30,9 +29,13 @@ export function LevelMark({ level, className = "" }: { level: Level; className?:
 						/>
 					))}
 				</span>
-				<Icon name={LEVEL[level].icon} size={16} color="bg-ink-700" />
-			</span>
-		</Tooltip>
+			</Tooltip>
+			<Tooltip content={LEVEL[level].name} tap className="-m-2 inline-flex flex-none p-2">
+				<span role="img" aria-label={LEVEL[level].name} className="inline-flex">
+					<Icon name={LEVEL[level].icon} size={16} color="bg-ink-700" />
+				</span>
+			</Tooltip>
+		</span>
 	);
 }
 

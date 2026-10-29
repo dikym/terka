@@ -351,6 +351,28 @@ test("extra practice names the question kind before the area", async ({ page }) 
 	expect(Math.abs(kindBox!.y - areaBox!.y)).toBeLessThan(20);
 });
 
+test("each icon beside the question explains itself on hover", async ({ page }) => {
+	await seen(page);
+	await page.goto("/beranda");
+	const ids = (plates as unknown as Bundle).regions.map((region) => region.id);
+	await seed(page, justLearnedLog(ids), { logVersion: 1000 });
+	await page.goto("/sesi");
+	await page.getByRole("button", { name: "Mulai" }).click();
+	await page.getByRole("heading", { level: 2 }).waitFor();
+	const level = page.getByRole("img", { name: /^Level \d$/ }).filter({ visible: true });
+	const name = page
+		.getByRole("img", { name: /^(Kenali|Ingat|Kuasai)$/ })
+		.filter({ visible: true });
+	const focused = page.getByRole("img", { name: "Latihan Terfokus" }).filter({ visible: true });
+	for (const icon of [focused, level, name]) {
+		const label = await icon.getAttribute("aria-label");
+		await icon.hover();
+		await expect(page.getByRole("tooltip")).toHaveText(label!);
+		await page.mouse.move(0, 0);
+		await expect(page.getByRole("tooltip")).toHaveCount(0);
+	}
+});
+
 test("after a long break Mulai belajar opens Cek ingatan and Lewati opens the daily session", async ({
 	page
 }) => {
