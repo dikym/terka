@@ -100,16 +100,16 @@ export function SessionMeta({
 						</span>
 					</div>
 				)}
+				{card?.pill && !finished && (
+					<StatusPill tone={card.pill.tone === "go" ? "fresh" : card.pill.tone}>
+						{card.pill.label}
+					</StatusPill>
+				)}
 				{mode === "terfokus" && (
 					<span className="inline-flex items-center gap-2 font-sans text-body-sm leading-none font-medium text-ink-900">
 						<Dot size={10} className={dot} />
 						{scope?.label}
 					</span>
-				)}
-				{card?.pill && !finished && (
-					<StatusPill tone={card.pill.tone === "go" ? "fresh" : card.pill.tone}>
-						{card.pill.label}
-					</StatusPill>
 				)}
 			</span>
 			{/* Alone on a phone, the level sits on the left. */}

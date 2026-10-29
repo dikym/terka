@@ -1,6 +1,8 @@
 import { expect, type Page, test } from "@playwright/test";
 import { MAIN_ROUTES } from "../../scripts/build/routes";
-import { learnedLog } from "./support/logs";
+import type { Bundle } from "../../src/core/content/schema";
+import plates from "../../src/data/plates.json";
+import { justLearnedLog, learnedLog } from "./support/logs";
 import { opened } from "./support/routes";
 import { seed } from "./support/seed";
 
@@ -101,6 +103,24 @@ test("a finished session keeps its way home in the bottom bar", async ({ page })
 	await expect(home).toHaveCount(1);
 	const bottom = await home.evaluate((link) => link.getBoundingClientRect().bottom);
 	expect(bottom).toBeGreaterThan(page.viewportSize()!.height - 40);
+});
+
+test("extra practice names the question kind before the area on a phone", async ({ page }) => {
+	await seen(page);
+	await page.goto("/beranda");
+	const ids = (plates as unknown as Bundle).regions.map((region) => region.id);
+	await seed(page, justLearnedLog(ids), { logVersion: 1000 });
+	await page.goto("/sesi");
+	await page.getByRole("button", { name: "Mulai" }).click();
+	await page.getByRole("heading", { level: 2 }).waitFor();
+	const kind = page
+		.getByText(/^Tebak (daerah|kode)$/i)
+		.filter({ visible: true })
+		.first();
+	const area = page.getByText("Seluruh Indonesia", { exact: true }).filter({ visible: true });
+	const [kindBox, areaBox] = [await kind.boundingBox(), await area.first().boundingBox()];
+	expect(kindBox!.x).toBeLessThan(areaBox!.x);
+	expect(Math.abs(kindBox!.y - areaBox!.y)).toBeLessThan(20);
 });
 
 test("a tapped map province stays on the map and links to Referensi", async ({ page }) => {
