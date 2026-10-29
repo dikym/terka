@@ -251,7 +251,7 @@ test("the daily session introduces new codes and moves them out of new material"
 	// The answer is written in the background; leave only once it is stored.
 	await expect.poll(async () => (await rows(page, "review_logs")).length).toBe(1);
 	await page.goto("/beranda");
-	await expect(page.getByText(/^9 materi baru hari ini$/)).toBeVisible();
+	await expect(page.getByText(/^9 kode baru hari ini$/)).toBeVisible();
 });
 
 test("the browser back button asks before leaving a session that has answers", async ({ page }) => {
