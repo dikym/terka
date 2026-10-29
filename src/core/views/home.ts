@@ -31,6 +31,17 @@ export type HomeSummary = {
 	streak: number;
 };
 
+export const ALL_INTRODUCED = "Semua kode di wilayah ini sudah diperkenalkan.";
+
+/** Every code in the scope has been introduced; its reversed questions are not counted here. */
+export function allIntroduced(state: AppState, bundle: Bundle, settings: SessionSettings): boolean {
+	const regions = new Map(bundle.regions.map((region) => [region.id, region]));
+	return !cardsWhere(state, (cardId) => modeOf(cardId) === "code2region").some((card) => {
+		const region = regions.get(contentOf(card.cardId));
+		return card.state === "new" && region !== undefined && inScope(region, settings.scope);
+	});
+}
+
 export function homeSummary(
 	state: AppState,
 	bundle: Bundle,
@@ -39,13 +50,6 @@ export function homeSummary(
 ): HomeSummary {
 	const daily = dailyQueue(state, bundle, settings, ctx);
 	const due = daily.items.filter((item) => item.slot !== "new").length;
-	const regions = new Map(bundle.regions.map((region) => [region.id, region]));
-	const allIntroduced = !cardsWhere(state, (cardId) => modeOf(cardId) === "code2region").some(
-		(card) => {
-			const region = regions.get(contentOf(card.cardId));
-			return card.state === "new" && region !== undefined && inScope(region, settings.scope);
-		}
-	);
 	const upcoming = cardsWhere(state, isGroupA)
 		.filter((card) => ACTIVE.has(card.state) && card.due > ctx.now)
 		.map((card) => card.due);
@@ -55,7 +59,7 @@ export function homeSummary(
 		due,
 		newAvailable: daily.items.length - due,
 		held: daily.held,
-		allIntroduced,
+		allIntroduced: allIntroduced(state, bundle, settings),
 		nextDueAt: upcoming.length ? Math.min(...upcoming) : null,
 		specialDue:
 			settings.specialEnabled || specialLearned

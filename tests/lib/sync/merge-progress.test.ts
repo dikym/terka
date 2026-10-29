@@ -1,9 +1,13 @@
 import { describe, expect, test } from "bun:test";
 import type { LearningEvent } from "../../../src/core/log/events";
+import type { CardMode } from "../../../src/core/questions/question";
+import { buildDictionary } from "../../../src/core/answers/dictionary";
 import { sortEvents } from "../../../src/core/log/order";
 import { replay } from "../../../src/core/replay/replay";
 import { streakDays } from "../../../src/core/replay/streak";
+import { planSession } from "../../../src/lib/session/modes";
 import { snapshot } from "../../core/replay/fixtures";
+import { ctxAt, SETTINGS } from "../../core/session/fixtures";
 import { eventIds, expectConsistent, openDevice, type Device } from "./support/device";
 import { MINUTE, review } from "./support/events";
 import { FakeServer } from "./support/server";
@@ -126,6 +130,48 @@ describe("a finished daily session when older progress from another device arriv
 			const tomorrow = queueOf(device, at(TODAY + 1, 9)).items.map((item) => item.cardId);
 			for (const card of owed) expect(tomorrow).toContain(card);
 		}
+	});
+
+	test("leaves the mastery where it was when the merged day's extra practice is answered", async () => {
+		const { server, laptop, phone } = await play(
+			PLANS["the laptop started later than the phone"]
+		);
+		await merge(server, laptop, phone);
+		const schedule = () =>
+			[...laptop.state().cards].map(([id, card]) => [
+				id,
+				card.state,
+				card.reps,
+				card.lapses,
+				card.due,
+				card.stability
+			]);
+		const mastery = homeOf(laptop, EVENING).scope.mastered;
+		const before = schedule();
+		const plan = planSession(
+			"harian",
+			{
+				state: laptop.state(),
+				bundle: bundle(),
+				dictionary: buildDictionary(bundle()),
+				settings: SETTINGS,
+				notes: new Map(),
+				ctx: ctxAt(EVENING, laptop.id),
+				nonce: "extra"
+			},
+			{ scope: null, code: null }
+		);
+		if (plan.kind !== "ready") throw new Error("expected extra practice");
+		expect(plan.run.kind).toBe("focused");
+		expect(plan.cards.length).toBeGreaterThan(0);
+		for (const [index, card] of plan.cards.entries()) {
+			const [contentId, mode] = card.id.split("#")[0].split("::") as [string, CardMode];
+			await laptop.record(
+				review(contentId, mode, EVENING + (index + 1) * MINUTE, { context: "focused" })
+			);
+		}
+		expect(schedule()).toEqual(before);
+		expect(homeOf(laptop, EVENING).scope.mastered).toBe(mastery);
 	});
 
 	test("closes the day whichever way the two histories overlap", async () => {

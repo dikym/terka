@@ -222,6 +222,8 @@ Tingkat tidak ditampilkan di beranda dan tidak dipakai sebagai label pengguna. T
 | Judul Latihan Terfokus       | **Latihan Terfokus · Kawasan Maluku**                                                                      |
 | Judul sesi harian yang seluruhnya latihan tambahan | **Latihan Terfokus**, bukan **Sesi hari ini**, supaya tidak bertentangan dengan beranda yang menulis sesi hari ini selesai |
 | Pengantar sesi harian yang seluruhnya latihan tambahan | **Semua soal terjadwal hari ini sudah selesai. Kamu bisa lanjut berlatih; hanya soal yang sudah waktunya diulang yang dapat memengaruhi jadwal.** |
+| Pengantar latihan tambahan setelah sesi harian selesai | **Semua soal terjadwal hari ini sudah selesai. Latihan ini tidak memengaruhi jadwal; soal yang sudah waktunya diulang menunggu sesi harian berikutnya.** |
+| Sesi harian selesai dan tidak ada kartu yang belum waktunya diulang | **Sesi hari ini selesai.** Detail jika ada kartu yang sudah waktunya diulang: **Soal yang sudah waktunya diulang menunggu sesi harian berikutnya.** Jika tidak ada dan semua kode di Cakupan sudah diperkenalkan: **Semua kode di wilayah ini sudah diperkenalkan.** |
 | Rincian jumlah soal, ada soal pengisi | Baris **Latihan tambahan** di samping **Pengulangan** dan **Materi baru** |
 | Jumlah soal                  | **18 soal · 12 pengulangan · 4 materi baru · 2 Bandingkan Kode**                                           |
 | Jenis soal                   | **Tebak daerah · 11**, **Tebak kode · 4**, **Tebak berwaktu · 3**                                          |

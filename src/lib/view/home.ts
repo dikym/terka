@@ -15,7 +15,7 @@ import {
 import { buildPreview } from "@/core/session/preview";
 import { dailyQueue } from "@/core/session/queue";
 import { addDays, dayStart } from "@/core/time/day";
-import { homeSummary, type HomeSummary } from "@/core/views/home";
+import { ALL_INTRODUCED, homeSummary, type HomeSummary } from "@/core/views/home";
 import { scopeMastery } from "@/core/views/mastery";
 import { STREAK_WINDOW_DAYS, TIERS } from "@/rules";
 import { dateLabel, durationLabel, weekdayShort } from "./format";
@@ -130,7 +130,7 @@ function flaggedPairs(state: AppState, bundle: Bundle) {
 function note(summary: HomeSummary): string | null {
 	if (summary.held) return "Materi baru dijeda hari ini agar sesi tetap ringan.";
 	if (summary.due === 0 && summary.allIntroduced && summary.newAvailable === 0)
-		return "Semua kode di wilayah ini sudah diperkenalkan.";
+		return ALL_INTRODUCED;
 	return null;
 }
 
