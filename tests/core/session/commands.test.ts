@@ -14,7 +14,7 @@ import {
 	voidEvent,
 	type Measurements
 } from "../../../src/core/session/commands";
-import { ENGINE_VERSION } from "../../../src/rules";
+import { ANSWER_RULES_VERSION, ENGINE_VERSION } from "../../../src/rules";
 import { MINUTE, NOW, ruleBundle, stateOf } from "../replay/fixtures";
 import { ctxAt, dictionary, SUMATERA } from "./fixtures";
 
@@ -64,7 +64,7 @@ describe("answer events", () => {
 			runId: "run-1",
 			contentVersion: 3,
 			engineVersion: ENGINE_VERSION,
-			answerRulesVersion: 1,
+			answerRulesVersion: ANSWER_RULES_VERSION,
 			localDay: "2026-09-21",
 			tz: "Asia/Makassar",
 			receivedAt: null
