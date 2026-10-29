@@ -7,6 +7,7 @@ import { Skeleton } from "@/components/ui/feedback";
 import { Icon, type IconName } from "@/components/ui/icon";
 import { Wordmark } from "@/components/ui/plate";
 import { useFocusTrap } from "@/components/ui/use-focus-trap";
+import { markLegalOrigin } from "@/lib/legal-origin";
 
 const FACTS = [
 	["perkiraan durasi", "3 menit"],
@@ -72,7 +73,10 @@ function WelcomeBody({
 					) : (
 						<Link
 							href="/tentang"
-							onClick={onSkip}
+							onClick={() => {
+								markLegalOrigin(false);
+								onSkip?.();
+							}}
 							className="inline-flex items-center gap-1.5 font-display text-body-sm leading-none font-semibold text-ink-1000 underline underline-offset-[3px]"
 						>
 							Tentang Terka

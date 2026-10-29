@@ -5,6 +5,7 @@ import { SkeletonText, skeletonWidth, Switch } from "@/components/ui/feedback";
 import { Icon, type IconName } from "@/components/ui/icon";
 import { PageTitle } from "@/components/ui/page-title";
 import { DotLabel } from "@/components/ui/tag";
+import { markLegalOrigin } from "@/lib/legal-origin";
 import type { Settings } from "@/lib/view/settings";
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -78,7 +79,17 @@ function Locked({ value, loading, width }: { value: string; loading: boolean; wi
 	);
 }
 
-function LinkRow({ icon, label, href }: { icon: IconName; label: string; href: string }) {
+function LinkRow({
+	icon,
+	label,
+	href,
+	onOpen
+}: {
+	icon: IconName;
+	label: string;
+	href: string;
+	onOpen?: () => void;
+}) {
 	const content = (
 		<>
 			<span className="inline-flex items-center gap-3 font-sans text-body-md leading-none font-medium text-ink-1000">
@@ -94,7 +105,7 @@ function LinkRow({ icon, label, href }: { icon: IconName; label: string; href: s
 			{content}
 		</a>
 	) : (
-		<Link href={href} className={className}>
+		<Link href={href} className={className} onClick={onOpen}>
 			{content}
 		</Link>
 	);
@@ -276,8 +287,18 @@ export function SettingsScreen({
 						</Row>
 					</Section>
 					<Section title="Tentang">
-						<LinkRow icon="info" label="Tentang Terka" href="/tentang" />
-						<LinkRow icon="shield-check" label="Kebijakan privasi" href="/privasi" />
+						<LinkRow
+							icon="info"
+							label="Tentang Terka"
+							href="/tentang"
+							onOpen={() => markLegalOrigin(true)}
+						/>
+						<LinkRow
+							icon="shield-check"
+							label="Kebijakan privasi"
+							href="/privasi"
+							onOpen={() => markLegalOrigin(true)}
+						/>
 						<LinkRow
 							icon="mail"
 							label="Laporkan data yang keliru"

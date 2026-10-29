@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
+import { LegalFrame } from "@/components/shell/legal-frame";
 import { Link } from "@/components/ui/app-link";
-import { PageTitle } from "@/components/ui/page-title";
 
 export const metadata: Metadata = { title: "Tentang · Terka" };
 
@@ -17,8 +17,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 export default function Page() {
 	return (
-		<div className="mx-auto flex w-full max-w-prose flex-col gap-5 lg:gap-6">
-			<PageTitle title="Tentang Terka" back="/setelan" />
+		<LegalFrame title="Tentang Terka">
 			<article className="flex flex-col gap-8">
 				<div className="flex flex-col gap-3">
 					<p className="font-display text-subhead leading-snug font-semibold text-ink-1000">
@@ -130,6 +129,6 @@ export default function Page() {
 					</ul>
 				</Section>
 			</article>
-		</div>
+		</LegalFrame>
 	);
 }

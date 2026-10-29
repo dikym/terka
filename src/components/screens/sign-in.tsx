@@ -7,6 +7,7 @@ import { Card, CardHeader } from "@/components/ui/card";
 import { Modal } from "@/components/ui/dialog";
 import { Callout, Skeleton, SkeletonText } from "@/components/ui/feedback";
 import { GoogleMark } from "@/components/ui/icon";
+import { markLegalOrigin } from "@/lib/legal-origin";
 import { EMAIL_RESEND_SECONDS } from "@/rules";
 
 export type SignIn = {
@@ -80,7 +81,11 @@ export function SignInForm({ signIn }: { signIn: SignIn }) {
 				<>
 					<p className="text-ink-900 type-body">
 						Dengan masuk, email dan riwayat latihan disimpan untuk sinkronisasi.{" "}
-						<Link href="/privasi" className="underline underline-offset-[3px]">
+						<Link
+							href="/privasi"
+							onClick={() => markLegalOrigin(false)}
+							className="underline underline-offset-[3px]"
+						>
 							Baca kebijakan privasi.
 						</Link>
 					</p>
