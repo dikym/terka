@@ -44,6 +44,8 @@ export type PreviewExtras = {
 	lastInputMode: "keyboard" | "touch" | null;
 	completedSessions: number;
 	revision: string;
+	/** The nonce the session's focused questions are drawn with, so counts match what it builds. */
+	nonce?: string;
 };
 
 function median(values: number[]): number {
@@ -99,6 +101,7 @@ export function buildPreview(
 			format: item.format,
 			drillPair: item.drillPair,
 			scope: settings.scope,
+			salt: item.context === "focused" ? extras.nonce : undefined,
 			memory: rungMemory(state, entry, ctx.now)
 		});
 	});

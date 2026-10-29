@@ -114,6 +114,39 @@ describe("planning a session", () => {
 		expect(plan.cards.every((card) => card.question.context === "focused")).toBe(true);
 	});
 
+	test("extra practice draws other cards, forms and options each visit", () => {
+		const state = fresh();
+		for (const region of bundle.regions)
+			seedCard(
+				state,
+				`${region.id}::code2region`,
+				reviewCard({
+					stability: 1,
+					intervalDays: 1,
+					lastReviewAt: NOW - DAY,
+					due: NOW + 20 * DAY
+				})
+			);
+		const visit = (nonce: string) => {
+			const plan = planSession("harian", { ...input(), state, nonce }, NO_PARAMS);
+			if (plan.kind !== "ready") throw new Error("not ready");
+			return plan;
+		};
+		const again = visit("a");
+		expect(again.cards.map((card) => card.id)).toEqual(visit("a").cards.map((card) => card.id));
+		const visits = ["a", "b", "c", "d", "e"].map(visit);
+		const signature = (plan: ReturnType<typeof visit>) =>
+			plan.cards.map((card) => `${card.question.cardId}|${card.question.prompt}`).join();
+		const options = (plan: ReturnType<typeof visit>) =>
+			plan.cards.map((card) => card.question.choices.join()).join("/");
+		expect(new Set(visits.map(signature)).size).toBeGreaterThan(1);
+		expect(new Set(visits.map(options)).size).toBeGreaterThan(1);
+		for (const plan of visits)
+			expect(plan.preview?.types.reduce((sum, [, value]) => sum + Number(value), 0)).toBe(
+				plan.cards.length
+			);
+	});
+
 	test("a daily session with few items is topped up with focused practice", () => {
 		const state = fresh();
 		for (const region of bundle.regions)

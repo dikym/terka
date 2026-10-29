@@ -25,6 +25,38 @@ describe("Latihan Terfokus", () => {
 	test("an area without learned cards cannot start", () => {
 		expect(focusedQueue(fresh(), bundle, SUMATERA, at)).toEqual([]);
 	});
+	describe("with a nonce", () => {
+		const CODES = ["bk", "bb", "ba", "bm", "bp"];
+		const learned = () => {
+			const state = fresh();
+			for (const code of CODES)
+				seedCard(state, `${code}::code2region`, reviewCard({ due: NOW + 5 * DAY }));
+			return state;
+		};
+		const order = (nonce?: string, state = learned()) =>
+			focusedQueue(state, bundle, SUMATERA, at, nonce).map((item) => item.cardId);
+
+		test("the same nonce gives the same order and another nonce a different one", () => {
+			expect(order("a")).toEqual(order("a"));
+			const orders = Array.from({ length: 8 }, (_, index) => order(`run-${index}`).join());
+			expect(new Set(orders).size).toBeGreaterThan(1);
+			expect(order("a").toSorted()).toEqual(order().toSorted());
+		});
+		test("cards due now stay ahead of the rest", () => {
+			const state = learned();
+			seedCard(state, "bm::code2region", reviewCard({ due: NOW - DAY }));
+			for (let index = 0; index < 8; index++)
+				expect(order(`run-${index}`, state)[0]).toBe("bm::code2region");
+		});
+		test("the format of a question changes with the nonce", () => {
+			const formats = Array.from({ length: 12 }, (_, index) =>
+				focusedQueue(learned(), bundle, SUMATERA, at, `run-${index}`)
+					.map((item) => item.format)
+					.join()
+			);
+			expect(new Set(formats).size).toBeGreaterThan(1);
+		});
+	});
 });
 
 describe("Tantangan Harian", () => {

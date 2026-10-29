@@ -6,11 +6,12 @@ import { newEntry } from "../../../src/core/replay/state";
 const plates: Bundle = await Bun.file(
 	new URL("../../../src/data/plates.json", import.meta.url)
 ).json();
-const ask = (variant?: number) =>
-	buildQuestion({ ...newEntry("bk::code2region"), state: "learning" }, plates, {
+const ask = (variant?: number, salt?: string, cardId = "bk::code2region") =>
+	buildQuestion({ ...newEntry(cardId), state: "learning" }, plates, {
 		context: "daily",
 		format: "choice",
-		variant
+		variant,
+		salt
 	});
 
 describe("question variant", () => {
@@ -28,5 +29,14 @@ describe("question variant", () => {
 		expect(again.every((question) => question.choices.length === first.choices.length)).toBe(
 			true
 		);
+	});
+
+	test("a salt gives the same question for the same salt and new ones for other salts", () => {
+		expect(ask(undefined, "a")).toEqual(ask(undefined, "a"));
+		const salts = Array.from({ length: 8 }, (_, index) => `run-${index}`);
+		const options = salts.map((salt) => ask(undefined, salt).choices.join());
+		const prompts = salts.map((salt) => ask(undefined, salt, "bk::region2code").prompt);
+		expect(new Set(options).size).toBeGreaterThan(1);
+		expect(new Set(prompts).size).toBeGreaterThan(1);
 	});
 });

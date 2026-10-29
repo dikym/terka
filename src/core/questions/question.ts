@@ -55,6 +55,8 @@ export type QuestionOptions = {
 	previousPromptAreaId?: string | null;
 	// A re-ask of a card keeps its prompt but draws its own options and their order.
 	variant?: number;
+	// Practice that does not move the schedule never raises `reps`; a salt per run keeps it from repeating.
+	salt?: string;
 	memory?: RungMemory;
 };
 
@@ -62,11 +64,12 @@ const VARIED_PURPOSES = new Set(["distractors", "order"]);
 
 export function questionRandom(
 	card: { cardId: string; reps: number },
-	options: Pick<QuestionOptions, "variant">,
+	options: Pick<QuestionOptions, "variant" | "salt">,
 	purpose: string
 ) {
 	const variant = options.variant && VARIED_PURPOSES.has(purpose) ? `:${options.variant}` : "";
-	return seeded(`${card.cardId}:${card.reps}:${purpose}${variant}`);
+	const salt = options.salt ? `:${options.salt}` : "";
+	return seeded(`${card.cardId}:${card.reps}:${purpose}${variant}${salt}`);
 }
 
 export const LABELS = {

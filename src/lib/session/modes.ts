@@ -60,6 +60,8 @@ export type PlanInput = {
 	settings: SessionSettings;
 	notes: ReadonlyMap<string, string>;
 	ctx: SessionContext;
+	/** Set per visit so focused practice, which never moves the schedule, draws fresh questions. */
+	nonce?: string;
 };
 export type PlanParams = { scope: Scope | null; code: string | null };
 
@@ -154,6 +156,7 @@ function cardsOf(
 			drillPair: item.drillPair,
 			scope,
 			variant,
+			salt: item.context === "focused" ? input.nonce : undefined,
 			memory: rungMemory(state, entry, input.ctx.now),
 			note: input.notes.get(contentOf(item.cardId)) ?? null
 		});
@@ -174,7 +177,8 @@ function previewFor(input: PlanInput, state: AppState, items: QueueItem[], held:
 		held,
 		lastInputMode: null,
 		completedSessions: 0,
-		revision: ""
+		revision: "",
+		nonce: input.nonce
 	});
 }
 
@@ -320,7 +324,7 @@ export function planSession(mode: Mode, input: PlanInput, params: PlanParams): P
 			const filler = room
 				? uniqueItems([
 						...daily.items,
-						...focusedQueue(state, bundle, settings.scope, ctx)
+						...focusedQueue(state, bundle, settings.scope, ctx, input.nonce)
 					]).slice(daily.items.length, daily.items.length + room)
 				: [];
 			if (!daily.items.length) {
@@ -454,7 +458,7 @@ export function planSession(mode: Mode, input: PlanInput, params: PlanParams): P
 		}
 		case "terfokus": {
 			const scope = params.scope ?? settings.scope;
-			const items = focusedQueue(state, bundle, scope, ctx);
+			const items = focusedQueue(state, bundle, scope, ctx, input.nonce);
 			if (!items.length) return empty(mode, NOTHING_LEARNED);
 			return focusedPlan(input, state, items, scope, TITLE[mode], FOCUSED_NOTE);
 		}
