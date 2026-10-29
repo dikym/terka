@@ -4,6 +4,7 @@ import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 const SHOW_AFTER_MS = 400;
+const TAP_SHOWS_MS = 2_500;
 const GAP = 10;
 const EDGE = 8;
 // Where the arrow points on a start-aligned tooltip, from the trigger's left edge.
@@ -17,7 +18,7 @@ type Place = { x: number; above: number; below: number; align: "center" | "start
 /**
  * A one-line label above its trigger, or below it when the viewport has no room: after a
  * 400 ms hover or on keyboard focus, gone on Esc or leave. Fixed to the viewport, so a
- * scrolling list cannot clip it. Touch never opens it.
+ * scrolling list cannot clip it. Touch opens it only where `tap` is set.
  * Portaled to the body: an ancestor's mask or filter would otherwise still clip it.
  */
 export function Tooltip({
@@ -26,6 +27,7 @@ export function Tooltip({
 	align = "center",
 	focusable = false,
 	truncatedOnly = false,
+	tap = false,
 	className = "inline-flex",
 	children
 }: {
@@ -38,6 +40,8 @@ export function Tooltip({
 	focusable?: boolean;
 	/** Opens only while the trigger's text is cut off with an ellipsis. */
 	truncatedOnly?: boolean;
+	/** A tap shows it for a moment, for an icon a phone has no hover to explain. */
+	tap?: boolean;
 	className?: string;
 	children: React.ReactNode;
 }) {
@@ -114,9 +118,11 @@ export function Tooltip({
 			if (event.key === "Escape") close();
 		};
 		document.addEventListener("keydown", onKey);
+		document.addEventListener("pointerdown", close);
 		window.addEventListener("scroll", close, true);
 		return () => {
 			document.removeEventListener("keydown", onKey);
+			document.removeEventListener("pointerdown", close);
 			window.removeEventListener("scroll", close, true);
 		};
 	}, [place]);
@@ -131,8 +137,17 @@ export function Tooltip({
 				if (event.pointerType === "touch") return;
 				timer.current = setTimeout(open, SHOW_AFTER_MS);
 			}}
-			onPointerLeave={close}
+			onPointerLeave={(event) => {
+				// A lifted finger always "leaves"; a tapped tooltip closes on its timer instead.
+				if (tap && event.pointerType === "touch") return;
+				close();
+			}}
 			onPointerDown={close}
+			onPointerUp={(event) => {
+				if (!tap || event.pointerType !== "touch") return;
+				open();
+				timer.current = setTimeout(close, TAP_SHOWS_MS);
+			}}
 			onFocus={(event) => {
 				if ((event.target as HTMLElement).matches(":focus-visible")) open();
 			}}

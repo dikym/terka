@@ -1,11 +1,30 @@
 import { BarButton, TopBar } from "@/components/shell/session-frame";
-import { Icon } from "@/components/ui/icon";
+import { Icon, type IconName } from "@/components/ui/icon";
 import { Tooltip } from "@/components/ui/tooltip";
 import { Dot } from "@/components/ui/feedback";
 import { GROUP_TEXT, type GroupId } from "@/components/ui/groups";
 import type { Level, SessionCard } from "@/lib/session/cards";
 import type { Mode } from "@/lib/session/modes";
 import { LevelMark, StatusPill, TimeBar } from "./indicators";
+
+/** A mode's icon beside the question, named by a tooltip that a tap opens on a phone too. */
+function ModeIcon({
+	name,
+	label,
+	color = "bg-ink-1000"
+}: {
+	name: IconName;
+	label: string;
+	color?: string;
+}) {
+	return (
+		<Tooltip content={label} tap className="-m-2 inline-flex flex-none p-2">
+			<span role="img" aria-label={label} className="inline-flex">
+				<Icon name={name} size={16} color={color} />
+			</span>
+		</Tooltip>
+	);
+}
 
 function Progress({ done, total }: { done: number; total: number }) {
 	return (
@@ -75,7 +94,7 @@ export function SessionMeta({
 					{scope?.label ?? "Seluruh Indonesia"}
 				</span>
 				<span className="ml-auto inline-flex flex-none items-center gap-3">
-					<Icon name="zap" size={16} color="bg-current" />
+					<ModeIcon name="zap" label="Mode Kilat" color="bg-current" />
 					{!finished && (
 						<span className="font-mono text-body-md leading-none font-semibold text-ink-1000">
 							{correct ?? 0} benar
@@ -117,18 +136,10 @@ export function SessionMeta({
 				className={`inline-flex flex-none items-center gap-3 ${left ? "ml-auto" : "lg:ml-auto"}`}
 			>
 				{mode === "tantangan" && (
-					<Tooltip content="Tantangan Harian">
-						<span
-							role="img"
-							aria-label="Tantangan Harian"
-							className="inline-flex flex-none items-center text-ink-1000"
-						>
-							<Icon name="calendar-check" size={16} color="bg-current" />
-						</span>
-					</Tooltip>
+					<ModeIcon name="calendar-check" label="Tantangan Harian" />
 				)}
-				{mode === "terfokus" && <Icon name="crosshair" size={16} color="bg-ink-1000" />}
-				{mode === "diplomat" && <Icon name="flag" size={16} color="bg-ink-1000" />}
+				{mode === "terfokus" && <ModeIcon name="crosshair" label="Latihan Terfokus" />}
+				{mode === "diplomat" && <ModeIcon name="flag" label="Kode diplomat" />}
 				{level && !finished && <LevelMark level={level} />}
 			</span>
 		</div>
