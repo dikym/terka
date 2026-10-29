@@ -32,6 +32,17 @@ test("the privacy policy opens without JavaScript", async ({ browser }) => {
 	await context.close();
 });
 
+test("every page keeps iOS from turning emails and numbers into links", async ({ request }) => {
+	for (const path of ["/beranda", "/setelan/akun", "/privasi"]) {
+		const html = await (await request.get(path)).text();
+		const tag = html.match(/<meta name="format-detection" content="([^"]*)"/);
+		expect([path, tag?.[1].split(", ").sort()]).toEqual([
+			path,
+			["address=no", "date=no", "email=no", "telephone=no"]
+		]);
+	}
+});
+
 test("no page breaks the content security policy or sets a cookie", async ({ page }) => {
 	await page.addInitScript(() => {
 		(window as unknown as { violations: string[] }).violations = [];
