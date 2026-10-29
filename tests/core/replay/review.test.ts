@@ -15,6 +15,7 @@ import {
 	ruleBundle,
 	seedCard,
 	stateOf,
+	voidOf,
 	WITA
 } from "./fixtures";
 
@@ -62,6 +63,35 @@ describe("introduction and learning steps", () => {
 			intro("dk", NOW + MINUTE / 2, { deviceId: "device-b" })
 		]);
 		expect(state.quota.get("region|2026-09-21")).toBe(1);
+	});
+	test("a repeat introduction on a later day uses that day's quota without touching the card", () => {
+		const later = NOW + DAY;
+		const state = stateOf([intro("dk", NOW), intro("dk", later, { deviceId: "device-b" })]);
+		expect(state.quota.get("region|2026-09-21")).toBe(1);
+		expect(state.quota.get("region|2026-09-22")).toBe(1);
+		expect(state.cards.get("dk::code2region")).toMatchObject({
+			state: "learning",
+			step: 1,
+			due: NOW
+		});
+		expect(state.introDay.get("dk")).toBe("2026-09-22");
+	});
+	test("every repeat introduction of a day counts, one per card", () => {
+		const later = NOW + DAY;
+		const state = stateOf([
+			intro("dk", NOW),
+			intro("dr", NOW + MINUTE),
+			intro("dk", later),
+			intro("dr", later + MINUTE),
+			intro("dk", later + 2 * MINUTE, { deviceId: "device-b" })
+		]);
+		expect(state.quota.get("region|2026-09-21")).toBe(2);
+		expect(state.quota.get("region|2026-09-22")).toBe(2);
+	});
+	test("an undone repeat introduction gives its quota back", () => {
+		const repeat = intro("dk", NOW + DAY, { deviceId: "device-b" });
+		const state = stateOf([intro("dk", NOW), repeat, voidOf(repeat, NOW + DAY + MINUTE)]);
+		expect(state.quota.get("region|2026-09-22")).toBeUndefined();
 	});
 });
 

@@ -46,7 +46,7 @@ export function typoThreshold(length: number): number {
 }
 
 // Raise on any change to ts-fsrs, GRADE_RULES_VERSION or queue rules; clients then replay in full.
-export const ENGINE_VERSION = 3;
+export const ENGINE_VERSION = 4;
 
 export const TIERS = {
 	pemula: { newPerDay: 8, hold: 40 },
