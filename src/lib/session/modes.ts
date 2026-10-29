@@ -28,6 +28,7 @@ import { recheckOffer, recheckQueue } from "@/core/session/recheck";
 import { buildQuestion } from "@/core/questions/build";
 import { addDays, dayNumber } from "@/core/time/day";
 import { CHALLENGE_SIZE, DAILY_MIN_SIZE, KILAT_ROUND_MS, REASK_GAP, TIER_ORDER } from "@/rules";
+import { ALL_INTRODUCED, allIntroduced } from "@/core/views/home";
 import { clock, durationLabel } from "../view/format";
 import { scopeGroup, scopeTitle } from "../view/groups";
 import { type SessionCard, toCard } from "./cards";
@@ -123,6 +124,7 @@ const ICON: Record<Mode, IconName> = {
 const NOTHING_LEARNED = "Belum ada materi yang bisa dilatih di wilayah ini.";
 const NOTHING_DUE = "Tidak ada soal yang perlu diulang hari ini.";
 const HELD = "Materi baru dijeda hari ini agar sesi tetap ringan.";
+const DAY_DONE = "Sesi hari ini selesai.";
 const RECHECK_DONE = "Cek ingatan hari ini sudah dikerjakan.";
 const RECHECK_LATER = "Cek ingatan ditawarkan setelah libur panjang.";
 
@@ -243,6 +245,8 @@ const FOCUSED_NOTE =
 	"Latihan tambahan. Hanya soal yang sudah waktunya diulang yang dapat memengaruhi jadwal.";
 const EXTRA_NOTE =
 	"Semua soal terjadwal hari ini sudah selesai. Kamu bisa lanjut berlatih; hanya soal yang sudah waktunya diulang yang dapat memengaruhi jadwal.";
+const DONE_NOTE =
+	"Semua soal terjadwal hari ini sudah selesai. Latihan ini tidak memengaruhi jadwal; soal yang sudah waktunya diulang menunggu sesi harian berikutnya.";
 
 // Runs as a focused run, so extra practice never counts as the daily session or moves the streak.
 function focusedPlan(
@@ -320,12 +324,21 @@ export function planSession(mode: Mode, input: PlanInput, params: PlanParams): P
 	switch (mode) {
 		case "harian": {
 			const daily = dailyQueue(state, bundle, settings, ctx);
+			// Once the day's session is done, cards that are due wait for tomorrow. Extra practice then
+			// draws only cards that are not due, so it cannot move any schedule.
+			const closed = state.dailyDoneDays.has(today);
+			const extra = () => {
+				const items = focusedQueue(state, bundle, settings.scope, ctx, input.nonce);
+				return closed
+					? items.filter((item) => (state.cards.get(item.cardId)?.due ?? 0) > ctx.now)
+					: items;
+			};
 			const room = Math.max(0, DAILY_MIN_SIZE - daily.items.length);
 			const filler = room
-				? uniqueItems([
-						...daily.items,
-						...focusedQueue(state, bundle, settings.scope, ctx, input.nonce)
-					]).slice(daily.items.length, daily.items.length + room)
+				? uniqueItems([...daily.items, ...extra()]).slice(
+						daily.items.length,
+						daily.items.length + room
+					)
 				: [];
 			if (!daily.items.length) {
 				if (filler.length)
@@ -335,8 +348,17 @@ export function planSession(mode: Mode, input: PlanInput, params: PlanParams): P
 						filler,
 						settings.scope,
 						TITLE.terfokus,
-						EXTRA_NOTE
+						closed ? DONE_NOTE : EXTRA_NOTE
 					);
+				if (closed) {
+					const waiting = cardsWhereActive(state).some((due) => due <= ctx.now);
+					const detail = waiting
+						? "Soal yang sudah waktunya diulang menunggu sesi harian berikutnya."
+						: allIntroduced(state, bundle, settings)
+							? ALL_INTRODUCED
+							: undefined;
+					return empty(mode, DAY_DONE, detail);
+				}
 				const next = cardsWhereActive(state).filter((due) => due > ctx.now);
 				const detail = next.length
 					? `Pengulangan berikutnya tersedia pukul ${clock(Math.min(...next), ctx.tz)}.`

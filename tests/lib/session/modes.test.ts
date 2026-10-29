@@ -128,6 +128,94 @@ describe("planning a session", () => {
 		expect(plan.cards.every((card) => card.question.context === "focused")).toBe(true);
 	});
 
+	describe("extra practice after the day's session is done", () => {
+		const seeded = (dueCodes: string[]) => {
+			const state = fresh();
+			for (const region of bundle.regions)
+				seedCard(
+					state,
+					`${region.id}::code2region`,
+					reviewCard({
+						stability: 3,
+						intervalDays: 3,
+						lastReviewAt: NOW - 3 * DAY,
+						due: dueCodes.includes(region.id) ? NOW - HOUR : NOW + 20 * DAY
+					})
+				);
+			state.dailyDoneDays.add("2026-09-21");
+			return state;
+		};
+		const plan = (state: ReturnType<typeof fresh>) =>
+			planSession("harian", { ...input(), state, nonce: "a" }, NO_PARAMS);
+
+		test("never serves a card that is due, so no answer can change a schedule", () => {
+			const ready = plan(seeded(["bk", "bb"]));
+			if (ready.kind !== "ready") throw new Error("expected extra practice");
+			expect(ready.cards.length).toBeGreaterThanOrEqual(DAILY_MIN_SIZE);
+			const served = ready.cards.map((card) => card.id.split("#")[0]);
+			expect(served).not.toContain("bk::code2region");
+			expect(served).not.toContain("bb::code2region");
+			expect((ready.preview?.composition ?? []).map(([label]) => label)).not.toContain(
+				"Dihitung untuk jadwal"
+			);
+			expect(ready.preview?.description).toContain("menunggu sesi harian berikutnya");
+		});
+
+		test("still fills the session to its minimum from cards that are not due", () => {
+			const ready = plan(seeded(["bk"]));
+			if (ready.kind !== "ready") throw new Error("expected extra practice");
+			expect(ready.run).toEqual({ kind: "focused", scope: SETTINGS.scope });
+			expect(ready.cards.length).toBeGreaterThanOrEqual(DAILY_MIN_SIZE);
+		});
+
+		test("says the day is done when every learned card is due", () => {
+			const empty = plan(seeded(bundle.regions.map((region) => region.id)));
+			expect(empty).toMatchObject({
+				kind: "empty",
+				message: "Sesi hari ini selesai.",
+				detail: "Soal yang sudah waktunya diulang menunggu sesi harian berikutnya."
+			});
+		});
+
+		test("says every code is introduced when nothing waits and the Cakupan is complete", () => {
+			const state = fresh();
+			for (const region of bundle.regions)
+				for (const mode of ["code2region", "region2code"])
+					seedCard(state, `${region.id}::${mode}`, { state: "suspended" });
+			state.dailyDoneDays.add("2026-09-21");
+			expect(plan(state)).toMatchObject({
+				kind: "empty",
+				message: "Sesi hari ini selesai.",
+				detail: "Semua kode di wilayah ini sudah diperkenalkan."
+			});
+		});
+
+		test("names the waiting cards before the introduced codes", () => {
+			const state = seeded(bundle.regions.map((region) => region.id));
+			expect(plan(state)).toMatchObject({
+				detail: "Soal yang sudah waktunya diulang menunggu sesi harian berikutnya."
+			});
+		});
+
+		test("promises nothing when no card is waiting", () => {
+			const state = fresh();
+			state.dailyDoneDays.add("2026-09-21");
+			const empty = plan(state);
+			expect(empty).toMatchObject({ kind: "empty", message: "Sesi hari ini selesai." });
+			expect(empty.kind === "empty" && empty.detail).toBeFalsy();
+		});
+
+		test("leaves the same cards to the daily session while the day is still open", () => {
+			const state = seeded(["bk", "bb"]);
+			state.dailyDoneDays.clear();
+			const open = plan(state);
+			if (open.kind !== "ready") throw new Error("expected a daily session");
+			const served = open.cards.map((card) => card.id.split("#")[0]);
+			expect(served).toContain("bk::code2region");
+			expect(served).toContain("bb::code2region");
+		});
+	});
+
 	test("extra practice draws other cards, forms and options each visit", () => {
 		const state = fresh();
 		for (const region of bundle.regions)
