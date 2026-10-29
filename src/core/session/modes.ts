@@ -92,6 +92,15 @@ export function challengeQueue(
 		}));
 }
 
+// One pass through the pool, shuffled by the run. A pass never opens with the card that closed the last.
+function kilatDeck(pool: CardEntry[], runId: string, round: number): CardEntry[] {
+	const deck = shuffle(pool, seeded(`${runId}:deck:${round}`));
+	if (round > 0 && deck.length > 1 && deck[0] === kilatDeck(pool, runId, round - 1).at(-1))
+		[deck[0], deck[1]] = [deck[1], deck[0]];
+	return deck;
+}
+
+/** Question `index` of a Mode Kilat run: each learned card once per pass, never the same card twice in a row. */
 export function kilatQuestion(
 	state: AppState,
 	bundle: Bundle,
@@ -99,14 +108,15 @@ export function kilatQuestion(
 	runId: string,
 	index: number
 ): QueueItem | null {
-	const pool = learnedIn(state, bundle, scope);
+	const pool = learnedIn(state, bundle, scope).sort((a, b) => compareText(a.cardId, b.cardId));
 	if (!pool.length) return null;
-	const card = pool[Math.floor(seeded(`${runId}:${index}`)() * pool.length)];
+	const card = kilatDeck(pool, runId, Math.floor(index / pool.length))[index % pool.length];
 	return {
 		cardId: card.cardId,
 		context: "kilat",
 		slot: "review",
-		format: pickFormat(card.cardId, `${runId}:${index}`, "kilat")
+		format: pickFormat(card.cardId, `${runId}:${index}`, "kilat"),
+		salt: `${runId}:${index}`
 	};
 }
 

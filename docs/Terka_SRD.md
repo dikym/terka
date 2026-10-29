@@ -635,6 +635,8 @@ Setiap mode latihan dimulai dengan pratinjau. Sesi harian, Latihan Terfokus, dan
 
 Tantangan Harian memuat paling banyak lima kartu Golongan A yang pernah dipelajari; jika hanya tiga tersedia, tampilkan tiga; jika nol, mode tidak tersedia. Mode Kilat menampilkan durasi tetap dan jenis soal, tanpa menjanjikan jumlah soal. Tes penempatan menampilkan batas atas 28 soal dan tahapan adaptif, bukan jumlah pasti per level. Kedua pengecualian itu dinyatakan di pratinjau. Sesi himpunan tidak dimasukkan ke Tantangan Harian atau Mode Kilat.
 
+Mode Kilat membagikan kartu yang sudah dipelajari seperti mengocok dek: setiap kartu keluar sekali per putaran, urutannya berbeda di setiap permainan, dan kartu yang sama tidak pernah keluar dua kali berturut-turut, termasuk saat pindah putaran. Jika hanya satu kartu yang tersedia, kartu itu berulang karena tidak ada pilihan lain. Kartu yang keluar lagi di permainan yang sama diundi ulang soal dan opsinya.
+
 **Isi pratinjau:**
 
 | Bagian            | Isi                                                               |

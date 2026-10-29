@@ -14,6 +14,8 @@ export type QueueItem = {
 	slot: "step" | "drill" | "review" | "new";
 	format?: QuestionFormat;
 	drillPair?: string;
+	/** Varies the question's draws for a card that comes up again without its schedule moving. */
+	salt?: string;
 };
 
 export const ACTIVE = new Set<string>(["learning", "relearning", "review", "mature"]);

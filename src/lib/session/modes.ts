@@ -156,7 +156,7 @@ function cardsOf(
 			drillPair: item.drillPair,
 			scope,
 			variant,
-			salt: item.context === "focused" ? input.nonce : undefined,
+			salt: item.salt ?? (item.context === "focused" ? input.nonce : undefined),
 			memory: rungMemory(state, entry, input.ctx.now),
 			note: input.notes.get(contentOf(item.cardId)) ?? null
 		});
