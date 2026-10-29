@@ -233,7 +233,7 @@ describe("signing out and in again", () => {
 		await a.sync();
 		const before = snapshot(a.state());
 		const events = await eventIds(a);
-		const out = await signOut(a.db, a.client, { confirmed: false });
+		const out = await signOut(a.db, a.client, { confirmed: false, now: a.now() });
 		expect(out).toEqual({ status: "ok" });
 		expect(await a.ids("review_logs")).toEqual([]);
 		await a.signIn();
@@ -248,7 +248,7 @@ describe("signing out and in again", () => {
 	test("asks before it drops rows that were never sent", async () => {
 		const { a } = await pair();
 		await a.record(review("ba", "code2region", NOW + MINUTE));
-		const out = await signOut(a.db, a.client, { confirmed: false });
+		const out = await signOut(a.db, a.client, { confirmed: false, now: a.now() });
 		expect(out.status).toBe("pending");
 		expect(await a.ids("review_logs")).toHaveLength(1);
 	});

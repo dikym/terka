@@ -193,10 +193,10 @@ describe("signing out and deleting the account", () => {
 			phone.db,
 			fromDevice(phone.deviceId, [review("dk", "code2region", NOW - HOUR)])
 		);
-		const warned = await signOut(phone.db, phone.client, { confirmed: false });
+		const warned = await signOut(phone.db, phone.client, { confirmed: false, now: NOW });
 		expect(warned.status).toBe("pending");
 		expect(await phone.db.review_logs.count()).toBe(1);
-		expect(await signOut(phone.db, phone.client, { confirmed: true })).toEqual({
+		expect(await signOut(phone.db, phone.client, { confirmed: true, now: NOW })).toEqual({
 			status: "ok"
 		});
 		expect(await phone.db.review_logs.count()).toBe(0);

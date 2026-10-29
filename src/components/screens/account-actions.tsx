@@ -34,7 +34,7 @@ export function useAccountActions(runtime: Runtime | null, onChange?: () => void
 
 	const leave = async (confirmed: boolean) => {
 		if (!runtime || !auth) return;
-		const result = await signOut(runtime.db, auth.client, { confirmed });
+		const result = await signOut(runtime.db, auth.client, { confirmed, now: Date.now() });
 		if (result.status === "pending")
 			return setDialog({ kind: "signOut", pending: result.count });
 		setDialog(null);

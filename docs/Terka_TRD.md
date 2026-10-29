@@ -244,7 +244,7 @@ Tabel event ber-ID (`review_logs`, `review_voids`, `card_events`, `sightings`, `
 | `platform`     | text                              | Diambil dari user agent, maks. 200 karakter, hanya untuk penelusuran masalah                                                         |
 | `created_at`   | timestamptz                       | —                                                                                                                                    |
 | `last_seen_at` | timestamptz                       | Diisi server dengan `now()` saat insert dan setiap update; nilai dari klien diabaikan |
-| `removed_at`   | timestamptz                       | Kosong untuk perangkat yang masih terdaftar. Diisi klien saat pengguna menghapus perangkat dari daftar, dikosongkan lagi oleh update sentuhan dari perangkat yang masih dipakai. Satu-satunya kolom lain yang boleh diubah |
+| `removed_at`   | timestamptz                       | Kosong untuk perangkat yang masih terdaftar. Diisi klien saat pengguna menghapus perangkat dari daftar atau keluar dari akun di perangkat itu (tanpa jaringan, tanda dilewati dan perangkat hilang sendiri setelah 7 hari), dikosongkan lagi oleh update sentuhan dari perangkat yang masih dipakai. Satu-satunya kolom lain yang boleh diubah |
 
 Jumlah perangkat aktif per akun dibatasi. Angka batas dan jendela waktunya ada di bagian 9; cara penegakannya di ERD bagian 2. Perangkat lama tidak dihapus, hanya berhenti terhitung aktif; perangkat yang dihapus pengguna dari daftar ditandai lewat `removed_at` dan juga tidak terhitung.
 
