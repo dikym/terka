@@ -123,7 +123,8 @@ test("the top bar stays in view on a finished session's summary", async ({ page 
 	const exit = page.getByRole("button", { name: "Keluar sesi" });
 	await expect(exit).toBeVisible();
 	await expect(page.getByText("5/5")).toBeVisible();
-	await page.mouse.wheel(0, 400);
+	// Not the mouse wheel: mobile WebKit does not support it.
+	await page.evaluate(() => window.scrollBy(0, 400));
 	const top = await exit.evaluate((button) => button.getBoundingClientRect().top);
 	expect(top).toBeGreaterThanOrEqual(0);
 	expect(top).toBeLessThan(40);
