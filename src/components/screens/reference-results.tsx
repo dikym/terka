@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { CodeChip } from "@/components/ui/code-chip";
+import { FadeScroll } from "@/components/ui/fade-scroll";
 import { Skeleton, SkeletonText, skeletonWidth } from "@/components/ui/feedback";
 import { GROUP_BG, GROUP_NAME } from "@/components/ui/groups";
 import { Flag, Icon } from "@/components/ui/icon";
@@ -324,13 +324,6 @@ export function NoResult({ query }: { query: string }) {
 	);
 }
 
-const FADE_PX = 4;
-// Smoothstep alpha at each stop: a short linear fade shows a hard line where it ends.
-export const FADE_RAMP = [0, 1, 2, 3, 4, 5, 6].map((step) => {
-	const t = step / 6;
-	return [Math.round(t * t * (3 - 2 * t) * 1000) / 1000, t] as const;
-});
-
 export function DiplomatList({
 	list,
 	current,
@@ -340,33 +333,6 @@ export function DiplomatList({
 	current: string;
 	onPick: (query: string) => void;
 }) {
-	const scroller = useRef<HTMLDivElement>(null);
-	const [more, setMore] = useState({ above: false, below: false });
-	const measure = () => {
-		const box = scroller.current;
-		if (!box) return;
-		setMore({
-			above: box.scrollTop > 0,
-			// One pixel of slack: scrollTop is fractional at some zoom levels.
-			below: box.scrollTop + box.clientHeight < box.scrollHeight - 1
-		});
-	};
-	// The open code sits in the middle of the list, without moving the page around it.
-	useEffect(() => {
-		const box = scroller.current;
-		const row = box?.querySelector<HTMLElement>(`[data-number="${current}"]`);
-		if (box && row) box.scrollTop = row.offsetTop - (box.clientHeight - row.offsetHeight) / 2;
-		measure();
-	}, [current]);
-	// Only an edge with more rows behind it fades.
-	const edge = (on: boolean, at: (px: number) => string) =>
-		on
-			? FADE_RAMP.map(([alpha, t]) => `rgb(0 0 0 / ${alpha}) ${at(t * FADE_PX)}`)
-			: [`black ${at(0)}`];
-	const stops = [
-		...edge(more.above, (px) => `${px}px`),
-		...edge(more.below, (px) => `calc(100% - ${px}px)`).reverse()
-	];
 	return (
 		<Card className="gap-3">
 			<CardHeader label="Kode diplomat" />
@@ -375,14 +341,7 @@ export function DiplomatList({
 				<Figure value={list.summary.first} label="kode pertama" />
 				<Figure value={list.summary.last} label="kode terakhir" />
 			</div>
-			<div
-				ref={scroller}
-				onScroll={measure}
-				style={{
-					maskImage: `linear-gradient(to bottom, ${stops.join(", ")})`
-				}}
-				className="relative -mx-2 max-h-96 overflow-y-auto px-2"
-			>
+			<FadeScroll centerOn={`[data-number="${current}"]`} className="-mx-2 max-h-96 px-2">
 				{list.entries.map((entry) => (
 					<button
 						key={entry.number}
@@ -415,7 +374,7 @@ export function DiplomatList({
 						</span>
 					</button>
 				))}
-			</div>
+			</FadeScroll>
 		</Card>
 	);
 }

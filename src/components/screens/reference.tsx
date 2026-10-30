@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { SEARCH_HASH, SEARCH_ID } from "@/components/shell/app-shell";
 import { Card, CardHeader } from "@/components/ui/card";
 import { CodeChip } from "@/components/ui/code-chip";
+import { FADE_RAMP } from "@/components/ui/fade-scroll";
 import { Dot, Skeleton, SkeletonText, skeletonWidth } from "@/components/ui/feedback";
 import {
 	GROUP_TEXT,
@@ -43,7 +44,6 @@ import {
 	DiplomatList,
 	DiplomatPractice,
 	Divider,
-	FADE_RAMP,
 	FormatCard,
 	FormatCards,
 	Hint,
