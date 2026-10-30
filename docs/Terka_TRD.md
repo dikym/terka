@@ -228,6 +228,7 @@ Tabel event ber-ID (`review_logs`, `review_voids`, `card_events`, `sightings`, `
 | --------------------------------- | ------------------------------------- |
 | `privacy_consents`                | `(user_id, policy_version)`           |
 | `user_settings`, `usage_totals`   | `user_id`                             |
+| `progress_resets`                 | `user_id`                             |
 | `card_notes`                      | `(user_id, content_id)`               |
 | `usage_daily`                     | `(user_id, received_day, table_name)` |
 | `privacy_policy_versions`         | `version`                             |

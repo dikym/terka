@@ -300,6 +300,12 @@ entity usage_totals {
   * row_count : integer = 0
 }
 
+entity progress_resets {
+  * user_id : uuid <<PK>> <<FK>>
+  --
+  * epoch : integer
+}
+
 ' ============================================================
 ' KONTEN BUNDLE — plates.json, BUKAN TABEL DATABASE
 ' ============================================================
@@ -431,6 +437,7 @@ auth_users              ||---o{ fsrs_params             : "trains"
 ' --- Pengaman pemakaian
 auth_users              ||-----o{ usage_daily           : "is metered daily in"
 auth_users              ||-----o| usage_totals          : "is capped by"
+auth_users              ||-----o| progress_resets       : "resets progress through"
 
 ' --- Konten bundle
 content_regions         ||..o{ content_region_areas     : "is used through"

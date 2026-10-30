@@ -1,5 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { DeviceInfo } from "@/lib/db/device";
+import { wipeProgress } from "@/lib/db/reset";
 import { readMeta, wipesOf, type TerkaDb } from "@/lib/db/schema";
 
 export async function claimLocalData(
@@ -74,6 +75,21 @@ export async function signOut(
 	await markDeviceLeft(db, client, options.now);
 	await client.auth.signOut({ scope: "local" });
 	await wipeLocalData(db);
+	return { status: "ok" };
+}
+
+// The server goes first: a device that wiped first would pull its progress back on the next round.
+export async function resetProgress(
+	db: TerkaDb,
+	client: SupabaseClient | null
+): Promise<{ status: "ok" } | { status: "failed" }> {
+	let epoch: number | undefined;
+	if (client && (await readMeta<string>(db, "ownerUserId"))) {
+		const { data, error } = await client.rpc("reset_progress");
+		if (error || typeof data !== "number") return { status: "failed" };
+		epoch = data;
+	}
+	await wipeProgress(db, epoch);
 	return { status: "ok" };
 }
 

@@ -383,6 +383,14 @@ Satu baris per pengguna.
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `row_count` | Jumlah baris gabungan `practice_runs`, `review_logs`, `review_voids`, `card_events`, `sightings`, `fact_views`, `fsrs_params`; dibandingkan dengan batas total di TRD bagian 9 dan tidak direset harian |
 
+### progress_resets
+
+Satu baris per pengguna yang pernah mereset progres. Fungsi `reset_progress()` menghapus data belajar akun di server, lalu menaikkan `epoch`. Perangkat lain membandingkan `epoch` dengan salinan lokalnya di awal setiap putaran sinkronisasi dan mengosongkan data belajarnya kalau `epoch` server lebih tinggi, sehingga progres lama tidak terkirim ulang.
+
+| Kolom   | Keterangan                                              |
+| ------- | ------------------------------------------------------- |
+| `epoch` | `integer`, naik satu setiap reset; akun tanpa baris = 0 |
+
 ### service_flags
 
 Satu baris untuk seluruh layanan. Dipakai pemilik proyek untuk menahan pertumbuhan database tanpa rilis aplikasi baru (TRD bagian 9).
@@ -512,6 +520,7 @@ Hal-hal berikut tidak cukup dijaga di kode klien. Klien berjalan di perangkat pe
 | `privacy_policy_versions`                                                                                               | `select` saja                                                                                                                  |
 | `timezones`                                                                                                             | Tidak ada. Foreign key diperiksa dengan hak pemilik tabel                                                                      |
 | `usage_daily`, `usage_totals`                                                                                           | Tidak ada. Hanya trigger `security definer` tingkat statement yang menulis ke sini                                             |
+| `progress_resets`                                                                                                       | `select` saja. Hanya `reset_progress()` yang menulis ke sini                                                                   |
 
 Role `anon` tidak diberi grant apa pun di tabel mana pun. Supabase sedang berpindah ke default baru yang tidak otomatis membuka tabel baru lewat Data API, jadi setiap migration yang membuat tabel wajib menyertakan grant-nya sendiri (TRD bagian 9).
 
