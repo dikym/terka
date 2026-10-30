@@ -89,6 +89,11 @@ export async function syncOnce(runtime: Runtime): Promise<void> {
 	await runtime.refreshPrefs();
 }
 
+/** Tells the account's other devices to sync, after a change made outside a sync round. */
+export function announceChange(): void {
+	signal?.announce();
+}
+
 const settlingStore = createStore<{ active: boolean }>()(() => ({ active: false }));
 
 /** True while the first round after sign-in runs; screens read nothing from the log until it ends. */

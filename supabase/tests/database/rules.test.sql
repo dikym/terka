@@ -309,7 +309,7 @@ select is(
 			union all select user_id from public.card_events union all select user_id from public.sightings
 			union all select user_id from public.fact_views union all select user_id from public.fsrs_params
 			union all select user_id from public.card_notes union all select user_id from public.usage_daily
-			union all select user_id from public.usage_totals
+			union all select user_id from public.usage_totals union all select user_id from public.progress_resets
 		) rows where user_id = current_setting('tests.k')::uuid
 	),
 	0, 'no row of the deleted account is left'

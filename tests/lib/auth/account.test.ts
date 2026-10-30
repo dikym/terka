@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { seeded } from "../../../src/core/random";
-import { claimLocalData, wipeLocalData } from "../../../src/lib/auth/account";
+import { claimLocalData, resetProgress, wipeLocalData } from "../../../src/lib/auth/account";
 import { acceptPolicy, recordConsent } from "../../../src/lib/auth/consent";
 import { ensureDevice } from "../../../src/lib/db/device";
 import { bumpLogVersion, loadState, record } from "../../../src/lib/db/log";
@@ -114,6 +114,66 @@ describe("wiping local data", () => {
 		expect(outcome).toEqual({ status: "wiped" });
 		expect(await readMeta(db, "pullHistory")).toBeUndefined();
 		expect(await readMeta(db, "policyVersions")).toBeUndefined();
+	});
+});
+
+describe("resetting progress", () => {
+	const learned = async () => {
+		const { db, deviceId } = await opened();
+		await claimLocalData(db, "user-a");
+		await acceptPolicy(db, "2026-10-01", NOW);
+		await recordConsent(db, NOW);
+		const loaded = await loadState(db, ruleBundle());
+		if (loaded.status !== "ok") throw new Error("expected a usable state");
+		await record(db, loaded.log, withUuids([review("dk", "code2region", NOW)]), ruleBundle());
+		await saveNote(db, "dk", "Denpasar", { now: NOW, deviceId });
+		return { db, deviceId };
+	};
+	const rpcClient = (reply: { data: unknown; error: unknown }) =>
+		({ rpc: async () => reply }) as unknown as SupabaseClient;
+
+	test("answers, notes and waiting rows go while the device, owner and consent stay", async () => {
+		const { db, deviceId } = await learned();
+		expect(await resetProgress(db, rpcClient({ data: 1, error: null }))).toEqual({
+			status: "ok"
+		});
+		expect(await db.review_logs.count()).toBe(0);
+		expect(await db.card_notes.count()).toBe(0);
+		expect(await db.derived.count()).toBe(0);
+		expect([...new Set((await db.outbox.toArray()).map((item) => item.table))].sort()).toEqual([
+			"devices",
+			"privacy_consents"
+		]);
+		expect((await db.devices.toArray()).map((row) => row.id)).toEqual([deviceId]);
+		expect(await db.privacy_consents.count()).toBe(1);
+		expect(await readMeta<string>(db, "ownerUserId")).toBe("user-a");
+		expect(await readMeta<number>(db, "resetEpoch")).toBe(1);
+	});
+	test("nothing is deleted on this device when the server refuses", async () => {
+		const { db } = await learned();
+		const outcome = await resetProgress(
+			db,
+			rpcClient({ data: null, error: { message: "offline" } })
+		);
+		expect(outcome).toEqual({ status: "failed" });
+		expect(await db.review_logs.count()).toBe(1);
+		expect(await readMeta(db, "resetEpoch")).toBeUndefined();
+	});
+	test("a device without an account resets without asking the server", async () => {
+		const { db } = await opened();
+		const loaded = await loadState(db, ruleBundle());
+		if (loaded.status !== "ok") throw new Error("expected a usable state");
+		await record(db, loaded.log, withUuids([review("dk", "code2region", NOW)]), ruleBundle());
+		expect(await resetProgress(db, null)).toEqual({ status: "ok" });
+		expect(await db.review_logs.count()).toBe(0);
+		expect(await readMeta(db, "resetEpoch")).toBeUndefined();
+	});
+	test("the log version only grows, so open tabs see the reset", async () => {
+		const { db } = await learned();
+		const before = await readMeta<number>(db, "logVersion");
+		await resetProgress(db, null);
+		expect(await readMeta<number>(db, "logVersion")).toBeGreaterThan(before!);
+		expect(await wipesOf(db)).toBe(1);
 	});
 });
 

@@ -57,6 +57,7 @@ export type AccountActions = {
 	exportData: () => void;
 	importData: () => void;
 	signOut: () => void;
+	resetProgress: () => void;
 	deleteAccount: () => void;
 	removeDevice: (id: string, name: string) => void;
 };
@@ -267,26 +268,47 @@ export function AccountScreen({
 					</Card>
 					<Card bar="bg-stop-500">
 						<CardHeader
-							label={<span className="text-stop-700">Hapus akun</span>}
+							label={<span className="text-stop-700">Zona berbahaya</span>}
 							aside={<Icon name="triangle-alert" size={18} color="bg-stop-700" />}
 						/>
-						<p className="font-sans text-body-sm leading-normal text-ink-500">
-							Menghapus akun menghapus data di server. Data di perangkat ini tetap
-							ada.
-						</p>
-						{page ? (
-							<Button
-								variant="stop"
-								size="sm"
-								block
-								icon="trash"
-								onClick={actions.deleteAccount}
-							>
-								Hapus akun
-							</Button>
-						) : (
-							block("h-9 w-full")
-						)}
+						<div className="flex flex-col gap-3 border-b border-hairline pb-5">
+							<p className="font-sans text-body-sm leading-normal text-ink-500">
+								Reset progres menghapus seluruh riwayat latihan, catatan, dan
+								setelan di semua perangkat. Akun tetap ada.
+							</p>
+							{page ? (
+								<Button
+									variant="stop"
+									size="sm"
+									block
+									icon="rotate-ccw"
+									onClick={actions.resetProgress}
+								>
+									Reset progres
+								</Button>
+							) : (
+								block("h-9 w-full")
+							)}
+						</div>
+						<div className="flex flex-col gap-3">
+							<p className="font-sans text-body-sm leading-normal text-ink-500">
+								Menghapus akun menghapus data di server. Data di perangkat ini tetap
+								ada.
+							</p>
+							{page ? (
+								<Button
+									variant="stop"
+									size="sm"
+									block
+									icon="trash"
+									onClick={actions.deleteAccount}
+								>
+									Hapus akun
+								</Button>
+							) : (
+								block("h-9 w-full")
+							)}
+						</div>
 					</Card>
 				</aside>
 			</div>

@@ -5,6 +5,7 @@ import { readMeta, wipesOf, type TerkaDb } from "@/lib/db/schema";
 import { backoff, type Action, type Block } from "./errors";
 import { runPull } from "./pull";
 import { runPush, touchDevice } from "./push";
+import { adoptServerReset } from "./reset";
 import { requeueLostCloses } from "./reconcile";
 import { activeBlocks, syncStatus, type SyncStatus } from "./status";
 
@@ -107,10 +108,20 @@ async function round(
 		return ended(db, log, ctx);
 	}
 	await put(db, "sessionEnded", false);
-	const wipes = await wipesOf(db);
 	// Rows of one account must never reach another; claiming and switching accounts belong to sign-in.
 	if ((await readMeta<string>(db, "ownerUserId")) !== data.session.user.id)
 		return { log, status: await statusOf(db, log, ctx, true), nextAt: null, hold: false };
+
+	// Before anything is sent: a reset elsewhere must not get this device's old rows back.
+	const reset = await adoptServerReset(db, client, ctx.now);
+	if (reset.action?.kind === "reauth") return ended(db, log, ctx);
+	if (reset.action)
+		return failed(db, log, ctx, reset.action.kind === "wait" ? reset.action : RETRY);
+	if (reset.wiped) {
+		const loaded = await loadState(db, bundle);
+		if (loaded.log) log = loaded.log;
+	}
+	const wipes = await wipesOf(db);
 
 	await requeueLostCloses(db, client, wipes);
 	let push = await runPush(db, client, ctx);

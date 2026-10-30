@@ -2,10 +2,10 @@
 
 import { useRef, useState } from "react";
 import { ConfirmDialog, DangerConfirm, TypedConfirm } from "@/components/ui/dialog";
-import { authClient, syncOnce } from "@/lib/app/auth";
+import { announceChange, authClient, syncOnce } from "@/lib/app/auth";
 import type { Runtime } from "@/lib/app/runtime";
 import { downloadExport, importFile } from "@/lib/app/transfer";
-import { deleteAccount, removeDevice, signOut } from "@/lib/auth/account";
+import { deleteAccount, removeDevice, resetProgress, signOut } from "@/lib/auth/account";
 import { showToast } from "@/lib/toasts";
 import { importMessage } from "@/lib/view/account";
 
@@ -19,6 +19,7 @@ export function useAccountActions(runtime: Runtime | null, onChange?: () => void
 	const [dialog, setDialog] = useState<
 		| { kind: "confirmSignOut" }
 		| { kind: "signOut"; pending: number }
+		| { kind: "reset" }
 		| { kind: "delete" }
 		| { kind: "device"; id: string; name: string }
 		| null
@@ -132,6 +133,40 @@ export function useAccountActions(runtime: Runtime | null, onChange?: () => void
 					berikutnya.
 				</DangerConfirm>
 			)}
+			{dialog?.kind === "reset" && (
+				<TypedConfirm
+					title="Reset progres"
+					word="RESET"
+					confirmLabel="Reset"
+					onCancel={() => setDialog(null)}
+					onConfirm={() => {
+						setDialog(null);
+						if (!runtime) return;
+						void resetProgress(runtime.db, auth?.client ?? null).then(
+							async (result) => {
+								if (result.status === "ok") {
+									await runtime.reload();
+									announceChange();
+								}
+								showToast(
+									result.status === "ok"
+										? {
+												tone: "success",
+												label: "Progres",
+												text: "Progres direset. Kamu mulai dari awal."
+											}
+										: { tone: "danger", text: NOT_SAVED }
+								);
+								onChange?.();
+							}
+						);
+					}}
+				>
+					Ketik RESET untuk menghapus seluruh riwayat latihan, catatan, dan setelan di
+					semua perangkat akunmu. Akun tetap ada. Ekspor data dulu kalau kamu mau
+					menyimpannya.
+				</TypedConfirm>
+			)}
 			{dialog?.kind === "delete" && (
 				<TypedConfirm
 					title="Hapus akun"
@@ -165,6 +200,7 @@ export function useAccountActions(runtime: Runtime | null, onChange?: () => void
 		exportData: () => void exportData(),
 		importData: () => file.current?.click(),
 		signOut: () => setDialog({ kind: "confirmSignOut" }),
+		resetProgress: () => setDialog({ kind: "reset" }),
 		deleteAccount: () => setDialog({ kind: "delete" }),
 		removeDevice: (id: string, name: string) => setDialog({ kind: "device", id, name }),
 		dialogs
