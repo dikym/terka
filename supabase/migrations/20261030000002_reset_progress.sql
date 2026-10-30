@@ -15,7 +15,7 @@ create function public.reset_progress() returns integer
 language plpgsql security definer set search_path = '' as $$
 declare
 	me uuid := auth.uid();
-	next integer;
+	new_epoch integer;
 begin
 	-- Answers go first: voids follow them by cascade, and sessions are no longer referenced.
 	delete from public.review_logs where user_id = me;
@@ -30,8 +30,8 @@ begin
 	update public.usage_totals set row_count = 0 where user_id = me;
 	insert into public.progress_resets as r (user_id, epoch) values (me, 1)
 	on conflict (user_id) do update set epoch = r.epoch + 1
-	returning r.epoch into next;
-	return next;
+	returning r.epoch into new_epoch;
+	return new_epoch;
 end;
 $$;
 
