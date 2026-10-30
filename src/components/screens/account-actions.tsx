@@ -17,6 +17,7 @@ const NOT_SAVED = "Perubahan belum tersimpan. Coba lagi.";
  */
 export function useAccountActions(runtime: Runtime | null, onChange?: () => void) {
 	const [dialog, setDialog] = useState<
+		| { kind: "confirmSignOut" }
 		| { kind: "signOut"; pending: number }
 		| { kind: "delete" }
 		| { kind: "device"; id: string; name: string }
@@ -64,6 +65,22 @@ export function useAccountActions(runtime: Runtime | null, onChange?: () => void
 					});
 				}}
 			/>
+			{dialog?.kind === "confirmSignOut" && (
+				<DangerConfirm
+					title="Keluar dari akun?"
+					cancel={{ label: "Batal", onClick: () => setDialog(null) }}
+					confirm={{
+						label: "Keluar",
+						onClick: () => {
+							setDialog(null);
+							void leave(false);
+						}
+					}}
+				>
+					Keluar menyelesaikan sinkronisasi lebih dulu, lalu menghapus data dari perangkat
+					ini.
+				</DangerConfirm>
+			)}
 			{dialog?.kind === "signOut" && (
 				<ConfirmDialog
 					title="Keluar"
@@ -147,7 +164,7 @@ export function useAccountActions(runtime: Runtime | null, onChange?: () => void
 	return {
 		exportData: () => void exportData(),
 		importData: () => file.current?.click(),
-		signOut: () => void leave(false),
+		signOut: () => setDialog({ kind: "confirmSignOut" }),
 		deleteAccount: () => setDialog({ kind: "delete" }),
 		removeDevice: (id: string, name: string) => setDialog({ kind: "device", id, name }),
 		dialogs
