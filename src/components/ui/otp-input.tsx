@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 
 const BOX =
-	"h-12 w-full min-w-0 lg:h-16 rounded-sm border border-ink-1000 bg-paper-0 px-0 text-center font-mono text-body-lg leading-none text-ink-1000 outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink-1000 disabled:opacity-40";
+	"h-12 w-full min-w-0 lg:h-16 rounded-sm border border-ink-1000 bg-paper-0 px-0 text-center font-mono text-heading leading-none text-ink-1000 outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink-1000 disabled:opacity-40";
 
 type OtpInputProps = {
 	label: string;

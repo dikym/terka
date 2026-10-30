@@ -8,7 +8,7 @@ export const exportLabel = (lastExportAt: number | null, now: number) =>
 	lastExportAt === null ? "Belum pernah ekspor" : `Ekspor terakhir ${ago(now - lastExportAt)}`;
 
 export const mergedMessage = (answers: number) =>
-	`Riwayat di perangkat ini digabung ke akun. ${count(answers)} jawaban ditambahkan.`;
+	`Riwayat di perangkat ini digabung ke akun. ${answers ? `${count(answers)} jawaban` : "Tidak ada jawaban"} ditambahkan.`;
 
 export function importMessage(result: ImportResult): { tone: "success" | "warn"; text: string } {
 	if (result.status === "ok") {
