@@ -1,6 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { createStore } from "zustand/vanilla";
 import { createTerkaClient } from "../auth/client";
+import { type SyncSignal, syncSignal } from "../sync/signal";
 import { liveSync, startSync } from "./sync";
 import type { Runtime } from "./runtime";
 
@@ -34,6 +35,8 @@ export function authClient(): { client: SupabaseClient; retryAfter: () => number
 }
 
 let started = false;
+// The nudge channel of the signed-in account, shared with rounds started by hand.
+let signal: SyncSignal | null = null;
 
 // Sync runs only while a session exists: without one syncNow reports the session as ended.
 export function startAuth(runtime: Runtime) {
@@ -53,21 +56,26 @@ export function startAuth(runtime: Runtime) {
 			email: user?.email ?? null,
 			provider: provider === "google" ? "google" : user ? "email" : null
 		});
-		if (user && !stop)
+		if (user && !stop) {
+			signal = syncSignal(auth.client, user.id);
 			stop = startSync(runtime.store, {
 				run: liveSync(runtime.store, auth.client, auth.retryAfter),
+				afterRound: runtime.refreshPrefs,
+				signal,
 				now: Date.now,
 				setTimer: (callback, ms) => setTimeout(callback, ms),
 				clearTimer: (handle) => clearTimeout(handle as ReturnType<typeof setTimeout>)
 			});
+		}
 		if (!user && stop) {
 			stop();
 			stop = null;
+			signal = null;
 		}
 	});
 }
 
-/** One sync round now, for "Sinkronkan dulu" before signing out. */
+/** One sync round now: by hand, right after sign-in, and for "Sinkronkan dulu" before signing out. */
 export async function syncOnce(runtime: Runtime): Promise<void> {
 	const auth = authClient();
 	if (!auth) return;
@@ -77,6 +85,8 @@ export async function syncOnce(runtime: Runtime): Promise<void> {
 		auth.retryAfter
 	)(runtime.store.getState().log);
 	runtime.store.adopt(result.log, result.status);
+	if (result.sent > 0) signal?.announce();
+	await runtime.refreshPrefs();
 }
 
 const settlingStore = createStore<{ active: boolean }>()(() => ({ active: false }));

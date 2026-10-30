@@ -2,6 +2,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { createStore } from "zustand/vanilla";
 import type { LogState } from "../db/log";
 import { createScheduler } from "../sync/scheduler";
+import type { SyncSignal } from "../sync/signal";
 import { syncNow, type SyncResult } from "../sync/sync";
 import type { AppStore } from "./store";
 
@@ -10,11 +11,16 @@ export type StartSyncDeps = {
 	now: () => number;
 	setTimer: (callback: () => void, ms: number) => unknown;
 	clearTimer: (handle: unknown) => void;
+	/** Runs after each round's log is adopted, to read what the round pulled besides the log. */
+	afterRound?: () => Promise<void>;
+	/** Nudges between the account's devices: a nudge pulls, and a round that sent something nudges. */
+	signal?: SyncSignal;
 	target?: Pick<Window, "addEventListener" | "removeEventListener">;
 	document?: Pick<Document, "visibilityState" | "addEventListener" | "removeEventListener">;
 };
 
-// Sync runs when the app opens, a few seconds after an answer, on return to the tab and when back online.
+// Sync runs when the app opens, a few seconds after an answer, when the page is shown or focused
+// again, when back online, when another device says it sent something, and every five minutes.
 // Start it only for a signed-in account: without a session syncNow reports the session as ended.
 export function startSync(store: AppStore, deps: StartSyncDeps): () => void {
 	const target = deps.target ?? window;
@@ -23,25 +29,31 @@ export function startSync(store: AppStore, deps: StartSyncDeps): () => void {
 		run: async () => {
 			const result = await deps.run(store.getState().log);
 			store.adopt(result.log, result.status);
-			return result.nextAt;
+			if (result.sent > 0) deps.signal?.announce();
+			await deps.afterRound?.();
+			return result.nextAt === null ? null : { at: result.nextAt, hold: result.hold };
 		},
 		now: deps.now,
 		setTimer: deps.setTimer,
 		clearTimer: deps.clearTimer
 	});
 	const offRecorded = store.onRecorded(() => scheduler.answered());
-	const online = () => void scheduler.online();
-	const visible = () => {
-		if (doc.visibilityState === "visible") void scheduler.visible();
+	const offSignal = deps.signal?.listen(() => void scheduler.kick());
+	const online = () => void scheduler.kick();
+	const returned = () => {
+		if (doc.visibilityState === "visible") void scheduler.returned();
 	};
 	target.addEventListener("online", online);
-	doc.addEventListener("visibilitychange", visible);
-	void scheduler.visible();
+	target.addEventListener("focus", returned);
+	doc.addEventListener("visibilitychange", returned);
+	void scheduler.kick();
 	return () => {
 		scheduler.stop();
 		offRecorded();
+		offSignal?.();
 		target.removeEventListener("online", online);
-		doc.removeEventListener("visibilitychange", visible);
+		target.removeEventListener("focus", returned);
+		doc.removeEventListener("visibilitychange", returned);
 	};
 }
 

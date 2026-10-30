@@ -53,6 +53,32 @@ describe("runtime", () => {
 		expect((await loadNotes(runtime.db)).has("bk")).toBe(false);
 	});
 
+	test("refreshing prefs picks up a pulled note and keeps unchanged settings as they are", async () => {
+		const status = await bootRuntime(deps());
+		if (status.status !== "ready") throw new Error("not ready");
+		const { runtime } = status;
+		const settings = runtime.prefs.getState().settings;
+		await runtime.db.card_notes.put({
+			contentId: "bk",
+			body: "BK — Batak",
+			updatedAt: 1,
+			updatedByDevice: "other",
+			receivedAt: 1
+		});
+		await runtime.refreshPrefs();
+		expect(runtime.prefs.getState().notes.get("bk")).toBe("BK — Batak");
+		expect(runtime.prefs.getState().settings).toBe(settings);
+	});
+
+	test("refreshing prefs with nothing new leaves the store untouched", async () => {
+		const status = await bootRuntime(deps());
+		if (status.status !== "ready") throw new Error("not ready");
+		const { runtime } = status;
+		const before = runtime.prefs.getState();
+		await runtime.refreshPrefs();
+		expect(runtime.prefs.getState()).toBe(before);
+	});
+
 	test("the last day is known only after something was answered", async () => {
 		const status = await bootRuntime(deps());
 		if (status.status !== "ready") throw new Error("not ready");

@@ -67,6 +67,9 @@ Penyiapan proyek sungguhan (tidak diotomasi):
 
 1. Proyek Supabase produksi dan staging dengan Postgres 15 atau lebih baru.
    Jalankan `supabase db push`; uji migration `jobs` (`pg_cron`) di staging dulu.
+   Di Realtime Settings, matikan "Allow public access" supaya hanya channel
+   privat sinyal sinkronisasi yang bisa dipakai. Terapkan migration sebelum
+   deploy klien yang memakainya.
 2. OAuth client Google: redirect URI ke callback Supabase Auth, layar
    persetujuan berisi nama Terka dan tautan kebijakan privasi, domain
    `terka.my.id` diverifikasi di Google Search Console.

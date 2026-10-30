@@ -18,7 +18,7 @@
 		"check": "tsc --noEmit",
 		"ci:names": "bun scripts/ci/test-names.ts",
 		"ci:coverage": "bun scripts/ci/coverage.ts",
-		"db:start": "supabase start -x studio,realtime,storage-api,imgproxy,edge-runtime,logflare,vector,supavisor,postgres-meta",
+		"db:start": "supabase start -x studio,storage-api,imgproxy,edge-runtime,logflare,vector,supavisor,postgres-meta",
 		"db:test": "supabase db reset && supabase test db && bun test supabase/checks"
 	},
 	"dependencies": {

@@ -25,6 +25,8 @@ export type Runtime = {
 	saveNote: (contentId: string, body: string) => Promise<"ok" | "quota">;
 	/** Reads the log, settings and notes again after an import or a wipe. */
 	reload: () => Promise<void>;
+	/** Reads settings and notes again after a sync round; screens re-render only if they changed. */
+	refreshPrefs: () => Promise<void>;
 };
 
 export type RuntimeStatus =
@@ -34,6 +36,13 @@ export type RuntimeStatus =
 	| { status: "ready"; runtime: Runtime };
 
 const createPrefs = (initial: PrefsState) => createStore<PrefsState>()(() => initial);
+
+const sameSettings = (a: SessionSettings, b: SessionSettings) =>
+	a.specialEnabled === b.specialEnabled &&
+	a.scope.level === b.scope.level &&
+	a.scope.id === b.scope.id;
+const sameNotes = (a: Map<string, string>, b: Map<string, string>) =>
+	a.size === b.size && [...a].every(([id, body]) => b.get(id) === body);
 
 const LOADING: RuntimeStatus = { status: "loading" };
 let current: RuntimeStatus = LOADING;
@@ -83,6 +92,13 @@ async function open(deps: BootDeps): Promise<RuntimeStatus> {
 			const loaded = await loadState(db, bundle);
 			if (loaded.log) store.adopt(loaded.log, store.getState().sync);
 			prefs.setState({ settings: await loadSettings(db), notes: await loadNotes(db) });
+		},
+		async refreshPrefs() {
+			const settings = await loadSettings(db);
+			const notes = await loadNotes(db);
+			const current = prefs.getState();
+			if (!sameSettings(current.settings, settings)) prefs.setState({ settings });
+			if (!sameNotes(current.notes, notes)) prefs.setState({ notes });
 		}
 	};
 	return { status: "ready", runtime };
