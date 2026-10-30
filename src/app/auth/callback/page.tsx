@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { authClient, settleAfterSignIn, syncOnce } from "@/lib/app/auth";
 import { useReady } from "@/lib/app/use-runtime";
-import { takeReturnTo } from "@/lib/auth/return-to";
 import { afterSignIn, finishCallback, switchAccount } from "@/lib/auth/signin";
 import { showToast } from "@/lib/toasts";
 import { mergedMessage } from "@/lib/view/account";
@@ -51,7 +50,7 @@ export default function Page() {
 				return setOutcome({ kind: "message", text: "Masuk belum berhasil. Coba lagi." });
 			void settleAfterSignIn(syncOnce(runtime), runtime.reload);
 			showToast({ tone: "success", text: mergedMessage(signed.answers), key: "signIn" });
-			router.replace(takeReturnTo() ?? HOME);
+			router.replace(HOME);
 		})();
 	}, [runtime, router]);
 
@@ -68,7 +67,7 @@ export default function Page() {
 					onWipe={() =>
 						void switchAccount(runtime.db, auth.client, Date.now()).then(async () => {
 							void settleAfterSignIn(syncOnce(runtime), runtime.reload);
-							router.replace(takeReturnTo() ?? HOME);
+							router.replace(HOME);
 						})
 					}
 				/>

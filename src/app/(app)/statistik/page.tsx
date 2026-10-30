@@ -15,7 +15,6 @@ import {
 	useSyncLabel,
 	useSyncRunning
 } from "@/lib/app/use-runtime";
-import { openLogin } from "@/lib/auth/return-to";
 import { mapProvinces } from "@/lib/view/map";
 import { statsView } from "@/lib/view/stats";
 
@@ -57,7 +56,7 @@ export default function Page() {
 			signedIn={email !== null}
 			syncing={busy}
 			onSync={sync}
-			onLogin={() => openLogin(router)}
+			onLogin={() => router.push("/masuk")}
 		/>
 	);
 }

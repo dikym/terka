@@ -18,7 +18,6 @@ import {
 	useSyncLabel,
 	useSyncRunning
 } from "@/lib/app/use-runtime";
-import { openLogin } from "@/lib/auth/return-to";
 import { showToast } from "@/lib/toasts";
 import { deviceRows, exportLabel } from "@/lib/view/account";
 import { EXPORT_REMINDER_DAYS } from "@/rules";
@@ -99,7 +98,7 @@ export default function Page() {
 			view={view}
 			lastExport={now && exported !== undefined ? exportLabel(exported, now) : null}
 			actions={actions}
-			onLogin={() => openLogin(router)}
+			onLogin={() => router.push("/masuk")}
 		/>
 	);
 }

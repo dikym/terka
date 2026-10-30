@@ -6,7 +6,6 @@ import { authClient, settleAfterSignIn, syncOnce } from "@/lib/app/auth";
 import type { Runtime } from "@/lib/app/runtime";
 import { isInAppBrowser } from "@/lib/auth/browsers";
 import { acceptPolicy } from "@/lib/auth/consent";
-import { rememberReturnTo } from "@/lib/auth/return-to";
 import {
 	afterSignIn,
 	requestEmailCode,
@@ -38,11 +37,7 @@ const noSubscribe = () => () => {};
  * The sign-in handlers for `SignInForm`. `onDone` runs once an email code has signed in, or the
  * local data was reset for the new account, with the message worth showing (or null).
  */
-export function useSignIn(
-	runtime: Runtime | null,
-	destination: string,
-	onDone: (message: string | null) => void
-) {
+export function useSignIn(runtime: Runtime | null, onDone: (message: string | null) => void) {
 	const online = useSyncExternalStore(
 		subscribeOnline,
 		() => navigator.onLine,
@@ -76,7 +71,6 @@ export function useSignIn(
 					inApp,
 					accept: () => acceptPolicy(runtime.db, PRIVACY_POLICY_VERSION, Date.now()),
 					async google() {
-						rememberReturnTo(destination);
 						const result = await signInWithGoogle(
 							runtime.db,
 							auth.client,

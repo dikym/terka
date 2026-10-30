@@ -1,26 +1,22 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { SiteHeader } from "@/components/shell/site-header";
 import { OtherAccount, SignInForm, SignInSkeleton } from "@/components/screens/sign-in";
 import { useSignIn } from "@/components/screens/use-sign-in";
 import { useAccount, useReady } from "@/lib/app/use-runtime";
-import { leaveLogin, peekReturnTo } from "@/lib/auth/return-to";
 import { showToast } from "@/lib/toasts";
 
 const HOME = "/beranda";
 
 export default function Page() {
 	const router = useRouter();
-	// Read once: a later visit to the privacy policy and back must not lose it.
-	const [remembered] = useState(() => peekReturnTo());
-	const destination = remembered ?? HOME;
 	const { runtime } = useReady();
 	const account = useAccount();
-	const { signIn, conflict } = useSignIn(runtime, destination, (message) => {
+	const { signIn, conflict } = useSignIn(runtime, (message) => {
 		if (message) showToast({ tone: "success", text: message, key: "signIn" });
-		leaveLogin(router, destination);
+		router.replace(HOME);
 	});
 
 	// Only someone already signed in when the page opens is sent on. A sign-in finishing here
@@ -29,8 +25,8 @@ export default function Page() {
 	useEffect(() => {
 		if (!account.known || decided.current) return;
 		decided.current = true;
-		if (account.email) leaveLogin(router, destination);
-	}, [account, destination, router]);
+		if (account.email) router.replace(HOME);
+	}, [account, router]);
 
 	const waiting = !account.known || !!account.email;
 	return (
