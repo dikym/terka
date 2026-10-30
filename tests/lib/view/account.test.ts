@@ -1,12 +1,26 @@
 import { expect, test } from "bun:test";
 import type { DeviceInfo } from "../../../src/lib/db/device";
-import { deviceRows, exportLabel, importMessage } from "../../../src/lib/view/account";
+import {
+	deviceRows,
+	exportLabel,
+	importMessage,
+	mergedMessage
+} from "../../../src/lib/view/account";
 
 const NOW = Date.parse("2026-10-25T08:00:00Z");
 
 test("the export line names how long ago the last export was", () => {
 	expect(exportLabel(null, NOW)).toBe("Belum pernah ekspor");
 	expect(exportLabel(NOW - 12 * 86_400_000, NOW)).toBe("Ekspor terakhir 12 hari lalu");
+});
+
+test("the merge message says no answers were added instead of a zero", () => {
+	expect(mergedMessage(0)).toBe(
+		"Riwayat di perangkat ini digabung ke akun. Tidak ada jawaban ditambahkan."
+	);
+	expect(mergedMessage(12)).toBe(
+		"Riwayat di perangkat ini digabung ke akun. 12 jawaban ditambahkan."
+	);
 });
 
 test("import outcomes read as the account screen messages", () => {
