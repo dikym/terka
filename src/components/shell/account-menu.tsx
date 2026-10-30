@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import { Menu, type MenuEntry } from "@/components/ui/menu";
 import { useAccount } from "@/lib/app/use-runtime";
-import { openLogin } from "@/lib/auth/return-to";
 import { useAccountContext } from "./account-provider";
 
 /** The account entry of the sidebar and the phone's top bar. */
@@ -44,7 +43,7 @@ export function AccountMenu({
 			"separator",
 			account.email
 				? { label: "Keluar", icon: "log-out", onSelect: actions.signOut }
-				: { label: "Masuk", icon: "user", onSelect: () => openLogin(router) }
+				: { label: "Masuk", icon: "user", onSelect: () => router.push("/masuk") }
 		);
 
 	return (
