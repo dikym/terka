@@ -65,6 +65,22 @@ export function backoff(attempt: number, random: () => number): number {
 // supabase-js does not expose response headers; this fetch remembers the last Retry-After.
 type Fetch = (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 
+// A request that a dropped connection leaves hanging would hold its sync round, and every later one.
+// The timer also covers reading the body, so it is not cleared when the headers arrive.
+export function withTimeout(base: Fetch, ms: number): Fetch {
+	return (input, init) => {
+		const controller = new AbortController();
+		const outer = init?.signal;
+		if (outer?.aborted) controller.abort(outer.reason);
+		else outer?.addEventListener("abort", () => controller.abort(outer.reason), { once: true });
+		setTimeout(
+			() => controller.abort(new DOMException("The request timed out.", "TimeoutError")),
+			ms
+		);
+		return base(input, { ...init, signal: controller.signal });
+	};
+}
+
 export function trackRetryAfter(base: Fetch = fetch) {
 	let seconds: number | null = null;
 	const tracked: Fetch = async (input, init) => {

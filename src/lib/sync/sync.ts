@@ -14,7 +14,16 @@ export type SyncContext = {
 	online: boolean;
 	retryAfter: () => number | null;
 };
-export type SyncResult = { log: LogState; status: SyncStatus; nextAt: number | null };
+// hold: nextAt is a wait the server asked for, which every trigger respects.
+// sent: rows this round pushed, even if it failed later; other devices then have something to pull.
+export type SyncResult = {
+	log: LogState;
+	status: SyncStatus;
+	nextAt: number | null;
+	hold: boolean;
+	sent: number;
+};
+type RoundResult = Omit<SyncResult, "sent">;
 
 const put = (db: TerkaDb, key: string, value: unknown) => db.sync_meta.put({ key, value });
 
@@ -54,19 +63,19 @@ async function failed(
 	log: LogState,
 	ctx: SyncContext,
 	action: Action
-): Promise<SyncResult> {
+): Promise<RoundResult> {
 	const failures = ((await readMeta<number>(db, "failures")) ?? 0) + 1;
 	await put(db, "failures", failures);
 	if ((await readMeta<number>(db, "failingSince")) === undefined)
 		await put(db, "failingSince", ctx.now);
 	const nextAt =
 		action.kind === "wait" ? action.until : ctx.now + backoff(failures - 1, ctx.random);
-	return { log, status: await statusOf(db, log, ctx), nextAt };
+	return { log, status: await statusOf(db, log, ctx), nextAt, hold: action.kind === "wait" };
 }
 
-async function ended(db: TerkaDb, log: LogState, ctx: SyncContext): Promise<SyncResult> {
+async function ended(db: TerkaDb, log: LogState, ctx: SyncContext): Promise<RoundResult> {
 	await put(db, "sessionEnded", true);
-	return { log, status: await statusOf(db, log, ctx), nextAt: null };
+	return { log, status: await statusOf(db, log, ctx), nextAt: null, hold: false };
 }
 
 const RETRY: Action = { kind: "retry" };
@@ -78,6 +87,19 @@ export async function syncNow(
 	log: LogState,
 	bundle: Bundle
 ): Promise<SyncResult> {
+	const pushed = { sent: 0 };
+	const result = await round(db, client, ctx, log, bundle, pushed);
+	return { ...result, sent: pushed.sent };
+}
+
+async function round(
+	db: TerkaDb,
+	client: SupabaseClient,
+	ctx: SyncContext,
+	log: LogState,
+	bundle: Bundle,
+	pushed: { sent: number }
+): Promise<RoundResult> {
 	const { data, error } = await client.auth.getSession();
 	if (!data.session) {
 		// An expired token that cannot refresh offline is kept by auth-js; that is a network problem.
@@ -88,10 +110,11 @@ export async function syncNow(
 	const wipes = await wipesOf(db);
 	// Rows of one account must never reach another; claiming and switching accounts belong to sign-in.
 	if ((await readMeta<string>(db, "ownerUserId")) !== data.session.user.id)
-		return { log, status: await statusOf(db, log, ctx, true), nextAt: null };
+		return { log, status: await statusOf(db, log, ctx, true), nextAt: null, hold: false };
 
 	await requeueLostCloses(db, client, wipes);
 	let push = await runPush(db, client, ctx);
+	pushed.sent += push.sent;
 	if (push.action?.kind === "reauth") {
 		const refreshed = await client.auth.refreshSession();
 		if (refreshed.error)
@@ -99,6 +122,7 @@ export async function syncNow(
 				? failed(db, log, ctx, RETRY)
 				: ended(db, log, ctx);
 		push = await runPush(db, client, ctx);
+		pushed.sent += push.sent;
 		if (push.action?.kind === "reauth") return ended(db, log, ctx);
 	}
 	if (push.action?.kind === "retry" || push.action?.kind === "wait")
@@ -108,7 +132,7 @@ export async function syncNow(
 	const pulled = await runPull(db, client, log, bundle, ctx.now, wipes);
 	// Signed out or switched account mid-round: the wiped data is not this round's to touch.
 	if (pulled.status === "wiped")
-		return { log, status: await statusOf(db, log, ctx), nextAt: null };
+		return { log, status: await statusOf(db, log, ctx), nextAt: null, hold: false };
 	let next = log;
 	if (pulled.status === "ok" || pulled.status === "outdated") {
 		next = pulled.log;
@@ -129,6 +153,7 @@ export async function syncNow(
 	return {
 		log: next,
 		status: await statusOf(db, next, ctx),
-		nextAt: ends.length ? Math.min(...ends) : null
+		nextAt: ends.length ? Math.min(...ends) : null,
+		hold: false
 	};
 }

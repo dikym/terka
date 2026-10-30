@@ -3,7 +3,7 @@
 import { useEffect, useRef, useSyncExternalStore } from "react";
 import type { SyncStatus } from "@/lib/sync/status";
 import { useAppState, useReady } from "@/lib/app/use-runtime";
-import { showToast } from "@/lib/toasts";
+import { dismissToast, showToast } from "@/lib/toasts";
 import { syncLabel } from "@/lib/view/sync-label";
 
 // States that need the user's eye; synced, pending and staged stay in the sync chip.
@@ -38,14 +38,28 @@ export function SyncNotices() {
 		() => true
 	);
 	const shown = useRef<string | null>(null);
+	const toast = useRef<number | null>(null);
 
 	useEffect(() => {
 		// Without an account there is no sync status; going offline is still worth a word.
 		const state = sync?.state ?? (online ? null : "offline");
 		if (state === shown.current) return;
 		shown.current = state;
-		if (!state || (!WARN.has(state) && !INFO.has(state))) return;
-		showToast({
+		if (!state || (!WARN.has(state) && !INFO.has(state))) {
+			// Notices wait for the user; one that no longer holds must not stay behind.
+			if (toast.current === null) return;
+			dismissToast(toast.current);
+			toast.current = null;
+			if (sync?.state === "synced")
+				showToast({
+					tone: "success",
+					label: "Sinkronisasi",
+					text: syncLabel(sync, true, Date.now()),
+					key: "sync"
+				});
+			return;
+		}
+		toast.current = showToast({
 			tone: WARN.has(state) ? "warn" : "info",
 			label: "Sinkronisasi",
 			icon: state === "offline" ? "globe" : undefined,

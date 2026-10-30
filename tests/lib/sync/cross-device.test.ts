@@ -42,6 +42,7 @@ describe("a finished session on one device", () => {
 		const sent = await a.sync();
 		await b.sync();
 		expect(sent.status.state).toBe("synced");
+		expect(sent.sent).toBeGreaterThan(0);
 		expect(server.ids("practice_runs")).toHaveLength(1);
 		expect(server.ids("review_logs")).toHaveLength(3);
 		expect(b.state().doneDays.has(DAY_KEY)).toBe(true);

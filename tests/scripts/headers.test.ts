@@ -22,8 +22,9 @@ describe("static site headers", () => {
 		expect(csp).toMatch(/script-src [^;]*'wasm-unsafe-eval'/);
 	});
 
-	test("the policy allows the sync server and the email captcha", () => {
+	test("the policy allows the sync server, its realtime socket and the email captcha", () => {
 		expect(csp).toMatch(/connect-src [^;]*https:\/\/\*\.supabase\.co/);
+		expect(csp).toMatch(/connect-src [^;]*wss:\/\/\*\.supabase\.co/);
 		expect(csp).toMatch(/script-src [^;]*https:\/\/challenges\.cloudflare\.com/);
 		expect(csp).toMatch(/frame-src [^;]*https:\/\/challenges\.cloudflare\.com/);
 	});
