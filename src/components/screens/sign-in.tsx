@@ -7,6 +7,7 @@ import { Card, CardHeader } from "@/components/ui/card";
 import { Modal } from "@/components/ui/dialog";
 import { Callout, Skeleton, SkeletonText } from "@/components/ui/feedback";
 import { GoogleMark } from "@/components/ui/icon";
+import { OtpInput } from "@/components/ui/otp-input";
 import { markLegalOrigin } from "@/lib/legal-origin";
 import { EMAIL_RESEND_SECONDS } from "@/rules";
 
@@ -71,6 +72,11 @@ export function SignInForm({ signIn }: { signIn: SignIn }) {
 		} finally {
 			setBusy(false);
 		}
+	};
+
+	const submitCode = (value: string) => {
+		if (signIn.blocked || busy || value.length !== 6) return;
+		void run(() => signIn.verify(email.trim(), value));
 	};
 
 	return (
@@ -141,22 +147,10 @@ export function SignInForm({ signIn }: { signIn: SignIn }) {
 						<span className="type-label text-ink-500">atau</span>
 						<span className="h-px flex-1 bg-hairline" />
 					</div>
-					<label className="flex flex-col gap-2">
-						<span className="type-label text-ink-500">Email</span>
-						<input
-							type="email"
-							value={email}
-							onChange={(event) => setEmail(event.target.value)}
-							autoComplete="email"
-							placeholder="nama@email.com"
-							className={`${FIELD} font-sans`}
-						/>
-					</label>
-					<Button
-						variant="secondary"
-						block
-						disabled={!!signIn.blocked || busy || !email.includes("@")}
-						onClick={() =>
+					<form
+						className="flex flex-col gap-4"
+						onSubmit={(event) => {
+							event.preventDefault();
 							void run(async () => {
 								const problem = await signIn.sendCode(email.trim());
 								if (!problem) {
@@ -164,11 +158,29 @@ export function SignInForm({ signIn }: { signIn: SignIn }) {
 									setStep("code");
 								}
 								return problem;
-							})
-						}
+							});
+						}}
 					>
-						Kirim tautan dan kode masuk
-					</Button>
+						<label className="flex flex-col gap-2">
+							<span className="type-label text-ink-500">Email</span>
+							<input
+								type="email"
+								value={email}
+								onChange={(event) => setEmail(event.target.value)}
+								autoComplete="email"
+								placeholder="nama@email.com"
+								className={`${FIELD} font-sans`}
+							/>
+						</label>
+						<Button
+							type="submit"
+							variant="secondary"
+							block
+							disabled={!!signIn.blocked || busy || !email.includes("@")}
+						>
+							Kirim tautan dan kode masuk
+						</Button>
+					</form>
 				</>
 			)}
 			{step === "code" && (
@@ -176,24 +188,27 @@ export function SignInForm({ signIn }: { signIn: SignIn }) {
 					<p className="text-ink-900 type-body">
 						Tautan dan kode masuk dikirim ke {email.trim()}.
 					</p>
-					<label className="flex flex-col gap-2">
-						<span className="type-label text-ink-500">Kode 6 digit dari email</span>
-						<input
-							inputMode="numeric"
-							autoComplete="one-time-code"
-							value={code}
-							onChange={(event) => setCode(event.target.value.replace(/\D/g, ""))}
-							maxLength={6}
-							className={`${FIELD} font-mono tracking-[0.3em]`}
-						/>
-					</label>
-					<Button
-						block
-						disabled={!!signIn.blocked || busy || code.length !== 6}
-						onClick={() => void run(() => signIn.verify(email.trim(), code))}
+					<form
+						className="flex flex-col gap-4"
+						onSubmit={(event) => {
+							event.preventDefault();
+							submitCode(code);
+						}}
 					>
-						Masuk
-					</Button>
+						<OtpInput
+							label="Kode 6 digit dari email"
+							value={code}
+							onChange={setCode}
+							onComplete={submitCode}
+						/>
+						<Button
+							type="submit"
+							block
+							disabled={!!signIn.blocked || busy || code.length !== 6}
+						>
+							Masuk
+						</Button>
+					</form>
 					<Hint>Belum menerima email? Cek folder spam, atau kirim ulang.</Hint>
 					<Button
 						variant="quiet"
