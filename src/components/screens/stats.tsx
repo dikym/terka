@@ -10,6 +10,7 @@ import {
 	SkeletonText,
 	skeletonWidth
 } from "@/components/ui/feedback";
+import { FadeScroll } from "@/components/ui/fade-scroll";
 import { GROUP_TEXT } from "@/components/ui/groups";
 import { Icon } from "@/components/ui/icon";
 import { type MapProvince, MasteryMap } from "@/components/ui/mastery-map";
@@ -445,7 +446,7 @@ function NameAll({ s, loading }: { s: Stats; loading: boolean }) {
 				label="Sebutkan sebanyak mungkin"
 				title={text(loading, `${s.nameAll.length} kode`)}
 			/>
-			<div className="flex flex-col">
+			<FadeScroll className="-mx-2 max-h-96 px-2">
 				{s.nameAll.map((row, index) => (
 					<div
 						key={row.code}
@@ -483,7 +484,7 @@ function NameAll({ s, loading }: { s: Stats; loading: boolean }) {
 						)}
 					</div>
 				))}
-			</div>
+			</FadeScroll>
 			<p className="font-sans text-body-sm leading-normal text-ink-500">
 				Sebutkan semua kab/kota yang memakai satu kode. Satu kode per sesi, di luar sesi
 				harian.
