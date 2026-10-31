@@ -20,7 +20,10 @@ export function useRuntime() {
 	const status = useSyncExternalStore(subscribeRuntime, runtimeSnapshot, loadingSnapshot);
 	useEffect(() => {
 		void bootRuntime().then((booted) => {
-			if (booted.status === "ready") startAuth(booted.runtime);
+			if (booted.status === "ready")
+				startAuth(booted.runtime, {
+					signingIn: location.pathname.startsWith("/auth/callback")
+				});
 		});
 	}, []);
 	return status;

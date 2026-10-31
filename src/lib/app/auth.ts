@@ -24,8 +24,10 @@ export const account = createStore<AccountState>()(() => ({
 
 let client: ReturnType<typeof createTerkaClient> | null | undefined;
 
+type AuthClient = { client: SupabaseClient; retryAfter: () => number | null } | null;
+
 /** Null when the build has no Supabase project configured; the app then runs without accounts. */
-export function authClient(): { client: SupabaseClient; retryAfter: () => number | null } | null {
+export function authClient(): AuthClient {
 	if (client !== undefined) return client;
 	const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
 	const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
@@ -43,18 +45,29 @@ const started = new WeakSet<Runtime>();
 let signal: SyncSignal | null = null;
 
 // Sync runs only while a session exists: without one syncNow reports the session as ended.
-export function startAuth(runtime: Runtime, auth = authClient()) {
+export function startAuth(
+	runtime: Runtime,
+	{ signingIn = false, auth = authClient() }: { signingIn?: boolean; auth?: AuthClient } = {}
+) {
 	if (started.has(runtime)) return;
 	started.add(runtime);
 	if (!auth) {
 		account.setState({ known: true });
 		return;
 	}
-	// One key: the open-time check, the auth listener and a sync round may all report one removal.
-	const notify = (text: string) =>
-		void showToast({ tone: "warn", label: "Sinkronisasi", text, key: "sync" });
+	// The open-time check, the auth listener and a sync round may each find one removal.
+	let told = false;
+	const notify = (text: string) => {
+		if (told) return;
+		told = true;
+		showToast({ tone: "warn", label: "Sinkronisasi", text, key: "sync" });
+	};
+	runtime.store.subscribe(({ sync }, previous) => {
+		if (sync?.state === "removed" && previous.sync?.state !== "removed") notify(REMOVED);
+	});
 	const leave = { db: runtime.db, client: auth.client, reload: runtime.reload, notify };
-	void settleOnOpen({ ...leave, online: navigator.onLine });
+	// Before the callback exchanges its code there is no session, so the check would ask about the old one.
+	if (!signingIn) void settleOnOpen({ ...leave, online: navigator.onLine });
 	let stop: (() => void) | null = null;
 	auth.client.auth.onAuthStateChange((_event, session) => {
 		const user = session?.user ?? null;
@@ -65,6 +78,7 @@ export function startAuth(runtime: Runtime, auth = authClient()) {
 			provider: provider === "google" ? "google" : user ? "email" : null
 		});
 		if (user && !stop) {
+			told = false;
 			signal = syncSignal(auth.client, user.id);
 			stop = startSync(runtime.store, {
 				run: liveSync(runtime.store, auth.client, auth.retryAfter),

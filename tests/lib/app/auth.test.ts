@@ -5,8 +5,7 @@ import type { Runtime } from "../../../src/lib/app/runtime";
 import { removeDevice, signOut } from "../../../src/lib/auth/account";
 import { loadState } from "../../../src/lib/db/log";
 import { readMeta, type TerkaDb } from "../../../src/lib/db/schema";
-import { showToast, toastStore } from "../../../src/lib/toasts";
-import { syncLabel } from "../../../src/lib/view/sync-label";
+import { toastStore } from "../../../src/lib/toasts";
 import { openDevice, shownMatchesStored, type Device } from "../sync/support/device";
 import { answersOf, NOW, openRun } from "../sync/support/events";
 import { FakeServer } from "../sync/support/server";
@@ -259,7 +258,7 @@ function watched(device: Device) {
 	};
 }
 
-function appOf(device: Device, client: SupabaseClient) {
+function appOf(device: Device, client: SupabaseClient, signingIn = false) {
 	const counts = { reloads: 0, prefReads: 0 };
 	const runtime = {
 		db: device.db,
@@ -271,7 +270,7 @@ function appOf(device: Device, client: SupabaseClient) {
 		},
 		refreshPrefs: async () => void counts.prefReads++
 	} as unknown as Runtime;
-	startAuth(runtime, { client, retryAfter: () => null });
+	startAuth(runtime, { signingIn, auth: { client, retryAfter: () => null } });
 	return counts;
 }
 
@@ -326,29 +325,31 @@ describe("a removal while the app is open", () => {
 
 	test("a removal found during sync reloads the app and shows the notice", async () => {
 		const { a, b, counts } = await openWatched();
-		// Stands in for SyncNotices, which shows a warning state once under the "sync" key.
-		const offNotices = b.store.subscribe(({ sync }, previous) => {
-			if (sync?.state === "removed" && previous.sync?.state !== "removed")
-				showToast({
-					tone: "warn",
-					label: "Sinkronisasi",
-					text: syncLabel(sync, true, 0),
-					key: "sync"
-				});
-		});
 		const prefReads = counts.prefReads;
 		await removeDevice(a.db, a.client, b.id, a.now());
 		page.get("online")?.();
 		await until(() => b.store.getState().sync?.state === "removed");
 		await until(() => counts.prefReads > prefReads);
 		await later(50, null);
-		offNotices();
 		expect(b.store.getState().sync?.state).toBe("removed");
 		expect(removedNotices().length).toBe(1);
 		expect(await readMeta(b.db, "ownerUserId")).toBeUndefined();
 		expect(await b.ids("review_logs")).toEqual([]);
 		const [shown, stored] = await shownMatchesStored(b);
 		expect(shown).toEqual(stored);
+	});
+
+	test("the open-time check does not run while a sign-in is completing", async () => {
+		const { server, b } = await removedPair();
+		b.auth.userId = null;
+		const before = sessionRemovedCalls(server).length;
+		const counts = appOf(b, watched(b).client, true);
+		expect(settling.get()).toBe(false);
+		await later(50, null);
+		expect(sessionRemovedCalls(server).length).toBe(before);
+		expect(counts.reloads).toBe(0);
+		expect(removedNotices()).toEqual([]);
+		expect(await readMeta<string>(b.db, "ownerUserId")).toBe("user-1");
 	});
 
 	test("signing out on this device shows no removal notice", async () => {

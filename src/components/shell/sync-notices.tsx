@@ -7,9 +7,9 @@ import { dismissToast, showToast } from "@/lib/toasts";
 import { syncLabel } from "@/lib/view/sync-label";
 
 // States that need the user's eye; synced, pending and staged stay in the sync chip.
+// "removed" is announced by startAuth, which also hears removals found outside a sync round.
 const WARN = new Set<SyncStatus["state"]>([
 	"sessionEnded",
-	"removed",
 	"outdated",
 	"otherAccount",
 	"unreachable",
