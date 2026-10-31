@@ -41,8 +41,13 @@ export function FadeScroll({
 	// The rows can change without a scroll, so the edges are measured after every render.
 	useEffect(measure);
 	useEffect(() => {
+		// The on-screen keyboard resizes only the visual viewport, which can shrink the box.
 		window.addEventListener("resize", measure);
-		return () => window.removeEventListener("resize", measure);
+		window.visualViewport?.addEventListener("resize", measure);
+		return () => {
+			window.removeEventListener("resize", measure);
+			window.visualViewport?.removeEventListener("resize", measure);
+		};
 	}, []);
 	const edge = (on: boolean, at: (px: number) => string) =>
 		on

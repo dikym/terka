@@ -1,36 +1,43 @@
 "use client";
 
-import { type RefObject, useEffect } from "react";
+import { type RefObject, useLayoutEffect } from "react";
 
 /**
- * Keeps a fixed overlay on the area the user can actually see. When the on-screen keyboard opens,
- * iOS Safari pans the visual viewport inside the layout viewport, so `inset-0` no longer lines up
- * with what is visible and the page behind shows through below the sheet.
+ * Lays an absolutely positioned overlay over the area the user can actually see. It is absolute in
+ * the document, not fixed, because iOS 26 will not paint fixed content below the visual viewport:
+ * a fixed sheet would be cut off at the translucent keyboard accessory bar instead of reaching
+ * down behind the keyboard. When pinch-zoomed it covers the layout viewport instead.
  */
 export function useVisualViewportFit(ref: RefObject<HTMLElement | null>) {
-	useEffect(() => {
+	useLayoutEffect(() => {
 		const element = ref.current;
+		if (!element) return;
 		const viewport = window.visualViewport;
-		if (!element || !viewport) return;
+		const html = document.documentElement;
 		const sync = () => {
-			if (viewport.scale !== 1) {
-				element.style.top = "";
-				element.style.left = "";
-				element.style.width = "";
-				element.style.height = "";
+			if (viewport && viewport.scale === 1) {
+				element.style.top = `${viewport.pageTop}px`;
+				element.style.left = `${viewport.pageLeft}px`;
+				element.style.width = `${viewport.width}px`;
+				element.style.height = `${viewport.height}px`;
 				return;
 			}
-			element.style.top = `${viewport.offsetTop}px`;
-			element.style.left = `${viewport.offsetLeft}px`;
-			element.style.width = `${viewport.width}px`;
-			element.style.height = `${viewport.height}px`;
+			element.style.top = `${viewport ? viewport.pageTop - viewport.offsetTop : window.scrollY}px`;
+			element.style.left = `${viewport ? viewport.pageLeft - viewport.offsetLeft : window.scrollX}px`;
+			element.style.width = `${html.clientWidth}px`;
+			element.style.height = `${html.clientHeight}px`;
 		};
 		sync();
-		viewport.addEventListener("resize", sync);
-		viewport.addEventListener("scroll", sync);
+		// The visual viewport fires no event when the document itself scrolls, so both are watched.
+		viewport?.addEventListener("resize", sync);
+		viewport?.addEventListener("scroll", sync);
+		window.addEventListener("resize", sync);
+		window.addEventListener("scroll", sync);
 		return () => {
-			viewport.removeEventListener("resize", sync);
-			viewport.removeEventListener("scroll", sync);
+			viewport?.removeEventListener("resize", sync);
+			viewport?.removeEventListener("scroll", sync);
+			window.removeEventListener("resize", sync);
+			window.removeEventListener("scroll", sync);
 		};
 	}, [ref]);
 }

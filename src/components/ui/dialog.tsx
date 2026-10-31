@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Button } from "./button";
+import { FadeScroll } from "./fade-scroll";
 import { Icon } from "./icon";
 import { useFocusTrap } from "./use-focus-trap";
 import { useScrollLock } from "./use-scroll-lock";
@@ -13,6 +15,28 @@ export const typedMatches = (word: string, value: string) => value !== "" && val
 // The disabled final button turns grey instead of fading, so it reads as not yet allowed.
 const DISABLED_GREY =
 	"disabled:border-ink-200 disabled:bg-ink-100 disabled:text-ink-500 disabled:opacity-100 disabled:shadow-none";
+
+/** Centres a field in the sheet's own scroll box when it is out of sight, never scrolling the page. */
+function reveal(field: HTMLElement, sheet: HTMLElement) {
+	for (let box = field.parentElement; box && sheet.contains(box); box = box.parentElement) {
+		if (box.scrollHeight <= box.clientHeight) continue;
+		const area = box.getBoundingClientRect();
+		const rect = field.getBoundingClientRect();
+		const viewport = window.visualViewport;
+		const bottom = viewport
+			? Math.min(area.bottom, viewport.offsetTop + viewport.height)
+			: area.bottom;
+		if (rect.top >= area.top && rect.bottom <= bottom) return;
+		const top = box.scrollTop + rect.top + rect.height / 2 - (area.top + bottom) / 2;
+		box.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+		return;
+	}
+}
+
+const isTextField = (target: EventTarget | null): target is HTMLElement =>
+	target instanceof HTMLTextAreaElement ||
+	(target instanceof HTMLInputElement &&
+		!["checkbox", "radio", "button", "file"].includes(target.type));
 
 /**
  * The scrim and panel shared by every dialog. On a phone the panel is a bottom sheet with a
@@ -37,18 +61,38 @@ function Overlay({
 }) {
 	const root = useRef<HTMLDivElement>(null);
 	const panel = useRef<HTMLDivElement>(null);
+	const scrim = useRef<HTMLDivElement>(null);
 	useVisualViewportFit(root);
 	useFocusTrap(panel);
 	useScrollLock();
-	useSheetDrag(panel, onDismiss);
+	useSheetDrag(panel, scrim, onDismiss);
 	const latest = useRef(onDismiss);
 	useEffect(() => {
 		latest.current = onDismiss;
 	});
 	useEffect(() => {
+		const sheet = panel.current;
+		if (!sheet) return;
 		const before = document.activeElement as HTMLElement | null;
-		const first = panel.current?.querySelector<HTMLElement>("[data-autofocus]");
-		(first ?? panel.current)?.focus();
+		// iOS Safari pans the whole page to a field it focuses, even on a frozen page. Re-focusing the
+		// field with preventScroll while the old focus is still leaving skips that pan; the sheet then
+		// rises with the visual viewport and the field is scrolled into view inside the sheet only.
+		const onBlur = (event: FocusEvent) => {
+			const next = event.relatedTarget;
+			if (isTextField(next) && sheet.contains(next)) {
+				next.focus({ preventScroll: true });
+				const viewport = window.visualViewport;
+				if (isTextField(event.target) || !viewport) reveal(next, sheet);
+				else viewport.addEventListener("resize", () => reveal(next, sheet), { once: true });
+			} else if (!next && event.target instanceof Node && sheet.contains(event.target)) {
+				// iOS's hide-keyboard key sends focus to <body>. Without a focused element in the sheet
+				// the next tap on the field fires no blur, and the page would pan again.
+				sheet.focus({ preventScroll: true });
+			}
+		};
+		document.addEventListener("blur", onBlur, true);
+		const first = sheet.querySelector<HTMLElement>("[data-autofocus]");
+		(first ?? sheet).focus({ preventScroll: true });
 		const onKey = (event: KeyboardEvent) => {
 			if (event.key !== "Escape") return;
 			event.stopPropagation();
@@ -56,19 +100,23 @@ function Overlay({
 		};
 		document.addEventListener("keydown", onKey, true);
 		return () => {
+			document.removeEventListener("blur", onBlur, true);
 			document.removeEventListener("keydown", onKey, true);
 			before?.focus();
 		};
 	}, []);
-	return (
+	// Portalled to <body> so the absolute overlay is placed against the document, not an ancestor.
+	return createPortal(
 		<div
 			ref={root}
-			className="fixed inset-0 z-50 flex items-end justify-center lg:items-center lg:p-6"
+			className="absolute top-0 left-0 z-50 flex h-dvh w-full items-end justify-center lg:items-center lg:p-6"
 		>
+			{/* Runs on below the visible area so the scrim also lies behind the keyboard. */}
 			<div
+				ref={scrim}
 				aria-hidden="true"
 				onClick={onDismiss}
-				className="absolute inset-0 touch-none bg-[oklch(0.14_0.012_60/0.45)]"
+				className="absolute inset-x-0 top-0 -bottom-[100lvh] touch-none bg-[oklch(0.14_0.012_60/0.45)]"
 			/>
 			<div
 				ref={panel}
@@ -77,15 +125,23 @@ function Overlay({
 				aria-labelledby={labelledBy}
 				aria-describedby={describedBy}
 				tabIndex={-1}
-				className={`relative flex max-h-[90%] w-full flex-col overflow-y-auto overscroll-contain rounded-t-lg bg-paper-0 shadow-overlay outline-none lg:w-120 lg:rounded-lg lg:border lg:border-ink-1000 ${padded ? "gap-5 px-5 pt-3 pb-[calc(--spacing(8)+env(safe-area-inset-bottom))] lg:p-6" : "pb-[env(safe-area-inset-bottom)] lg:pb-0"}`}
+				className={`relative flex max-h-[90%] w-full flex-col rounded-t-lg bg-paper-0 shadow-[0_calc(100lvh+12px)_0_100lvh_var(--color-paper-0)] outline-none lg:w-120 lg:rounded-lg lg:border lg:border-ink-1000 lg:shadow-overlay ${padded ? "gap-2 py-3 lg:p-6" : "pb-[env(safe-area-inset-bottom)] lg:pb-0"}`}
 			>
 				<span
 					aria-hidden="true"
 					className={`h-1 w-10 flex-none self-center rounded-full bg-ink-300 lg:hidden ${padded ? "" : "mt-3"}`}
 				/>
-				{children}
+				{/* Only the content scrolls, under a fixed handle. Most spacing sits inside the scroll box, so a
+				    scrolled sheet keeps just a slim gap at each edge; the safe-area spacer is an ::after because
+				    bottom padding of a scrolling flex box is not reliably kept. */}
+				<FadeScroll
+					className={`min-h-0 overscroll-contain ${padded ? "flex flex-col gap-5 px-5 pt-3 *:shrink-0 after:h-[env(safe-area-inset-bottom)] after:shrink-0 lg:p-0 lg:after:hidden" : ""}`}
+				>
+					{children}
+				</FadeScroll>
 			</div>
-		</div>
+		</div>,
+		document.body
 	);
 }
 
@@ -275,8 +331,12 @@ export function TypedConfirm({
 					if (event.key === "Enter" && ready) onConfirm();
 				}}
 				aria-label={`Ketik ${word}`}
+				name="confirm-word"
+				type="text"
 				autoComplete="off"
 				autoCapitalize="characters"
+				autoCorrect="off"
+				enterKeyHint="done"
 				spellCheck={false}
 				className="h-12 w-full rounded-sm border border-ink-1000 bg-paper-0 px-4 font-mono text-body-lg leading-none font-medium tracking-[0.08em] text-ink-1000"
 			/>
