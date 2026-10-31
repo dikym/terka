@@ -106,16 +106,18 @@ export function useAccountActions(runtime: Runtime | null, onChange?: () => void
 					confirm={{
 						label: "Hapus",
 						onClick: () => {
-							const { id } = dialog;
+							const { id, name } = dialog;
 							setDialog(null);
 							if (!runtime || !auth) return;
 							void removeDevice(runtime.db, auth.client, id, Date.now()).then(
 								(result) => {
+									// An open removed device syncs on the nudge and leaves at once.
+									if (result.status === "ok") announceChange();
 									showToast(
 										result.status === "ok"
 											? {
 													tone: "success",
-													text: "Perangkat dihapus dari daftar"
+													text: `${name} sudah dikeluarkan dari akun`
 												}
 											: {
 													tone: "danger",
@@ -128,9 +130,9 @@ export function useAccountActions(runtime: Runtime | null, onChange?: () => void
 						}
 					}}
 				>
-					{dialog.name} dihapus dari daftar perangkat akun ini. Riwayat latihan tidak ikut
-					terhapus. Kalau perangkat itu masih dipakai, ia muncul lagi setelah sinkronisasi
-					berikutnya.
+					{dialog.name} akan keluar dari akun ini dan data di perangkat itu dihapus,
+					termasuk perubahan yang belum tersinkron. Riwayat latihan yang sudah tersinkron
+					tetap ada di akun.
 				</DangerConfirm>
 			)}
 			{dialog?.kind === "reset" && (

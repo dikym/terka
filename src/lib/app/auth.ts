@@ -1,7 +1,11 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { createStore } from "zustand/vanilla";
 import { createTerkaClient } from "../auth/client";
+import { checkRemoved, leaveRemovedDevice, sessionIdOf } from "../auth/removal";
+import { readMeta, type TerkaDb } from "../db/schema";
 import { type SyncSignal, syncSignal } from "../sync/signal";
+import { showToast } from "../toasts";
+import { syncLabel } from "../view/sync-label";
 import { liveSync, startSync } from "./sync";
 import type { Runtime } from "./runtime";
 
@@ -34,19 +38,23 @@ export function authClient(): { client: SupabaseClient; retryAfter: () => number
 	return client;
 }
 
-let started = false;
+const started = new WeakSet<Runtime>();
 // The nudge channel of the signed-in account, shared with rounds started by hand.
 let signal: SyncSignal | null = null;
 
 // Sync runs only while a session exists: without one syncNow reports the session as ended.
-export function startAuth(runtime: Runtime) {
-	if (started) return;
-	started = true;
-	const auth = authClient();
+export function startAuth(runtime: Runtime, auth = authClient()) {
+	if (started.has(runtime)) return;
+	started.add(runtime);
 	if (!auth) {
 		account.setState({ known: true });
 		return;
 	}
+	// One key: the open-time check, the auth listener and a sync round may all report one removal.
+	const notify = (text: string) =>
+		void showToast({ tone: "warn", label: "Sinkronisasi", text, key: "sync" });
+	const leave = { db: runtime.db, client: auth.client, reload: runtime.reload, notify };
+	void settleOnOpen({ ...leave, online: navigator.onLine });
 	let stop: (() => void) | null = null;
 	auth.client.auth.onAuthStateChange((_event, session) => {
 		const user = session?.user ?? null;
@@ -71,6 +79,10 @@ export function startAuth(runtime: Runtime) {
 			stop();
 			stop = null;
 			signal = null;
+			// auth-js drops a revoked session itself when a refresh fails, and no round runs after that.
+			void readMeta<string>(runtime.db, "ownerUserId")
+				.then((owner) => (owner ? leaveIfRemoved(leave) : undefined))
+				.catch(() => {});
 		}
 	});
 }
@@ -121,6 +133,50 @@ export async function settleAfterSignIn(
 		});
 		await Promise.race([sync.catch(() => {}), limit]);
 		await reload();
+	} finally {
+		clearTimeout(timer);
+		settlingStore.setState({ active: false });
+	}
+}
+
+type Leave = {
+	db: TerkaDb;
+	client: SupabaseClient;
+	reload: () => Promise<void>;
+	notify: (text: string) => void;
+};
+
+const REMOVED = syncLabel({ state: "removed", quarantined: 0, lastSyncAt: null }, true, 0);
+
+async function leaveIfRemoved(deps: Leave, sessionId?: string | null): Promise<void> {
+	if ((await checkRemoved(deps.db, deps.client, sessionId)) !== "removed") return;
+	await leaveRemovedDevice(deps.db, deps.client);
+	await deps.reload();
+	deps.notify(REMOVED);
+}
+
+/**
+ * A device removed elsewhere while it was closed leaves before its first screen. The screens wait
+ * for the answer only up to the limit; a removal that answers later still signs the device out.
+ */
+export async function settleOnOpen({
+	online,
+	limitMs = 3_000,
+	...deps
+}: Leave & { online: boolean; limitMs?: number }): Promise<void> {
+	if (!online) return;
+	settlingStore.setState({ active: true });
+	let timer: ReturnType<typeof setTimeout> | undefined;
+	try {
+		const limit = new Promise<void>((resolve) => {
+			timer = setTimeout(resolve, limitMs);
+		});
+		const check = (async () => {
+			if (!(await readMeta<string>(deps.db, "ownerUserId"))) return;
+			const { data } = await deps.client.auth.getSession();
+			await leaveIfRemoved(deps, sessionIdOf(data.session?.access_token));
+		})();
+		await Promise.race([check.catch(() => {}), limit]);
 	} finally {
 		clearTimeout(timer);
 		settlingStore.setState({ active: false });
