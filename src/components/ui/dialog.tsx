@@ -79,6 +79,10 @@ function Overlay({
 				/>
 				{children}
 			</div>
+			<div
+				aria-hidden="true"
+				className="pointer-events-none absolute inset-x-0 top-full h-dvh bg-paper-0 lg:hidden"
+			/>
 		</div>
 	);
 }
