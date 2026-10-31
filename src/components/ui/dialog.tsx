@@ -125,7 +125,7 @@ function Overlay({
 				aria-labelledby={labelledBy}
 				aria-describedby={describedBy}
 				tabIndex={-1}
-				className={`relative flex max-h-[90%] w-full flex-col rounded-t-lg bg-paper-0 shadow-[0_calc(100lvh+12px)_0_100lvh_var(--color-paper-0)] outline-none lg:w-120 lg:rounded-lg lg:border lg:border-ink-1000 lg:shadow-overlay ${padded ? "gap-2 py-3 lg:p-6" : "pb-[env(safe-area-inset-bottom)] lg:pb-0"}`}
+				className={`relative flex max-h-[90%] w-full flex-col rounded-t-lg bg-paper-0 shadow-[0_calc(100lvh+12px)_0_100lvh_var(--color-paper-0)] outline-none lg:w-120 lg:rounded-lg lg:border lg:border-ink-1000 lg:shadow-overlay ${padded ? "gap-2 py-3 lg:p-0" : "pb-[env(safe-area-inset-bottom)] lg:pb-0"}`}
 			>
 				<span
 					aria-hidden="true"
@@ -133,9 +133,11 @@ function Overlay({
 				/>
 				{/* Only the content scrolls, under a fixed handle. Most spacing sits inside the scroll box, so a
 				    scrolled sheet keeps just a slim gap at each edge; the safe-area spacer is an ::after because
-				    bottom padding of a scrolling flex box is not reliably kept. */}
+				    bottom padding of a scrolling flex box is not reliably kept. The scroll box clips what is
+				    drawn past it, so on a desktop the panel padding sits inside it to keep focus rings and
+				    button shadows whole. */}
 				<FadeScroll
-					className={`min-h-0 overscroll-contain ${padded ? "flex flex-col gap-5 px-5 pt-3 *:shrink-0 after:h-[env(safe-area-inset-bottom)] after:shrink-0 lg:p-0 lg:after:hidden" : ""}`}
+					className={`min-h-0 overscroll-contain ${padded ? "flex flex-col gap-5 px-5 pt-3 *:shrink-0 after:h-[env(safe-area-inset-bottom)] after:shrink-0 lg:p-6 lg:after:hidden" : ""}`}
 				>
 					{children}
 				</FadeScroll>
