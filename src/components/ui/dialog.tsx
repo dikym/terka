@@ -6,6 +6,7 @@ import { Icon } from "./icon";
 import { useFocusTrap } from "./use-focus-trap";
 import { useScrollLock } from "./use-scroll-lock";
 import { useSheetDrag } from "./use-sheet-drag";
+import { useVisualViewportFit } from "./use-visual-viewport-fit";
 
 export const typedMatches = (word: string, value: string) => value !== "" && value === word;
 
@@ -34,7 +35,9 @@ function Overlay({
 	padded?: boolean;
 	children: React.ReactNode;
 }) {
+	const root = useRef<HTMLDivElement>(null);
 	const panel = useRef<HTMLDivElement>(null);
+	useVisualViewportFit(root);
 	useFocusTrap(panel);
 	useScrollLock();
 	useSheetDrag(panel, onDismiss);
@@ -58,7 +61,10 @@ function Overlay({
 		};
 	}, []);
 	return (
-		<div className="fixed inset-0 z-50 flex items-end justify-center lg:items-center lg:p-6">
+		<div
+			ref={root}
+			className="fixed inset-0 z-50 flex items-end justify-center lg:items-center lg:p-6"
+		>
 			<div
 				aria-hidden="true"
 				onClick={onDismiss}
@@ -71,7 +77,7 @@ function Overlay({
 				aria-labelledby={labelledBy}
 				aria-describedby={describedBy}
 				tabIndex={-1}
-				className={`relative flex max-h-[90dvh] w-full flex-col overflow-y-auto overscroll-contain rounded-t-lg bg-paper-0 shadow-overlay outline-none lg:w-120 lg:rounded-lg lg:border lg:border-ink-1000 ${padded ? "gap-5 px-5 pt-3 pb-[calc(--spacing(8)+env(safe-area-inset-bottom))] lg:p-6" : "pb-[env(safe-area-inset-bottom)] lg:pb-0"}`}
+				className={`relative flex max-h-[90%] w-full flex-col overflow-y-auto overscroll-contain rounded-t-lg bg-paper-0 shadow-overlay outline-none lg:w-120 lg:rounded-lg lg:border lg:border-ink-1000 ${padded ? "gap-5 px-5 pt-3 pb-[calc(--spacing(8)+env(safe-area-inset-bottom))] lg:p-6" : "pb-[env(safe-area-inset-bottom)] lg:pb-0"}`}
 			>
 				<span
 					aria-hidden="true"
@@ -79,10 +85,6 @@ function Overlay({
 				/>
 				{children}
 			</div>
-			<div
-				aria-hidden="true"
-				className="pointer-events-none absolute inset-x-0 top-full h-dvh bg-paper-0 lg:hidden"
-			/>
 		</div>
 	);
 }
