@@ -70,7 +70,7 @@ export default function Page() {
 
 	const rows = runtime && now && devices ? deviceRows(devices, runtime.deviceId, now) : null;
 	const view: AccountView =
-		!runtime || !account.known || !rows
+		!runtime || !app || !account.known || !rows
 			? { kind: "loading" }
 			: account.email
 				? {

@@ -37,6 +37,7 @@ export async function checkRemoved(
 	const session = sessionId ?? (await readMeta<string>(db, "sessionId"));
 	if (!session) return "unknown";
 	try {
+		// Only a strict true wipes data: an error or a missing function also leaves data empty.
 		const { data } = await client.rpc("session_removed", { session });
 		if (data === false) return "kept";
 		if (data !== true) return "unknown";
