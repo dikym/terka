@@ -418,6 +418,14 @@ export class FakeServer {
 	private updateDevices(rows: Row[], session: string | null, values: Row): Result {
 		const next = rows.map((row): Row | null => {
 			const removedAt = "removed_at" in values ? values.removed_at : row.removed_at;
+			if (!row.session_id && session) {
+				if (removedAt && removedAt !== row.removed_at)
+					return row.removal_reason === "removed"
+						? {}
+						: { removed_at: removedAt, removal_reason: "left" };
+				if (row.removal_reason === "left")
+					return { session_id: session, removed_at: null, removal_reason: null };
+			}
 			const owner = row.session_id ?? session;
 			if (!session || owner === session)
 				return row.removal_reason === "removed"

@@ -4,8 +4,6 @@ alter table public.devices
 	add column session_id uuid,
 	add column removal_reason text check (removal_reason in ('removed', 'left'));
 
-update public.devices set removal_reason = 'left' where removed_at is not null;
-
 -- Owner and security definer writes pass through untouched, so remove_device leaves last_seen_at alone.
 create or replace function public.device_seen() returns trigger
 language plpgsql set search_path = '' as $$
@@ -21,6 +19,23 @@ begin
 		new.removed_at := null;
 		new.removal_reason := null;
 		return new;
+	end if;
+	if old.session_id is null and caller_session is not null then
+		if new.removed_at is not null and new.removed_at is distinct from old.removed_at then
+			-- With no session recorded the marker may be another device, so the row stays unbound.
+			new.removal_reason := coalesce(old.removal_reason, 'left');
+			if old.removal_reason = 'removed' then
+				new.removed_at := old.removed_at;
+			end if;
+			return new;
+		end if;
+		if old.removal_reason = 'left' then
+			-- Hidden before sessions were tracked; only the device itself touches its row, so it is signed in.
+			new.session_id := caller_session;
+			new.removed_at := null;
+			new.removal_reason := null;
+			return new;
+		end if;
 	end if;
 	new.session_id := coalesce(old.session_id, caller_session);
 	new.removal_reason := old.removal_reason;
@@ -42,6 +57,9 @@ begin
 	return new;
 end;
 $$;
+
+-- Runs after the new device_seen, which passes owner writes through and so keeps last_seen_at.
+update public.devices set removal_reason = 'left' where removed_at is not null;
 
 create function public.remove_device(device uuid) returns void
 language plpgsql security definer set search_path = '' as $$
@@ -69,6 +87,8 @@ create function public.session_removed(session uuid) returns boolean
 language sql stable security definer set search_path = '' as $$
 	select exists (select 1 from public.devices where session_id = session and removal_reason = 'removed');
 $$;
+
+create index on public.devices (session_id) where removal_reason = 'removed';
 
 revoke all on function public.remove_device(uuid) from anon, public;
 revoke all on function public.session_removed(uuid) from anon, public;

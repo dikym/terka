@@ -231,6 +231,26 @@ describe("signing out", () => {
 		expect(await listed(a)).toContain(b.id);
 	});
 
+	test("a device hidden before sessions were tracked reappears after its next touch", async () => {
+		const { server, a, b } = await settled();
+		Object.assign(server.rowOf("devices", b.id) ?? {}, {
+			session_id: null,
+			removed_at: new Date(server.clock.now).toISOString(),
+			removal_reason: "left"
+		});
+		await a.sync();
+		expect(await listed(a)).not.toContain(b.id);
+		server.clock.now += HOUR + MINUTE;
+		await b.sync();
+		expect(server.rowOf("devices", b.id)).toMatchObject({
+			removed_at: null,
+			removal_reason: null
+		});
+		expect(server.rowOf("devices", b.id)?.session_id).not.toBeNull();
+		await a.sync();
+		expect(await listed(a)).toContain(b.id);
+	});
+
 	test("still signs out when the server refuses the mark", async () => {
 		const { server, b } = await settled();
 		server.fail({ table: "devices", op: "update", status: 503 });

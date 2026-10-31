@@ -1,5 +1,5 @@
 begin;
-select plan(16);
+select plan(19);
 
 select set_config('tests.a', tests.create_user('sessions-a@test.terka')::text, true);
 select set_config('tests.b', tests.create_user('sessions-b@test.terka')::text, true);
@@ -8,6 +8,15 @@ select set_config('tests.s2', tests.add_session(current_setting('tests.a')::uuid
 select set_config('tests.s3', tests.add_session(current_setting('tests.a')::uuid)::text, true);
 select set_config('tests.b_device', tests.add_device(current_setting('tests.b')::uuid)::text, true);
 select set_config('tests.legacy', tests.add_device(current_setting('tests.a')::uuid)::text, true);
+select set_config('tests.legacy_left', tests.add_device(current_setting('tests.a')::uuid)::text, true);
+select set_config('tests.legacy_marked', tests.add_device(current_setting('tests.a')::uuid)::text, true);
+update public.devices set removed_at = now(), last_seen_at = now() - interval '2 days'
+where id = current_setting('tests.legacy_left')::uuid;
+update public.devices set removal_reason = 'left' where removed_at is not null;
+select is(
+	(select last_seen_at from public.devices where id = current_setting('tests.legacy_left')::uuid), now() - interval '2 days',
+	'marking old sign-outs as left keeps when the device was last seen'
+);
 
 select tests.as_session(current_setting('tests.a')::uuid, current_setting('tests.s1')::uuid);
 select set_config('tests.d1', tests.add_device(current_setting('tests.a')::uuid)::text, true);
@@ -87,6 +96,20 @@ select ok(
 	(select session_id = current_setting('tests.s2')::uuid and removal_reason = 'removed'
 	from public.devices where id = current_setting('tests.legacy')::uuid),
 	'a removed legacy device stays removed when its session is first recorded'
+);
+
+update public.devices set last_seen_at = now() where id = current_setting('tests.legacy_left')::uuid;
+select ok(
+	(select session_id = current_setting('tests.s2')::uuid and removed_at is null and removal_reason is null
+	from public.devices where id = current_setting('tests.legacy_left')::uuid),
+	'a legacy sign-out mark is cleared by the first touch'
+);
+
+update public.devices set removed_at = now() where id = current_setting('tests.legacy_marked')::uuid;
+select ok(
+	(select session_id is null and removed_at is not null and removal_reason = 'left'
+	from public.devices where id = current_setting('tests.legacy_marked')::uuid),
+	'a direct mark on a legacy device does not bind the marking session'
 );
 
 select tests.as_anon();
