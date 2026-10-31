@@ -64,6 +64,28 @@ describe("asking whether this device was removed", () => {
 		expect(await checkRemoved(a.db, a.client)).toBe("kept");
 	});
 
+	test("a sync round that finds an earlier session removed keeps a device that signed in again meanwhile", async () => {
+		const { server, b } = await removed();
+		b.auth.userId = null;
+		let answer = () => {};
+		const answered = new Promise<void>((resolve) => {
+			answer = resolve;
+		});
+		let asked = false;
+		server.beforeRequest = async (call) => {
+			if (call.table !== "session_removed") return;
+			asked = true;
+			await answered;
+		};
+		const round = b.sync();
+		while (!asked) await new Promise((resolve) => setTimeout(resolve, 5));
+		await b.signIn();
+		answer();
+		expect((await round).status.state).not.toBe("removed");
+		expect((await b.client.auth.getSession()).data.session).not.toBeNull();
+		expect(await readMeta<string>(b.db, "ownerUserId")).toBe("user-1");
+	});
+
 	test("a server error is unknown", async () => {
 		const { server, b } = await removed();
 		server.fail({ table: "session_removed", op: "rpc", status: 503 });

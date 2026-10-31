@@ -38,7 +38,12 @@ export async function checkRemoved(
 	if (!session) return "unknown";
 	try {
 		const { data } = await client.rpc("session_removed", { session });
-		return data === true ? "removed" : data === false ? "kept" : "unknown";
+		if (data === false) return "kept";
+		if (data !== true) return "unknown";
+		// The answer is about the session asked for; a sign-in since then has a session of its own.
+		const now = await client.auth.getSession();
+		const current = sessionIdOf(now.data.session?.access_token);
+		return current && current !== session ? "kept" : "removed";
 	} catch {
 		return "unknown";
 	}

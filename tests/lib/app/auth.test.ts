@@ -5,7 +5,8 @@ import type { Runtime } from "../../../src/lib/app/runtime";
 import { removeDevice, signOut } from "../../../src/lib/auth/account";
 import { loadState } from "../../../src/lib/db/log";
 import { readMeta, type TerkaDb } from "../../../src/lib/db/schema";
-import { toastStore } from "../../../src/lib/toasts";
+import { showToast, toastStore } from "../../../src/lib/toasts";
+import { syncLabel } from "../../../src/lib/view/sync-label";
 import { openDevice, shownMatchesStored, type Device } from "../sync/support/device";
 import { answersOf, NOW, openRun } from "../sync/support/events";
 import { FakeServer } from "../sync/support/server";
@@ -188,6 +189,30 @@ describe("checking for a removal when the app opens", () => {
 		expect(seen.reloads).toEqual([false]);
 		expect(await readMeta(b.db, "ownerUserId")).toBeUndefined();
 	});
+
+	test("a device removed while signed out stays signed in when it signs in again during the open-time check", async () => {
+		const { b, server } = await removedPair();
+		b.auth.userId = null;
+		let answer = () => {};
+		const answered = new Promise<void>((resolve) => {
+			answer = resolve;
+		});
+		let asked = false;
+		server.beforeRequest = async (call) => {
+			if (call.table !== "session_removed") return;
+			asked = true;
+			await answered;
+		};
+		const { seen, deps } = opening(b);
+		const done = settleOnOpen(deps);
+		await until(() => asked);
+		await b.signIn();
+		answer();
+		await done;
+		expect(seen).toEqual({ reloads: [], notices: [] });
+		expect((await b.client.auth.getSession()).data.session).not.toBeNull();
+		expect(await readMeta<string>(b.db, "ownerUserId")).toBe("user-1");
+	});
 });
 
 // The fake server's client, with the auth events and sync channel the app listens to.
@@ -301,12 +326,25 @@ describe("a removal while the app is open", () => {
 
 	test("a removal found during sync reloads the app and shows the notice", async () => {
 		const { a, b, counts } = await openWatched();
+		// Stands in for SyncNotices, which shows a warning state once under the "sync" key.
+		const offNotices = b.store.subscribe(({ sync }, previous) => {
+			if (sync?.state === "removed" && previous.sync?.state !== "removed")
+				showToast({
+					tone: "warn",
+					label: "Sinkronisasi",
+					text: syncLabel(sync, true, 0),
+					key: "sync"
+				});
+		});
 		const prefReads = counts.prefReads;
 		await removeDevice(a.db, a.client, b.id, a.now());
 		page.get("online")?.();
 		await until(() => b.store.getState().sync?.state === "removed");
 		await until(() => counts.prefReads > prefReads);
-		expect(removedNotices().length).toBeLessThanOrEqual(1);
+		await later(50, null);
+		offNotices();
+		expect(b.store.getState().sync?.state).toBe("removed");
+		expect(removedNotices().length).toBe(1);
 		expect(await readMeta(b.db, "ownerUserId")).toBeUndefined();
 		expect(await b.ids("review_logs")).toEqual([]);
 		const [shown, stored] = await shownMatchesStored(b);
