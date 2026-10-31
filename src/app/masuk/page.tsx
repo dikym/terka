@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { SiteHeader } from "@/components/shell/site-header";
 import { OtherAccount, SignInForm, SignInSkeleton } from "@/components/screens/sign-in";
 import { useSignIn } from "@/components/screens/use-sign-in";
@@ -20,15 +20,15 @@ export default function Page() {
 	});
 
 	// Only someone already signed in when the page opens is sent on. A sign-in finishing here
-	// navigates itself, after the device's data has been claimed.
-	const decided = useRef(false);
+	// keeps the busy form up and navigates itself, after the device's data has been claimed.
+	const [signedInAtOpen, setSignedInAtOpen] = useState<boolean | null>(null);
+	if (account.known && signedInAtOpen === null) setSignedInAtOpen(!!account.email);
 	useEffect(() => {
-		if (!account.known || decided.current) return;
-		decided.current = true;
-		if (account.email) router.replace(HOME);
-	}, [account, router]);
+		if (signedInAtOpen) router.replace(HOME);
+		else if (signedInAtOpen === false) router.prefetch(HOME);
+	}, [signedInAtOpen, router]);
 
-	const waiting = !account.known || !!account.email;
+	const waiting = signedInAtOpen !== false;
 	return (
 		<>
 			<SiteHeader signIn={false} />
