@@ -76,6 +76,8 @@ entity devices {
   * created_at : timestamptz
   * last_seen_at : timestamptz = now()
   removed_at : timestamptz
+  session_id : uuid
+  removal_reason : text
   --
   maks. 20 perangkat aktif (90 hari)
 }

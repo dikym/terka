@@ -245,9 +245,13 @@ Tabel event ber-ID (`review_logs`, `review_voids`, `card_events`, `sightings`, `
 | `platform`     | text                              | Diambil dari user agent, maks. 200 karakter, hanya untuk penelusuran masalah                                                         |
 | `created_at`   | timestamptz                       | —                                                                                                                                    |
 | `last_seen_at` | timestamptz                       | Diisi server dengan `now()` saat insert dan setiap update; nilai dari klien diabaikan |
-| `removed_at`   | timestamptz                       | Kosong untuk perangkat yang masih terdaftar. Diisi klien saat pengguna menghapus perangkat dari daftar atau keluar dari akun di perangkat itu (tanpa jaringan, tanda dilewati dan perangkat hilang sendiri setelah 7 hari), dikosongkan lagi oleh update sentuhan dari perangkat yang masih dipakai. Satu-satunya kolom lain yang boleh diubah |
+| `removed_at`   | timestamptz                       | Kosong untuk perangkat yang masih terdaftar. Diisi saat pengguna menghapus perangkat dari perangkat lain (lewat `remove_device()`, alasan `removed`) atau keluar dari akun di perangkat itu (diisi klien, alasan `left`; tanpa jaringan, tanda dilewati dan perangkat hilang sendiri setelah 7 hari). Dikosongkan hanya oleh login dengan sesi baru, bukan oleh update sentuhan |
+| `session_id`   | uuid                              | Sesi login (`session_id` dari JWT) yang terakhir menulis baris ini. Diisi trigger dari `auth.jwt()`, bukan klien; sesi dari login ulang menggantikannya |
+| `removal_reason` | text                            | `removed` (dihapus dari perangkat lain) atau `left` (keluar sendiri); kosong selama `removed_at` kosong. Diisi server, tidak punya grant untuk klien |
 
 Jumlah perangkat aktif per akun dibatasi. Angka batas dan jendela waktunya ada di bagian 9; cara penegakannya di ERD bagian 2. Perangkat lama tidak dihapus, hanya berhenti terhitung aktif; perangkat yang dihapus pengguna dari daftar ditandai lewat `removed_at` dan juga tidak terhitung.
+
+**Hapus perangkat berarti mengeluarkannya.** Penghapusan berlaku untuk sesi login yang tercatat di `session_id` saat itu. `remove_device(device)` menandai `removed_at` dengan alasan `removed` dan menghapus sesi itu dari `auth.sessions` dalam satu transaksi, sehingga refresh token-nya mati; menghapus perangkat yang sudah dihapus tidak mengubah apa pun. Perangkat yang dihapus keluar seperti Keluar (data lokal dihapus, `deviceId` dipertahankan) lewat salah satu jalur: ronde sinkronisasi yang melihat barisnya `removed` untuk sesinya, pengecekan saat app dibuka (layar loading menunggu paling lama 3 detik, dilewati saat offline atau tanpa login), atau pendengar auth ketika perpanjangan token gagal karena sesi tidak ada. Pada dua jalur terakhir klien bertanya lewat `session_removed(session)`, yang hanya mengembalikan boolean dan bisa dipanggil tanpa login. Hanya jawaban ya yang menghapus data; jaringan gagal, timeout, atau RPC yang belum ada dianggap tidak tahu. Login ulang membawa sesi baru yang mengosongkan tanda penghapusan, jadi perangkat tidak keluar sendiri. Token akses yang sudah terbit tetap sah sampai kedaluwarsa (sekitar 1 jam); deteksi klien menutup celah itu untuk klien Terka.
 
 #### `user_settings`
 
@@ -492,7 +496,7 @@ Hasil kedua jalur wajib identik dengan replay penuh atas log yang sama; ini diuj
 - **Penautan identitas.** Supabase Auth otomatis menautkan identitas dengan email yang sama ke satu pengguna, dan hanya untuk email yang sudah terverifikasi. Email dari Google selalu terverifikasi, jadi pengguna yang masuk dengan email lalu dengan Google berakhir di satu `user_id`. Penautan manual untuk email berbeda (fitur beta) tidak diaktifkan.
 - **Persetujuan dan OAuth.** Dialog persetujuan kebijakan privasi tampil sebelum redirect ke Google. Waktu dan versinya disimpan di penyimpanan lokal, lalu ditulis ke `privacy_consents` segera setelah session terbentuk di callback. Jika penulisan itu gagal, sinkronisasi tertahan oleh policy persetujuan (bagian 9) sampai berhasil.
 - **Session:** disimpan supabase-js di perangkat. Access token diperbarui otomatis saat online. Saat offline, token kedaluwarsa tidak menghentikan latihan; antrean kirim terus bertambah. Jika refresh token sudah tidak berlaku saat kembali online, status berubah jadi sesi berakhir dan pengguna diminta login lagi. Outbox tidak disentuh sampai akun yang sama login kembali.
-- **Logout:** jika antrean kirim tidak kosong, pengguna diperingatkan dulu. Logout menghapus seluruh data pengguna dari IndexedDB perangkat itu, karena salinan lengkapnya ada di server dan data lokal tanpa pemilik jelas justru jadi sumber kebingungan.
+- **Logout:** jika antrean kirim tidak kosong, pengguna diperingatkan dulu. Logout menghapus seluruh data pengguna dari IndexedDB perangkat itu, karena salinan lengkapnya ada di server dan data lokal tanpa pemilik jelas justru jadi sumber kebingungan. Perangkat yang dihapus dari perangkat lain menjalankan alur yang sama, termasuk menghapus perubahan yang belum tersinkron, lalu menampilkan satu pemberitahuan.
 - **Hapus akun:** memanggil `delete_user()` (bagian 9). Seluruh baris milik pengguna ikut terhapus lewat `on delete cascade`. Data di perangkat yang sedang dipakai tetap ada sampai pengguna menghapusnya.
 
 ### 5.2 Pengiriman Data
@@ -661,7 +665,7 @@ Sistem memperlakukan kegagalan sebagai keadaan yang harus dijelaskan, bukan dibi
 
 Tes keamanan yang masih aktif pada rentang TR-52 sampai TR-59 di `Terka_Tests.md` memastikan tidak ada tabel yang terlewat.
 
-**Fungsi `security definer`.** Tiga kategori: delete_user(), has_current_consent(), dan trigger pengaman pemakaian — penghitung baris tingkat statement serta batas perangkat aktif. Semuanya memakai `set search_path = ''`.
+**Fungsi `security definer`.** Lima kategori: delete_user(), has_current_consent(), remove_device(), session_removed(), dan trigger pengaman pemakaian — penghitung baris tingkat statement serta batas perangkat aktif. Semuanya memakai `set search_path = ''`.
 
 **Hapus akun tidak boleh terhalang foreign key.** Semua foreign key di dalam data pengguna memakai `cascade`, `no action`, atau `set null` dengan daftar kolom; tidak ada `restrict`. Foreign key `(user_id, run_id)` wajib memakai `on delete set null (run_id)`, karena `set null` tanpa daftar kolom ikut mengosongkan `user_id` yang `NOT NULL` dan menggagalkan cascade. Tabel aksi lengkapnya ada di ERD bagian 8.
 

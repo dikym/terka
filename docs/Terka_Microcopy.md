@@ -474,6 +474,9 @@ Status detail hanya perlu muncul di halaman statistik atau pemeriksaan kode. Sta
 | File impor tidak valid                  | **File ini bukan ekspor Terka. Tidak ada data yang diubah.**                                                                                                             |
 | Tombol keluar                           | **Keluar**                                                                                                                                                               |
 | Keluar dengan perubahan tertunda        | **12 perubahan belum tersinkron. Keluar sekarang akan menghapusnya dari perangkat ini.** Tombol: **Sinkronkan dulu** · **Keluar**                                  |
+| Dialog hapus perangkat                  | **Hapus perangkat.** **{nama} akan keluar dari akun ini dan data di perangkat itu dihapus, termasuk perubahan yang belum tersinkron. Riwayat latihan yang sudah tersinkron tetap ada di akun.** Tombol: **Batal** · **Hapus** |
+| Perangkat berhasil dikeluarkan          | **{nama} sudah dikeluarkan dari akun** |
+| Perangkat ini dikeluarkan dari akun     | **Perangkat ini dikeluarkan dari akun dari perangkat lain.** |
 | Tombol hapus akun                       | **Hapus akun**                                                                                                                                                           |
 | Konfirmasi hapus akun                   | **Ketik HAPUS untuk menghapus akun dan seluruh data sinkron.**                                                                                                           |
 | Akun terhapus                           | **Akun dan data sinkron sudah dihapus. Data di perangkat ini tetap ada.**                                                                                                |
