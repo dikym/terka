@@ -17,7 +17,9 @@ const client: Record<string, Record<string, true>> = {
 	"fsrs_params.algorithm": enums.FSRS_ALGORITHMS,
 	"fsrs_params.status": enums.FSRS_STATUSES,
 	"practice_runs.kind": enums.RUN_KINDS,
-	"practice_runs.placement_level": enums.TIERS
+	"practice_runs.placement_level": enums.TIERS,
+	// Server-filled only; no client code writes or branches on it.
+	"devices.removal_reason": { removed: true, left: true }
 };
 
 // An enum constraint is a whole CHECK of one column against a list, or against one value.

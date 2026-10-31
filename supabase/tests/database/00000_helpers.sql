@@ -31,6 +31,18 @@ begin
 end;
 $$;
 
+create or replace function tests.as_session(user_id uuid, session_id uuid) returns void
+language plpgsql as $$
+begin
+	perform set_config('role', 'authenticated', true);
+	perform set_config(
+		'request.jwt.claims',
+		json_build_object('sub', user_id, 'role', 'authenticated', 'session_id', session_id)::text,
+		true
+	);
+end;
+$$;
+
 create or replace function tests.as_anon() returns void
 language plpgsql as $$
 begin
@@ -53,6 +65,16 @@ declare
 	id uuid := tests.uuid7();
 begin
 	insert into public.devices (user_id, id, created_at, label, platform) values (owner, id, now(), 'test', 'test');
+	return id;
+end;
+$$;
+
+create or replace function tests.add_session(owner uuid) returns uuid
+language plpgsql as $$
+declare
+	id uuid := gen_random_uuid();
+begin
+	insert into auth.sessions (id, user_id, created_at, updated_at) values (id, owner, now(), now());
 	return id;
 end;
 $$;
