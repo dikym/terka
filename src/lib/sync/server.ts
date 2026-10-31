@@ -3,7 +3,7 @@ import { toLocal, toWire } from "@/lib/db/wire";
 
 const CLOSING = ["ended_at", "answered", "correct", "active_ms", "score", "placement_level"];
 // Filled by the server; the column grants refuse them from clients.
-const SERVER_FILLED = ["received_at", "server_seq", "last_seen_at"];
+const SERVER_FILLED = ["received_at", "server_seq", "last_seen_at", "session_id", "removal_reason"];
 // Local-only: the full id list never leaves the device that ran the optimizer.
 const LOCAL_ONLY = ["training_event_ids"];
 

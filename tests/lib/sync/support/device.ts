@@ -13,7 +13,7 @@ import { EVENT_TABLES, type TerkaDb } from "../../../../src/lib/db/schema";
 import { syncNow, type SyncResult } from "../../../../src/lib/sync/sync";
 import { ruleBundle, snapshot } from "../../../core/replay/fixtures";
 import { freshDb } from "../../db/fixtures";
-import type { FakeServer } from "./server";
+import type { Auth, FakeServer } from "./server";
 
 export type Device = Awaited<ReturnType<typeof openDevice>>;
 
@@ -27,9 +27,7 @@ export async function openDevice(
 		bundle?: () => Bundle;
 	} = { name: "device" }
 ) {
-	const auth: { userId: string | null; refreshFails?: boolean; expired?: boolean } = {
-		userId: null
-	};
+	const auth: Auth = { userId: null };
 	const skew = options.skew ?? 0;
 	const now = () => server.clock.now + skew;
 	const boot = await openApp({
@@ -61,6 +59,7 @@ export async function openDevice(
 		async signIn(userId = "user-1", consent = true) {
 			if (consent) await acceptPolicy(boot.db, "v1", now());
 			auth.userId = userId;
+			auth.sessionId = crypto.randomUUID();
 			return afterSignIn(boot.db, client, now());
 		},
 

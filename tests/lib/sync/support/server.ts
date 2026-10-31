@@ -1,10 +1,16 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 
 export type Row = Record<string, unknown>;
-type Op = "select" | "insert" | "upsert" | "update";
+type Op = "select" | "insert" | "upsert" | "update" | "rpc";
 type PgError = { code: string; message: string };
-type Result = { data: Row[] | Row | null; error: PgError | null; status: number };
+type Result = { data: Row[] | Row | boolean | null; error: PgError | null; status: number };
 type Options = { onConflict?: string; ignoreDuplicates?: boolean };
+export type Auth = {
+	userId: string | null;
+	sessionId?: string;
+	refreshFails?: boolean;
+	expired?: boolean;
+};
 
 export type Rule = {
 	table?: string;
@@ -29,7 +35,7 @@ const LOG_TABLES = [
 ];
 const DAILY_TABLES = ["review_logs", "sightings", "fact_views"];
 const CLOSING = ["ended_at", "answered", "correct", "active_ms", "score", "placement_level"];
-const SERVER_FILLED = ["received_at", "server_seq", "last_seen_at"];
+const SERVER_FILLED = ["received_at", "server_seq", "last_seen_at", "session_id", "removal_reason"];
 const UPDATABLE: Record<string, string[]> = {
 	practice_runs: CLOSING,
 	devices: ["last_seen_at", "removed_at"],
@@ -53,6 +59,9 @@ export class FakeServer {
 	signupsOpen = true;
 	// False for a server that has not run the migration that adds removed_at.
 	deviceRemoval = true;
+	// False for a server without remove_device and session_removed.
+	deviceSessions = true;
+	revoked = new Set<string>();
 	// A server may return fewer rows than asked for; a short page is not the end of a table.
 	rowCap = Infinity;
 	policyVersions: Row[] = [
@@ -101,12 +110,18 @@ export class FakeServer {
 		});
 	}
 
-	client(auth: { userId: string | null; refreshFails?: boolean; expired?: boolean }) {
+	client(auth: Auth) {
+		auth.sessionId ??= crypto.randomUUID();
+		const accessToken = () =>
+			`x.${Buffer.from(JSON.stringify({ session_id: auth.sessionId })).toString("base64url")}.y`;
 		return {
 			auth: {
 				getSession: async () => ({
 					data: {
-						session: auth.userId && !auth.expired ? { user: { id: auth.userId } } : null
+						session:
+							auth.userId && !auth.expired
+								? { user: { id: auth.userId }, access_token: accessToken() }
+								: null
 					},
 					error: null
 				}),
@@ -115,13 +130,19 @@ export class FakeServer {
 					return { error: null };
 				},
 				refreshSession: async () => {
+					if (this.revoked.has(auth.sessionId!))
+						return {
+							data: { session: null, user: null },
+							error: { code: "session_not_found", message: "Session not found" }
+						};
 					if (auth.refreshFails)
 						return { data: {}, error: { message: "refresh refused" } };
 					auth.expired = false;
 					return { data: {}, error: null };
 				}
 			},
-			from: (table: string) => new Query(this, table, auth)
+			from: (table: string) => new Query(this, table, auth),
+			rpc: (name: string, args: Row = {}) => new Query(this, name, auth).call(args)
 		} as unknown as SupabaseClient;
 	}
 
@@ -193,7 +214,13 @@ export class FakeServer {
 		return null;
 	}
 
-	insert(table: string, user: string, payload: Row[], options: Options): Result {
+	insert(
+		table: string,
+		user: string,
+		session: string | null,
+		payload: Row[],
+		options: Options
+	): Result {
 		const columns = (options.onConflict ?? "user_id,id").split(",");
 		const keyOf = (row: Row) =>
 			columns.map((column) => (column === "user_id" ? user : row[column]));
@@ -243,7 +270,9 @@ export class FakeServer {
 				stored.server_seq = this.nextSeq(table);
 			} else if (table === "devices") {
 				stored.last_seen_at = new Date(this.clock.now).toISOString();
+				stored.session_id = session;
 				stored.removed_at = null;
+				stored.removal_reason = null;
 			} else if (LOG_TABLES.includes(table)) stored.server_seq = this.nextSeq(table);
 			staged.push(stored);
 		}
@@ -332,7 +361,13 @@ export class FakeServer {
 		return { data: out, error: null, status: 201 };
 	}
 
-	update(table: string, user: string, values: Row, matches: (row: Row) => boolean): Result {
+	update(
+		table: string,
+		user: string,
+		session: string | null,
+		values: Row,
+		matches: (row: Row) => boolean
+	): Result {
 		if (table === "devices" && "removed_at" in values && !this.deviceRemoval)
 			return failure(
 				400,
@@ -343,8 +378,10 @@ export class FakeServer {
 		for (const column of Object.keys(values))
 			if (!allowed.includes(column))
 				return failure(403, "42501", `permission denied for column ${column} of ${table}`);
+		const matched = this.rows(table, user).filter(matches);
+		if (table === "devices") return this.updateDevices(matched, session, values);
 		const changed: Row[] = [];
-		for (const row of this.rows(table, user).filter(matches)) {
+		for (const row of matched) {
 			if (table === "practice_runs") {
 				if (row.ended_at !== null)
 					return failure(400, "TK006", "the session is already closed");
@@ -365,13 +402,62 @@ export class FakeServer {
 						'new row violates check constraint "practice_runs_check"'
 					);
 				Object.assign(row, values, { server_seq: this.nextSeq(table) });
-			} else if (table === "devices") {
-				row.last_seen_at = new Date(this.clock.now).toISOString();
-				if ("removed_at" in values) row.removed_at = values.removed_at;
 			}
 			changed.push(row);
 		}
 		return { data: changed, error: null, status: 200 };
+	}
+
+	// What the device_seen trigger makes of a client's update to its device rows.
+	private updateDevices(rows: Row[], session: string | null, values: Row): Result {
+		const next = rows.map((row): Row | null => {
+			const removedAt = "removed_at" in values ? values.removed_at : row.removed_at;
+			const owner = row.session_id ?? session;
+			if (!session || owner === session)
+				return row.removal_reason === "removed"
+					? { session_id: owner }
+					: {
+							session_id: owner,
+							removed_at: removedAt,
+							removal_reason: removedAt ? "left" : null
+						};
+			if (removedAt && removedAt !== row.removed_at) return null;
+			return { session_id: session, removed_at: null, removal_reason: null };
+		});
+		if (next.includes(null)) return failure(400, "TK007", "a device can only mark itself");
+		const seen = new Date(this.clock.now).toISOString();
+		rows.forEach((row, index) => Object.assign(row, next[index], { last_seen_at: seen }));
+		return { data: rows, error: null, status: 200 };
+	}
+
+	rpc(name: string, args: Row, user: string | null, session: string | null): Result {
+		if (this.deviceSessions && name === "session_removed")
+			return {
+				data: this.list("devices").some(
+					(row) => row.session_id === args.session && row.removal_reason === "removed"
+				),
+				error: null,
+				status: 200
+			};
+		if (this.deviceSessions && name === "remove_device") {
+			if (!user) return failure(401, "42501", "permission denied for function remove_device");
+			const target = this.rowOf("devices", String(args.device), user);
+			if (!target) return failure(400, "TK009", "no such device");
+			if (session && target.session_id === session)
+				return failure(400, "TK008", "cannot remove this session");
+			if (target.removal_reason !== "removed")
+				Object.assign(target, {
+					removed_at: new Date(this.clock.now).toISOString(),
+					removal_reason: "removed"
+				});
+			if (target.session_id) this.revoked.add(String(target.session_id));
+			return { data: null, error: null, status: 204 };
+		}
+		return failure(
+			404,
+			"PGRST202",
+			`Could not find the function public.${name} in the schema cache`
+		);
 	}
 }
 
@@ -390,7 +476,7 @@ class Query implements PromiseLike<Result> {
 	constructor(
 		private server: FakeServer,
 		private table: string,
-		private auth: { userId: string | null; expired?: boolean }
+		private auth: Auth
 	) {}
 
 	select(columns = "*") {
@@ -436,6 +522,11 @@ class Query implements PromiseLike<Result> {
 	retry() {
 		return this;
 	}
+	call(args: Row) {
+		this.kind = "rpc";
+		this.values = args;
+		return this;
+	}
 	single() {
 		this.one = true;
 		return this;
@@ -459,17 +550,22 @@ class Query implements PromiseLike<Result> {
 		const user = this.auth.userId && !this.auth.expired ? this.auth.userId : null;
 		server.calls.push({ table: this.table, op: this.kind, user });
 		if (server.beforeRequest) await server.beforeRequest({ table: this.table, op: this.kind });
-		if (!user) return failure(401, "PGRST301", "JWT expired");
-		const payload = this.kind === "update" ? this.values : this.payload;
+		// session_removed is open to a device that is already signed out.
+		if (!user && this.kind !== "rpc") return failure(401, "PGRST301", "JWT expired");
+		const payload = this.kind === "update" || this.kind === "rpc" ? this.values : this.payload;
 		const rule = server.takeRule(this.table, this.kind, payload);
 		if (rule && !rule.commit)
 			return failure(rule.status ?? 500, rule.code ?? "", rule.message ?? "server error");
-		const result = this.execute(user);
+		const session = this.auth.sessionId ?? null;
+		const result =
+			this.kind === "rpc"
+				? server.rpc(this.table, this.values, user, session)
+				: this.execute(user!, session);
 		if (rule?.commit) return failure(0, "", "TypeError: Failed to fetch");
 		return result;
 	}
 
-	private execute(user: string): Result {
+	private execute(user: string, session: string | null): Result {
 		const server = this.server;
 		if (this.kind === "select") {
 			if (this.table === "privacy_policy_versions")
@@ -500,10 +596,10 @@ class Query implements PromiseLike<Result> {
 		}
 		const result =
 			this.kind === "insert"
-				? server.insert(this.table, user, this.payload, this.options)
+				? server.insert(this.table, user, session, this.payload, this.options)
 				: this.kind === "upsert"
 					? server.upsert(this.table, user, this.payload, this.options)
-					: server.update(this.table, user, this.values, (row) =>
+					: server.update(this.table, user, session, this.values, (row) =>
 							this.filters.every((test) => test(row))
 						);
 		if (result.error || !this.returning) return { ...result, data: null };

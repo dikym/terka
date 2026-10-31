@@ -105,8 +105,8 @@ export async function deleteAccount(
 }
 
 /**
- * Takes another device off the account's list. The row stays on the server, marked, because its
- * sessions and answers still point at it; a device that is really in use clears the mark again.
+ * Takes another device off the account's list and ends its session, so it signs out the next time
+ * it reaches the server. The row stays, marked, because its sessions and answers still point at it.
  */
 export async function removeDevice(
 	db: TerkaDb,
@@ -115,12 +115,8 @@ export async function removeDevice(
 	now: number
 ): Promise<{ status: "ok" } | { status: "failed" }> {
 	if (id === (await readMeta<string>(db, "deviceId"))) return { status: "failed" };
-	const response = await client
-		.from("devices")
-		.update({ removed_at: new Date(now).toISOString() })
-		.eq("id", id)
-		.select("id");
-	if (response.error || !response.data?.length) return { status: "failed" };
+	const { error } = await client.rpc("remove_device", { device: id });
+	if (error) return { status: "failed" };
 	const list = (await readMeta<DeviceInfo[]>(db, "deviceList")) ?? [];
 	await db.sync_meta.put({
 		key: "deviceList",

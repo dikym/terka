@@ -71,6 +71,7 @@ describe("removing a device", () => {
 		const result = await removeDevice(a.db, a.client, b.id, a.now());
 		expect(result).toEqual({ status: "ok" });
 		expect(server.rowOf("devices", b.id)?.removed_at).not.toBeNull();
+		expect(server.rowOf("devices", b.id)?.removal_reason).toBe("removed");
 		expect(await listed(a)).toEqual([a.id]);
 	});
 
@@ -103,17 +104,32 @@ describe("removing a device", () => {
 		expect(server.rowOf("devices", b.id)).toBeDefined();
 	});
 
-	test("is undone by the next touch from a device that is really in use", async () => {
+	test("revokes the removed device's session", async () => {
 		const { server, a, b } = await pair();
 		await a.sync();
 		await b.sync();
 		await a.sync();
 		await removeDevice(a.db, a.client, b.id, a.now());
+		expect(server.revoked.has(b.auth.sessionId!)).toBe(true);
+		expect(server.revoked.has(a.auth.sessionId!)).toBe(false);
+		expect((await b.client.auth.refreshSession()).error).toMatchObject({
+			code: "session_not_found"
+		});
+		expect((await a.client.auth.refreshSession()).error).toBeNull();
+	});
+
+	test("stays removed when the removed device touches again", async () => {
+		const { server, a, b } = await pair();
+		await a.sync();
+		await b.sync();
+		await a.sync();
+		await removeDevice(a.db, a.client, b.id, a.now());
+		const removedAt = server.rowOf("devices", b.id)?.removed_at;
 		server.clock.now += HOUR + MINUTE;
 		await b.sync();
-		expect(server.rowOf("devices", b.id)?.removed_at).toBeNull();
+		expect(server.rowOf("devices", b.id)?.removed_at).toBe(removedAt);
 		await a.sync();
-		expect(await listed(a)).toContain(b.id);
+		expect(await listed(a)).not.toContain(b.id);
 	});
 
 	test("reports a failure and changes nothing when the server refuses", async () => {
@@ -121,26 +137,28 @@ describe("removing a device", () => {
 		await a.sync();
 		await b.sync();
 		await a.sync();
-		server.fail({ table: "devices", op: "update", status: 503 });
+		server.fail({ table: "remove_device", op: "rpc", status: 503 });
 		const result = await removeDevice(a.db, a.client, b.id, a.now());
 		expect(result).toEqual({ status: "failed" });
+		expect(server.rowOf("devices", b.id)?.removed_at).toBeNull();
 		expect(await listed(a)).toContain(b.id);
 	});
 
-	test("reports a failure on a server that has no such column", async () => {
+	test("reports a failure on a server without the removal function", async () => {
 		const { server, a, b } = await pair();
 		await a.sync();
 		await b.sync();
 		await a.sync();
-		server.deviceRemoval = false;
+		server.deviceSessions = false;
 		const result = await removeDevice(a.db, a.client, b.id, a.now());
 		expect(result).toEqual({ status: "failed" });
+		expect(server.rowOf("devices", b.id)?.removed_at).toBeNull();
 		expect(await listed(a)).toContain(b.id);
 	});
 
-	test("still touches the device on a server that has no such column", async () => {
+	test("still touches the device on a server without the removal function", async () => {
 		const { server, a } = await pair();
-		server.deviceRemoval = false;
+		server.deviceSessions = false;
 		await a.sync();
 		const touched = server.rowOf("devices", a.id)?.last_seen_at;
 		server.clock.now += HOUR + MINUTE;
