@@ -62,6 +62,8 @@ export class FakeServer {
 	// False for a server without remove_device and session_removed.
 	deviceSessions = true;
 	revoked = new Set<string>();
+	// What the auth server answers when a revoked session refreshes; it may not name the session.
+	revokedCode = "session_not_found";
 	// A server may return fewer rows than asked for; a short page is not the end of a table.
 	rowCap = Infinity;
 	policyVersions: Row[] = [
@@ -114,32 +116,36 @@ export class FakeServer {
 		auth.sessionId ??= crypto.randomUUID();
 		const accessToken = () =>
 			`x.${Buffer.from(JSON.stringify({ session_id: auth.sessionId })).toString("base64url")}.y`;
+		const refreshSession = async () => {
+			if (this.revoked.has(auth.sessionId!))
+				return {
+					data: { session: null, user: null },
+					error: { code: this.revokedCode, message: "Session not found" }
+				};
+			if (auth.refreshFails) return { data: {}, error: { message: "refresh refused" } };
+			auth.expired = false;
+			return { data: {}, error: null };
+		};
 		return {
 			auth: {
-				getSession: async () => ({
-					data: {
-						session:
-							auth.userId && !auth.expired
-								? { user: { id: auth.userId }, access_token: accessToken() }
-								: null
-					},
-					error: null
-				}),
+				// As in auth-js, reading an expired session refreshes it, and a failed refresh leaves none.
+				getSession: async () => {
+					const refreshed = auth.userId && auth.expired ? await refreshSession() : null;
+					return {
+						data: {
+							session:
+								auth.userId && !auth.expired
+									? { user: { id: auth.userId }, access_token: accessToken() }
+									: null
+						},
+						error: refreshed?.error ?? null
+					};
+				},
 				signOut: async () => {
 					auth.userId = null;
 					return { error: null };
 				},
-				refreshSession: async () => {
-					if (this.revoked.has(auth.sessionId!))
-						return {
-							data: { session: null, user: null },
-							error: { code: "session_not_found", message: "Session not found" }
-						};
-					if (auth.refreshFails)
-						return { data: {}, error: { message: "refresh refused" } };
-					auth.expired = false;
-					return { data: {}, error: null };
-				}
+				refreshSession
 			},
 			from: (table: string) => new Query(this, table, auth),
 			rpc: (name: string, args: Row = {}) => new Query(this, name, auth).call(args)

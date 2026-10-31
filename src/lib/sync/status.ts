@@ -17,7 +17,7 @@ export type SyncFacts = {
 };
 
 export type SyncStatus = { quarantined: number; lastSyncAt: number | null } & (
-	| { state: "otherAccount" | "outdated" | "sessionEnded" | "offline" }
+	| { state: "otherAccount" | "outdated" | "sessionEnded" | "removed" | "offline" }
 	| { state: BlockReason }
 	| { state: "unreachable"; days: number }
 	| { state: "pending"; count: number }

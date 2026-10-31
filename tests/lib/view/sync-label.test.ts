@@ -18,6 +18,12 @@ test("sync states read as the account screen copy", () => {
 	).toBe("Server sinkronisasi tidak terjangkau sejak 4 hari lalu. Latihan tetap berjalan.");
 });
 
+test("a removed device reports that it was removed", () => {
+	expect(syncLabel({ quarantined: 0, lastSyncAt: null, state: "removed" }, true, NOW)).toBe(
+		"Perangkat ini dikeluarkan dari akun dari perangkat lain."
+	);
+});
+
 test("without an account the progress stays on this device", () => {
 	expect(syncLabel(null, false, NOW)).toBe("Tersimpan di perangkat ini");
 });

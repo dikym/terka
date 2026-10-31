@@ -244,7 +244,12 @@ describe("repeated rounds", () => {
 		await b.sync();
 		const writes = server.calls
 			.slice(before)
-			.filter((call) => call.op !== "select" && call.table !== "devices");
+			.filter(
+				(call) =>
+					call.op !== "select" &&
+					call.table !== "devices" &&
+					call.table !== "session_removed"
+			);
 		expect(writes).toEqual([]);
 		expect(server.ids("review_logs")).toEqual(rows);
 		expect(await a.outbox()).toEqual([]);

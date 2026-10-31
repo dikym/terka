@@ -24,6 +24,8 @@ export function syncLabel(
 			return "Sesi masuk berakhir. Masuk lagi untuk melanjutkan sinkronisasi.";
 		case "unreachable":
 			return `Server sinkronisasi tidak terjangkau sejak ${status.days} hari lalu. Latihan tetap berjalan.`;
+		case "removed":
+			return "Perangkat ini dikeluarkan dari akun dari perangkat lain.";
 		case "otherAccount":
 			return "Data di perangkat ini milik akun lain.";
 		case "outdated":

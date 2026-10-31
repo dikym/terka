@@ -1,9 +1,14 @@
 import { describe, expect, test } from "bun:test";
 import { LEAVE_WAIT_MS, removeDevice, signOut } from "../../../src/lib/auth/account";
+import { createAppStore } from "../../../src/lib/app/store";
 import { listDevices } from "../../../src/lib/db/device";
+import { readMeta, wipesOf } from "../../../src/lib/db/schema";
+import type { SyncStatus } from "../../../src/lib/sync/status";
+import { syncNow, type SyncResult } from "../../../src/lib/sync/sync";
 import { deviceRows } from "../../../src/lib/view/account";
-import { openDevice } from "./support/device";
+import { openDevice, type Device } from "./support/device";
 import { answersOf, DAY, HOUR, MINUTE, NOW, openRun, review } from "./support/events";
+import { snapshot } from "../../core/replay/fixtures";
 import { FakeServer } from "./support/server";
 import { pair, trio } from "./support/world";
 
@@ -264,5 +269,150 @@ describe("signing out", () => {
 		const out = await signOut(b.db, b.client, { confirmed: false, now: b.now() });
 		expect(out.status).toBe("pending");
 		expect(server.rowOf("devices", b.id)?.removed_at).toBeNull();
+	});
+});
+
+describe("signing out a removed device", () => {
+	const settled = async () => {
+		const world = await pair();
+		const daily = openRun("daily", NOW, { plannedCount: 1 });
+		await world.b.record(daily);
+		await world.b.record(...answersOf(daily, ["ba"], NOW));
+		for (const device of [world.a, world.b, world.a]) await device.sync();
+		return world;
+	};
+	const removeB = ({ a, b }: { a: Device; b: Device }) =>
+		removeDevice(a.db, a.client, b.id, a.now());
+	const signedIn = async (device: Device) =>
+		(await device.client.auth.getSession()).data.session !== null;
+	const REMOVED: SyncStatus = { state: "removed", quarantined: 0, lastSyncAt: null };
+
+	test("the removed device signs out and wipes on its next round", async () => {
+		const world = await settled();
+		const { b } = world;
+		await removeB(world);
+		const result = await b.sync();
+		expect(result.status).toEqual(REMOVED);
+		expect(result.nextAt).toBeNull();
+		expect(result.hold).toBe(false);
+		expect(await signedIn(b)).toBe(false);
+		expect(await b.ids("review_logs")).toEqual([]);
+		expect(await b.ids("practice_runs")).toEqual([]);
+		expect(await readMeta(b.db, "ownerUserId")).toBeUndefined();
+		expect(await readMeta<string>(b.db, "deviceId")).toBe(b.id);
+		expect(snapshot(b.state())).toEqual(snapshot(await b.rebuilt()));
+	});
+
+	test("the removed device sends what it had waiting before it leaves", async () => {
+		const world = await settled();
+		const { server, b } = world;
+		await b.record(review("ba", "code2region", NOW + MINUTE));
+		await removeB(world);
+		const result = await b.sync();
+		expect(result.status.state).toBe("removed");
+		expect(result.sent).toBe(1);
+		expect(server.rows("review_logs")).toHaveLength(2);
+		expect(await b.ids("review_logs")).toEqual([]);
+		expect(await b.outbox()).toEqual([]);
+	});
+
+	test("the removed device signs out after its token can no longer refresh", async () => {
+		const { server, a, b, c } = await trio();
+		for (const device of [a, b, c, a]) await device.sync();
+		await removeDevice(a.db, a.client, b.id, a.now());
+		await removeDevice(a.db, a.client, c.id, a.now());
+		server.revokedCode = "refresh_token_not_found";
+		b.auth.expired = true;
+		expect((await b.sync()).status).toEqual(REMOVED);
+		await c.record(review("ba", "code2region", NOW + MINUTE));
+		server.fail({ table: "review_logs", op: "insert", status: 401, code: "PGRST301" });
+		expect((await c.sync()).status).toEqual(REMOVED);
+		for (const device of [b, c]) {
+			expect(await signedIn(device)).toBe(false);
+			expect(await device.ids("review_logs")).toEqual([]);
+		}
+	});
+
+	test("a session that ends for another reason keeps the data", async () => {
+		const { server, b } = await settled();
+		server.revoked.add(b.auth.sessionId!);
+		b.auth.expired = true;
+		const result = await b.sync();
+		expect(result.status.state).toBe("sessionEnded");
+		expect(await b.ids("review_logs")).toHaveLength(1);
+		expect(await readMeta<string>(b.db, "ownerUserId")).toBe("user-1");
+		expect(server.calls.at(-1)?.table).toBe("session_removed");
+	});
+
+	test("a device that signed in again after removal is not signed out", async () => {
+		const world = await settled();
+		const { server, b } = world;
+		await removeB(world);
+		const removedSession = b.auth.sessionId;
+		await b.signIn();
+		expect(b.auth.sessionId).not.toBe(removedSession);
+		expect((await b.sync()).status.state).toBe("synced");
+		expect(server.rowOf("devices", b.id)?.session_id).toBe(removedSession);
+		server.clock.now += HOUR + MINUTE;
+		expect((await b.sync()).status.state).toBe("synced");
+		expect(server.rowOf("devices", b.id)).toMatchObject({
+			session_id: b.auth.sessionId,
+			removed_at: null,
+			removal_reason: null
+		});
+		expect((await b.sync()).status.state).toBe("synced");
+		expect(await signedIn(b)).toBe(true);
+		expect(await b.ids("review_logs")).toHaveLength(1);
+	});
+
+	test("a removal check the server cannot answer keeps the data", async () => {
+		const world = await settled();
+		const { server, b } = world;
+		await removeB(world);
+		server.fail({ table: "session_removed", op: "rpc", status: 503 });
+		const result = await b.sync();
+		expect(result.status.state).toBe("synced");
+		expect(await signedIn(b)).toBe(true);
+		expect(await b.ids("review_logs")).toHaveLength(1);
+	});
+
+	test("a second tab of the removed device sees the wipe", async () => {
+		const world = await settled();
+		const { server, b } = world;
+		const tab = createAppStore({
+			db: b.db,
+			bundle: b.store.bundle,
+			log: b.store.getState().log
+		});
+		let checked = false;
+		let first: SyncResult | null = null;
+		// The removal and the first tab's round land while the second tab is pulling.
+		server.beforeRequest = async ({ table, op }) => {
+			if (table === "session_removed") checked = true;
+			else if (checked && !first && op === "select") {
+				first = {} as SyncResult;
+				await removeB(world);
+				first = await b.sync();
+			}
+		};
+		const sentBefore = server.rows("review_logs").length;
+		const wipes = await wipesOf(b.db);
+		const second = await syncNow(
+			b.db,
+			b.client,
+			{ now: b.now(), random: () => 0.5, online: true, retryAfter: () => null },
+			tab.getState().log,
+			tab.bundle
+		);
+		server.beforeRequest = null;
+		expect(first!.status).toEqual(REMOVED);
+		expect(second.status.state).not.toBe("removed");
+		expect(await wipesOf(b.db)).toBe(wipes + 1);
+		expect(second.sent).toBe(0);
+		expect(server.rows("review_logs")).toHaveLength(sentBefore);
+		expect(second.log.logVersion).toBe(first!.log.logVersion);
+		expect(snapshot(second.log.state)).toEqual(snapshot(await b.rebuilt()));
+		expect(await readMeta(b.db, "lastSyncAt")).toBeUndefined();
+		expect(await b.ids("review_logs")).toEqual([]);
 	});
 });

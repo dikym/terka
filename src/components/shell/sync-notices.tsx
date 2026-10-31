@@ -9,6 +9,7 @@ import { syncLabel } from "@/lib/view/sync-label";
 // States that need the user's eye; synced, pending and staged stay in the sync chip.
 const WARN = new Set<SyncStatus["state"]>([
 	"sessionEnded",
+	"removed",
 	"outdated",
 	"otherAccount",
 	"unreachable",
