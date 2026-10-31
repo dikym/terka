@@ -1,5 +1,5 @@
 begin;
-select plan(19);
+select plan(20);
 
 select set_config('tests.a', tests.create_user('sessions-a@test.terka')::text, true);
 select set_config('tests.b', tests.create_user('sessions-b@test.terka')::text, true);
@@ -10,6 +10,7 @@ select set_config('tests.b_device', tests.add_device(current_setting('tests.b'):
 select set_config('tests.legacy', tests.add_device(current_setting('tests.a')::uuid)::text, true);
 select set_config('tests.legacy_left', tests.add_device(current_setting('tests.a')::uuid)::text, true);
 select set_config('tests.legacy_marked', tests.add_device(current_setting('tests.a')::uuid)::text, true);
+select set_config('tests.legacy_removed', tests.add_device(current_setting('tests.a')::uuid)::text, true);
 update public.devices set removed_at = now(), last_seen_at = now() - interval '2 days'
 where id = current_setting('tests.legacy_left')::uuid;
 update public.devices set removal_reason = 'left' where removed_at is not null;
@@ -110,6 +111,19 @@ select ok(
 	(select session_id is null and removed_at is not null and removal_reason = 'left'
 	from public.devices where id = current_setting('tests.legacy_marked')::uuid),
 	'a direct mark on a legacy device does not bind the marking session'
+);
+
+select tests.as_session(current_setting('tests.a')::uuid, current_setting('tests.s1')::uuid);
+select public.remove_device(current_setting('tests.legacy_removed')::uuid);
+select tests.as_owner();
+update public.devices set removed_at = now() - interval '1 day'
+where id = current_setting('tests.legacy_removed')::uuid;
+select tests.as_session(current_setting('tests.a')::uuid, current_setting('tests.s2')::uuid);
+update public.devices set removed_at = now() where id = current_setting('tests.legacy_removed')::uuid;
+select ok(
+	(select session_id is null and removed_at = now() - interval '1 day' and removal_reason = 'removed'
+	from public.devices where id = current_setting('tests.legacy_removed')::uuid),
+	'a direct mark on a removed legacy device keeps the removal and stays unbound'
 );
 
 select tests.as_anon();
