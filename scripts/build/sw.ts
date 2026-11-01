@@ -29,7 +29,8 @@ const options = (outDir: string) => ({
 export async function buildServiceWorker(outDir: string): Promise<string[]> {
 	const { manifestEntries, warnings } = await getManifest(options(outDir));
 	const missing = missingFromManifest((manifestEntries ?? []).map((entry) => entry.url));
-	if (missing.length > 0) return missing.map((url) => `${url} is not in the precache manifest`);
+	if (missing.length > 0)
+		return [...warnings, ...missing.map((url) => `${url} is not in the precache manifest`)];
 	const bundled = await Bun.build({
 		entrypoints: [join(import.meta.dir, "../../src/sw/sw.ts")],
 		target: "browser",
