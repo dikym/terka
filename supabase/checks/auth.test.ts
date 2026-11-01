@@ -120,6 +120,21 @@ describe("signing in with an emailed code", () => {
 			status: "tooSoon"
 		});
 	});
+
+	test("a password a stranger set at sign-up stops working once the owner signs in by code", async () => {
+		const email = uniqueEmail("hijack");
+		const stranger = createClient(API_URL, status.ANON_KEY, {
+			auth: { persistSession: false }
+		});
+		const password = "stranger-password-1";
+		const signedUp = await stranger.auth.signUp({ email, password });
+		expect(signedUp.data.session).toBeNull();
+		// The sign-up email counts toward the one-a-minute limit; the owner asks later than that.
+		await sql`update auth.users set confirmation_sent_at = now() - interval '2 minutes' where email = ${email}`;
+		expect((await signInByEmail(await browser(), email)).status).toBe("ok");
+		const attempt = await stranger.auth.signInWithPassword({ email, password });
+		expect(attempt.data.session).toBeNull();
+	});
 });
 
 describe("claiming and switching accounts", () => {

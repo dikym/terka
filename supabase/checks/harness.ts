@@ -20,13 +20,19 @@ export type Device = { db: TerkaDb; client: SupabaseClient; userId: string; devi
 
 // Test-only sign-in; the app signs in with Google or an email code (C3).
 export async function signIn(email: string): Promise<{ client: SupabaseClient; userId: string }> {
-	const password = "test-password-1";
-	const created = await admin.auth.admin.createUser({ email, password, email_confirm: true });
+	const created = await admin.auth.admin.createUser({ email, email_confirm: true });
 	if (created.error && !created.error.message.includes("already")) throw created.error;
+	// The admin API issues the code without sending an email, so the one-a-minute limit does not apply.
+	const link = await admin.auth.admin.generateLink({ type: "magiclink", email });
+	if (link.error) throw link.error;
 	const client = createClient(API_URL, status.ANON_KEY, { auth: { persistSession: false } });
-	const signed = await client.auth.signInWithPassword({ email, password });
+	const signed = await client.auth.verifyOtp({
+		email,
+		token: link.data.properties.email_otp,
+		type: "email"
+	});
 	if (signed.error) throw signed.error;
-	return { client, userId: signed.data.user.id };
+	return { client, userId: signed.data.user!.id };
 }
 
 export const uniqueEmail = (name: string) => `${name}-${crypto.randomUUID()}@test.terka`;

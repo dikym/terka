@@ -74,7 +74,10 @@ Penyiapan proyek sungguhan (tidak diotomasi):
    persetujuan berisi nama Terka dan tautan kebijakan privasi, domain
    `terka.my.id` diverifikasi di Google Search Console.
 3. SMTP Resend dengan SPF, DKIM, dan DMARC; batas email per jam 80; template
-   email dari `supabase/templates/magic_link.html`.
+   email dari `supabase/templates/magic_link.html` untuk Magic Link dan Confirm
+   signup. Di Auth > Email: "Confirm email" aktif dan Email OTP Expiration 900
+   detik, sama dengan `supabase/config.toml`. Tanpa "Confirm email", password yang
+   didaftarkan orang lain lewat API ikut berlaku di akun pemilik alamat.
 4. Turnstile: site key di aplikasi, secret di pengaturan CAPTCHA Supabase Auth.
    Stack lokal tidak memakai CAPTCHA, karena verifikasinya memerlukan internet.
 5. Site URL `https://terka.my.id`; Redirect URL hanya
@@ -83,8 +86,10 @@ Penyiapan proyek sungguhan (tidak diotomasi):
 
 Pemeriksaan manual sebelum login dibuka: login Google di Chrome Android dan
 Safari iOS (termasuk PWA), email yang sama lewat Google dan kode email berakhir
-di satu akun, kode kedaluwarsa setelah satu jam, permintaan tanpa token
-Turnstile ditolak, email ke-81 dalam satu jam ditolak, serta SPF/DKIM/DMARC.
+di satu akun, kode kedaluwarsa setelah 15 menit, permintaan tanpa token
+Turnstile ditolak, email ke-81 dalam satu jam ditolak, `signUp` dengan password
+lewat API tidak memberi session dan password itu gagal setelah pemilik masuk
+dengan kode, serta SPF/DKIM/DMARC.
 
 ## Build dan rilis
 

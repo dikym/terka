@@ -76,7 +76,7 @@ openai_api_key = "env(OPENAI_API_KEY)"
 
 # Email testing server. Emails sent with the local dev setup are not actually sent - rather, they
 # are monitored, and you can view the emails that would have been sent from the web interface.
-[inbucket]
+[local_smtp]
 enabled = true
 port = 54324
 
@@ -144,14 +144,16 @@ enable_signup = true
 # If enabled, a user will be required to confirm any email change on both the old, and new email
 # addresses. If disabled, only the new email is required to confirm.
 double_confirm_changes = true
-enable_confirmations = false
+# The Auth API takes a password on sign-up even though the app never asks for one. Confirmation keeps
+# such an account unusable until the owner signs in by code, which replaces that password.
+enable_confirmations = true
 # If enabled, users will need to reauthenticate or have logged in recently to change their password.
 secure_password_change = false
 # Controls the minimum amount of time that must pass before sending another signup confirmation or password reset email.
 max_frequency = "60s"
 otp_length = 6
-# Number of seconds before the email OTP expires (defaults to 1 hour).
-otp_expiry = 3600
+# A 6-digit code is guessable within an hour by requests spread over many addresses.
+otp_expiry = 900
 
 # The same email carries the link and the 6-digit code; new and returning accounts get it alike.
 [auth.email.template.magic_link]
