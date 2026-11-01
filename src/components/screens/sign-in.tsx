@@ -30,9 +30,9 @@ function Hint({ children }: { children: React.ReactNode }) {
 }
 
 /** Whole seconds left of a wait started with `start`, counted down once a second. */
-function useCooldown() {
-	const [until, setUntil] = useState(0);
-	const [now, setNow] = useState(0);
+function useCooldown(initialUntil = 0) {
+	const [until, setUntil] = useState(initialUntil);
+	const [now, setNow] = useState(() => (initialUntil ? Date.now() : 0));
 	useEffect(() => {
 		if (!until) return;
 		const timer = setInterval(() => {
@@ -52,17 +52,41 @@ function useCooldown() {
 	};
 }
 
+const PENDING_KEY = "terka:pending-code";
+const CODE_LIFETIME_MS = 15 * 60_000;
+
+type PendingCode = { email: string; sentAt: number };
+
+// A reload mid-sign-in (an app update, a discarded tab) must not strand someone whose code is already sent.
+function readPending(): PendingCode | null {
+	try {
+		const raw = sessionStorage.getItem(PENDING_KEY);
+		const pending = raw ? (JSON.parse(raw) as PendingCode) : null;
+		if (pending && Date.now() - pending.sentAt < CODE_LIFETIME_MS) return pending;
+		sessionStorage.removeItem(PENDING_KEY);
+	} catch {}
+	return null;
+}
+
+function writePending(pending: PendingCode | null) {
+	try {
+		if (pending) sessionStorage.setItem(PENDING_KEY, JSON.stringify(pending));
+		else sessionStorage.removeItem(PENDING_KEY);
+	} catch {}
+}
+
 /**
  * Sign-in: consent first on every attempt, then Google or an emailed code. Each handler
  * returns the message to show, or null when nothing needs saying.
  */
 export function SignInForm({ signIn }: { signIn: SignIn }) {
-	const [step, setStep] = useState<"consent" | "choose" | "code">("consent");
-	const [email, setEmail] = useState("");
+	const [pending] = useState(readPending);
+	const [step, setStep] = useState<"consent" | "choose" | "code">(pending ? "code" : "consent");
+	const [email, setEmail] = useState(pending?.email ?? "");
 	const [code, setCode] = useState("");
 	const [busy, setBusy] = useState(false);
 	const [message, setMessage] = useState<string | null>(null);
-	const resend = useCooldown();
+	const resend = useCooldown(pending ? pending.sentAt + EMAIL_RESEND_SECONDS * 1_000 : 0);
 
 	const run = async (work: () => Promise<string | null>) => {
 		setBusy(true);
@@ -76,7 +100,11 @@ export function SignInForm({ signIn }: { signIn: SignIn }) {
 
 	const submitCode = (value: string) => {
 		if (signIn.blocked || busy || value.length !== 6) return;
-		void run(() => signIn.verify(email.trim(), value));
+		void run(async () => {
+			const problem = await signIn.verify(email.trim(), value);
+			if (!problem) writePending(null);
+			return problem;
+		});
 	};
 
 	return (
@@ -155,6 +183,7 @@ export function SignInForm({ signIn }: { signIn: SignIn }) {
 								const problem = await signIn.sendCode(email.trim());
 								if (!problem) {
 									resend.start(EMAIL_RESEND_SECONDS);
+									writePending({ email: email.trim(), sentAt: Date.now() });
 									setStep("code");
 								}
 								return problem;
@@ -219,7 +248,10 @@ export function SignInForm({ signIn }: { signIn: SignIn }) {
 							void run(async () => {
 								setCode("");
 								const problem = await signIn.sendCode(email.trim());
-								if (!problem) resend.start(EMAIL_RESEND_SECONDS);
+								if (!problem) {
+									resend.start(EMAIL_RESEND_SECONDS);
+									writePending({ email: email.trim(), sentAt: Date.now() });
+								}
 								return problem;
 							})
 						}
