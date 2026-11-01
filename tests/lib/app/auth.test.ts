@@ -90,14 +90,20 @@ function opening(device: Device, online = true) {
 const sessionRemovedCalls = (server: FakeServer) =>
 	server.calls.filter((call) => call.table === "session_removed");
 
+const watchSettling = () => {
+	const flips: boolean[] = [];
+	const stop = settling.subscribe(({ active }) => flips.push(active));
+	return { flips, stop };
+};
+
 describe("checking for a removal when the app opens", () => {
 	test("opening a removed device signs it out before the first screen", async () => {
 		const { b } = await removedPair();
 		const { seen, deps } = opening(b);
-		const done = settleOnOpen(deps);
-		expect(settling.get()).toBe(true);
-		await done;
-		expect(settling.get()).toBe(false);
+		const watch = watchSettling();
+		await settleOnOpen(deps);
+		watch.stop();
+		expect(watch.flips).toEqual([true, false]);
 		expect(seen.reloads).toEqual([true]);
 		expect(seen.notices).toEqual([REMOVED_TEXT]);
 		expect((await b.client.auth.getSession()).data.session).toBeNull();
@@ -126,12 +132,14 @@ describe("checking for a removal when the app opens", () => {
 		expect(await readMeta<string>(b.db, "ownerUserId")).toBe("user-1");
 	});
 
-	test("opening as a guest does not wait", async () => {
+	test("opening as a guest never holds the screen", async () => {
 		const server = new FakeServer();
 		const guest = await openDevice(server, { name: "phone" });
 		const { seen, deps } = opening(guest);
+		const watch = watchSettling();
 		await settleOnOpen(deps);
-		expect(settling.get()).toBe(false);
+		watch.stop();
+		expect(watch.flips).toEqual([]);
 		expect(sessionRemovedCalls(server)).toEqual([]);
 		expect(seen).toEqual({ reloads: [], notices: [] });
 	});

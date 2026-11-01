@@ -179,6 +179,9 @@ export async function settleOnOpen({
 	...deps
 }: Leave & { online: boolean; limitMs?: number }): Promise<void> {
 	if (!online) return;
+	// A guest has nothing to check, so its screens never blank out while it opens.
+	const owner = await readMeta<string>(deps.db, "ownerUserId").catch(() => undefined);
+	if (!owner) return;
 	settlingStore.setState({ active: true });
 	let timer: ReturnType<typeof setTimeout> | undefined;
 	try {
@@ -186,7 +189,6 @@ export async function settleOnOpen({
 			timer = setTimeout(resolve, limitMs);
 		});
 		const check = (async () => {
-			if (!(await readMeta<string>(deps.db, "ownerUserId"))) return;
 			const { data } = await deps.client.auth.getSession();
 			await leaveIfRemoved(deps, sessionIdOf(data.session?.access_token));
 		})();
