@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import {
 	applyWaiting,
 	checkForUpdate,
+	holdsUpdate,
 	registerServiceWorker,
 	updateAction,
 	watchWaiting
@@ -24,7 +25,7 @@ export function InstallStatus() {
 	const [offline, setOffline] = useState(false);
 	const [waiting, setWaiting] = useState(false);
 	const [typing, setTyping] = useState(false);
-	const inSession = usePathname().startsWith("/sesi");
+	const held = holdsUpdate(usePathname());
 	const lastCheck = useRef(0);
 
 	useEffect(() => {
@@ -75,7 +76,7 @@ export function InstallStatus() {
 	}, [failed, offline]);
 
 	useEffect(() => {
-		if (updateAction({ waiting, inSession, typing }) === "apply") void applyWaiting();
-	}, [waiting, inSession, typing]);
+		if (updateAction({ waiting, held, typing }) === "apply") void applyWaiting();
+	}, [waiting, held, typing]);
 	return null;
 }

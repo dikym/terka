@@ -70,13 +70,17 @@ export async function applyWaiting(): Promise<void> {
 	if (registration?.waiting) activate(registration);
 }
 
+// A reload here loses the user's place: a session's answers, or the sign-in step while they read the code in their mail.
+export const holdsUpdate = (pathname: string) =>
+	pathname.startsWith("/sesi") || pathname.startsWith("/masuk");
+
 /**
  * A waiting version is installed on its own, silently, as soon as nothing is in progress.
  * During a session or while the user is typing it waits, so no answer or input is lost to a reload.
  */
 export const updateAction = (input: {
 	waiting: boolean;
-	inSession: boolean;
+	held: boolean;
 	typing: boolean;
 }): "none" | "apply" | "wait" =>
-	!input.waiting ? "none" : input.inSession || input.typing ? "wait" : "apply";
+	!input.waiting ? "none" : input.held || input.typing ? "wait" : "apply";
