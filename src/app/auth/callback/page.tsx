@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { OtherAccount } from "@/components/screens/sign-in";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/feedback";
 import { authClient, settleAfterSignIn, syncOnce } from "@/lib/app/auth";
 import { useReady } from "@/lib/app/use-runtime";
 import { afterSignIn, finishCallback, switchAccount } from "@/lib/auth/signin";
@@ -56,7 +57,7 @@ export default function Page() {
 
 	const auth = authClient();
 	return (
-		<main className="container flex flex-col gap-5 py-10">
+		<main className="flex min-h-dvh flex-col items-center px-4 py-6 lg:py-10">
 			{outcome?.kind === "otherAccount" && runtime && auth ? (
 				<OtherAccount
 					onBack={() =>
@@ -72,17 +73,25 @@ export default function Page() {
 					}
 				/>
 			) : (
-				<Card>
-					<CardHeader label="Akun" title="Masuk" />
-					<p className="text-ink-900 type-body">
-						{outcome?.kind === "message" ? outcome.text : "Menyelesaikan masuk…"}
-					</p>
-					{outcome && (
-						<Button block href="/masuk">
-							Kembali ke halaman masuk
-						</Button>
-					)}
-				</Card>
+				<div className="flex w-full max-w-md flex-1 flex-col justify-center">
+					<Card>
+						<CardHeader label="Akun" title="Masuk" />
+						<p className="text-ink-900 type-body">
+							{outcome?.kind === "message" ? outcome.text : "Menyelesaikan masuk…"}
+						</p>
+						{!outcome && (
+							<div aria-hidden="true" className="flex flex-col gap-2">
+								<Skeleton className="h-4 w-full rounded-sm" />
+								<Skeleton className="h-4 w-2/3 rounded-sm" />
+							</div>
+						)}
+						{outcome && (
+							<Button block href="/masuk">
+								Kembali ke halaman masuk
+							</Button>
+						)}
+					</Card>
+				</div>
 			)}
 		</main>
 	);
