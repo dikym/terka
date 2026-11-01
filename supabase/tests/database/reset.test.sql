@@ -1,5 +1,5 @@
 begin;
-select plan(11);
+select plan(12);
 
 select set_config('tests.a', tests.ready_user('reset-a@test.terka')::text, true);
 select set_config('tests.b', tests.ready_user('reset-b@test.terka')::text, true);
@@ -38,6 +38,10 @@ select tests.as_owner();
 select is(
 	(select row_count from public.usage_totals where user_id = current_setting('tests.a')::uuid), 0,
 	'a reset frees the account row limit'
+);
+select is(
+	(select byte_count from public.usage_totals where user_id = current_setting('tests.a')::uuid), 0::bigint,
+	'a reset frees the account size limit'
 );
 select is(
 	(select count(*)::integer from public.review_logs where user_id = current_setting('tests.b')::uuid), 1,

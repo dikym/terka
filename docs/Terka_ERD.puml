@@ -287,6 +287,7 @@ entity usage_daily {
   * table_name : text <<PK>>
   --
   * row_count : integer = 0
+  * byte_count : bigint = 0
 }
 
 entity service_flags {
@@ -300,6 +301,7 @@ entity usage_totals {
   * user_id : uuid <<PK>> <<FK>>
   --
   * row_count : integer = 0
+  * byte_count : bigint = 0
 }
 
 entity progress_resets {

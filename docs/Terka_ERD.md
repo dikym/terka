@@ -363,6 +363,7 @@ Satu baris per pengguna per tabel per hari server.
 | `received_day` | Tanggal server dalam UTC saat baris diterima. **Bukan** `local_day`          |
 | `table_name`   | `review_logs`, `sightings`, `fact_views`, dan tabel insert-only lainnya      |
 | `row_count`    | Dinaikkan trigger `after insert` tingkat statement di tiap tabel yang diukur |
+| `byte_count`   | Jumlah `pg_column_size` baris yang sama, untuk batas ukuran harian           |
 
 **Mengapa hari server, bukan `local_day`.** `local_day` datang dari klien. Jika batas dihitung per `local_day`, penyalahguna cukup menyebar kiriman ke tanggal-tanggal lama untuk melewati batas. Tanggal server tidak bisa dipalsukan. Pengguna wajar yang baru sinkron setelah seminggu offline paling banyak mengirim ratusan jawaban dalam satu hari server — jauh di bawah batas harian di TRD bagian 9.
 
@@ -390,6 +391,7 @@ Satu baris per pengguna.
 | Kolom       | Keterangan                                                                                                                                                                                              |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `row_count` | Jumlah baris gabungan `practice_runs`, `review_logs`, `review_voids`, `card_events`, `sightings`, `fact_views`, `fsrs_params`; dibandingkan dengan batas total di TRD bagian 9 dan tidak direset harian |
+| `byte_count` | Jumlah byte tersimpan dari tabel yang sama ditambah `card_notes`, diukur dengan `pg_column_size`; dibandingkan dengan batas ukuran total di TRD bagian 9 |
 
 ### progress_resets
 

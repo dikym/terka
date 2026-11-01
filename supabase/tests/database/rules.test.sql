@@ -1,5 +1,5 @@
 begin;
-select plan(49);
+select plan(53);
 
 create function pg_temp.reviews(owner uuid, count integer, overrides jsonb default '{}') returns jsonb
 language sql as $$
@@ -50,6 +50,32 @@ update public.usage_totals set row_count = 50000 where user_id = current_setting
 select throws_ok(
 	format('select pg_temp.insert_as(%L, %L)', current_setting('tests.c'), pg_temp.reviews(current_setting('tests.c')::uuid, 1)),
 	'TK002', null, 'an account at 50,000 log rows is refused'
+);
+select tests.as_owner();
+
+-- Size limits
+select is(
+	(select byte_count from public.usage_totals where user_id = current_setting('tests.a')::uuid),
+	(select sum(pg_column_size(r.*))::bigint from public.review_logs r where user_id = current_setting('tests.a')::uuid),
+	'the total counter adds up the bytes of stored rows'
+);
+select set_config('tests.size', tests.ready_user('size@test.terka')::text, true);
+select pg_temp.insert_as(current_setting('tests.size')::uuid, pg_temp.reviews(current_setting('tests.size')::uuid, 1));
+update public.usage_daily set byte_count = 5242880 where user_id = current_setting('tests.size')::uuid;
+select throws_ok(
+	format('select pg_temp.insert_as(%L, %L)', current_setting('tests.size'), pg_temp.reviews(current_setting('tests.size')::uuid, 1)),
+	'TK001', null, 'a table past 5 MB in one server day is refused'
+);
+select tests.as_owner();
+update public.usage_daily set byte_count = 0 where user_id = current_setting('tests.size')::uuid;
+select lives_ok(
+	format('select pg_temp.insert_as(%L, %L)', current_setting('tests.size'), pg_temp.reviews(current_setting('tests.size')::uuid, 1)),
+	'answers under the size limits are accepted'
+);
+update public.usage_totals set byte_count = 52428800 where user_id = current_setting('tests.size')::uuid;
+select throws_ok(
+	format('select pg_temp.insert_as(%L, %L)', current_setting('tests.size'), pg_temp.reviews(current_setting('tests.size')::uuid, 1)),
+	'TK002', null, 'an account past 50 MB is refused'
 );
 select tests.as_owner();
 
