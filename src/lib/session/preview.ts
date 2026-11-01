@@ -1,4 +1,4 @@
-import type { GroupId } from "@/components/ui/groups";
+import type { GroupId } from "../view/groups";
 import type { IconName } from "@/components/ui/icon";
 import { LABELS } from "@/core/questions/question";
 import type { InfoItem, Preview as CorePreview } from "@/core/session/preview";

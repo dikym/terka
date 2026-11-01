@@ -1,4 +1,3 @@
-import type { GroupId } from "@/components/ui/groups";
 import { groupName } from "@/core/content/names";
 import type { Bundle, Fact } from "@/core/content/schema";
 import type { ReviewLog } from "@/core/log/events";
@@ -7,7 +6,7 @@ import { streak, streakDays } from "@/core/replay/streak";
 import type { AppState } from "@/core/replay/state";
 import { sessionSummary } from "@/core/views/summary";
 import { decimal } from "../view/format";
-import { scopeTitle, uiGroup } from "../view/groups";
+import { scopeTitle, uiGroup, type GroupId } from "../view/groups";
 import type { Mode } from "./modes";
 
 export type FactCardView = {

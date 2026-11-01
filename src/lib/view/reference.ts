@@ -1,4 +1,3 @@
-import type { GroupId } from "@/components/ui/groups";
 import type { FlagCode } from "@/components/ui/icon";
 import { areaDisplayName, provinceName } from "@/core/answers/dictionary";
 import type { Area as CoreArea, Bundle, Region, Special } from "@/core/content/schema";
@@ -11,7 +10,7 @@ import { normalizeName } from "@/core/text";
 import { SIGHTING_WINDOW_DAYS } from "@/rules";
 import { holderFlag } from "./flags";
 import { shortDate } from "./format";
-import { provincesOf, uiGroup } from "./groups";
+import { provincesOf, uiGroup, type GroupId } from "./groups";
 import { areaSummary, listSummary } from "./stats";
 
 export type RefView =

@@ -1,4 +1,3 @@
-import type { GroupId } from "@/components/ui/groups";
 import type { Bundle } from "@/core/content/schema";
 import { inScope } from "@/core/questions/distractors";
 import { streak, streakDays } from "@/core/replay/streak";
@@ -21,7 +20,7 @@ import { ALL_INTRODUCED, homeSummary, type HomeSummary } from "@/core/views/home
 import { scopeMastery } from "@/core/views/mastery";
 import { STREAK_WINDOW_DAYS, TIERS } from "@/rules";
 import { dateLabel, durationLabel, weekdayShort } from "./format";
-import { provincesOf, scopeGroup, scopeTitle, uiGroup } from "./groups";
+import { provincesOf, scopeGroup, scopeTitle, uiGroup, type GroupId } from "./groups";
 
 export type DayMark = { day: string; state: "done" | "tolerance" | "missed" | "today" };
 

@@ -6,13 +6,7 @@ import { Card, CardHeader } from "@/components/ui/card";
 import { CodeChip } from "@/components/ui/code-chip";
 import { FADE_RAMP } from "@/components/ui/fade-scroll";
 import { Dot, Skeleton, SkeletonText, skeletonWidth } from "@/components/ui/feedback";
-import {
-	GROUP_TEXT,
-	GROUP_BORDER,
-	GROUP_IDS,
-	GROUP_NAME,
-	type GroupId
-} from "@/components/ui/groups";
+import { GROUP_TEXT, GROUP_BORDER, GROUP_NAME } from "@/components/ui/groups";
 import { Flag, Icon } from "@/components/ui/icon";
 import { Kbd } from "@/components/ui/kbd";
 import { Tooltip } from "@/components/ui/tooltip";
@@ -23,7 +17,7 @@ import type { Bundle } from "@/core/content/schema";
 import type { AppState } from "@/core/replay/state";
 import { sightingCounts } from "@/core/views/stats";
 import { SIGHTING_WINDOW_DAYS } from "@/rules";
-import { uiGroup } from "@/lib/view/groups";
+import { GROUP_IDS, type GroupId, uiGroup } from "@/lib/view/groups";
 import {
 	diplomatEntry,
 	diplomatList,

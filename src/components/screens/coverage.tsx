@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CodeChip } from "@/components/ui/code-chip";
 import { Dot, Skeleton, SkeletonText, skeletonWidth } from "@/components/ui/feedback";
-import { GROUP_BG, GROUP_IDS, GROUP_NAME, GROUP_TEXT, type GroupId } from "@/components/ui/groups";
+import { GROUP_BG, GROUP_NAME, GROUP_TEXT } from "@/components/ui/groups";
 import { Icon } from "@/components/ui/icon";
 import type { Coverage, Province } from "@/lib/view/coverage";
+import { GROUP_IDS, type GroupId } from "@/lib/view/groups";
 import { keyAction } from "@/lib/keys";
 
 export type Node = "national" | GroupId;

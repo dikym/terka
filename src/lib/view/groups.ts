@@ -1,8 +1,19 @@
-import { GROUP_IDS, type GroupId } from "@/components/ui/groups";
 import { provinceName } from "@/core/answers/dictionary";
 import { groupName } from "@/core/content/names";
 import type { Bundle } from "@/core/content/schema";
 import type { Scope } from "@/core/questions/distractors";
+
+export const GROUP_IDS = [
+	"sumatera",
+	"jawa",
+	"kalimantan",
+	"sulawesi",
+	"balinusra",
+	"maluku",
+	"papua"
+] as const;
+
+export type GroupId = (typeof GROUP_IDS)[number];
 
 // The design names Bali & Nusa Tenggara "balinusra"; every other group id is the same.
 export function uiGroup(id: string): GroupId {

@@ -1,14 +1,4 @@
-export const GROUP_IDS = [
-	"sumatera",
-	"jawa",
-	"kalimantan",
-	"sulawesi",
-	"balinusra",
-	"maluku",
-	"papua"
-] as const;
-
-export type GroupId = (typeof GROUP_IDS)[number];
+import type { GroupId } from "@/lib/view/groups";
 
 export const GROUP_NAME: Record<GroupId, string> = {
 	sumatera: "Sumatera",

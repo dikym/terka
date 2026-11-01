@@ -1,4 +1,3 @@
-import type { GroupId } from "@/components/ui/groups";
 import { highMembers } from "@/core/answers/dictionary";
 import type { Bundle, Region } from "@/core/content/schema";
 import { LABELS } from "@/core/questions/question";
@@ -10,7 +9,7 @@ import { scopeMastery } from "@/core/views/mastery";
 import { forecast, hardCards, sightingCounts, weakestCards } from "@/core/views/stats";
 import { LEECH_LAPSES, TIERS } from "@/rules";
 import { dayMonth, weekday, weekdayShort } from "./format";
-import { provincesOf, uiGroup } from "./groups";
+import { provincesOf, uiGroup, type GroupId } from "./groups";
 
 export type CodeStatus = "learning" | "leech" | "suspended";
 

@@ -1,11 +1,10 @@
-import type { GroupId } from "@/components/ui/groups";
 import type { Bundle } from "@/core/content/schema";
 import { inScope, NATIONAL, type Scope } from "@/core/questions/distractors";
 import type { AppState } from "@/core/replay/state";
 import { effectiveCard } from "@/core/replay/universe";
 import { contentOf, modeOf } from "@/core/session/context";
 import { scopeMastery } from "@/core/views/mastery";
-import { provincesOf, uiGroup } from "./groups";
+import { provincesOf, uiGroup, type GroupId } from "./groups";
 
 export type Province = { id: string; name: string; codes: string[]; percent: number };
 

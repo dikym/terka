@@ -2,11 +2,12 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
+import type { GroupId } from "@/lib/view/groups";
 import { referenceHref } from "@/lib/view/reference";
 import { Button } from "./button";
 import { CodeChip, CodeLink } from "./code-chip";
 import { Dot } from "./feedback";
-import { GROUP_NAME, GROUP_TEXT, type GroupId } from "./groups";
+import { GROUP_NAME, GROUP_TEXT } from "./groups";
 import { Icon, type IconName } from "./icon";
 import { Tooltip as LabelTip } from "./tooltip";
 
