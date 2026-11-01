@@ -48,7 +48,7 @@
 		"mapshaper": "0.7.97",
 		"prettier": "^3.9.1",
 		"prettier-plugin-tailwindcss": "^0.8.0",
-		"supabase": "^2",
+		"supabase": "2.122.0",
 		"typescript": "^5",
 		"workbox-build": "7.4.1",
 		"workbox-precaching": "7.4.1"
