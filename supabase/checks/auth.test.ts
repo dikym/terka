@@ -243,7 +243,7 @@ describe("auth configuration", () => {
 	test("redirects, email rate limit and the code template match the spec", () => {
 		const config = readFileSync("supabase/config.toml", "utf8");
 		expect(config).toContain(
-			'additional_redirect_urls = ["http://localhost:3000/auth/callback", "https://terka.my.id/auth/callback"]'
+			'additional_redirect_urls = ["http://localhost:3000/auth/callback", "https://terka.my.id/auth/callback", "https://www.terka.my.id/auth/callback"]'
 		);
 		expect(config).toMatch(/\[auth\.rate_limit\][^[]*\nemail_sent = 80\n/);
 		expect(config).toMatch(/max_frequency = "60s"\notp_length = 6/);
