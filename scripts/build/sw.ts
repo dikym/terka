@@ -34,7 +34,8 @@ export async function buildServiceWorker(outDir: string): Promise<string[]> {
 	const bundled = await Bun.build({
 		entrypoints: [join(import.meta.dir, "../../src/sw/sw.ts")],
 		target: "browser",
-		minify: true
+		minify: true,
+		define: { "process.env.NODE_ENV": '"production"' }
 	});
 	if (!bundled.success) return bundled.logs.map(String);
 	const swSrc = join(tmpdir(), `terka-sw-${crypto.randomUUID()}.js`);
