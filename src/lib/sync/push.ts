@@ -39,18 +39,29 @@ async function localRows(db: TerkaDb, table: TableName, keys: string[]) {
 // Rows that reference a rejected row cannot be stored either, so they leave the outbox with it.
 async function dependentsOf(db: TerkaDb, table: TableName, key: string): Promise<OutboxRow[]> {
 	const items = await db.outbox.toArray();
+	const rows = (await Promise.all(items.map((item) => db.table(item.table).get(item.key)))) as (
+		Record<string, unknown> | undefined
+	)[];
+	const parents = items.map((item, index) => {
+		const row = rows[index];
+		if (!row) return null;
+		if (item.table === "review_voids") return `review_logs|${row.reviewId}`;
+		if (item.table === "review_logs" || item.table === "fact_views")
+			return `practice_runs|${row.runId}`;
+		return null;
+	});
+	const rejected = new Set([`${table}|${key}`]);
 	const found: OutboxRow[] = [];
-	for (const item of items) {
-		if (item.table === table && item.key === key) continue;
-		const row = (await db.table(item.table).get(item.key)) as
-			Record<string, unknown> | undefined;
-		if (!row) continue;
-		const points =
-			(table === "review_logs" && item.table === "review_voids" && row.reviewId === key) ||
-			(table === "practice_runs" &&
-				(item.table === "review_logs" || item.table === "fact_views") &&
-				row.runId === key);
-		if (points) found.push(item, ...(await dependentsOf(db, item.table, item.key)));
+	for (let grew = true; grew;) {
+		grew = false;
+		items.forEach((item, index) => {
+			const id = `${item.table}|${item.key}`;
+			const parent = parents[index];
+			if (rejected.has(id) || !parent || !rejected.has(parent)) return;
+			rejected.add(id);
+			found.push(item);
+			grew = true;
+		});
 	}
 	return found;
 }
@@ -196,12 +207,17 @@ async function sendClose(db: TerkaDb, client: SupabaseClient, item: OutboxRow) {
 
 async function sendUpsert(db: TerkaDb, client: SupabaseClient, batch: Batch) {
 	const { table } = batch;
-	for (const item of batch.items) {
-		const row = (await db.table(table).get(item.key)) as Record<string, unknown> | undefined;
-		if (!row) continue;
-		const response = await client
-			.from(table)
-			.upsert(toServer(table, row), { onConflict: CONFLICT[table] });
+	const rows = await localRows(
+		db,
+		table,
+		batch.items.map((item) => item.key)
+	);
+	const present = rows.filter((entry) => entry.row);
+	if (present.length) {
+		const response = await client.from(table).upsert(
+			present.map((entry) => toServer(table, entry.row!)),
+			{ onConflict: CONFLICT[table] }
+		);
 		if (response.error) return { failure: failureOf(response.error, response.status) };
 	}
 	return { metas: [] };
