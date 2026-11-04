@@ -1,9 +1,9 @@
 import { describe, expect, test } from "bun:test";
-import type { PracticeRun, ReviewLog } from "../../../src/core/log/events";
-import { buildQuestion } from "../../../src/core/questions/build";
-import { NATIONAL } from "../../../src/core/questions/distractors";
-import { newEntry } from "../../../src/core/replay/state";
-import { checkAnswer } from "../../../src/core/session/check";
+import type { PracticeRun, ReviewLog } from "@/core/log/events";
+import { buildQuestion } from "@/core/questions/build";
+import { NATIONAL } from "@/core/questions/distractors";
+import { newEntry } from "@/core/replay/state";
+import { checkAnswer } from "@/core/session/check";
 import {
 	answerEvent,
 	canUndo,
@@ -13,8 +13,8 @@ import {
 	startRun,
 	voidEvent,
 	type Measurements
-} from "../../../src/core/session/commands";
-import { ANSWER_RULES_VERSION, ENGINE_VERSION } from "../../../src/rules";
+} from "@/core/session/commands";
+import { ANSWER_RULES_VERSION, ENGINE_VERSION } from "@/rules";
 import { MINUTE, NOW, ruleBundle, stateOf } from "../replay/fixtures";
 import { ctxAt, dictionary, SUMATERA } from "./fixtures";
 

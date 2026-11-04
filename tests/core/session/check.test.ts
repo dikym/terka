@@ -1,8 +1,8 @@
 import { describe, expect, test } from "bun:test";
-import { buildQuestion } from "../../../src/core/questions/build";
-import type { Question } from "../../../src/core/questions/question";
-import { newEntry } from "../../../src/core/replay/state";
-import { checkAnswer } from "../../../src/core/session/check";
+import { buildQuestion } from "@/core/questions/build";
+import type { Question } from "@/core/questions/question";
+import { newEntry } from "@/core/replay/state";
+import { checkAnswer } from "@/core/session/check";
 import { ruleBundle } from "../replay/fixtures";
 import { dictionary } from "./fixtures";
 

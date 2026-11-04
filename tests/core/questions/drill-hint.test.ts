@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import type { Bundle } from "../../../src/core/content/schema";
-import { buildQuestion } from "../../../src/core/questions/build";
-import { newEntry } from "../../../src/core/replay/state";
+import type { Bundle } from "@/core/content/schema";
+import { buildQuestion } from "@/core/questions/build";
+import { newEntry } from "@/core/replay/state";
 import { ruleBundle } from "../rules/fixtures";
 
 const plates: Bundle = await Bun.file(

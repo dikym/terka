@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test";
-import type { LearningEvent } from "../../../src/core/log/events";
-import { append, replay } from "../../../src/core/replay/replay";
+import type { LearningEvent } from "@/core/log/events";
+import { append, replay } from "@/core/replay/replay";
 import { review, ruleBundle } from "./fixtures";
 import { randomLog } from "./generator";
 

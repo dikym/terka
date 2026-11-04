@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import Dexie from "dexie";
-import { loadState } from "../../../src/lib/db/log";
-import { TerkaDb } from "../../../src/lib/db/schema";
+import { loadState } from "@/lib/db/log";
+import { TerkaDb } from "@/lib/db/schema";
 import { ruleBundle } from "../../core/replay/fixtures";
 
 // The first Terka release kept its progress in a Dexie database named "terka" with these stores.

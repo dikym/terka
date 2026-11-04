@@ -64,7 +64,7 @@ describe("database size alarm", () => {
 	});
 
 	test("uses the documented 150 MB alarm by default", async () => {
-		const { DB_SIZE_ALARM_BYTES } = await import("../../src/rules");
+		const { DB_SIZE_ALARM_BYTES } = await import("@/rules");
 		const script = await readFile(join(scripts, "db-size.sh"), "utf8");
 		expect(script).toContain(`DB_SIZE_LIMIT:-${DB_SIZE_ALARM_BYTES}`);
 	});

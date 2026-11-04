@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import { sortEvents } from "../../../src/core/log/order";
-import { applyEvent } from "../../../src/core/replay/apply";
-import { effectiveCard } from "../../../src/core/replay/universe";
+import { sortEvents } from "@/core/log/order";
+import { applyEvent } from "@/core/replay/apply";
+import { effectiveCard } from "@/core/replay/universe";
 import {
 	cardEvent,
 	DAY,

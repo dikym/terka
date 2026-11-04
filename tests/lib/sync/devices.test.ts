@@ -1,11 +1,11 @@
 import { describe, expect, test } from "bun:test";
-import { LEAVE_WAIT_MS, removeDevice, signOut } from "../../../src/lib/auth/account";
-import { createAppStore } from "../../../src/lib/app/store";
-import { listDevices } from "../../../src/lib/db/device";
-import { readMeta, wipesOf } from "../../../src/lib/db/schema";
-import type { SyncStatus } from "../../../src/lib/sync/status";
-import { syncNow, type SyncResult } from "../../../src/lib/sync/sync";
-import { deviceRows } from "../../../src/lib/view/account";
+import { LEAVE_WAIT_MS, removeDevice, signOut } from "@/lib/auth/account";
+import { createAppStore } from "@/lib/app/store";
+import { listDevices } from "@/lib/db/device";
+import { readMeta, wipesOf } from "@/lib/db/schema";
+import type { SyncStatus } from "@/lib/sync/status";
+import { syncNow, type SyncResult } from "@/lib/sync/sync";
+import { deviceRows } from "@/lib/view/account";
 import { openDevice, type Device } from "./support/device";
 import { answersOf, DAY, HOUR, MINUTE, NOW, openRun, review } from "./support/events";
 import { snapshot } from "../../core/replay/fixtures";

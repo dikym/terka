@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { FLAG_CODES, ICON_NAMES } from "../../src/components/ui/icon";
+import { FLAG_CODES, ICON_NAMES } from "@/components/ui/icon";
 
 test("every icon name has a file without embedded metadata", async () => {
 	for (const name of ICON_NAMES) {
@@ -15,7 +15,7 @@ test("every flag code has a file", async () => {
 });
 
 test("every country with a diplomat code shows its flag", async () => {
-	const { holderFlag } = await import("../../src/lib/view/flags");
+	const { holderFlag } = await import("@/lib/view/flags");
 	const plates = await Bun.file("src/data/plates.json").json();
 	for (const special of plates.specials) {
 		const flag = holderFlag(special);
@@ -25,7 +25,7 @@ test("every country with a diplomat code shows its flag", async () => {
 });
 
 test("UN bodies and the EU fly their flag", async () => {
-	const { holderFlag } = await import("../../src/lib/view/flags");
+	const { holderFlag } = await import("@/lib/view/flags");
 	const plates = await Bun.file("src/data/plates.json").json();
 	const flagOf = (id: string) =>
 		holderFlag(plates.specials.find((s: { id: string }) => s.id === id));

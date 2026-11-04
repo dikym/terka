@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import { seeded } from "../../../src/core/random";
-import { openApp } from "../../../src/lib/app/boot";
-import { readMeta, TerkaDb } from "../../../src/lib/db/schema";
+import { seeded } from "@/core/random";
+import { openApp } from "@/lib/app/boot";
+import { readMeta, TerkaDb } from "@/lib/db/schema";
 import { ruleBundle } from "../../core/replay/fixtures";
 import { freshDb } from "../db/fixtures";
 

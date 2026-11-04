@@ -1,13 +1,8 @@
 import { describe, expect, test } from "bun:test";
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { removeDevice } from "../../../src/lib/auth/account";
-import {
-	checkRemoved,
-	leaveRemovedDevice,
-	rememberSession,
-	sessionIdOf
-} from "../../../src/lib/auth/removal";
-import { readMeta } from "../../../src/lib/db/schema";
+import { removeDevice } from "@/lib/auth/account";
+import { checkRemoved, leaveRemovedDevice, rememberSession, sessionIdOf } from "@/lib/auth/removal";
+import { readMeta } from "@/lib/db/schema";
 import { openDevice } from "../sync/support/device";
 import { answersOf, NOW, openRun } from "../sync/support/events";
 import { FakeServer } from "../sync/support/server";

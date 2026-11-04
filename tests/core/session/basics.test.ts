@@ -1,8 +1,8 @@
 import { describe, expect, test } from "bun:test";
-import { seeded } from "../../../src/core/random";
-import { cardsWhere, isGroupA, prepare, uniqueItems } from "../../../src/core/session/context";
-import { pickFormat } from "../../../src/core/session/forms";
-import { uuidV7 } from "../../../src/core/session/ids";
+import { seeded } from "@/core/random";
+import { cardsWhere, isGroupA, prepare, uniqueItems } from "@/core/session/context";
+import { pickFormat } from "@/core/session/forms";
+import { uuidV7 } from "@/core/session/ids";
 import { fresh, NOW } from "../replay/fixtures";
 import { ctxAt } from "./fixtures";
 

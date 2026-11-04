@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { seeded, shuffle } from "../../../src/core/random";
+import { seeded, shuffle } from "@/core/random";
 
 describe("seeded random", () => {
 	test("the same seed gives the same stream; values stay in [0, 1)", () => {

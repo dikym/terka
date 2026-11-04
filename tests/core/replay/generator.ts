@@ -1,6 +1,6 @@
-import type { LearningEvent } from "../../../src/core/log/events";
-import type { CardMode } from "../../../src/core/questions/question";
-import { seeded } from "../../../src/core/random";
+import type { LearningEvent } from "@/core/log/events";
+import type { CardMode } from "@/core/questions/question";
+import { seeded } from "@/core/random";
 import { cardEvent, factView, HOUR, NOW, review, run, sighting, voidOf } from "./fixtures";
 
 const CODES = [

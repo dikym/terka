@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import type { ReviewLog } from "../../../src/core/log/events";
-import { confusionsOf, recordConfusion, recordDrill } from "../../../src/core/replay/pairs";
-import { addDays } from "../../../src/core/time/day";
+import type { ReviewLog } from "@/core/log/events";
+import { confusionsOf, recordConfusion, recordDrill } from "@/core/replay/pairs";
+import { addDays } from "@/core/time/day";
 import { fresh, NOW, review } from "./fixtures";
 
 const day = (offset: number) => addDays("2026-09-01", offset);

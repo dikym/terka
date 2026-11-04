@@ -1,8 +1,8 @@
 import { describe, expect, test } from "bun:test";
-import { ladderScale } from "../../../src/core/questions/rung";
-import { schedulerAt } from "../../../src/core/replay/params";
-import { retrievability } from "../../../src/core/scheduling/fsrs";
-import { rungMemory } from "../../../src/core/session/rung";
+import { ladderScale } from "@/core/questions/rung";
+import { schedulerAt } from "@/core/replay/params";
+import { retrievability } from "@/core/scheduling/fsrs";
+import { rungMemory } from "@/core/session/rung";
 import { DAY, fresh, NOW, reviewCard, seedCard } from "../replay/fixtures";
 
 describe("rung memory", () => {

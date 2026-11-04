@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { homeSummary } from "../../../src/core/views/home";
+import { homeSummary } from "@/core/views/home";
 import { fresh, MINUTE, NOW, reviewCard, ruleBundle, seedCard } from "../replay/fixtures";
 import { ctxAt, SETTINGS } from "../session/fixtures";
 

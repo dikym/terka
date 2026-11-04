@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { forecast, hardCards, sightingCounts, weakestCards } from "../../../src/core/views/stats";
+import { forecast, hardCards, sightingCounts, weakestCards } from "@/core/views/stats";
 import { DAY, fresh, NOW, reviewCard, seedCard } from "../replay/fixtures";
 import { ctxAt } from "../session/fixtures";
 

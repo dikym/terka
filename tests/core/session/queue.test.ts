@@ -1,10 +1,10 @@
 import { describe, expect, test } from "bun:test";
-import { schedulerAt } from "../../../src/core/replay/params";
-import { retrievability } from "../../../src/core/scheduling/fsrs";
-import { dailyQueue, dueReviewCount, specialQueue } from "../../../src/core/session/queue";
-import { dayStats } from "../../../src/core/replay/days";
-import { REVIEW_CAP_PER_DAY } from "../../../src/rules";
-import { addDays } from "../../../src/core/time/day";
+import { schedulerAt } from "@/core/replay/params";
+import { retrievability } from "@/core/scheduling/fsrs";
+import { dailyQueue, dueReviewCount, specialQueue } from "@/core/session/queue";
+import { dayStats } from "@/core/replay/days";
+import { REVIEW_CAP_PER_DAY } from "@/rules";
+import { addDays } from "@/core/time/day";
 import {
 	DAY,
 	fresh,

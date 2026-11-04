@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { pullStart } from "../../../src/lib/sync/pull";
+import { pullStart } from "@/lib/sync/pull";
 
 const MINUTE = 60_000;
 const NOW = Date.parse("2026-10-04T12:00:00Z");

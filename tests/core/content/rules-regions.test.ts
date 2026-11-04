@@ -1,8 +1,8 @@
 import { describe, expect, test } from "bun:test";
-import { identityRules } from "../../../src/core/content/rules/identity";
-import { placementRules } from "../../../src/core/content/rules/placement";
-import { exclusiveProvinces } from "../../../src/core/content/rules/provinces";
-import { regionRules } from "../../../src/core/content/rules/regions";
+import { identityRules } from "@/core/content/rules/identity";
+import { placementRules } from "@/core/content/rules/placement";
+import { exclusiveProvinces } from "@/core/content/rules/provinces";
+import { regionRules } from "@/core/content/rules/regions";
 import { errorCodes, validDraft } from "./fixtures";
 
 const all = (draft = validDraft()) => [

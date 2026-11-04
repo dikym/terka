@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import type { Bundle } from "../../../src/core/content/schema";
-import { searchReference } from "../../../src/core/reference/search";
-import { sightingEvent } from "../../../src/core/session/commands";
+import type { Bundle } from "@/core/content/schema";
+import { searchReference } from "@/core/reference/search";
+import { sightingEvent } from "@/core/session/commands";
 import { ruleBundle } from "../rules/fixtures";
 import { ctxAt } from "../session/fixtures";
 import { NOW } from "../replay/fixtures";

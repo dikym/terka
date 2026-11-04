@@ -1,10 +1,10 @@
 import { describe, expect, test } from "bun:test";
-import { buildDictionary, highMembers } from "../../../src/core/answers/dictionary";
-import type { Bundle } from "../../../src/core/content/schema";
-import { buildQuestion } from "../../../src/core/questions/build";
-import { newEntry } from "../../../src/core/replay/state";
-import { checkAnswer } from "../../../src/core/session/check";
-import { alsoCorrect, setFeedback } from "../../../src/core/session/feedback";
+import { buildDictionary, highMembers } from "@/core/answers/dictionary";
+import type { Bundle } from "@/core/content/schema";
+import { buildQuestion } from "@/core/questions/build";
+import { newEntry } from "@/core/replay/state";
+import { checkAnswer } from "@/core/session/check";
+import { alsoCorrect, setFeedback } from "@/core/session/feedback";
 
 const plates: Bundle = await Bun.file(
 	new URL("../../../src/data/plates.json", import.meta.url)

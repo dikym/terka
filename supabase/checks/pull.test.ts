@@ -1,12 +1,12 @@
 import { describe, expect, test } from "bun:test";
-import type { PracticeRun } from "../../src/core/log/events";
-import type { AppState } from "../../src/core/replay/state";
-import { loadState, type LogState } from "../../src/lib/db/log";
-import { wipesOf } from "../../src/lib/db/schema";
-import { runPull } from "../../src/lib/sync/pull";
-import { runPush } from "../../src/lib/sync/push";
-import { toServer } from "../../src/lib/sync/server";
-import { ENGINE_VERSION } from "../../src/rules";
+import type { PracticeRun } from "@/core/log/events";
+import type { AppState } from "@/core/replay/state";
+import { loadState, type LogState } from "@/lib/db/log";
+import { wipesOf } from "@/lib/db/schema";
+import { runPull } from "@/lib/sync/pull";
+import { runPush } from "@/lib/sync/push";
+import { toServer } from "@/lib/sync/server";
+import { ENGINE_VERSION } from "@/rules";
 import { HOUR, MINUTE, review, run, snapshot, stateOf } from "../../tests/core/replay/fixtures";
 import {
 	bundle,

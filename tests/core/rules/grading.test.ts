@@ -1,12 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import { narrowKey, percentile, pickGroup, wideKey } from "../../../src/core/grading/fluency";
-import {
-	gradeAnswer,
-	gradePlacement,
-	gradeSet,
-	gradeWithGroup
-} from "../../../src/core/grading/grade";
-import type { AnswerSignals } from "../../../src/core/grading/signals";
+import { narrowKey, percentile, pickGroup, wideKey } from "@/core/grading/fluency";
+import { gradeAnswer, gradePlacement, gradeSet, gradeWithGroup } from "@/core/grading/grade";
+import type { AnswerSignals } from "@/core/grading/signals";
 
 const answer = (overrides: Partial<AnswerSignals> = {}): AnswerSignals => ({
 	context: "daily",

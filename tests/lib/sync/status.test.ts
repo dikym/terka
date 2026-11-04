@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { syncStatus, type SyncFacts } from "../../../src/lib/sync/status";
+import { syncStatus, type SyncFacts } from "@/lib/sync/status";
 
 const NOW = Date.parse("2026-10-04T12:00:00Z");
 const DAY = 86_400_000;

@@ -1,9 +1,9 @@
-import type { Bundle } from "../../../src/core/content/schema";
-import type { LearningEvent } from "../../../src/core/log/events";
-import type { CardMode } from "../../../src/core/questions/question";
-import { seeded } from "../../../src/core/random";
-import { universe } from "../../../src/core/replay/universe";
-import { localDay } from "../../../src/core/time/day";
+import type { Bundle } from "@/core/content/schema";
+import type { LearningEvent } from "@/core/log/events";
+import type { CardMode } from "@/core/questions/question";
+import { seeded } from "@/core/random";
+import { universe } from "@/core/replay/universe";
+import { localDay } from "@/core/time/day";
 import { DAY, MINUTE, NOW, review as fixtureReview } from "../../core/replay/fixtures";
 import { randomLog } from "../../core/replay/generator";
 import { withUuids } from "../../lib/db/fixtures";

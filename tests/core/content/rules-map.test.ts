@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { coverageIds, mapRules } from "../../../src/core/content/rules/map";
+import { coverageIds, mapRules } from "@/core/content/rules/map";
 import { ruleBundle } from "../rules/fixtures";
 
 const bundle = ruleBundle();

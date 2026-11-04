@@ -1,5 +1,5 @@
-import type { LearningEvent } from "../../../src/core/log/events";
-import { seeded } from "../../../src/core/random";
+import type { LearningEvent } from "@/core/log/events";
+import { seeded } from "@/core/random";
 import { DAY, intro, manyRegions, MINUTE, NOW, review } from "../../core/replay/fixtures";
 import { withUuids } from "../db/fixtures";
 

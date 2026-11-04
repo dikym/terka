@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { readCuration } from "../../../src/core/content/read-curation";
+import { readCuration } from "@/core/content/read-curation";
 import { validDraft } from "./fixtures";
 
 describe("curation reader", () => {

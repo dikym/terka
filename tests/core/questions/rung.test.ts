@@ -1,8 +1,8 @@
 import { describe, expect, test } from "bun:test";
-import { areaDisplayName, provinceName } from "../../../src/core/answers/dictionary";
-import { buildQuestion } from "../../../src/core/questions/build";
-import { baseRung, ladderScale, rungForLevel } from "../../../src/core/questions/rung";
-import { newCard, type CardMemory } from "../../../src/core/scheduling/card-memory";
+import { areaDisplayName, provinceName } from "@/core/answers/dictionary";
+import { buildQuestion } from "@/core/questions/build";
+import { baseRung, ladderScale, rungForLevel } from "@/core/questions/rung";
+import { newCard, type CardMemory } from "@/core/scheduling/card-memory";
 import { ruleBundle } from "../rules/fixtures";
 
 const bundle = ruleBundle();

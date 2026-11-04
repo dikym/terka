@@ -1,10 +1,10 @@
 import { describe, expect, test } from "bun:test";
-import { seeded } from "../../../src/core/random";
-import { openApp } from "../../../src/lib/app/boot";
-import { createAppStore } from "../../../src/lib/app/store";
-import { startSync, syncRunning, trackRound } from "../../../src/lib/app/sync";
-import type { SyncSignal } from "../../../src/lib/sync/signal";
-import type { SyncStatus } from "../../../src/lib/sync/status";
+import { seeded } from "@/core/random";
+import { openApp } from "@/lib/app/boot";
+import { createAppStore } from "@/lib/app/store";
+import { startSync, syncRunning, trackRound } from "@/lib/app/sync";
+import type { SyncSignal } from "@/lib/sync/signal";
+import type { SyncStatus } from "@/lib/sync/status";
 import { NOW, review, ruleBundle } from "../../core/replay/fixtures";
 import { freshDb, withUuids } from "../db/fixtures";
 

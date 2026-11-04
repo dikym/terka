@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import type { FsrsParams } from "../../../src/core/log/events";
-import { addParams, schedulerAt } from "../../../src/core/replay/params";
-import { createScheduler } from "../../../src/core/scheduling/fsrs";
+import type { FsrsParams } from "@/core/log/events";
+import { addParams, schedulerAt } from "@/core/replay/params";
+import { createScheduler } from "@/core/scheduling/fsrs";
 import { DAY, HOUR, MINUTE, NOW, intro, params, review, stateOf } from "./fixtures";
 
 const defaults = [...createScheduler().parameters.w];

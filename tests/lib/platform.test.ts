@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { isFinishKey } from "../../src/lib/platform";
+import { isFinishKey } from "@/lib/platform";
 
 const press = (
 	key: string,

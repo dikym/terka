@@ -1,8 +1,8 @@
 import { describe, expect, test } from "bun:test";
-import type { Bundle } from "../../../src/core/content/schema";
-import plates from "../../../src/data/plates.json";
-import { demoQuestions } from "../../../src/lib/view/demo";
-import { DEMO_LENGTH, demoRound } from "../../../src/lib/view/demo-round";
+import type { Bundle } from "@/core/content/schema";
+import plates from "@/data/plates.json";
+import { demoQuestions } from "@/lib/view/demo";
+import { DEMO_LENGTH, demoRound } from "@/lib/view/demo-round";
 
 const bundle = plates as unknown as Bundle;
 const questions = demoQuestions(bundle);

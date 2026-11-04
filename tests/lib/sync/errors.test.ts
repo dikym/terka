@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { backoff, classify, trackRetryAfter, withTimeout } from "../../../src/lib/sync/errors";
+import { backoff, classify, trackRetryAfter, withTimeout } from "@/lib/sync/errors";
 
 const NOW = Date.parse("2026-10-04T15:30:00Z");
 const DAY = 86_400_000;

@@ -1,8 +1,8 @@
 import { describe, expect, test } from "bun:test";
-import { newCard } from "../../../src/core/scheduling/card-memory";
-import { createScheduler, nextMemory, retrievability } from "../../../src/core/scheduling/fsrs";
-import { fuzzDays } from "../../../src/core/scheduling/fuzz";
-import { addDays, dayStart } from "../../../src/core/time/day";
+import { newCard } from "@/core/scheduling/card-memory";
+import { createScheduler, nextMemory, retrievability } from "@/core/scheduling/fsrs";
+import { fuzzDays } from "@/core/scheduling/fuzz";
+import { addDays, dayStart } from "@/core/time/day";
 import { NOW, WITA } from "./fixtures";
 
 const DAY = 86_400_000;

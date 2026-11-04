@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import type { LearningEvent } from "../../../src/core/log/events";
-import { countedAnswers } from "../../../src/core/optimizer/counted";
-import { replay } from "../../../src/core/replay/replay";
+import type { LearningEvent } from "@/core/log/events";
+import { countedAnswers } from "@/core/optimizer/counted";
+import { replay } from "@/core/replay/replay";
 import { DAY, intro, MINUTE, NOW, review, ruleBundle, run, voidOf } from "../replay/fixtures";
 
 const choice = { level: 1, questionType: "choice" } as const;

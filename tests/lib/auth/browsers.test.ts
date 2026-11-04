@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { isInAppBrowser } from "../../../src/lib/auth/browsers";
+import { isInAppBrowser } from "@/lib/auth/browsers";
 
 const agents = {
 	instagram:

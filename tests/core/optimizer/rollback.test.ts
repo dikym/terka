@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { default_w } from "ts-fsrs";
-import { rollbackDraft } from "../../../src/core/optimizer/rollback";
+import { rollbackDraft } from "@/core/optimizer/rollback";
 import { answers, DAY, NOW, paramsRow } from "./fixtures";
 
 const previous = paramsRow({

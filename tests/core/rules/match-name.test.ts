@@ -1,11 +1,11 @@
 import { describe, expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
-import { buildDictionary, highMembers, provinceName } from "../../../src/core/answers/dictionary";
-import { matchName } from "../../../src/core/answers/match-name";
-import { typoDistance } from "../../../src/core/answers/typo";
-import { typoThreshold } from "../../../src/rules";
-import { bundleSchema } from "../../../src/core/content/schema";
-import { compactName } from "../../../src/core/text";
+import { buildDictionary, highMembers, provinceName } from "@/core/answers/dictionary";
+import { matchName } from "@/core/answers/match-name";
+import { typoDistance } from "@/core/answers/typo";
+import { typoThreshold } from "@/rules";
+import { bundleSchema } from "@/core/content/schema";
+import { compactName } from "@/core/text";
 import { ruleBundle } from "./fixtures";
 
 const dictionary = buildDictionary(ruleBundle());

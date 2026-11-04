@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { ago, countdownTo, dateLabel, dueIn, shortDate } from "../../../src/lib/view/format";
+import { ago, countdownTo, dateLabel, dueIn, shortDate } from "@/lib/view/format";
 
 describe("formatting", () => {
 	test("relative times read in minutes, hours or days", () => {

@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { AuthRetryableFetchError, createClient } from "@supabase/supabase-js";
-import { syncNow, type SyncContext } from "../../src/lib/sync/sync";
+import { syncNow, type SyncContext } from "@/lib/sync/sync";
 import { HOUR, review } from "../../tests/core/replay/fixtures";
 import {
 	API_URL,

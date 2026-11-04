@@ -1,9 +1,9 @@
 import { describe, expect, test } from "bun:test";
-import { NATIONAL } from "../../../src/core/questions/distractors";
-import { signOut } from "../../../src/lib/auth/account";
-import { afterSignIn, switchAccount } from "../../../src/lib/auth/signin";
-import { exportData, importData } from "../../../src/lib/db/transfer";
-import { loadNotes, loadSettings, saveNote, saveSettings } from "../../../src/lib/db/settings";
+import { NATIONAL } from "@/core/questions/distractors";
+import { signOut } from "@/lib/auth/account";
+import { afterSignIn, switchAccount } from "@/lib/auth/signin";
+import { exportData, importData } from "@/lib/db/transfer";
+import { loadNotes, loadSettings, saveNote, saveSettings } from "@/lib/db/settings";
 import { snapshot } from "../../core/replay/fixtures";
 import { withUuids } from "../db/fixtures";
 import { eventIds, expectConsistent, openDevice, type Device } from "./support/device";

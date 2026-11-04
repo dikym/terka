@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import { advanceDays, advanceTo, priorityLoad, quotaLeft } from "../../../src/core/replay/days";
-import type { AppState } from "../../../src/core/replay/state";
-import { addDays, localDay } from "../../../src/core/time/day";
+import { advanceDays, advanceTo, priorityLoad, quotaLeft } from "@/core/replay/days";
+import type { AppState } from "@/core/replay/state";
+import { addDays, localDay } from "@/core/time/day";
 import { DAY, fresh, manyRegions, NOW, reviewCard, seedCard, WITA } from "./fixtures";
 
 const TODAY = "2026-09-21";

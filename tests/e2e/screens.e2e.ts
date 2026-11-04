@@ -1,6 +1,6 @@
 import { expect, type Locator, type Page, test } from "@playwright/test";
-import type { Bundle } from "../../src/core/content/schema";
-import plates from "../../src/data/plates.json";
+import type { Bundle } from "@/core/content/schema";
+import plates from "@/data/plates.json";
 import { DAY } from "../core/replay/fixtures";
 import { justLearnedLog, learnedLog, missedLog } from "./support/logs";
 import { pageErrors } from "./support/pwa";

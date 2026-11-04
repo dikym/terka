@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { paramsView } from "../../../src/lib/view/params";
+import { paramsView } from "@/lib/view/params";
 import { answers, DAY, paramsRow } from "../../core/optimizer/fixtures";
 
 const T0 = Date.parse("2026-10-01T10:00:00Z");

@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { dailyQueue } from "../../../src/core/session/queue";
+import { dailyQueue } from "@/core/session/queue";
 import { DAY, fresh, manyRegions, NOW, reviewCard, seedCard } from "../replay/fixtures";
 import { ctxAt, SETTINGS } from "./fixtures";
 

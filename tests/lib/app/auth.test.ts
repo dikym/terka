@@ -1,11 +1,11 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, jest, test } from "bun:test";
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { settleAfterSignIn, settleOnOpen, settling, startAuth } from "../../../src/lib/app/auth";
-import type { Runtime } from "../../../src/lib/app/runtime";
-import { removeDevice, signOut } from "../../../src/lib/auth/account";
-import { loadState } from "../../../src/lib/db/log";
-import { readMeta, type TerkaDb } from "../../../src/lib/db/schema";
-import { toastStore } from "../../../src/lib/toasts";
+import { settleAfterSignIn, settleOnOpen, settling, startAuth } from "@/lib/app/auth";
+import type { Runtime } from "@/lib/app/runtime";
+import { removeDevice, signOut } from "@/lib/auth/account";
+import { loadState } from "@/lib/db/log";
+import { readMeta, type TerkaDb } from "@/lib/db/schema";
+import { toastStore } from "@/lib/toasts";
 import { openDevice, shownMatchesStored, type Device } from "../sync/support/device";
 import { answersOf, NOW, openRun } from "../sync/support/events";
 import { FakeServer } from "../sync/support/server";

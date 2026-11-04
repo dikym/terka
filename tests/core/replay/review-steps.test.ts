@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import { dailyQueue } from "../../../src/core/session/queue";
-import { addDays, dayStart, localDay } from "../../../src/core/time/day";
+import { dailyQueue } from "@/core/session/queue";
+import { addDays, dayStart, localDay } from "@/core/time/day";
 import { ctxAt, SETTINGS } from "../session/fixtures";
 import { intro, NOW, review, ruleBundle, stateOf, WITA } from "./fixtures";
 

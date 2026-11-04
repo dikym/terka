@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import type { Bundle, Fact } from "../../../src/core/content/schema";
-import type { AppState } from "../../../src/core/replay/state";
-import { factViewEvent, pickFact } from "../../../src/core/views/facts";
+import type { Bundle, Fact } from "@/core/content/schema";
+import type { AppState } from "@/core/replay/state";
+import { factViewEvent, pickFact } from "@/core/views/facts";
 import { factView, fresh, NOW, ruleBundle, stateOf } from "../replay/fixtures";
 import { ctxAt } from "../session/fixtures";
 

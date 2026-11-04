@@ -1,20 +1,15 @@
 import { describe, expect, test } from "bun:test";
 import { createClient } from "@supabase/supabase-js";
 import { readFileSync } from "node:fs";
-import { seeded } from "../../src/core/random";
-import { deleteAccount, signOut } from "../../src/lib/auth/account";
-import { createTerkaClient } from "../../src/lib/auth/client";
-import { acceptPolicy } from "../../src/lib/auth/consent";
-import {
-	afterSignIn,
-	requestEmailCode,
-	switchAccount,
-	verifyEmailCode
-} from "../../src/lib/auth/signin";
-import { ensureDevice } from "../../src/lib/db/device";
-import { readMeta, TerkaDb } from "../../src/lib/db/schema";
-import { syncNow } from "../../src/lib/sync/sync";
-import { PRIVACY_POLICY_VERSION } from "../../src/rules";
+import { seeded } from "@/core/random";
+import { deleteAccount, signOut } from "@/lib/auth/account";
+import { createTerkaClient } from "@/lib/auth/client";
+import { acceptPolicy } from "@/lib/auth/consent";
+import { afterSignIn, requestEmailCode, switchAccount, verifyEmailCode } from "@/lib/auth/signin";
+import { ensureDevice } from "@/lib/db/device";
+import { readMeta, TerkaDb } from "@/lib/db/schema";
+import { syncNow } from "@/lib/sync/sync";
+import { PRIVACY_POLICY_VERSION } from "@/rules";
 import { HOUR, review } from "../../tests/core/replay/fixtures";
 import { openDatabase } from "./database";
 import { API_URL, bundle, fromDevice, opened, recorded, uniqueEmail } from "./harness";

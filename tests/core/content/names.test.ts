@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import { assembleBundle } from "../../../src/core/content/build";
-import { groupName, provinceName } from "../../../src/core/content/names";
+import { assembleBundle } from "@/core/content/build";
+import { groupName, provinceName } from "@/core/content/names";
 import { validDraft } from "./fixtures";
 
 describe("scope names", () => {

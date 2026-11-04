@@ -1,11 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import type { ReviewLog } from "../../../src/core/log/events";
-import {
-	answerForm,
-	fluencyGroup,
-	recordSample,
-	toSignals
-} from "../../../src/core/replay/samples";
+import type { ReviewLog } from "@/core/log/events";
+import { answerForm, fluencyGroup, recordSample, toSignals } from "@/core/replay/samples";
 import { fresh, NOW, review } from "./fixtures";
 
 const row = (overrides: Partial<ReviewLog> = {}) =>

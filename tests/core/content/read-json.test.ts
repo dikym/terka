@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
-import { readFunFacts } from "../../../src/core/content/read-fun-facts";
-import { readSpecialCodes } from "../../../src/core/content/read-special-codes";
+import { readFunFacts } from "@/core/content/read-fun-facts";
+import { readSpecialCodes } from "@/core/content/read-special-codes";
 
 const json = async (path: string) => JSON.parse(await readFile(path, "utf8"));
 

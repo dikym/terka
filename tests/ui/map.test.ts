@@ -1,9 +1,9 @@
 import { expect, test } from "bun:test";
-import { fillStep, wheelZoom } from "../../src/components/ui/mastery-map";
-import { mapProvinces } from "../../src/lib/view/map";
+import { fillStep, wheelZoom } from "@/components/ui/mastery-map";
+import { mapProvinces } from "@/lib/view/map";
 import { stateOf } from "../core/replay/fixtures";
-import plates from "../../src/data/plates.json";
-import type { Bundle } from "../../src/core/content/schema";
+import plates from "@/data/plates.json";
+import type { Bundle } from "@/core/content/schema";
 
 test("fill step follows the legend bands", () => {
 	expect([null, 0, 1, 33, 34, 66, 67, 99, 100].map(fillStep)).toEqual([

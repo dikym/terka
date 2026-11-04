@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { AuthError, type SupabaseClient } from "@supabase/supabase-js";
-import { acceptPolicy } from "../../../src/lib/auth/consent";
-import { finishCallback, requestEmailCode, signInWithGoogle } from "../../../src/lib/auth/signin";
+import { acceptPolicy } from "@/lib/auth/consent";
+import { finishCallback, requestEmailCode, signInWithGoogle } from "@/lib/auth/signin";
 import { freshDb } from "../db/fixtures";
 
 const CALLBACK = "http://localhost:3000/auth/callback";

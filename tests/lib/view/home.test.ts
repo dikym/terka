@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import { addDays, localDay } from "../../../src/core/time/day";
-import { homeView } from "../../../src/lib/view/home";
+import { addDays, localDay } from "@/core/time/day";
+import { homeView } from "@/lib/view/home";
 import {
 	DAY,
 	intro,

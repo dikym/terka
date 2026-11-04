@@ -1,8 +1,8 @@
 import { expect, test } from "bun:test";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { LevelMark, levelName } from "../../src/components/screens/session/indicators";
-import { type BarProps, SessionMeta } from "../../src/components/screens/session/session-bar";
+import { LevelMark, levelName } from "@/components/screens/session/indicators";
+import { type BarProps, SessionMeta } from "@/components/screens/session/session-bar";
 
 const bar = (mode: BarProps["mode"], level: BarProps["level"] = null): BarProps => ({
 	mode,

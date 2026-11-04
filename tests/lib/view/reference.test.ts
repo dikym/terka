@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import type { Bundle } from "../../../src/core/content/schema";
-import plates from "../../../src/data/plates.json";
+import type { Bundle } from "@/core/content/schema";
+import plates from "@/data/plates.json";
 import {
 	diplomatList,
 	provinceResults,
@@ -10,7 +10,7 @@ import {
 	regionDetail,
 	searchResults,
 	suggestions
-} from "../../../src/lib/view/reference";
+} from "@/lib/view/reference";
 import { stateOf } from "../../core/replay/fixtures";
 
 const bundle = plates as Bundle;

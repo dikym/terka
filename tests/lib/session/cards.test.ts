@@ -1,9 +1,9 @@
 import { describe, expect, test } from "bun:test";
-import { buildDictionary } from "../../../src/core/answers/dictionary";
-import { buildQuestion } from "../../../src/core/questions/build";
-import type { QuestionContext, QuestionFormat } from "../../../src/core/questions/question";
-import { type CardEntry, newEntry } from "../../../src/core/replay/state";
-import { toCard } from "../../../src/lib/session/cards";
+import { buildDictionary } from "@/core/answers/dictionary";
+import { buildQuestion } from "@/core/questions/build";
+import type { QuestionContext, QuestionFormat } from "@/core/questions/question";
+import { type CardEntry, newEntry } from "@/core/replay/state";
+import { toCard } from "@/lib/session/cards";
 import { ruleBundle } from "../../core/replay/fixtures";
 
 const bundle = ruleBundle();

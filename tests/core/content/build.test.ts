@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { assembleBundle, buildFromDraft } from "../../../src/core/content/build";
+import { assembleBundle, buildFromDraft } from "@/core/content/build";
 import { errorCodes, validDraft } from "./fixtures";
 
 const options = { today: "2026-09-28", release: false, previous: null as unknown };

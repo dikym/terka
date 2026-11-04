@@ -1,9 +1,9 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-import type { LearningEvent } from "../../src/core/log/events";
-import { seeded } from "../../src/core/random";
-import { ensureDevice } from "../../src/lib/db/device";
-import { loadState, record, type LogState } from "../../src/lib/db/log";
-import { TerkaDb } from "../../src/lib/db/schema";
+import type { LearningEvent } from "@/core/log/events";
+import { seeded } from "@/core/random";
+import { ensureDevice } from "@/lib/db/device";
+import { loadState, record, type LogState } from "@/lib/db/log";
+import { TerkaDb } from "@/lib/db/schema";
 import { ruleBundle } from "../../tests/core/replay/fixtures";
 import { withUuids } from "../../tests/lib/db/fixtures";
 

@@ -1,8 +1,8 @@
 import { afterAll, describe, expect, test } from "bun:test";
-import type { PracticeRun, ReviewLog } from "../../src/core/log/events";
-import { NATIONAL } from "../../src/core/questions/distractors";
-import { saveSettings } from "../../src/lib/db/settings";
-import { runPush } from "../../src/lib/sync/push";
+import type { PracticeRun, ReviewLog } from "@/core/log/events";
+import { NATIONAL } from "@/core/questions/distractors";
+import { saveSettings } from "@/lib/db/settings";
+import { runPush } from "@/lib/sync/push";
 import { HOUR, MINUTE, review, run, voidOf } from "../../tests/core/replay/fixtures";
 import { openDatabase } from "./database";
 import { device, fromDevice, noRetryAfter, recorded, signIn, uniqueEmail } from "./harness";

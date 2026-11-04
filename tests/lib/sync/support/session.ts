@@ -1,8 +1,8 @@
-import type { LearningEvent } from "../../../../src/core/log/events";
-import type { CardMode } from "../../../../src/core/questions/question";
-import { dailyQueue } from "../../../../src/core/session/queue";
-import { readEvents } from "../../../../src/lib/db/log";
-import { homeView } from "../../../../src/lib/view/home";
+import type { LearningEvent } from "@/core/log/events";
+import type { CardMode } from "@/core/questions/question";
+import { dailyQueue } from "@/core/session/queue";
+import { readEvents } from "@/lib/db/log";
+import { homeView } from "@/lib/view/home";
 import { manyRegions } from "../../../core/replay/fixtures";
 import { ctxAt, SETTINGS } from "../../../core/session/fixtures";
 import type { Device } from "./device";

@@ -1,8 +1,8 @@
 import { describe, expect, test } from "bun:test";
-import { seeded } from "../../../src/core/random";
-import { openApp } from "../../../src/lib/app/boot";
-import { createAppStore } from "../../../src/lib/app/store";
-import { bumpLogVersion } from "../../../src/lib/db/log";
+import { seeded } from "@/core/random";
+import { openApp } from "@/lib/app/boot";
+import { createAppStore } from "@/lib/app/store";
+import { bumpLogVersion } from "@/lib/db/log";
 import { NOW, review, ruleBundle } from "../../core/replay/fixtures";
 import { freshDb, withUuids } from "../db/fixtures";
 

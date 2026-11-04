@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import type { Bundle } from "../../../src/core/content/schema";
-import { NATIONAL } from "../../../src/core/questions/distractors";
-import { placementResult } from "../../../src/core/views/placement-result";
+import type { Bundle } from "@/core/content/schema";
+import { NATIONAL } from "@/core/questions/distractors";
+import { placementResult } from "@/core/views/placement-result";
 import { ruleBundle } from "../replay/fixtures";
 
 function tiered(): Bundle {

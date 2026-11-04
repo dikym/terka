@@ -1,8 +1,8 @@
 import { describe, expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
-import { buildDictionary } from "../../../src/core/answers/dictionary";
-import { cardIdsOf, coverageRules } from "../../../src/core/content/rules/coverage";
-import { bundleSchema } from "../../../src/core/content/schema";
+import { buildDictionary } from "@/core/answers/dictionary";
+import { cardIdsOf, coverageRules } from "@/core/content/rules/coverage";
+import { bundleSchema } from "@/core/content/schema";
 import { ruleBundle } from "./fixtures";
 
 describe("level three coverage in the build", () => {

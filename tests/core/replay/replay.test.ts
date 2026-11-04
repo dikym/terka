@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import { append, replay } from "../../../src/core/replay/replay";
-import { ENGINE_VERSION } from "../../../src/rules";
+import { append, replay } from "@/core/replay/replay";
+import { ENGINE_VERSION } from "@/rules";
 import {
 	DAY,
 	factView,

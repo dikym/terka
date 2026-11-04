@@ -1,10 +1,10 @@
 import { describe, expect, test } from "bun:test";
 import * as binding from "@open-spaced-repetition/binding";
 import { createEmptyCard, default_w, fsrs, Rating } from "ts-fsrs";
-import type { Grade } from "../../../src/core/grading/signals";
-import { splitByTime, type ReviewSeq } from "../../../src/core/optimizer/items";
-import { seeded } from "../../../src/core/random";
-import { createTrainer } from "../../../src/lib/optimizer/trainer";
+import type { Grade } from "@/core/grading/signals";
+import { splitByTime, type ReviewSeq } from "@/core/optimizer/items";
+import { seeded } from "@/core/random";
+import { createTrainer } from "@/lib/optimizer/trainer";
 
 const DAY = 86_400_000;
 const truth = default_w.map((weight, index) =>

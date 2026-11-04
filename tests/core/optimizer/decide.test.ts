@@ -1,8 +1,8 @@
 import { describe, expect, test } from "bun:test";
 import { default_w } from "ts-fsrs";
-import { accepts, decide } from "../../../src/core/optimizer/decide";
-import type { Trainer } from "../../../src/core/optimizer/items";
-import { trainingSetHash } from "../../../src/core/optimizer/hash";
+import { accepts, decide } from "@/core/optimizer/decide";
+import type { Trainer } from "@/core/optimizer/items";
+import { trainingSetHash } from "@/core/optimizer/hash";
 import { answers, DAY, NOW, paramsRow } from "./fixtures";
 
 const base = { baselineLogloss: 0.5, baselineRmse: 0.1 };

@@ -1,11 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import { NATIONAL } from "../../../src/core/questions/distractors";
-import {
-	levelIndicator,
-	masteryMap,
-	scopeMastery,
-	specialMastery
-} from "../../../src/core/views/mastery";
+import { NATIONAL } from "@/core/questions/distractors";
+import { levelIndicator, masteryMap, scopeMastery, specialMastery } from "@/core/views/mastery";
 import { fresh, reviewCard, ruleBundle, seedCard } from "../replay/fixtures";
 
 const bundle = ruleBundle();

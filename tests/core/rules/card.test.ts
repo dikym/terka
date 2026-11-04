@@ -9,10 +9,10 @@ import {
 	unlock,
 	unsuspend,
 	type AnswerContext
-} from "../../../src/core/scheduling/card";
-import { newCard, type CardMemory } from "../../../src/core/scheduling/card-memory";
-import { createScheduler, nextMemory } from "../../../src/core/scheduling/fsrs";
-import { addDays, dayStart, localDay } from "../../../src/core/time/day";
+} from "@/core/scheduling/card";
+import { newCard, type CardMemory } from "@/core/scheduling/card-memory";
+import { createScheduler, nextMemory } from "@/core/scheduling/fsrs";
+import { addDays, dayStart, localDay } from "@/core/time/day";
 import { NOW, WITA } from "./fixtures";
 
 const MINUTE = 60_000;

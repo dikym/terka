@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { addDays, dayNumber, dayStart, localDay, nextLocalDay } from "../../../src/core/time/day";
+import { addDays, dayNumber, dayStart, localDay, nextLocalDay } from "@/core/time/day";
 
 const WITA = "Asia/Makassar";
 const WIB = "Asia/Jakarta";

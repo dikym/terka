@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import type { PracticeRun } from "../../../src/core/log/events";
-import { closingOf, fromServer, toServer } from "../../../src/lib/sync/server";
+import type { PracticeRun } from "@/core/log/events";
+import { closingOf, fromServer, toServer } from "@/lib/sync/server";
 import { NOW, params, review, run } from "../../core/replay/fixtures";
 
 describe("server rows", () => {

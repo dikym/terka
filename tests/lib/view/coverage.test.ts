@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import { coverageView } from "../../../src/lib/view/coverage";
-import { settingsView } from "../../../src/lib/view/settings";
+import { coverageView } from "@/lib/view/coverage";
+import { settingsView } from "@/lib/view/settings";
 import { intro, NOW, ruleBundle, stateOf, WITA } from "../../core/replay/fixtures";
 import { SETTINGS } from "../../core/session/fixtures";
 

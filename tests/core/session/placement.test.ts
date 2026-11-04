@@ -1,11 +1,11 @@
 import { describe, expect, test } from "bun:test";
-import type { Bundle } from "../../../src/core/content/schema";
+import type { Bundle } from "@/core/content/schema";
 import {
 	placementAvailable,
 	placementItems,
 	placementNext,
 	placementStage
-} from "../../../src/core/session/placement";
+} from "@/core/session/placement";
 import { DAY, intro, NOW, review, ruleBundle, run, stateOf, voidOf } from "../replay/fixtures";
 
 const FULL = { 1: 8, 2: 10, 3: 10 } as const;

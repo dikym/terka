@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import type { Bundle } from "../../../src/core/content/schema";
+import type { Bundle } from "@/core/content/schema";
 
 const plates: Bundle = await Bun.file(
 	new URL("../../../src/data/plates.json", import.meta.url)

@@ -1,8 +1,8 @@
 import { describe, expect, test } from "bun:test";
-import { matchRegionCode } from "../../../src/core/answers/match-code";
-import { buildDictionary } from "../../../src/core/answers/dictionary";
-import { matchSet, setThreshold } from "../../../src/core/answers/match-set";
-import { matchHolder, matchSpecialCode } from "../../../src/core/answers/match-special";
+import { matchRegionCode } from "@/core/answers/match-code";
+import { buildDictionary } from "@/core/answers/dictionary";
+import { matchSet, setThreshold } from "@/core/answers/match-set";
+import { matchHolder, matchSpecialCode } from "@/core/answers/match-special";
 import { ruleBundle } from "./fixtures";
 
 const bundle = ruleBundle();

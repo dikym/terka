@@ -1,7 +1,7 @@
 // Regenerates public/map.svg from geoBoundaries; run by hand, the output is committed.
 import { readFile, writeFile } from "node:fs/promises";
 import mapshaper from "mapshaper";
-import type { Bundle } from "../src/core/content/schema";
+import type { Bundle } from "@/core/content/schema";
 
 const SOURCE =
 	"https://github.com/wmgeolab/geoBoundaries/raw/9469f09/releaseData/gbHumanitarian/IDN";

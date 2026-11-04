@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import { newEntry } from "../../../src/core/replay/state";
-import { effectiveCard, universe } from "../../../src/core/replay/universe";
+import { newEntry } from "@/core/replay/state";
+import { effectiveCard, universe } from "@/core/replay/universe";
 import { fresh, ruleBundle } from "./fixtures";
 
 describe("card universe", () => {

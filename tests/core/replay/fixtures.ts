@@ -8,18 +8,13 @@ import type {
 	ReviewVoid,
 	RunKind,
 	Sighting
-} from "../../../src/core/log/events";
-import type { CardMode } from "../../../src/core/questions/question";
-import { localDay } from "../../../src/core/time/day";
-import { ENGINE_VERSION } from "../../../src/rules";
-import type { Bundle } from "../../../src/core/content/schema";
-import { replay } from "../../../src/core/replay/replay";
-import {
-	initialState,
-	newEntry,
-	type AppState,
-	type CardEntry
-} from "../../../src/core/replay/state";
+} from "@/core/log/events";
+import type { CardMode } from "@/core/questions/question";
+import { localDay } from "@/core/time/day";
+import { ENGINE_VERSION } from "@/rules";
+import type { Bundle } from "@/core/content/schema";
+import { replay } from "@/core/replay/replay";
+import { initialState, newEntry, type AppState, type CardEntry } from "@/core/replay/state";
 import { NOW, WITA, ruleBundle } from "../rules/fixtures";
 
 export { NOW, WITA, ruleBundle } from "../rules/fixtures";

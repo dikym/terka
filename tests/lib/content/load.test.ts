@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { loadBundle } from "../../../src/lib/content/load";
+import { loadBundle } from "@/lib/content/load";
 
 const platesText = await Bun.file(new URL("../../../src/data/plates.json", import.meta.url)).text();
 const respond = (body: string, status = 200) =>

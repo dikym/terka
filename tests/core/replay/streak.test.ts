@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import { streak } from "../../../src/core/replay/streak";
-import { addDays } from "../../../src/core/time/day";
+import { streak } from "@/core/replay/streak";
+import { addDays } from "@/core/time/day";
 
 const days = (start: string, count: number, skip: number[] = []) =>
 	new Set(

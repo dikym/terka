@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { deviceIcon, deviceLabel, deviceName } from "../../../src/lib/app/device-label";
+import { deviceIcon, deviceLabel, deviceName } from "@/lib/app/device-label";
 
 test("names the device family from the user agent", () => {
 	expect(

@@ -1,12 +1,12 @@
 import { describe, expect, test } from "bun:test";
-import type { Bundle } from "../../../src/core/content/schema";
-import { schedulerAt } from "../../../src/core/replay/params";
-import type { AppState } from "../../../src/core/replay/state";
-import { retrievability } from "../../../src/core/scheduling/fsrs";
-import { contentOf } from "../../../src/core/session/context";
-import { recheckOffer, recheckQueue } from "../../../src/core/session/recheck";
-import { addDays, localDay } from "../../../src/core/time/day";
-import { RECHECK_AWAY_DAYS, RECHECK_SIZE } from "../../../src/rules";
+import type { Bundle } from "@/core/content/schema";
+import { schedulerAt } from "@/core/replay/params";
+import type { AppState } from "@/core/replay/state";
+import { retrievability } from "@/core/scheduling/fsrs";
+import { contentOf } from "@/core/session/context";
+import { recheckOffer, recheckQueue } from "@/core/session/recheck";
+import { addDays, localDay } from "@/core/time/day";
+import { RECHECK_AWAY_DAYS, RECHECK_SIZE } from "@/rules";
 import {
 	DAY,
 	fresh,

@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { MAIN_ROUTES } from "../../scripts/build/routes";
-import { PRIVACY_POLICY_VERSION } from "../../src/rules";
+import { PRIVACY_POLICY_VERSION } from "@/rules";
 
 test("the web app manifest offers a Referensi shortcut", async ({ request }) => {
 	const response = await request.get("/manifest.webmanifest");

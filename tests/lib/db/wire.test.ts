@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import type { LearningEvent, ReviewLog } from "../../../src/core/log/events";
-import type { TableName } from "../../../src/lib/db/schema";
-import { fromWire, TABLES, toWire } from "../../../src/lib/db/wire";
+import type { LearningEvent, ReviewLog } from "@/core/log/events";
+import type { TableName } from "@/lib/db/schema";
+import { fromWire, TABLES, toWire } from "@/lib/db/wire";
 import {
 	cardEvent,
 	factView,

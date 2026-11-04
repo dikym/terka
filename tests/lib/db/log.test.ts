@@ -1,15 +1,9 @@
 import { describe, expect, test } from "bun:test";
-import type { LearningEvent, PracticeRun, ReviewLog } from "../../../src/core/log/events";
-import type { AppState } from "../../../src/core/replay/state";
-import {
-	lastSightingAt,
-	loadState,
-	readEvents,
-	record,
-	type LogState
-} from "../../../src/lib/db/log";
-import { readMeta, TerkaDb } from "../../../src/lib/db/schema";
-import { ENGINE_VERSION } from "../../../src/rules";
+import type { LearningEvent, PracticeRun, ReviewLog } from "@/core/log/events";
+import type { AppState } from "@/core/replay/state";
+import { lastSightingAt, loadState, readEvents, record, type LogState } from "@/lib/db/log";
+import { readMeta, TerkaDb } from "@/lib/db/schema";
+import { ENGINE_VERSION } from "@/rules";
 import {
 	HOUR,
 	MINUTE,

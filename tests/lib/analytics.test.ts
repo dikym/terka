@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { beforeSend, pageViewUrl } from "../../src/lib/analytics";
+import { beforeSend, pageViewUrl } from "@/lib/analytics";
 
 describe("page view url", () => {
 	test("drops the auth code and fragment from the callback", () => {

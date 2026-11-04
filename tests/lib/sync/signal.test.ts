@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { signalTopic, syncSignal } from "../../../src/lib/sync/signal";
+import { signalTopic, syncSignal } from "@/lib/sync/signal";
 
 // Stands in for a Realtime channel: records what was sent and lets the test play the server.
 function fakeClient() {

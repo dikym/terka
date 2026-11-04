@@ -1,7 +1,7 @@
 import { expect, test } from "bun:test";
-import { effectiveTs } from "../../../src/core/log/order";
-import { append } from "../../../src/core/replay/replay";
-import { dailyQueue } from "../../../src/core/session/queue";
+import { effectiveTs } from "@/core/log/order";
+import { append } from "@/core/replay/replay";
+import { dailyQueue } from "@/core/session/queue";
 import { HOUR, review, ruleBundle, stateOf } from "../replay/fixtures";
 import { randomLog } from "../replay/generator";
 import { ctxAt, SETTINGS } from "./fixtures";

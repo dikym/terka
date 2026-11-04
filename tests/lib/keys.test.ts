@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { keyAction } from "../../src/lib/keys";
+import { keyAction } from "@/lib/keys";
 
 const el = (tagName: string) => ({ tagName });
 

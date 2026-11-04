@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
-import type { Bundle } from "../../src/core/content/schema";
-import plates from "../../src/data/plates.json";
+import type { Bundle } from "@/core/content/schema";
+import plates from "@/data/plates.json";
 import { asUuid } from "../lib/db/fixtures";
 import { eligibleLog, replayLog } from "./support/logs";
 import { rows, seed } from "./support/seed";

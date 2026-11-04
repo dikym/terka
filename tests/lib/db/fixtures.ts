@@ -1,7 +1,7 @@
-import type { LearningEvent } from "../../../src/core/log/events";
-import { seeded } from "../../../src/core/random";
-import { uuidV7 } from "../../../src/core/session/ids";
-import { TerkaDb } from "../../../src/lib/db/schema";
+import type { LearningEvent } from "@/core/log/events";
+import { seeded } from "@/core/random";
+import { uuidV7 } from "@/core/session/ids";
+import { TerkaDb } from "@/lib/db/schema";
 import { HOUR, NOW, review, stateOf } from "../../core/replay/fixtures";
 
 // Every test gets its own database; bun shares one fake IndexedDB across test files.

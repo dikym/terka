@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import { acceptPolicy, recordConsent } from "../../../src/lib/auth/consent";
-import { wipeLocalData } from "../../../src/lib/auth/account";
+import { acceptPolicy, recordConsent } from "@/lib/auth/consent";
+import { wipeLocalData } from "@/lib/auth/account";
 import { expectConsistent, openDevice } from "./support/device";
 import { answersOf, closeOf, DAY, MINUTE, NOW, openRun, review } from "./support/events";
 import { FakeServer } from "./support/server";

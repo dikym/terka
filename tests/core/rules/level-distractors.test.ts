@@ -1,17 +1,17 @@
 import { describe, expect, test } from "bun:test";
-import { areaDisplayName, provinceName } from "../../../src/core/answers/dictionary";
-import type { Area, Bundle } from "../../../src/core/content/schema";
+import { areaDisplayName, provinceName } from "@/core/answers/dictionary";
+import type { Area, Bundle } from "@/core/content/schema";
 import {
 	foreignAreas,
 	NATIONAL,
 	otherCodes,
 	provinceChoices,
 	specialChoices
-} from "../../../src/core/questions/distractors";
-import { automaticLevel, resolveLevel } from "../../../src/core/questions/level";
-import { parseCardId } from "../../../src/core/questions/question";
-import { seeded } from "../../../src/core/random";
-import { newCard } from "../../../src/core/scheduling/card-memory";
+} from "@/core/questions/distractors";
+import { automaticLevel, resolveLevel } from "@/core/questions/level";
+import { parseCardId } from "@/core/questions/question";
+import { seeded } from "@/core/random";
+import { newCard } from "@/core/scheduling/card-memory";
 import { ruleBundle } from "./fixtures";
 
 const bundle = ruleBundle();

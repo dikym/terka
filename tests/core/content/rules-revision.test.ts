@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import { assembleBundle } from "../../../src/core/content/build";
-import { revisionRules } from "../../../src/core/content/rules/revision";
+import { assembleBundle } from "@/core/content/build";
+import { revisionRules } from "@/core/content/rules/revision";
 import { errorCodes, validDraft } from "./fixtures";
 
 describe("revision rules", () => {

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { applyEvent } from "../../../src/core/replay/apply";
+import { applyEvent } from "@/core/replay/apply";
 import {
 	HOUR,
 	MINUTE,

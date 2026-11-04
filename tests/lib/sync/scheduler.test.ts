@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { createScheduler, type NextRun } from "../../../src/lib/sync/scheduler";
+import { createScheduler, type NextRun } from "@/lib/sync/scheduler";
 
 // A clock and timer queue that only move when the test says so.
 function fakeTime() {

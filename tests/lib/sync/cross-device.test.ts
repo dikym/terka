@@ -1,11 +1,11 @@
 import { describe, expect, test } from "bun:test";
-import type { LearningEvent } from "../../../src/core/log/events";
-import { effectiveTs } from "../../../src/core/log/order";
-import { streakDays } from "../../../src/core/replay/streak";
-import { toWire } from "../../../src/lib/db/wire";
-import { runPull } from "../../../src/lib/sync/pull";
-import { loadState } from "../../../src/lib/db/log";
-import { wipesOf } from "../../../src/lib/db/schema";
+import type { LearningEvent } from "@/core/log/events";
+import { effectiveTs } from "@/core/log/order";
+import { streakDays } from "@/core/replay/streak";
+import { toWire } from "@/lib/db/wire";
+import { runPull } from "@/lib/sync/pull";
+import { loadState } from "@/lib/db/log";
+import { wipesOf } from "@/lib/db/schema";
 import { snapshot } from "../../core/replay/fixtures";
 import { eventIds, expectConsistent, openDevice, type Device } from "./support/device";
 import {

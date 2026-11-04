@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import type { ReviewLog } from "../../../src/core/log/events";
-import { endView } from "../../../src/lib/session/end";
-import { createMeasure } from "../../../src/lib/session/measure";
+import type { ReviewLog } from "@/core/log/events";
+import { endView } from "@/lib/session/end";
+import { createMeasure } from "@/lib/session/measure";
 import { NOW, review, ruleBundle, stateOf } from "../../core/replay/fixtures";
 
 const bundle = ruleBundle();

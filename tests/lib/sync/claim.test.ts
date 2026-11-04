@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { claimFacts } from "../../../src/lib/sync/sync";
+import { claimFacts } from "@/lib/sync/sync";
 import { freshDb } from "../db/fixtures";
 
 describe("claim progress", () => {

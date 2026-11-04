@@ -1,11 +1,7 @@
 import { expect, test } from "bun:test";
-import {
-	areaDisplayName,
-	buildDictionary,
-	provinceName
-} from "../../../src/core/answers/dictionary";
-import { matchName } from "../../../src/core/answers/match-name";
-import type { Bundle } from "../../../src/core/content/schema";
+import { areaDisplayName, buildDictionary, provinceName } from "@/core/answers/dictionary";
+import { matchName } from "@/core/answers/match-name";
+import type { Bundle } from "@/core/content/schema";
 
 const plates: Bundle = await Bun.file(
 	new URL("../../../src/data/plates.json", import.meta.url)

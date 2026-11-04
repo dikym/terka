@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { noteOffer, pendingNotices } from "../../../src/core/views/notices";
+import { noteOffer, pendingNotices } from "@/core/views/notices";
 import { fresh, reviewCard, seedCard } from "../replay/fixtures";
 
 describe("note offer after a jump in lapses", () => {

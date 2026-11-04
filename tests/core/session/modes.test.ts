@@ -5,7 +5,7 @@ import {
 	kilatQuestion,
 	setrecallDue,
 	setrecallQueue
-} from "../../../src/core/session/modes";
+} from "@/core/session/modes";
 import { DAY, fresh, NOW, reviewCard, ruleBundle, seedCard } from "../replay/fixtures";
 import { ctxAt, SUMATERA } from "./fixtures";
 

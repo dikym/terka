@@ -1,5 +1,5 @@
 import type { Page } from "@playwright/test";
-import type { LearningEvent } from "../../../src/core/log/events";
+import type { LearningEvent } from "@/core/log/events";
 
 // The app creates the database on its first page load; add rows once its stores exist.
 export async function seed(

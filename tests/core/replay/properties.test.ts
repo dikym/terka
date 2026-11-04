@@ -1,7 +1,7 @@
 import { describe, expect, spyOn, test } from "bun:test";
-import { sortEvents } from "../../../src/core/log/order";
-import { seeded, shuffle } from "../../../src/core/random";
-import { append } from "../../../src/core/replay/replay";
+import { sortEvents } from "@/core/log/order";
+import { seeded, shuffle } from "@/core/random";
+import { append } from "@/core/replay/replay";
 import { snapshot, stateOf } from "./fixtures";
 import { randomLog } from "./generator";
 

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { createToasts } from "../../src/lib/toasts";
+import { createToasts } from "@/lib/toasts";
 
 // Collects scheduled callbacks so a test can run them when it wants.
 function manualTimers() {

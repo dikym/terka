@@ -1,4 +1,4 @@
-import type { Area, Bundle, Region, Special } from "../../../src/core/content/schema";
+import type { Area, Bundle, Region, Special } from "@/core/content/schema";
 
 export const WITA = "Asia/Makassar";
 // Monday 21 September 2026, 00:00 WITA.

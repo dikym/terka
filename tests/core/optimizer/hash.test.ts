@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { createHash } from "node:crypto";
-import { trainingSetHash } from "../../../src/core/optimizer/hash";
+import { trainingSetHash } from "@/core/optimizer/hash";
 
 const one = "00000000-0000-0000-0000-000000000001";
 const two = "00000000-0000-0000-0000-000000000002";

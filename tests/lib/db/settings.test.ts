@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import { NATIONAL } from "../../../src/core/questions/distractors";
-import { markNoteOffer, markNotified, readFlags } from "../../../src/lib/db/flags";
-import { loadNotes, loadSettings, saveNote, saveSettings } from "../../../src/lib/db/settings";
+import { NATIONAL } from "@/core/questions/distractors";
+import { markNoteOffer, markNotified, readFlags } from "@/lib/db/flags";
+import { loadNotes, loadSettings, saveNote, saveSettings } from "@/lib/db/settings";
 import { freshDb } from "./fixtures";
 
 const NOW = Date.parse("2026-10-03T08:00:00Z");

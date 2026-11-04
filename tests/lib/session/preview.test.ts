@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { composition, infoNotes, typeRows } from "../../../src/lib/session/preview";
+import { composition, infoNotes, typeRows } from "@/lib/session/preview";
 
 describe("session preview", () => {
 	test("composition leaves out empty slots", () => {

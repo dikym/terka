@@ -1,12 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import { applyEvent } from "../../../src/core/replay/apply";
-import { localDay } from "../../../src/core/time/day";
-import {
-	exportReminderDue,
-	loginPromptDue,
-	noteOffer,
-	pendingNotices
-} from "../../../src/core/views/notices";
+import { applyEvent } from "@/core/replay/apply";
+import { localDay } from "@/core/time/day";
+import { exportReminderDue, loginPromptDue, noteOffer, pendingNotices } from "@/core/views/notices";
 import { fresh, NOW, review, reviewCard, seedCard } from "../replay/fixtures";
 
 describe("note offer", () => {

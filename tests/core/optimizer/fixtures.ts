@@ -1,6 +1,6 @@
-import type { FsrsParams } from "../../../src/core/log/events";
-import type { CountedAnswer } from "../../../src/core/optimizer/counted";
-import { addDays } from "../../../src/core/time/day";
+import type { FsrsParams } from "@/core/log/events";
+import type { CountedAnswer } from "@/core/optimizer/counted";
+import { addDays } from "@/core/time/day";
 import { DAY, NOW } from "../replay/fixtures";
 
 export { DAY, NOW };

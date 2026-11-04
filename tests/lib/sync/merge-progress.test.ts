@@ -1,11 +1,11 @@
 import { describe, expect, test } from "bun:test";
-import type { LearningEvent } from "../../../src/core/log/events";
-import type { CardMode } from "../../../src/core/questions/question";
-import { buildDictionary } from "../../../src/core/answers/dictionary";
-import { sortEvents } from "../../../src/core/log/order";
-import { replay } from "../../../src/core/replay/replay";
-import { streakDays } from "../../../src/core/replay/streak";
-import { planSession } from "../../../src/lib/session/modes";
+import type { LearningEvent } from "@/core/log/events";
+import type { CardMode } from "@/core/questions/question";
+import { buildDictionary } from "@/core/answers/dictionary";
+import { sortEvents } from "@/core/log/order";
+import { replay } from "@/core/replay/replay";
+import { streakDays } from "@/core/replay/streak";
+import { planSession } from "@/lib/session/modes";
 import { snapshot } from "../../core/replay/fixtures";
 import { ctxAt, SETTINGS } from "../../core/session/fixtures";
 import { eventIds, expectConsistent, openDevice, type Device } from "./support/device";

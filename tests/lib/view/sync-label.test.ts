@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { lastSyncLabel, syncIcon, syncLabel } from "../../../src/lib/view/sync-label";
+import { lastSyncLabel, syncIcon, syncLabel } from "@/lib/view/sync-label";
 
 const NOW = Date.parse("2026-10-25T08:00:00Z");
 

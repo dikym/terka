@@ -1,10 +1,10 @@
 import { describe, expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
-import { areaDisplayName } from "../../../src/core/answers/dictionary";
-import { bundleSchema } from "../../../src/core/content/schema";
-import { buildQuestion } from "../../../src/core/questions/build";
-import { eligibleRegions } from "../../../src/core/questions/distractors";
-import { newCard, type CardMemory } from "../../../src/core/scheduling/card-memory";
+import { areaDisplayName } from "@/core/answers/dictionary";
+import { bundleSchema } from "@/core/content/schema";
+import { buildQuestion } from "@/core/questions/build";
+import { eligibleRegions } from "@/core/questions/distractors";
+import { newCard, type CardMemory } from "@/core/scheduling/card-memory";
 import { ruleBundle } from "./fixtures";
 
 const bundle = ruleBundle();

@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import { seeded } from "../../../src/core/random";
-import { ensureDevice, ensurePersistence } from "../../../src/lib/db/device";
-import { readMeta } from "../../../src/lib/db/schema";
+import { seeded } from "@/core/random";
+import { ensureDevice, ensurePersistence } from "@/lib/db/device";
+import { readMeta } from "@/lib/db/schema";
 import { freshDb } from "./fixtures";
 
 const NOW = Date.parse("2026-10-03T08:00:00Z");

@@ -1,12 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import type { LearningEvent } from "../../../src/core/log/events";
-import {
-	compareKeys,
-	dedupeEvents,
-	effectiveTs,
-	eventKey,
-	sortEvents
-} from "../../../src/core/log/order";
+import type { LearningEvent } from "@/core/log/events";
+import { compareKeys, dedupeEvents, effectiveTs, eventKey, sortEvents } from "@/core/log/order";
 import { HOUR, MINUTE, NOW, review, run } from "./fixtures";
 
 const ids = (events: LearningEvent[]) => events.map((event) => event.row.id);

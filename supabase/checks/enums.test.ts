@@ -1,5 +1,5 @@
 import { afterAll, expect, test } from "bun:test";
-import * as enums from "../../src/lib/db/enums";
+import * as enums from "@/lib/db/enums";
 import { openDatabase } from "./database";
 
 const db = openDatabase();

@@ -1,6 +1,6 @@
 import { readdir, readFile } from "node:fs/promises";
 import { dirname, join, relative } from "node:path";
-import { releaseVersionSchema } from "../../src/core/content/schema";
+import { releaseVersionSchema } from "@/core/content/schema";
 import { htmlPathOf, MAIN_ROUTES } from "./routes";
 
 const exists = (path: string) =>

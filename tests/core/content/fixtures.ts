@@ -1,5 +1,5 @@
-import type { ContentDraft } from "../../../src/core/content/draft";
-import type { ContentMessage } from "../../../src/core/content/messages";
+import type { ContentDraft } from "@/core/content/draft";
+import type { ContentMessage } from "@/core/content/messages";
 
 const letters = "abcdefghijklmnopqrstuvwxyz";
 export const idAt = (index: number) => letters[Math.floor(index / 26)] + letters[index % 26];

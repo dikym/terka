@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import type { OutboxRow, TableName } from "../../../src/lib/db/schema";
-import type { Block } from "../../../src/lib/sync/errors";
-import { planPush } from "../../../src/lib/sync/plan";
+import type { OutboxRow, TableName } from "@/lib/db/schema";
+import type { Block } from "@/lib/sync/errors";
+import { planPush } from "@/lib/sync/plan";
 
 const NOW = Date.parse("2026-10-04T12:00:00Z");
 let seq = 0;

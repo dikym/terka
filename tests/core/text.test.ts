@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { compactName, holderKey, normalizeName } from "../../src/core/text";
+import { compactName, holderKey, normalizeName } from "@/core/text";
 
 describe("name normalization", () => {
 	test("case, punctuation and spacing collapse", () => {

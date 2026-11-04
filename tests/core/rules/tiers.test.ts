@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { DEFAULT_TIER, TIER_ORDER, TIERS } from "../../../src/rules";
+import { DEFAULT_TIER, TIER_ORDER, TIERS } from "@/rules";
 
 describe("tier table", () => {
 	test("every tier keeps new material plus the hold threshold under ten minutes a day", () => {

@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import { buildQuestion } from "../../../src/core/questions/build";
-import type { QueueItem } from "../../../src/core/session/context";
+import { buildQuestion } from "@/core/questions/build";
+import type { QueueItem } from "@/core/session/context";
 import {
 	buildPreview,
 	durationRange,
@@ -9,7 +9,7 @@ import {
 	questionMs,
 	previewStale,
 	type PreviewExtras
-} from "../../../src/core/session/preview";
+} from "@/core/session/preview";
 import { DAY, fresh, MINUTE, NOW, reviewCard, ruleBundle, seedCard } from "../replay/fixtures";
 import { ctxAt, SETTINGS, SUMATERA } from "./fixtures";
 

@@ -1,7 +1,7 @@
 import { expect, type Page, test } from "@playwright/test";
 import { MAIN_ROUTES } from "../../scripts/build/routes";
-import type { Bundle } from "../../src/core/content/schema";
-import plates from "../../src/data/plates.json";
+import type { Bundle } from "@/core/content/schema";
+import plates from "@/data/plates.json";
 import { justLearnedLog, learnedLog } from "./support/logs";
 import { opened } from "./support/routes";
 import { seed } from "./support/seed";

@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import type { Bundle } from "../../src/core/content/schema";
-import { mapRules } from "../../src/core/content/rules/map";
+import type { Bundle } from "@/core/content/schema";
+import { mapRules } from "@/core/content/rules/map";
 import { readMapIds } from "../../scripts/build/map-ids";
 
 const svg = await Bun.file(new URL("../../public/map.svg", import.meta.url)).text();

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { holdsUpdate, updateAction } from "../../../src/lib/pwa/register";
+import { holdsUpdate, updateAction } from "@/lib/pwa/register";
 
 describe("what to do with a waiting version", () => {
 	test("nothing while no new version waits", () => {

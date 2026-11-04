@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { readFile } from "node:fs/promises";
-import { buildContent } from "../../../src/core/content/build";
+import { buildContent } from "@/core/content/build";
 
 const text = (path: string) => readFile(path, "utf8");
 const sources = async () => ({

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { optimizationDue, optimizationProgress } from "../../../src/core/optimizer/due";
+import { optimizationDue, optimizationProgress } from "@/core/optimizer/due";
 import { answers, DAY, NOW, paramsRow } from "./fixtures";
 
 const later = NOW + 1_000 * 3_600_000;

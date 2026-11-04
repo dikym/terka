@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { hardCardList, statsView } from "../../../src/lib/view/stats";
+import { hardCardList, statsView } from "@/lib/view/stats";
 import { DAY, intro, NOW, review, ruleBundle, stateOf } from "../../core/replay/fixtures";
 import { ctxAt } from "../../core/session/fixtures";
 

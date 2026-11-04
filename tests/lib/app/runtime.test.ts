@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, test } from "bun:test";
-import { seeded } from "../../../src/core/random";
-import { bootRuntime, lastDayOf, resetRuntime } from "../../../src/lib/app/runtime";
-import { loadNotes, loadSettings } from "../../../src/lib/db/settings";
+import { seeded } from "@/core/random";
+import { bootRuntime, lastDayOf, resetRuntime } from "@/lib/app/runtime";
+import { loadNotes, loadSettings } from "@/lib/db/settings";
 import { ruleBundle } from "../../core/replay/fixtures";
 import { freshDb } from "../db/fixtures";
 

@@ -1,13 +1,13 @@
 import { describe, expect, test } from "bun:test";
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { seeded } from "../../../src/core/random";
-import { claimLocalData, resetProgress, wipeLocalData } from "../../../src/lib/auth/account";
-import { acceptPolicy, recordConsent } from "../../../src/lib/auth/consent";
-import { ensureDevice } from "../../../src/lib/db/device";
-import { bumpLogVersion, loadState, record } from "../../../src/lib/db/log";
-import { readMeta, wipesOf, type TerkaDb } from "../../../src/lib/db/schema";
-import { saveNote } from "../../../src/lib/db/settings";
-import { runPull } from "../../../src/lib/sync/pull";
+import { seeded } from "@/core/random";
+import { claimLocalData, resetProgress, wipeLocalData } from "@/lib/auth/account";
+import { acceptPolicy, recordConsent } from "@/lib/auth/consent";
+import { ensureDevice } from "@/lib/db/device";
+import { bumpLogVersion, loadState, record } from "@/lib/db/log";
+import { readMeta, wipesOf, type TerkaDb } from "@/lib/db/schema";
+import { saveNote } from "@/lib/db/settings";
+import { runPull } from "@/lib/sync/pull";
 import { review, ruleBundle } from "../../core/replay/fixtures";
 import { freshDb, withUuids } from "../db/fixtures";
 

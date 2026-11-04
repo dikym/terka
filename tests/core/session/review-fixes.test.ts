@@ -1,14 +1,14 @@
 import { describe, expect, test } from "bun:test";
-import type { PracticeRun, ReviewLog } from "../../../src/core/log/events";
-import { buildQuestion } from "../../../src/core/questions/build";
-import { NATIONAL } from "../../../src/core/questions/distractors";
-import { applyEvent } from "../../../src/core/replay/apply";
-import { effectiveCard } from "../../../src/core/replay/universe";
-import { checkAnswer } from "../../../src/core/session/check";
-import { answerEvent, startRun } from "../../../src/core/session/commands";
-import { setrecallQueue } from "../../../src/core/session/modes";
-import { placementNext } from "../../../src/core/session/placement";
-import { buildPreview } from "../../../src/core/session/preview";
+import type { PracticeRun, ReviewLog } from "@/core/log/events";
+import { buildQuestion } from "@/core/questions/build";
+import { NATIONAL } from "@/core/questions/distractors";
+import { applyEvent } from "@/core/replay/apply";
+import { effectiveCard } from "@/core/replay/universe";
+import { checkAnswer } from "@/core/session/check";
+import { answerEvent, startRun } from "@/core/session/commands";
+import { setrecallQueue } from "@/core/session/modes";
+import { placementNext } from "@/core/session/placement";
+import { buildPreview } from "@/core/session/preview";
 import { fresh, NOW, reviewCard, ruleBundle, seedCard } from "../replay/fixtures";
 import { ctxAt, dictionary, SETTINGS } from "./fixtures";
 

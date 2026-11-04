@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import type { CountedAnswer } from "../../../src/core/optimizer/counted";
-import { revlogCsv } from "../../../src/core/optimizer/steps";
+import type { CountedAnswer } from "@/core/optimizer/counted";
+import { revlogCsv } from "@/core/optimizer/steps";
 
 const answer = (
 	cardId: string,

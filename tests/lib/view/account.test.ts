@@ -1,11 +1,6 @@
 import { expect, test } from "bun:test";
-import type { DeviceInfo } from "../../../src/lib/db/device";
-import {
-	deviceRows,
-	exportLabel,
-	importMessage,
-	mergedMessage
-} from "../../../src/lib/view/account";
+import type { DeviceInfo } from "@/lib/db/device";
+import { deviceRows, exportLabel, importMessage, mergedMessage } from "@/lib/view/account";
 
 const NOW = Date.parse("2026-10-25T08:00:00Z");
 

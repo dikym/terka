@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import { factRules } from "../../../src/core/content/rules/facts";
-import { identityRules } from "../../../src/core/content/rules/identity";
-import { specialRules } from "../../../src/core/content/rules/specials";
+import { factRules } from "@/core/content/rules/facts";
+import { identityRules } from "@/core/content/rules/identity";
+import { specialRules } from "@/core/content/rules/specials";
 import { errorCodes, validDraft } from "./fixtures";
 
 const TODAY = "2026-09-28";

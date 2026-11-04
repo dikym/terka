@@ -1,16 +1,16 @@
 import { describe, expect, test } from "bun:test";
-import { buildDictionary } from "../../../src/core/answers/dictionary";
-import type { LearningEvent } from "../../../src/core/log/events";
+import { buildDictionary } from "@/core/answers/dictionary";
+import type { LearningEvent } from "@/core/log/events";
 import {
 	kilatCards,
 	type PlanInput,
 	planSession,
 	reaskCard,
 	reaskPosition
-} from "../../../src/lib/session/modes";
-import { buildPreview } from "../../../src/core/session/preview";
-import { dailyQueue } from "../../../src/core/session/queue";
-import { DAILY_MIN_SIZE } from "../../../src/rules";
+} from "@/lib/session/modes";
+import { buildPreview } from "@/core/session/preview";
+import { dailyQueue } from "@/core/session/queue";
+import { DAILY_MIN_SIZE } from "@/rules";
 import {
 	DAY,
 	fresh,

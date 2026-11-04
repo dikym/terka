@@ -1,5 +1,5 @@
 import { readFile, writeFile } from "node:fs/promises";
-import { buildContent } from "../src/core/content/build";
+import { buildContent } from "@/core/content/build";
 import { readMapIds } from "./build/map-ids";
 
 const root = new URL("../", import.meta.url);

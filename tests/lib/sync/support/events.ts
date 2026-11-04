@@ -1,5 +1,5 @@
-import type { LearningEvent, PracticeRun } from "../../../../src/core/log/events";
-import { localDay } from "../../../../src/core/time/day";
+import type { LearningEvent, PracticeRun } from "@/core/log/events";
+import { localDay } from "@/core/time/day";
 import { MINUTE, NOW, review, run, WITA } from "../../../core/replay/fixtures";
 
 export { MINUTE, NOW, review, run, WITA };

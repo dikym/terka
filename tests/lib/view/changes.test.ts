@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { dataChanges } from "../../../src/lib/view/changes";
+import { dataChanges } from "@/lib/view/changes";
 import { intro, NOW, ruleBundle, stateOf } from "../../core/replay/fixtures";
 
 test("without suspended material the change list says nothing moved", () => {

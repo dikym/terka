@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { buildItems, splitByTime } from "../../../src/core/optimizer/items";
+import { buildItems, splitByTime } from "@/core/optimizer/items";
 import { answers, DAY, NOW } from "./fixtures";
 
 describe("buildItems", () => {

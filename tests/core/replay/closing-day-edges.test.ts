@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import type { PracticeRun } from "../../../src/core/log/events";
-import type { AppState } from "../../../src/core/replay/state";
-import { localDay } from "../../../src/core/time/day";
+import type { PracticeRun } from "@/core/log/events";
+import type { AppState } from "@/core/replay/state";
+import { localDay } from "@/core/time/day";
 import { DAY, HOUR, intro, MINUTE, NOW, review, run, stateOf, voidOf, WITA } from "./fixtures";
 
 const TODAY = localDay(NOW, WITA);

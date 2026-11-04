@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import type { ReviewLog } from "../../../src/core/log/events";
-import { sessionSummary } from "../../../src/core/views/summary";
+import type { ReviewLog } from "@/core/log/events";
+import { sessionSummary } from "@/core/views/summary";
 import {
 	fresh,
 	intro,

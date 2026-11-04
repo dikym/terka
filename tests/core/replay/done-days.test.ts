@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import type { PracticeRun } from "../../../src/core/log/events";
-import { streakDays } from "../../../src/core/replay/streak";
-import { localDay } from "../../../src/core/time/day";
+import type { PracticeRun } from "@/core/log/events";
+import { streakDays } from "@/core/replay/streak";
+import { localDay } from "@/core/time/day";
 import {
 	DAY as DAY_MS,
 	HOUR,

@@ -1,15 +1,15 @@
 import { describe, expect, test } from "bun:test";
 import * as binding from "@open-spaced-repetition/binding";
 import { default_w } from "ts-fsrs";
-import { optimizeLog } from "../../../src/core/optimizer/decide";
-import type { Trainer } from "../../../src/core/optimizer/items";
-import { paramsAt } from "../../../src/core/replay/params";
-import { seeded } from "../../../src/core/random";
-import { ensureDevice } from "../../../src/lib/db/device";
-import { loadState, record } from "../../../src/lib/db/log";
-import { TerkaDb } from "../../../src/lib/db/schema";
-import { maybeOptimize, type Optimize } from "../../../src/lib/optimizer/run";
-import { createTrainer } from "../../../src/lib/optimizer/trainer";
+import { optimizeLog } from "@/core/optimizer/decide";
+import type { Trainer } from "@/core/optimizer/items";
+import { paramsAt } from "@/core/replay/params";
+import { seeded } from "@/core/random";
+import { ensureDevice } from "@/lib/db/device";
+import { loadState, record } from "@/lib/db/log";
+import { TerkaDb } from "@/lib/db/schema";
+import { maybeOptimize, type Optimize } from "@/lib/optimizer/run";
+import { createTrainer } from "@/lib/optimizer/trainer";
 import { freshDb } from "../db/fixtures";
 import { AFTER_LOG, bundle, eligibleLog } from "./fixtures";
 

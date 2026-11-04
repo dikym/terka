@@ -1,10 +1,10 @@
 import { describe, expect, test } from "bun:test";
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { seeded } from "../../../src/core/random";
-import { ensureDevice } from "../../../src/lib/db/device";
-import { loadState, record } from "../../../src/lib/db/log";
-import { readMeta } from "../../../src/lib/db/schema";
-import { adoptServerReset } from "../../../src/lib/sync/reset";
+import { seeded } from "@/core/random";
+import { ensureDevice } from "@/lib/db/device";
+import { loadState, record } from "@/lib/db/log";
+import { readMeta } from "@/lib/db/schema";
+import { adoptServerReset } from "@/lib/sync/reset";
 import { review, ruleBundle } from "../../core/replay/fixtures";
 import { freshDb, withUuids } from "../db/fixtures";
 

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { bundleSchema } from "../../../src/core/content/schema";
+import { bundleSchema } from "@/core/content/schema";
 
 const bundle = () => ({
 	version: "2026.09.28",
