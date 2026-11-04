@@ -1,9 +1,9 @@
 import { TIMED_LIMIT_MS } from "@/rules";
-import type { Bundle, Special } from "../content/schema";
-import { shuffle } from "../random";
-import { isLeech } from "../scheduling/card";
-import type { CardMemory } from "../scheduling/card-memory";
-import { specialChoices } from "./distractors";
+import type { Bundle, Special } from "@/core/content/schema";
+import { shuffle } from "@/core/random";
+import { isLeech } from "@/core/scheduling/card";
+import type { CardMemory } from "@/core/scheduling/card-memory";
+import { specialChoices } from "@/core/questions/distractors";
 import {
 	LABELS,
 	type Level,
@@ -12,8 +12,8 @@ import {
 	type Question,
 	type QuestionOptions,
 	questionRandom
-} from "./question";
-import { levelSourceFor, type ResolvedLevels } from "./region";
+} from "@/core/questions/question";
+import { levelSourceFor, type ResolvedLevels } from "@/core/questions/region";
 
 export function buildSpecialQuestion(
 	card: CardMemory,

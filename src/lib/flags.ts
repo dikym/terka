@@ -39,6 +39,6 @@ export function writeFlag(store: Store, key: string, value: string) {
 	}
 }
 
-export { LEGAL_FROM_SETTINGS, WELCOME_SEEN } from "./flag-keys";
+export { LEGAL_FROM_SETTINGS, WELCOME_SEEN } from "@/lib/flag-keys";
 export const LOGIN_PROMPT_DISMISSED = "terka.loginPromptDismissed";
 export const SEEN_CONTENT_REV = "terka.seenContentRev";

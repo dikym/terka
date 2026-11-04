@@ -1,6 +1,6 @@
 import { LADDER_WINDOW, UNLOCK_REVERSE_DAYS, UNLOCK_SET_DAYS } from "@/rules";
-import { gradePlacement, gradeWithGroup } from "../grading/grade";
-import type { ReviewLog } from "../log/events";
+import { gradePlacement, gradeWithGroup } from "@/core/grading/grade";
+import type { ReviewLog } from "@/core/log/events";
 import {
 	answer,
 	type AnswerContext,
@@ -8,13 +8,13 @@ import {
 	isLeech,
 	seedFromPlacement,
 	unlock
-} from "../scheduling/card";
-import { dayStats } from "./days";
-import { schedulerAt } from "./params";
-import { confusionsOf, recordConfusion, recordDrill } from "./pairs";
-import { fluencyGroup, recordSample, toSignals } from "./samples";
-import { type AppState, type CardEntry, newEntry, putCard } from "./state";
-import { trackOf } from "./universe";
+} from "@/core/scheduling/card";
+import { dayStats } from "@/core/replay/days";
+import { schedulerAt } from "@/core/replay/params";
+import { confusionsOf, recordConfusion, recordDrill } from "@/core/replay/pairs";
+import { fluencyGroup, recordSample, toSignals } from "@/core/replay/samples";
+import { type AppState, type CardEntry, newEntry, putCard } from "@/core/replay/state";
+import { trackOf } from "@/core/replay/universe";
 
 const STEPS = new Set<string>(["learning", "relearning"]);
 const REGION_MODES = new Set<string>(["code2region", "region2code"]);

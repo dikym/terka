@@ -1,6 +1,6 @@
 import { SUGGESTED_GROUP_ORDER, type Tier } from "@/rules";
-import type { Bundle, Region } from "../content/schema";
-import { eligibleRegions, NATIONAL, type Scope } from "../questions/distractors";
+import type { Bundle, Region } from "@/core/content/schema";
+import { eligibleRegions, NATIONAL, type Scope } from "@/core/questions/distractors";
 
 type PlacementAnswer = { codeId: string; stage: 1 | 2 | 3; correct: boolean; seeded: boolean };
 const TIERS = ["common", "medium", "rare"] as const;

@@ -1,7 +1,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { wipeProgress } from "@/lib/db/reset";
 import { readMeta, type TerkaDb } from "@/lib/db/schema";
-import { classify, type Action } from "./errors";
+import { classify, type Action } from "@/lib/sync/errors";
 
 /**
  * Compares the server's reset counter with this device's. A higher one means the account's progress

@@ -8,7 +8,7 @@ import type { SetFeedback } from "@/core/session/feedback";
 import { useFinishKey } from "@/lib/platform";
 import type { SessionCard } from "@/lib/session/cards";
 import type { SessionState } from "@/lib/session/state";
-import { StatusPill, TimeBar } from "./indicators";
+import { StatusPill, TimeBar } from "@/components/screens/session/indicators";
 
 const KEYS = ["F", "G", "H", "J"];
 // Two options sit under the index fingers, F and J.

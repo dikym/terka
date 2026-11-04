@@ -1,8 +1,8 @@
-import { areaDisplayName, highMembers, type NameDictionary } from "../answers/dictionary";
-import { matchName } from "../answers/match-name";
-import type { Bundle } from "../content/schema";
-import type { Question } from "../questions/question";
-import type { Checked } from "./check";
+import { areaDisplayName, highMembers, type NameDictionary } from "@/core/answers/dictionary";
+import { matchName } from "@/core/answers/match-name";
+import type { Bundle } from "@/core/content/schema";
+import type { Question } from "@/core/questions/question";
+import type { Checked } from "@/core/session/check";
 
 // After a correct Tebak daerah the result also names a few other areas of the same code.
 export function alsoCorrect(

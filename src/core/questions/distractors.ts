@@ -1,7 +1,7 @@
-import { areaDisplayName, highMembers, provinceName } from "../answers/dictionary";
-import type { Area, Bundle, Region, Special } from "../content/schema";
-import { shuffle } from "../random";
-import { compactName, holderKey } from "../text";
+import { areaDisplayName, highMembers, provinceName } from "@/core/answers/dictionary";
+import type { Area, Bundle, Region, Special } from "@/core/content/schema";
+import { shuffle } from "@/core/random";
+import { compactName, holderKey } from "@/core/text";
 
 export type Scope = { level: "national" | "group" | "province"; id: string };
 export const NATIONAL: Scope = { level: "national", id: "indonesia" };

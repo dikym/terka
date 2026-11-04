@@ -2,7 +2,7 @@ import { z } from "zod";
 import type { Bundle } from "@/core/content/schema";
 import type { LearningEvent } from "@/core/log/events";
 import { ENGINE_VERSION } from "@/rules";
-import { storeEvent } from "./log";
+import { storeEvent } from "@/lib/db/log";
 import {
 	type ConsentRow,
 	type DeviceRow,
@@ -15,8 +15,8 @@ import {
 	type TableName,
 	type TerkaDb,
 	unlessQuota
-} from "./schema";
-import { fromWire, isTable, TABLES, toWire } from "./wire";
+} from "@/lib/db/schema";
+import { fromWire, isTable, TABLES, toWire } from "@/lib/db/wire";
 
 const FORMAT = "terka-export";
 const FORMAT_VERSION = 4;

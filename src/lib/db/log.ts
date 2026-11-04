@@ -10,7 +10,7 @@ import {
 	readMeta,
 	type TerkaDb,
 	unlessQuota
-} from "./schema";
+} from "@/lib/db/schema";
 
 // `outdated`: the stored log holds rows from a newer app, so the state is the last one this app
 // could build; answers are still saved, but never cached.

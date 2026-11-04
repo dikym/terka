@@ -1,4 +1,4 @@
-import type { Bundle } from "../schema";
+import type { Bundle } from "@/core/content/schema";
 
 export function exclusiveProvinces(bundle: Pick<Bundle, "regions" | "areas">): Map<string, string> {
 	const codesByArea = new Map<string, Set<string>>();

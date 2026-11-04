@@ -1,8 +1,8 @@
 import type { Tier } from "@/rules";
-import type { MatchType } from "../answers/match-name";
-import type { SetItem } from "../answers/match-set";
-import type { AnswerSignals } from "../grading/signals";
-import type { CardMode, Level, LevelSource, QuestionContext } from "../questions/question";
+import type { MatchType } from "@/core/answers/match-name";
+import type { SetItem } from "@/core/answers/match-set";
+import type { AnswerSignals } from "@/core/grading/signals";
+import type { CardMode, Level, LevelSource, QuestionContext } from "@/core/questions/question";
 
 // Times are epoch milliseconds; `receivedAt` and `serverSeq` stay null until the server has the row.
 type EventRow = {

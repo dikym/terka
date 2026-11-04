@@ -8,13 +8,13 @@ import {
 	PREVIEW_STALE_MS,
 	READ_MS
 } from "@/rules";
-import type { Bundle } from "../content/schema";
-import { buildQuestion } from "../questions/build";
-import { inScope, type Scope } from "../questions/distractors";
-import type { Level, Question } from "../questions/question";
-import type { AppState } from "../replay/state";
-import { effectiveCard } from "../replay/universe";
-import { rungMemory } from "./rung";
+import type { Bundle } from "@/core/content/schema";
+import { buildQuestion } from "@/core/questions/build";
+import { inScope, type Scope } from "@/core/questions/distractors";
+import type { Level, Question } from "@/core/questions/question";
+import type { AppState } from "@/core/replay/state";
+import { effectiveCard } from "@/core/replay/universe";
+import { rungMemory } from "@/core/session/rung";
 import {
 	contentOf,
 	isReversedNew,
@@ -23,7 +23,7 @@ import {
 	type SessionContext,
 	type SessionSettings,
 	todayOf
-} from "./context";
+} from "@/core/session/context";
 
 export type InfoItem = "held" | "tier-changed" | "timed" | "leech" | "outside-scope" | "keyboard";
 export type Preview = {

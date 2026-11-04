@@ -1,9 +1,9 @@
-import type { GroupId } from "../view/groups";
+import type { GroupId } from "@/lib/view/groups";
 import type { IconName } from "@/components/ui/icon";
 import { LABELS } from "@/core/questions/question";
 import type { InfoItem, Preview as CorePreview } from "@/core/session/preview";
 import { TIERS, TIMED_LIMIT_MS, type Tier } from "@/rules";
-import { TIER_NAME } from "../view/format";
+import { TIER_NAME } from "@/lib/view/format";
 
 /** What the preview screen draws. */
 export type Preview = {

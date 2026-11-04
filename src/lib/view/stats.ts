@@ -8,8 +8,8 @@ import { contentOf, modeOf, prepare, type SessionContext, todayOf } from "@/core
 import { scopeMastery } from "@/core/views/mastery";
 import { forecast, hardCards, sightingCounts, weakestCards } from "@/core/views/stats";
 import { LEECH_LAPSES, TIERS } from "@/rules";
-import { dayMonth, weekday, weekdayShort } from "./format";
-import { provincesOf, uiGroup, type GroupId } from "./groups";
+import { dayMonth, weekday, weekdayShort } from "@/lib/view/format";
+import { provincesOf, uiGroup, type GroupId } from "@/lib/view/groups";
 
 export type CodeStatus = "learning" | "leech" | "suspended";
 

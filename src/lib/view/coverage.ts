@@ -4,7 +4,7 @@ import type { AppState } from "@/core/replay/state";
 import { effectiveCard } from "@/core/replay/universe";
 import { contentOf, modeOf } from "@/core/session/context";
 import { scopeMastery } from "@/core/views/mastery";
-import { provincesOf, uiGroup, type GroupId } from "./groups";
+import { provincesOf, uiGroup, type GroupId } from "@/lib/view/groups";
 
 export type Province = { id: string; name: string; codes: string[]; percent: number };
 

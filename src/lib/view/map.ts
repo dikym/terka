@@ -2,8 +2,8 @@ import type { MapProvince } from "@/components/ui/mastery-map";
 import type { Bundle } from "@/core/content/schema";
 import type { AppState } from "@/core/replay/state";
 import { scopeMastery } from "@/core/views/mastery";
-import { provincesOf, uiGroup } from "./groups";
-import { codeMastered, REGION_MODES } from "./stats";
+import { provincesOf, uiGroup } from "@/lib/view/groups";
+import { codeMastered, REGION_MODES } from "@/lib/view/stats";
 
 /** Every province in the data, its progress percent and how many of its codes are mastered. */
 export function mapProvinces(state: AppState, bundle: Bundle): Record<string, MapProvince> {

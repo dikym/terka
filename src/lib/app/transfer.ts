@@ -1,7 +1,7 @@
-import { exportData, importData, type ImportResult } from "../db/transfer";
-import { readMeta } from "../db/schema";
+import { exportData, importData, type ImportResult } from "@/lib/db/transfer";
+import { readMeta } from "@/lib/db/schema";
 import { localDay } from "@/core/time/day";
-import type { Runtime } from "./runtime";
+import type { Runtime } from "@/lib/app/runtime";
 
 /** Downloads the whole local history as one JSON file. */
 export async function downloadExport(runtime: Runtime): Promise<void> {

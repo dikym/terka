@@ -2,7 +2,7 @@
 
 import { useEffect, useSyncExternalStore } from "react";
 import type { StoreApi } from "zustand/vanilla";
-import { account, settling, startAuth } from "./auth";
+import { account, settling, startAuth } from "@/lib/app/auth";
 import {
 	bootRuntime,
 	loadingSnapshot,
@@ -10,10 +10,10 @@ import {
 	type Runtime,
 	runtimeSnapshot,
 	subscribeRuntime
-} from "./runtime";
-import { syncRunning } from "./sync";
-import { lastSyncLabel, type SyncIcon, syncIcon, syncLabel } from "../view/sync-label";
-import type { AppState } from "./store";
+} from "@/lib/app/runtime";
+import { syncRunning } from "@/lib/app/sync";
+import { lastSyncLabel, type SyncIcon, syncIcon, syncLabel } from "@/lib/view/sync-label";
+import type { AppState } from "@/lib/app/store";
 
 /** The shared runtime; the static export and the first client render see "loading". */
 export function useRuntime() {

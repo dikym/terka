@@ -1,5 +1,5 @@
 import { Link } from "@/components/ui/app-link";
-import { Icon } from "./icon";
+import { Icon } from "@/components/ui/icon";
 
 /** The back arrow beside a screen title; the keyboard panel uses it too. */
 export const BACK_BUTTON =

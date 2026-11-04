@@ -23,8 +23,8 @@ import {
 	RUN_KINDS,
 	SCOPE_LEVELS,
 	TIERS
-} from "./enums";
-import type { ConsentRow, DeviceRow, NoteRow, SettingsRow, TableName } from "./schema";
+} from "@/lib/db/enums";
+import type { ConsentRow, DeviceRow, NoteRow, SettingsRow, TableName } from "@/lib/db/schema";
 
 const oneOf = <T extends string>(values: Record<T, true>) =>
 	z.enum(Object.keys(values) as [T, ...T[]]);

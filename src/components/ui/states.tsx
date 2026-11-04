@@ -1,4 +1,4 @@
-import { Button } from "./button";
+import { Button } from "@/components/ui/button";
 
 /** One muted sentence where content would be; no illustration and no call to practise more. */
 export function EmptyState({ label, children }: { label?: string; children: React.ReactNode }) {

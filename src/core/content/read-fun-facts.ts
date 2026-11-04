@@ -1,6 +1,11 @@
 import { z } from "zod";
-import { issueMessages } from "./issues";
-import { contentIdSchema, contentSourceSchema, factSchema, isoDateSchema } from "./schema";
+import { issueMessages } from "@/core/content/issues";
+import {
+	contentIdSchema,
+	contentSourceSchema,
+	factSchema,
+	isoDateSchema
+} from "@/core/content/schema";
 
 export const funFactSchema = z.object({
 	ref: z.number().int().positive(),

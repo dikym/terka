@@ -1,9 +1,9 @@
 import { LEECH_LAPSES, MATURE_INTERVAL_DAYS, SUSPEND_LAPSES } from "@/rules";
-import type { Grade } from "../grading/signals";
-import { addDays, dayStart } from "../time/day";
-import type { CardMemory, SuspensionReason } from "./card-memory";
-import { nextMemory, type Scheduler } from "./fsrs";
-import { fuzzDays } from "./fuzz";
+import type { Grade } from "@/core/grading/signals";
+import { addDays, dayStart } from "@/core/time/day";
+import type { CardMemory, SuspensionReason } from "@/core/scheduling/card-memory";
+import { nextMemory, type Scheduler } from "@/core/scheduling/fsrs";
+import { fuzzDays } from "@/core/scheduling/fuzz";
 
 export type AnswerContext = {
 	at: number;

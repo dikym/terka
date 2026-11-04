@@ -1,13 +1,13 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { createStore } from "zustand/vanilla";
-import { createTerkaClient } from "../auth/client";
-import { checkRemoved, leaveRemovedDevice, sessionIdOf } from "../auth/removal";
-import { readMeta, type TerkaDb } from "../db/schema";
-import { type SyncSignal, syncSignal } from "../sync/signal";
-import { showToast } from "../toasts";
-import { syncLabel } from "../view/sync-label";
-import { liveSync, startSync } from "./sync";
-import type { Runtime } from "./runtime";
+import { createTerkaClient } from "@/lib/auth/client";
+import { checkRemoved, leaveRemovedDevice, sessionIdOf } from "@/lib/auth/removal";
+import { readMeta, type TerkaDb } from "@/lib/db/schema";
+import { type SyncSignal, syncSignal } from "@/lib/sync/signal";
+import { showToast } from "@/lib/toasts";
+import { syncLabel } from "@/lib/view/sync-label";
+import { liveSync, startSync } from "@/lib/app/sync";
+import type { Runtime } from "@/lib/app/runtime";
 
 export type AccountState = {
 	/** False until the stored session has been read, so screens do not flash the sign-in card. */

@@ -1,5 +1,5 @@
-import { Dot } from "./feedback";
-import { Tooltip } from "./tooltip";
+import { Dot } from "@/components/ui/feedback";
+import { Tooltip } from "@/components/ui/tooltip";
 
 const TONE = {
 	default: "border-ink-200 bg-paper-0 text-ink-900",

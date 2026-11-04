@@ -5,9 +5,9 @@ import type { Scope } from "@/core/questions/distractors";
 import { streak, streakDays } from "@/core/replay/streak";
 import type { AppState } from "@/core/replay/state";
 import { sessionSummary } from "@/core/views/summary";
-import { decimal } from "../view/format";
-import { scopeTitle, uiGroup, type GroupId } from "../view/groups";
-import type { Mode } from "./modes";
+import { decimal } from "@/lib/view/format";
+import { scopeTitle, uiGroup, type GroupId } from "@/lib/view/groups";
+import type { Mode } from "@/lib/session/modes";
 
 export type FactCardView = {
 	label: "Terverifikasi" | "Diperdebatkan" | "Mitos";

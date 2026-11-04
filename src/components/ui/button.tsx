@@ -1,6 +1,6 @@
 import { Link } from "@/components/ui/app-link";
-import { Icon, type IconName } from "./icon";
-import { Kbd } from "./kbd";
+import { Icon, type IconName } from "@/components/ui/icon";
+import { Kbd } from "@/components/ui/kbd";
 
 const VARIANT = {
 	primary: "border-ink-1000 bg-caution-500 text-ink-1000 shadow-block",

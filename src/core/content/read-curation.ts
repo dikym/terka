@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { issueMessages } from "./issues";
+import { issueMessages } from "@/core/content/issues";
 import {
 	areaSchema,
 	contentHistorySchema,
@@ -7,7 +7,7 @@ import {
 	contentRevSchema,
 	regionSchema,
 	releaseVersionSchema
-} from "./schema";
+} from "@/core/content/schema";
 
 export const curationSchema = z
 	.object({

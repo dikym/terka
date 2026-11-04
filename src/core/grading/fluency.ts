@@ -5,7 +5,7 @@ import {
 	INTERRUPTED_LATENCY_MS,
 	LONG_GAP_MS
 } from "@/rules";
-import type { AnswerSignals } from "./signals";
+import type { AnswerSignals } from "@/core/grading/signals";
 
 const ascending = (values: number[]) => [...values].sort((a, b) => a - b);
 

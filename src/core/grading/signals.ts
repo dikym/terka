@@ -1,4 +1,4 @@
-import type { MatchType } from "../answers/match-name";
+import type { MatchType } from "@/core/answers/match-name";
 
 export type AnswerSignals = {
 	context:

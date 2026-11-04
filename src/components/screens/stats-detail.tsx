@@ -14,7 +14,7 @@ import { showToast } from "@/lib/toasts";
 import { referenceHref } from "@/lib/view/reference";
 import type { HardCard, MasteryRow } from "@/lib/view/stats";
 import { NOTE_MAX_CHARS } from "@/rules";
-import { MapHint, MapLegend } from "./stats";
+import { MapHint, MapLegend } from "@/components/screens/stats";
 
 export function MasteryMapScreen({
 	provinces,

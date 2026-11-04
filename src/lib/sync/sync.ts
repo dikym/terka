@@ -3,12 +3,12 @@ import type { Bundle } from "@/core/content/schema";
 import { checkRemoved, leaveRemovedDevice, rememberSession } from "@/lib/auth/removal";
 import { loadState, type LogState } from "@/lib/db/log";
 import { readMeta, wipesOf, type TerkaDb } from "@/lib/db/schema";
-import { backoff, type Action, type Block } from "./errors";
-import { runPull } from "./pull";
-import { runPush, touchDevice } from "./push";
-import { adoptServerReset } from "./reset";
-import { requeueLostCloses } from "./reconcile";
-import { activeBlocks, syncStatus, type SyncStatus } from "./status";
+import { backoff, type Action, type Block } from "@/lib/sync/errors";
+import { runPull } from "@/lib/sync/pull";
+import { runPush, touchDevice } from "@/lib/sync/push";
+import { adoptServerReset } from "@/lib/sync/reset";
+import { requeueLostCloses } from "@/lib/sync/reconcile";
+import { activeBlocks, syncStatus, type SyncStatus } from "@/lib/sync/status";
 
 export type SyncContext = {
 	now: number;

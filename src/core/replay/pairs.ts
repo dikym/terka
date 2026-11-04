@@ -1,7 +1,7 @@
 import { DRILL_CLEAR_STREAK, PAIR_RETHRESHOLD, PAIR_THRESHOLD, PAIR_WINDOW_DAYS } from "@/rules";
-import type { ReviewLog } from "../log/events";
-import { dayNumber } from "../time/day";
-import type { AppState, PairState } from "./state";
+import type { ReviewLog } from "@/core/log/events";
+import { dayNumber } from "@/core/time/day";
+import type { AppState, PairState } from "@/core/replay/state";
 
 export const pairKey = (from: string, to: string) => `${from}>${to}`;
 

@@ -1,11 +1,11 @@
 import { ENGINE_VERSION } from "@/rules";
-import type { Bundle } from "../content/schema";
-import type { LearningEvent, PracticeRun } from "../log/events";
-import { compareKeys, eventKey, sortEvents } from "../log/order";
-import { CARD_MODES, CONTEXTS, MATCH_TYPES, QUESTION_TYPES } from "../log/values";
-import { applyEvent } from "./apply";
-import { activation } from "./params";
-import { type AppState, initialState } from "./state";
+import type { Bundle } from "@/core/content/schema";
+import type { LearningEvent, PracticeRun } from "@/core/log/events";
+import { compareKeys, eventKey, sortEvents } from "@/core/log/order";
+import { CARD_MODES, CONTEXTS, MATCH_TYPES, QUESTION_TYPES } from "@/core/log/values";
+import { applyEvent } from "@/core/replay/apply";
+import { activation } from "@/core/replay/params";
+import { type AppState, initialState } from "@/core/replay/state";
 
 export type ReplayResult = { status: "ok"; state: AppState } | { status: "outdated" };
 

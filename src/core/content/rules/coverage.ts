@@ -4,17 +4,17 @@ import {
 	buildDictionary,
 	highMembers,
 	type NameDictionary
-} from "../../answers/dictionary";
-import { matchRegionCode } from "../../answers/match-code";
-import { matchName } from "../../answers/match-name";
-import { matchSet } from "../../answers/match-set";
-import { matchHolder, matchSpecialCode } from "../../answers/match-special";
-import { buildQuestion } from "../../questions/build";
-import { eligibleRegions } from "../../questions/distractors";
-import type { Question } from "../../questions/question";
-import { newCard } from "../../scheduling/card-memory";
-import { type ContentMessage, error } from "../messages";
-import type { Bundle } from "../schema";
+} from "@/core/answers/dictionary";
+import { matchRegionCode } from "@/core/answers/match-code";
+import { matchName } from "@/core/answers/match-name";
+import { matchSet } from "@/core/answers/match-set";
+import { matchHolder, matchSpecialCode } from "@/core/answers/match-special";
+import { buildQuestion } from "@/core/questions/build";
+import { eligibleRegions } from "@/core/questions/distractors";
+import type { Question } from "@/core/questions/question";
+import { newCard } from "@/core/scheduling/card-memory";
+import { type ContentMessage, error } from "@/core/content/messages";
+import type { Bundle } from "@/core/content/schema";
 
 export function cardIdsOf(bundle: Bundle): string[] {
 	const regionCards = eligibleRegions(bundle).flatMap((region) => {

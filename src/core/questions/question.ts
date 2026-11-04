@@ -1,7 +1,7 @@
-import type { AnswerSignals } from "../grading/signals";
-import { seeded } from "../random";
-import type { RungMemory } from "./rung";
-import type { Scope } from "./distractors";
+import type { AnswerSignals } from "@/core/grading/signals";
+import { seeded } from "@/core/random";
+import type { RungMemory } from "@/core/questions/rung";
+import type { Scope } from "@/core/questions/distractors";
 
 export type CardMode =
 	"code2region" | "region2code" | "setrecall" | "special2holder" | "holder2special";

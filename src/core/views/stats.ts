@@ -1,7 +1,13 @@
 import { FORECAST_DAYS, LEECH_LAPSES, SIGHTING_WINDOW_DAYS, WEAKEST_LIMIT } from "@/rules";
-import type { AppState } from "../replay/state";
-import { ACTIVE, cardsWhere, compareText, todayOf, type SessionContext } from "../session/context";
-import { addDays, dayNumber, localDay } from "../time/day";
+import type { AppState } from "@/core/replay/state";
+import {
+	ACTIVE,
+	cardsWhere,
+	compareText,
+	todayOf,
+	type SessionContext
+} from "@/core/session/context";
+import { addDays, dayNumber, localDay } from "@/core/time/day";
 
 export function sightingCounts(state: AppState, today: string): Map<string, number> {
 	const counts = new Map<string, number>();

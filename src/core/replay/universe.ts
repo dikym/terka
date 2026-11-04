@@ -1,9 +1,9 @@
 import { SET_MIN_AREAS } from "@/rules";
-import { highMembers } from "../answers/dictionary";
-import type { Bundle } from "../content/schema";
-import type { CardMode } from "../questions/question";
-import { suspend } from "../scheduling/card";
-import type { AppState, CardEntry, ContentStatus } from "./state";
+import { highMembers } from "@/core/answers/dictionary";
+import type { Bundle } from "@/core/content/schema";
+import type { CardMode } from "@/core/questions/question";
+import { suspend } from "@/core/scheduling/card";
+import type { AppState, CardEntry, ContentStatus } from "@/core/replay/state";
 
 export const trackOf = (mode: CardMode): "region" | "special" =>
 	mode === "special2holder" || mode === "holder2special" ? "special" : "region";

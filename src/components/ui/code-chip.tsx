@@ -1,7 +1,7 @@
 import { Link } from "@/components/ui/app-link";
 import type { GroupId } from "@/lib/view/groups";
 import { referenceHref } from "@/lib/view/reference";
-import { GROUP_BORDER } from "./groups";
+import { GROUP_BORDER } from "@/components/ui/groups";
 
 const SIZE = {
 	xs: "h-5.5 w-7.5 border-b-2 text-micro",

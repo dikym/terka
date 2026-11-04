@@ -1,5 +1,5 @@
-import type { QuestionContext, QuestionFormat } from "../questions/question";
-import { seeded } from "../random";
+import type { QuestionContext, QuestionFormat } from "@/core/questions/question";
+import { seeded } from "@/core/random";
 
 const REGION_FORMS: readonly QuestionFormat[] = ["choice", "truefalse", "oddoneout"];
 

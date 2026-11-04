@@ -6,7 +6,7 @@ import { GROUP_TEXT } from "@/components/ui/groups";
 import type { GroupId } from "@/lib/view/groups";
 import type { Level, SessionCard } from "@/lib/session/cards";
 import type { Mode } from "@/lib/session/modes";
-import { LevelMark, StatusPill, TimeBar } from "./indicators";
+import { LevelMark, StatusPill, TimeBar } from "@/components/screens/session/indicators";
 
 /** A mode's icon beside the question, named by a tooltip that a tap opens on a phone too. */
 function ModeIcon({

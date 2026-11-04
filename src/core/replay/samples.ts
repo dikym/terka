@@ -5,10 +5,10 @@ import {
 	narrowKey,
 	pickGroup,
 	wideKey
-} from "../grading/fluency";
-import type { AnswerSignals } from "../grading/signals";
-import type { ReviewLog } from "../log/events";
-import type { AppState } from "./state";
+} from "@/core/grading/fluency";
+import type { AnswerSignals } from "@/core/grading/signals";
+import type { ReviewLog } from "@/core/log/events";
+import type { AppState } from "@/core/replay/state";
 
 export function answerForm(
 	row: Pick<ReviewLog, "mode" | "questionType">

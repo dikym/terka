@@ -1,6 +1,6 @@
 import type { OutboxRow, TableName } from "@/lib/db/schema";
-import type { Block } from "./errors";
-import { activeBlocks } from "./status";
+import type { Block } from "@/lib/sync/errors";
+import { activeBlocks } from "@/lib/sync/status";
 
 export const INSERT_ORDER: TableName[] = [
 	"devices",

@@ -1,5 +1,5 @@
-import { draftSources, type ContentDraft } from "../draft";
-import { duplicates, error, type ContentMessage } from "../messages";
+import { draftSources, type ContentDraft } from "@/core/content/draft";
+import { duplicates, error, type ContentMessage } from "@/core/content/messages";
 
 export function factRules(draft: ContentDraft): ContentMessage[] {
 	const out: ContentMessage[] = [];

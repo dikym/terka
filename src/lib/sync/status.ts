@@ -1,4 +1,4 @@
-import type { Block, BlockReason } from "./errors";
+import type { Block, BlockReason } from "@/lib/sync/errors";
 
 const DAY = 86_400_000;
 

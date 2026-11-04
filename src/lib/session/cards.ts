@@ -1,5 +1,5 @@
 import type { FlagCode } from "@/components/ui/icon";
-import { holderFlag } from "../view/flags";
+import { holderFlag } from "@/lib/view/flags";
 import { areaDisplayName, highMembers, type NameDictionary } from "@/core/answers/dictionary";
 import type { Bundle } from "@/core/content/schema";
 import type { Scope } from "@/core/questions/distractors";
@@ -7,7 +7,7 @@ import { LABELS, parseCardId, type Question } from "@/core/questions/question";
 import type { CardEntry } from "@/core/replay/state";
 import { checkAnswer } from "@/core/session/check";
 import type { QueueItem } from "@/core/session/context";
-import type { Mode } from "./modes";
+import type { Mode } from "@/lib/session/modes";
 
 export type CardForm =
 	| "tebakDaerah"

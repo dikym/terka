@@ -1,12 +1,12 @@
 import { OPTIMIZE_MIN_GAIN } from "@/rules";
-import type { Bundle } from "../content/schema";
-import type { FsrsParams, LearningEvent } from "../log/events";
-import { type CountedAnswer, countedAnswers } from "./counted";
-import { currentWeights, identityOf, type ParamsDraft } from "./draft";
-import { optimizationDue } from "./due";
-import { buildItems, type StepSuggestion, splitByTime, type Trainer } from "./items";
-import { rollbackDraft } from "./rollback";
-import { revlogCsv } from "./steps";
+import type { Bundle } from "@/core/content/schema";
+import type { FsrsParams, LearningEvent } from "@/core/log/events";
+import { type CountedAnswer, countedAnswers } from "@/core/optimizer/counted";
+import { currentWeights, identityOf, type ParamsDraft } from "@/core/optimizer/draft";
+import { optimizationDue } from "@/core/optimizer/due";
+import { buildItems, type StepSuggestion, splitByTime, type Trainer } from "@/core/optimizer/items";
+import { rollbackDraft } from "@/core/optimizer/rollback";
+import { revlogCsv } from "@/core/optimizer/steps";
 
 const EPSILON = 1e-12;
 

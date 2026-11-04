@@ -1,6 +1,6 @@
 import { STREAK_WINDOW_DAYS } from "@/rules";
-import { addDays, dayNumber } from "../time/day";
-import type { AppState } from "./state";
+import { addDays, dayNumber } from "@/core/time/day";
+import type { AppState } from "@/core/replay/state";
 
 // One missed day is forgiven per rolling 30 days; a second one inside that window resets the count.
 export function streak(days: ReadonlySet<string>, today: string): number {

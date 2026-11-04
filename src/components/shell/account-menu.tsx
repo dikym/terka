@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { Menu, type MenuEntry } from "@/components/ui/menu";
 import { useAccount } from "@/lib/app/use-runtime";
-import { useAccountContext } from "./account-provider";
+import { useAccountContext } from "@/components/shell/account-provider";
 
 /** The account entry of the sidebar and the phone's top bar. */
 export function AccountMenu({

@@ -5,20 +5,20 @@ import {
 	TIMED_LIMIT_MS,
 	TRUE_FALSE_LIMIT_MS
 } from "@/rules";
-import { areaDisplayName, highMembers, provinceName } from "../answers/dictionary";
-import { groupName } from "../content/names";
-import { setThreshold } from "../answers/match-set";
-import type { Area, Bundle, Region } from "../content/schema";
-import { shuffle } from "../random";
-import { isLeech } from "../scheduling/card";
-import type { CardMemory } from "../scheduling/card-memory";
+import { areaDisplayName, highMembers, provinceName } from "@/core/answers/dictionary";
+import { groupName } from "@/core/content/names";
+import { setThreshold } from "@/core/answers/match-set";
+import type { Area, Bundle, Region } from "@/core/content/schema";
+import { shuffle } from "@/core/random";
+import { isLeech } from "@/core/scheduling/card";
+import type { CardMemory } from "@/core/scheduling/card-memory";
 import {
 	foreignAreas,
 	type ForeignOptions,
 	NATIONAL,
 	otherCodes,
 	provinceChoices
-} from "./distractors";
+} from "@/core/questions/distractors";
 import {
 	type CompareHint,
 	LABELS,
@@ -29,8 +29,8 @@ import {
 	type QuestionAnswer,
 	type QuestionOptions,
 	questionRandom
-} from "./question";
-import type { Rung } from "./rung";
+} from "@/core/questions/question";
+import type { Rung } from "@/core/questions/rung";
 
 export type ResolvedLevels = { level: Level; autoLevel: Level; levelSource: LevelSource };
 

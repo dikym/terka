@@ -1,6 +1,6 @@
 import type { SyncStatus } from "@/lib/sync/status";
 import { ACTIVE_DEVICE_DAYS, ACTIVE_DEVICE_LIMIT } from "@/rules";
-import { ago } from "./format";
+import { ago } from "@/lib/view/format";
 
 /** One line for the sync chip and the account screen. */
 export function syncLabel(

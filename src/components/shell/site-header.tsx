@@ -1,6 +1,6 @@
 import { Link } from "@/components/ui/app-link";
 import { Wordmark } from "@/components/ui/plate";
-import { SiteHeaderAction } from "./site-header-action";
+import { SiteHeaderAction } from "@/components/shell/site-header-action";
 
 /** The page column of the public pages: the landing page and the sign-in page. */
 export const SITE_WRAP = "container max-w-280 lg:px-5";

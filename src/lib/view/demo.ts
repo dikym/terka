@@ -1,8 +1,8 @@
 import { provinceName } from "@/core/answers/dictionary";
 import type { Bundle } from "@/core/content/schema";
 import { eligibleRegions } from "@/core/questions/distractors";
-import { areaSummary } from "./stats";
-import type { DemoQuestion } from "./demo-round";
+import { areaSummary } from "@/lib/view/stats";
+import type { DemoQuestion } from "@/lib/view/demo-round";
 
 /**
  * The landing page's sample questions, worked out at build time so the page ships only these few

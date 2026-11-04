@@ -1,4 +1,4 @@
-import type { LearningEvent } from "./events";
+import type { LearningEvent } from "@/core/log/events";
 
 export type EventKey = { ts: number; deviceId: string; id: string };
 

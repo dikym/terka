@@ -1,4 +1,4 @@
-import type { Bundle } from "../content/schema";
+import type { Bundle } from "@/core/content/schema";
 
 export type CodeMatch = { matchType: "exact" | "none"; confusedWith: string | null };
 

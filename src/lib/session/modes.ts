@@ -30,10 +30,10 @@ import { buildQuestion } from "@/core/questions/build";
 import { addDays, dayNumber } from "@/core/time/day";
 import { CHALLENGE_SIZE, DAILY_MIN_SIZE, KILAT_ROUND_MS, REASK_GAP, TIER_ORDER } from "@/rules";
 import { ALL_INTRODUCED, allIntroduced } from "@/core/views/home";
-import { clock, durationLabel } from "../view/format";
-import { scopeGroup, scopeTitle } from "../view/groups";
-import { type SessionCard, toCard } from "./cards";
-import { composition, infoNotes, type Preview, typeRows } from "./preview";
+import { clock, durationLabel } from "@/lib/view/format";
+import { scopeGroup, scopeTitle } from "@/lib/view/groups";
+import { type SessionCard, toCard } from "@/lib/session/cards";
+import { composition, infoNotes, type Preview, typeRows } from "@/lib/session/preview";
 
 export type Mode =
 	"harian" | "tantangan" | "kilat" | "terfokus" | "diplomat" | "sebutkan" | "penempatan" | "cek";

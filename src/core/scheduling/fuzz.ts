@@ -1,6 +1,6 @@
 import { FUZZ_MIN_DAYS, FUZZ_RATIO } from "@/rules";
-import { seeded } from "../random";
-import { addDays, dayStart } from "../time/day";
+import { seeded } from "@/core/random";
+import { addDays, dayStart } from "@/core/time/day";
 
 export function fuzzDays(
 	days: number,

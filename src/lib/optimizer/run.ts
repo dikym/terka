@@ -3,8 +3,8 @@ import type { LearningEvent } from "@/core/log/events";
 import type { OptimizeOutcome } from "@/core/optimizer/decide";
 import type { ParamsDraft } from "@/core/optimizer/draft";
 import { uuidV7 } from "@/core/session/ids";
-import { loadState, readEvents, record } from "../db/log";
-import { readMeta, type TerkaDb } from "../db/schema";
+import { loadState, readEvents, record } from "@/lib/db/log";
+import { readMeta, type TerkaDb } from "@/lib/db/schema";
 
 export type Optimize = (input: {
 	events: LearningEvent[];

@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { Link } from "@/components/ui/app-link";
 import { Icon } from "@/components/ui/icon";
-import { isActive, NAV } from "./sidebar";
+import { isActive, NAV } from "@/components/shell/sidebar";
 
 /** The phone's bottom navigation: the sidebar's four main tabs. */
 export function TabBar() {

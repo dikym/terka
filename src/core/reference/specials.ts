@@ -1,4 +1,4 @@
-import type { Bundle, Special } from "../content/schema";
+import type { Bundle, Special } from "@/core/content/schema";
 
 export function specialCodeList(bundle: Bundle): {
 	entries: Special[];

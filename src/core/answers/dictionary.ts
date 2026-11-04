@@ -1,4 +1,4 @@
-import type { Area, Bundle, Confidence, Region } from "../content/schema";
+import type { Area, Bundle, Confidence, Region } from "@/core/content/schema";
 
 export type NameOwner = { codeId: string; confidence: Confidence };
 export type NameEntry = {

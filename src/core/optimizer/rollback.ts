@@ -1,8 +1,8 @@
 import { ROLLBACK_MARGIN, ROLLBACK_REVIEWS, TARGET_RETENTION } from "@/rules";
-import type { FsrsParams } from "../log/events";
-import { activation, paramsAt } from "../replay/params";
-import type { CountedAnswer } from "./counted";
-import { activeList, identityOf, type ParamsDraft, weightsOf } from "./draft";
+import type { FsrsParams } from "@/core/log/events";
+import { activation, paramsAt } from "@/core/replay/params";
+import type { CountedAnswer } from "@/core/optimizer/counted";
+import { activeList, identityOf, type ParamsDraft, weightsOf } from "@/core/optimizer/draft";
 
 // Float noise must not turn exactly 5 points into "more than 5 points".
 const EPSILON = 1e-9;

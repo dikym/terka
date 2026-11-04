@@ -19,8 +19,8 @@ import { addDays, dayStart } from "@/core/time/day";
 import { ALL_INTRODUCED, homeSummary, type HomeSummary } from "@/core/views/home";
 import { scopeMastery } from "@/core/views/mastery";
 import { STREAK_WINDOW_DAYS, TIERS } from "@/rules";
-import { dateLabel, durationLabel, weekdayShort } from "./format";
-import { provincesOf, scopeGroup, scopeTitle, uiGroup, type GroupId } from "./groups";
+import { dateLabel, durationLabel, weekdayShort } from "@/lib/view/format";
+import { provincesOf, scopeGroup, scopeTitle, uiGroup, type GroupId } from "@/lib/view/groups";
 
 export type DayMark = { day: string; state: "done" | "tolerance" | "missed" | "today" };
 

@@ -1,4 +1,4 @@
-import type { CountedAnswer } from "./counted";
+import type { CountedAnswer } from "@/core/optimizer/counted";
 
 const HEADER = "card_id,review_time,review_rating,review_state,review_duration";
 // Revlog states the step estimator reads: 0 new, 1 learning, 2 review, 3 relearning.

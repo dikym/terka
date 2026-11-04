@@ -1,7 +1,7 @@
-import type { Bundle } from "../content/schema";
-import { inScope } from "../questions/distractors";
-import { streak, streakDays } from "../replay/streak";
-import type { AppState } from "../replay/state";
+import type { Bundle } from "@/core/content/schema";
+import { inScope } from "@/core/questions/distractors";
+import { streak, streakDays } from "@/core/replay/streak";
+import type { AppState } from "@/core/replay/state";
 import {
 	ACTIVE,
 	cardsWhere,
@@ -12,11 +12,11 @@ import {
 	todayOf,
 	type SessionContext,
 	type SessionSettings
-} from "../session/context";
-import { challengeQueue } from "../session/modes";
-import { placementAvailable } from "../session/placement";
-import { dailyQueue, specialQueue } from "../session/queue";
-import { recheckOffer } from "../session/recheck";
+} from "@/core/session/context";
+import { challengeQueue } from "@/core/session/modes";
+import { placementAvailable } from "@/core/session/placement";
+import { dailyQueue, specialQueue } from "@/core/session/queue";
+import { recheckOffer } from "@/core/session/recheck";
 
 export type HomeSummary = {
 	due: number;

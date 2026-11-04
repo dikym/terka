@@ -7,11 +7,11 @@ import { sessionCtx } from "@/lib/app/runtime";
 import { useAppState, useReady } from "@/lib/app/use-runtime";
 import { keyAction } from "@/lib/keys";
 import { DAILY_SESSION } from "@/lib/session/modes";
-import { AccountProvider } from "./account-provider";
-import { MobileHeader } from "./mobile-header";
-import { Sidebar } from "./sidebar";
-import { SyncNotices } from "./sync-notices";
-import { TabBar } from "./tab-bar";
+import { AccountProvider } from "@/components/shell/account-provider";
+import { MobileHeader } from "@/components/shell/mobile-header";
+import { Sidebar } from "@/components/shell/sidebar";
+import { SyncNotices } from "@/components/shell/sync-notices";
+import { TabBar } from "@/components/shell/tab-bar";
 
 export const SEARCH_ID = "referensi-search";
 /** Opening Referensi with this hash puts the cursor in its search box. */

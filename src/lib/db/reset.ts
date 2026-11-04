@@ -1,4 +1,4 @@
-import { EVENT_TABLES, readMeta, wipesOf, type TableName, type TerkaDb } from "./schema";
+import { EVENT_TABLES, readMeta, wipesOf, type TableName, type TerkaDb } from "@/lib/db/schema";
 
 const PROGRESS_TABLES: TableName[] = [...EVENT_TABLES, "card_notes", "user_settings"];
 

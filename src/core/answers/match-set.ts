@@ -1,6 +1,6 @@
 import { SET_THRESHOLD_MAX } from "@/rules";
-import type { NameDictionary } from "./dictionary";
-import { matchName, type MatchType } from "./match-name";
+import type { NameDictionary } from "@/core/answers/dictionary";
+import { matchName, type MatchType } from "@/core/answers/match-name";
 
 export type SetItem = [
 	raw: string,

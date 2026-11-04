@@ -1,9 +1,9 @@
 import { PLACEMENT_EXPERT_SHARE, PLACEMENT_PASS, PLACEMENT_STAGE_SIZES, type Tier } from "@/rules";
-import type { Bundle, Region } from "../content/schema";
-import { eligibleRegions } from "../questions/distractors";
-import { seeded, shuffle } from "../random";
-import type { AppState } from "../replay/state";
-import type { QueueItem } from "./context";
+import type { Bundle, Region } from "@/core/content/schema";
+import { eligibleRegions } from "@/core/questions/distractors";
+import { seeded, shuffle } from "@/core/random";
+import type { AppState } from "@/core/replay/state";
+import type { QueueItem } from "@/core/session/context";
 
 export type Stage = 1 | 2 | 3;
 const TIER_OF = { 1: "common", 2: "medium", 3: "rare" } as const;

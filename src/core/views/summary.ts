@@ -1,8 +1,8 @@
-import type { Bundle } from "../content/schema";
-import type { ReviewLog } from "../log/events";
-import type { AppState } from "../replay/state";
-import { compareText } from "../session/context";
-import { scopeMastery } from "./mastery";
+import type { Bundle } from "@/core/content/schema";
+import type { ReviewLog } from "@/core/log/events";
+import type { AppState } from "@/core/replay/state";
+import { compareText } from "@/core/session/context";
+import { scopeMastery } from "@/core/views/mastery";
 
 export function sessionSummary(
 	before: AppState,

@@ -54,11 +54,16 @@ import {
 } from "@/lib/session/state";
 import { dueIn, TIER_NAME } from "@/lib/view/format";
 import { scopeGroup, scopeTitle } from "@/lib/view/groups";
-import { type BarProps, SessionBar, SessionMeta } from "./session-bar";
-import { EndFooter, PlacementEnd, type PlacementEndView, SessionEnd } from "./session-end";
-import { SessionLoading } from "./loading";
-import { SessionEmpty, SessionPreview } from "./session-preview";
-import { Question } from "./question";
+import { type BarProps, SessionBar, SessionMeta } from "@/components/screens/session/session-bar";
+import {
+	EndFooter,
+	PlacementEnd,
+	type PlacementEndView,
+	SessionEnd
+} from "@/components/screens/session/session-end";
+import { SessionLoading } from "@/components/screens/session/loading";
+import { SessionEmpty, SessionPreview } from "@/components/screens/session/session-preview";
+import { Question } from "@/components/screens/session/question";
 
 const TICK_MS = 100;
 // Mode Kilat draws questions in batches; a round of 60 seconds rarely needs more than a few.

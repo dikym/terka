@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import { Icon, type IconName } from "./icon";
+import { Icon, type IconName } from "@/components/ui/icon";
 
 export type MenuEntry =
 	{ label: string; icon: IconName; onSelect: () => void; danger?: boolean } | "separator";

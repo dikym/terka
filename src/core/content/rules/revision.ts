@@ -1,5 +1,5 @@
-import { error, type ContentMessage } from "../messages";
-import type { Bundle } from "../schema";
+import { error, type ContentMessage } from "@/core/content/messages";
+import type { Bundle } from "@/core/content/schema";
 
 // Everything a content revision covers: the bundle minus its release metadata (and the retired sourceRevision).
 const payload = (bundle: Record<string, unknown>) =>

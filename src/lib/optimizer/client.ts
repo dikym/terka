@@ -1,6 +1,6 @@
-import { loadBundle } from "../content/load";
-import { TerkaDb } from "../db/schema";
-import { maybeOptimize, type Optimize } from "./run";
+import { loadBundle } from "@/lib/content/load";
+import { TerkaDb } from "@/lib/db/schema";
+import { maybeOptimize, type Optimize } from "@/lib/optimizer/run";
 
 const TIMEOUT_MS = 10 * 60_000;
 

@@ -6,15 +6,15 @@ import {
 	SIGHTING_DEDUPE_MS,
 	type Tier
 } from "@/rules";
-import type { Bundle } from "../content/schema";
-import type { CardEvent, LearningEvent, PracticeRun, ReviewLog, RunKind } from "../log/events";
-import type { Scope } from "../questions/distractors";
-import { parseCardId, type Question } from "../questions/question";
-import { frontCode, SPECIAL_SERIES } from "../reference/front-code";
-import { nextLocalDay } from "../time/day";
-import type { Checked, Response } from "./check";
-import type { SessionContext } from "./context";
-import { uuidV7 } from "./ids";
+import type { Bundle } from "@/core/content/schema";
+import type { CardEvent, LearningEvent, PracticeRun, ReviewLog, RunKind } from "@/core/log/events";
+import type { Scope } from "@/core/questions/distractors";
+import { parseCardId, type Question } from "@/core/questions/question";
+import { frontCode, SPECIAL_SERIES } from "@/core/reference/front-code";
+import { nextLocalDay } from "@/core/time/day";
+import type { Checked, Response } from "@/core/session/check";
+import type { SessionContext } from "@/core/session/context";
+import { uuidV7 } from "@/core/session/ids";
 
 export type Measurements = {
 	msToFirstKey: number | null;

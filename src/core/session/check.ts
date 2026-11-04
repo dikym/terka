@@ -1,11 +1,11 @@
 import { ANSWER_MAX_CHARS, SET_MAX_ITEMS } from "@/rules";
-import type { NameDictionary } from "../answers/dictionary";
-import { matchRegionCode } from "../answers/match-code";
-import { matchName, type MatchType } from "../answers/match-name";
-import { matchSet, type SetItem } from "../answers/match-set";
-import { matchHolder, matchSpecialCode } from "../answers/match-special";
-import type { Bundle } from "../content/schema";
-import type { Question } from "../questions/question";
+import type { NameDictionary } from "@/core/answers/dictionary";
+import { matchRegionCode } from "@/core/answers/match-code";
+import { matchName, type MatchType } from "@/core/answers/match-name";
+import { matchSet, type SetItem } from "@/core/answers/match-set";
+import { matchHolder, matchSpecialCode } from "@/core/answers/match-special";
+import type { Bundle } from "@/core/content/schema";
+import type { Question } from "@/core/questions/question";
 
 export type Response =
 	{ text: string } | { choice: string } | { items: string[] } | { unknown: true };

@@ -1,11 +1,11 @@
-import type { CardEvent, LearningEvent, PracticeRun } from "../log/events";
-import { compareKeys, eventKey } from "../log/order";
-import { suspend, unsuspend } from "../scheduling/card";
-import { isTimeZone } from "../time/day";
-import { advanceDays } from "./days";
-import { addParams } from "./params";
-import { applyReview, completeRun } from "./review";
-import { putCard, type AppState } from "./state";
+import type { CardEvent, LearningEvent, PracticeRun } from "@/core/log/events";
+import { compareKeys, eventKey } from "@/core/log/order";
+import { suspend, unsuspend } from "@/core/scheduling/card";
+import { isTimeZone } from "@/core/time/day";
+import { advanceDays } from "@/core/replay/days";
+import { addParams } from "@/core/replay/params";
+import { applyReview, completeRun } from "@/core/replay/review";
+import { putCard, type AppState } from "@/core/replay/state";
 
 const CONTENT_ID = /^[a-z0-9-]{1,32}$/;
 

@@ -1,9 +1,9 @@
-import type { Bundle } from "../content/schema";
-import { inScope, type Scope } from "../questions/distractors";
+import type { Bundle } from "@/core/content/schema";
+import { inScope, type Scope } from "@/core/questions/distractors";
 import { MATURE_INTERVAL_DAYS } from "@/rules";
-import type { AppState, CardEntry } from "../replay/state";
-import { effectiveCard } from "../replay/universe";
-import { contentOf, modeOf } from "../session/context";
+import type { AppState, CardEntry } from "@/core/replay/state";
+import { effectiveCard } from "@/core/replay/universe";
+import { contentOf, modeOf } from "@/core/session/context";
 
 export type Mastery = {
 	counted: number;

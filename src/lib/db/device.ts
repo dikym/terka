@@ -1,5 +1,5 @@
 import { uuidV7 } from "@/core/session/ids";
-import { readMeta, type TerkaDb } from "./schema";
+import { readMeta, type TerkaDb } from "@/lib/db/schema";
 
 // Cut on code points, like char_length on the server, so an emoji is never split in half.
 const cut = (text: string, max: number) => [...text].slice(0, max).join("");

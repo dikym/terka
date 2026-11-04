@@ -7,7 +7,7 @@ import { Icon, type IconName } from "@/components/ui/icon";
 import type { Bundle } from "@/core/content/schema";
 import plates from "@/data/plates.json";
 import { demoQuestions } from "@/lib/view/demo";
-import { DemoCard } from "./landing-demo";
+import { DemoCard } from "@/components/screens/landing-demo";
 
 // Worked out while the static page is built, so the browser gets a few lines, not the plate data.
 const DEMO = demoQuestions(plates as unknown as Bundle);

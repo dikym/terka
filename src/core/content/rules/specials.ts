@@ -1,6 +1,6 @@
-import { holderKey } from "../../text";
-import { draftSources, type ContentDraft } from "../draft";
-import { error, warning, type ContentMessage } from "../messages";
+import { holderKey } from "@/core/text";
+import { draftSources, type ContentDraft } from "@/core/content/draft";
+import { error, warning, type ContentMessage } from "@/core/content/messages";
 
 export function specialRules(draft: ContentDraft, today: string): ContentMessage[] {
 	const { specials } = draft;

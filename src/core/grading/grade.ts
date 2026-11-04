@@ -1,6 +1,6 @@
 import { PLACEMENT_FAST_MS } from "@/rules";
-import { comparisonGroup, fluencyScore, isInterrupted } from "./fluency";
-import type { AnswerSignals, Grade } from "./signals";
+import { comparisonGroup, fluencyScore, isInterrupted } from "@/core/grading/fluency";
+import type { AnswerSignals, Grade } from "@/core/grading/signals";
 
 export function gradeSet(setCorrect: number, setThreshold: number): Grade {
 	if (setCorrect === 0) return 1;

@@ -1,12 +1,12 @@
 import { FACT_RECENT_MAX } from "@/rules";
-import type { Bundle, Fact } from "../content/schema";
-import type { LearningEvent } from "../log/events";
-import { seeded } from "../random";
-import type { AppState } from "../replay/state";
-import type { LastDay } from "../session/commands";
-import type { SessionContext } from "../session/context";
-import { uuidV7 } from "../session/ids";
-import { nextLocalDay } from "../time/day";
+import type { Bundle, Fact } from "@/core/content/schema";
+import type { LearningEvent } from "@/core/log/events";
+import { seeded } from "@/core/random";
+import type { AppState } from "@/core/replay/state";
+import type { LastDay } from "@/core/session/commands";
+import type { SessionContext } from "@/core/session/context";
+import { uuidV7 } from "@/core/session/ids";
+import { nextLocalDay } from "@/core/time/day";
 
 // History of facts that are still ready; drafts and deleted facts drop out of the window.
 function readyHistory(state: AppState, ready: ReadonlySet<string>): string[] {

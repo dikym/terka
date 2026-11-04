@@ -1,12 +1,12 @@
 import { CHALLENGE_SIZE, TIERS } from "@/rules";
-import type { Bundle } from "../content/schema";
-import { inScope, type Scope } from "../questions/distractors";
-import { seeded, shuffle } from "../random";
-import { priorityLoad, quotaLeft } from "../replay/days";
-import { schedulerAt } from "../replay/params";
-import type { AppState, CardEntry } from "../replay/state";
-import { effectiveCard } from "../replay/universe";
-import { retrievability } from "../scheduling/fsrs";
+import type { Bundle } from "@/core/content/schema";
+import { inScope, type Scope } from "@/core/questions/distractors";
+import { seeded, shuffle } from "@/core/random";
+import { priorityLoad, quotaLeft } from "@/core/replay/days";
+import { schedulerAt } from "@/core/replay/params";
+import type { AppState, CardEntry } from "@/core/replay/state";
+import { effectiveCard } from "@/core/replay/universe";
+import { retrievability } from "@/core/scheduling/fsrs";
 import {
 	ACTIVE,
 	cardsWhere,
@@ -20,8 +20,8 @@ import {
 	STEPS,
 	tierOn,
 	todayOf
-} from "./context";
-import { pickFormat } from "./forms";
+} from "@/core/session/context";
+import { pickFormat } from "@/core/session/forms";
 
 function learnedIn(state: AppState, bundle: Bundle, scope: Scope): CardEntry[] {
 	const regions = new Map(bundle.regions.map((region) => [region.id, region]));

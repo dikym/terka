@@ -4,7 +4,7 @@ import { optimizationProgress } from "@/core/optimizer/due";
 import { paramsAt } from "@/core/replay/params";
 import { localDay } from "@/core/time/day";
 import { TARGET_RETENTION } from "@/rules";
-import { count, decimal, shortDate } from "./format";
+import { count, decimal, shortDate } from "@/lib/view/format";
 
 export type ParamsOutcome = "accepted" | "rejected" | "restored";
 

@@ -4,8 +4,8 @@ import {
 	OPTIMIZE_FIRST_CARDS,
 	OPTIMIZE_FIRST_REVIEWS
 } from "@/rules";
-import type { FsrsParams } from "../log/events";
-import type { CountedAnswer } from "./counted";
+import type { FsrsParams } from "@/core/log/events";
+import type { CountedAnswer } from "@/core/optimizer/counted";
 
 const DAY_MS = 86_400_000;
 

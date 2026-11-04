@@ -1,7 +1,7 @@
-import type { MatchType } from "../answers/match-name";
-import type { CardEvent, FsrsParams, ReviewLog, RunKind } from "./events";
-import type { Scope } from "../questions/distractors";
-import type { CardMode, LevelSource, QuestionContext } from "../questions/question";
+import type { MatchType } from "@/core/answers/match-name";
+import type { CardEvent, FsrsParams, ReviewLog, RunKind } from "@/core/log/events";
+import type { Scope } from "@/core/questions/distractors";
+import type { CardMode, LevelSource, QuestionContext } from "@/core/questions/question";
 import type { Tier } from "@/rules";
 
 // The client's single list of every enum the database checks. Records, so the compiler rejects a

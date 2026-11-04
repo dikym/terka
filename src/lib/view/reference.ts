@@ -8,10 +8,10 @@ import type { AppState } from "@/core/replay/state";
 import { sightingCounts } from "@/core/views/stats";
 import { normalizeName } from "@/core/text";
 import { SIGHTING_WINDOW_DAYS } from "@/rules";
-import { holderFlag } from "./flags";
-import { shortDate } from "./format";
-import { provincesOf, uiGroup, type GroupId } from "./groups";
-import { areaSummary, listSummary } from "./stats";
+import { holderFlag } from "@/lib/view/flags";
+import { shortDate } from "@/lib/view/format";
+import { provincesOf, uiGroup, type GroupId } from "@/lib/view/groups";
+import { areaSummary, listSummary } from "@/lib/view/stats";
 
 export type RefView =
 	| { kind: "list" }

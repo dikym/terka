@@ -1,12 +1,12 @@
 import { DEFAULT_TIER, type Tier } from "@/rules";
-import type { Bundle } from "../content/schema";
-import type { AnswerSignals } from "../grading/signals";
-import type { CountedAnswer } from "../optimizer/counted";
-import type { FsrsParams, PracticeRun } from "../log/events";
-import type { EventKey } from "../log/order";
-import { type CardMemory, newCard } from "../scheduling/card-memory";
-import { localDay } from "../time/day";
-import { contentIndex, universe } from "./universe";
+import type { Bundle } from "@/core/content/schema";
+import type { AnswerSignals } from "@/core/grading/signals";
+import type { CountedAnswer } from "@/core/optimizer/counted";
+import type { FsrsParams, PracticeRun } from "@/core/log/events";
+import type { EventKey } from "@/core/log/order";
+import { type CardMemory, newCard } from "@/core/scheduling/card-memory";
+import { localDay } from "@/core/time/day";
+import { contentIndex, universe } from "@/core/replay/universe";
 
 export type ContentStatus = "ok" | "confidence" | "missing-data";
 export type CardEntry = CardMemory & {

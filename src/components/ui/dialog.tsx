@@ -2,13 +2,13 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { Button } from "./button";
-import { FadeScroll } from "./fade-scroll";
-import { Icon } from "./icon";
-import { useFocusTrap } from "./use-focus-trap";
-import { useScrollLock } from "./use-scroll-lock";
-import { useSheetDrag } from "./use-sheet-drag";
-import { useVisualViewportFit } from "./use-visual-viewport-fit";
+import { Button } from "@/components/ui/button";
+import { FadeScroll } from "@/components/ui/fade-scroll";
+import { Icon } from "@/components/ui/icon";
+import { useFocusTrap } from "@/components/ui/use-focus-trap";
+import { useScrollLock } from "@/components/ui/use-scroll-lock";
+import { useSheetDrag } from "@/components/ui/use-sheet-drag";
+import { useVisualViewportFit } from "@/components/ui/use-visual-viewport-fit";
 
 export const typedMatches = (word: string, value: string) => value !== "" && value === word;
 

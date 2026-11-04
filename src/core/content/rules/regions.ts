@@ -1,6 +1,6 @@
-import { compactName } from "../../text";
-import type { ContentDraft } from "../draft";
-import { duplicates, error, report, warning, type ContentMessage } from "../messages";
+import { compactName } from "@/core/text";
+import type { ContentDraft } from "@/core/content/draft";
+import { duplicates, error, report, warning, type ContentMessage } from "@/core/content/messages";
 
 const REFERENCE_SERIES = ["RI", "CD", "CC", "CH"];
 

@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { fontVariables } from "./fonts";
-import "./globals.css";
-import { InstallStatus } from "./install-status";
-import { OptimizerOnIdle } from "./optimizer-on-idle";
-import { PageViews } from "./page-views";
+import { fontVariables } from "@/app/fonts";
+import "@/app/globals.css";
+import { InstallStatus } from "@/app/install-status";
+import { OptimizerOnIdle } from "@/app/optimizer-on-idle";
+import { PageViews } from "@/app/page-views";
 import { ToastHost } from "@/components/ui/toast";
 import { LEGAL_FROM_SETTINGS, WELCOME_SEEN } from "@/lib/flag-keys";
 

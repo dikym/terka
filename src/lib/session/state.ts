@@ -1,7 +1,7 @@
 import { normalizeName } from "@/core/text";
 import type { SetFeedback } from "@/core/session/feedback";
-import type { SessionCard } from "./cards";
-import { type Mode, REASK_MARK } from "./modes";
+import type { SessionCard } from "@/lib/session/cards";
+import { type Mode, REASK_MARK } from "@/lib/session/modes";
 
 export type Verdict = "right" | "wrong" | "unverified";
 

@@ -5,7 +5,7 @@ import { Icon } from "@/components/ui/icon";
 import { Wordmark } from "@/components/ui/plate";
 import { Tooltip } from "@/components/ui/tooltip";
 import { useReady, useSyncIcon, useSyncLabel } from "@/lib/app/use-runtime";
-import { AccountMenu } from "./account-menu";
+import { AccountMenu } from "@/components/shell/account-menu";
 
 const ICON_BUTTON =
 	"inline-flex size-11 flex-none cursor-pointer items-center justify-center rounded-sm border border-transparent bg-transparent text-ink-700 focus-visible:-outline-offset-2";

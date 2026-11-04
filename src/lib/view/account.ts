@@ -1,8 +1,8 @@
-import { type DeviceIcon, deviceIcon, deviceName } from "../app/device-label";
-import type { DeviceInfo } from "../db/device";
-import type { ImportResult } from "../db/transfer";
+import { type DeviceIcon, deviceIcon, deviceName } from "@/lib/app/device-label";
+import type { DeviceInfo } from "@/lib/db/device";
+import type { ImportResult } from "@/lib/db/transfer";
 import { LISTED_DEVICE_DAYS } from "@/rules";
-import { ago, count } from "./format";
+import { ago, count } from "@/lib/view/format";
 
 export const exportLabel = (lastExportAt: number | null, now: number) =>
 	lastExportAt === null ? "Belum pernah ekspor" : `Ekspor terakhir ${ago(now - lastExportAt)}`;

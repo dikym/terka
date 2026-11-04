@@ -9,7 +9,7 @@ import { BACK_BUTTON } from "@/components/ui/page-title";
 import { EmptyState } from "@/components/ui/states";
 import { Tooltip } from "@/components/ui/tooltip";
 import type { Preview } from "@/lib/session/preview";
-import { LevelMark, levelName } from "./indicators";
+import { LevelMark, levelName } from "@/components/screens/session/indicators";
 
 function Row({
 	last,

@@ -17,8 +17,8 @@ import {
 	type TerkaDb
 } from "@/lib/db/schema";
 import { toLocal } from "@/lib/db/wire";
-import { classify, type Action, type Block } from "./errors";
-import { fromServer } from "./server";
+import { classify, type Action, type Block } from "@/lib/sync/errors";
+import { fromServer } from "@/lib/sync/server";
 
 export type PullEntry = { startedAt: number; cursor: number };
 export type PullOutcome =

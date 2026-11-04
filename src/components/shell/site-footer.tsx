@@ -1,5 +1,5 @@
 import { Icon, type IconName } from "@/components/ui/icon";
-import { SITE_WRAP } from "./site-header";
+import { SITE_WRAP } from "@/components/shell/site-header";
 
 const LINKS: { icon: IconName; label: string; href: string }[] = [
 	{ icon: "info", label: "Tentang Terka", href: "/tentang" },

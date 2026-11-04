@@ -1,10 +1,10 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { createStore } from "zustand/vanilla";
-import type { LogState } from "../db/log";
-import { createScheduler } from "../sync/scheduler";
-import type { SyncSignal } from "../sync/signal";
-import { syncNow, type SyncResult } from "../sync/sync";
-import type { AppStore } from "./store";
+import type { LogState } from "@/lib/db/log";
+import { createScheduler } from "@/lib/sync/scheduler";
+import type { SyncSignal } from "@/lib/sync/signal";
+import { syncNow, type SyncResult } from "@/lib/sync/sync";
+import type { AppStore } from "@/lib/app/store";
 
 export type StartSyncDeps = {
 	run: (log: LogState) => Promise<SyncResult>;

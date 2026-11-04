@@ -4,12 +4,12 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { GroupId } from "@/lib/view/groups";
 import { referenceHref } from "@/lib/view/reference";
-import { Button } from "./button";
-import { CodeChip, CodeLink } from "./code-chip";
-import { Dot } from "./feedback";
-import { GROUP_NAME, GROUP_TEXT } from "./groups";
-import { Icon, type IconName } from "./icon";
-import { Tooltip as LabelTip } from "./tooltip";
+import { Button } from "@/components/ui/button";
+import { CodeChip, CodeLink } from "@/components/ui/code-chip";
+import { Dot } from "@/components/ui/feedback";
+import { GROUP_NAME, GROUP_TEXT } from "@/components/ui/groups";
+import { Icon, type IconName } from "@/components/ui/icon";
+import { Tooltip as LabelTip } from "@/components/ui/tooltip";
 
 export type MapProvince = {
 	name: string;

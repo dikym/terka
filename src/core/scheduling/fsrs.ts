@@ -1,7 +1,7 @@
 import { TARGET_RETENTION } from "@/rules";
 import { type Card, createEmptyCard, fsrs, type Grade as FsrsGrade, State } from "ts-fsrs";
-import type { Grade } from "../grading/signals";
-import type { CardMemory } from "./card-memory";
+import type { Grade } from "@/core/grading/signals";
+import type { CardMemory } from "@/core/scheduling/card-memory";
 
 export type Scheduler = ReturnType<typeof fsrs>;
 

@@ -1,6 +1,6 @@
-import type { FsrsParams } from "../log/events";
-import { compareKeys } from "../log/order";
-import { createScheduler, type Scheduler } from "../scheduling/fsrs";
+import type { FsrsParams } from "@/core/log/events";
+import { compareKeys } from "@/core/log/order";
+import { createScheduler, type Scheduler } from "@/core/scheduling/fsrs";
 
 // Rows the server has seen cannot activate later than they arrived.
 export const activation = (row: FsrsParams) =>

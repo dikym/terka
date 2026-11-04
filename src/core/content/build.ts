@@ -1,19 +1,19 @@
-import { draftSources, type ContentDraft } from "./draft";
-import { issueMessages } from "./issues";
-import { error, isError, report, type ContentMessage } from "./messages";
-import { readCuration } from "./read-curation";
-import { readFunFacts } from "./read-fun-facts";
-import { readSpecialCodes } from "./read-special-codes";
-import { coverageRules } from "./rules/coverage";
-import { factRules } from "./rules/facts";
-import { identityRules } from "./rules/identity";
-import { mapRules } from "./rules/map";
-import { placementRules } from "./rules/placement";
-import { exclusiveProvinces } from "./rules/provinces";
-import { regionRules } from "./rules/regions";
-import { revisionRules } from "./rules/revision";
-import { specialRules } from "./rules/specials";
-import { bundleSchema, type Bundle } from "./schema";
+import { draftSources, type ContentDraft } from "@/core/content/draft";
+import { issueMessages } from "@/core/content/issues";
+import { error, isError, report, type ContentMessage } from "@/core/content/messages";
+import { readCuration } from "@/core/content/read-curation";
+import { readFunFacts } from "@/core/content/read-fun-facts";
+import { readSpecialCodes } from "@/core/content/read-special-codes";
+import { coverageRules } from "@/core/content/rules/coverage";
+import { factRules } from "@/core/content/rules/facts";
+import { identityRules } from "@/core/content/rules/identity";
+import { mapRules } from "@/core/content/rules/map";
+import { placementRules } from "@/core/content/rules/placement";
+import { exclusiveProvinces } from "@/core/content/rules/provinces";
+import { regionRules } from "@/core/content/rules/regions";
+import { revisionRules } from "@/core/content/rules/revision";
+import { specialRules } from "@/core/content/rules/specials";
+import { bundleSchema, type Bundle } from "@/core/content/schema";
 
 export type BuildOptions = {
 	today: string;

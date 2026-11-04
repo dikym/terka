@@ -1,4 +1,4 @@
-import { LEGAL_FROM_SETTINGS, readFlag, useFlag, writeFlag } from "./flags";
+import { LEGAL_FROM_SETTINGS, readFlag, useFlag, writeFlag } from "@/lib/flags";
 
 // A page opened from a typed address, a bookmark or another site starts with a clean slate, so a
 // mark left by an earlier visit in the same tab cannot leak into it.

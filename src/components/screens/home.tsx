@@ -12,7 +12,7 @@ import { DRILL_CLEAR_STREAK } from "@/rules";
 import { countdownTo } from "@/lib/view/format";
 import { DAILY_SESSION } from "@/lib/session/modes";
 import type { DayMark, Home } from "@/lib/view/home";
-import { SyncChip } from "./sync-chip";
+import { SyncChip } from "@/components/screens/sync-chip";
 
 const CHIP_SKELETON = "h-7 w-10 flex-none rounded-sm";
 

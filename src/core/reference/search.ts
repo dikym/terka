@@ -6,11 +6,11 @@ import type {
 	ReferencePlate,
 	Region,
 	Special
-} from "../content/schema";
-import { provinceName } from "../answers/dictionary";
-import { groupName } from "../content/names";
-import { compactName, holderKey, normalizeName } from "../text";
-import { frontCode } from "./front-code";
+} from "@/core/content/schema";
+import { provinceName } from "@/core/answers/dictionary";
+import { groupName } from "@/core/content/names";
+import { compactName, holderKey, normalizeName } from "@/core/text";
+import { frontCode } from "@/core/reference/front-code";
 
 export type ReferenceResult =
 	| { kind: "empty" }

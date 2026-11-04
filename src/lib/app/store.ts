@@ -1,9 +1,9 @@
 import { createStore } from "zustand/vanilla";
 import type { Bundle } from "@/core/content/schema";
 import type { LearningEvent } from "@/core/log/events";
-import { loadState, record, type LogState } from "../db/log";
-import type { TerkaDb } from "../db/schema";
-import type { SyncStatus } from "../sync/status";
+import { loadState, record, type LogState } from "@/lib/db/log";
+import type { TerkaDb } from "@/lib/db/schema";
+import type { SyncStatus } from "@/lib/sync/status";
 
 export type AppState = { log: LogState; sync: SyncStatus | null };
 export type RecordOutcome = "ok" | "outdated" | "stale" | "quota";

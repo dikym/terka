@@ -46,7 +46,7 @@ import {
 	RegionCard,
 	SpecialCard,
 	UnverifiedLegend
-} from "./reference-results";
+} from "@/components/screens/reference-results";
 
 const LISTBOX_ID = "referensi-saran";
 const optionId = (position: number) => `referensi-saran-${position}`;

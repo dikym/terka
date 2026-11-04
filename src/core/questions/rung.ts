@@ -8,8 +8,8 @@ import {
 	RUNG_HARD_DIFFICULTY,
 	RUNG_STABILITY_DAYS
 } from "@/rules";
-import type { CardMemory } from "../scheduling/card-memory";
-import type { Level, LevelSource, QuestionContext } from "./question";
+import type { CardMemory } from "@/core/scheduling/card-memory";
+import type { Level, LevelSource, QuestionContext } from "@/core/questions/question";
 
 export type Rung = 1 | 2 | 3 | 4 | 5 | 6;
 export type RungMemory = { retrievability: number; scale: number };

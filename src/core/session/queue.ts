@@ -5,16 +5,16 @@ import {
 	SPECIAL_HOLD,
 	TIERS
 } from "@/rules";
-import { dayNumber } from "../time/day";
-import type { Bundle, Region } from "../content/schema";
-import { inScope } from "../questions/distractors";
-import type { QuestionContext } from "../questions/question";
-import { priorityLoad, quotaLeft } from "../replay/days";
-import { schedulerAt } from "../replay/params";
-import type { AppState, CardEntry } from "../replay/state";
-import { effectiveCard } from "../replay/universe";
-import { retrievability } from "../scheduling/fsrs";
-import { sightingCounts } from "../views/stats";
+import { dayNumber } from "@/core/time/day";
+import type { Bundle, Region } from "@/core/content/schema";
+import { inScope } from "@/core/questions/distractors";
+import type { QuestionContext } from "@/core/questions/question";
+import { priorityLoad, quotaLeft } from "@/core/replay/days";
+import { schedulerAt } from "@/core/replay/params";
+import type { AppState, CardEntry } from "@/core/replay/state";
+import { effectiveCard } from "@/core/replay/universe";
+import { retrievability } from "@/core/scheduling/fsrs";
+import { sightingCounts } from "@/core/views/stats";
 import {
 	ACTIVE,
 	cardsWhere,
@@ -32,8 +32,8 @@ import {
 	tierOn,
 	todayOf,
 	uniqueItems
-} from "./context";
-import { pickFormat } from "./forms";
+} from "@/core/session/context";
+import { pickFormat } from "@/core/session/forms";
 
 export type DailyQueue = { items: QueueItem[]; held: boolean; outsideScopeNew: number };
 

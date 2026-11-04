@@ -10,9 +10,9 @@ import {
 	TIER_WINDOW_DAYS,
 	TIERS
 } from "@/rules";
-import { addDays, dayNumber, dayStart } from "../time/day";
-import type { AppState, DayStats } from "./state";
-import { effectiveCard } from "./universe";
+import { addDays, dayNumber, dayStart } from "@/core/time/day";
+import type { AppState, DayStats } from "@/core/replay/state";
+import { effectiveCard } from "@/core/replay/universe";
 
 const ACTIVE = new Set<string>(["learning", "relearning", "review", "mature"]);
 const SETTLED = new Set<string>(["review", "mature"]);

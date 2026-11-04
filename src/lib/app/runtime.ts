@@ -4,11 +4,11 @@ import type { Bundle } from "@/core/content/schema";
 import type { AppState } from "@/core/replay/state";
 import type { LastDay } from "@/core/session/commands";
 import type { SessionContext, SessionSettings } from "@/core/session/context";
-import { loadState } from "../db/log";
-import { loadNotes, loadSettings, saveNote, saveSettings } from "../db/settings";
-import type { TerkaDb } from "../db/schema";
-import { type BootDeps, openApp } from "./boot";
-import { type AppStore, createAppStore } from "./store";
+import { loadState } from "@/lib/db/log";
+import { loadNotes, loadSettings, saveNote, saveSettings } from "@/lib/db/settings";
+import type { TerkaDb } from "@/lib/db/schema";
+import { type BootDeps, openApp } from "@/lib/app/boot";
+import { type AppStore, createAppStore } from "@/lib/app/store";
 
 export type PrefsState = { settings: SessionSettings; notes: Map<string, string> };
 

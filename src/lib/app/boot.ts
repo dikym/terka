@@ -1,9 +1,9 @@
 import type { Bundle } from "@/core/content/schema";
-import { loadBundle } from "../content/load";
-import { ensureDevice, ensurePersistence } from "../db/device";
-import { loadState, type LogState } from "../db/log";
-import { TerkaDb } from "../db/schema";
-import { deviceLabel } from "./device-label";
+import { loadBundle } from "@/lib/content/load";
+import { ensureDevice, ensurePersistence } from "@/lib/db/device";
+import { loadState, type LogState } from "@/lib/db/log";
+import { TerkaDb } from "@/lib/db/schema";
+import { deviceLabel } from "@/lib/app/device-label";
 
 type Opened = { db: TerkaDb; bundle: Bundle; deviceId: string; persisted: boolean };
 export type Boot =

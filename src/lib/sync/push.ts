@@ -3,9 +3,9 @@ import type { LearningEvent } from "@/core/log/events";
 import { effectiveTs } from "@/core/log/order";
 import { bumpLogVersion } from "@/lib/db/log";
 import { readMeta, type OutboxRow, type TableName, type TerkaDb } from "@/lib/db/schema";
-import { classify, type Action, type Block, type Failure } from "./errors";
-import { isBlocked, LOG_TABLES, planPush, type Batch } from "./plan";
-import { closingOf, toServer } from "./server";
+import { classify, type Action, type Block, type Failure } from "@/lib/sync/errors";
+import { isBlocked, LOG_TABLES, planPush, type Batch } from "@/lib/sync/plan";
+import { closingOf, toServer } from "@/lib/sync/server";
 
 export type PushContext = { now: number; retryAfter: () => number | null };
 export type PushOutcome = { sent: number; quarantined: number; action: Action | null };

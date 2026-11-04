@@ -1,10 +1,10 @@
 import type { Tier } from "@/rules";
-import type { Scope } from "../questions/distractors";
-import type { QuestionContext, QuestionFormat } from "../questions/question";
-import { advanceTo } from "../replay/days";
-import type { AppState, CardEntry } from "../replay/state";
-import { effectiveCard } from "../replay/universe";
-import { localDay } from "../time/day";
+import type { Scope } from "@/core/questions/distractors";
+import type { QuestionContext, QuestionFormat } from "@/core/questions/question";
+import { advanceTo } from "@/core/replay/days";
+import type { AppState, CardEntry } from "@/core/replay/state";
+import { effectiveCard } from "@/core/replay/universe";
+import { localDay } from "@/core/time/day";
 
 export type SessionSettings = { scope: Scope; specialEnabled: boolean };
 export type SessionContext = { now: number; tz: string; deviceId: string; random: () => number };

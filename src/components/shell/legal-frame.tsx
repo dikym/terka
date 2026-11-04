@@ -3,9 +3,9 @@
 import { useEffect } from "react";
 import { PageTitle } from "@/components/ui/page-title";
 import { useOpenedFromSettings } from "@/lib/legal-origin";
-import { AppShell } from "./app-shell";
-import { SiteFooter } from "./site-footer";
-import { SiteHeader } from "./site-header";
+import { AppShell } from "@/components/shell/app-shell";
+import { SiteFooter } from "@/components/shell/site-footer";
+import { SiteHeader } from "@/components/shell/site-header";
 
 /**
  * The frame of the about page and privacy policy. Opened from Setelan it sits inside the app, with

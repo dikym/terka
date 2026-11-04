@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { issueMessages } from "./issues";
-import { contentSourceSchema, referencePlateSchema, specialSchema } from "./schema";
+import { issueMessages } from "@/core/content/issues";
+import { contentSourceSchema, referencePlateSchema, specialSchema } from "@/core/content/schema";
 
 // Non-strict on purpose: summary, riPairs and other doc-only keys are dropped here.
 const specialCodesSchema = z.object({

@@ -4,10 +4,10 @@ import {
 	LOGIN_PROMPT_ACTIVE_DAYS,
 	NOTE_OFFER_LAPSES
 } from "@/rules";
-import type { AppState } from "../replay/state";
-import { effectiveCard } from "../replay/universe";
-import { compareText, contentOf } from "../session/context";
-import { dayNumber, localDay } from "../time/day";
+import type { AppState } from "@/core/replay/state";
+import { effectiveCard } from "@/core/replay/universe";
+import { compareText, contentOf } from "@/core/session/context";
+import { dayNumber, localDay } from "@/core/time/day";
 
 // One note per code: offered at four lapses and once more at six, never over an existing note.
 export function noteOffer(

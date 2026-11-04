@@ -1,8 +1,8 @@
 /// <reference lib="webworker" />
 import type { Trainer } from "@/core/optimizer/items";
 import { optimizeLog } from "@/core/optimizer/decide";
-import type { Optimize } from "./run";
-import { createTrainer, VERSION } from "./trainer";
+import type { Optimize } from "@/lib/optimizer/run";
+import { createTrainer, VERSION } from "@/lib/optimizer/trainer";
 
 let loaded: Promise<Trainer> | null = null;
 

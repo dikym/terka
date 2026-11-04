@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useSyncExternalStore } from "react";
 import { dismissToast, type ToastItem, type ToastTone, toastStore } from "@/lib/toasts";
-import { Icon, type IconName } from "./icon";
+import { Icon, type IconName } from "@/components/ui/icon";
 
 const TONE: Record<ToastTone, { box: string; text: string; icon: string; glyph: IconName }> = {
 	success: {

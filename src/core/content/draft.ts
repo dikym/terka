@@ -1,7 +1,7 @@
-import type { Curation } from "./read-curation";
-import type { FunFacts } from "./read-fun-facts";
-import type { SpecialCodes } from "./read-special-codes";
-import type { ContentSource } from "./schema";
+import type { Curation } from "@/core/content/read-curation";
+import type { FunFacts } from "@/core/content/read-fun-facts";
+import type { SpecialCodes } from "@/core/content/read-special-codes";
+import type { ContentSource } from "@/core/content/schema";
 
 export type ContentDraft = {
 	curation: Curation;

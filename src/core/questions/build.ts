@@ -1,10 +1,10 @@
-import type { Bundle } from "../content/schema";
-import type { CardMemory } from "../scheduling/card-memory";
-import { automaticLevel, resolveLevel } from "./level";
-import { parseCardId, type Question, type QuestionOptions } from "./question";
-import { buildRegionQuestion } from "./region";
-import { baseRung, NEUTRAL_MEMORY, rungForLevel } from "./rung";
-import { buildSpecialQuestion } from "./special";
+import type { Bundle } from "@/core/content/schema";
+import type { CardMemory } from "@/core/scheduling/card-memory";
+import { automaticLevel, resolveLevel } from "@/core/questions/level";
+import { parseCardId, type Question, type QuestionOptions } from "@/core/questions/question";
+import { buildRegionQuestion } from "@/core/questions/region";
+import { baseRung, NEUTRAL_MEMORY, rungForLevel } from "@/core/questions/rung";
+import { buildSpecialQuestion } from "@/core/questions/special";
 
 // Deterministic for a given card id, reps and options.
 export function buildQuestion(

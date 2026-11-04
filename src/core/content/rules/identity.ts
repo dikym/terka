@@ -1,5 +1,5 @@
-import type { ContentDraft } from "../draft";
-import { type ContentMessage, duplicates, error } from "../messages";
+import type { ContentDraft } from "@/core/content/draft";
+import { type ContentMessage, duplicates, error } from "@/core/content/messages";
 
 export function identityRules({ curation, specials, funFacts }: ContentDraft): ContentMessage[] {
 	const out: ContentMessage[] = [];

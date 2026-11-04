@@ -1,7 +1,7 @@
-import type { Bundle } from "../content/schema";
-import type { Grade } from "../grading/signals";
-import type { LearningEvent } from "../log/events";
-import { replay } from "../replay/replay";
+import type { Bundle } from "@/core/content/schema";
+import type { Grade } from "@/core/grading/signals";
+import type { LearningEvent } from "@/core/log/events";
+import { replay } from "@/core/replay/replay";
 
 // One answer that updated a schedule: the optimizer's training data.
 export type CountedAnswer = {

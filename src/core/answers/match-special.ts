@@ -1,7 +1,7 @@
-import type { Bundle, Special } from "../content/schema";
-import { holderKey } from "../text";
+import type { Bundle, Special } from "@/core/content/schema";
+import { holderKey } from "@/core/text";
 import { typoThreshold } from "@/rules";
-import { typoDistance } from "./typo";
+import { typoDistance } from "@/core/answers/typo";
 
 export type HolderMatch = {
 	matchType: "exact" | "typo" | "none";

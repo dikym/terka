@@ -1,7 +1,7 @@
 import { OPTIMIZE_TEST_SHARE } from "@/rules";
-import type { Grade } from "../grading/signals";
-import { dayNumber } from "../time/day";
-import type { CountedAnswer } from "./counted";
+import type { Grade } from "@/core/grading/signals";
+import { dayNumber } from "@/core/time/day";
+import type { CountedAnswer } from "@/core/optimizer/counted";
 
 // One card's history up to and including the review being predicted.
 export type ReviewSeq = {

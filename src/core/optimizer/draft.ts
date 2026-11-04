@@ -1,8 +1,8 @@
 import { default_w } from "ts-fsrs";
-import type { FsrsParams } from "../log/events";
-import { addParams, paramsAt } from "../replay/params";
-import type { CountedAnswer } from "./counted";
-import { trainingSetHash } from "./hash";
+import type { FsrsParams } from "@/core/log/events";
+import { addParams, paramsAt } from "@/core/replay/params";
+import type { CountedAnswer } from "@/core/optimizer/counted";
+import { trainingSetHash } from "@/core/optimizer/hash";
 
 export type ParamsDraft = Omit<FsrsParams, "id" | "deviceId" | "receivedAt" | "serverSeq">;
 

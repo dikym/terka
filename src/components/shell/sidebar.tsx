@@ -4,7 +4,7 @@ import { Link } from "@/components/ui/app-link";
 import { usePathname } from "next/navigation";
 import { Icon, type IconName } from "@/components/ui/icon";
 import { Wordmark } from "@/components/ui/plate";
-import { AccountMenu } from "./account-menu";
+import { AccountMenu } from "@/components/shell/account-menu";
 
 export const NAV: { href: string; label: string; icon: IconName }[] = [
 	{ href: "/beranda", label: "Beranda", icon: "house" },

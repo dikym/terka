@@ -11,8 +11,8 @@ import {
 	TIERS,
 	TIMED_LIMIT_MS
 } from "@/rules";
-import { decimal, shortDate, TIER_NAME } from "./format";
-import { scopeTitle } from "./groups";
+import { decimal, shortDate, TIER_NAME } from "@/lib/view/format";
+import { scopeTitle } from "@/lib/view/groups";
 
 export type Settings = {
 	newPerDay: string;

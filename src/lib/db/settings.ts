@@ -1,7 +1,7 @@
 import { NATIONAL } from "@/core/questions/distractors";
 import type { SessionContext, SessionSettings } from "@/core/session/context";
 import { NOTE_MAX_CHARS } from "@/rules";
-import { type Quota, type TerkaDb, unlessQuota } from "./schema";
+import { type Quota, type TerkaDb, unlessQuota } from "@/lib/db/schema";
 
 type Writer = Pick<SessionContext, "now" | "deviceId">;
 

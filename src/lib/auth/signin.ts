@@ -1,7 +1,7 @@
 import { isAuthError, type SupabaseClient } from "@supabase/supabase-js";
 import { readMeta, type TerkaDb } from "@/lib/db/schema";
-import { claimLocalData, wipeLocalData } from "./account";
-import { freshConsent, recordConsent, type PendingConsent } from "./consent";
+import { claimLocalData, wipeLocalData } from "@/lib/auth/account";
+import { freshConsent, recordConsent, type PendingConsent } from "@/lib/auth/consent";
 
 type Outcome<T extends string> = { status: T };
 

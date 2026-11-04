@@ -1,6 +1,6 @@
-import { NATIONAL } from "../../questions/distractors";
-import { type ContentMessage, error } from "../messages";
-import type { Bundle } from "../schema";
+import { NATIONAL } from "@/core/questions/distractors";
+import { type ContentMessage, error } from "@/core/content/messages";
+import type { Bundle } from "@/core/content/schema";
 
 export const coverageIds = (bundle: Bundle): string[] => [
 	NATIONAL.id,

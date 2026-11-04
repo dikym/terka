@@ -1,4 +1,4 @@
-import type { TerkaDb } from "./schema";
+import type { TerkaDb } from "@/lib/db/schema";
 
 const NOTIFIED = "notified:";
 const NOTE_OFFER = "noteOffer:";

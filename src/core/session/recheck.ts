@@ -1,10 +1,10 @@
 import { RECHECK_AWAY_DAYS, RECHECK_SIZE, REVIEW_CAP_PER_DAY } from "@/rules";
-import type { Bundle } from "../content/schema";
-import { schedulerAt } from "../replay/params";
-import type { AppState } from "../replay/state";
-import { effectiveCard } from "../replay/universe";
-import { retrievability } from "../scheduling/fsrs";
-import { addDays } from "../time/day";
+import type { Bundle } from "@/core/content/schema";
+import { schedulerAt } from "@/core/replay/params";
+import type { AppState } from "@/core/replay/state";
+import { effectiveCard } from "@/core/replay/universe";
+import { retrievability } from "@/core/scheduling/fsrs";
+import { addDays } from "@/core/time/day";
 import {
 	cardsWhere,
 	compareText,
@@ -14,8 +14,8 @@ import {
 	type QueueItem,
 	type SessionContext,
 	todayOf
-} from "./context";
-import { dueReviewCount, dueReviews } from "./queue";
+} from "@/core/session/context";
+import { dueReviewCount, dueReviews } from "@/core/session/queue";
 
 export function recheckOffer(input: AppState, ctx: SessionContext): boolean {
 	const today = todayOf(ctx);
