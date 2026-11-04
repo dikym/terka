@@ -10,24 +10,8 @@ const headerOf = (source: string, key: string) =>
 		?.headers.find((header) => header.key === key)?.value;
 
 describe("static site headers", () => {
-	const csp = headerOf("/(.*)", "Content-Security-Policy") ?? "";
-
-	test("every page gets a content security policy", () => {
-		expect(csp).toContain("default-src 'self'");
-		expect(csp).toContain("frame-ancestors 'none'");
-		expect(csp).toContain("object-src 'none'");
-	});
-
-	test("the policy lets the optimizer compile WebAssembly", () => {
-		expect(csp).toMatch(/script-src [^;]*'wasm-unsafe-eval'/);
-	});
-
-	test("the policy allows the sync server, its realtime socket and the email captcha", () => {
-		expect(csp).toMatch(/connect-src [^;]*https:\/\/eviyqszgwjhekywqmhwv\.supabase\.co/);
-		expect(csp).toMatch(/connect-src [^;]*wss:\/\/eviyqszgwjhekywqmhwv\.supabase\.co/);
-		expect(csp).not.toContain("*.supabase.co");
-		expect(csp).toMatch(/script-src [^;]*https:\/\/challenges\.cloudflare\.com/);
-		expect(csp).toMatch(/frame-src [^;]*https:\/\/challenges\.cloudflare\.com/);
+	test("pages cannot be framed", () => {
+		expect(headerOf("/(.*)", "Content-Security-Policy")).toBe("frame-ancestors 'none'");
 	});
 
 	test("pages are not sniffed and the service worker is always revalidated", () => {

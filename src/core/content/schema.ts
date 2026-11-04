@@ -1,5 +1,8 @@
 import { z } from "zod";
 
+// The page policy forbids eval; without this Zod probes Function("") and reports a violation.
+z.config({ jitless: true });
+
 export const contentIdSchema = z.string().regex(/^[a-z0-9-]{1,32}$/);
 export const confidenceSchema = z.enum(["high", "medium", "low"]);
 export const isoDateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);

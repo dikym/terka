@@ -132,8 +132,9 @@ Penyiapan pemilik proyek (tidak diotomasi):
    produksi dan deploy) belum dipasang.
 6. DNS email (`.github/workflows/dns.yml`): Resend butuh SPF `include:amazonses.com`
    dan MX di `send.terka.my.id`. Per 2026-10-24 keduanya belum ada; DKIM dan DMARC sudah.
-7. Header keamanan ada di `vercel.json` (CSP, `nosniff`, `Referrer-Policy`,
-   `Permissions-Policy`). Domain Supabase atau CAPTCHA baru harus ditambahkan ke CSP.
+7. Header keamanan ada di `vercel.json` (`frame-ancestors`, `nosniff`, `Referrer-Policy`,
+   `Permissions-Policy`). CSP lainnya dipasang per halaman oleh `scripts/build/csp.ts`; domain
+   Supabase atau CAPTCHA baru harus ditambahkan di sana.
 8. Teks `/privasi` adalah draf dari dokumen teknis. Tinjau secara hukum sebelum login
    dibuka untuk publik, lalu naikkan `PRIVACY_POLICY_VERSION` dan katalog
    `privacy_policy_versions` bila isinya berubah material.

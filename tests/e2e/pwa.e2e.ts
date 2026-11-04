@@ -54,7 +54,10 @@ test("no page breaks the content security policy or sets a cookie", async ({ pag
 	});
 	for (const route of MAIN_ROUTES) {
 		const response = await page.goto(route);
-		expect(response?.headers()["content-security-policy"]).toContain("default-src 'self'");
+		expect(response?.headers()["content-security-policy"]).toBe("frame-ancestors 'none'");
+		expect(
+			await page.locator('meta[http-equiv="Content-Security-Policy"]').getAttribute("content")
+		).toContain("default-src 'self'");
 		await page.waitForLoadState("networkidle");
 		expect(
 			await page.evaluate(() => (window as unknown as { violations: string[] }).violations)

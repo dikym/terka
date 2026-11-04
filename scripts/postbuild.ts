@@ -1,4 +1,5 @@
 import { copyFile, mkdir } from "node:fs/promises";
+import { injectCsp } from "./build/csp";
 import { checkExport } from "./build/export-check";
 import { buildServiceWorker } from "./build/sw";
 import { buildOptimizerWorker } from "./build/worker";
@@ -17,6 +18,7 @@ const steps: [string, () => Promise<string[]>][] = [
 		}
 	],
 	["check export", () => checkExport("out", "src/app")],
+	["content security policy", () => injectCsp("out")],
 	["optimizer worker", () => buildOptimizerWorker("out")],
 	["service worker", () => buildServiceWorker("out")]
 ];
