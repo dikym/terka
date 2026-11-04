@@ -30,13 +30,13 @@ const envelopeSchema = z
 		deviceId: z.string().nullable(),
 		contentRev: z.number().int().positive(),
 		engineVersion: z.number().int().positive(),
-		tables: z.record(z.array(z.record(z.unknown()))),
+		tables: z.record(z.string(), z.array(z.record(z.string(), z.unknown()))),
 		quarantine: z.array(
 			z
 				.object({
 					table: z.string(),
 					key: z.string().min(1),
-					row: z.record(z.unknown()),
+					row: z.record(z.string(), z.unknown()),
 					error: z.string(),
 					quarantinedAt: iso
 				})
@@ -87,7 +87,7 @@ type Parsed = { rows: [TableName, unknown[]][]; quarantine: Omit<QuarantineRow, 
 
 const describe = (error: z.ZodError) => {
 	const issue = error.issues[0];
-	return `${issue.path.join(".") || "file"}: ${issue.message}`;
+	return `${issue.path.map(String).join(".") || "file"}: ${issue.message}`;
 };
 
 function parseFile(text: string): Parsed | string {

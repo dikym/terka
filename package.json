@@ -33,7 +33,7 @@
 		"react-dom": "19.2.4",
 		"tailwindcss": "^4",
 		"ts-fsrs": "5.4.2",
-		"zod": "^3",
+		"zod": "^4.6.6",
 		"zustand": "^5.0.15"
 	},
 	"devDependencies": {
@@ -52,6 +52,9 @@
 		"typescript": "^5",
 		"workbox-build": "7.4.1",
 		"workbox-precaching": "7.4.1"
+	},
+	"overrides": {
+		"postcss": "^8.5.23"
 	},
 	"ignoreScripts": [
 		"sharp",
