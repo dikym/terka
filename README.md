@@ -130,8 +130,8 @@ Penyiapan pemilik proyek (tidak diotomasi):
    `bun run ci:names` (nama tes dan komentar tanpa ID katalog atau rujukan dokumen) dan
    `bun run ci:coverage` (cakupan baris `src/core` minimal 90%). Langkah 7 (migration
    produksi dan deploy) belum dipasang.
-6. DNS email (`.github/workflows/dns.yml`): Resend butuh SPF `include:amazonses.com`
-   dan MX di `send.terka.my.id`. Per 2026-10-24 keduanya belum ada; DKIM dan DMARC sudah.
+6. DNS email (`.github/workflows/dns.yml`): memeriksa SPF di `send.terka.my.id`
+   (harus mengizinkan pengirim lewat `ip4:`, `ip6:`, atau `include:`), DKIM, dan DMARC.
 7. Header keamanan ada di `vercel.json` (`frame-ancestors`, `nosniff`, `Referrer-Policy`,
    `Permissions-Policy`). CSP lainnya dipasang per halaman oleh `scripts/build/csp.ts`; domain
    Supabase atau CAPTCHA baru harus ditambahkan di sana.

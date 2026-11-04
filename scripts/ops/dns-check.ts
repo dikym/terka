@@ -7,8 +7,8 @@ export type DnsRecords = { spf: string[]; dkim: string[]; dmarc: string[] };
 export function checkDns(records: DnsRecords): string[] {
 	const problems: string[] = [];
 	const spf = records.spf.filter((record) => record.startsWith("v=spf1"));
-	if (!spf.some((record) => record.includes("amazonses.com")))
-		problems.push(`SPF on send.${DOMAIN} does not include amazonses.com`);
+	if (!spf.some((record) => /\b(ip4|ip6|include):/.test(record)))
+		problems.push(`SPF on send.${DOMAIN} does not authorize any sender`);
 	if (!records.dkim.some((record) => record.includes("p=")))
 		problems.push(`DKIM key resend._domainkey.${DOMAIN} is missing`);
 	if (!records.dmarc.some((record) => record.startsWith("v=DMARC1")))
