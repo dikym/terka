@@ -65,7 +65,7 @@ function Day({ mark, loading }: { mark: DayMark; loading: boolean }) {
 	const icon =
 		mark.state === "done" ? "check" : mark.state === "tolerance" ? "shield-check" : null;
 	const iconColor = loading
-		? "bg-ink-100"
+		? "bg-ink-300"
 		: mark.state === "done"
 			? "bg-tangerine-700"
 			: "bg-ink-500";
@@ -391,7 +391,7 @@ export function HomeScreen({ data }: { data: Home | null }) {
 											<Icon
 												name="git-compare-arrows"
 												size={14}
-												color={d ? "bg-ink-500" : "bg-ink-100"}
+												color={d ? "bg-ink-500" : "bg-ink-200"}
 											/>
 											{d ? (
 												<CodeLink code={pair.b} group={pair.group} />
@@ -509,7 +509,7 @@ export function HomeScreen({ data }: { data: Home | null }) {
 								name="flame"
 								size={null}
 								className="-mt-0.5 size-5.5 lg:mt-0 lg:size-6"
-								color={d ? "bg-tangerine-700" : "bg-ink-100"}
+								color={d ? "bg-tangerine-700" : "bg-ink-200"}
 							/>
 							<span className="font-display text-title leading-none font-bold tracking-title tabular-nums">
 								{d ? (
@@ -536,7 +536,7 @@ export function HomeScreen({ data }: { data: Home | null }) {
 								<Icon
 									name="shield-check"
 									size={16}
-									color={d ? "bg-ink-500" : "bg-ink-100"}
+									color={d ? "bg-ink-500" : "bg-ink-200"}
 								/>
 								{d ? d.tolerance : <SkeletonText width="22.0em" />}
 							</span>
