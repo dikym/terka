@@ -400,6 +400,20 @@ export function MasteryMap({
 						setTip(null);
 					}}
 				>
+					{/* In the static page, so the land shows before any script has run to fetch the map. */}
+					{!markup && (
+						<>
+							<mask id="map-land">
+								<image href="/map.svg" width={1000} height={371} />
+							</mask>
+							<rect
+								width={1000}
+								height={371}
+								mask="url(#map-land)"
+								className="animate-skl fill-ink-100"
+							/>
+						</>
+					)}
 					<g
 						className={`${loading ? "max-lg:[&_path]:fill-ink-100" : ""} [&_path]:stroke-paper-0 [&_path]:[stroke-width:0.75] [&_path]:[stroke-linejoin:round] [&_path]:[vector-effect:non-scaling-stroke]`}
 						style={layerStyle}

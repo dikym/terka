@@ -35,3 +35,10 @@ describe("the shipped map", () => {
 		for (const [province, group] of placed) expect(groupOf.get(province)).toBe(group);
 	});
 });
+
+test("as an image its root paints land white and province seams black, for the loading mask", () => {
+	const root = svg.match(/<svg [^>]*>/)?.[0] ?? "";
+	expect(root).toContain('fill="#fff"');
+	expect(root).toContain('stroke="#000"');
+	expect(root).toContain('stroke-width="1"');
+});

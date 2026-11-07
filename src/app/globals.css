@@ -99,9 +99,11 @@
 		0%,
 		100% {
 			background-color: var(--color-ink-100);
+			fill: var(--color-ink-100);
 		}
 		50% {
 			background-color: var(--color-ink-200);
+			fill: var(--color-ink-200);
 		}
 	}
 

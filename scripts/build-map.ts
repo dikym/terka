@@ -81,6 +81,8 @@ const svg = String(output["map.svg"])
 	.replace(/<\?xml[^>]*>\s*/, "")
 	.replace(/<svg /, '<svg id="indonesia" ')
 	.replace(/<g id="/g, '<g data-group="')
-	.replace(/ (fill|stroke|stroke-width)="[^"]*"/g, "");
+	.replace(/ (fill|stroke|stroke-width)="[^"]*"/g, "")
+	// Only for the file loaded as an image, the loading mask: the page keeps just the root's children.
+	.replace(/<svg /, '<svg fill="#fff" stroke="#000" stroke-width="1" ');
 await writeFile("public/map.svg", svg);
 console.log(`map.svg: ${placed.size} provinces, ${svg.length} bytes`);
