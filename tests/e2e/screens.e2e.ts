@@ -664,6 +664,7 @@ test("the wheel zooms the map without scrolling the page", async ({ page }) => {
 	await seen(page);
 	await page.goto("/statistik");
 	const map = page.getByRole("img", { name: "Peta Penguasaan per provinsi" });
+	await expect(map.locator("path#bali")).toBeAttached();
 	await map.scrollIntoViewIfNeeded();
 	const before = await page.evaluate(() => window.scrollY);
 	await map.hover();
@@ -693,6 +694,7 @@ test("shadowed buttons sink while pressed, links included", async ({ page }) => 
 	await expect.poll(() => shadow(start)).not.toContain("3px 3px");
 	await page.mouse.up();
 	await page.goto("/statistik");
+	await expect(page.locator("path#bali")).toBeAttached();
 	const zoomIn = page.getByRole("button", { name: "Perbesar" });
 	await zoomIn.hover();
 	await page.mouse.down();
@@ -946,6 +948,46 @@ test("the desktop map sits in the middle of its box and stops evenly when zoomed
 	expect(corner.left).toBeGreaterThan(0);
 	for (const gap of [corner.top, opposite.right, opposite.bottom])
 		expect(Math.abs(gap - corner.left)).toBeLessThan(1);
+});
+
+test("the map skeleton cannot be zoomed by wheel, button or keyboard", async ({ page }) => {
+	await seen(page);
+	let letGo = () => {};
+	const held = new Promise<void>((resolve) => (letGo = resolve));
+	await page.route("**/map.svg", async (route) => {
+		await held;
+		await route.continue();
+	});
+	await page.goto("/statistik/peta", { waitUntil: "domcontentloaded" });
+	const map = page.getByRole("img", { name: "Peta Penguasaan per provinsi" });
+	await expect(map.locator("mask#map-land")).toBeAttached();
+	const wrap = map.locator("xpath=..");
+	const zoomIn = page.getByRole("button", { name: "Perbesar" });
+	for (const name of ["Perbesar", "Perkecil", "Kembalikan ukuran"])
+		await expect(page.getByRole("button", { name })).toBeDisabled();
+	// The group holds the border and the shadow, so it is the group that dims, once.
+	const dimming = () =>
+		zoomIn.evaluate((button) => {
+			const opacity = (element: Element) => getComputedStyle(element).opacity;
+			return { button: opacity(button), group: opacity(button.closest(".overflow-hidden")!) };
+		});
+	expect(await dimming()).toEqual({ button: "1", group: "0.4" });
+	const box = (await map.boundingBox())!;
+	await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+	await page.mouse.wheel(0, -100);
+	const button = (await zoomIn.boundingBox())!;
+	await page.mouse.click(button.x + button.width / 2, button.y + button.height / 2);
+	await zoomIn.evaluate((element) => (element as HTMLButtonElement).focus());
+	await page.keyboard.press("Enter");
+	await page.waitForTimeout(150);
+	await expect(wrap.getByText("100%", { exact: true })).toBeVisible();
+	letGo();
+	await expect(map.locator("path#bali")).toBeAttached();
+	await page.getByText("Sumatera", { exact: true }).first().waitFor();
+	await expect(zoomIn).toBeEnabled();
+	expect(await dimming()).toEqual({ button: "1", group: "1" });
+	await zoomIn.click();
+	await expect(wrap.getByText("160%", { exact: true })).toBeVisible();
 });
 
 test("a right click on a map province stays on the map", async ({ page }) => {

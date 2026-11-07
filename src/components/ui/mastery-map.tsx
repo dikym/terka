@@ -282,10 +282,12 @@ function Selection({ id, province }: { id: string; province: MapProvince }) {
 function ZoomButton({
 	icon,
 	label,
+	disabled,
 	onClick
 }: {
 	icon: IconName;
 	label: string;
+	disabled: boolean;
 	onClick: () => void;
 }) {
 	return (
@@ -297,6 +299,7 @@ function ZoomButton({
 			<button
 				type="button"
 				aria-label={label}
+				disabled={disabled}
 				onClick={onClick}
 				className="grid size-7.5 cursor-pointer place-items-center bg-paper-0 hover:bg-paper-50 focus-visible:outline-offset-[-3px] lg:size-10"
 			>
@@ -316,7 +319,7 @@ export function MasteryMap({
 	className = "h-52.5 lg:h-105"
 }: {
 	provinces: Record<string, MapProvince>;
-	/** The land as a skeleton until the data is in; on a phone, no selection and no input either. */
+	/** The land as a skeleton until the data is in, with no input until then. */
 	loading?: boolean;
 	/** Height of the map box. */
 	className?: string;
@@ -669,6 +672,8 @@ export function MasteryMap({
 		if (notTouch(event) && pointers.current.delete(event.pointerId)) settle();
 	};
 
+	const skeleton = loading || !markup;
+
 	const layerStyle = {
 		transform: `translate(${view.x}px, ${view.y}px) scale(${view.k})`,
 		transformOrigin: "0 0",
@@ -679,7 +684,7 @@ export function MasteryMap({
 		<div>
 			<div
 				ref={wrap}
-				className={`relative w-full touch-none overflow-hidden bg-paper-0 lg:rounded-sm ${loading ? "max-lg:pointer-events-none" : ""} ${className}`}
+				className={`relative w-full touch-none overflow-hidden bg-paper-0 lg:rounded-sm ${skeleton ? "pointer-events-none" : ""} ${className}`}
 			>
 				<svg
 					ref={svg}
@@ -732,7 +737,7 @@ export function MasteryMap({
 					}}
 				>
 					{/* In the static page, so the land shows before any script has run to fetch the map. */}
-					{(loading || !markup) && (
+					{skeleton && (
 						<g style={layerStyle}>
 							<mask id="map-land">
 								<image href="/map.svg" width={1000} height={371} />
@@ -771,20 +776,25 @@ export function MasteryMap({
 						</g>
 					)}
 				</svg>
-				<div className="absolute top-2.5 right-2.5 flex overflow-hidden rounded-sm border border-ink-1000 bg-paper-0 shadow-[2px_2px_0_var(--color-ink-1000)] transition-[box-shadow,translate] duration-90 ease-out has-[button:active]:translate-0.5 has-[button:active]:shadow-none lg:top-3 lg:right-3 lg:flex-col lg:shadow-block">
+				<div
+					className={`absolute top-2.5 right-2.5 flex overflow-hidden rounded-sm border border-ink-1000 bg-paper-0 shadow-[2px_2px_0_var(--color-ink-1000)] transition-[box-shadow,translate] duration-90 ease-out has-[button:active]:translate-0.5 has-[button:active]:shadow-none lg:top-3 lg:right-3 lg:flex-col lg:shadow-block ${skeleton ? "opacity-40" : ""}`}
+				>
 					<ZoomButton
 						icon="plus"
 						label="Perbesar"
+						disabled={skeleton}
 						onClick={() => zoomButton(ZOOM_STEP)}
 					/>
 					<ZoomButton
 						icon="minus"
 						label="Perkecil"
+						disabled={skeleton}
 						onClick={() => zoomButton(1 / ZOOM_STEP)}
 					/>
 					<ZoomButton
 						icon="rotate-ccw"
 						label="Kembalikan ukuran"
+						disabled={skeleton}
 						onClick={() => zoomButton(null)}
 					/>
 				</div>

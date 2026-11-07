@@ -131,6 +131,40 @@ test.describe("map gestures", () => {
 		};
 	};
 
+	test("the map skeleton cannot be pinched, dragged or zoomed by its buttons", async ({
+		page
+	}) => {
+		await seen(page);
+		await page.route("**/map.svg", () => {});
+		await page.goto("/statistik/peta", { waitUntil: "domcontentloaded" });
+		const map = page.getByRole("img", { name: "Peta Penguasaan per provinsi" });
+		await expect(map.locator("mask#map-land")).toBeAttached();
+		const wrap = map.locator("xpath=..");
+		const cdp = await page.context().newCDPSession(page);
+		const touch = (type: "touchStart" | "touchMove" | "touchEnd", points: Point[]) =>
+			cdp.send("Input.dispatchTouchEvent", {
+				type,
+				touchPoints: points.map(([x, y], id) => ({ x, y, id }))
+			});
+		await touch("touchStart", [[150, 165]]);
+		await touch("touchStart", [
+			[150, 165],
+			[240, 165]
+		]);
+		await touch("touchMove", [
+			[100, 165],
+			[290, 165]
+		]);
+		await touch("touchEnd", [[290, 165]]);
+		await touch("touchEnd", []);
+		for (const name of ["Perbesar", "Perkecil", "Kembalikan ukuran"])
+			await expect(page.getByRole("button", { name })).toBeDisabled();
+		const button = (await page.getByRole("button", { name: "Perbesar" }).boundingBox())!;
+		await page.touchscreen.tap(button.x + button.width / 2, button.y + button.height / 2);
+		await page.waitForTimeout(150);
+		await expect(wrap.getByText("100%", { exact: true })).toBeVisible();
+	});
+
 	const noSelection = async (page: Page) => {
 		// Long enough for a selection, if one was coming, to have rendered.
 		await page.waitForTimeout(150);
