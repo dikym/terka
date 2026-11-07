@@ -27,14 +27,21 @@ export function useAccountActions(runtime: Runtime | null, onChange?: () => void
 	>(null);
 	const [working, setWorking] = useState<Work | null>(null);
 	const file = useRef<HTMLInputElement>(null);
+	// The account menu has closed by the time an action runs, so it needs a word on screen instead.
+	const fromMenu = useRef(false);
 	const auth = authClient();
 
 	const during = async (work: Work, task: () => Promise<unknown>) => {
 		setWorking(work);
 		try {
 			await task();
+		} catch {
+			setDialog(null);
+			showToast({ tone: "danger", text: "Belum berhasil. Coba lagi.", key: work });
+			onChange?.();
 		} finally {
-			setWorking(null);
+			// Another action may have started meanwhile, and its dialog must stay locked.
+			setWorking((current) => (current === work ? null : current));
 		}
 	};
 	const exportData = async () => {
@@ -45,7 +52,7 @@ export function useAccountActions(runtime: Runtime | null, onChange?: () => void
 	};
 
 	const leave = async (confirmed: boolean) => {
-		if (!runtime || !auth) return;
+		if (!runtime || !auth) return setDialog(null);
 		const result = await signOut(runtime.db, auth.client, { confirmed, now: Date.now() });
 		if (result.status === "pending")
 			return setDialog({ kind: "signOut", pending: result.count });
@@ -65,6 +72,8 @@ export function useAccountActions(runtime: Runtime | null, onChange?: () => void
 					const chosen = event.target.files?.[0];
 					event.target.value = "";
 					if (!chosen || !runtime) return;
+					if (fromMenu.current)
+						showToast({ tone: "info", text: "Mengimpor data...", key: "import" });
 					void during("import", async () => {
 						const message = importMessage(await importFile(runtime, chosen));
 						showToast({
@@ -224,7 +233,19 @@ export function useAccountActions(runtime: Runtime | null, onChange?: () => void
 
 	return {
 		exportData: () => void during("export", exportData),
-		importData: () => file.current?.click(),
+		exportFromMenu: () => {
+			if (!runtime) return;
+			showToast({ tone: "info", text: "Mengekspor data...", key: "export" });
+			void during("export", exportData);
+		},
+		importData: () => {
+			fromMenu.current = false;
+			file.current?.click();
+		},
+		importFromMenu: () => {
+			fromMenu.current = true;
+			file.current?.click();
+		},
 		signOut: () => setDialog({ kind: "confirmSignOut" }),
 		resetProgress: () => setDialog({ kind: "reset" }),
 		deleteAccount: () => setDialog({ kind: "delete" }),

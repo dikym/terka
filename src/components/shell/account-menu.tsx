@@ -34,8 +34,8 @@ export function AccountMenu({
 					} satisfies MenuEntry
 				]),
 		"separator",
-		{ label: "Ekspor data", icon: "download", onSelect: actions.exportData },
-		{ label: "Impor data", icon: "upload", onSelect: actions.importData }
+		{ label: "Ekspor data", icon: "download", onSelect: actions.exportFromMenu },
+		{ label: "Impor data", icon: "upload", onSelect: actions.importFromMenu }
 	];
 	// Whether someone is signed in is unknown until the stored session is read.
 	if (account.known)
