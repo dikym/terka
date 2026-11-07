@@ -557,19 +557,21 @@ test("every text uses a design font", async ({ page }) => {
 	await seen(page);
 	await page.goto("/beranda");
 	await page.getByText("soal perlu diulang").waitFor();
-	const loaded = await page.evaluate(async () => {
-		await document.fonts.ready;
-		return [...document.fonts]
-			.filter((face) => face.status === "loaded")
-			.map((face) => face.family);
-	});
-	for (const family of [
-		"Space Grotesk",
-		"IBM Plex Sans",
-		"IBM Plex Mono",
-		"Barlow Semi Condensed"
-	])
+	const loadedFonts = () =>
+		page.evaluate(async () => {
+			await document.fonts.ready;
+			return [...document.fonts]
+				.filter((face) => face.status === "loaded")
+				.map((face) => face.family);
+		});
+	const loaded = await loadedFonts();
+	for (const family of ["Space Grotesk", "IBM Plex Sans", "IBM Plex Mono"])
 		expect(loaded.some((name) => name.includes(family))).toBe(true);
+
+	// Browsers fetch a face only when text uses it, and the plate face has no text on the home screen.
+	await page.goto("/referensi");
+	await page.getByText("BL", { exact: true }).first().waitFor();
+	expect((await loadedFonts()).some((name) => name.includes("Barlow Semi Condensed"))).toBe(true);
 });
 
 test("a naming round can be finished with the mouse", async ({ page }) => {
