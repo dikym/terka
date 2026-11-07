@@ -903,6 +903,51 @@ test("enter right after typing ignores the highlight from the previous query", a
 	await expect(page.getByText(/^\d+ kode ditemukan\.$/)).toBeVisible();
 });
 
+test("the desktop map sits in the middle of its box and stops evenly when zoomed", async ({
+	page
+}) => {
+	await seen(page);
+	await page.goto("/statistik/peta");
+	const map = page.getByRole("img", { name: "Peta Penguasaan per provinsi" });
+	await expect(map.locator("path#bali")).toBeAttached();
+	await page.getByText("Sumatera", { exact: true }).first().waitFor();
+	const gaps = () =>
+		map.evaluate((svg) => {
+			const land = svg.querySelector("g[style]")!.getBoundingClientRect();
+			const box = svg.parentElement!.getBoundingClientRect();
+			return {
+				left: land.left - box.left,
+				right: box.right - land.right,
+				top: land.top - box.top,
+				bottom: box.bottom - land.bottom
+			};
+		});
+	const rest = await gaps();
+	expect(Math.abs(rest.left - rest.right)).toBeLessThan(1);
+	expect(Math.abs(rest.top - rest.bottom)).toBeLessThan(1);
+	const zoomIn = page.getByRole("button", { name: "Perbesar" });
+	await zoomIn.click();
+	await zoomIn.click();
+	await zoomIn.click();
+	await page.waitForTimeout(350);
+	const box = (await map.boundingBox())!;
+	const middle = { x: box.x + box.width / 2, y: box.y + box.height / 2 };
+	const drag = async (dx: number, dy: number) => {
+		await page.mouse.move(middle.x, middle.y);
+		await page.mouse.down();
+		await page.mouse.move(middle.x + dx, middle.y + dy);
+		await page.mouse.up();
+		await page.mouse.move(0, 0);
+	};
+	await drag(3000, 3000);
+	const corner = await gaps();
+	await drag(-3000, -3000);
+	const opposite = await gaps();
+	expect(corner.left).toBeGreaterThan(0);
+	for (const gap of [corner.top, opposite.right, opposite.bottom])
+		expect(Math.abs(gap - corner.left)).toBeLessThan(1);
+});
+
 test("a right click on a map province stays on the map", async ({ page }) => {
 	await seen(page);
 	await page.goto("/statistik/peta");

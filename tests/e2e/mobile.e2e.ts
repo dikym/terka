@@ -346,6 +346,45 @@ test.describe("map gestures", () => {
 		await touch("touchEnd", []);
 	});
 
+	const gaps = (map: Locator) =>
+		map.evaluate((svg) => {
+			const land = svg.querySelector("g[style]")!.getBoundingClientRect();
+			const box = svg.parentElement!.getBoundingClientRect();
+			return {
+				left: land.left - box.left,
+				right: box.right - land.right,
+				top: land.top - box.top,
+				bottom: box.bottom - land.bottom
+			};
+		});
+
+	test("the land sits in the middle of its box at full view", async ({ page }) => {
+		const { map } = await openMap(page);
+		const { left, right, top, bottom } = await gaps(map);
+		expect(Math.abs(left - right)).toBeLessThan(1);
+		expect(Math.abs(top - bottom)).toBeLessThan(1);
+	});
+
+	test("a zoomed map stops the same distance from every side", async ({ page }) => {
+		const { touch, map } = await openMap(page);
+		await zoomedIn(page, map);
+		await touch("touchStart", [[195, 165]]);
+		await touch("touchMove", [[2500, 2500]]);
+		await page.waitForTimeout(50);
+		await touch("touchEnd", []);
+		await page.waitForTimeout(50);
+		const corner = await gaps(map);
+		await touch("touchStart", [[195, 165]]);
+		await touch("touchMove", [[-2500, -2500]]);
+		await page.waitForTimeout(50);
+		await touch("touchEnd", []);
+		await page.waitForTimeout(50);
+		const opposite = await gaps(map);
+		expect(corner.left).toBeGreaterThan(0);
+		for (const gap of [corner.top, opposite.right, opposite.bottom])
+			expect(Math.abs(gap - corner.left)).toBeLessThan(1);
+	});
+
 	test("a pinch lands where the fingers left it", async ({ page }) => {
 		const { touch, map, zoom } = await openMap(page);
 		const province = map.locator("path#kalimantan-barat");

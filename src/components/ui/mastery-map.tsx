@@ -40,9 +40,15 @@ const FILLS = [
 	"var(--color-go-700)"
 ];
 
-// map.svg is 1000 × 371; the extra room on the right keeps the zoom buttons off the islands.
-const VIEW = { x: -16, y: -16, w: 1080, h: 403 };
-const MAP = { w: 1000, h: 371 };
+// The land's bounds in map.svg, and the even margin it keeps from the box's sides.
+const LAND = { left: 1.4, top: 4.6, right: 999, bottom: 369.1 };
+const MARGIN = 24;
+export const VIEW = {
+	x: LAND.left - MARGIN,
+	y: LAND.top - MARGIN,
+	w: LAND.right - LAND.left + 2 * MARGIN,
+	h: LAND.bottom - LAND.top + 2 * MARGIN
+};
 const ZOOM_STEP = 1.6;
 const MAX_ZOOM = 10;
 // Screen pixels. Below the 15 or so a phone browser may swallow before its first pointermove,
@@ -79,21 +85,20 @@ type Gesture = {
 	trail: (Point & { at: number })[];
 };
 
-/** Keeps the land over the whole box once it is big enough to cover it, and centred until then. */
+/** One axis: the land's edges stop MARGIN inside the box, and it centres when it cannot reach both. */
+function fitAxis(offset: number, k: number, low: number, high: number, from: number, to: number) {
+	const most = from + MARGIN - k * low;
+	const least = to - MARGIN - k * high;
+	return least > most ? (least + most) / 2 : Math.min(most, Math.max(least, offset));
+}
+
 export function clampView({ k, x, y }: View, box: Box): View {
 	const scale = Math.min(MAX_ZOOM, Math.max(1, k));
-	const unit = VIEW.w / box.width;
-	const top = VIEW.y - (box.height * unit - VIEW.h) / 2;
-	const bottom = VIEW.y + VIEW.h + (box.height * unit - VIEW.h) / 2;
-	const height = MAP.h * scale;
+	const room = (box.height * (VIEW.w / box.width) - VIEW.h) / 2;
 	return {
 		k: scale,
-		// Left of 0 the view's own margin shows; the room right of the land at full view is on purpose.
-		x: Math.min(0, Math.max(Math.min(0, VIEW.x + VIEW.w - MAP.w * scale), x)),
-		y:
-			height < bottom - top
-				? (top + bottom - height) / 2
-				: Math.min(top, Math.max(bottom - height, y))
+		x: fitAxis(x, scale, LAND.left, LAND.right, VIEW.x, VIEW.x + VIEW.w),
+		y: fitAxis(y, scale, LAND.top, LAND.bottom, VIEW.y - room, VIEW.y + VIEW.h + room)
 	};
 }
 

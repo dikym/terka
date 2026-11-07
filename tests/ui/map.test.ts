@@ -7,6 +7,7 @@ import {
 	isTap,
 	layerTransform,
 	pinchView,
+	VIEW,
 	wheelZoom
 } from "@/components/ui/mastery-map";
 import { mapProvinces } from "@/lib/view/map";
@@ -55,7 +56,7 @@ test("a tap stays near where it landed and lifts soon", () => {
 });
 
 test("the gesture layer puts every point where the live view would draw it", () => {
-	const view = { x: -16, y: -16, w: 1080, h: 403 };
+	const view = VIEW;
 	const box = { width: 540, height: 300 };
 	const unit = view.w / box.width;
 	const pad = (box.height - view.h / unit) / 2;
@@ -79,7 +80,7 @@ test("the gesture layer puts every point where the live view would draw it", () 
 });
 
 test("a pinch keeps the map point under the fingers' midpoint under it", () => {
-	const box = { left: 0, top: 0, width: 1080, height: 403 };
+	const box = { left: 0, top: 0, width: VIEW.w, height: VIEW.h };
 	const anchor = { k: 2, x: -100, y: -50 };
 	const view = pinchView(
 		anchor,
@@ -94,13 +95,14 @@ test("a pinch keeps the map point under the fingers' midpoint under it", () => {
 		box
 	);
 	expect(view.k).toBe(4);
-	// Client (150, 100) is (134, 84) in view units; client (150, 150) is (134, 134).
-	expect((134 - view.x) / view.k).toBeCloseTo((134 - anchor.x) / anchor.k, 6);
-	expect((134 - view.y) / view.k).toBeCloseTo((84 - anchor.y) / anchor.k, 6);
+	const [fromX, fromY] = [150 + VIEW.x, 100 + VIEW.y];
+	const [toX, toY] = [150 + VIEW.x, 150 + VIEW.y];
+	expect((toX - view.x) / view.k).toBeCloseTo((fromX - anchor.x) / anchor.k, 6);
+	expect((toY - view.y) / view.k).toBeCloseTo((fromY - anchor.y) / anchor.k, 6);
 });
 
 test("a pinch stops at the zoom limits", () => {
-	const box = { left: 0, top: 0, width: 1080, height: 403 };
+	const box = { left: 0, top: 0, width: VIEW.w, height: VIEW.h };
 	const from = [
 		{ x: 100, y: 100 },
 		{ x: 200, y: 100 }
@@ -117,21 +119,26 @@ test("a pinch stops at the zoom limits", () => {
 	expect(pinchView({ k: 1.5, x: 0, y: 0 }, from, together, box).k).toBe(1);
 });
 
-test("the map never leaves empty room in the box once it can fill it", () => {
-	// A phone: the box holds 581.5 units of height, more than the map at full view.
-	const box = { left: 0, top: 0, width: 390, height: 210 };
-	expect(clampView({ k: 1, x: 300, y: 200 }, box)).toEqual({ k: 1, x: 0, y: 0 });
-	expect(clampView({ k: 2, x: -300, y: -200 }, box)).toEqual({ k: 2, x: -300, y: -200 });
-	expect(clampView({ k: 2, x: 500, y: 500 }, box).x).toBe(0);
-	expect(clampView({ k: 2, x: -5000, y: -5000 }, box).x).toBe(-936);
-	expect(clampView({ k: 2, x: 0, y: 500 }, box).y).toBeCloseTo(-105.27, 1);
-	expect(clampView({ k: 2, x: 0, y: -5000 }, box).y).toBeCloseTo(-265.73, 1);
+// A phone: the box holds more height than the view.
+const phone = { left: 0, top: 0, width: 390, height: 210 };
+
+test("the land rests in the middle of the box at full view", () => {
+	const view = clampView({ k: 1, x: 300, y: 200 }, phone);
+	expect(view.x).toBeCloseTo(0, 6);
+	expect(view.y).toBeCloseTo(0, 6);
 });
 
-test("a map too short to fill the box stays centred in it", () => {
-	const box = { left: 0, top: 0, width: 390, height: 210 };
-	expect(clampView({ k: 1.25, x: 0, y: -500 }, box).y).toBeCloseTo(-46.375, 3);
-	expect(clampView({ k: 1.25, x: 0, y: 500 }, box).y).toBeCloseTo(-46.375, 3);
+test("the land stops the same margin from every side of the box", () => {
+	expect(clampView({ k: 2, x: -300, y: -200 }, phone)).toEqual({ k: 2, x: -300, y: -200 });
+	expect(clampView({ k: 2, x: 500, y: 0 }, phone).x).toBeCloseTo(-1.4, 6);
+	expect(clampView({ k: 2, x: -5000, y: 0 }, phone).x).toBeCloseTo(-999, 6);
+	expect(clampView({ k: 2, x: 0, y: 500 }, phone).y).toBeCloseTo(-79.86, 1);
+	expect(clampView({ k: 2, x: 0, y: -5000 }, phone).y).toBeCloseTo(-293.84, 1);
+});
+
+test("land too short to reach both margins stays centred", () => {
+	expect(clampView({ k: 1.25, x: 0, y: -500 }, phone).y).toBeCloseTo(-46.71, 1);
+	expect(clampView({ k: 1.25, x: 0, y: 500 }, phone).y).toBeCloseTo(-46.71, 1);
 });
 
 test("a fling takes the finger's speed from its last moments", () => {
