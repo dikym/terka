@@ -212,7 +212,7 @@ export function MasteryMap({
 	className = "h-52.5 lg:h-105"
 }: {
 	provinces: Record<string, MapProvince>;
-	/** On a phone: grey provinces, no selection and no input until the data is in. */
+	/** The land as a skeleton until the data is in; on a phone, no selection and no input either. */
 	loading?: boolean;
 	/** Height of the map box. */
 	className?: string;
@@ -401,8 +401,8 @@ export function MasteryMap({
 					}}
 				>
 					{/* In the static page, so the land shows before any script has run to fetch the map. */}
-					{!markup && (
-						<>
+					{(loading || !markup) && (
+						<g style={layerStyle}>
 							<mask id="map-land">
 								<image href="/map.svg" width={1000} height={371} />
 							</mask>
@@ -412,13 +412,13 @@ export function MasteryMap({
 								mask="url(#map-land)"
 								className="animate-skl fill-ink-100"
 							/>
-						</>
+						</g>
 					)}
 					<g
-						className={`${loading ? "max-lg:[&_path]:fill-ink-100" : ""} [&_path]:stroke-paper-0 [&_path]:[stroke-width:0.75] [&_path]:[stroke-linejoin:round] [&_path]:[vector-effect:non-scaling-stroke]`}
+						className="[&_path]:stroke-paper-0 [&_path]:[stroke-width:0.75] [&_path]:[stroke-linejoin:round] [&_path]:[vector-effect:non-scaling-stroke]"
 						style={layerStyle}
 						// map.svg is our own build output (scripts/build-map.ts), served from this origin.
-						dangerouslySetInnerHTML={{ __html: markup }}
+						dangerouslySetInnerHTML={{ __html: loading ? "" : markup }}
 					/>
 					{/* A stroke on the province itself is half hidden under the neighbours painted after it. */}
 					{!loading && selected && provinces[selected] && (
