@@ -1,7 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import type { GroupId } from "@/lib/view/groups";
 import { referenceHref } from "@/lib/view/reference";
 import { Button } from "@/components/ui/button";
@@ -41,37 +42,75 @@ const FILLS = [
 
 // map.svg is 1000 × 371; the extra room on the right keeps the zoom buttons off the islands.
 const VIEW = { x: -16, y: -16, w: 1080, h: 403 };
+const MAP = { w: 1000, h: 371 };
 const ZOOM_STEP = 1.6;
 const MAX_ZOOM = 10;
+// Screen pixels. Below the 15 or so a phone browser may swallow before its first pointermove,
+// so the distance is also checked on release: a short swipe may report no move at all.
+const TAP_RANGE = 8;
+const TAP_MS = 400;
+// Pixels per millisecond and milliseconds: a flick glides on for its speed times FLING_MS.
+const FLING_MS = 300;
+const FLING_START = 0.2;
+const FLING_STOP = 0.02;
+// The speed comes from the finger's last moments, and a finger that rested before lifting has none.
+const FLING_WINDOW_MS = 100;
+const FLING_REST_MS = 40;
+// A layer that was scaled is blurred until the land is redrawn at the new zoom. Redrawing blocks
+// the page long enough to show under a moving finger, and for iOS to stop letting the page keep
+// a new touch (touchstart arrives with cancelable=false). So it runs once per zoom, picks a moment
+// when nothing is moving, and only gives up waiting for one after REDRAW_LATEST_MS.
+const REDRAW_MS = 150;
+const REDRAW_RETRY_MS = 50;
+const REDRAW_LATEST_MS = 1000;
+const FINGER_STILL_MS = 120;
 
 type View = { k: number; x: number; y: number };
+type Point = { x: number; y: number };
+type Box = { left: number; top: number; width: number; height: number };
+type Gesture = {
+	/** What the land's own transforms last painted. */
+	base: View;
+	live: View;
+	box: Box;
+	/** The view and the fingers when the number of fingers last changed. */
+	anchor: View;
+	from: Point[];
+	trail: (Point & { at: number })[];
+};
 
-function clamp({ k, x, y }: View): View {
+/** Keeps the land over the whole box once it is big enough to cover it, and centred until then. */
+export function clampView({ k, x, y }: View, box: Box): View {
 	const scale = Math.min(MAX_ZOOM, Math.max(1, k));
-	const minX = VIEW.w - VIEW.w * scale;
-	const minY = VIEW.h - VIEW.h * scale;
+	const unit = VIEW.w / box.width;
+	const top = VIEW.y - (box.height * unit - VIEW.h) / 2;
+	const bottom = VIEW.y + VIEW.h + (box.height * unit - VIEW.h) / 2;
+	const height = MAP.h * scale;
 	return {
 		k: scale,
-		x: Math.min(0, Math.max(minX, x)),
-		y: Math.min(0, Math.max(minY, y))
+		// Left of 0 the view's own margin shows; the room right of the land at full view is on purpose.
+		x: Math.min(0, Math.max(Math.min(0, VIEW.x + VIEW.w - MAP.w * scale), x)),
+		y:
+			height < bottom - top
+				? (top + bottom - height) / 2
+				: Math.min(top, Math.max(bottom - height, y))
 	};
 }
 
 /** Zooms by `factor` keeping the point (px, py), in view units, still. */
-const zoomAt = (view: View, factor: number, px: number, py: number) => {
+const zoomAt = (view: View, factor: number, px: number, py: number, box: Box) => {
 	const k = Math.min(MAX_ZOOM, Math.max(1, view.k * factor));
 	const ratio = k / view.k;
-	return clamp({ k, x: px - (px - view.x) * ratio, y: py - (py - view.y) * ratio });
+	return clampView({ k, x: px - (px - view.x) * ratio, y: py - (py - view.y) * ratio }, box);
 };
 
 /** A client point inside the map, in view units. */
-function pointerIn(element: SVGSVGElement, clientX: number, clientY: number) {
-	const rect = element.getBoundingClientRect();
+function pointerIn(rect: Box, clientX: number, clientY: number) {
 	const scale = VIEW.w / rect.width;
 	const height = VIEW.w / (rect.width / rect.height);
 	return {
-		x: (clientX - rect.left) * scale,
-		y: (clientY - rect.top) * scale - (height - VIEW.h) / 2
+		x: (clientX - rect.left) * scale + VIEW.x,
+		y: (clientY - rect.top) * scale - (height - VIEW.h) / 2 + VIEW.y
 	};
 }
 
@@ -85,6 +124,66 @@ export function wheelZoom(deltaY: number, deltaMode: number, ctrlKey: boolean) {
 	const notch = !ctrlKey && (deltaMode !== 0 || Math.abs(deltaY) >= 50);
 	if (notch) return { factor: deltaY < 0 ? 2 : 0.5, animate: true };
 	return { factor: 2 ** (-deltaY / 100), animate: false };
+}
+
+export const isTap = (
+	landed: { x: number; y: number; at: number },
+	x: number,
+	y: number,
+	at: number
+) => Math.hypot(x - landed.x, y - landed.y) < TAP_RANGE && at - landed.at < TAP_MS;
+
+/**
+ * Two fingers, measured from where they started rather than from the last event, so the map
+ * point between them stays between them however fast they move.
+ */
+export function pinchView(anchor: View, from: Point[], to: Point[], box: Box): View {
+	const [a, b] = from;
+	const [c, d] = to;
+	const spread = Math.hypot(a.x - b.x, a.y - b.y);
+	const factor = spread ? Math.hypot(c.x - d.x, c.y - d.y) / spread : 1;
+	const k = Math.min(MAX_ZOOM, Math.max(1, anchor.k * factor));
+	const ratio = k / anchor.k;
+	const start = pointerIn(box, (a.x + b.x) / 2, (a.y + b.y) / 2);
+	const now = pointerIn(box, (c.x + d.x) / 2, (c.y + d.y) / 2);
+	return clampView(
+		{
+			k,
+			x: now.x - (start.x - anchor.x) * ratio,
+			y: now.y - (start.y - anchor.y) * ratio
+		},
+		box
+	);
+}
+
+/** The finger's speed at the moment it lifted, in pixels per millisecond. */
+export function flingVelocity(trail: Gesture["trail"], at: number): Point {
+	const last = trail.at(-1);
+	const first = trail.find((sample) => last && last.at - sample.at <= FLING_WINDOW_MS);
+	if (!last || !first || last === first || at - last.at > FLING_REST_MS) return { x: 0, y: 0 };
+	const time = last.at - first.at;
+	return { x: (last.x - first.x) / time, y: (last.y - first.y) / time };
+}
+
+/** One frame of a glide: exponential, so its length does not depend on the frame rate. */
+export function flingStep(velocity: number, ms: number) {
+	const decay = Math.exp(-ms / FLING_MS);
+	return { velocity: velocity * decay, distance: velocity * FLING_MS * (1 - decay) };
+}
+
+/**
+ * The transform, in screen pixels from the svg's corner, that makes what `base` painted
+ * look like `live`.
+ */
+export function layerTransform(base: View, live: View, box: { width: number; height: number }) {
+	const unit = VIEW.w / box.width;
+	const pad = (box.height - VIEW.h / unit) / 2;
+	const scale = live.k / base.k;
+	return {
+		scale,
+		x: (scale * (VIEW.x - base.x) + live.x - VIEW.x) / unit,
+		y: (scale * (VIEW.y - base.y) + live.y - VIEW.y) / unit + pad * (1 - scale)
+	};
 }
 
 /** `outline` is the hovered province's shape, drawn again above every other province. */
@@ -224,13 +323,20 @@ export function MasteryMap({
 	const [selected, setSelected] = useState<string | null>(null);
 	const router = useRouter();
 	const dragged = useRef(false);
-	// The province under the first finger: the capture below sends the click to the map, not the path.
+	// The province under the first finger: later events no longer say what it landed on.
 	const pressed = useRef<string | null>(null);
+	const landed = useRef({ x: 0, y: 0, at: 0 });
+	// React state and the land's own transforms stay put during a gesture: redrawing the map for
+	// every finger move is what a phone cannot keep up with. The svg moves as one GPU layer instead.
+	const gesture = useRef<Gesture | null>(null);
+	const fling = useRef(0);
+	const redraw = useRef<ReturnType<typeof setTimeout>>(undefined);
+	const label = useRef<HTMLDivElement>(null);
 	const svg = useRef<SVGSVGElement>(null);
 	const wrap = useRef<HTMLDivElement>(null);
 	const box = useRef<HTMLDivElement>(null);
 	// Every finger or mouse button down on the map: one pans, two pinch.
-	const pointers = useRef(new Map<number, { x: number; y: number }>());
+	const pointers = useRef(new Map<number, Point>());
 
 	useEffect(() => {
 		let live = true;
@@ -254,25 +360,6 @@ export function MasteryMap({
 		return { markup: doc.documentElement.innerHTML, outlines };
 	}, [source, provinces]);
 
-	// Pixel distances on screen, in view units.
-	const unit = () => VIEW.w / (svg.current?.getBoundingClientRect().width || VIEW.w);
-
-	// React's wheel listener is passive, so it cannot stop the page from scrolling.
-	useEffect(() => {
-		const element = svg.current;
-		if (!element) return;
-		const onWheel = (event: WheelEvent) => {
-			event.preventDefault();
-			const point = pointerIn(element, event.clientX, event.clientY);
-			const zoom = wheelZoom(event.deltaY, event.deltaMode, event.ctrlKey);
-			setAnimate(zoom.animate);
-			setTip(null);
-			setView((current) => zoomAt(current, zoom.factor, point.x, point.y));
-		};
-		element.addEventListener("wheel", onWheel, { passive: false });
-		return () => element.removeEventListener("wheel", onWheel);
-	}, []);
-
 	// The browser sends no pointerleave when the map moves out from under a still cursor
 	// (scrolling) or when focus leaves the window, so the tooltip would be left behind.
 	useEffect(() => {
@@ -288,10 +375,14 @@ export function MasteryMap({
 	}, []);
 
 	const zoomButton = (factor: number | null) => {
+		settle();
 		setAnimate(true);
 		setTip(null);
+		const rect = wrap.current!.getBoundingClientRect();
 		setView((current) =>
-			factor === null ? { k: 1, x: 0, y: 0 } : zoomAt(current, factor, VIEW.w / 2, VIEW.h / 2)
+			factor === null
+				? { k: 1, x: 0, y: 0 }
+				: zoomAt(current, factor, VIEW.w / 2 + VIEW.x, VIEW.h / 2 + VIEW.y, rect)
 		);
 	};
 
@@ -309,40 +400,269 @@ export function MasteryMap({
 		setTip({ id: path.id, left, top, outline: path.getAttribute("d") ?? "" });
 	};
 
-	const move = (event: React.PointerEvent) => {
-		const points = pointers.current;
-		const last = points.get(event.pointerId);
-		// Hover details are for a mouse; a phone shows the tapped province under the map.
-		if (!last) return event.pointerType === "mouse" && showTip(event);
-		const [a, b] = [...points.values()];
-		points.set(event.pointerId, { x: event.clientX, y: event.clientY });
-		const scale = unit();
-		if (!b) {
-			const dx = (event.clientX - last.x) * scale;
-			const dy = (event.clientY - last.y) * scale;
-			if (dx || dy) dragged.current = true;
-			return setView((current) =>
-				clamp({ ...current, x: current.x + dx, y: current.y + dy })
-			);
-		}
-		const [c, d] = [...points.values()];
-		const before = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
-		const after = { x: (c.x + d.x) / 2, y: (c.y + d.y) / 2 };
-		const spread = Math.hypot(a.x - b.x, a.y - b.y);
-		const factor = spread ? Math.hypot(c.x - d.x, c.y - d.y) / spread : 1;
-		const center = pointerIn(svg.current!, before.x, before.y);
-		dragged.current = true;
-		setView((current) => {
-			const zoomed = zoomAt(current, factor, center.x, center.y);
-			return clamp({
-				...zoomed,
-				x: zoomed.x + (after.x - before.x) * scale,
-				y: zoomed.y + (after.y - before.y) * scale
-			});
-		});
+	const paint = (run: Gesture) => {
+		const layer = layerTransform(run.base, run.live, run.box);
+		svg.current!.style.transform = `translate(${layer.x}px, ${layer.y}px) scale(${layer.scale})`;
+		const percent = `${Math.round(run.live.k * 100)}%`;
+		// textContent would replace the text node, which restyles the box on every finger move.
+		const text = label.current!.firstChild!;
+		if (text.nodeValue !== percent) text.nodeValue = percent;
 	};
 
-	const release = (event: React.PointerEvent) => pointers.current.delete(event.pointerId);
+	const settle = () => {
+		const run = gesture.current;
+		if (!run) return;
+		clearTimeout(redraw.current);
+		redraw.current = undefined;
+		cancelAnimationFrame(fling.current);
+		fling.current = 0;
+		gesture.current = null;
+		// In this frame: the layer must not let go before the land is drawn where it was showing.
+		flushSync(() => setView(run.live));
+		svg.current!.style.transform = "";
+	};
+
+	// A pan needs no redraw at all: the layer already holds the land, as sharp as it was.
+	const sharpen = (latest: number, now: number) => {
+		redraw.current = undefined;
+		const run = gesture.current;
+		// A pinch still running would only blur it again; its fingers ask again when they lift.
+		if (!run || run.live.k === run.base.k || pointers.current.size > 1) return;
+		const moved = run.trail.at(-1)?.at ?? 0;
+		const moving =
+			fling.current !== 0 || (pointers.current.size && now - moved < FINGER_STILL_MS);
+		if (moving && now < latest) {
+			redraw.current = setTimeout(() => sharpen(latest, performance.now()), REDRAW_RETRY_MS);
+			return;
+		}
+		flushSync(() => setView(run.live));
+		run.base = run.live;
+		paint(run);
+	};
+
+	const glide = (run: Gesture, speed: Point) => {
+		let { x: vx, y: vy } = speed;
+		let last = performance.now();
+		const frame = (now: number) => {
+			// The frame's clock can start just before the call that asked for it.
+			const ms = Math.max(0, now - last);
+			const across = flingStep(vx, ms);
+			const down = flingStep(vy, ms);
+			last = now;
+			const unit = VIEW.w / run.box.width;
+			const wanted = {
+				...run.live,
+				x: run.live.x + across.distance * unit,
+				y: run.live.y + down.distance * unit
+			};
+			run.live = clampView(wanted, run.box);
+			vx = run.live.x === wanted.x ? across.velocity : 0;
+			vy = run.live.y === wanted.y ? down.velocity : 0;
+			paint(run);
+			fling.current = Math.hypot(vx, vy) >= FLING_STOP ? requestAnimationFrame(frame) : 0;
+		};
+		fling.current = requestAnimationFrame(frame);
+	};
+
+	const begin = (x: number, y: number, at: number, target: Element) => {
+		// A touch that stops a glide only stops it.
+		dragged.current = fling.current !== 0;
+		cancelAnimationFrame(fling.current);
+		fling.current = 0;
+		landed.current = { x, y, at };
+		pressed.current = target.closest("path[id]")?.id ?? null;
+		const live = gesture.current?.live ?? view;
+		gesture.current = {
+			base: gesture.current?.base ?? view,
+			live,
+			box: wrap.current!.getBoundingClientRect(),
+			anchor: live,
+			from: [],
+			trail: []
+		};
+		setAnimate(false);
+		setTip(null);
+	};
+
+	const reanchor = () => {
+		const run = gesture.current;
+		if (!run) return;
+		run.anchor = run.live;
+		run.from = [...pointers.current.values()];
+		run.trail = [];
+	};
+
+	const follow = (at: number) => {
+		const run = gesture.current;
+		if (!run) return;
+		const [a, b] = [...pointers.current.values()];
+		if (b) run.live = pinchView(run.anchor, run.from, [a, b], run.box);
+		else {
+			if (!isTap(landed.current, a.x, a.y, landed.current.at)) dragged.current = true;
+			const unit = VIEW.w / run.box.width;
+			run.live = clampView(
+				{
+					...run.anchor,
+					x: run.anchor.x + (a.x - run.from[0].x) * unit,
+					y: run.anchor.y + (a.y - run.from[0].y) * unit
+				},
+				run.box
+			);
+			run.trail = [...run.trail.slice(-15), { ...a, at }];
+		}
+		paint(run);
+	};
+
+	const lift = (at: number) => {
+		const run = gesture.current;
+		if (!run) return;
+		const speed = flingVelocity(run.trail, at);
+		if (dragged.current && Math.hypot(speed.x, speed.y) >= FLING_START) glide(run, speed);
+	};
+
+	const pick = (
+		x: number,
+		y: number,
+		at: number,
+		{ button, metaKey, ctrlKey }: { button: number; metaKey: boolean; ctrlKey: boolean }
+	) => {
+		const id = pressed.current;
+		if (dragged.current || !isTap(landed.current, x, y, at) || !id || !provinces[id]) return;
+		// From lg up there is no selection panel: a click opens the province instead.
+		const href = referenceHref("provinsi", id);
+		if (!window.matchMedia("(min-width: 64rem)").matches) setSelected(id);
+		else if (button !== 0) return;
+		else if (metaKey || ctrlKey) window.open(href, "_blank");
+		else router.push(href);
+	};
+
+	const touchStarted = useEffectEvent((event: TouchEvent) => {
+		if (event.cancelable) event.preventDefault();
+		// A finger whose touchend never reached us.
+		const down = new Set(Array.from(event.touches, (touch) => touch.identifier));
+		for (const id of pointers.current.keys()) if (!down.has(id)) pointers.current.delete(id);
+		for (const touch of Array.from(event.changedTouches)) {
+			if (pointers.current.has(touch.identifier)) continue;
+			if (pointers.current.size) dragged.current = true;
+			else begin(touch.clientX, touch.clientY, event.timeStamp, touch.target as Element);
+			pointers.current.set(touch.identifier, { x: touch.clientX, y: touch.clientY });
+		}
+		reanchor();
+	});
+
+	const touchMoved = useEffectEvent((event: TouchEvent) => {
+		if (event.cancelable) event.preventDefault();
+		for (const touch of Array.from(event.touches))
+			if (pointers.current.has(touch.identifier))
+				pointers.current.set(touch.identifier, { x: touch.clientX, y: touch.clientY });
+		follow(event.timeStamp);
+	});
+
+	const touchEnded = useEffectEvent((event: TouchEvent) => {
+		if (event.cancelable) event.preventDefault();
+		for (const touch of Array.from(event.changedTouches)) {
+			if (!pointers.current.delete(touch.identifier) || pointers.current.size) continue;
+			if (event.type === "touchend")
+				pick(touch.clientX, touch.clientY, event.timeStamp, {
+					button: 0,
+					metaKey: false,
+					ctrlKey: false
+				});
+			lift(event.timeStamp);
+		}
+		if (pointers.current.size) reanchor();
+		// Not on every lift, or flicking fast would keep pushing the redraw back.
+		if (pointers.current.size < 2 && redraw.current === undefined) {
+			const latest = performance.now() + REDRAW_LATEST_MS;
+			redraw.current = setTimeout(() => sharpen(latest, performance.now()), REDRAW_MS);
+		}
+	});
+
+	// Touch events, not pointer events: a browser that decides to scroll or zoom ends a pointer
+	// gesture with pointercancel, but a touchstart it was told to leave alone stays the page's.
+	// React's touch listeners are passive, so they could not tell it that.
+	useEffect(() => {
+		// The box, not the svg: the svg travels with the map, and a finger can land where it has left.
+		const element = wrap.current;
+		if (!element) return;
+		const options = { passive: false };
+		const started = (event: TouchEvent) => touchStarted(event);
+		const moved = (event: TouchEvent) => touchMoved(event);
+		const ended = (event: TouchEvent) => {
+			touchEnded(event);
+			if (!pointers.current.size) detach();
+		};
+		// On the document only for the length of a gesture: a pinch's second finger often lands
+		// off the map, and a lasting listener here would make every scroll of the page wait for it.
+		const detach = () => {
+			document.removeEventListener("touchstart", started);
+			document.removeEventListener("touchmove", moved);
+			document.removeEventListener("touchend", ended);
+			document.removeEventListener("touchcancel", ended);
+		};
+		const onMap = (event: TouchEvent) => {
+			// Cancelling this touch would take the click away from the zoom buttons.
+			if ((event.target as Element).closest("button")) return;
+			started(event);
+			document.addEventListener("touchstart", started, options);
+			document.addEventListener("touchmove", moved, options);
+			document.addEventListener("touchend", ended, options);
+			document.addEventListener("touchcancel", ended, options);
+		};
+		// Safari's own pinch of the page.
+		const noPageZoom = (event: Event) => event.preventDefault();
+		element.addEventListener("touchstart", onMap, options);
+		element.addEventListener("gesturestart", noPageZoom, options);
+		return () => {
+			element.removeEventListener("touchstart", onMap);
+			element.removeEventListener("gesturestart", noPageZoom);
+			detach();
+			cancelAnimationFrame(fling.current);
+			clearTimeout(redraw.current);
+		};
+	}, []);
+
+	const settleNow = useEffectEvent(settle);
+
+	// React's wheel listener is passive, so it cannot stop the page from scrolling.
+	useEffect(() => {
+		const element = svg.current;
+		if (!element) return;
+		const onWheel = (event: WheelEvent) => {
+			event.preventDefault();
+			if (pointers.current.size) return;
+			settleNow();
+			const rect = wrap.current!.getBoundingClientRect();
+			const point = pointerIn(rect, event.clientX, event.clientY);
+			const zoom = wheelZoom(event.deltaY, event.deltaMode, event.ctrlKey);
+			setAnimate(zoom.animate);
+			setTip(null);
+			setView((current) => zoomAt(current, zoom.factor, point.x, point.y, rect));
+		};
+		element.addEventListener("wheel", onWheel, { passive: false });
+		return () => element.removeEventListener("wheel", onWheel);
+	}, []);
+
+	// A parked layer is measured in the box's old pixels.
+	useEffect(() => {
+		const onResize = () => {
+			const run = gesture.current;
+			const width = wrap.current?.getBoundingClientRect().width;
+			if (run && !pointers.current.size && width !== run.box.width) settleNow();
+		};
+		window.addEventListener("resize", onResize);
+		return () => window.removeEventListener("resize", onResize);
+	}, []);
+
+	// A mouse or a stylus on a device with no touch events; every finger goes through those above.
+	const notTouch = (event: React.PointerEvent) =>
+		event.pointerType === "mouse" ||
+		(event.pointerType === "pen" && !("ontouchstart" in window));
+
+	const release = (event: React.PointerEvent) => {
+		// Only a finger glides: a mouse stays where it put the map, ready for the next click.
+		if (notTouch(event) && pointers.current.delete(event.pointerId)) settle();
+	};
 
 	const layerStyle = {
 		transform: `translate(${view.x}px, ${view.y}px) scale(${view.k})`,
@@ -354,45 +674,51 @@ export function MasteryMap({
 		<div>
 			<div
 				ref={wrap}
-				// A phone's map box is taller than the map, so the map is centred in it.
-				className={`relative flex w-full flex-col justify-center overflow-hidden bg-paper-0 lg:block lg:rounded-sm ${loading ? "max-lg:pointer-events-none" : ""} ${className}`}
+				className={`relative w-full touch-none overflow-hidden bg-paper-0 lg:rounded-sm ${loading ? "max-lg:pointer-events-none" : ""} ${className}`}
 			>
 				<svg
 					ref={svg}
 					role="img"
 					aria-label="Peta Penguasaan per provinsi"
 					viewBox={`${VIEW.x} ${VIEW.y} ${VIEW.w} ${VIEW.h}`}
-					// Overflow shows the zoomed map in the room above it; the box still clips at its edges.
-					className="block aspect-[1080/403] w-full cursor-grab touch-none active:cursor-grabbing max-lg:overflow-visible lg:aspect-auto lg:size-full"
+					// Overflow keeps all of the zoomed map on the layer a gesture moves; the box clips it.
+					className="block size-full origin-top-left cursor-grab overflow-visible will-change-transform active:cursor-grabbing"
 					onPointerDown={(event) => {
-						// A new gesture's first finger: drop any finger whose pointerup never reached the map.
-						if (event.isPrimary) {
-							pointers.current.clear();
-							pressed.current =
-								(event.target as Element).closest("path[id]")?.id ?? null;
-						}
-						if (!pointers.current.size) dragged.current = false;
+						if (!notTouch(event)) return;
+						// A press whose pointerup never reached the map.
+						pointers.current.clear();
+						begin(
+							event.clientX,
+							event.clientY,
+							event.timeStamp,
+							event.target as Element
+						);
 						pointers.current.set(event.pointerId, {
 							x: event.clientX,
 							y: event.clientY
 						});
-						// Keeps the drag going when the finger slides past the map's edge.
+						reanchor();
+						// Keeps the drag going when the pointer slides past the map's edge.
 						event.currentTarget.setPointerCapture(event.pointerId);
-						setAnimate(false);
-						setTip(null);
 					}}
-					onPointerMove={move}
+					onPointerMove={(event) => {
+						if (!notTouch(event)) return;
+						// Hover details are for a mouse; a phone shows the tapped province under the map.
+						if (!pointers.current.has(event.pointerId))
+							return event.pointerType === "mouse" && showTip(event);
+						pointers.current.set(event.pointerId, {
+							x: event.clientX,
+							y: event.clientY
+						});
+						follow(event.timeStamp);
+					}}
 					onPointerUp={(event) => {
+						if (!notTouch(event) || !pointers.current.has(event.pointerId)) return;
+						// A mouse press can be as slow as it likes; only its distance counts.
+						const at =
+							event.pointerType === "mouse" ? landed.current.at : event.timeStamp;
+						pick(event.clientX, event.clientY, at, event);
 						release(event);
-						const id = pressed.current;
-						if (!pointers.current.size && !dragged.current && id && provinces[id]) {
-							// From lg up there is no selection panel: a click opens the province instead.
-							const href = referenceHref("provinsi", id);
-							if (!window.matchMedia("(min-width: 64rem)").matches) setSelected(id);
-							else if (event.button !== 0) return;
-							else if (event.metaKey || event.ctrlKey) window.open(href, "_blank");
-							else router.push(href);
-						}
 					}}
 					onPointerCancel={release}
 					onPointerLeave={(event) => {
@@ -457,8 +783,11 @@ export function MasteryMap({
 						onClick={() => zoomButton(null)}
 					/>
 				</div>
-				<div className="absolute bottom-3 left-3 font-mono text-micro leading-none font-medium text-ink-500 lg:right-3 lg:left-auto">
-					{Math.round(view.k * 100)}%
+				<div
+					ref={label}
+					className="absolute bottom-3 left-3 font-mono text-micro leading-none font-medium text-ink-500 lg:right-3 lg:left-auto"
+				>
+					{`${Math.round(view.k * 100)}%`}
 				</div>
 				{tip && provinces[tip.id] && (
 					<div
