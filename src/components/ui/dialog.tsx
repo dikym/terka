@@ -17,7 +17,7 @@ const EXIT_MS = 200;
 
 // The disabled final button turns grey instead of fading, so it reads as not yet allowed.
 const DISABLED_GREY =
-	"disabled:border-ink-200 disabled:bg-ink-100 disabled:text-ink-500 disabled:opacity-100 disabled:shadow-none";
+	"disabled:border-ink-200 disabled:bg-ink-100 disabled:text-ink-500 disabled:opacity-100 disabled:shadow-[3px_3px_0_color-mix(in_oklch,var(--color-ink-1000)_40%,transparent)]";
 
 /** Centres a field in the sheet's own scroll box when it is out of sight, never scrolling the page. */
 function reveal(field: HTMLElement, sheet: HTMLElement) {

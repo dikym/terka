@@ -179,7 +179,7 @@ function PhoneActions({
 							type="button"
 							disabled
 							aria-disabled="true"
-							className={`${TILE} flex-1 cursor-not-allowed border-ink-200 bg-stop-500 opacity-40`}
+							className={`${TILE} flex-1 cursor-not-allowed border-ink-1000 bg-stop-500 opacity-40 shadow-block`}
 						>
 							<Icon name="calendar-check" size={18} />
 							<span className="flex flex-col gap-1">
@@ -226,7 +226,7 @@ function ChallengeButton({ done, countdown }: { done: boolean; countdown: ReactN
 					type="button"
 					disabled
 					aria-disabled="true"
-					className="flex h-12 w-full cursor-not-allowed items-center justify-between gap-3 rounded-sm border border-ink-200 bg-stop-500 px-4 text-ink-1000 opacity-40"
+					className="flex h-12 w-full cursor-not-allowed items-center justify-between gap-3 rounded-sm border border-ink-1000 bg-stop-500 px-4 text-ink-1000 opacity-40 shadow-block"
 				>
 					<span className="inline-flex items-center gap-2 font-display text-body-md leading-none font-semibold text-ink-1000">
 						<Icon name="calendar-check" size={16} />

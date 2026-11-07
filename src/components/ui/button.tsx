@@ -44,13 +44,13 @@ export function buttonClass(variant: Variant, size: keyof typeof SIZE, block: bo
 		block ? "flex w-full" : "inline-flex",
 		"items-center justify-center gap-2 rounded-sm border font-display leading-none font-semibold whitespace-nowrap",
 		"transition-[background-color,color,box-shadow,translate] duration-90 ease-out",
-		"cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 aria-busy:cursor-not-allowed aria-busy:opacity-60 aria-busy:shadow-none",
+		"cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 aria-busy:cursor-not-allowed aria-busy:opacity-40",
 		// `not-disabled`, not `enabled`: `:enabled` never matches the links this renders as.
 		pressable
 			? "not-disabled:not-aria-busy:active:translate-0.5 not-disabled:not-aria-busy:active:shadow-none"
 			: "",
 		// The focus outline would run into the offset shadow, so the shadow steps aside for it.
-		pressable ? "focus-visible:shadow-none" : "",
+		pressable ? "not-aria-busy:focus-visible:shadow-none" : "",
 		VARIANT[variant],
 		SIZE[size]
 	].join(" ");
