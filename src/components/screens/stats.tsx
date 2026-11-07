@@ -621,11 +621,12 @@ function Sync({
 					variant="secondary"
 					size="sm"
 					block
-					icon={syncing ? "cloud-sync" : "cloud-upload"}
-					disabled={syncing}
+					icon="cloud-upload"
+					loading={syncing}
+					busyLabel="Menyinkronkan"
 					onClick={onSync}
 				>
-					{syncing ? "Menyinkronkan…" : "Sinkronkan sekarang"}
+					Sinkronkan sekarang
 				</Button>
 			) : (
 				<Button variant="quiet" size="sm" block onClick={onLogin} className="text-ink-1000">
