@@ -1,3 +1,4 @@
+import { BusyText } from "@/components/ui/feedback";
 import { Icon } from "@/components/ui/icon";
 import { useReady, useSyncIcon } from "@/lib/app/use-runtime";
 
@@ -20,7 +21,9 @@ export function SyncChip({ label }: { label: string | null }) {
 	return (
 		<span className="hidden h-9 items-center gap-2 rounded-sm border border-ink-200 px-3 text-ink-700 lg:inline-flex">
 			<Icon name={icon} size={16} />
-			<span className="font-sans text-body-sm leading-none font-medium">{label}</span>
+			<span className="font-sans text-body-sm leading-none font-medium">
+				<BusyText>{label}</BusyText>
+			</span>
 		</span>
 	);
 }

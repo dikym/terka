@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { CodeLink } from "@/components/ui/code-chip";
 import {
+	BusyText,
 	Dot,
 	Pill,
 	ProgressBar,
@@ -604,10 +605,12 @@ function Sync({
 							{/* Level with the first line when the text wraps. */}
 							<Icon name={icon} size={16} className="mt-0.75" />
 							<span className="text-ink-900 type-body">
-								{copy ?? (
+								{copy === null ? (
 									<SkeletonText
 										width={skeletonWidth("Tersinkron 3 menit lalu")}
 									/>
+								) : (
+									<BusyText>{copy}</BusyText>
 								)}
 							</span>
 						</div>

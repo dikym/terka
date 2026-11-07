@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { OtherAccount } from "@/components/screens/sign-in";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/feedback";
+import { BusyText, Skeleton } from "@/components/ui/feedback";
 import { authClient, settleAfterSignIn, syncOnce } from "@/lib/app/auth";
 import { useReady } from "@/lib/app/use-runtime";
 import { afterSignIn, finishCallback, switchAccount } from "@/lib/auth/signin";
@@ -77,7 +77,11 @@ export default function Page() {
 					<Card>
 						<CardHeader label="Akun" title="Masuk" />
 						<p className="text-ink-900 type-body">
-							{outcome?.kind === "message" ? outcome.text : "Menyelesaikan masuk…"}
+							<BusyText>
+								{outcome?.kind === "message"
+									? outcome.text
+									: "Menyelesaikan masuk…"}
+							</BusyText>
 						</p>
 						{!outcome && (
 							<div aria-hidden="true" className="flex flex-col gap-2">

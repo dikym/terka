@@ -67,6 +67,35 @@ export function Dot({ size, className = "" }: { size: number; className?: string
 	);
 }
 
+/** Three dots pulsing in turn after text that says something is under way. */
+export function BusyDots() {
+	return (
+		<span aria-hidden="true">
+			{[0, 160, 320].map((delay) => (
+				<span
+					key={delay}
+					className="animate-busy-dot"
+					style={{ animationDelay: `${delay}ms` }}
+				>
+					.
+				</span>
+			))}
+		</span>
+	);
+}
+
+/** Shows a message's trailing ellipsis as pulsing dots; other text stays as it is. */
+export function BusyText({ children }: { children: string }) {
+	const stem = children.match(/^(.*)(?:…|\.\.\.)$/)?.[1];
+	if (stem === undefined) return children;
+	return (
+		<>
+			{stem}
+			<BusyDots />
+		</>
+	);
+}
+
 /** A pulsing placeholder; give it the size of what it stands in for. */
 export function Skeleton({ className, width }: { className: string; width?: string }) {
 	return (

@@ -18,6 +18,7 @@ import {
 	type ToastTone,
 	toastStore
 } from "@/lib/toasts";
+import { BusyText } from "@/components/ui/feedback";
 import { Icon, type IconName } from "@/components/ui/icon";
 
 const TONE: Record<ToastTone, { box: string; text: string; icon: string; glyph: IconName }> = {
@@ -71,7 +72,7 @@ export function Toast({
 					<span className={`leading-[20px]! type-label ${tone.text}`}>{toast.label}</span>
 				)}
 				<span className="font-sans text-body-md leading-[20px] font-medium text-ink-900">
-					{toast.text}
+					<BusyText>{toast.text}</BusyText>
 				</span>
 			</div>
 			{toast.action && (

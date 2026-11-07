@@ -1,4 +1,5 @@
 import { Link } from "@/components/ui/app-link";
+import { BusyDots } from "@/components/ui/feedback";
 import { Icon, type IconName } from "@/components/ui/icon";
 import { Kbd } from "@/components/ui/kbd";
 
@@ -87,17 +88,7 @@ export function Button({
 		loading && busyLabel !== undefined ? (
 			<span>
 				{busyLabel}
-				<span aria-hidden="true">
-					{[0, 160, 320].map((delay) => (
-						<span
-							key={delay}
-							className="animate-busy-dot"
-							style={{ animationDelay: `${delay}ms` }}
-						>
-							.
-						</span>
-					))}
-				</span>
+				<BusyDots />
 			</span>
 		) : (
 			label
