@@ -34,22 +34,21 @@ describe("Button loading", () => {
 		expect(html).not.toContain("data-spinner");
 	});
 
-	test("hides the old label at once, and shows only the busy one", () => {
+	test("shows only the busy label while loading", () => {
 		const html = renderToStaticMarkup(
 			<Button loading busyLabel="Mengirim">
 				Kirim
 			</Button>
 		);
-		expect(html).toContain('class="inline-flex items-center gap-2 invisible"');
-		expect(html.match(/\binvisible\b/g)).toHaveLength(1);
-		expect(html).not.toContain("animate-busy-out");
-		expect(html).not.toContain("animate-busy-in");
+		expect(html).toContain("Mengirim");
+		expect(html).not.toContain("Kirim");
 	});
 
-	test("reserves the busy label's width while idle, hidden from view", () => {
-		const html = renderToStaticMarkup(<Button busyLabel="Mengirim">Kirim</Button>);
-		expect(html).toContain('class="invisible"');
-		expect(html).not.toContain("animate-busy-dot");
+	test("an idle button is only as wide as its own label", () => {
+		const html = renderToStaticMarkup(<Button busyLabel="Menghapus">Hapus</Button>);
+		expect(html).toContain("Hapus");
+		expect(html).not.toContain("Menghapus");
+		expect(html).not.toContain("invisible");
 	});
 
 	test("cannot be followed as a link", () => {

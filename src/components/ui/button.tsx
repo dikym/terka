@@ -32,7 +32,7 @@ type ButtonProps = {
 	href?: string;
 	/** A slow action is running: the button ignores presses and says so with `busyLabel`. */
 	loading?: boolean;
-	/** What is happening, without the dots. It also sets the width, so the swap shifts nothing. */
+	/** What is happening, without the dots. */
 	busyLabel?: string;
 	className?: string;
 	onClick?: () => void;
@@ -84,30 +84,23 @@ export function Button({
 		</>
 	);
 	const content =
-		busyLabel === undefined ? (
-			label
-		) : (
-			<span className="grid place-items-center *:col-start-1 *:row-start-1">
-				<span className={`inline-flex items-center gap-2 ${loading ? "invisible" : ""}`}>
-					{label}
-				</span>
-				<span className={loading ? undefined : "invisible"}>
-					{busyLabel}
-					<span aria-hidden="true">
-						{loading
-							? [0, 160, 320].map((delay) => (
-									<span
-										key={delay}
-										className="animate-busy-dot"
-										style={{ animationDelay: `${delay}ms` }}
-									>
-										.
-									</span>
-								))
-							: "..."}
-					</span>
+		loading && busyLabel !== undefined ? (
+			<span>
+				{busyLabel}
+				<span aria-hidden="true">
+					{[0, 160, 320].map((delay) => (
+						<span
+							key={delay}
+							className="animate-busy-dot"
+							style={{ animationDelay: `${delay}ms` }}
+						>
+							.
+						</span>
+					))}
 				</span>
 			</span>
+		) : (
+			label
 		);
 	const classes = `${buttonClass(variant, size, block)} ${className}`;
 	// A link cannot be disabled, so a disabled target renders as a disabled button.
