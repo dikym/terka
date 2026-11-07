@@ -405,16 +405,16 @@ function SpecialCodesCard({ loading }: { loading: boolean }) {
 					className={`grid grid-cols-[84px_minmax(0,1fr)] items-center gap-3 py-3 lg:grid-cols-[96px_minmax(0,1fr)] ${index < rows.length - 1 ? "border-b border-hairline" : ""}`}
 				>
 					{loading ? (
-						<Skeleton className="h-5.5 w-19 rounded-xs" />
+						<Skeleton className="h-6.25 w-full rounded-sm" />
 					) : (
-						<SpecialPlate parts={parts} />
+						<SpecialPlate parts={parts} className="self-center" />
 					)}
 					<div className="flex min-w-0 flex-col gap-1">
 						<span className="font-sans text-body-sm leading-[1.3] font-medium text-ink-900">
 							{title}
 						</span>
 						{loading ? (
-							<span className="flex items-center gap-1.5">
+							<span className="flex h-[1em] items-center gap-1.5 text-label leading-none">
 								<Skeleton className="size-1.75 rounded-full" />
 								<SkeletonText width={skeletonWidth(label)} />
 							</span>

@@ -1072,6 +1072,64 @@ for (const [width, height] of [
 		expect(skeleton).toEqual(await shape());
 	});
 
+for (const [width, height] of [
+	[1280, 800],
+	[390, 844]
+])
+	test(`the special plates' skeleton matches the plate, both centred down the row, at ${width}px`, async ({
+		page
+	}) => {
+		await seen(page);
+		await page.setViewportSize({ width, height });
+		let letGo = () => {};
+		const held = new Promise<void>((resolve) => (letGo = resolve));
+		await page.route("**/plates.json", async (route) => {
+			await held;
+			await route.continue();
+		});
+		await page.goto("/referensi", { waitUntil: "domcontentloaded" });
+		const row = page.getByText("Pejabat negara", { exact: true }).locator("xpath=../..");
+		const shape = (selector: string) =>
+			row.evaluate((element, target) => {
+				const block = element.querySelector(target)!;
+				const box = block.getBoundingClientRect();
+				const top = element.getBoundingClientRect().top;
+				return {
+					width: Math.round(box.width),
+					height: Math.round(box.height),
+					offset: Math.round(box.top - top),
+					radius: getComputedStyle(block).borderTopLeftRadius
+				};
+			}, selector);
+		await expect(row.locator("[data-skeleton]").first()).toBeVisible();
+		// A web font arriving late would change the heights being compared.
+		await page.evaluate(() => document.fonts.ready);
+		const skeleton = await shape("[data-skeleton]");
+		letGo();
+		await expect(row.locator(".font-plate")).toBeVisible();
+		expect(skeleton).toEqual(await shape(".font-plate"));
+
+		for (const title of [
+			"Korps diplomatik dan organisasi internasional",
+			"Korps konsulat",
+			"Konsul kehormatan",
+			"Pejabat negara"
+		]) {
+			const middles = await page
+				.getByText(title, { exact: true })
+				.locator("xpath=../..")
+				.evaluate((element) => {
+					const middle = (box: DOMRect) => box.top + box.height / 2;
+					const content = element.lastElementChild!.getBoundingClientRect();
+					const plate = element.querySelector(".font-plate")!.getBoundingClientRect();
+					return { plate: middle(plate), content: middle(content) };
+				});
+			expect(Math.abs(middles.plate - middles.content), title).toBeLessThan(1);
+		}
+		// A plate with no third part keeps its empty column, so its text stays to the left.
+		await expect(row.locator(".font-plate > span")).toHaveCount(3);
+	});
+
 test("a right click on a map province stays on the map", async ({ page }) => {
 	await seen(page);
 	await page.goto("/statistik/peta");

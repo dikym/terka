@@ -56,16 +56,19 @@ const SPECIAL_SIZE = {
 export function SpecialPlate({
 	parts,
 	size = "sm",
-	empty = false
+	empty = false,
+	className = "self-start"
 }: {
 	parts: [string, string, string];
 	size?: keyof typeof SPECIAL_SIZE;
 	/** The dashed placeholder plate of an empty search. */
 	empty?: boolean;
+	/** Where it sits across its parent. */
+	className?: string;
 }) {
 	return (
 		<span
-			className={`inline-grid grid-cols-[minmax(1.3em,auto)_minmax(1.3em,auto)_minmax(1.3em,auto)] items-baseline justify-items-center gap-x-[0.35em] self-start rounded-sm border-2 bg-paper-0 font-plate leading-none font-bold tracking-plate whitespace-nowrap ${empty ? "border-dashed border-ink-300 text-ink-300" : "border-ink-1000 text-ink-1000"} ${SPECIAL_SIZE[size]}`}
+			className={`inline-grid grid-cols-[minmax(1.3em,auto)_minmax(1.3em,auto)_minmax(1.3em,auto)] items-baseline justify-items-center gap-x-[0.35em] rounded-sm border-2 bg-paper-0 font-plate leading-none font-bold tracking-plate whitespace-nowrap ${empty ? "border-dashed border-ink-300 text-ink-300" : "border-ink-1000 text-ink-1000"} ${SPECIAL_SIZE[size]} ${className}`}
 		>
 			{parts.map((part, index) => (
 				<span key={index}>{part || "\u00a0"}</span>
