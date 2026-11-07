@@ -5,16 +5,47 @@ import { Link } from "@/components/ui/app-link";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { CodeLink } from "@/components/ui/code-chip";
-import { Dot, Pill, ProgressBar } from "@/components/ui/feedback";
-import { GROUP_BG, GROUP_TEXT } from "@/components/ui/groups";
+import { Dot, Pill, ProgressBar, Skeleton, SkeletonText } from "@/components/ui/feedback";
+import { GROUP_BG, GROUP_NAME, GROUP_TEXT } from "@/components/ui/groups";
 import { type MapProvince, MasteryMap } from "@/components/ui/mastery-map";
 import { PageTitle } from "@/components/ui/page-title";
 import { EmptyState } from "@/components/ui/states";
 import { showToast } from "@/lib/toasts";
+import type { GroupId } from "@/lib/view/groups";
 import { referenceHref } from "@/lib/view/reference";
 import type { HardCard, MasteryRow } from "@/lib/view/stats";
 import { NOTE_MAX_CHARS } from "@/rules";
-import { MapHint, MapLegend } from "@/components/screens/stats";
+import { MapHint, MapLegend, text } from "@/components/screens/stats";
+
+// The figures' sans labels, measured: it decides where a row of them wraps.
+const LABEL_EM_PER_CHAR = 0.49;
+const NOT_STARTED = (provinces: number) => [[`${provinces} provinsi`, "belum mulai"]];
+// What each group's row shows before any learning, the most common case and the one that shapes
+// the page: which figures a row has decides what fits on a line.
+const ROW_SKELETONS: MasteryRow[] = (
+	[
+		["sumatera", NOT_STARTED(10)],
+		["jawa", NOT_STARTED(6)],
+		[
+			"balinusra",
+			[
+				["0%", "Bali"],
+				["0%", "Nusa Tenggara Barat"],
+				["0%", "Nusa Tenggara Timur"]
+			]
+		],
+		["kalimantan", NOT_STARTED(5)],
+		["sulawesi", NOT_STARTED(6)],
+		[
+			"maluku",
+			[
+				["0%", "Maluku"],
+				["0%", "Maluku Utara"]
+			]
+		],
+		["papua", NOT_STARTED(6)]
+	] satisfies [GroupId, string[][]][]
+).map(([group, figures]) => ({ group, name: GROUP_NAME[group], percent: 0, figures }));
 
 export function MasteryMapScreen({
 	provinces,
@@ -23,6 +54,7 @@ export function MasteryMapScreen({
 	provinces: Record<string, MapProvince>;
 	rows: MasteryRow[] | null;
 }) {
+	const loading = rows === null;
 	return (
 		<>
 			<PageTitle title="Peta Penguasaan" back="/statistik" />
@@ -32,7 +64,7 @@ export function MasteryMapScreen({
 					<CardHeader label="Peta Penguasaan" title="Penguasaan tiap provinsi" />
 				</div>
 				<div className="-mx-4 -mt-5 border-b border-hairline lg:m-0 lg:border-0">
-					<MasteryMap provinces={provinces} loading={rows === null} />
+					<MasteryMap provinces={provinces} loading={loading} />
 				</div>
 				<div className="flex flex-col gap-3 lg:border-t lg:border-hairline lg:pt-4">
 					<MapLegend />
@@ -40,32 +72,56 @@ export function MasteryMapScreen({
 				</div>
 			</section>
 			<div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-8">
-				{(rows ?? []).map((row) => (
+				{(rows ?? ROW_SKELETONS).map((row) => (
 					<div
 						key={row.group}
 						className="grid grid-cols-[10px_minmax(0,1fr)_44px] items-start gap-3 border-b border-hairline py-4 lg:grid-cols-[10px_minmax(0,1fr)_160px_48px] lg:items-center lg:gap-x-4"
 					>
-						<Dot size={10} className={`mt-1 lg:mt-0 ${GROUP_TEXT[row.group]}`} />
+						{loading ? (
+							<Skeleton className="mt-1 size-2.5 rounded-full lg:mt-0" />
+						) : (
+							<Dot size={10} className={`mt-1 lg:mt-0 ${GROUP_TEXT[row.group]}`} />
+						)}
 						<div className="flex min-w-0 flex-col gap-2">
-							<Link
-								href={referenceHref("kawasan", row.group)}
-								className="w-fit font-display text-body-md leading-[1.2] font-semibold underline-offset-[3px] hover:underline"
-							>
-								{row.name}
-							</Link>
-							<ProgressBar
-								value={row.percent}
-								color={GROUP_BG[row.group]}
-								className="h-1.5 lg:hidden"
-							/>
+							{loading ? (
+								<span className="font-display text-body-md leading-[1.2] font-semibold">
+									{text(loading, row.name)}
+								</span>
+							) : (
+								<Link
+									href={referenceHref("kawasan", row.group)}
+									className="w-fit font-display text-body-md leading-[1.2] font-semibold underline-offset-[3px] hover:underline"
+								>
+									{row.name}
+								</Link>
+							)}
+							{loading ? (
+								<Skeleton className="h-1.5 rounded-xs lg:hidden" />
+							) : (
+								<ProgressBar
+									value={row.percent}
+									color={GROUP_BG[row.group]}
+									className="h-1.5 lg:hidden"
+								/>
+							)}
 							<div className="flex flex-wrap gap-x-5 gap-y-2">
 								{row.figures.map(([value, label]) => (
 									<span key={label} className="inline-flex flex-col gap-0.75">
 										<span className="font-mono text-body-md leading-none font-semibold text-ink-1000">
-											{value}
+											{loading ? (
+												<SkeletonText width={`${value.length}ch`} />
+											) : (
+												value
+											)}
 										</span>
 										<span className="font-sans text-micro leading-[1.2] text-ink-500">
-											{label}
+											{loading ? (
+												<SkeletonText
+													width={`${label.length * LABEL_EM_PER_CHAR}em`}
+												/>
+											) : (
+												label
+											)}
 										</span>
 									</span>
 								))}
@@ -78,14 +134,18 @@ export function MasteryMapScreen({
 								</span>
 							)}
 						</div>
-						<ProgressBar
-							value={row.percent}
-							color={GROUP_BG[row.group]}
-							className="hidden h-2 flex-none lg:block"
-						/>
+						{loading ? (
+							<Skeleton className="h-2 flex-none rounded-xs max-lg:hidden" />
+						) : (
+							<ProgressBar
+								value={row.percent}
+								color={GROUP_BG[row.group]}
+								className="hidden h-2 flex-none lg:block"
+							/>
+						)}
 						<span className="text-right">
 							<span className="font-mono text-body-md leading-[1.2] font-medium text-ink-1000 tabular-nums">
-								{row.percent}%
+								{text(loading, `${row.percent}%`)}
 							</span>
 						</span>
 					</div>

@@ -30,7 +30,7 @@ const PILL_SKELETON = "h-[26px] w-[125px] rounded-full";
 const CHIP_SKELETON = "h-7 w-10 flex-none rounded-sm";
 
 /** Copy, or a skeleton line sized to that copy while loading. */
-const text = (loading: boolean, copy: string | number) =>
+export const text = (loading: boolean, copy: string | number) =>
 	loading ? <SkeletonText width={skeletonWidth(String(copy))} /> : copy;
 
 function Figure({ value, label, loading }: { value: string; label: string; loading: boolean }) {

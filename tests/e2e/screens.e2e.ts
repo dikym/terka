@@ -1009,6 +1009,69 @@ test("the zoom buttons round their outer ends down the desktop column", async ({
 	expect(await corners("Kembalikan ukuran")).toEqual(["0px", "0px", "4px", "4px"]);
 });
 
+test("the rows under the map stay skeletons until the data is in, with no note", async ({
+	page
+}) => {
+	await seen(page);
+	let letGo = () => {};
+	const held = new Promise<void>((resolve) => (letGo = resolve));
+	await page.route("**/plates.json", async (route) => {
+		await held;
+		await route.continue();
+	});
+	await page.goto("/statistik/peta", { waitUntil: "domcontentloaded" });
+	const rows = page.locator("section + div").first().locator("> div");
+	await expect(rows).toHaveCount(7);
+	for (const row of await rows.all()) {
+		await expect(row.locator("[data-skeleton]").first()).toBeVisible();
+		await expect(row.getByRole("link")).toHaveCount(0);
+		await expect(row).toHaveText("");
+	}
+	letGo();
+	await expect(page.getByRole("link", { name: "Sumatera", exact: true })).toBeVisible();
+	await expect(rows).toHaveCount(7);
+	await expect(rows.first().locator("[data-skeleton]")).toHaveCount(0);
+});
+
+for (const [width, height] of [
+	[1280, 800],
+	[390, 844],
+	[360, 800]
+])
+	test(`the skeleton rows match a new learner's rows, line for line, at ${width}px`, async ({
+		page
+	}) => {
+		await seen(page);
+		await page.setViewportSize({ width, height });
+		let letGo = () => {};
+		const held = new Promise<void>((resolve) => (letGo = resolve));
+		await page.route("**/plates.json", async (route) => {
+			await held;
+			await route.continue();
+		});
+		await page.goto("/statistik/peta", { waitUntil: "domcontentloaded" });
+		const rows = page.locator("section + div").first().locator("> div");
+		await expect(rows).toHaveCount(7);
+		const shape = () =>
+			rows.evaluateAll((all) =>
+				all.map((row) => {
+					const figures = [...row.querySelectorAll(".inline-flex")].map(
+						(figure) => figure.getBoundingClientRect().top
+					);
+					return {
+						height: Math.round(row.getBoundingClientRect().height),
+						wrapped: figures.map((top) => Math.round(top - figures[0]) > 0)
+					};
+				})
+			);
+		// A web font arriving late would change the heights being compared.
+		await page.evaluate(() => document.fonts.ready);
+		const skeleton = await shape();
+		letGo();
+		await expect(page.getByRole("link", { name: "Sumatera", exact: true })).toBeVisible();
+		expect(skeleton).toEqual(await shape());
+	});
+
 test("a right click on a map province stays on the map", async ({ page }) => {
 	await seen(page);
 	await page.goto("/statistik/peta");
