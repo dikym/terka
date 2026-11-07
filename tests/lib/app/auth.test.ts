@@ -75,12 +75,13 @@ const removedPair = async () => {
 	return world;
 };
 
-function opening(device: Device, online = true) {
+function opening(device: Device, online = true, signedIn = true) {
 	const seen = { reloads: [] as boolean[], notices: [] as string[] };
 	const deps = {
 		db: device.db,
 		client: device.client,
 		online,
+		signedIn,
 		reload: async () => void seen.reloads.push(settling.get()),
 		notify: (text: string) => void seen.notices.push(text)
 	};
@@ -97,6 +98,14 @@ const watchSettling = () => {
 };
 
 describe("checking for a removal when the app opens", () => {
+	test("opening a signed-in device holds the screen without waiting a turn", async () => {
+		const { a } = await removedPair();
+		const done = settleOnOpen(opening(a).deps);
+		expect(settling.get()).toBe(true);
+		await done;
+		expect(settling.get()).toBe(false);
+	});
+
 	test("opening a removed device signs it out before the first screen", async () => {
 		const { b } = await removedPair();
 		const { seen, deps } = opening(b);
@@ -135,7 +144,7 @@ describe("checking for a removal when the app opens", () => {
 	test("opening as a guest never holds the screen", async () => {
 		const server = new FakeServer();
 		const guest = await openDevice(server, { name: "phone" });
-		const { seen, deps } = opening(guest);
+		const { seen, deps } = opening(guest, true, false);
 		const watch = watchSettling();
 		await settleOnOpen(deps);
 		watch.stop();
@@ -161,6 +170,7 @@ describe("checking for a removal when the app opens", () => {
 				db,
 				client,
 				online: true,
+				signedIn: true,
 				reload: async () => {},
 				notify: () => {}
 			});
@@ -271,6 +281,7 @@ function appOf(device: Device, client: SupabaseClient, signingIn = false) {
 	const runtime = {
 		db: device.db,
 		store: device.store,
+		signedInAtOpen: true,
 		async reload() {
 			counts.reloads++;
 			const loaded = await loadState(device.db, device.store.bundle);
@@ -317,6 +328,13 @@ describe("a removal while the app is open", () => {
 		await until(() => world.b.store.getState().sync?.state === "synced" && !settling.get());
 		return { ...world, auth, counts };
 	};
+
+	test("starting auth on a signed-in device holds the screen at once", async () => {
+		const { a } = await removedPair();
+		appOf(a, watched(a).client);
+		expect(settling.get()).toBe(true);
+		await until(() => !settling.get());
+	});
 
 	test("a device whose session is dropped while open signs out when it was removed", async () => {
 		const { a, b, auth, counts } = await openWatched();

@@ -6,7 +6,7 @@ import type { LastDay } from "@/core/session/commands";
 import type { SessionContext, SessionSettings } from "@/core/session/context";
 import { loadState } from "@/lib/db/log";
 import { loadNotes, loadSettings, saveNote, saveSettings } from "@/lib/db/settings";
-import type { TerkaDb } from "@/lib/db/schema";
+import { readMeta, type TerkaDb } from "@/lib/db/schema";
 import { type BootDeps, openApp } from "@/lib/app/boot";
 import { type AppStore, createAppStore } from "@/lib/app/store";
 
@@ -18,6 +18,8 @@ export type Runtime = {
 	deviceId: string;
 	persisted: boolean;
 	outdated: boolean;
+	/** Read before the runtime reports ready, so the open-time check can hold the first screen. */
+	signedInAtOpen: boolean;
 	store: AppStore;
 	dictionary: NameDictionary;
 	prefs: ReturnType<typeof createPrefs>;
@@ -63,6 +65,7 @@ async function open(deps: BootDeps): Promise<RuntimeStatus> {
 	const { db, bundle, deviceId } = boot;
 	const store = createAppStore({ db, bundle, log: boot.log });
 	const prefs = createPrefs({ settings: await loadSettings(db), notes: await loadNotes(db) });
+	const owner = await readMeta<string>(db, "ownerUserId").catch(() => undefined);
 	const writer = () => ({ now: Date.now(), deviceId });
 	const runtime: Runtime = {
 		db,
@@ -70,6 +73,7 @@ async function open(deps: BootDeps): Promise<RuntimeStatus> {
 		deviceId,
 		persisted: boot.persisted,
 		outdated: boot.status === "outdated",
+		signedInAtOpen: Boolean(owner),
 		store,
 		dictionary: buildDictionary(bundle),
 		prefs,

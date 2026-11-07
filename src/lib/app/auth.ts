@@ -67,7 +67,12 @@ export function startAuth(
 	});
 	const leave = { db: runtime.db, client: auth.client, reload: runtime.reload, notify };
 	// Before the callback exchanges its code there is no session, so the check would ask about the old one.
-	if (!signingIn) void settleOnOpen({ ...leave, online: navigator.onLine });
+	if (!signingIn)
+		void settleOnOpen({
+			...leave,
+			online: navigator.onLine,
+			signedIn: runtime.signedInAtOpen
+		});
 	let stop: (() => void) | null = null;
 	auth.client.auth.onAuthStateChange((_event, session) => {
 		const user = session?.user ?? null;
@@ -175,13 +180,14 @@ async function leaveIfRemoved(deps: Leave, sessionId?: string | null): Promise<v
  */
 export async function settleOnOpen({
 	online,
+	signedIn,
 	limitMs = 3_000,
 	...deps
-}: Leave & { online: boolean; limitMs?: number }): Promise<void> {
+}: Leave & { online: boolean; signedIn: boolean; limitMs?: number }): Promise<void> {
 	if (!online) return;
 	// A guest has nothing to check, so its screens never blank out while it opens.
-	const owner = await readMeta<string>(deps.db, "ownerUserId").catch(() => undefined);
-	if (!owner) return;
+	if (!signedIn) return;
+	// No await before this line: the browser could paint the screens in that gap, then blank them.
 	settlingStore.setState({ active: true });
 	let timer: ReturnType<typeof setTimeout> | undefined;
 	try {

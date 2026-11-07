@@ -24,6 +24,20 @@ describe("runtime", () => {
 		expect(second).toBe(first);
 	});
 
+	test("knows a device that belongs to an account before it reports ready", async () => {
+		const db = freshDb();
+		await db.sync_meta.put({ key: "ownerUserId", value: "user-1" });
+		const status = await bootRuntime({ ...deps(), openDb: () => db });
+		if (status.status !== "ready") throw new Error("not ready");
+		expect(status.runtime.signedInAtOpen).toBe(true);
+	});
+
+	test("treats a device without an account as a guest", async () => {
+		const status = await bootRuntime(deps());
+		if (status.status !== "ready") throw new Error("not ready");
+		expect(status.runtime.signedInAtOpen).toBe(false);
+	});
+
 	test("reports content that cannot load", async () => {
 		const status = await bootRuntime({
 			...deps(),
