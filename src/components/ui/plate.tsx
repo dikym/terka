@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const SIZE = {
 	sm: "gap-[0.3em] px-[9px] py-1 text-[19px] tracking-[0.05em]",
 	md: "gap-[0.35em] px-4.5 py-2.5 text-display tracking-plate",
@@ -35,14 +37,15 @@ export function Plate({
 	);
 }
 
-export function Wordmark() {
+export function Wordmark({ className = "h-[31px]" }: { className?: string }) {
 	return (
-		<span className="flex">
-			<span className="inline-flex items-center gap-[0.3em] rounded-sm border-2 border-ink-1000 bg-paper-0 px-[9px] py-1 font-plate text-[19px] leading-none font-bold tracking-[0.05em] text-ink-1000">
-				T<span>3</span>
-				<span>RKA</span>
-			</span>
-		</span>
+		<Image
+			src="/terka.svg"
+			alt="Terka"
+			width={358}
+			height={124}
+			className={`block w-auto self-start ${className}`}
+		/>
 	);
 }
 

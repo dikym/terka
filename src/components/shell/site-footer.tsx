@@ -1,4 +1,5 @@
 import { Icon, type IconName } from "@/components/ui/icon";
+import { Wordmark } from "@/components/ui/plate";
 import { SITE_WRAP } from "@/components/shell/site-header";
 
 const LINKS: { icon: IconName; label: string; href: string }[] = [
@@ -15,10 +16,7 @@ export function SiteFooter() {
 				className={`${SITE_WRAP} flex flex-col gap-5 pt-8 pb-10 lg:flex-row lg:flex-wrap lg:items-center lg:justify-between lg:py-8`}
 			>
 				<div className="flex flex-col items-start gap-3 lg:flex-row lg:flex-wrap lg:items-center lg:gap-4">
-					<span className="inline-flex items-center gap-[0.3em] rounded-sm border-2 border-ink-1000 px-2 py-0.75 font-plate text-body-lg leading-none font-bold tracking-wider text-ink-1000">
-						T<span>3</span>
-						<span>RKA</span>
-					</span>
+					<Wordmark className="h-[26px]" />
 					<span className="text-body-sm leading-[1.4] text-ink-500">
 						Dikembangkan mandiri.
 					</span>
