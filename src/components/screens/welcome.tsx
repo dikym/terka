@@ -73,10 +73,7 @@ function WelcomeBody({
 					) : (
 						<Link
 							href="/tentang"
-							onClick={() => {
-								markLegalOrigin(false);
-								onSkip?.();
-							}}
+							onClick={() => markLegalOrigin(false)}
 							className="inline-flex items-center gap-1.5 font-display text-body-sm leading-none font-semibold text-ink-1000 underline underline-offset-[3px]"
 						>
 							Tentang Terka

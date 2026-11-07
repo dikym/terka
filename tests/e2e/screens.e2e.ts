@@ -52,6 +52,37 @@ test("the landing page starts with the placement test, through one button", asyn
 	await expect(welcome.getByText("Tes penempatan", { exact: true })).toBeVisible();
 });
 
+test.describe("the about link on the welcome screen", () => {
+	// Requests a service worker answers never reach page.route.
+	test.use({ serviceWorkers: "block" });
+
+	test("covers the home screen until the page opens, and back returns to the welcome", async ({
+		page
+	}) => {
+		let release = () => {};
+		const held = new Promise<void>((resolve) => {
+			release = resolve;
+		});
+		await page.route(/\/tentang[./]/, async (route) => {
+			await held;
+			await route.continue();
+		});
+
+		await page.goto("/beranda");
+		const welcome = page.getByRole("dialog", { name: "Terka" });
+		await welcome.getByRole("link", { name: "Tentang Terka" }).click();
+		await expect(welcome).toBeVisible();
+
+		release();
+		await expect(page.getByRole("heading", { level: 1, name: "Tentang Terka" })).toBeVisible();
+		await expect(welcome).toBeHidden();
+
+		await page.goBack();
+		await expect(page).toHaveURL(/\/beranda$/);
+		await expect(welcome).toBeVisible();
+	});
+});
+
 test("a returning visitor opening the landing page goes straight to the home screen", async ({
 	page
 }) => {
