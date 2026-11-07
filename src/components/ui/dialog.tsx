@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Button } from "@/components/ui/button";
 import { FadeScroll } from "@/components/ui/fade-scroll";
@@ -11,6 +11,9 @@ import { useSheetDrag } from "@/components/ui/use-sheet-drag";
 import { useVisualViewportFit } from "@/components/ui/use-visual-viewport-fit";
 
 export const typedMatches = (word: string, value: string) => value !== "" && value === word;
+
+// The longest exit animation, `animate-sheet-out`, and a little over.
+const EXIT_MS = 200;
 
 // The disabled final button turns grey instead of fading, so it reads as not yet allowed.
 const DISABLED_GREY =
@@ -37,6 +40,50 @@ const isTextField = (target: EventTarget | null): target is HTMLElement =>
 	target instanceof HTMLTextAreaElement ||
 	(target instanceof HTMLInputElement &&
 		!["checkbox", "radio", "button", "file"].includes(target.type));
+
+/**
+ * Plays a dialog's exit on a copy left in the page, because the callers unmount it outright and
+ * have no closing state to wait for. The copy is only a picture: nothing can reach or read it.
+ */
+function useExitClone(
+	root: React.RefObject<HTMLElement | null>,
+	panel: React.RefObject<HTMLElement | null>
+) {
+	useLayoutEffect(() => {
+		const element = root.current;
+		const sheet = panel.current;
+		if (!element || !sheet) return;
+		return () => {
+			// A sheet swiped away has already left the screen.
+			if (sheet.style.transform) return;
+			const copy = element.cloneNode(true) as HTMLElement;
+			copy.dataset.dialogGhost = "";
+			copy.inert = true;
+			copy.setAttribute("aria-hidden", "true");
+			copy.classList.add("pointer-events-none");
+			for (const node of copy.querySelectorAll("[id], [role]")) {
+				node.removeAttribute("id");
+				node.removeAttribute("role");
+			}
+			const [shade, front] = copy.children;
+			shade.classList.replace("animate-fade-in", "animate-fade-out");
+			front.classList.replace("animate-sheet-in", "animate-sheet-out");
+			front.classList.replace("lg:animate-dialog-in", "lg:animate-dialog-out");
+			const nodes = [...sheet.querySelectorAll("*")];
+			const scrolled = nodes.map((node) => node.scrollTop);
+			// StrictMode's simulated unmount keeps the element on the page; a real one has removed it.
+			queueMicrotask(() => {
+				if (element.isConnected) return;
+				document.body.append(copy);
+				const copies = copy.children[1].querySelectorAll("*");
+				scrolled.forEach((top, index) => {
+					if (top) copies[index].scrollTop = top;
+				});
+				setTimeout(() => copy.remove(), EXIT_MS);
+			});
+		};
+	}, [root, panel]);
+}
 
 /**
  * The scrim and panel shared by every dialog. On a phone the panel is a bottom sheet with a
@@ -72,6 +119,7 @@ function Overlay({
 		if (!locked) onDismiss();
 	};
 	useSheetDrag(panel, scrim, dismiss, locked);
+	useExitClone(root, panel);
 	const latest = useRef(dismiss);
 	useEffect(() => {
 		latest.current = dismiss;
