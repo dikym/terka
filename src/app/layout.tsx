@@ -4,6 +4,7 @@ import "@/app/globals.css";
 import { InstallStatus } from "@/app/install-status";
 import { OptimizerOnIdle } from "@/app/optimizer-on-idle";
 import { PageViews } from "@/app/page-views";
+import { SkeletonSync } from "@/components/ui/skeleton-sync";
 import { ToastHost } from "@/components/ui/toast";
 import { LEGAL_FROM_SETTINGS, WELCOME_SEEN } from "@/lib/flag-keys";
 
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 			<body>
 				<InstallStatus />
 				{children}
+				<SkeletonSync />
 				<ToastHost />
 				<OptimizerOnIdle />
 				<PageViews />
