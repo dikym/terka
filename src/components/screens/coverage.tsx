@@ -71,7 +71,7 @@ function Row({
 	const Tag = onClick ? "button" : "div";
 	return (
 		<div
-			className={`flex min-h-12 items-center gap-3 rounded-sm text-left ${INDENT[indent]} ${look}`}
+			className={`flex min-h-12 items-center gap-3 rounded-sm text-left ${indent === 2 ? "animate-fade-in" : ""} ${INDENT[indent]} ${look}`}
 		>
 			{chevron && (
 				<button
