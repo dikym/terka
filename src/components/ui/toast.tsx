@@ -1,8 +1,23 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useSyncExternalStore } from "react";
-import { dismissToast, type ToastItem, type ToastTone, toastStore } from "@/lib/toasts";
+import {
+	useCallback,
+	useEffect,
+	useLayoutEffect,
+	useRef,
+	useState,
+	useSyncExternalStore
+} from "react";
+import {
+	dismissToast,
+	pauseToasts,
+	resumeToasts,
+	stackLayout,
+	type ToastItem,
+	type ToastTone,
+	toastStore
+} from "@/lib/toasts";
 import { Icon, type IconName } from "@/components/ui/icon";
 
 const TONE: Record<ToastTone, { box: string; text: string; icon: string; glyph: IconName }> = {
@@ -32,12 +47,23 @@ const TONE: Record<ToastTone, { box: string; text: string; icon: string; glyph: 
 	}
 };
 
-export function Toast({ toast, onClose }: { toast: ToastItem; onClose: () => void }) {
+const roleOf = (tone: ToastTone) => (tone === "danger" ? "alert" : "status");
+
+export function Toast({
+	toast,
+	onClose,
+	muted = false
+}: {
+	toast: ToastItem;
+	onClose: () => void;
+	/** Behind the front card: only its coloured edge shows. */
+	muted?: boolean;
+}) {
 	const tone = TONE[toast.tone];
 	return (
 		<div
-			role={toast.tone === "danger" ? "alert" : "status"}
-			className={`inline-flex w-full max-w-120 items-start gap-3 rounded-md border py-3 pr-2 pl-4 shadow-overlay lg:w-max ${tone.box}`}
+			role={roleOf(toast.tone)}
+			className={`flex w-full items-start gap-3 rounded-md border py-3 pr-2 pl-4 shadow-overlay *:transition-opacity *:duration-200 ${muted ? "*:opacity-0" : ""} ${tone.box}`}
 		>
 			<Icon name={toast.icon ?? tone.glyph} size={18} color={tone.icon} className="mt-px" />
 			<div className="flex min-w-0 flex-1 flex-col gap-0.5">
@@ -73,6 +99,59 @@ export function Toast({ toast, onClose }: { toast: ToastItem; onClose: () => voi
 	);
 }
 
+function ToastCard({
+	toast,
+	card,
+	height,
+	layer,
+	onMeasure
+}: {
+	toast: ToastItem;
+	card: { y: number; scale: number; clamp: number | null };
+	height: number | undefined;
+	layer: number;
+	onMeasure: (id: number, height: number | null) => void;
+}) {
+	const body = useRef<HTMLDivElement>(null);
+	useLayoutEffect(() => {
+		const element = body.current;
+		if (!element) return;
+		const measure = () => onMeasure(toast.id, element.offsetHeight);
+		measure();
+		const observer = new ResizeObserver(measure);
+		observer.observe(element);
+		return () => {
+			observer.disconnect();
+			onMeasure(toast.id, null);
+		};
+	}, [toast.id, onMeasure]);
+	// A focused button about to leave the page would otherwise hold the stack open.
+	useEffect(() => {
+		const focused = document.activeElement;
+		if (toast.leaving && focused instanceof HTMLElement && body.current?.contains(focused))
+			focused.blur();
+	}, [toast.leaving]);
+	const inert = card.clamp !== null || toast.leaving;
+	return (
+		<div
+			className={`absolute inset-x-0 bottom-0 origin-top transition-[transform,height] duration-200 ease-out ${card.clamp !== null ? "overflow-hidden" : ""} ${inert ? "pointer-events-none" : ""}`}
+			style={{
+				transform: `translateY(${-card.y}px) scale(${card.scale})`,
+				height: card.clamp ?? height,
+				zIndex: layer
+			}}
+		>
+			<div ref={body} className={toast.leaving ? "animate-toast-out" : "animate-toast-in"}>
+				<Toast
+					toast={toast}
+					muted={card.clamp !== null}
+					onClose={() => dismissToast(toast.id)}
+				/>
+			</div>
+		</div>
+	);
+}
+
 const NONE: ToastItem[] = [];
 
 /** Every status message of the app, bottom right of the screen; one per page. */
@@ -84,15 +163,81 @@ export function ToastHost() {
 		() => toastStore.getState().items,
 		() => NONE
 	);
-	if (!items.length) return null;
+	const root = useRef<HTMLDivElement>(null);
+	const [hover, setHover] = useState(false);
+	const [focus, setFocus] = useState(false);
+	const [tap, setTap] = useState(false);
+	const [heights, setHeights] = useState<Record<number, number>>({});
+	const measure = useCallback((id: number, height: number | null) => {
+		setHeights((current) => {
+			if (height === null) {
+				const { [id]: _gone, ...rest } = current;
+				return rest;
+			}
+			return current[id] === height ? current : { ...current, [id]: height };
+		});
+	}, []);
+
+	const live = items.filter((item) => !item.leaving).length;
+	// Closing the last toast under the pointer shrinks the host with no `pointerleave` to follow.
+	if (live === 0 && (hover || focus)) {
+		setHover(false);
+		setFocus(false);
+	}
+	if (live <= 1 && tap) setTap(false);
+
+	const spread = hover || focus || tap;
+	useEffect(() => {
+		if (spread) pauseToasts();
+		else resumeToasts();
+	}, [spread]);
+	useEffect(() => {
+		if (!tap) return;
+		const onDown = (event: PointerEvent) => {
+			if (!root.current?.contains(event.target as Node)) setTap(false);
+		};
+		document.addEventListener("pointerdown", onDown);
+		return () => document.removeEventListener("pointerdown", onDown);
+	}, [tap]);
+
+	const layout = stackLayout(items, heights, spread);
+	// In a stable order: moving a DOM node, as a toast replaced by key would, restarts its animation.
+	const byAge = [...items].sort((a, b) => a.id - b.id);
 	return (
 		// On a phone the stack spans the screen and sits 16 px above the tab bar; on desktop it
-		// sits 24 px from the right and bottom edges.
+		// sits 24 px from the right and bottom edges. Its box covers the gaps between spread cards,
+		// so moving the pointer across them does not collapse the stack.
 		<div
-			className={`fixed inset-x-4 z-50 flex flex-col items-end gap-3 lg:inset-x-auto lg:right-6 lg:bottom-6 ${bare ? "bottom-[calc(--spacing(4)+env(safe-area-inset-bottom))]" : "bottom-[calc(--spacing(19)+env(safe-area-inset-bottom))]"}`}
+			ref={root}
+			style={{ height: layout.height }}
+			onPointerEnter={(event) => {
+				if (event.pointerType === "mouse") setHover(true);
+			}}
+			onPointerLeave={(event) => {
+				if (event.pointerType === "mouse") setHover(false);
+			}}
+			onPointerUp={(event) => {
+				const onButton = (event.target as Element).closest("button");
+				if (event.pointerType !== "mouse" && live > 1 && !onButton) setTap(true);
+			}}
+			onFocus={(event) => {
+				if (event.target.matches(":focus-visible")) setFocus(true);
+			}}
+			onBlur={(event) => {
+				if (!event.currentTarget.contains(event.relatedTarget)) setFocus(false);
+			}}
+			className={`fixed inset-x-4 z-50 ml-auto max-w-120 lg:inset-x-auto lg:right-6 lg:bottom-6 lg:w-100 ${bare ? "bottom-[calc(--spacing(4)+env(safe-area-inset-bottom))]" : "bottom-[calc(--spacing(19)+env(safe-area-inset-bottom))]"}`}
 		>
-			{items.map((toast) => (
-				<Toast key={toast.id} toast={toast} onClose={() => dismissToast(toast.id)} />
+			{byAge.map((toast) => (
+				<ToastCard
+					// Screen readers may not announce a role that changes on a node already on the page.
+					key={`${toast.id}-${roleOf(toast.tone)}`}
+					toast={toast}
+					card={layout.cards[toast.id]}
+					height={heights[toast.id]}
+					layer={items.indexOf(toast)}
+					onMeasure={measure}
+				/>
 			))}
 		</div>
 	);
