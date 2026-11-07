@@ -99,6 +99,11 @@ export function Toast({
 	);
 }
 
+const SWIPE_SLOP = 8;
+const SWIPE_DISTANCE = 80;
+const SWIPE_VELOCITY = 0.5;
+const FLICK_DISTANCE = 24;
+
 function ToastCard({
 	toast,
 	card,
@@ -132,6 +137,26 @@ function ToastCard({
 			focused.blur();
 	}, [toast.leaving]);
 	const inert = card.clamp !== null || toast.leaving;
+	const swipe = useRef<{ x: number; time: number; offset: number } | null>(null);
+	const settle = (element: HTMLElement, transform: string, opacity: string) => {
+		element.style.transition = "transform 160ms ease-out, opacity 160ms ease-out";
+		element.style.transform = transform;
+		element.style.opacity = opacity;
+	};
+	const endSwipe = (event: React.PointerEvent<HTMLElement>, released: boolean) => {
+		const start = swipe.current;
+		swipe.current = null;
+		if (!start?.offset) return;
+		const elapsed = Math.max(1, event.timeStamp - start.time);
+		const far =
+			Math.abs(start.offset) > SWIPE_DISTANCE ||
+			(Math.abs(start.offset) > FLICK_DISTANCE &&
+				Math.abs(start.offset) / elapsed > SWIPE_VELOCITY);
+		if (released && far) {
+			settle(event.currentTarget, `translateX(${Math.sign(start.offset) * 100}%)`, "0");
+			dismissToast(toast.id);
+		} else settle(event.currentTarget, "", "");
+	};
 	return (
 		<div
 			className={`absolute inset-x-0 bottom-0 origin-top transition-[transform,height] duration-200 ease-out ${card.clamp !== null ? "overflow-hidden" : ""} ${inert ? "pointer-events-none" : ""}`}
@@ -142,11 +167,34 @@ function ToastCard({
 			}}
 		>
 			<div ref={body} className={toast.leaving ? "animate-toast-out" : "animate-toast-in"}>
-				<Toast
-					toast={toast}
-					muted={card.clamp !== null}
-					onClose={() => dismissToast(toast.id)}
-				/>
+				<div
+					className="touch-pan-y"
+					onPointerDown={(event) => {
+						// A press that drifts on a button would still click it as the card moves.
+						const onButton = (event.target as Element).closest("button");
+						if (event.pointerType === "mouse" || inert || onButton) return;
+						swipe.current = { x: event.clientX, time: event.timeStamp, offset: 0 };
+					}}
+					onPointerMove={(event) => {
+						const start = swipe.current;
+						if (!start) return;
+						const delta = event.clientX - start.x;
+						if (!start.offset && Math.abs(delta) < SWIPE_SLOP) return;
+						start.offset = delta;
+						const element = event.currentTarget;
+						element.style.transition = "none";
+						element.style.transform = `translateX(${delta}px)`;
+						element.style.opacity = `${1 - Math.abs(delta) / element.offsetWidth}`;
+					}}
+					onPointerUp={(event) => endSwipe(event, true)}
+					onPointerCancel={(event) => endSwipe(event, false)}
+				>
+					<Toast
+						toast={toast}
+						muted={card.clamp !== null}
+						onClose={() => dismissToast(toast.id)}
+					/>
+				</div>
 			</div>
 		</div>
 	);
@@ -164,6 +212,7 @@ export function ToastHost() {
 		() => NONE
 	);
 	const root = useRef<HTMLDivElement>(null);
+	const pressed = useRef({ x: 0, y: 0 });
 	const [hover, setHover] = useState(false);
 	const [focus, setFocus] = useState(false);
 	const [tap, setTap] = useState(false);
@@ -216,9 +265,15 @@ export function ToastHost() {
 			onPointerLeave={(event) => {
 				if (event.pointerType === "mouse") setHover(false);
 			}}
+			onPointerDown={(event) => {
+				pressed.current = { x: event.clientX, y: event.clientY };
+			}}
 			onPointerUp={(event) => {
 				const onButton = (event.target as Element).closest("button");
-				if (event.pointerType !== "mouse" && live > 1 && !onButton) setTap(true);
+				const moved =
+					Math.abs(event.clientX - pressed.current.x) >= SWIPE_SLOP ||
+					Math.abs(event.clientY - pressed.current.y) >= SWIPE_SLOP;
+				if (event.pointerType !== "mouse" && live > 1 && !onButton && !moved) setTap(true);
 			}}
 			onFocus={(event) => {
 				if (event.target.matches(":focus-visible")) setFocus(true);
