@@ -2,9 +2,6 @@ import { Link } from "@/components/ui/app-link";
 import { Wordmark } from "@/components/ui/plate";
 import { SiteHeaderAction } from "@/components/shell/site-header-action";
 
-/** The page column of the public pages: the landing page and the sign-in page. */
-export const SITE_WRAP = "container max-w-280 lg:px-5";
-
 const NAV = [
 	["Cara kerja", "#cara-kerja"],
 	["Bentuk soal", "#bentuk-soal"],
@@ -17,10 +14,8 @@ const NAV = [
  */
 export function SiteHeader({ home = false, signIn = true }: { home?: boolean; signIn?: boolean }) {
 	return (
-		<header className="fixed inset-x-0 top-0 z-30 border-b border-hairline bg-paper-0">
-			<div
-				className={`${SITE_WRAP} flex min-h-15 items-center justify-between gap-3 py-2 lg:gap-4 lg:py-4`}
-			>
+		<header className="fixed inset-x-0 top-0 z-30 h-15 border-b border-hairline bg-paper-0 lg:h-auto">
+			<div className="container flex h-full items-center justify-between gap-3 lg:gap-4 lg:py-4">
 				<Link href="/" aria-label="Terka">
 					<Wordmark />
 				</Link>

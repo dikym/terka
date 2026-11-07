@@ -1,6 +1,5 @@
 import { Icon, type IconName } from "@/components/ui/icon";
 import { Wordmark } from "@/components/ui/plate";
-import { SITE_WRAP } from "@/components/shell/site-header";
 
 const LINKS: { icon: IconName; label: string; href: string }[] = [
 	{ icon: "info", label: "Tentang Terka", href: "/tentang" },
@@ -12,9 +11,7 @@ const LINKS: { icon: IconName; label: string; href: string }[] = [
 export function SiteFooter() {
 	return (
 		<footer className="border-t border-hairline">
-			<div
-				className={`${SITE_WRAP} flex flex-col gap-5 pt-8 pb-10 lg:flex-row lg:flex-wrap lg:items-center lg:justify-between lg:py-8`}
-			>
+			<div className="container flex flex-col gap-5 pt-8 pb-10 lg:flex-row lg:flex-wrap lg:items-center lg:justify-between lg:py-8">
 				<div className="flex flex-col items-start gap-3 lg:flex-row lg:flex-wrap lg:items-center lg:gap-4">
 					<Wordmark className="h-[26px]" />
 					<span className="text-body-sm leading-[1.4] text-ink-500">

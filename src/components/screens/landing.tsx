@@ -1,5 +1,5 @@
 import { SiteFooter } from "@/components/shell/site-footer";
-import { SITE_WRAP as WRAP, SiteHeader } from "@/components/shell/site-header";
+import { SiteHeader } from "@/components/shell/site-header";
 import { Link } from "@/components/ui/app-link";
 import { Button, buttonClass } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -172,9 +172,7 @@ function Hero() {
 	return (
 		<section className="border-b border-hairline">
 			{/* On a phone the demo card sits between the copy and the buttons, so the copy column dissolves into the stack. */}
-			<div
-				className={`${WRAP} flex flex-col gap-8 pt-10 pb-12 lg:grid lg:grid-cols-2 lg:items-center lg:gap-12 lg:pt-16 lg:pb-20`}
-			>
+			<div className="container flex flex-col gap-8 pt-10 pb-12 lg:grid lg:grid-cols-2 lg:items-center lg:gap-12 lg:pt-16 lg:pb-20">
 				<div className="contents lg:flex lg:min-w-0 lg:flex-col lg:gap-6">
 					<div className="flex flex-col gap-5 lg:gap-6">
 						<span className={LABEL}>Latihan hafalan kode pelat nomor Indonesia</span>
@@ -211,7 +209,7 @@ function HowItWorks() {
 			id="cara-kerja"
 			className="scroll-mt-15.25 border-b border-hairline bg-paper-50 lg:scroll-mt-17.25"
 		>
-			<div className={`${WRAP} flex flex-col gap-6 py-12 lg:gap-10 lg:py-16`}>
+			<div className="container flex flex-col gap-6 py-12 lg:gap-10 lg:py-16">
 				<div className="flex max-w-prose flex-col gap-3">
 					<Heading
 						label="Cara kerja"
@@ -259,9 +257,7 @@ function QuestionKinds() {
 			id="bentuk-soal"
 			className="scroll-mt-15.25 border-b border-hairline lg:scroll-mt-17.25"
 		>
-			<div
-				className={`${WRAP} grid gap-6 py-12 lg:grid-cols-2 lg:items-start lg:gap-10 lg:py-16`}
-			>
+			<div className="container grid gap-6 py-12 lg:grid-cols-2 lg:items-start lg:gap-10 lg:py-16">
 				<div className="flex flex-col gap-3 lg:max-w-[40ch]">
 					<Heading label="Bentuk soal" title="Satu kode, ditanya dari berbagai arah." />
 					<p className="text-ink-700 type-body">
@@ -278,9 +274,7 @@ function QuestionKinds() {
 function Tools() {
 	return (
 		<section className="border-b border-hairline">
-			<div
-				className={`${WRAP} grid gap-6 py-12 lg:grid-cols-2 lg:items-start lg:gap-10 lg:py-16`}
-			>
+			<div className="container grid gap-6 py-12 lg:grid-cols-2 lg:items-start lg:gap-10 lg:py-16">
 				<div className="flex flex-col gap-3 lg:max-w-[40ch]">
 					<Heading label="Alat bantu" title="Pantau kemajuan, cari kode kapan saja." />
 					<p className="text-ink-700 type-body">
@@ -297,7 +291,7 @@ function Tools() {
 function Extras() {
 	return (
 		<section className="border-b border-hairline bg-paper-50">
-			<div className={`${WRAP} flex flex-col gap-6 py-12 lg:gap-10 lg:py-16`}>
+			<div className="container flex flex-col gap-6 py-12 lg:gap-10 lg:py-16">
 				<div className="flex max-w-prose flex-col gap-3">
 					<Heading
 						label="Di luar sesi harian"
@@ -332,9 +326,7 @@ function Extras() {
 function Privacy() {
 	return (
 		<section id="data" className="scroll-mt-15.25 border-b border-hairline lg:scroll-mt-17.25">
-			<div
-				className={`${WRAP} grid gap-6 py-12 lg:grid-cols-2 lg:items-start lg:gap-10 lg:py-16`}
-			>
+			<div className="container grid gap-6 py-12 lg:grid-cols-2 lg:items-start lg:gap-10 lg:py-16">
 				<div className="flex flex-col gap-3 lg:max-w-[44ch]">
 					<Heading
 						label="Data dan privasi"
@@ -386,9 +378,7 @@ function Privacy() {
 function Closing() {
 	return (
 		<section className="bg-paper-50">
-			<div
-				className={`${WRAP} flex flex-col gap-5 py-12 lg:flex-row lg:flex-wrap lg:items-center lg:justify-between lg:gap-6 lg:py-16`}
-			>
+			<div className="container flex flex-col gap-5 py-12 lg:flex-row lg:flex-wrap lg:items-center lg:justify-between lg:gap-6 lg:py-16">
 				<div className="flex flex-col gap-3 lg:max-w-[52ch]">
 					<Heading title="Mulai dari tes penempatan" />
 					<p className="text-ink-700 type-body">
@@ -410,7 +400,7 @@ export function Landing() {
 	return (
 		<>
 			<SiteHeader home />
-			<main className="pt-15.25 lg:pt-17.25">
+			<main className="pt-15 lg:pt-17.25">
 				<Hero />
 				<HowItWorks />
 				<QuestionKinds />

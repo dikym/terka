@@ -62,9 +62,11 @@ function WelcomeBody({
 }) {
 	return (
 		<>
-			<header className="border-b border-hairline">
-				<div className="container flex min-h-15 items-center justify-between gap-3 py-2 lg:gap-4 lg:py-4">
-					<Wordmark />
+			<header className="h-15 flex-none border-b border-hairline lg:h-auto">
+				<div className="container flex h-full items-center justify-between gap-3 lg:min-h-17 lg:gap-4">
+					<div>
+						<Wordmark />
+					</div>
 					{ghost ? (
 						<span className="inline-flex items-center gap-1.5 font-display text-body-sm leading-none font-semibold">
 							<Text ghost>Tentang Terka</Text>
