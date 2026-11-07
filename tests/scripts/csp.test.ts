@@ -33,6 +33,16 @@ describe("page content security policy", () => {
 		expect(html).toContain("'sha256-");
 	});
 
+	test("the policy follows a leading charset, before any script", () => {
+		const html = withCsp(
+			'<html><head><meta charSet="utf-8"/><script>self.x=1</script></head></html>'
+		)!;
+		expect(html).toStartWith(
+			'<html><head><meta charSet="utf-8"/><meta http-equiv="Content-Security-Policy"'
+		);
+		expect(html.indexOf("Content-Security-Policy")).toBeLessThan(html.indexOf("<script>"));
+	});
+
 	test("a page without a head is refused", () => {
 		expect(withCsp("<html></html>")).toBeNull();
 	});

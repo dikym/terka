@@ -5,6 +5,7 @@ import { join } from "node:path";
 const SUPABASE = "eviyqszgwjhekywqmhwv.supabase.co";
 const INLINE_SCRIPT = /<script(?![^>]*\ssrc=)[^>]*>([\s\S]*?)<\/script>/g;
 const HEAD_OPEN = "<head>";
+const CHARSET = '<meta charSet="utf-8"/>';
 
 // frame-ancestors is ignored in a meta tag, so vercel.json sends it as a header.
 export function cspFor(scriptHashes: string[]): string {
@@ -34,7 +35,10 @@ export function inlineScriptHashes(html: string): string[] {
 export function withCsp(html: string): string | null {
 	if (!html.includes(HEAD_OPEN)) return null;
 	const tag = `<meta http-equiv="Content-Security-Policy" content="${cspFor(inlineScriptHashes(html))}"/>`;
-	return html.replace(HEAD_OPEN, `${HEAD_OPEN}${tag}`);
+	// The charset must stay within the page's first 1024 bytes, and the policy alone is longer.
+	const opening = `${HEAD_OPEN}${CHARSET}`;
+	const anchor = html.includes(opening) ? opening : HEAD_OPEN;
+	return html.replace(anchor, `${anchor}${tag}`);
 }
 
 // Next.js emits inline scripts, so each page allows exactly the ones it contains instead of 'unsafe-inline'.

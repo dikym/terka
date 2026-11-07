@@ -7,10 +7,23 @@ import { PageViews } from "@/app/page-views";
 import { SkeletonSync } from "@/components/ui/skeleton-sync";
 import { ToastHost } from "@/components/ui/toast";
 import { LEGAL_FROM_SETTINGS, WELCOME_SEEN } from "@/lib/flag-keys";
+import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "@/lib/site-meta";
 
 export const metadata: Metadata = {
+	metadataBase: new URL(SITE_URL),
 	title: "Terka",
-	description: "Lihat pelatnya, terka asalnya.",
+	description: SITE_DESCRIPTION,
+	// "./" resolves to each page's own path, so no page declares another as its original.
+	alternates: { canonical: "./" },
+	openGraph: {
+		title: SITE_TITLE,
+		description: SITE_DESCRIPTION,
+		url: "./",
+		siteName: "Terka",
+		type: "website",
+		locale: "id_ID"
+	},
+	twitter: { card: "summary_large_image" },
 	// iOS otherwise turns email addresses, dates and numbers into underlined links, such as the
 	// account's own email on the Akun screen. Links meant to be tapped are written as links.
 	formatDetection: { email: false, telephone: false, address: false, date: false }
@@ -34,6 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 		// Chrome on iOS adds `__gcrremoteframetoken` to <html> before hydration.
 		<html lang="id" className={fontVariables} suppressHydrationWarning>
 			<head>
+				<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 				{/* Inline, not in the stylesheet: it must apply before the first paint, also in dev. */}
 				<style>{`html[data-welcome="pending"] [data-welcome-skeleton]{display:flex}html[data-returning]{display:none}html[data-legal="app"] [data-legal-public]{display:none}`}</style>
 				<script dangerouslySetInnerHTML={{ __html: FIRST_VISIT }} />
