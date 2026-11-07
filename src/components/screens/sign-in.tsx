@@ -236,7 +236,20 @@ export function SignInForm({ signIn }: { signIn: SignIn }) {
 			{step === "code" && (
 				<>
 					<p className="text-ink-900 type-body">
-						Tautan dan kode masuk dikirim ke {email.trim()}.
+						Tautan dan kode masuk dikirim ke {email.trim()}.{" "}
+						<button
+							type="button"
+							disabled={busy}
+							className="cursor-pointer underline underline-offset-[3px] disabled:cursor-not-allowed disabled:opacity-40"
+							onClick={() => {
+								writePending(null);
+								setCode("");
+								setMessage(null);
+								setStep("choose");
+							}}
+						>
+							Ganti email
+						</button>
 					</p>
 					<form
 						className="flex flex-col gap-4"
