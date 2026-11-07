@@ -1,5 +1,6 @@
 "use client";
 
+import { SyncLabel } from "@/components/ui/feedback";
 import { usePathname } from "next/navigation";
 import { Icon } from "@/components/ui/icon";
 import { Wordmark } from "@/components/ui/plate";
@@ -27,7 +28,7 @@ export function MobileHeader() {
 			<Wordmark />
 			<span className="-mr-2.5 inline-flex items-center">
 				{SYNC_SCREENS.includes(pathname) && (
-					<Tooltip content={label}>
+					<Tooltip content={label && <SyncLabel label={label} />}>
 						<button type="button" aria-label={label} className={ICON_BUTTON}>
 							<Icon name={icon} />
 						</button>

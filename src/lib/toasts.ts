@@ -6,6 +6,8 @@ export type ToastTone = "success" | "info" | "warn" | "danger";
 export type ToastInput = {
 	tone: ToastTone;
 	text: string;
+	/** The text names a process still running, so it ends in pulsing dots. */
+	busy?: boolean;
 	/** A small caps heading above the text, naming the area the message is about. */
 	label?: string;
 	icon?: IconName;

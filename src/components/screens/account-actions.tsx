@@ -73,7 +73,12 @@ export function useAccountActions(runtime: Runtime | null, onChange?: () => void
 					event.target.value = "";
 					if (!chosen || !runtime) return;
 					if (fromMenu.current)
-						showToast({ tone: "info", text: "Mengimpor data...", key: "import" });
+						showToast({
+							tone: "info",
+							text: "Mengimpor data",
+							busy: true,
+							key: "import"
+						});
 					void during("import", async () => {
 						const message = importMessage(await importFile(runtime, chosen));
 						showToast({
@@ -235,7 +240,7 @@ export function useAccountActions(runtime: Runtime | null, onChange?: () => void
 		exportData: () => void during("export", exportData),
 		exportFromMenu: () => {
 			if (!runtime) return;
-			showToast({ tone: "info", text: "Mengekspor data...", key: "export" });
+			showToast({ tone: "info", text: "Mengekspor data", busy: true, key: "export" });
 			void during("export", exportData);
 		},
 		importData: () => {

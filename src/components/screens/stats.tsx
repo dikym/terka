@@ -3,13 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { CodeLink } from "@/components/ui/code-chip";
 import {
-	BusyText,
 	Dot,
 	Pill,
 	ProgressBar,
 	Skeleton,
 	SkeletonText,
-	skeletonWidth
+	skeletonWidth,
+	SyncLabel
 } from "@/components/ui/feedback";
 import { FadeScroll } from "@/components/ui/fade-scroll";
 import { GROUP_TEXT } from "@/components/ui/groups";
@@ -610,7 +610,7 @@ function Sync({
 										width={skeletonWidth("Tersinkron 3 menit lalu")}
 									/>
 								) : (
-									<BusyText>{copy}</BusyText>
+									<SyncLabel label={copy} />
 								)}
 							</span>
 						</div>

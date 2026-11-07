@@ -77,11 +77,11 @@ export default function Page() {
 					<Card>
 						<CardHeader label="Akun" title="Masuk" />
 						<p className="text-ink-900 type-body">
-							<BusyText>
-								{outcome?.kind === "message"
-									? outcome.text
-									: "Menyelesaikan masuk…"}
-							</BusyText>
+							{outcome?.kind === "message" ? (
+								outcome.text
+							) : (
+								<BusyText>Menyelesaikan masuk</BusyText>
+							)}
 						</p>
 						{!outcome && (
 							<div aria-hidden="true" className="flex flex-col gap-2">

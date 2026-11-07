@@ -72,7 +72,7 @@ export function Toast({
 					<span className={`leading-[20px]! type-label ${tone.text}`}>{toast.label}</span>
 				)}
 				<span className="font-sans text-body-md leading-[20px] font-medium text-ink-900">
-					<BusyText>{toast.text}</BusyText>
+					{toast.busy ? <BusyText>{toast.text}</BusyText> : toast.text}
 				</span>
 			</div>
 			{toast.action && (

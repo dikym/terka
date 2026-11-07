@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
-import { BusyText, Skeleton, SkeletonText } from "@/components/ui/feedback";
+import { Skeleton, SkeletonText, SyncLabel } from "@/components/ui/feedback";
 import { Icon } from "@/components/ui/icon";
 import { PageTitle } from "@/components/ui/page-title";
 import { DotLabel } from "@/components/ui/tag";
@@ -247,7 +247,7 @@ export function AccountScreen({
 							>
 								<span className="text-ink-900 type-body">
 									{page ? (
-										<BusyText>{page.synced}</BusyText>
+										<SyncLabel label={page.synced} />
 									) : (
 										<SkeletonText width="12em" />
 									)}

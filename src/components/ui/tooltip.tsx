@@ -1,6 +1,5 @@
 "use client";
 
-import { BusyText } from "@/components/ui/feedback";
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -32,7 +31,7 @@ export function Tooltip({
 	className = "inline-flex",
 	children
 }: {
-	content: string;
+	content: React.ReactNode;
 	/** A keyboard shortcut shown after the text. */
 	kbd?: string;
 	/** "start" lines the tooltip up with the trigger's left edge, for text labels. */
@@ -165,7 +164,7 @@ export function Tooltip({
 						style={{ visibility: "hidden" }}
 						className="pointer-events-none fixed z-60 inline-flex max-w-72 animate-fade-in items-center gap-2 rounded-sm border border-ink-1000 bg-paper-0 px-2.5 py-1.5 font-sans text-body-sm leading-4 font-medium text-ink-900 shadow-overlay"
 					>
-						<BusyText>{content}</BusyText>
+						{content}
 						{kbd && (
 							<kbd className="rounded-xs border border-ink-300 px-1.25 py-0.75 font-mono text-micro leading-none font-medium text-ink-1000">
 								{kbd}

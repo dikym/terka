@@ -2,6 +2,8 @@ import type { SyncStatus } from "@/lib/sync/status";
 import { ACTIVE_DEVICE_DAYS, ACTIVE_DEVICE_LIMIT } from "@/rules";
 import { ago } from "@/lib/view/format";
 
+export const SYNCING_LABEL = "Menyinkronkan…";
+
 /** One line for the sync chip and the account screen. */
 export function syncLabel(
 	status: SyncStatus | null,
@@ -10,7 +12,7 @@ export function syncLabel(
 	syncing = false
 ): string {
 	if (!signedIn) return "Tersimpan di perangkat ini";
-	if (!status || syncing) return "Menyinkronkan…";
+	if (!status || syncing) return SYNCING_LABEL;
 	switch (status.state) {
 		case "synced":
 			return status.lastSyncAt === null

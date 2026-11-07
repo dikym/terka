@@ -1,3 +1,5 @@
+import { SYNCING_LABEL } from "@/lib/view/sync-label";
+
 export function ProgressBar({
 	value,
 	color = "bg-ink-1000",
@@ -84,16 +86,19 @@ export function BusyDots() {
 	);
 }
 
-/** Shows a message's trailing ellipsis as pulsing dots; other text stays as it is. */
+/** Text for a process being waited on, without its dots. */
 export function BusyText({ children }: { children: string }) {
-	const stem = children.match(/^(.*)(?:…|\.\.\.)$/)?.[1];
-	if (stem === undefined) return children;
 	return (
 		<>
-			{stem}
+			{children}
 			<BusyDots />
 		</>
 	);
+}
+
+/** A sync status line; only the syncing one is waiting on anything. */
+export function SyncLabel({ label }: { label: string }) {
+	return label === SYNCING_LABEL ? <BusyText>{label.slice(0, -1)}</BusyText> : label;
 }
 
 /** A pulsing placeholder; give it the size of what it stands in for. */
