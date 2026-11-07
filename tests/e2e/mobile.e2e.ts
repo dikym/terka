@@ -165,6 +165,23 @@ test.describe("map gestures", () => {
 		await expect(wrap.getByText("100%", { exact: true })).toBeVisible();
 	});
 
+	test("the zoom buttons round their outer ends along the phone's row", async ({ page }) => {
+		await openMap(page);
+		const corners = (name: string) =>
+			page.getByRole("button", { name }).evaluate((button) => {
+				const style = getComputedStyle(button);
+				return [
+					style.borderTopLeftRadius,
+					style.borderTopRightRadius,
+					style.borderBottomRightRadius,
+					style.borderBottomLeftRadius
+				];
+			});
+		expect(await corners("Perbesar")).toEqual(["4px", "0px", "0px", "4px"]);
+		expect(await corners("Perkecil")).toEqual(["0px", "0px", "0px", "0px"]);
+		expect(await corners("Kembalikan ukuran")).toEqual(["0px", "4px", "4px", "0px"]);
+	});
+
 	const noSelection = async (page: Page) => {
 		// Long enough for a selection, if one was coming, to have rendered.
 		await page.waitForTimeout(150);

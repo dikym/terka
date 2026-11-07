@@ -294,14 +294,15 @@ function ZoomButton({
 		// The wrapper is the button group's child, so the dividing borders sit on it.
 		<LabelTip
 			content={label}
-			className="flex border-0 border-ink-200 not-first:border-l lg:not-first:border-t lg:not-first:border-l-0"
+			className="group/zoom flex border-0 border-ink-200 not-first:border-l lg:not-first:border-t lg:not-first:border-l-0"
 		>
 			<button
 				type="button"
 				aria-label={label}
 				disabled={disabled}
 				onClick={onClick}
-				className="grid size-7.5 cursor-pointer place-items-center bg-paper-0 hover:bg-paper-50 focus-visible:outline-offset-[-3px] lg:size-10"
+				// The focus outline takes its corners from these, tightened by its inset.
+				className="grid size-7.5 cursor-pointer place-items-center bg-paper-0 hover:bg-paper-50 focus-visible:outline-offset-[-3px] max-lg:group-first/zoom:rounded-l-sm max-lg:group-last/zoom:rounded-r-sm lg:size-10 lg:group-first/zoom:rounded-t-sm lg:group-last/zoom:rounded-b-sm"
 			>
 				<Icon
 					name={icon}

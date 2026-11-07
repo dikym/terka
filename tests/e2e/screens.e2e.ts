@@ -990,6 +990,25 @@ test("the map skeleton cannot be zoomed by wheel, button or keyboard", async ({ 
 	await expect(wrap.getByText("160%", { exact: true })).toBeVisible();
 });
 
+test("the zoom buttons round their outer ends down the desktop column", async ({ page }) => {
+	await seen(page);
+	await page.goto("/statistik/peta");
+	await expect(page.locator("path#bali")).toBeAttached();
+	const corners = (name: string) =>
+		page.getByRole("button", { name }).evaluate((button) => {
+			const style = getComputedStyle(button);
+			return [
+				style.borderTopLeftRadius,
+				style.borderTopRightRadius,
+				style.borderBottomRightRadius,
+				style.borderBottomLeftRadius
+			];
+		});
+	expect(await corners("Perbesar")).toEqual(["4px", "4px", "0px", "0px"]);
+	expect(await corners("Perkecil")).toEqual(["0px", "0px", "0px", "0px"]);
+	expect(await corners("Kembalikan ukuran")).toEqual(["0px", "0px", "4px", "4px"]);
+});
+
 test("a right click on a map province stays on the map", async ({ page }) => {
 	await seen(page);
 	await page.goto("/statistik/peta");
