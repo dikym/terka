@@ -60,6 +60,7 @@ export type AccountActions = {
 	resetProgress: () => void;
 	deleteAccount: () => void;
 	removeDevice: (id: string, name: string) => void;
+	working: string | null;
 };
 
 const block = (className: string) => <Skeleton className={`block rounded-sm ${className}`} />;
@@ -150,13 +151,21 @@ function TransferCard({
 			<div className="flex items-center gap-3">
 				{ready ? (
 					<>
-						<Button size="sm" icon="download" onClick={actions.exportData}>
+						<Button
+							size="sm"
+							icon="download"
+							loading={actions.working === "export"}
+							busyLabel="Mengekspor"
+							onClick={actions.exportData}
+						>
 							Ekspor data
 						</Button>
 						<Button
 							variant="secondary"
 							size="sm"
 							icon="upload"
+							loading={actions.working === "import"}
+							busyLabel="Mengimpor"
 							onClick={actions.importData}
 						>
 							Impor data

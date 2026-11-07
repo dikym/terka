@@ -48,6 +48,7 @@ function Overlay({
 	labelledBy,
 	describedBy,
 	onDismiss,
+	locked = false,
 	padded = true,
 	children
 }: {
@@ -55,6 +56,7 @@ function Overlay({
 	labelledBy: string;
 	describedBy?: string;
 	onDismiss: () => void;
+	locked?: boolean;
 	/** False for the modal, whose header and body carry their own padding. */
 	padded?: boolean;
 	children: React.ReactNode;
@@ -65,10 +67,14 @@ function Overlay({
 	useVisualViewportFit(root);
 	useFocusTrap(panel);
 	useScrollLock();
-	useSheetDrag(panel, scrim, onDismiss);
-	const latest = useRef(onDismiss);
+	// While its work runs the dialog holds, so the outcome is not lost behind a closed panel.
+	const dismiss = () => {
+		if (!locked) onDismiss();
+	};
+	useSheetDrag(panel, scrim, dismiss, locked);
+	const latest = useRef(dismiss);
 	useEffect(() => {
-		latest.current = onDismiss;
+		latest.current = dismiss;
 	});
 	useEffect(() => {
 		const sheet = panel.current;
@@ -115,8 +121,8 @@ function Overlay({
 			<div
 				ref={scrim}
 				aria-hidden="true"
-				onClick={onDismiss}
-				className="absolute inset-x-0 top-0 -bottom-[100lvh] touch-none bg-[oklch(0.14_0.012_60/0.45)]"
+				onClick={dismiss}
+				className="absolute inset-x-0 top-0 -bottom-[100lvh] animate-fade-in touch-none bg-[oklch(0.14_0.012_60/0.45)]"
 			/>
 			<div
 				ref={panel}
@@ -125,7 +131,7 @@ function Overlay({
 				aria-labelledby={labelledBy}
 				aria-describedby={describedBy}
 				tabIndex={-1}
-				className={`relative flex max-h-[90%] w-full flex-col rounded-t-lg bg-paper-0 shadow-[0_calc(100lvh+12px)_0_100lvh_var(--color-paper-0)] outline-none lg:w-120 lg:rounded-lg lg:border lg:border-ink-1000 lg:shadow-overlay ${padded ? "gap-2 py-3 lg:p-0" : "pb-[env(safe-area-inset-bottom)] lg:pb-0"}`}
+				className={`relative flex max-h-[90%] w-full animate-sheet-in flex-col rounded-t-lg bg-paper-0 shadow-[0_calc(100lvh+12px)_0_100lvh_var(--color-paper-0)] outline-none lg:w-120 lg:animate-dialog-in lg:rounded-lg lg:border lg:border-ink-1000 lg:shadow-overlay ${padded ? "gap-2 py-3 lg:p-0" : "pb-[env(safe-area-inset-bottom)] lg:pb-0"}`}
 			>
 				<span
 					aria-hidden="true"
@@ -208,12 +214,14 @@ export function ConfirmDialog({
 	title,
 	children,
 	safe,
-	destructive
+	destructive,
+	busy = false
 }: {
 	title: string;
 	children: React.ReactNode;
 	safe: { label: string; icon?: Parameters<typeof Button>[0]["icon"]; onClick: () => void };
-	destructive: { label: string; onClick: () => void };
+	destructive: { label: string; busyLabel?: string; onClick: () => void };
+	busy?: boolean;
 }) {
 	const id = useId();
 	return (
@@ -222,6 +230,7 @@ export function ConfirmDialog({
 			labelledBy={id}
 			describedBy={`${id}-text`}
 			onDismiss={safe.onClick}
+			locked={busy}
 		>
 			<div className="flex flex-col gap-2">
 				<Heading id={id}>{title}</Heading>
@@ -232,6 +241,8 @@ export function ConfirmDialog({
 					variant="secondary"
 					size="sm"
 					className="max-lg:w-full"
+					loading={busy}
+					busyLabel={destructive.busyLabel}
 					onClick={destructive.onClick}
 				>
 					{destructive.label}
@@ -241,6 +252,7 @@ export function ConfirmDialog({
 					size="sm"
 					className="max-lg:w-full"
 					data-autofocus
+					disabled={busy}
 					onClick={safe.onClick}
 				>
 					{safe.label}
@@ -258,12 +270,14 @@ export function DangerConfirm({
 	title,
 	children,
 	cancel,
-	confirm
+	confirm,
+	busy = false
 }: {
 	title: string;
 	children: React.ReactNode;
 	cancel: { label: string; onClick: () => void };
-	confirm: { label: string; onClick: () => void };
+	confirm: { label: string; busyLabel?: string; onClick: () => void };
+	busy?: boolean;
 }) {
 	const id = useId();
 	return (
@@ -272,6 +286,7 @@ export function DangerConfirm({
 			labelledBy={id}
 			describedBy={`${id}-text`}
 			onDismiss={cancel.onClick}
+			locked={busy}
 		>
 			<div className="flex flex-col gap-2">
 				<Heading id={id}>{title}</Heading>
@@ -283,6 +298,7 @@ export function DangerConfirm({
 					size="sm"
 					className="max-lg:w-full"
 					data-autofocus
+					disabled={busy}
 					onClick={cancel.onClick}
 				>
 					{cancel.label}
@@ -291,6 +307,8 @@ export function DangerConfirm({
 					variant="stop"
 					size="sm"
 					className="max-lg:w-full"
+					loading={busy}
+					busyLabel={confirm.busyLabel}
 					onClick={confirm.onClick}
 				>
 					{confirm.label}
@@ -307,7 +325,9 @@ export function TypedConfirm({
 	children,
 	confirmLabel,
 	onCancel,
-	onConfirm
+	onConfirm,
+	busy = false,
+	busyLabel
 }: {
 	title: string;
 	word: string;
@@ -315,12 +335,20 @@ export function TypedConfirm({
 	confirmLabel: string;
 	onCancel: () => void;
 	onConfirm: () => void;
+	busy?: boolean;
+	busyLabel?: string;
 }) {
 	const id = useId();
 	const [value, setValue] = useState("");
 	const ready = typedMatches(word, value);
 	return (
-		<Overlay role="alertdialog" labelledBy={id} describedBy={`${id}-text`} onDismiss={onCancel}>
+		<Overlay
+			role="alertdialog"
+			labelledBy={id}
+			describedBy={`${id}-text`}
+			onDismiss={onCancel}
+			locked={busy}
+		>
 			<div className="flex flex-col gap-2">
 				<Heading id={id}>{title}</Heading>
 				<Body id={`${id}-text`}>{children}</Body>
@@ -328,9 +356,10 @@ export function TypedConfirm({
 			<input
 				data-autofocus
 				value={value}
+				readOnly={busy}
 				onChange={(event) => setValue(event.target.value)}
 				onKeyDown={(event) => {
-					if (event.key === "Enter" && ready) onConfirm();
+					if (event.key === "Enter" && ready && !busy) onConfirm();
 				}}
 				aria-label={`Ketik ${word}`}
 				name="confirm-word"
@@ -343,7 +372,13 @@ export function TypedConfirm({
 				className="h-12 w-full rounded-sm border border-ink-1000 bg-paper-0 px-4 font-mono text-body-lg leading-none font-medium tracking-[0.08em] text-ink-1000"
 			/>
 			<div className="flex flex-col-reverse gap-3 lg:flex-row lg:justify-end">
-				<Button variant="secondary" size="sm" className="max-lg:w-full" onClick={onCancel}>
+				<Button
+					variant="secondary"
+					size="sm"
+					className="max-lg:w-full"
+					disabled={busy}
+					onClick={onCancel}
+				>
 					Batal
 				</Button>
 				<Button
@@ -351,6 +386,8 @@ export function TypedConfirm({
 					size="sm"
 					disabled={!ready}
 					aria-disabled={!ready}
+					loading={busy}
+					busyLabel={busyLabel}
 					className={`max-lg:w-full ${DISABLED_GREY}`}
 					onClick={onConfirm}
 				>

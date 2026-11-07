@@ -29,7 +29,7 @@ export function SiteHeader({ home = false, signIn = true }: { home?: boolean; si
 						<a
 							key={hash}
 							href={home ? hash : `/${hash}`}
-							className="font-display text-body-sm leading-none font-semibold text-ink-700 hover:text-ink-1000 max-lg:hidden"
+							className="font-display text-body-sm leading-none font-semibold text-ink-700 transition-colors duration-90 hover:text-ink-1000 max-lg:hidden"
 						>
 							{label}
 						</a>

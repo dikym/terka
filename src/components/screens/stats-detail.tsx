@@ -125,6 +125,7 @@ export function HardCodesScreen({
 	const hardCards = cards ?? [];
 	const [chosen, setChosen] = useState<string | null>(null);
 	const [drafts, setDrafts] = useState<Record<string, string>>({});
+	const [reactivating, setReactivating] = useState(false);
 	const card =
 		hardCards.find((item) => item.cardId === chosen) ??
 		hardCards.find((item) => item.code === initial) ??
@@ -251,19 +252,24 @@ export function HardCodesScreen({
 						{current === "suspended" && (
 							<Button
 								block
-								onClick={() =>
-									void onReactivate(card).then((done) =>
-										showToast(
-											done
-												? {
-														tone: "success",
-														label: "Sulit Dikuasai",
-														text: "Kode ini diaktifkan kembali dan dimulai dari awal."
-													}
-												: { tone: "danger", text: NOT_SAVED }
+								loading={reactivating}
+								busyLabel="Mengaktifkan"
+								onClick={() => {
+									setReactivating(true);
+									void onReactivate(card)
+										.then((done) =>
+											showToast(
+												done
+													? {
+															tone: "success",
+															label: "Sulit Dikuasai",
+															text: "Kode ini diaktifkan kembali dan dimulai dari awal."
+														}
+													: { tone: "danger", text: NOT_SAVED }
+											)
 										)
-									)
-								}
+										.finally(() => setReactivating(false));
+								}}
 							>
 								Aktifkan kembali
 							</Button>

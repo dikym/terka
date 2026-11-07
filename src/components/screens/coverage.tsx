@@ -81,7 +81,11 @@ function Row({
 					aria-label={chevron === "open" ? "Tutup" : "Buka"}
 					className="grid size-6 flex-none cursor-pointer place-items-center"
 				>
-					<Icon name={chevron === "open" ? "chevron-down" : "chevron-right"} size={22} />
+					<Icon
+						name="chevron-right"
+						size={22}
+						className={`transition-transform duration-120 ease-out ${chevron === "open" ? "rotate-90" : ""}`}
+					/>
 				</button>
 			)}
 			<Tag

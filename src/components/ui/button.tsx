@@ -30,6 +30,10 @@ type ButtonProps = {
 	icon?: IconName;
 	kbd?: string;
 	href?: string;
+	/** A slow action is running: the button ignores presses and says so with `busyLabel`. */
+	loading?: boolean;
+	/** What is happening, without the dots. It also sets the width, so the swap shifts nothing. */
+	busyLabel?: string;
 	className?: string;
 	onClick?: () => void;
 } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "className" | "children" | "onClick">;
@@ -40,9 +44,11 @@ export function buttonClass(variant: Variant, size: keyof typeof SIZE, block: bo
 		block ? "flex w-full" : "inline-flex",
 		"items-center justify-center gap-2 rounded-sm border font-display leading-none font-semibold whitespace-nowrap",
 		"transition-[background-color,color,box-shadow,translate] duration-90 ease-out",
-		"cursor-pointer disabled:cursor-not-allowed disabled:opacity-40",
+		"cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 aria-busy:cursor-not-allowed aria-busy:opacity-60 aria-busy:shadow-none",
 		// `not-disabled`, not `enabled`: `:enabled` never matches the links this renders as.
-		pressable ? "not-disabled:active:translate-0.5 not-disabled:active:shadow-none" : "",
+		pressable
+			? "not-disabled:not-aria-busy:active:translate-0.5 not-disabled:not-aria-busy:active:shadow-none"
+			: "",
 		// The focus outline would run into the offset shadow, so the shadow steps aside for it.
 		pressable ? "focus-visible:shadow-none" : "",
 		VARIANT[variant],
@@ -58,12 +64,15 @@ export function Button({
 	icon,
 	kbd,
 	href,
+	loading = false,
+	busyLabel,
+	disabled = false,
 	className = "",
 	type = "button",
 	onClick,
 	...rest
 }: ButtonProps) {
-	const content = (
+	const label = (
 		<>
 			{icon && <Icon name={icon} size={size === "lg" ? 18 : 16} />}
 			<span>{children}</span>
@@ -74,16 +83,52 @@ export function Button({
 			)}
 		</>
 	);
+	const content =
+		busyLabel === undefined ? (
+			label
+		) : (
+			<span className="grid place-items-center *:col-start-1 *:row-start-1">
+				<span className={`inline-flex items-center gap-2 ${loading ? "invisible" : ""}`}>
+					{label}
+				</span>
+				<span className={loading ? undefined : "invisible"}>
+					{busyLabel}
+					<span aria-hidden="true">
+						{loading
+							? [0, 160, 320].map((delay) => (
+									<span
+										key={delay}
+										className="animate-busy-dot"
+										style={{ animationDelay: `${delay}ms` }}
+									>
+										.
+									</span>
+								))
+							: "..."}
+					</span>
+				</span>
+			</span>
+		);
 	const classes = `${buttonClass(variant, size, block)} ${className}`;
 	// A link cannot be disabled, so a disabled target renders as a disabled button.
-	if (href && !rest.disabled)
+	if (href && !disabled && !loading)
 		return (
 			<Link href={href} className={classes} onClick={onClick}>
 				{content}
 			</Link>
 		);
 	return (
-		<button type={type} className={classes} onClick={onClick} {...rest}>
+		// `disabled` would drop keyboard focus for the whole wait, and an emptied dialog would lose its
+		// focus trap, so a busy button stays focusable and ignores presses, Enter in a form included.
+		<button
+			type={type}
+			className={classes}
+			onClick={loading ? (event) => event.preventDefault() : onClick}
+			disabled={disabled && !loading}
+			{...rest}
+			aria-busy={loading || undefined}
+			aria-disabled={loading || rest["aria-disabled"]}
+		>
 			{content}
 		</button>
 	);

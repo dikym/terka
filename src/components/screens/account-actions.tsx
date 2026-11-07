@@ -10,6 +10,7 @@ import { showToast } from "@/lib/toasts";
 import { importMessage } from "@/lib/view/account";
 
 const NOT_SAVED = "Perubahan belum tersimpan. Coba lagi.";
+type Work = "export" | "import" | "signOut" | "device" | "reset" | "delete";
 
 /**
  * Export, import, sign-out and account deletion, shared by the account menu and the account
@@ -24,9 +25,18 @@ export function useAccountActions(runtime: Runtime | null, onChange?: () => void
 		| { kind: "device"; id: string; name: string }
 		| null
 	>(null);
+	const [working, setWorking] = useState<Work | null>(null);
 	const file = useRef<HTMLInputElement>(null);
 	const auth = authClient();
 
+	const during = async (work: Work, task: () => Promise<unknown>) => {
+		setWorking(work);
+		try {
+			await task();
+		} finally {
+			setWorking(null);
+		}
+	};
 	const exportData = async () => {
 		if (!runtime) return;
 		await downloadExport(runtime);
@@ -55,8 +65,8 @@ export function useAccountActions(runtime: Runtime | null, onChange?: () => void
 					const chosen = event.target.files?.[0];
 					event.target.value = "";
 					if (!chosen || !runtime) return;
-					void importFile(runtime, chosen).then((result) => {
-						const message = importMessage(result);
+					void during("import", async () => {
+						const message = importMessage(await importFile(runtime, chosen));
 						showToast({
 							tone: message.tone === "success" ? "success" : "danger",
 							text: message.text,
@@ -69,13 +79,12 @@ export function useAccountActions(runtime: Runtime | null, onChange?: () => void
 			{dialog?.kind === "confirmSignOut" && (
 				<DangerConfirm
 					title="Keluar dari akun?"
+					busy={working === "signOut"}
 					cancel={{ label: "Batal", onClick: () => setDialog(null) }}
 					confirm={{
 						label: "Keluar",
-						onClick: () => {
-							setDialog(null);
-							void leave(false);
-						}
+						busyLabel: "Keluar",
+						onClick: () => void during("signOut", () => leave(false))
 					}}
 				>
 					Keluar menyelesaikan sinkronisasi lebih dulu, lalu menghapus data dari perangkat
@@ -93,7 +102,12 @@ export function useAccountActions(runtime: Runtime | null, onChange?: () => void
 							if (runtime) void syncOnce(runtime).then(onChange);
 						}
 					}}
-					destructive={{ label: "Keluar", onClick: () => void leave(true) }}
+					busy={working === "signOut"}
+					destructive={{
+						label: "Keluar",
+						busyLabel: "Keluar",
+						onClick: () => void during("signOut", () => leave(true))
+					}}
 				>
 					{dialog.pending} perubahan belum tersinkron. Keluar sekarang akan menghapusnya
 					dari perangkat ini.
@@ -102,31 +116,37 @@ export function useAccountActions(runtime: Runtime | null, onChange?: () => void
 			{dialog?.kind === "device" && (
 				<DangerConfirm
 					title="Hapus perangkat"
+					busy={working === "device"}
 					cancel={{ label: "Batal", onClick: () => setDialog(null) }}
 					confirm={{
 						label: "Hapus",
+						busyLabel: "Menghapus",
 						onClick: () => {
 							const { id, name } = dialog;
-							setDialog(null);
-							if (!runtime || !auth) return;
-							void removeDevice(runtime.db, auth.client, id, Date.now()).then(
-								(result) => {
-									// An open removed device syncs on the nudge and leaves at once.
-									if (result.status === "ok") announceChange();
-									showToast(
-										result.status === "ok"
-											? {
-													tone: "success",
-													text: `${name} sudah dikeluarkan dari akun`
-												}
-											: {
-													tone: "danger",
-													text: "Perangkat belum terhapus. Coba lagi."
-												}
-									);
-									onChange?.();
-								}
-							);
+							if (!runtime || !auth) return setDialog(null);
+							void during("device", async () => {
+								const result = await removeDevice(
+									runtime.db,
+									auth.client,
+									id,
+									Date.now()
+								);
+								// An open removed device syncs on the nudge and leaves at once.
+								if (result.status === "ok") announceChange();
+								setDialog(null);
+								showToast(
+									result.status === "ok"
+										? {
+												tone: "success",
+												text: `${name} sudah dikeluarkan dari akun`
+											}
+										: {
+												tone: "danger",
+												text: "Perangkat belum terhapus. Coba lagi."
+											}
+								);
+								onChange?.();
+							});
 						}
 					}}
 				>
@@ -140,28 +160,29 @@ export function useAccountActions(runtime: Runtime | null, onChange?: () => void
 					title="Reset progres"
 					word="RESET"
 					confirmLabel="Reset"
+					busy={working === "reset"}
+					busyLabel="Mereset"
 					onCancel={() => setDialog(null)}
 					onConfirm={() => {
-						setDialog(null);
-						if (!runtime) return;
-						void resetProgress(runtime.db, auth?.client ?? null).then(
-							async (result) => {
-								if (result.status === "ok") {
-									await runtime.reload();
-									announceChange();
-								}
-								showToast(
-									result.status === "ok"
-										? {
-												tone: "success",
-												label: "Progres",
-												text: "Progres direset. Kamu mulai dari awal."
-											}
-										: { tone: "danger", text: NOT_SAVED }
-								);
-								onChange?.();
+						if (!runtime) return setDialog(null);
+						void during("reset", async () => {
+							const result = await resetProgress(runtime.db, auth?.client ?? null);
+							if (result.status === "ok") {
+								await runtime.reload();
+								announceChange();
 							}
-						);
+							setDialog(null);
+							showToast(
+								result.status === "ok"
+									? {
+											tone: "success",
+											label: "Progres",
+											text: "Progres direset. Kamu mulai dari awal."
+										}
+									: { tone: "danger", text: NOT_SAVED }
+							);
+							onChange?.();
+						});
 					}}
 				>
 					Ketik RESET untuk menghapus seluruh riwayat latihan, catatan, dan setelan di
@@ -174,11 +195,14 @@ export function useAccountActions(runtime: Runtime | null, onChange?: () => void
 					title="Hapus akun"
 					word="HAPUS"
 					confirmLabel="Hapus"
+					busy={working === "delete"}
+					busyLabel="Menghapus"
 					onCancel={() => setDialog(null)}
 					onConfirm={() => {
-						setDialog(null);
-						if (!runtime || !auth) return;
-						void deleteAccount(runtime.db, auth.client).then((result) => {
+						if (!runtime || !auth) return setDialog(null);
+						void during("delete", async () => {
+							const result = await deleteAccount(runtime.db, auth.client);
+							setDialog(null);
 							showToast(
 								result.status === "ok"
 									? {
@@ -199,12 +223,13 @@ export function useAccountActions(runtime: Runtime | null, onChange?: () => void
 	);
 
 	return {
-		exportData: () => void exportData(),
+		exportData: () => void during("export", exportData),
 		importData: () => file.current?.click(),
 		signOut: () => setDialog({ kind: "confirmSignOut" }),
 		resetProgress: () => setDialog({ kind: "reset" }),
 		deleteAccount: () => setDialog({ kind: "delete" }),
 		removeDevice: (id: string, name: string) => setDialog({ kind: "device", id, name }),
+		working,
 		dialogs
 	};
 }

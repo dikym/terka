@@ -111,7 +111,7 @@ export function Menu({
 					id={id}
 					role="menu"
 					aria-label={label}
-					className={`absolute z-40 flex flex-col overflow-y-auto rounded-md border border-hairline bg-paper-0 p-1 shadow-overlay ${menuClassName}`}
+					className={`absolute z-40 flex animate-pop-in flex-col overflow-y-auto rounded-md border border-hairline bg-paper-0 p-1 shadow-overlay ${caret === "up" ? "[--pop-from:4px]" : ""} ${menuClassName}`}
 				>
 					{entries.map((entry, position) => {
 						if (entry === "separator")
@@ -135,7 +135,7 @@ export function Menu({
 								tabIndex={-1}
 								onClick={() => pick(at)}
 								onPointerEnter={() => setActive(at)}
-								className={`flex h-11 flex-none cursor-pointer items-center gap-3 rounded-sm px-3 text-left outline-none type-body lg:h-10 ${tone}`}
+								className={`flex h-11 flex-none cursor-pointer items-center gap-3 rounded-sm px-3 text-left transition-colors duration-90 outline-none type-body lg:h-10 ${tone}`}
 							>
 								<Icon
 									name={entry.icon}

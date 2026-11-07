@@ -13,7 +13,10 @@ export function ProgressBar({
 	const percent = Math.max(0, Math.min(100, value));
 	return (
 		<div className={`overflow-hidden rounded-xs bg-ink-100 ${className}`}>
-			<div className={`h-full ${color}`} style={{ width: `${percent}%` }} />
+			<div
+				className={`h-full transition-[width] duration-240 ease-out ${color}`}
+				style={{ width: `${percent}%` }}
+			/>
 		</div>
 	);
 }

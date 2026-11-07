@@ -18,7 +18,7 @@ export function TabBar() {
 						href={href}
 						aria-current={active ? "page" : undefined}
 						// The 3 px top border sits over the bar's hairline.
-						className={`-mt-px flex min-h-15 flex-col items-center justify-center gap-[5px] border-t-3 pt-2 pb-3 font-display text-micro leading-none font-semibold focus-visible:-outline-offset-2 ${active ? "border-t-ink-1000 bg-nav-active text-ink-1000" : "border-t-transparent text-ink-500"}`}
+						className={`-mt-px flex min-h-15 flex-col items-center justify-center gap-[5px] border-t-3 pt-2 pb-3 font-display text-micro leading-none font-semibold transition-colors duration-90 focus-visible:-outline-offset-2 ${active ? "border-t-ink-1000 bg-nav-active text-ink-1000" : "border-t-transparent text-ink-500"}`}
 					>
 						<Icon name={icon} />
 						<span>{label}</span>

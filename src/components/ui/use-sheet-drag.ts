@@ -23,11 +23,12 @@ function scrolledBetween(target: EventTarget | null, panel: HTMLElement) {
 export function useSheetDrag(
 	ref: RefObject<HTMLElement | null>,
 	scrimRef: RefObject<HTMLElement | null>,
-	onDismiss: () => void
+	onDismiss: () => void,
+	locked = false
 ) {
-	const latest = useRef(onDismiss);
+	const latest = useRef({ onDismiss, locked });
 	useEffect(() => {
-		latest.current = onDismiss;
+		latest.current = { onDismiss, locked };
 	});
 	useEffect(() => {
 		const panel = ref.current;
@@ -48,7 +49,7 @@ export function useSheetDrag(
 			scrim.style.opacity = opacity;
 		};
 		const onStart = (event: TouchEvent) => {
-			if (!phone.matches || event.touches.length !== 1) return;
+			if (latest.current.locked || !phone.matches || event.touches.length !== 1) return;
 			clearTimeout(timer);
 			tracking = true;
 			dragging = false;
@@ -90,7 +91,7 @@ export function useSheetDrag(
 			if (offset > DISMISS_DISTANCE || offset / elapsed > DISMISS_VELOCITY) {
 				// A full screen, not the sheet's own height, so it sinks behind the keyboard too.
 				settle("translateY(100lvh)", "0");
-				timer = setTimeout(() => latest.current(), SETTLE_MS);
+				timer = setTimeout(() => latest.current.onDismiss(), SETTLE_MS);
 			} else {
 				settle("", "");
 			}

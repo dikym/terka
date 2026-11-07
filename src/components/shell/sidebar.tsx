@@ -15,7 +15,7 @@ export const NAV: { href: string; label: string; icon: IconName }[] = [
 
 // The ring sits inside the item: items bleed to the sidebar edge, so an outer ring would be clipped.
 const ITEM =
-	"-mx-4 flex min-h-11 cursor-pointer items-center gap-3 border-r-3 px-4 font-display text-body-sm leading-none font-semibold focus-visible:-outline-offset-2";
+	"-mx-4 flex min-h-11 cursor-pointer items-center gap-3 border-r-3 px-4 transition-colors duration-90 font-display text-body-sm leading-none font-semibold focus-visible:-outline-offset-2";
 const ACTIVE = "border-r-ink-1000 bg-nav-active text-ink-1000";
 const IDLE = "border-r-transparent bg-transparent text-ink-500";
 

@@ -127,7 +127,7 @@ function Suggest({
 		<div
 			id={LISTBOX_ID}
 			role="listbox"
-			className="absolute top-[calc(100%+6px)] right-0 left-0 z-20 max-h-80 overflow-y-auto rounded-sm border border-ink-1000 bg-paper-0 shadow-block"
+			className="absolute top-[calc(100%+6px)] right-0 left-0 z-20 max-h-80 animate-pop-in overflow-y-auto rounded-sm border border-ink-1000 bg-paper-0 shadow-block"
 		>
 			{result.diplomats.length > 0 && (
 				<>

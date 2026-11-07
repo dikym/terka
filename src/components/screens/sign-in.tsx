@@ -84,23 +84,38 @@ export function SignInForm({ signIn }: { signIn: SignIn }) {
 	const [step, setStep] = useState<"consent" | "choose" | "code">(pending ? "code" : "consent");
 	const [email, setEmail] = useState(pending?.email ?? "");
 	const [code, setCode] = useState("");
-	const [busy, setBusy] = useState(false);
+	const [running, setRunning] = useState<
+		"accept" | "google" | "send" | "verify" | "resend" | null
+	>(null);
+	const busy = running !== null;
 	const [message, setMessage] = useState<string | null>(null);
 	const resend = useCooldown(pending ? pending.sentAt + EMAIL_RESEND_SECONDS * 1_000 : 0);
 
-	const run = async (work: () => Promise<string | null>) => {
-		setBusy(true);
+	const run = async (name: NonNullable<typeof running>, work: () => Promise<string | null>) => {
+		setRunning(name);
 		setMessage(null);
+		let leaving = false;
 		try {
-			setMessage(await work());
+			const problem = await work();
+			setMessage(problem);
+			// The browser is on its way to Google, so a second press would start a second redirect.
+			leaving = name === "google" && problem === null;
 		} finally {
-			setBusy(false);
+			if (!leaving) setRunning(null);
 		}
 	};
 
+	// Coming back from Google restores this page from the back/forward cache, still busy.
+	useEffect(() => {
+		const onShow = (event: PageTransitionEvent) => {
+			if (event.persisted) setRunning(null);
+		};
+		window.addEventListener("pageshow", onShow);
+		return () => window.removeEventListener("pageshow", onShow);
+	}, []);
 	const submitCode = (value: string) => {
 		if (signIn.blocked || busy || value.length !== 6) return;
-		void run(async () => {
+		void run("verify", async () => {
 			const problem = await signIn.verify(email.trim(), value);
 			if (!problem) writePending(null);
 			return problem;
@@ -126,8 +141,10 @@ export function SignInForm({ signIn }: { signIn: SignIn }) {
 					<Button
 						block
 						disabled={!!signIn.blocked || busy}
+						loading={running === "accept"}
+						busyLabel="Menyimpan"
 						onClick={() =>
-							void run(async () => {
+							void run("accept", async () => {
 								await signIn.accept();
 								setStep("choose");
 								return null;
@@ -162,7 +179,9 @@ export function SignInForm({ signIn }: { signIn: SignIn }) {
 							variant="secondary"
 							block
 							disabled={!!signIn.blocked || busy}
-							onClick={() => void run(signIn.google)}
+							loading={running === "google"}
+							busyLabel="Membuka Google"
+							onClick={() => void run("google", signIn.google)}
 						>
 							<span className="flex items-center gap-2">
 								<GoogleMark />
@@ -179,7 +198,7 @@ export function SignInForm({ signIn }: { signIn: SignIn }) {
 						className="flex flex-col gap-4"
 						onSubmit={(event) => {
 							event.preventDefault();
-							void run(async () => {
+							void run("send", async () => {
 								const problem = await signIn.sendCode(email.trim());
 								if (!problem) {
 									resend.start(EMAIL_RESEND_SECONDS);
@@ -206,6 +225,8 @@ export function SignInForm({ signIn }: { signIn: SignIn }) {
 							variant="secondary"
 							block
 							disabled={!!signIn.blocked || busy || !email.includes("@")}
+							loading={running === "send"}
+							busyLabel="Mengirim"
 						>
 							Kirim tautan dan kode masuk
 						</Button>
@@ -234,6 +255,8 @@ export function SignInForm({ signIn }: { signIn: SignIn }) {
 							type="submit"
 							block
 							disabled={!!signIn.blocked || busy || code.length !== 6}
+							loading={running === "verify"}
+							busyLabel="Memeriksa"
 						>
 							Masuk
 						</Button>
@@ -244,8 +267,10 @@ export function SignInForm({ signIn }: { signIn: SignIn }) {
 						size="sm"
 						className="w-fit bg-transparent tabular-nums"
 						disabled={busy || resend.left > 0}
+						loading={running === "resend"}
+						busyLabel="Mengirim"
 						onClick={() =>
-							void run(async () => {
+							void run("resend", async () => {
 								setCode("");
 								const problem = await signIn.sendCode(email.trim());
 								if (!problem) {
