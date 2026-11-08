@@ -10,6 +10,7 @@ import { DEMO_LENGTH, type DemoQuestion, demoRound } from "@/lib/view/demo-round
 // The same keys the app's four-choice questions use.
 const KEYS = ["F", "G", "H", "J"];
 const subscribeNever = () => () => {};
+const SKELETON = "animate-skl bg-ink-100";
 
 /** A three-question taste of Tebak daerah on the landing page; nothing is saved. */
 export function DemoCard({ questions }: { questions: DemoQuestion[] }) {
@@ -72,31 +73,45 @@ export function DemoCard({ questions }: { questions: DemoQuestion[] }) {
 					aria-hidden={done || undefined}
 					className={`flex flex-col gap-4 [grid-area:1/1] ${done ? "invisible" : ""}`}
 				>
+					{/* Until hydration the static round 0 sits under a skeleton, keeping its size, so it never flashes before the random round. */}
 					<div className="flex flex-col items-start gap-3">
-						<Plate
-							code={question.code}
-							size="md"
-							highlight="code"
-							className="lg:px-5 lg:py-3 lg:text-[56px]"
-						/>
+						<div
+							data-skeleton={!mounted || undefined}
+							className={`flex ${mounted ? "" : `rounded-sm ${SKELETON} *:invisible`}`}
+						>
+							<Plate
+								code={question.code}
+								size="md"
+								highlight="code"
+								className="lg:px-5 lg:py-3 lg:text-[56px]"
+							/>
+						</div>
 						<p className="font-display text-heading leading-snug font-bold tracking-title text-ink-1000">
-							{question.code} dipakai daerah mana?
+							<span
+								className={
+									mounted ? "" : `rounded-[3px] text-transparent ${SKELETON}`
+								}
+							>
+								{question.code} dipakai daerah mana?
+							</span>
 						</p>
 					</div>
 					<div className="grid grid-cols-2 gap-2">
 						{question.choices.map((choice, index) => {
-							const tone = !picked
-								? "border-ink-1000 bg-paper-0"
-								: choice === question.answer
-									? "border-go-500 bg-go-100"
-									: choice === picked
-										? "border-stop-500 bg-stop-100"
-										: "border-hairline bg-paper-0";
+							const tone = !mounted
+								? `border-transparent ${SKELETON} *:invisible`
+								: !picked
+									? "border-ink-1000 bg-paper-0"
+									: choice === question.answer
+										? "border-go-500 bg-go-100"
+										: choice === picked
+											? "border-stop-500 bg-stop-100"
+											: "border-hairline bg-paper-0";
 							return (
 								<button
 									key={choice}
 									type="button"
-									disabled={!!picked}
+									disabled={!mounted || !!picked}
 									aria-keyshortcuts={KEYS[index]}
 									onClick={() => pick(choice)}
 									className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-sm border px-3 text-left font-sans text-body-md leading-[1.2] font-medium text-ink-1000 disabled:cursor-default ${tone}`}
