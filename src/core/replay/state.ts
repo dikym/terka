@@ -30,6 +30,8 @@ export type DayStats = {
 	held: boolean;
 	// Scheduled Golongan A reviews answered that day, counted against the daily cap.
 	capped: number;
+	// Drills counted that day; a session planned again later in the day gets only what is left.
+	drilled: number;
 };
 export type Diagnostic = { eventId: string; reason: string };
 

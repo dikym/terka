@@ -48,6 +48,13 @@ describe("confused pairs", () => {
 		recordDrill(state, "be", "bd", true, day(3));
 		expect(state.pairs.get("be>bd")?.drillStreak).toBe(1);
 	});
+	test("each counted drill uses up one of the day's drill slots", () => {
+		const state = fresh();
+		for (const offset of [0, 1, 2]) recordConfusion(state, "be", "bd", day(offset));
+		recordDrill(state, "be", "bd", false, day(3));
+		recordDrill(state, "be", "bd", true, day(3));
+		expect(state.tier.days.get(day(3))?.drilled).toBe(1);
+	});
 	test("a day without a drill keeps the count", () => {
 		const state = fresh();
 		for (const offset of [0, 1, 2]) recordConfusion(state, "be", "bd", day(offset));

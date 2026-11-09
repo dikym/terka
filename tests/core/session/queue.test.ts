@@ -3,7 +3,7 @@ import { schedulerAt } from "@/core/replay/params";
 import { retrievability } from "@/core/scheduling/fsrs";
 import { dailyQueue, dueReviewCount, specialQueue } from "@/core/session/queue";
 import { dayStats } from "@/core/replay/days";
-import { REVIEW_CAP_PER_DAY } from "@/rules";
+import { DRILL_CAP_PER_DAY, REVIEW_CAP_PER_DAY } from "@/rules";
 import { addDays } from "@/core/time/day";
 import {
 	DAY,
@@ -291,6 +291,65 @@ describe("Kode Khusus queue", () => {
 		expect(ids(specialQueue(state, bundleOf(), SETTINGS, at).items)).toEqual([
 			"cd-49-jepang::special2holder"
 		]);
+	});
+});
+
+describe("daily drill cap", () => {
+	const flag = (drillDay: string | null, drillStreak = 0) => ({
+		occurrences: [],
+		flagged: true,
+		cleared: false,
+		drillStreak,
+		drillDay
+	});
+	const drillsOf = (items: { slot: string; cardId: string }[]) =>
+		items.filter((item) => item.slot === "drill").map((item) => item.cardId);
+	const confusedState = (pick: (index: number) => ReturnType<typeof flag>) => {
+		const bundle = manyRegions(10);
+		const state = settle(fresh(bundle));
+		for (let index = 0; index < 10; index++) {
+			seedCard(state, `x${index}::code2region`, reviewCard({ due: NOW + 5 * DAY }));
+			state.pairs.set(`x${index}>x${(index + 1) % 10}`, pick(index));
+		}
+		return { bundle, state };
+	};
+	const confused = (pick: (index: number) => ReturnType<typeof flag>) => {
+		const { bundle, state } = confusedState(pick);
+		return drillsOf(dailyQueue(state, bundle, SETTINGS, at).items);
+	};
+
+	test("no more than 8 drills are queued, longest waiting first", () => {
+		expect(DRILL_CAP_PER_DAY).toBe(8);
+		expect(confused((index) => flag(addDays(TODAY, -1 - index)))).toEqual(
+			[9, 8, 7, 6, 5, 4, 3, 2].map((index) => `x${index}::code2region`)
+		);
+	});
+	test("a tie in waiting goes to the lower streak", () => {
+		const queued = confused((index) => flag(addDays(TODAY, -1), index < 2 ? 4 : 0));
+		expect(queued).not.toContain("x0::code2region");
+		expect(queued).not.toContain("x1::code2region");
+	});
+	test("drills answered earlier today use up the day's cap", () => {
+		const { bundle, state } = confusedState(() => flag(addDays(TODAY, -1)));
+		dayStats(state, TODAY).drilled = 5;
+		expect(drillsOf(dailyQueue(state, bundle, SETTINGS, at).items)).toHaveLength(3);
+	});
+	test("directions from the same code take one slot", () => {
+		const { bundle, state } = confusedState(() => flag(addDays(TODAY, -1)));
+		for (let index = 2; index < 10; index++) state.pairs.set(`x0>x${index}`, flag(null));
+		const queued = drillsOf(dailyQueue(state, bundle, SETTINGS, at).items);
+		expect(queued).toHaveLength(8);
+		expect(new Set(queued).size).toBe(8);
+	});
+	test("a code in its learning steps leaves its drill slot to another code", () => {
+		const { bundle, state } = confusedState((index) => flag(addDays(TODAY, -1 - index)));
+		seedCard(state, "x9::code2region", { state: "learning", step: 1, due: NOW - MINUTE });
+		expect(drillsOf(dailyQueue(state, bundle, SETTINGS, at).items)).toEqual(
+			[8, 7, 6, 5, 4, 3, 2, 1].map((index) => `x${index}::code2region`)
+		);
+	});
+	test("pairs drilled today do not take a slot under the cap", () => {
+		expect(confused((index) => flag(index < 3 ? TODAY : addDays(TODAY, -1)))).toHaveLength(7);
 	});
 });
 

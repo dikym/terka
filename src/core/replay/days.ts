@@ -1,4 +1,5 @@
 import {
+	DRILL_CAP_PER_DAY,
 	SPECIAL_NEW_PER_DAY,
 	TIER_COOLDOWN_DAYS,
 	TIER_DOWN_ACCURACY,
@@ -21,7 +22,14 @@ const contentOf = (cardId: string) => cardId.slice(0, cardId.indexOf("::"));
 export function dayStats(state: AppState, day: string): DayStats {
 	let stats = state.tier.days.get(day);
 	if (!stats) {
-		stats = { tier: state.tier.current, reviews: 0, reviewsCorrect: 0, held: false, capped: 0 };
+		stats = {
+			tier: state.tier.current,
+			reviews: 0,
+			reviewsCorrect: 0,
+			held: false,
+			capped: 0,
+			drilled: 0
+		};
 		state.tier.days.set(day, stats);
 	}
 	return stats;
@@ -50,13 +58,20 @@ export function priorityLoad(state: AppState, day: string, tz: string): number {
 		// A card whose data is in doubt reads as suspended, which is never active.
 		if (state.content.get(contentOf(cardId)) === "ok") load++;
 	}
+	// One drill per code: directions from the same code share its card, so only one is asked.
+	const drills = new Set<string>();
 	for (const [key, pair] of state.pairs) {
 		if (!pair.flagged || pair.drillDay === day) continue;
-		const codes = key.split(">").map((id) => effectiveCard(state, `${id}::code2region`));
-		if (codes.every((card) => card !== undefined && card.state !== "suspended")) load++;
+		const codes = key.split(">");
+		const cards = codes.map((id) => effectiveCard(state, `${id}::code2region`));
+		if (cards.every((card) => card !== undefined && card.state !== "suspended"))
+			drills.add(codes[0]);
 	}
-	return load;
+	return load + Math.min(drills.size, drillsLeft(state, day));
 }
+
+export const drillsLeft = (state: AppState, day: string) =>
+	Math.max(0, DRILL_CAP_PER_DAY - (state.tier.days.get(day)?.drilled ?? 0));
 
 function evaluateTier(state: AppState, day: string) {
 	const tier = state.tier;

@@ -1,7 +1,8 @@
 import { describe, expect, test } from "bun:test";
-import { advanceDays, advanceTo, priorityLoad, quotaLeft } from "@/core/replay/days";
+import { advanceDays, advanceTo, dayStats, priorityLoad, quotaLeft } from "@/core/replay/days";
 import type { AppState } from "@/core/replay/state";
 import { addDays, localDay } from "@/core/time/day";
+import { DRILL_CAP_PER_DAY } from "@/rules";
 import { DAY, fresh, manyRegions, NOW, reviewCard, seedCard, WITA } from "./fixtures";
 
 const TODAY = "2026-09-21";
@@ -13,7 +14,8 @@ function fillWindow(state: AppState, day: string, reviews: number, correct: numb
 			reviews,
 			reviewsCorrect: correct,
 			held: offset <= heldDays,
-			capped: 0
+			capped: 0,
+			drilled: 0
 		});
 		state.activeDays.add(addDays(day, -offset));
 	}
@@ -28,7 +30,8 @@ function absence(state: AppState, day: string, practisedWhileHeld: boolean) {
 			reviews: held ? 0 : 17,
 			reviewsCorrect: held ? 0 : 15,
 			held,
-			capped: 0
+			capped: 0,
+			drilled: 0
 		});
 		if (!held || practisedWhileHeld) state.activeDays.add(addDays(day, -offset));
 	}
@@ -103,6 +106,27 @@ describe("priority load and hold", () => {
 		expect(priorityLoad(state, TODAY, WITA)).toBe(1);
 		seedCard(state, "bd::code2region", { ...reviewCard(), state: "suspended" });
 		expect(priorityLoad(state, TODAY, WITA)).toBe(0);
+	});
+	test("confused pairs add no more than the daily drill cap", () => {
+		const state = fresh(manyRegions(12));
+		for (let index = 0; index < 12; index++)
+			state.pairs.set(`x${index}>x${(index + 1) % 12}`, {
+				occurrences: [],
+				flagged: true,
+				cleared: false,
+				drillStreak: 0,
+				drillDay: null
+			});
+		expect(priorityLoad(state, TODAY, WITA)).toBe(DRILL_CAP_PER_DAY);
+		dayStats(state, TODAY).drilled = 5;
+		expect(priorityLoad(state, TODAY, WITA)).toBe(DRILL_CAP_PER_DAY - 5);
+	});
+	test("directions from the same code count as one drill", () => {
+		const state = fresh(manyRegions(4));
+		const pair = { occurrences: [], flagged: true, cleared: false, drillStreak: 0 };
+		for (const key of ["x0>x1", "x0>x2", "x0>x3"])
+			state.pairs.set(key, { ...pair, drillDay: null });
+		expect(priorityLoad(state, TODAY, WITA)).toBe(1);
 	});
 });
 

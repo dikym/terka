@@ -1,6 +1,7 @@
 import { DRILL_CLEAR_STREAK, PAIR_RETHRESHOLD, PAIR_THRESHOLD, PAIR_WINDOW_DAYS } from "@/rules";
 import type { ReviewLog } from "@/core/log/events";
 import { dayNumber } from "@/core/time/day";
+import { dayStats } from "@/core/replay/days";
 import type { AppState, PairState } from "@/core/replay/state";
 
 export const pairKey = (from: string, to: string) => `${from}>${to}`;
@@ -51,6 +52,7 @@ export function recordDrill(
 	const key = pairKey(from, to);
 	const pair = state.pairs.get(key);
 	if (!pair?.flagged || pair.drillDay === localDay) return;
+	dayStats(state, localDay).drilled++;
 	if (!correct) return void state.pairs.set(key, { ...pair, drillStreak: 0, drillDay: localDay });
 	const drillStreak = pair.drillStreak + 1;
 	state.pairs.set(

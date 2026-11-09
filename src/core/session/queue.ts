@@ -9,9 +9,9 @@ import { dayNumber } from "@/core/time/day";
 import type { Bundle, Region } from "@/core/content/schema";
 import { inScope } from "@/core/questions/distractors";
 import type { QuestionContext } from "@/core/questions/question";
-import { priorityLoad, quotaLeft } from "@/core/replay/days";
+import { drillsLeft, priorityLoad, quotaLeft } from "@/core/replay/days";
 import { schedulerAt } from "@/core/replay/params";
-import type { AppState, CardEntry } from "@/core/replay/state";
+import type { AppState, CardEntry, PairState } from "@/core/replay/state";
 import { effectiveCard } from "@/core/replay/universe";
 import { retrievability } from "@/core/scheduling/fsrs";
 import { sightingCounts } from "@/core/views/stats";
@@ -135,18 +135,33 @@ function byRecheck(
 	return [...reviews].sort((a, b) => score(a) - score(b));
 }
 
-function drills(state: AppState, today: string): QueueItem[] {
-	const items: QueueItem[] = [];
-	for (const [key, pair] of [...state.pairs].sort(([a], [b]) => compareText(a, b))) {
+// Longest waiting first, so a pair that keeps resetting to 0 cannot starve one close to clearing.
+// `taken`: cards already in the queue; a drill on one of them would be dropped as a duplicate.
+function drills(state: AppState, today: string, taken: Set<string>): QueueItem[] {
+	const eligible: { key: string; pair: PairState; item: QueueItem }[] = [];
+	for (const [key, pair] of state.pairs) {
 		if (!pair.flagged || pair.drillDay === today) continue;
 		const [from, to] = key.split(">");
 		const own = effectiveCard(state, `${from}::code2region`);
 		const other = effectiveCard(state, `${to}::code2region`);
 		if (!own || !other || own.state === "suspended" || other.state === "suspended") continue;
 		if (!ACTIVE.has(own.state)) continue;
-		items.push({ cardId: own.cardId, context: "drill", slot: "drill", drillPair: to });
+		eligible.push({
+			key,
+			pair,
+			item: { cardId: own.cardId, context: "drill", slot: "drill", drillPair: to }
+		});
 	}
-	return items;
+	return eligible
+		.sort(
+			(a, b) =>
+				compareText(a.pair.drillDay ?? "", b.pair.drillDay ?? "") ||
+				a.pair.drillStreak - b.pair.drillStreak ||
+				compareText(a.key, b.key)
+		)
+		.map((entry) => entry.item)
+		.filter((item) => !taken.has(item.cardId) && taken.add(item.cardId))
+		.slice(0, drillsLeft(state, today));
 }
 
 function introductions(
@@ -176,9 +191,10 @@ export function dailyQueue(
 	const state = prepare(input, ctx);
 	const today = todayOf(ctx);
 	const cards = cardsWhere(state, isGroupA);
+	const steps = dueSteps(cards, ctx.now, "daily");
 	const due = uniqueItems([
-		...dueSteps(cards, ctx.now, "daily"),
-		...drills(state, today),
+		...steps,
+		...drills(state, today, new Set(steps.map((item) => item.cardId))),
 		...byRecheck(state, bundle, today, dueReviews(state, cards, today, ctx.now, "daily")).slice(
 			0,
 			reviewsLeft(state, today)
