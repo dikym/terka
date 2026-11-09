@@ -18,7 +18,7 @@ import { type MapProvince, MasteryMap } from "@/components/ui/mastery-map";
 import { Tooltip } from "@/components/ui/tooltip";
 import type { SyncIcon } from "@/lib/view/sync-label";
 import { type CodeStatus, type Stats, STATUS_LABEL } from "@/lib/view/stats";
-import { SIGHTING_WINDOW_DAYS } from "@/rules";
+import { DRILL_CLEAR_STREAK, SIGHTING_WINDOW_DAYS } from "@/rules";
 
 const PILL_TONE = { learning: "learning", leech: "leech", suspended: "off" } as const;
 
@@ -440,6 +440,44 @@ function Hard({ s, loading }: { s: Stats; loading: boolean }) {
 	);
 }
 
+function Pairs({ s, loading }: { s: Stats; loading: boolean }) {
+	return (
+		<Card id="bandingkan-kode">
+			<CardHeader
+				label="Bandingkan Kode"
+				title={text(loading, `${s.pairs.length} pasangan`)}
+				aside={<Icon name="git-compare-arrows" size={18} color="bg-ink-1000" />}
+			/>
+			<div className="flex flex-col">
+				{s.pairs.map((pair, index) => (
+					<Row key={`${pair.a}>${pair.b}`} last={index === s.pairs.length - 1}>
+						<span className="inline-flex items-center gap-1.5">
+							{loading ? (
+								<Skeleton className={CHIP_SKELETON} />
+							) : (
+								<CodeLink code={pair.a} group={pair.group} />
+							)}
+							<Icon
+								name="git-compare-arrows"
+								size={14}
+								color={loading ? "bg-ink-200" : "bg-ink-500"}
+							/>
+							{loading ? (
+								<Skeleton className={CHIP_SKELETON} />
+							) : (
+								<CodeLink code={pair.b} group={pair.group} />
+							)}
+						</span>
+						<span className="font-mono text-xs text-ink-500">
+							{text(loading, `${pair.streak}/${DRILL_CLEAR_STREAK}`)}
+						</span>
+					</Row>
+				))}
+			</div>
+		</Card>
+	);
+}
+
 function NameAll({ s, loading }: { s: Stats; loading: boolean }) {
 	return (
 		<Card className="gap-3">
@@ -679,6 +717,7 @@ export function StatsScreen({
 				<aside className="flex min-w-0 flex-col gap-5">
 					{/* An empty list says nothing; its card shows once there is something in it. */}
 					{(loading || s.hard.length > 0) && <Hard s={s} loading={loading} />}
+					{(loading || s.pairs.length > 0) && <Pairs s={s} loading={loading} />}
 					{(loading || s.nameAll.length > 0) && <NameAll s={s} loading={loading} />}
 					{(loading || s.diplomat.started) && <Diplomat s={s} loading={loading} />}
 					{(loading || s.seen.length > 0) && <Seen s={s} loading={loading} />}
@@ -735,5 +774,6 @@ const SKELETON: Stats = {
 		wait: null
 	})),
 	diplomat: { mastered: 42, total: 130, started: true },
-	seen: ["a", "b", "c"].map((code) => ({ code, group: "jawa", count: 1 }))
+	seen: ["a", "b", "c"].map((code) => ({ code, group: "jawa", count: 1 })),
+	pairs: ["a", "b", "c"].map((code) => ({ a: code, b: code, group: "jawa", streak: 0 }))
 };

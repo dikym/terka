@@ -135,6 +135,26 @@ describe("home view", () => {
 		expect(home.pairs[0].streak).toBe(1);
 	});
 
+	test("flagged pairs list the ones furthest from clearing first", () => {
+		const state = stateOf([]);
+		const pair = { occurrences: [], flagged: true, cleared: false, drillDay: null };
+		state.pairs.set("bk>bm", { ...pair, drillStreak: 3 });
+		state.pairs.set("ba>bb", { ...pair, drillStreak: 3 });
+		state.pairs.set("bd>be", { ...pair, drillStreak: 0 });
+		const home = homeView(
+			state,
+			ruleBundle(),
+			SETTINGS,
+			ctxAt(NOW),
+			"Tersimpan di perangkat ini"
+		);
+		expect(home.pairs.map((item) => `${item.a}-${item.b}:${item.streak}`)).toEqual([
+			"BD-BE:0",
+			"BA-BB:3",
+			"BK-BM:3"
+		]);
+	});
+
 	test("a single missed day inside a streak shows as tolerance", () => {
 		const today = localDay(NOW, WITA);
 		const events = [3, 2, 0].map((back) => run("challenge", NOW - back * DAY));

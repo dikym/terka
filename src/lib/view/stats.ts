@@ -9,6 +9,7 @@ import { scopeMastery } from "@/core/views/mastery";
 import { forecast, hardCards, sightingCounts, weakestCards } from "@/core/views/stats";
 import { LEECH_LAPSES, TIERS } from "@/rules";
 import { dayMonth, weekday, weekdayShort } from "@/lib/view/format";
+import { flaggedPairs, type Home } from "@/lib/view/home";
 import { provincesOf, uiGroup, type GroupId } from "@/lib/view/groups";
 
 export type CodeStatus = "learning" | "leech" | "suspended";
@@ -39,6 +40,7 @@ export type Stats = {
 	/** `started`: some diplomat code was introduced, so the card has something to report. */
 	diplomat: { mastered: number; total: number; started: boolean };
 	seen: { code: string; group: GroupId; count: number }[];
+	pairs: Home["pairs"];
 };
 
 export const REGION_MODES = new Set(["code2region", "region2code", "setrecall"]);
@@ -226,7 +228,8 @@ export function statsView(input: AppState, bundle: Bundle, ctx: SessionContext):
 				})
 			)
 		},
-		seen
+		seen,
+		pairs: flaggedPairs(state, bundle)
 	};
 }
 

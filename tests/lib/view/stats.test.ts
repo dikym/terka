@@ -1,4 +1,5 @@
 import { describe, expect, test } from "bun:test";
+import { flaggedPairs } from "@/lib/view/home";
 import { hardCardList, statsView } from "@/lib/view/stats";
 import { DAY, intro, NOW, review, ruleBundle, stateOf } from "../../core/replay/fixtures";
 import { ctxAt } from "../../core/session/fixtures";
@@ -18,6 +19,16 @@ describe("statistics view", () => {
 		expect(stats.forecast.days[0].slice(0, 2)).toEqual(["Hari", "ini"]);
 		expect(stats.forecast.title).toBe("Belum ada soal terjadwal");
 		expect(stats.diplomat.started).toBe(false);
+	});
+
+	test("statistics list every flagged pair, like home", () => {
+		const state = stateOf([]);
+		const pair = { occurrences: [], flagged: true, cleared: false, drillDay: null };
+		for (const key of ["ba>bb", "bb>ba", "bd>be", "bk>bm", "bm>bp"])
+			state.pairs.set(key, { ...pair, drillStreak: 1 });
+		const stats = statsView(state, bundle, ctxAt(NOW));
+		expect(stats.pairs).toHaveLength(4);
+		expect(stats.pairs).toEqual(flaggedPairs(state, bundle));
 	});
 
 	test("an introduced diplomat code starts the diplomat track", () => {

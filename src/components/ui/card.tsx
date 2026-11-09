@@ -1,8 +1,11 @@
 export function Card({
+	id,
 	bar,
 	className = "gap-4",
 	children
 }: {
+	/** Anchor target; the scroll margin keeps it clear of the fixed mobile header. */
+	id?: string;
 	/** A `bg-*` class for the 4 px classification bar across the top. */
 	bar?: string;
 	/** Classes for the padded body, usually its `gap-*`. */
@@ -10,7 +13,10 @@ export function Card({
 	children: React.ReactNode;
 }) {
 	return (
-		<section className="min-w-0 overflow-hidden rounded-md border border-hairline bg-paper-0 shadow-lift">
+		<section
+			id={id}
+			className="min-w-0 scroll-mt-19 overflow-hidden rounded-md border border-hairline bg-paper-0 shadow-lift lg:scroll-mt-5"
+		>
 			{bar && <div className={`h-1 ${bar}`} />}
 			<div className={`flex flex-col p-4 ${className}`}>{children}</div>
 		</section>

@@ -4,6 +4,7 @@ import { streak, streakDays } from "@/core/replay/streak";
 import type { AppState } from "@/core/replay/state";
 import {
 	cardsWhere,
+	compareText,
 	contentOf,
 	isReversedNew,
 	modeOf,
@@ -104,7 +105,7 @@ function scopeRows(state: AppState, bundle: Bundle, settings: SessionSettings) {
 }
 
 // A pair flagged both ways shows as one chip, at the count of the direction furthest from clearing.
-function flaggedPairs(state: AppState, bundle: Bundle) {
+export function flaggedPairs(state: AppState, bundle: Bundle): Home["pairs"] {
 	const codes = new Map(bundle.regions.map((region) => [region.id, region]));
 	const pairs = new Map<string, Home["pairs"][number]>();
 	for (const [key, pair] of state.pairs) {
@@ -124,7 +125,9 @@ function flaggedPairs(state: AppState, bundle: Bundle) {
 				streak: pair.drillStreak
 			});
 	}
-	return [...pairs.values()];
+	return [...pairs.values()].sort(
+		(x, y) => x.streak - y.streak || compareText(x.a, y.a) || compareText(x.b, y.b)
+	);
 }
 
 // Waiting reversed questions belong to codes that are already introduced, so the note holds back
