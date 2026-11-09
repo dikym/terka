@@ -377,36 +377,54 @@ export function HomeScreen({ data }: { data: Home | null }) {
 								value={d ? d.pairs.length : <SkeletonText width="1.2em" />}
 								unit={d ? "pasangan" : <SkeletonText width="4.5em" />}
 							>
-								<div className="flex flex-wrap gap-2">
-									{(d?.pairs ?? SKELETON_HOME.pairs).map((pair) => (
-										<span
-											key={pair.a}
-											className="inline-flex items-center gap-1.5"
-										>
-											{d ? (
-												<CodeLink code={pair.a} group={pair.group} />
-											) : (
-												<Skeleton className={CHIP_SKELETON} />
-											)}
-											<Icon
-												name="git-compare-arrows"
-												size={14}
-												color={d ? "bg-ink-500" : "bg-ink-200"}
+								<div className="flex flex-wrap gap-x-5 gap-y-2">
+									{(d?.pairs ?? SKELETON_HOME.pairs)
+										.slice(0, quiet ? PAIRS_SHOWN_WIDE : PAIRS_SHOWN)
+										.map((pair, index) => (
+											<span
+												key={`${pair.a}>${pair.b}`}
+												className={`items-center gap-1.5 ${index < PAIRS_SHOWN ? "inline-flex" : "hidden sm:inline-flex"}`}
+											>
+												{d ? (
+													<CodeLink code={pair.a} group={pair.group} />
+												) : (
+													<Skeleton className={CHIP_SKELETON} />
+												)}
+												<Icon
+													name="git-compare-arrows"
+													size={14}
+													color={d ? "bg-ink-500" : "bg-ink-200"}
+												/>
+												{d ? (
+													<CodeLink code={pair.b} group={pair.group} />
+												) : (
+													<Skeleton className={CHIP_SKELETON} />
+												)}
+												{d ? (
+													<span className="font-mono text-xs text-ink-500">
+														{pair.streak}/{DRILL_CLEAR_STREAK}
+													</span>
+												) : (
+													<SkeletonText width="1.6em" />
+												)}
+											</span>
+										))}
+									{d && (
+										<>
+											<MorePairs
+												total={d.pairs.length}
+												shown={PAIRS_SHOWN}
+												className={quiet ? "sm:hidden" : ""}
 											/>
-											{d ? (
-												<CodeLink code={pair.b} group={pair.group} />
-											) : (
-												<Skeleton className={CHIP_SKELETON} />
+											{quiet && (
+												<MorePairs
+													total={d.pairs.length}
+													shown={PAIRS_SHOWN_WIDE}
+													className="hidden sm:inline"
+												/>
 											)}
-											{d ? (
-												<span className="font-mono text-xs text-ink-500">
-													{pair.streak}/{DRILL_CLEAR_STREAK}
-												</span>
-											) : (
-												<SkeletonText width="1.6em" />
-											)}
-										</span>
-									))}
+										</>
+									)}
 								</div>
 							</Stat>
 						</section>
@@ -602,6 +620,29 @@ const SKELETON_ROWS = [
 	{ name: "b", codes: ["a", "b"], percent: 0 },
 	{ name: "c", codes: ["a", "b", "c"], percent: 0 }
 ];
+const PAIRS_SHOWN = 2;
+// The Bandingkan Kode stat spans the whole card when it is the only stat; phones still get 2.
+const PAIRS_SHOWN_WIDE = 3;
+
+function MorePairs({
+	total,
+	shown,
+	className
+}: {
+	total: number;
+	shown: number;
+	className: string;
+}) {
+	if (total <= shown) return null;
+	return (
+		<Link
+			href="/statistik#bandingkan-kode"
+			className={`self-center font-mono text-xs text-ink-500 hover:underline ${className}`}
+		>
+			+{total - shown} lagi
+		</Link>
+	);
+}
 const SKELETON_ROW_WIDTHS = ["2.2em", "10.5em", "10.5em"];
 const SKELETON_HOME = {
 	week: [
