@@ -61,13 +61,23 @@ export function priorityLoad(state: AppState, day: string, tz: string): number {
 	// One drill per code: directions from the same code share its card, so only one is asked.
 	const drills = new Set<string>();
 	for (const [key, pair] of state.pairs) {
-		if (!pair.flagged || pair.drillDay === day) continue;
-		const codes = key.split(">");
-		const cards = codes.map((id) => effectiveCard(state, `${id}::code2region`));
-		if (cards.every((card) => card !== undefined && card.state !== "suspended"))
-			drills.add(codes[0]);
+		if (!pair.flagged || pair.drillDay === day || !drillable(state, key)) continue;
+		drills.add(key.slice(0, key.indexOf(">")));
 	}
 	return load + Math.min(drills.size, drillsLeft(state, day));
+}
+
+// The queue and the load must agree on which pairs can be drilled, or new material is held for nothing.
+export function drillable(state: AppState, key: string): boolean {
+	const [from, to] = key.split(">");
+	const own = effectiveCard(state, `${from}::code2region`);
+	const other = effectiveCard(state, `${to}::code2region`);
+	return (
+		own !== undefined &&
+		ACTIVE.has(own.state) &&
+		other !== undefined &&
+		other.state !== "suspended"
+	);
 }
 
 export const drillsLeft = (state: AppState, day: string) =>

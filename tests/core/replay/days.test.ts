@@ -96,6 +96,7 @@ describe("priority load and hold", () => {
 	});
 	test("an active confused pair adds one drill unless a code is suspended", () => {
 		const state = fresh();
+		seedCard(state, "be::code2region", reviewCard({ due: NOW + 3 * DAY }));
 		state.pairs.set("be>bd", {
 			occurrences: [],
 			flagged: true,
@@ -110,6 +111,8 @@ describe("priority load and hold", () => {
 	test("confused pairs add no more than the daily drill cap", () => {
 		const state = fresh(manyRegions(12));
 		for (let index = 0; index < 12; index++)
+			seedCard(state, `x${index}::code2region`, reviewCard({ due: NOW + 3 * DAY }));
+		for (let index = 0; index < 12; index++)
 			state.pairs.set(`x${index}>x${(index + 1) % 12}`, {
 				occurrences: [],
 				flagged: true,
@@ -121,8 +124,21 @@ describe("priority load and hold", () => {
 		dayStats(state, TODAY).drilled = 5;
 		expect(priorityLoad(state, TODAY, WITA)).toBe(DRILL_CAP_PER_DAY - 5);
 	});
+	test("a pair whose own code is not yet active adds no drill", () => {
+		const state = fresh();
+		state.pairs.set("be>bd", {
+			occurrences: [],
+			flagged: true,
+			cleared: false,
+			drillStreak: 0,
+			drillDay: null
+		});
+		expect(state.cards.get("be::code2region")?.state).toBe("new");
+		expect(priorityLoad(state, TODAY, WITA)).toBe(0);
+	});
 	test("directions from the same code count as one drill", () => {
 		const state = fresh(manyRegions(4));
+		seedCard(state, "x0::code2region", reviewCard({ due: NOW + 3 * DAY }));
 		const pair = { occurrences: [], flagged: true, cleared: false, drillStreak: 0 };
 		for (const key of ["x0>x1", "x0>x2", "x0>x3"])
 			state.pairs.set(key, { ...pair, drillDay: null });

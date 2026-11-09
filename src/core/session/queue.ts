@@ -9,14 +9,12 @@ import { dayNumber } from "@/core/time/day";
 import type { Bundle, Region } from "@/core/content/schema";
 import { inScope } from "@/core/questions/distractors";
 import type { QuestionContext } from "@/core/questions/question";
-import { drillsLeft, priorityLoad, quotaLeft } from "@/core/replay/days";
+import { drillable, drillsLeft, priorityLoad, quotaLeft } from "@/core/replay/days";
 import { schedulerAt } from "@/core/replay/params";
 import type { AppState, CardEntry, PairState } from "@/core/replay/state";
-import { effectiveCard } from "@/core/replay/universe";
 import { retrievability } from "@/core/scheduling/fsrs";
 import { sightingCounts } from "@/core/views/stats";
 import {
-	ACTIVE,
 	cardsWhere,
 	compareText,
 	contentOf,
@@ -140,16 +138,12 @@ function byRecheck(
 function drills(state: AppState, today: string, taken: Set<string>): QueueItem[] {
 	const eligible: { key: string; pair: PairState; item: QueueItem }[] = [];
 	for (const [key, pair] of state.pairs) {
-		if (!pair.flagged || pair.drillDay === today) continue;
+		if (!pair.flagged || pair.drillDay === today || !drillable(state, key)) continue;
 		const [from, to] = key.split(">");
-		const own = effectiveCard(state, `${from}::code2region`);
-		const other = effectiveCard(state, `${to}::code2region`);
-		if (!own || !other || own.state === "suspended" || other.state === "suspended") continue;
-		if (!ACTIVE.has(own.state)) continue;
 		eligible.push({
 			key,
 			pair,
-			item: { cardId: own.cardId, context: "drill", slot: "drill", drillPair: to }
+			item: { cardId: `${from}::code2region`, context: "drill", slot: "drill", drillPair: to }
 		});
 	}
 	return eligible
