@@ -257,7 +257,7 @@ export function SettingsScreen({
 									].map(([value, label, width]) => (
 										<span
 											key={label}
-											className="flex min-w-0 flex-col gap-[3px]"
+											className="flex min-w-0 flex-col gap-0.75"
 										>
 											<span className="font-mono text-body-md leading-none font-semibold text-ink-1000">
 												{loading ? <SkeletonText width={width} /> : value}

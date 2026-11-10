@@ -170,7 +170,7 @@ function Overlay({
 				ref={scrim}
 				aria-hidden="true"
 				onClick={dismiss}
-				className="absolute inset-x-0 top-0 -bottom-[100lvh] animate-fade-in touch-none bg-[oklch(0.14_0.012_60/0.45)]"
+				className="absolute inset-x-0 top-0 bottom-[-100lvh] animate-fade-in touch-none bg-[oklch(0.14_0.012_60/0.45)]"
 			/>
 			<div
 				ref={panel}

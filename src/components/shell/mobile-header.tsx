@@ -24,7 +24,7 @@ export function MobileHeader() {
 	const label = useSyncLabel(runtime) ?? "";
 	const icon = useSyncIcon(runtime);
 	return (
-		<header className="fixed inset-x-0 top-0 z-30 flex min-h-15 items-center justify-between gap-3 border-b border-hairline bg-paper-0 px-4 py-2 group-has-[[data-topbar]]:hidden lg:hidden">
+		<header className="fixed inset-x-0 top-0 z-30 flex min-h-15 items-center justify-between gap-3 border-b border-hairline bg-paper-0 px-4 py-2 group-has-data-topbar:hidden lg:hidden">
 			<Wordmark />
 			<span className="-mr-2.5 inline-flex items-center">
 				{SYNC_SCREENS.includes(pathname) && (

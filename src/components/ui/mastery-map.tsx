@@ -752,7 +752,7 @@ export function MasteryMap({
 						</g>
 					)}
 					<g
-						className="[&_path]:stroke-paper-0 [&_path]:[stroke-width:0.75] [&_path]:[stroke-linejoin:round] [&_path]:[vector-effect:non-scaling-stroke]"
+						className="[&_path]:stroke-paper-0 [&_path]:stroke-[0.75] [&_path]:[stroke-linejoin:round] [&_path]:[vector-effect:non-scaling-stroke]"
 						style={layerStyle}
 						// map.svg is our own build output (scripts/build-map.ts), served from this origin.
 						dangerouslySetInnerHTML={{ __html: loading ? "" : markup }}
@@ -763,7 +763,7 @@ export function MasteryMap({
 							<path
 								d={outlines.get(selected)}
 								fill="none"
-								className="stroke-ink-1000 [stroke-width:2] [stroke-linejoin:round] [vector-effect:non-scaling-stroke]"
+								className="stroke-ink-1000 stroke-2 [stroke-linejoin:round] [vector-effect:non-scaling-stroke]"
 							/>
 						</g>
 					)}
@@ -772,7 +772,7 @@ export function MasteryMap({
 							<path
 								d={tip.outline}
 								fill="none"
-								className="stroke-ink-1000 [stroke-width:1.5] [stroke-linejoin:round] [vector-effect:non-scaling-stroke]"
+								className="stroke-ink-1000 stroke-[1.5] [stroke-linejoin:round] [vector-effect:non-scaling-stroke]"
 							/>
 						</g>
 					)}

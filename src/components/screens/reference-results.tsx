@@ -142,7 +142,7 @@ export function RegionCard({ detail, loading }: { detail: RegionDetail; loading:
 			{detail.note && (
 				<div className="flex items-start gap-2 border-t border-hairline pt-3">
 					{/* Level with the first line when the note wraps. */}
-					<Icon name="info" size={14} className="mt-[3px]" />
+					<Icon name="info" size={14} className="mt-0.75" />
 					<Hint>{loading ? <SkeletonText width="22em" /> : detail.note}</Hint>
 				</div>
 			)}

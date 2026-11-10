@@ -21,7 +21,7 @@ export function LevelMark({ level, className = "" }: { level: Level; className?:
 	return (
 		<span className={`inline-flex flex-none items-center gap-2 ${className}`}>
 			<Tooltip content={`Level ${level}`} tap className="-m-2 inline-flex flex-none p-2">
-				<span role="img" aria-label={`Level ${level}`} className="inline-flex gap-[3px]">
+				<span role="img" aria-label={`Level ${level}`} className="inline-flex gap-0.75">
 					{[1, 2, 3].map((step) => (
 						<span
 							key={step}

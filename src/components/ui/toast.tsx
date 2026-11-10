@@ -15,8 +15,8 @@ import {
 	resumeToasts,
 	stackLayout,
 	type ToastItem,
-	type ToastTone,
-	toastStore
+	toastStore,
+	type ToastTone
 } from "@/lib/toasts";
 import { BusyText } from "@/components/ui/feedback";
 import { Icon, type IconName } from "@/components/ui/icon";
@@ -69,9 +69,9 @@ export function Toast({
 			<Icon name={toast.icon ?? tone.glyph} size={18} color={tone.icon} className="mt-px" />
 			<div className="flex min-w-0 flex-1 flex-col gap-0.5">
 				{toast.label && (
-					<span className={`leading-[20px]! type-label ${tone.text}`}>{toast.label}</span>
+					<span className={`leading-5! type-label ${tone.text}`}>{toast.label}</span>
 				)}
-				<span className="font-sans text-body-md leading-[20px] font-medium text-ink-900">
+				<span className="font-sans text-body-md leading-5 font-medium text-ink-900">
 					{toast.busy ? <BusyText>{toast.text}</BusyText> : toast.text}
 				</span>
 			</div>

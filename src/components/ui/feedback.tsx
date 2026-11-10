@@ -164,7 +164,7 @@ export function Switch({
 					cx="14"
 					cy="14"
 					r="10"
-					className={`transition-[translate,fill] duration-150 ease-out motion-reduce:transition-none ${checked ? "translate-x-[18px] fill-paper-0" : "fill-ink-1000"}`}
+					className={`transition-[translate,fill] duration-150 ease-out motion-reduce:transition-none ${checked ? "translate-x-4.5 fill-paper-0" : "fill-ink-1000"}`}
 				/>
 			</svg>
 		</button>

@@ -37,7 +37,7 @@ export function Plate({
 	);
 }
 
-export function Wordmark({ className = "h-[31px]" }: { className?: string }) {
+export function Wordmark({ className = "h-7.75" }: { className?: string }) {
 	return (
 		<Image
 			src="/terka.svg"

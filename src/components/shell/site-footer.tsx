@@ -13,7 +13,7 @@ export function SiteFooter() {
 		<footer className="border-t border-hairline">
 			<div className="container flex flex-col gap-5 pt-8 pb-10 lg:flex-row lg:flex-wrap lg:items-center lg:justify-between lg:py-8">
 				<div className="flex flex-col items-start gap-3 lg:flex-row lg:flex-wrap lg:items-center lg:gap-4">
-					<Wordmark className="h-[26px]" />
+					<Wordmark className="h-6.5" />
 					<span className="text-body-sm leading-[1.4] text-ink-500">
 						Dikembangkan mandiri.
 					</span>

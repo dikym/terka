@@ -64,7 +64,7 @@ export function DotLabel({
 	const color = tone === "go" ? "text-go-700" : "text-ink-500";
 	const label = (
 		<span
-			className={`inline-flex flex-none items-center gap-1.5 font-display text-label leading-none font-semibold tracking-[0.02em] whitespace-nowrap ${color}`}
+			className={`inline-flex flex-none items-center gap-1.5 font-display text-label leading-none font-semibold -tracking-title whitespace-nowrap ${color}`}
 		>
 			<Dot size={7} />
 			{children}
