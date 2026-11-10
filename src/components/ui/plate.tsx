@@ -44,7 +44,7 @@ export function Wordmark({ className = "h-7.75" }: { className?: string }) {
 			alt="Terka"
 			width={358}
 			height={124}
-			className={`block w-auto self-start ${className}`}
+			className={`block w-auto self-center lg:self-start ${className}`}
 		/>
 	);
 }
