@@ -47,6 +47,24 @@ function Note({ children }: { children: React.ReactNode }) {
 	return <p className="font-sans text-body-sm leading-normal text-ink-500">{children}</p>;
 }
 
+function newNote(d: Home): string {
+	const { summary, scope, newLimit } = d;
+	if (summary.newAvailable === 0) {
+		if (summary.held) return "Dijeda hari ini agar sesi tetap ringan.";
+		if (summary.allIntroduced) {
+			if (scope.national) return "Semua kode sudah diperkenalkan.";
+			return Number(scope.newOutside) > 0
+				? "Semua kode di Cakupan ini sudah diperkenalkan. Masih ada kode baru di luar Cakupan."
+				: "Semua kode di Cakupan ini sudah diperkenalkan.";
+		}
+		return "Jatah materi baru hari ini sudah terpakai. Lanjut besok.";
+	}
+	const limit = scope.national
+		? `Maksimal ${newLimit} per hari.`
+		: `Maksimal ${newLimit} per hari untuk semua Cakupan.`;
+	return d.newFromKnown ? `Dari kode yang sudah dikenal. ${limit}` : limit;
+}
+
 function Day({ mark, loading }: { mark: DayMark; loading: boolean }) {
 	const label = {
 		done: "selesai",
@@ -353,21 +371,7 @@ export function HomeScreen({ data }: { data: Home | null }) {
 										}
 									>
 										<Note>
-											{d ? (
-												d.newFromKnown ? (
-													d.scope.national ? (
-														"Dari kode yang dikenal. Batas harian seluruh Indonesia."
-													) : (
-														"Dari kode yang dikenal. Batas harian semua Cakupan."
-													)
-												) : d.scope.national ? (
-													"Batas harian untuk seluruh Indonesia."
-												) : (
-													"Batas harian, berlaku untuk semua Cakupan."
-												)
-											) : (
-												<SkeletonText width="17em" />
-											)}
+											{d ? newNote(d) : <SkeletonText width="17em" />}
 										</Note>
 									</Stat>
 								</>
