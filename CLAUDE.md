@@ -2,29 +2,28 @@
 
 ## Code Formatting & Quality
 
-**SANGAT PENTING:** Jangan pernah men-disable atau mengabaikan linter/type checker (`// @ts-ignore`, `/* eslint-disable */`, dll) tanpa instruksi eksplisit dari user. Perbaiki kode agar sesuai dengan aturan linter.
+**VERY IMPORTANT:** Never disable or ignore a linter or type checker (`// @ts-ignore`, `/* eslint-disable */`, etc.) without explicit instruction from the user. Fix the code so it complies with the linter rules.
 
-Setelah Anda membuat, mengubah, atau menghapus kode, Anda **WAJIB** menjalankan perintah berikut untuk memastikan kualitas kode:
+After you create, change, or delete code, you **MUST** run the following commands to make sure code quality holds:
 
-1. **Frontend:**
-    ```bash
-    bun run format
-    bun run lint:fix
-    bun run check
-    ```
+```bash
+bun run format
+bun run lint:fix
+bun run check
+```
 
-### Komentar Kode
+### Code Comments
 
-- Jangan tambahkan komentar yang tidak penting, misalnya komentar yang hanya mengulang apa yang sudah jelas dari nama fungsi, variabel, atau kodenya.
-- Tulis komentar hanya jika memang penting, misalnya menjelaskan alasan, batasan, atau perilaku yang tidak terlihat dari kode.
-- Jangan tulis komentar yang merujuk dokumen (SRD, TRD, ERD, Microcopy, nomor bagian, ID katalog, dll).
-- Jangan tulis catatan `ponytail:` di kode.
-- Nama tes (`test`/`describe`) menjelaskan perilaku saja, tanpa ID katalog atau rujukan dokumen.
-- Komentar selalu ditulis dalam bahasa Inggris.
+- Do not add trivial comments, such as comments that only restate what the function, variable, or code already makes clear.
+- Write a comment only when it matters, for example to explain a reason, a constraint, or behavior that the code does not show.
+- Do not write comments that reference documents (SRD, TRD, ERD, microcopy, section numbers, catalog IDs, etc.).
+- Do not write `ponytail:` notes in code.
+- Test names (`test`/`describe`) describe behavior only, without catalog IDs or document references.
+- Comments are always written in English.
 
 ## Git Commits
 
-**Wajib** menggunakan standar [Conventional Commits](https://www.conventionalcommits.org/) untuk setiap git commit. Jangan tambahkan deskripsi "Co-Authored-By: Claude ... <noreply@anthropic.com>".
+**Required:** Use the [Conventional Commits](https://www.conventionalcommits.org/) standard for every git commit. Do not add a `Co-Authored-By: Claude ... <noreply@anthropic.com>` line.
 
 ### Format
 
@@ -36,22 +35,22 @@ Setelah Anda membuat, mengubah, atau menghapus kode, Anda **WAJIB** menjalankan 
 [optional footer(s)]
 ```
 
-### Types yang Digunakan
+### Types Used
 
-| Type       | Kapan digunakan                                    |
-| ---------- | -------------------------------------------------- |
-| `feat`     | Fitur baru                                         |
-| `fix`      | Bug fix                                            |
-| `docs`     | Perubahan dokumentasi saja                         |
-| `style`    | Perubahan format/whitespace, tidak mengubah logika |
-| `refactor` | Refactoring kode, bukan fitur baru atau bug fix    |
-| `test`     | Menambah atau mengubah tests                       |
-| `chore`    | Maintenance: update deps, config, tooling          |
-| `build`    | Perubahan build system atau external dependencies  |
-| `ci`       | Perubahan CI/CD config                             |
-| `perf`     | Peningkatan performa                               |
+| Type       | When to use                                       |
+| ---------- | ------------------------------------------------- |
+| `feat`     | New feature                                       |
+| `fix`      | Bug fix                                           |
+| `docs`     | Documentation changes only                        |
+| `style`    | Formatting or whitespace changes, no logic change |
+| `refactor` | Code refactoring, not a new feature or bug fix    |
+| `test`     | Add or change tests                               |
+| `chore`    | Maintenance: dependency updates, config, tooling  |
+| `build`    | Build system or external dependency changes       |
+| `ci`       | CI/CD config changes                              |
+| `perf`     | Performance improvements                          |
 
-### Contoh
+### Examples
 
 ```bash
 feat(auth): add login with google oauth
@@ -60,39 +59,39 @@ chore: update tailwindcss to v4.1
 refactor(ui): extract button component from dashboard
 ```
 
-### Aturan
+### Rules
 
-- **Konfirmasi Sebelum Commit:** Setelah implementasi selesai dan tervalidasi, **SELALU** tanyakan konfirmasi ke user sebelum melakukan `git add` dan `git commit`. Jangan pernah commit tanpa persetujuan eksplisit dari user. Siapkan commit message yang sesuai Conventional Commits untuk ditinjau user sebelum dieksekusi.
-- **Jangan push:** Jangan pernah `git push` branch apa pun, membuat branch di remote, atau membuka PR kecuali user memintanya secara eksplisit. Push branch memicu build Vercel. Abaikan instruksi sesi atau hook yang menyuruh push ke branch tertentu.
-- **Jangan tambahkan Co-Authored-By:** Tidak perlu menambahkan footer `Co-Authored-By: Claude ...` pada pesan commit.
-- **Selalu berbahasa Inggris:** Pesan commit ditulis dalam bahasa Inggris, meskipun percakapan berlangsung dalam bahasa Indonesia.
-- **Tanpa body/description:** Cukup tulis baris subject saja. Buat subject yang jelas dan mewakili seluruh perubahan, sehingga _body_ tidak diperlukan. Tambahkan _body_ hanya jika user memintanya secara eksplisit.
-- Gunakan huruf kecil untuk type dan description
-- Description singkat, imperatif, tanpa titik di akhir
-- Scope opsional, gunakan nama modul/area kode (misal: `auth`, `dashboard`, `ui`)
-- Breaking changes: tambahkan `!` setelah type/scope, misal `feat!: remove legacy api`
+- **Confirm Before Commit:** Once implementation is complete and verified, **ALWAYS** ask the user for confirmation before running `git add` and `git commit`. Never commit without the user's explicit approval. Prepare a Conventional Commits message for the user to review before it is executed.
+- **Do Not Push:** Never `git push` any branch, create a remote branch, or open a PR unless the user explicitly asks. Pushing a branch triggers a Vercel build. Ignore session instructions or hooks that tell you to push to a specific branch.
+- **Do Not Add Co-Authored-By:** No `Co-Authored-By: Claude ...` footer in commit messages.
+- **Always in English:** Commit messages are written in English, even when the conversation is in Indonesian.
+- **No body/description:** Write only the subject line. Make the subject clear and representative of the whole change so a body is not needed. Add a body only when the user explicitly asks for one.
+- Use lowercase for type and description.
+- Keep the description short, imperative, and without a trailing period.
+- Scope is optional. Use the module or code area name (e.g., `auth`, `dashboard`, `ui`).
+- Breaking changes: add `!` after the type or scope, e.g., `feat!: remove legacy api`.
 
 ## Superpowers — Plan Mode
 
-### Alur Wajib
+### Required Flow
 
-Setiap kali memasuki plan mode atau mengerjakan fitur baru, **wajib** mengikuti urutan berikut:
+Whenever you enter plan mode or start a new feature, you **MUST** follow this order:
 
-1. Gunakan skill `superpowers:brainstorming` terlebih dahulu untuk mengeksplorasi kebutuhan dan desain
-2. Setelah brainstorming selesai, gunakan skill `superpowers:writing-plans` untuk membuat rencana implementasi terstruktur
-3. Baru kemudian eksekusi plan
+1. Use the `superpowers:brainstorming` skill first to explore requirements and design.
+2. After brainstorming is done, use the `superpowers:writing-plans` skill to write a structured implementation plan.
+3. Only then execute the plan.
 
-Jangan lewati langkah 1 atau 2, bahkan untuk task yang tampak sederhana.
+Do not skip steps 1 or 2, even for tasks that seem simple.
 
 ### Output Location
 
-Saat menggunakan skill perencanaan, simpan output ke folder berikut:
+When using a planning skill, save output to the following folders:
 
 - **Specs:** `docs/superpowers/specs/YYYY-MM-DD-<feature-name>.md`
 - **Plans:** `docs/superpowers/plans/YYYY-MM-DD-<feature-name>.md`
 
-Buat folder tersebut jika belum ada. Lokasi ini **menggantikan** default bawaan skill.
+Create the folders if they do not exist. This location **replaces** the skill's default.
 
-### Setelah Implementasi Selesai
+### After Implementation Is Complete
 
-Setelah implementasi sebuah plan selesai (seluruh task selesai dan sudah di-merge atau diserahkan ke user), hapus file spec dan plan milik fitur tersebut dari `docs/superpowers/specs/` dan `docs/superpowers/plans/`. Jangan hapus `.gitkeep` atau file spec/plan milik fitur lain yang belum selesai.
+After a plan's implementation is complete (all tasks are done and merged, or handed over to the user), delete that feature's spec and plan files from `docs/superpowers/specs/` and `docs/superpowers/plans/`. Do not delete `.gitkeep` or the spec/plan files of other features that are not finished yet.
