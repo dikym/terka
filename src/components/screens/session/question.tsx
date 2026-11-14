@@ -119,7 +119,9 @@ function AnswerBox({
 			<input
 				id={ANSWER_INPUT}
 				value={state.input}
-				onChange={(event) => onInput(event.target.value)}
+				onChange={(event) =>
+					onInput(mono ? event.target.value.toUpperCase() : event.target.value)
+				}
 				readOnly={graded}
 				autoFocus
 				autoComplete="off"
